@@ -39,13 +39,13 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext.js
+;// ./src/x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -148,25 +148,25 @@ const __default__ = X3DKeyDeviceSensorContext;
 ;
 
 /* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorContext = (external_X_ITE_X3D_Namespace_default().add ("X3DKeyDeviceSensorContext", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSensorNode"
+;// external "__X_ITE_X3D__ .X3DSensorNode"
 const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
 var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode.js
+;// ./src/x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -279,7 +279,7 @@ const X3DKeyDeviceSensorNode_default_ = X3DKeyDeviceSensorNode;
 ;
 
 /* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorNode = (external_X_ITE_X3D_Namespace_default().add ("X3DKeyDeviceSensorNode", X3DKeyDeviceSensorNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/KeyDeviceSensor/KeySensor.js
+;// ./src/x_ite/Components/KeyDeviceSensor/KeySensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -645,7 +645,7 @@ const KeySensor_default_ = KeySensor;
 ;
 
 /* harmony default export */ const KeyDeviceSensor_KeySensor = (external_X_ITE_X3D_Namespace_default().add ("KeySensor", KeySensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/KeyDeviceSensor/StringSensor.js
+;// ./src/x_ite/Components/KeyDeviceSensor/StringSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -796,7 +796,7 @@ const StringSensor_default_ = StringSensor;
 ;
 
 /* harmony default export */ const KeyDeviceSensor_StringSensor = (external_X_ITE_X3D_Namespace_default().add ("StringSensor", StringSensor_default_));
-;// CONCATENATED MODULE: ./src/assets/components/KeyDeviceSensorComponent.js
+;// ./src/assets/components/KeyDeviceSensorComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

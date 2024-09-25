@@ -71,25 +71,25 @@ module.exports = __X_ITE_X3D__ .jquery;
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/CubeMapTexturing/Panorama1.fs.js
+;// ./src/x_ite/Browser/CubeMapTexturing/Panorama1.fs.js
 const __default__ = /* glsl */ `
 precision highp float;precision highp int;precision highp sampler2D;const float M_PI=3.1415926535897932384626433832795;varying vec2 texCoord;uniform sampler2D x3d_PanoramaTexture;uniform int x3d_CurrentFace;vec3 uvToXYZ(const in int face,const in vec2 uv){vec3 xyz;if(face==0)xyz=vec3(1.0,uv.y,uv.x);else if(face==1)xyz=vec3(-1.0,uv.y,-uv.x);else if(face==2)xyz=vec3(uv.x,uv.y,-1.0);else if(face==3)xyz=vec3(-uv.x,uv.y,1.0);else if(face==4)xyz=vec3(uv.y,-1.0,uv.x);else xyz=vec3(-uv.y,1.0,uv.x);return xyz;}vec2 dirToUV(const in vec3 dir){return vec2(0.5+0.5*atan(dir.z,dir.x)/M_PI,1.0-acos(dir.y)/M_PI);}vec3 panoramaToCubeMap(const in int face,const in vec2 texCoord){vec3 scan=uvToXYZ(face,texCoord);vec3 direction=normalize(scan);vec2 src=dirToUV(direction);return texture2D(x3d_PanoramaTexture,src).rgb;}void main(){gl_FragColor=vec4(panoramaToCubeMap(x3d_CurrentFace,texCoord),1.0);}`
 ;
 
 /* harmony default export */ const Panorama1_fs = (external_X_ITE_X3D_Namespace_default().add ("Panorama1.fs", __default__));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/CubeMapTexturing/Panorama2.fs.js
+;// ./src/x_ite/Browser/CubeMapTexturing/Panorama2.fs.js
 const Panorama2_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;const float M_PI=3.1415926535897932384626433832795;in vec2 texCoord;out vec4 x3d_FragColor;uniform sampler2D x3d_PanoramaTexture;uniform int x3d_CurrentFace;vec3 uvToXYZ(const in int face,const in vec2 uv){switch(face){case 0:return vec3(1.0,uv.y,uv.x);case 1:return vec3(-1.0,uv.y,-uv.x);case 2:return vec3(uv.x,uv.y,-1.0);case 3:return vec3(-uv.x,uv.y,1.0);case 4:return vec3(uv.y,-1.0,uv.x);default:return vec3(-uv.y,1.0,uv.x);}}vec2 dirToUV(const in vec3 dir){return vec2(0.5+0.5*atan(dir.z,dir.x)/M_PI,1.0-acos(dir.y)/M_PI);}vec3 panoramaToCubeMap(const in int face,const in vec2 texCoord){vec3 scan=uvToXYZ(face,texCoord);vec3 direction=normalize(scan);vec2 src=dirToUV(direction);return texture(x3d_PanoramaTexture,src).rgb;}void main(){x3d_FragColor=vec4(panoramaToCubeMap(x3d_CurrentFace,texCoord),1.0);}`
 ;
 
 /* harmony default export */ const Panorama2_fs = (external_X_ITE_X3D_Namespace_default().add ("Panorama2.fs", Panorama2_fs_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/CubeMapTexturing/X3DCubeMapTexturingContext.js
+;// ./src/x_ite/Browser/CubeMapTexturing/X3DCubeMapTexturingContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -160,25 +160,25 @@ const X3DCubeMapTexturingContext_default_ = X3DCubeMapTexturingContext;
 ;
 
 /* harmony default export */ const CubeMapTexturing_X3DCubeMapTexturingContext = (external_X_ITE_X3D_Namespace_default().add ("X3DCubeMapTexturingContext", X3DCubeMapTexturingContext_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSingleTextureNode"
+;// external "__X_ITE_X3D__ .X3DSingleTextureNode"
 const external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject = __X_ITE_X3D__ .X3DSingleTextureNode;
 var external_X_ITE_X3D_X3DSingleTextureNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode.js
+;// ./src/x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -332,13 +332,13 @@ const X3DEnvironmentTextureNode_default_ = X3DEnvironmentTextureNode;
 ;
 
 /* harmony default export */ const CubeMapTexturing_X3DEnvironmentTextureNode = (external_X_ITE_X3D_Namespace_default().add ("X3DEnvironmentTextureNode", X3DEnvironmentTextureNode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .BitSet"
+;// external "__X_ITE_X3D__ .BitSet"
 const external_X_ITE_X3D_BitSet_namespaceObject = __X_ITE_X3D__ .BitSet;
 var external_X_ITE_X3D_BitSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_BitSet_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture.js
+;// ./src/x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -588,16 +588,16 @@ const ComposedCubeMapTexture_default_ = ComposedCubeMapTexture;
 ;
 
 /* harmony default export */ const CubeMapTexturing_ComposedCubeMapTexture = (external_X_ITE_X3D_Namespace_default().add ("ComposedCubeMapTexture", ComposedCubeMapTexture_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBaseNode"
+;// external "__X_ITE_X3D__ .X3DBaseNode"
 const external_X_ITE_X3D_X3DBaseNode_namespaceObject = __X_ITE_X3D__ .X3DBaseNode;
 var external_X_ITE_X3D_X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBaseNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DRenderObject"
+;// external "__X_ITE_X3D__ .X3DRenderObject"
 const external_X_ITE_X3D_X3DRenderObject_namespaceObject = __X_ITE_X3D__ .X3DRenderObject;
 var external_X_ITE_X3D_X3DRenderObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DRenderObject_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+;// external "__X_ITE_X3D__ .TraverseType"
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Rendering/DependentRenderer.js
+;// ./src/x_ite/Rendering/DependentRenderer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -751,31 +751,31 @@ const DependentRenderer_default_ = DependentRenderer;
 ;
 
 /* harmony default export */ const Rendering_DependentRenderer = (external_X_ITE_X3D_Namespace_default().add ("DependentRenderer", DependentRenderer_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextureBuffer"
+;// external "__X_ITE_X3D__ .TextureBuffer"
 const external_X_ITE_X3D_TextureBuffer_namespaceObject = __X_ITE_X3D__ .TextureBuffer;
 var external_X_ITE_X3D_TextureBuffer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureBuffer_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Camera"
+;// external "__X_ITE_X3D__ .Camera"
 const external_X_ITE_X3D_Camera_namespaceObject = __X_ITE_X3D__ .Camera;
 var external_X_ITE_X3D_Camera_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Camera_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ViewVolume"
+;// external "__X_ITE_X3D__ .ViewVolume"
 const external_X_ITE_X3D_ViewVolume_namespaceObject = __X_ITE_X3D__ .ViewVolume;
 var external_X_ITE_X3D_ViewVolume_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ViewVolume_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+;// external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector4"
+;// external "__X_ITE_X3D__ .Vector4"
 const external_X_ITE_X3D_Vector4_namespaceObject = __X_ITE_X3D__ .Vector4;
 var external_X_ITE_X3D_Vector4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+;// external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture.js
+;// ./src/x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1062,16 +1062,16 @@ const GeneratedCubeMapTexture_default_ = GeneratedCubeMapTexture;
 ;
 
 /* harmony default export */ const CubeMapTexturing_GeneratedCubeMapTexture = (external_X_ITE_X3D_Namespace_default().add ("GeneratedCubeMapTexture", GeneratedCubeMapTexture_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DUrlObject"
+;// external "__X_ITE_X3D__ .X3DUrlObject"
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
 var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector2"
+;// external "__X_ITE_X3D__ .Vector2"
 const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
 var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .DEVELOPMENT"
+;// external "__X_ITE_X3D__ .DEVELOPMENT"
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
+;// ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
 /* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
@@ -1463,7 +1463,7 @@ const ImageCubeMapTexture_default_ = ImageCubeMapTexture;
 ;
 
 /* harmony default export */ const CubeMapTexturing_ImageCubeMapTexture = (external_X_ITE_X3D_Namespace_default().add ("ImageCubeMapTexture", ImageCubeMapTexture_default_));
-;// CONCATENATED MODULE: ./src/assets/components/CubeMapTexturingComponent.js
+;// ./src/assets/components/CubeMapTexturingComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

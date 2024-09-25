@@ -71,31 +71,31 @@ module.exports = __X_ITE_X3D__ .jquery;
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .GeometryTypes"
+;// external "__X_ITE_X3D__ .GeometryTypes"
 const external_X_ITE_X3D_GeometryTypes_namespaceObject = __X_ITE_X3D__ .GeometryTypes;
 var external_X_ITE_X3D_GeometryTypes_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_GeometryTypes_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/Line3.glsl.js
+;// ./src/x_ite/Browser/ParticleSystems/Line3.glsl.js
 const __default__ = /* glsl */ `
 #if defined(X3D_BOUNDED_VOLUME)||defined(X3D_VOLUME_EMITTER)
 struct Line3{vec3 point;vec3 direction;};bool intersects(const in Line3 line,const in vec3 a,const in vec3 b,const in vec3 c,out vec3 r){vec3 edge1=b-a;vec3 edge2=c-a;vec3 pvec=cross(line.direction,edge2);float det=dot(edge1,pvec);if(det==0.0)return false;float inv_det=1.0/det;vec3 tvec=line.point-a;float u=dot(tvec,pvec)*inv_det;if(u<0.0||u>1.0)return false;vec3 qvec=cross(tvec,edge1);float v=dot(line.direction,qvec)*inv_det;if(v<0.0||u+v>1.0)return false;r=vec3(u,v,1.0-u-v);return true;}
@@ -104,7 +104,7 @@ struct Line3{vec3 point;vec3 direction;};bool intersects(const in Line3 line,con
 ;
 
 /* harmony default export */ const Line3_glsl = (external_X_ITE_X3D_Namespace_default().add ("Line3.glsl", __default__));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/Plane3.glsl.js
+;// ./src/x_ite/Browser/ParticleSystems/Plane3.glsl.js
 const Plane3_glsl_default_ = /* glsl */ `
 #if defined(X3D_BOUNDED_VOLUME)||defined(X3D_VOLUME_EMITTER)
 struct Plane3{vec3 normal;float distanceFromOrigin;};Plane3 plane3(const in vec3 point,const in vec3 normal){return Plane3(normal,dot(normal,point));}float plane_distance(const in Plane3 plane,const in vec3 point){return dot(point,plane.normal)-plane.distanceFromOrigin;}bool intersects(const in Plane3 plane,const in Line3 line,out vec3 point){float theta=dot(line.direction,plane.normal);if(theta==0.0)return false;float t=(plane.distanceFromOrigin-dot(plane.normal,line.point))/theta;point=line.point+line.direction*t;return true;}void sort(inout vec4 points[ARRAY_SIZE],const in int count,const in Plane3 plane){const float shrink=1.0/1.3;int gap=count;bool exchanged=true;while(exchanged){gap=int(float(gap)*shrink);if(gap<=1){exchanged=false;gap=1;}for(int i=0,l=count-gap;i<l;++i){int j=gap+i;if(plane_distance(plane,points[i].xyz)>plane_distance(plane,points[j].xyz)){vec4 tmp1=points[i];points[i]=points[j];points[j]=tmp1;exchanged=true;}}}}int min_index(const in vec4 points[ARRAY_SIZE],const in int count,const in float value,const in Plane3 plane){int index=-1;float dist=1000000.0;for(int i=0;i<count;++i){float d=plane_distance(plane,points[i].xyz);if(d>=value&&d<dist){dist=d;index=i;}}return index;}
@@ -113,7 +113,7 @@ struct Plane3{vec3 normal;float distanceFromOrigin;};Plane3 plane3(const in vec3
 ;
 
 /* harmony default export */ const Plane3_glsl = (external_X_ITE_X3D_Namespace_default().add ("Plane3.glsl", Plane3_glsl_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/Box3.glsl.js
+;// ./src/x_ite/Browser/ParticleSystems/Box3.glsl.js
 const Box3_glsl_default_ = /* glsl */ `
 #if defined(X3D_VOLUME_EMITTER)||defined(X3D_BOUNDED_VOLUME)
 bool intersects(const in vec3 min,const in vec3 max,const in Line3 line){vec3 intersection;if(intersects(plane3(max,vec3(0.0,0.0,1.0)),line,intersection)){if(all(greaterThanEqual(vec4(intersection.xy,max.xy),vec4(min.xy,intersection.xy))))return true;}if(intersects(plane3(min,vec3(0.0,0.0,-1.0)),line,intersection)){if(all(greaterThanEqual(vec4(intersection.xy,max.xy),vec4(min.xy,intersection.xy))))return true;}if(intersects(plane3(max,vec3(0.0,1.0,0.0)),line,intersection)){if(all(greaterThanEqual(vec4(intersection.xz,max.xz),vec4(min.xz,intersection.xz))))return true;}if(intersects(plane3(min,vec3(0.0,-1.0,0.0)),line,intersection)){if(all(greaterThanEqual(vec4(intersection.xz,max.xz),vec4(min.xz,intersection.xz))))return true;}if(intersects(plane3(max,vec3(1.0,0.0,0.0)),line,intersection)){if(all(greaterThanEqual(vec4(intersection.yz,max.yz),vec4(min.yz,intersection.yz))))return true;}return false;}
@@ -122,7 +122,7 @@ bool intersects(const in vec3 min,const in vec3 max,const in Line3 line){vec3 in
 ;
 
 /* harmony default export */ const Box3_glsl = (external_X_ITE_X3D_Namespace_default().add ("Box3.glsl", Box3_glsl_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/BVH.glsl.js
+;// ./src/x_ite/Browser/ParticleSystems/BVH.glsl.js
 const BVH_glsl_default_ = /* glsl */ `
 #if defined(X3D_VOLUME_EMITTER)||defined(X3D_BOUNDED_VOLUME)
 #define BVH_NODE 0
@@ -140,7 +140,7 @@ int getIntersections(const in sampler2D volume,const in int verticesIndex,const 
 ;
 
 /* harmony default export */ const BVH_glsl = (external_X_ITE_X3D_Namespace_default().add ("BVH.glsl", BVH_glsl_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js
+;// ./src/x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -668,10 +668,10 @@ const X3DParticleEmitterNode_default_ = X3DParticleEmitterNode;
 ;
 
 /* harmony default export */ const ParticleSystems_X3DParticleEmitterNode = (external_X_ITE_X3D_Namespace_default().add ("X3DParticleEmitterNode", X3DParticleEmitterNode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/PointEmitter.js
+;// ./src/x_ite/Components/ParticleSystems/PointEmitter.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -828,7 +828,7 @@ const PointEmitter_default_ = PointEmitter;
 ;
 
 /* harmony default export */ const ParticleSystems_PointEmitter = (external_X_ITE_X3D_Namespace_default().add ("PointEmitter", PointEmitter_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/X3DParticleSystemsContext.js
+;// ./src/x_ite/Browser/ParticleSystems/X3DParticleSystemsContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -902,7 +902,7 @@ const X3DParticleSystemsContext_default_ = X3DParticleSystemsContext;
 ;
 
 /* harmony default export */ const ParticleSystems_X3DParticleSystemsContext = (external_X_ITE_X3D_Namespace_default().add ("X3DParticleSystemsContext", X3DParticleSystemsContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode.js
+;// ./src/x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -972,10 +972,10 @@ const X3DParticlePhysicsModelNode_default_ = X3DParticlePhysicsModelNode;
 ;
 
 /* harmony default export */ const ParticleSystems_X3DParticlePhysicsModelNode = (external_X_ITE_X3D_Namespace_default().add ("X3DParticlePhysicsModelNode", X3DParticlePhysicsModelNode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/BoundedPhysicsModel.js
+;// ./src/x_ite/Components/ParticleSystems/BoundedPhysicsModel.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1100,7 +1100,7 @@ const BoundedPhysicsModel_default_ = BoundedPhysicsModel;
 ;
 
 /* harmony default export */ const ParticleSystems_BoundedPhysicsModel = (external_X_ITE_X3D_Namespace_default().add ("BoundedPhysicsModel", BoundedPhysicsModel_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ConeEmitter.js
+;// ./src/x_ite/Components/ParticleSystems/ConeEmitter.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1267,7 +1267,7 @@ const ConeEmitter_default_ = ConeEmitter;
 ;
 
 /* harmony default export */ const ParticleSystems_ConeEmitter = (external_X_ITE_X3D_Namespace_default().add ("ConeEmitter", ConeEmitter_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ExplosionEmitter.js
+;// ./src/x_ite/Components/ParticleSystems/ExplosionEmitter.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1407,7 +1407,7 @@ const ExplosionEmitter_default_ = ExplosionEmitter;
 ;
 
 /* harmony default export */ const ParticleSystems_ExplosionEmitter = (external_X_ITE_X3D_Namespace_default().add ("ExplosionEmitter", ExplosionEmitter_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ForcePhysicsModel.js
+;// ./src/x_ite/Components/ParticleSystems/ForcePhysicsModel.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1513,40 +1513,40 @@ const ForcePhysicsModel_default_ = ForcePhysicsModel;
 ;
 
 /* harmony default export */ const ParticleSystems_ForcePhysicsModel = (external_X_ITE_X3D_Namespace_default().add ("ForcePhysicsModel", ForcePhysicsModel_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DShapeNode"
+;// external "__X_ITE_X3D__ .X3DShapeNode"
 const external_X_ITE_X3D_X3DShapeNode_namespaceObject = __X_ITE_X3D__ .X3DShapeNode;
 var external_X_ITE_X3D_X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DShapeNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .GeometryContext"
+;// external "__X_ITE_X3D__ .GeometryContext"
 const external_X_ITE_X3D_GeometryContext_namespaceObject = __X_ITE_X3D__ .GeometryContext;
 var external_X_ITE_X3D_GeometryContext_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_GeometryContext_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .VertexArray"
+;// external "__X_ITE_X3D__ .VertexArray"
 const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArray;
 var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+;// external "__X_ITE_X3D__ .TraverseType"
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .AlphaMode"
+;// external "__X_ITE_X3D__ .AlphaMode"
 const external_X_ITE_X3D_AlphaMode_namespaceObject = __X_ITE_X3D__ .AlphaMode;
 var external_X_ITE_X3D_AlphaMode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_AlphaMode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .LineSet"
+;// external "__X_ITE_X3D__ .LineSet"
 const external_X_ITE_X3D_LineSet_namespaceObject = __X_ITE_X3D__ .LineSet;
 var external_X_ITE_X3D_LineSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_LineSet_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Coordinate"
+;// external "__X_ITE_X3D__ .Coordinate"
 const external_X_ITE_X3D_Coordinate_namespaceObject = __X_ITE_X3D__ .Coordinate;
 var external_X_ITE_X3D_Coordinate_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Coordinate_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix3"
+;// external "__X_ITE_X3D__ .Matrix3"
 const external_X_ITE_X3D_Matrix3_namespaceObject = __X_ITE_X3D__ .Matrix3;
 var external_X_ITE_X3D_Matrix3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Plane3"
+;// external "__X_ITE_X3D__ .Plane3"
 const external_X_ITE_X3D_Plane3_namespaceObject = __X_ITE_X3D__ .Plane3;
 var external_X_ITE_X3D_Plane3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Plane3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .QuickSort"
+;// external "__X_ITE_X3D__ .QuickSort"
 const external_X_ITE_X3D_QuickSort_namespaceObject = __X_ITE_X3D__ .QuickSort;
 var external_X_ITE_X3D_QuickSort_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_QuickSort_namespaceObject);
-;// CONCATENATED MODULE: ./src/standard/Math/Utility/BVH.js
+;// ./src/standard/Math/Utility/BVH.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1925,7 +1925,7 @@ const BVH_default_ = BVH;
 ;
 
 /* harmony default export */ const Utility_BVH = (external_X_ITE_X3D_Namespace_default().add ("BVH", BVH_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ParticleSystem.js
+;// ./src/x_ite/Components/ParticleSystems/ParticleSystem.js
 /* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
@@ -2816,6 +2816,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    { },
    traverse (type, renderObject)
    {
+      if (this .geometryType === (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
+      {
+         if (!this .getGeometry ())
+            return;
+      }
+
       switch (type)
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
@@ -2852,7 +2858,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       if (this .geometryType === (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
       {
          // Currently used for ScreenText and Tools.
-         this .getGeometry () ?.traverse (type, renderObject);
+         this .getGeometry () .traverse (type, renderObject);
       }
    },
    displaySimple (gl, renderContext, shaderNode)
@@ -2871,7 +2877,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          }
          case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
          {
-            this .getGeometry () ?.displaySimpleInstanced (gl, shaderNode, this);
+            this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
          case (external_X_ITE_X3D_GeometryTypes_default()).SPRITE:
@@ -2913,7 +2919,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          }
          case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
          {
-            this .getGeometry () ?.displayInstanced (gl, renderContext, this);
+            this .getGeometry () .displayInstanced (gl, renderContext, this);
             break;
          }
          case (external_X_ITE_X3D_GeometryTypes_default()).SPRITE:
@@ -3068,10 +3074,10 @@ const ParticleSystem_default_ = ParticleSystem;
 ;
 
 /* harmony default export */ const ParticleSystems_ParticleSystem = (external_X_ITE_X3D_Namespace_default().add ("ParticleSystem", ParticleSystem_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .IndexedLineSet"
+;// external "__X_ITE_X3D__ .IndexedLineSet"
 const external_X_ITE_X3D_IndexedLineSet_namespaceObject = __X_ITE_X3D__ .IndexedLineSet;
 var external_X_ITE_X3D_IndexedLineSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_IndexedLineSet_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/PolylineEmitter.js
+;// ./src/x_ite/Components/ParticleSystems/PolylineEmitter.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3330,10 +3336,10 @@ const PolylineEmitter_default_ = PolylineEmitter;
 ;
 
 /* harmony default export */ const ParticleSystems_PolylineEmitter = (external_X_ITE_X3D_Namespace_default().add ("PolylineEmitter", PolylineEmitter_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Triangle3"
+;// external "__X_ITE_X3D__ .Triangle3"
 const external_X_ITE_X3D_Triangle3_namespaceObject = __X_ITE_X3D__ .Triangle3;
 var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Triangle3_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/SurfaceEmitter.js
+;// ./src/x_ite/Components/ParticleSystems/SurfaceEmitter.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3608,10 +3614,10 @@ const SurfaceEmitter_default_ = SurfaceEmitter;
 ;
 
 /* harmony default export */ const ParticleSystems_SurfaceEmitter = (external_X_ITE_X3D_Namespace_default().add ("SurfaceEmitter", SurfaceEmitter_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .IndexedFaceSet"
+;// external "__X_ITE_X3D__ .IndexedFaceSet"
 const external_X_ITE_X3D_IndexedFaceSet_namespaceObject = __X_ITE_X3D__ .IndexedFaceSet;
 var external_X_ITE_X3D_IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_IndexedFaceSet_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/VolumeEmitter.js
+;// ./src/x_ite/Components/ParticleSystems/VolumeEmitter.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3934,10 +3940,10 @@ const VolumeEmitter_default_ = VolumeEmitter;
 ;
 
 /* harmony default export */ const ParticleSystems_VolumeEmitter = (external_X_ITE_X3D_Namespace_default().add ("VolumeEmitter", VolumeEmitter_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+;// external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/WindPhysicsModel.js
+;// ./src/x_ite/Components/ParticleSystems/WindPhysicsModel.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -4072,7 +4078,7 @@ const WindPhysicsModel_default_ = WindPhysicsModel;
 ;
 
 /* harmony default export */ const ParticleSystems_WindPhysicsModel = (external_X_ITE_X3D_Namespace_default().add ("WindPhysicsModel", WindPhysicsModel_default_));
-;// CONCATENATED MODULE: ./src/assets/components/ParticleSystemsComponent.js
+;// ./src/assets/components/ParticleSystemsComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

@@ -39,37 +39,37 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLayerNode"
+;// external "__X_ITE_X3D__ .X3DLayerNode"
 const external_X_ITE_X3D_X3DLayerNode_namespaceObject = __X_ITE_X3D__ .X3DLayerNode;
 var external_X_ITE_X3D_X3DLayerNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLayerNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Viewpoint"
+;// external "__X_ITE_X3D__ .Viewpoint"
 const external_X_ITE_X3D_Viewpoint_namespaceObject = __X_ITE_X3D__ .Viewpoint;
 var external_X_ITE_X3D_Viewpoint_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Viewpoint_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Group"
+;// external "__X_ITE_X3D__ .Group"
 const external_X_ITE_X3D_Group_namespaceObject = __X_ITE_X3D__ .Group;
 var external_X_ITE_X3D_Group_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Group_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/AnnotationLayer.js
+;// ./src/x_ite/Components/Annotation/AnnotationLayer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -164,10 +164,10 @@ const __default__ = AnnotationLayer;
 ;
 
 /* harmony default export */ const Annotation_AnnotationLayer = (external_X_ITE_X3D_Namespace_default().add ("AnnotationLayer", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+;// external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/AnnotationTarget.js
+;// ./src/x_ite/Components/Annotation/AnnotationTarget.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -257,10 +257,10 @@ const AnnotationTarget_default_ = AnnotationTarget;
 ;
 
 /* harmony default export */ const Annotation_AnnotationTarget = (external_X_ITE_X3D_Namespace_default().add ("AnnotationTarget", AnnotationTarget_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
+;// external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/X3DAnnotationNode.js
+;// ./src/x_ite/Components/Annotation/X3DAnnotationNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -333,7 +333,7 @@ const X3DAnnotationNode_default_ = X3DAnnotationNode;
 ;
 
 /* harmony default export */ const Annotation_X3DAnnotationNode = (external_X_ITE_X3D_Namespace_default().add ("X3DAnnotationNode", X3DAnnotationNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/GroupAnnotation.js
+;// ./src/x_ite/Components/Annotation/GroupAnnotation.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -438,10 +438,10 @@ const GroupAnnotation_default_ = GroupAnnotation;
 ;
 
 /* harmony default export */ const Annotation_GroupAnnotation = (external_X_ITE_X3D_Namespace_default().add ("GroupAnnotation", GroupAnnotation_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DUrlObject"
+;// external "__X_ITE_X3D__ .X3DUrlObject"
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
 var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/IconAnnotation.js
+;// ./src/x_ite/Components/Annotation/IconAnnotation.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -544,7 +544,7 @@ const IconAnnotation_default_ = IconAnnotation;
 ;
 
 /* harmony default export */ const Annotation_IconAnnotation = (external_X_ITE_X3D_Namespace_default().add ("IconAnnotation", IconAnnotation_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/TextAnnotation.js
+;// ./src/x_ite/Components/Annotation/TextAnnotation.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -635,7 +635,7 @@ const TextAnnotation_default_ = TextAnnotation;
 ;
 
 /* harmony default export */ const Annotation_TextAnnotation = (external_X_ITE_X3D_Namespace_default().add ("TextAnnotation", TextAnnotation_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/URLAnnotation.js
+;// ./src/x_ite/Components/Annotation/URLAnnotation.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -725,7 +725,7 @@ const URLAnnotation_default_ = URLAnnotation;
 ;
 
 /* harmony default export */ const Annotation_URLAnnotation = (external_X_ITE_X3D_Namespace_default().add ("URLAnnotation", URLAnnotation_default_));
-;// CONCATENATED MODULE: ./src/assets/components/AnnotationComponent.js
+;// ./src/assets/components/AnnotationComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

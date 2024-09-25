@@ -3,7 +3,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 845:
+/***/ 480:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14565,28 +14565,28 @@ var __webpack_exports__ = {};
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DUrlObject"
+;// external "__X_ITE_X3D__ .X3DUrlObject"
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
 var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/TextAlignment.js
+;// ./src/x_ite/Browser/Text/TextAlignment.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -14648,15 +14648,15 @@ const __default__ = TextAlignment;
 ;
 
 /* harmony default export */ const Text_TextAlignment = (external_X_ITE_X3D_Namespace_default().add ("TextAlignment", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FileLoader"
+;// external "__X_ITE_X3D__ .FileLoader"
 const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .URLs"
+;// external "__X_ITE_X3D__ .URLs"
 const external_X_ITE_X3D_URLs_namespaceObject = __X_ITE_X3D__ .URLs;
 var external_X_ITE_X3D_URLs_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_URLs_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Text/X3DFontStyleNode.js
+;// ./src/x_ite/Components/Text/X3DFontStyleNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -14908,28 +14908,28 @@ const X3DFontStyleNode_default_ = X3DFontStyleNode;
 ;
 
 /* harmony default export */ const Text_X3DFontStyleNode = (external_X_ITE_X3D_Namespace_default().add ("X3DFontStyleNode", X3DFontStyleNode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .PrimitiveQuality"
+;// external "__X_ITE_X3D__ .PrimitiveQuality"
 const external_X_ITE_X3D_PrimitiveQuality_namespaceObject = __X_ITE_X3D__ .PrimitiveQuality;
 var external_X_ITE_X3D_PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PrimitiveQuality_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextCompression"
+;// external "__X_ITE_X3D__ .TextCompression"
 const external_X_ITE_X3D_TextCompression_namespaceObject = __X_ITE_X3D__ .TextCompression;
 var external_X_ITE_X3D_TextCompression_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextCompression_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Box2"
+;// external "__X_ITE_X3D__ .Box2"
 const external_X_ITE_X3D_Box2_namespaceObject = __X_ITE_X3D__ .Box2;
 var external_X_ITE_X3D_Box2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box2_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Box3"
+;// external "__X_ITE_X3D__ .Box3"
 const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
 var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector2"
+;// external "__X_ITE_X3D__ .Vector2"
 const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
 var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix3"
+;// external "__X_ITE_X3D__ .Matrix3"
 const external_X_ITE_X3D_Matrix3_namespaceObject = __X_ITE_X3D__ .Matrix3;
 var external_X_ITE_X3D_Matrix3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix3_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextGeometry.js
+;// ./src/x_ite/Browser/Text/X3DTextGeometry.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -15607,16 +15607,16 @@ const X3DTextGeometry_default_ = X3DTextGeometry;
 ;
 
 /* harmony default export */ const Text_X3DTextGeometry = (external_X_ITE_X3D_Namespace_default().add ("X3DTextGeometry", X3DTextGeometry_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Bezier"
+;// external "__X_ITE_X3D__ .Bezier"
 const external_X_ITE_X3D_Bezier_namespaceObject = __X_ITE_X3D__ .Bezier;
 var external_X_ITE_X3D_Bezier_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Bezier_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .libtess"
+;// external "__X_ITE_X3D__ .libtess"
 const external_X_ITE_X3D_libtess_namespaceObject = __X_ITE_X3D__ .libtess;
 var external_X_ITE_X3D_libtess_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_libtess_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/PolygonText.js
+;// ./src/x_ite/Browser/Text/PolygonText.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -15977,7 +15977,7 @@ const PolygonText_default_ = PolygonText;
 ;
 
 /* harmony default export */ const Text_PolygonText = (external_X_ITE_X3D_Namespace_default().add ("PolygonText", PolygonText_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Text/FontStyle.js
+;// ./src/x_ite/Components/Text/FontStyle.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16079,9 +16079,9 @@ const FontStyle_default_ = FontStyle;
 ;
 
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
+;// ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(845);
+/* provided dependency */ var opentype = __webpack_require__(480);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16219,13 +16219,13 @@ const X3DTextContext_default_ = X3DTextContext;
 ;
 
 /* harmony default export */ const Text_X3DTextContext = (external_X_ITE_X3D_Namespace_default().add ("X3DTextContext", X3DTextContext_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGeometryNode"
+;// external "__X_ITE_X3D__ .X3DGeometryNode"
 const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
 var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Text/Text.js
+;// ./src/x_ite/Components/Text/Text.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16402,7 +16402,7 @@ const Text_default_ = Text;
 ;
 
 /* harmony default export */ const Text_Text = (external_X_ITE_X3D_Namespace_default().add ("Text", Text_default_));
-;// CONCATENATED MODULE: ./src/assets/components/TextComponent.js
+;// ./src/assets/components/TextComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

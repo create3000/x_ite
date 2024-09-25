@@ -39,31 +39,31 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGeometricPropertyNode"
+;// external "__X_ITE_X3D__ .X3DGeometricPropertyNode"
 const external_X_ITE_X3D_X3DGeometricPropertyNode_namespaceObject = __X_ITE_X3D__ .X3DGeometricPropertyNode;
 var external_X_ITE_X3D_X3DGeometricPropertyNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometricPropertyNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimDisplacer.js
+;// ./src/x_ite/Components/HAnim/HAnimDisplacer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -150,31 +150,31 @@ const __default__ = HAnimDisplacer;
 ;
 
 /* harmony default export */ const HAnim_HAnimDisplacer = (external_X_ITE_X3D_Namespace_default().add ("HAnimDisplacer", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+;// external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Group"
+;// external "__X_ITE_X3D__ .Group"
 const external_X_ITE_X3D_Group_namespaceObject = __X_ITE_X3D__ .Group;
 var external_X_ITE_X3D_Group_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Group_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Transform"
+;// external "__X_ITE_X3D__ .Transform"
 const external_X_ITE_X3D_Transform_namespaceObject = __X_ITE_X3D__ .Transform;
 var external_X_ITE_X3D_Transform_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Transform_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBoundedObject"
+;// external "__X_ITE_X3D__ .X3DBoundedObject"
 const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
 var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+;// external "__X_ITE_X3D__ .TraverseType"
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+;// external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimHumanoid.js
+;// ./src/x_ite/Components/HAnim/HAnimHumanoid.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -847,13 +847,13 @@ const HAnimHumanoid_default_ = HAnimHumanoid;
 ;
 
 /* harmony default export */ const HAnim_HAnimHumanoid = (external_X_ITE_X3D_Namespace_default().add ("HAnimHumanoid", HAnimHumanoid_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DTransformNode"
+;// external "__X_ITE_X3D__ .X3DTransformNode"
 const external_X_ITE_X3D_X3DTransformNode_namespaceObject = __X_ITE_X3D__ .X3DTransformNode;
 var external_X_ITE_X3D_X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTransformNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimJoint.js
+;// ./src/x_ite/Components/HAnim/HAnimJoint.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1037,19 +1037,19 @@ const HAnimJoint_default_ = HAnimJoint;
 ;
 
 /* harmony default export */ const HAnim_HAnimJoint = (external_X_ITE_X3D_Namespace_default().add ("HAnimJoint", HAnimJoint_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TimeSensor"
+;// external "__X_ITE_X3D__ .TimeSensor"
 const external_X_ITE_X3D_TimeSensor_namespaceObject = __X_ITE_X3D__ .TimeSensor;
 var external_X_ITE_X3D_TimeSensor_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TimeSensor_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .PositionInterpolator"
+;// external "__X_ITE_X3D__ .PositionInterpolator"
 const external_X_ITE_X3D_PositionInterpolator_namespaceObject = __X_ITE_X3D__ .PositionInterpolator;
 var external_X_ITE_X3D_PositionInterpolator_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PositionInterpolator_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .OrientationInterpolator"
+;// external "__X_ITE_X3D__ .OrientationInterpolator"
 const external_X_ITE_X3D_OrientationInterpolator_namespaceObject = __X_ITE_X3D__ .OrientationInterpolator;
 var external_X_ITE_X3D_OrientationInterpolator_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_OrientationInterpolator_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+;// external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimMotion.js
+;// ./src/x_ite/Components/HAnim/HAnimMotion.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1458,10 +1458,10 @@ const HAnimMotion_default_ = HAnimMotion;
 ;
 
 /* harmony default export */ const HAnim_HAnimMotion = (external_X_ITE_X3D_Namespace_default().add ("HAnimMotion", HAnimMotion_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
+;// external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimSegment.js
+;// ./src/x_ite/Components/HAnim/HAnimSegment.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1557,7 +1557,7 @@ const HAnimSegment_default_ = HAnimSegment;
 ;
 
 /* harmony default export */ const HAnim_HAnimSegment = (external_X_ITE_X3D_Namespace_default().add ("HAnimSegment", HAnimSegment_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimSite.js
+;// ./src/x_ite/Components/HAnim/HAnimSite.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1651,7 +1651,7 @@ const HAnimSite_default_ = HAnimSite;
 ;
 
 /* harmony default export */ const HAnim_HAnimSite = (external_X_ITE_X3D_Namespace_default().add ("HAnimSite", HAnimSite_default_));
-;// CONCATENATED MODULE: ./src/assets/components/HAnimComponent.js
+;// ./src/assets/components/HAnimComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

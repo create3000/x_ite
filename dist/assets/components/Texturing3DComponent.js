@@ -3,7 +3,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 89:
+/***/ 252:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 491:
+/***/ 78:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -74,7 +74,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 483:
+/***/ 718:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4030,7 +4030,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 99:
+/***/ 134:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5291,31 +5291,31 @@ module.exports = __X_ITE_X3D__ .jquery;
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSingleTextureNode"
+;// external "__X_ITE_X3D__ .X3DSingleTextureNode"
 const external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject = __X_ITE_X3D__ .X3DSingleTextureNode;
 var external_X_ITE_X3D_X3DSingleTextureNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/X3DTexture3DNode.js
+;// ./src/x_ite/Components/Texturing3D/X3DTexture3DNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -5489,10 +5489,10 @@ const __default__ = X3DTexture3DNode;
 ;
 
 /* harmony default export */ const Texturing3D_X3DTexture3DNode = (external_X_ITE_X3D_Namespace_default().add ("X3DTexture3DNode", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ComposedTexture3D.js
+;// ./src/x_ite/Components/Texturing3D/ComposedTexture3D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -5686,16 +5686,16 @@ const ComposedTexture3D_default_ = ComposedTexture3D;
 ;
 
 /* harmony default export */ const Texturing3D_ComposedTexture3D = (external_X_ITE_X3D_Namespace_default().add ("ComposedTexture3D", ComposedTexture3D_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DUrlObject"
+;// external "__X_ITE_X3D__ .X3DUrlObject"
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
 var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Expressions"
+;// external "__X_ITE_X3D__ .Expressions"
 const external_X_ITE_X3D_Expressions_namespaceObject = __X_ITE_X3D__ .Expressions;
 var external_X_ITE_X3D_Expressions_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Expressions_namespaceObject);
 // EXTERNAL MODULE: external "__X_ITE_X3D__ .jquery"
 var external_X_ITE_X3D_jquery_ = __webpack_require__(254);
 var external_X_ITE_X3D_jquery_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_jquery_);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/NRRDParser.js
+;// ./src/x_ite/Browser/Texturing3D/NRRDParser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -6160,7 +6160,7 @@ const NRRDParser_default_ = NRRDParser;
 ;
 
 /* harmony default export */ const Texturing3D_NRRDParser = (external_X_ITE_X3D_Namespace_default().add ("NRRDParser", NRRDParser_default_));
-;// CONCATENATED MODULE: ./node_modules/jpeg-lossless-decoder-js/release/lossless.js
+;// ./node_modules/jpeg-lossless-decoder-js/release/lossless.js
 var __defProp = Object.defineProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -7313,11 +7313,11 @@ var Decoder = class _Decoder {
 };
 
 //# 
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(483);
-/* provided dependency */ var JpegImage = __webpack_require__(99);
-/* provided dependency */ var CharLS = __webpack_require__(89);
-/* provided dependency */ var OpenJPEG = __webpack_require__(491);
+;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
+/* provided dependency */ var dicomParser = __webpack_require__(718);
+/* provided dependency */ var JpegImage = __webpack_require__(134);
+/* provided dependency */ var CharLS = __webpack_require__(252);
+/* provided dependency */ var OpenJPEG = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8419,13 +8419,13 @@ const DICOMParser_default_ = DicomParser;
 ;
 
 /* harmony default export */ const DICOMParser = (external_X_ITE_X3D_Namespace_default().add ("DICOMParser", DICOMParser_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FileLoader"
+;// external "__X_ITE_X3D__ .FileLoader"
 const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
 var external_X_ITE_X3D_FileLoader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FileLoader_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .DEVELOPMENT"
+;// external "__X_ITE_X3D__ .DEVELOPMENT"
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTexture3D.js
+;// ./src/x_ite/Components/Texturing3D/ImageTexture3D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8630,7 +8630,7 @@ const ImageTexture3D_default_ = ImageTexture3D;
 ;
 
 /* harmony default export */ const Texturing3D_ImageTexture3D = (external_X_ITE_X3D_Namespace_default().add ("ImageTexture3D", ImageTexture3D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
+;// ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
 /* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
@@ -8874,7 +8874,7 @@ const ImageTextureAtlas_default_ = ImageTextureAtlas;
 ;
 
 /* harmony default export */ const Texturing3D_ImageTextureAtlas = (external_X_ITE_X3D_Namespace_default().add ("ImageTextureAtlas", ImageTextureAtlas_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/PixelTexture3D.js
+;// ./src/x_ite/Components/Texturing3D/PixelTexture3D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9072,13 +9072,13 @@ const PixelTexture3D_default_ = PixelTexture3D;
 ;
 
 /* harmony default export */ const Texturing3D_PixelTexture3D = (external_X_ITE_X3D_Namespace_default().add ("PixelTexture3D", PixelTexture3D_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSingleTextureCoordinateNode"
+;// external "__X_ITE_X3D__ .X3DSingleTextureCoordinateNode"
 const external_X_ITE_X3D_X3DSingleTextureCoordinateNode_namespaceObject = __X_ITE_X3D__ .X3DSingleTextureCoordinateNode;
 var external_X_ITE_X3D_X3DSingleTextureCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSingleTextureCoordinateNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureCoordinate3D.js
+;// ./src/x_ite/Components/Texturing3D/TextureCoordinate3D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9234,7 +9234,7 @@ const TextureCoordinate3D_default_ = TextureCoordinate3D;
 ;
 
 /* harmony default export */ const Texturing3D_TextureCoordinate3D = (external_X_ITE_X3D_Namespace_default().add ("TextureCoordinate3D", TextureCoordinate3D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureCoordinate4D.js
+;// ./src/x_ite/Components/Texturing3D/TextureCoordinate4D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9384,16 +9384,16 @@ const TextureCoordinate4D_default_ = TextureCoordinate4D;
 ;
 
 /* harmony default export */ const Texturing3D_TextureCoordinate4D = (external_X_ITE_X3D_Namespace_default().add ("TextureCoordinate4D", TextureCoordinate4D_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSingleTextureTransformNode"
+;// external "__X_ITE_X3D__ .X3DSingleTextureTransformNode"
 const external_X_ITE_X3D_X3DSingleTextureTransformNode_namespaceObject = __X_ITE_X3D__ .X3DSingleTextureTransformNode;
 var external_X_ITE_X3D_X3DSingleTextureTransformNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSingleTextureTransformNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+;// external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureTransform3D.js
+;// ./src/x_ite/Components/Texturing3D/TextureTransform3D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9526,7 +9526,7 @@ const TextureTransform3D_default_ = TextureTransform3D;
 ;
 
 /* harmony default export */ const Texturing3D_TextureTransform3D = (external_X_ITE_X3D_Namespace_default().add ("TextureTransform3D", TextureTransform3D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureTransformMatrix3D.js
+;// ./src/x_ite/Components/Texturing3D/TextureTransformMatrix3D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9622,7 +9622,7 @@ const TextureTransformMatrix3D_default_ = TextureTransformMatrix3D;
 ;
 
 /* harmony default export */ const Texturing3D_TextureTransformMatrix3D = (external_X_ITE_X3D_Namespace_default().add ("TextureTransformMatrix3D", TextureTransformMatrix3D_default_));
-;// CONCATENATED MODULE: ./src/assets/components/Texturing3DComponent.js
+;// ./src/assets/components/Texturing3DComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

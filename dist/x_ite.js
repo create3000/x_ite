@@ -12,10 +12,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 690:
+/***/ 57:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(842);
+/* provided dependency */ var jQuery = __webpack_require__(665);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -211,7 +211,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 368:
+/***/ 177:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -225,7 +225,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(842)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(665)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -436,7 +436,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 842:
+/***/ 665:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11160,7 +11160,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 123:
+/***/ 202:
 /***/ ((module) => {
 
 /**
@@ -15939,7 +15939,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 538:
+/***/ 381:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19184,7 +19184,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 621:
+/***/ 914:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -20251,7 +20251,7 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ x_ite)
 });
 
-;// CONCATENATED MODULE: ./src/x_ite/Namespace.js
+;// ./src/x_ite/Namespace.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -20323,7 +20323,7 @@ Object .defineProperty (Namespace, "add",
 
 /* harmony default export */ const x_ite_Namespace = (Namespace .add ("Namespace", Namespace));
 
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DConstants.js
+;// ./src/x_ite/Base/X3DConstants.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -20484,7 +20484,7 @@ const __default__ = X3DConstants;
 ;
 
 /* harmony default export */ const Base_X3DConstants = (x_ite_Namespace .add ("X3DConstants", __default__));
-;// CONCATENATED MODULE: ./src/standard/Math/Algorithm.js
+;// ./src/standard/Math/Algorithm.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -20718,7 +20718,7 @@ const Algorithm_default_ = Algorithm;
 ;
 
 /* harmony default export */ const Math_Algorithm = (x_ite_Namespace .add ("Algorithm", Algorithm_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/NamedNodesHandling.js
+;// ./src/x_ite/Execution/NamedNodesHandling.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -20813,7 +20813,7 @@ const getUniqueName = function (map, name = "")
    return newName;
 };
 
-;// CONCATENATED MODULE: ./src/x_ite/InputOutput/Generator.js
+;// ./src/x_ite/InputOutput/Generator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -21365,7 +21365,7 @@ const Generator_default_ = Generator;
 ;
 
 /* harmony default export */ const InputOutput_Generator = (x_ite_Namespace .add ("Generator", Generator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/DEVELOPMENT.js
+;// ./src/x_ite/DEVELOPMENT.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -21419,7 +21419,7 @@ const DEVELOPMENT_default_ = false;
 ;
 
 /* harmony default export */ const DEVELOPMENT = (x_ite_Namespace .add ("DEVELOPMENT", DEVELOPMENT_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Features.js
+;// ./src/x_ite/Features.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -21563,7 +21563,7 @@ const Features_default_ = Features;
 ;
 
 /* harmony default export */ const x_ite_Features = (x_ite_Namespace .add ("Features", Features_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DObject.js
+;// ./src/x_ite/Base/X3DObject.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -21829,7 +21829,7 @@ const X3DObject_default_ = X3DObject;
 ;
 
 /* harmony default export */ const Base_X3DObject = (x_ite_Namespace .add ("X3DObject", X3DObject_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/IterableWeakSet.js
+;// ./src/x_ite/Base/IterableWeakSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -21975,7 +21975,7 @@ class IterableWeakSet extends Set
 ;
 
 /* harmony default export */ const IterableWeakSet = (x_ite_Namespace .add ("IterableWeakSet", IterableWeakSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DChildObject.js
+;// ./src/x_ite/Base/X3DChildObject.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -22139,7 +22139,7 @@ const X3DChildObject_default_ = X3DChildObject;
 ;
 
 /* harmony default export */ const Base_X3DChildObject = (x_ite_Namespace .add ("X3DChildObject", X3DChildObject_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/Events.js
+;// ./src/x_ite/Base/Events.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -22224,7 +22224,7 @@ const Events_default_ = Events;
 ;
 
 /* harmony default export */ const Base_Events = (x_ite_Namespace .add ("Events", Events_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DFieldDefinition.js
+;// ./src/x_ite/Base/X3DFieldDefinition.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -22303,7 +22303,7 @@ const X3DFieldDefinition_default_ = X3DFieldDefinition;
 ;
 
 /* harmony default export */ const Base_X3DFieldDefinition = (x_ite_Namespace .add ("X3DFieldDefinition", X3DFieldDefinition_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DInfoArray.js
+;// ./src/x_ite/Base/X3DInfoArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -22695,7 +22695,7 @@ const X3DInfoArray_default_ = X3DInfoArray;
 ;
 
 /* harmony default export */ const Base_X3DInfoArray = (x_ite_Namespace .add ("X3DInfoArray", X3DInfoArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/FieldDefinitionArray.js
+;// ./src/x_ite/Base/FieldDefinitionArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -22769,7 +22769,7 @@ const FieldDefinitionArray_default_ = FieldDefinitionArray;
 ;
 
 /* harmony default export */ const Base_FieldDefinitionArray = (x_ite_Namespace .add ("FieldDefinitionArray", FieldDefinitionArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DField.js
+;// ./src/x_ite/Base/X3DField.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -23180,7 +23180,7 @@ const X3DField_default_ = X3DField;
 ;
 
 /* harmony default export */ const Base_X3DField = (x_ite_Namespace .add ("X3DField", X3DField_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/FieldArray.js
+;// ./src/x_ite/Base/FieldArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -23254,7 +23254,7 @@ const FieldArray_default_ = FieldArray;
 ;
 
 /* harmony default export */ const Base_FieldArray = (x_ite_Namespace .add ("FieldArray", FieldArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFBool.js
+;// ./src/x_ite/Fields/SFBool.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -23362,7 +23362,7 @@ const SFBool_default_ = SFBool;
 ;
 
 /* harmony default export */ const Fields_SFBool = (x_ite_Namespace .add ("SFBool", SFBool_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Color3.js
+;// ./src/standard/Math/Numbers/Color3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -23653,7 +23653,7 @@ const Color3_default_ = Color3;
 ;
 
 /* harmony default export */ const Numbers_Color3 = (x_ite_Namespace .add ("Color3", Color3_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFColor.js
+;// ./src/x_ite/Fields/SFColor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -23896,7 +23896,7 @@ const SFColor_default_ = SFColor;
 ;
 
 /* harmony default export */ const Fields_SFColor = (x_ite_Namespace .add ("SFColor", SFColor_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Color4.js
+;// ./src/standard/Math/Numbers/Color4.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -24104,7 +24104,7 @@ const Color4_default_ = Color4;
 ;
 
 /* harmony default export */ const Numbers_Color4 = (x_ite_Namespace .add ("Color4", Color4_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFColorRGBA.js
+;// ./src/x_ite/Fields/SFColorRGBA.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -24314,7 +24314,7 @@ const SFColorRGBA_default_ = SFColorRGBA;
 ;
 
 /* harmony default export */ const Fields_SFColorRGBA = (x_ite_Namespace .add ("SFColorRGBA", SFColorRGBA_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFDouble.js
+;// ./src/x_ite/Fields/SFDouble.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -24426,7 +24426,7 @@ const SFDouble_default_ = SFDouble;
 ;
 
 /* harmony default export */ const Fields_SFDouble = (x_ite_Namespace .add ("SFDouble", SFDouble_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFFloat.js
+;// ./src/x_ite/Fields/SFFloat.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -24538,7 +24538,7 @@ const SFFloat_default_ = SFFloat;
 ;
 
 /* harmony default export */ const Fields_SFFloat = (x_ite_Namespace .add ("SFFloat", SFFloat_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFInt32.js
+;// ./src/x_ite/Fields/SFInt32.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -24646,7 +24646,7 @@ const SFInt32_default_ = SFInt32;
 ;
 
 /* harmony default export */ const Fields_SFInt32 = (x_ite_Namespace .add ("SFInt32", SFInt32_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFMatrixPrototypeTemplate.js
+;// ./src/x_ite/Fields/SFMatrixPrototypeTemplate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -24902,7 +24902,7 @@ const SFMatrixPrototypeTemplate_default_ = SFMatrixPrototypeTemplate;
 ;
 
 /* harmony default export */ const Fields_SFMatrixPrototypeTemplate = (x_ite_Namespace .add ("SFMatrixPrototypeTemplate", SFMatrixPrototypeTemplate_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Vector2.js
+;// ./src/standard/Math/Numbers/Vector2.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -25154,7 +25154,7 @@ const Vector2_default_ = Vector2;
 ;
 
 /* harmony default export */ const Numbers_Vector2 = (x_ite_Namespace .add ("Vector2", Vector2_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Vector3.js
+;// ./src/standard/Math/Numbers/Vector3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -25459,7 +25459,7 @@ const Vector3_default_ = Vector3;
 ;
 
 /* harmony default export */ const Numbers_Vector3 = (x_ite_Namespace .add ("Vector3", Vector3_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Matrix2.js
+;// ./src/standard/Math/Numbers/Matrix2.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -25741,7 +25741,7 @@ const Matrix2_default_ = Matrix2;
 ;
 
 /* harmony default export */ const Numbers_Matrix2 = (x_ite_Namespace .add ("Matrix2", Matrix2_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/eigen_decomposition.js
+;// ./src/standard/Math/Algorithms/eigen_decomposition.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -25935,7 +25935,7 @@ const eigen_decomposition_default_ = eigen_decomposition;
 ;
 
 /* harmony default export */ const Algorithms_eigen_decomposition = (x_ite_Namespace .add ("eigen_decomposition", eigen_decomposition_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Matrix3.js
+;// ./src/standard/Math/Numbers/Matrix3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -26583,7 +26583,7 @@ const Matrix3_default_ = Matrix3;
 ;
 
 /* harmony default export */ const Numbers_Matrix3 = (x_ite_Namespace .add ("Matrix3", Matrix3_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFMatrix3.js
+;// ./src/x_ite/Fields/SFMatrix3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -26712,7 +26712,7 @@ const SFMatrix3_default_ = SFMatrix3;
 ;
 
 /* harmony default export */ const Fields_SFMatrix3 = (x_ite_Namespace .add ("SFMatrix3", SFMatrix3_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Vector4.js
+;// ./src/standard/Math/Numbers/Vector4.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -27035,7 +27035,7 @@ const Vector4_default_ = Vector4;
 ;
 
 /* harmony default export */ const Numbers_Vector4 = (x_ite_Namespace .add ("Vector4", Vector4_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Quaternion.js
+;// ./src/standard/Math/Numbers/Quaternion.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -27707,7 +27707,7 @@ const Quaternion_default_ = Quaternion;
 ;
 
 /* harmony default export */ const Numbers_Quaternion = (x_ite_Namespace .add ("Quaternion", Quaternion_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Rotation4.js
+;// ./src/standard/Math/Numbers/Rotation4.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -28230,7 +28230,7 @@ const Rotation4_default_ = Rotation4;
 ;
 
 /* harmony default export */ const Numbers_Rotation4 = (x_ite_Namespace .add ("Rotation4", Rotation4_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Matrix4.js
+;// ./src/standard/Math/Numbers/Matrix4.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -29000,7 +29000,7 @@ const Matrix4_default_ = Matrix4_Matrix4;
 ;
 
 /* harmony default export */ const Numbers_Matrix4 = (x_ite_Namespace .add ("Matrix4", Matrix4_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFMatrix4.js
+;// ./src/x_ite/Fields/SFMatrix4.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -29111,7 +29111,7 @@ const SFMatrix4_default_ = SFMatrix4;
 ;
 
 /* harmony default export */ const Fields_SFMatrix4 = (x_ite_Namespace .add ("SFMatrix4", SFMatrix4_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFNodeCache.js
+;// ./src/x_ite/Fields/SFNodeCache.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -29220,7 +29220,7 @@ const SFNodeCache_default_ = SFNodeCache;
 ;
 
 /* harmony default export */ const Fields_SFNodeCache = (x_ite_Namespace .add ("SFNodeCache", SFNodeCache_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFNode.js
+;// ./src/x_ite/Fields/SFNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -29683,7 +29683,7 @@ const SFNode_default_ = SFNode;
 ;
 
 /* harmony default export */ const Fields_SFNode = (x_ite_Namespace .add ("SFNode", SFNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVecPrototypeTemplate.js
+;// ./src/x_ite/Fields/SFVecPrototypeTemplate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -29961,7 +29961,7 @@ const SFVecPrototypeTemplate_default_ = SFVecPrototypeTemplate;
 ;
 
 /* harmony default export */ const Fields_SFVecPrototypeTemplate = (x_ite_Namespace .add ("SFVecPrototypeTemplate", SFVecPrototypeTemplate_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVec3.js
+;// ./src/x_ite/Fields/SFVec3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -30054,7 +30054,7 @@ const SFVec3_default_ = SFVec3;
 ;
 
 /* harmony default export */ const Fields_SFVec3 = (x_ite_Namespace .add ("SFVec3", SFVec3_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFRotation.js
+;// ./src/x_ite/Fields/SFRotation.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -30357,7 +30357,7 @@ const SFRotation_default_ = SFRotation;
 ;
 
 /* harmony default export */ const Fields_SFRotation = (x_ite_Namespace .add ("SFRotation", SFRotation_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFString.js
+;// ./src/x_ite/Fields/SFString.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -30495,7 +30495,7 @@ const SFString_default_ = SFString;
 ;
 
 /* harmony default export */ const Fields_SFString = (x_ite_Namespace .add ("SFString", SFString_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFTime.js
+;// ./src/x_ite/Fields/SFTime.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -30603,7 +30603,7 @@ const SFTime_default_ = SFTime;
 ;
 
 /* harmony default export */ const Fields_SFTime = (x_ite_Namespace .add ("SFTime", SFTime_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVec2.js
+;// ./src/x_ite/Fields/SFVec2.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -30690,7 +30690,7 @@ const SFVec2_default_ = SFVec2;
 ;
 
 /* harmony default export */ const Fields_SFVec2 = (x_ite_Namespace .add ("SFVec2", SFVec2_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVec4.js
+;// ./src/x_ite/Fields/SFVec4.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -30777,7 +30777,7 @@ const SFVec4_default_ = SFVec4;
 ;
 
 /* harmony default export */ const Fields_SFVec4 = (x_ite_Namespace .add ("SFVec4", SFVec4_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DArrayField.js
+;// ./src/x_ite/Base/X3DArrayField.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -30920,7 +30920,7 @@ const X3DArrayField_default_ = X3DArrayField;
 ;
 
 /* harmony default export */ const Base_X3DArrayField = (x_ite_Namespace .add ("X3DArrayField", X3DArrayField_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DObjectArrayField.js
+;// ./src/x_ite/Base/X3DObjectArrayField.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -31472,7 +31472,7 @@ const X3DObjectArrayField_default_ = X3DObjectArrayField;
 ;
 
 /* harmony default export */ const Base_X3DObjectArrayField = (x_ite_Namespace .add ("X3DObjectArrayField", X3DObjectArrayField_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DTypedArrayField.js
+;// ./src/x_ite/Base/X3DTypedArrayField.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -32521,7 +32521,7 @@ const X3DTypedArrayField_default_ = X3DTypedArrayField;
 ;
 
 /* harmony default export */ const Base_X3DTypedArrayField = (x_ite_Namespace .add ("X3DTypedArrayField", X3DTypedArrayField_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/ArrayFields.js
+;// ./src/x_ite/Fields/ArrayFields.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -33009,7 +33009,7 @@ const ArrayFields_default_ = ArrayFields;
 ;
 
 /* harmony default export */ const Fields_ArrayFields = (x_ite_Namespace .add ("ArrayFields", ArrayFields_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFImage.js
+;// ./src/x_ite/Fields/SFImage.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -33388,7 +33388,7 @@ const SFImage_default_ = SFImage;
 ;
 
 /* harmony default export */ const Fields_SFImage = (x_ite_Namespace .add ("SFImage", SFImage_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Fields.js
+;// ./src/x_ite/Fields.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -33479,7 +33479,7 @@ const Fields_default_ = Fields;
 ;
 
 /* harmony default export */ const x_ite_Fields = (x_ite_Namespace .add ("Fields", Fields_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/HTMLSupport.js
+;// ./src/x_ite/Parser/HTMLSupport.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -33557,7 +33557,7 @@ const HTMLSupport_default_ = HTMLSupport;
 ;
 
 /* harmony default export */ const Parser_HTMLSupport = (x_ite_Namespace .add ("HTMLSupport", HTMLSupport_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DBaseNode.js
+;// ./src/x_ite/Base/X3DBaseNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34172,8 +34172,8 @@ const X3DBaseNode_default_ = X3DBaseNode;
 ;
 
 /* harmony default export */ const Base_X3DBaseNode = (x_ite_Namespace .add ("X3DBaseNode", X3DBaseNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Legacy.js
+/* provided dependency */ var $ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34261,7 +34261,7 @@ const Legacy_default_ = Legacy;
 ;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
-;// CONCATENATED MODULE: ./src/x_ite/BROWSER_VERSION.js
+;// ./src/x_ite/BROWSER_VERSION.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34313,7 +34313,7 @@ const BROWSER_VERSION_default_ = "10.5.3";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/X3DNode.js
+;// ./src/x_ite/Components/Core/X3DNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36134,7 +36134,7 @@ const X3DNode_default_ = X3DNode;
 ;
 
 /* harmony default export */ const Core_X3DNode = (x_ite_Namespace .add ("X3DNode", X3DNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/X3DMetadataObject.js
+;// ./src/x_ite/Components/Core/X3DMetadataObject.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36202,7 +36202,7 @@ const X3DMetadataObject_default_ = X3DMetadataObject;
 ;
 
 /* harmony default export */ const Core_X3DMetadataObject = (x_ite_Namespace .add ("X3DMetadataObject", X3DMetadataObject_default_));
-;// CONCATENATED MODULE: ./src/x_ite/LATEST_VERSION.js
+;// ./src/x_ite/LATEST_VERSION.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36256,7 +36256,7 @@ const LATEST_VERSION_default_ = "4.0";
 ;
 
 /* harmony default export */ const LATEST_VERSION = (x_ite_Namespace .add ("LATEST_VERSION", LATEST_VERSION_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/MetadataBoolean.js
+;// ./src/x_ite/Components/Core/MetadataBoolean.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36361,7 +36361,7 @@ const MetadataBoolean_default_ = MetadataBoolean;
 ;
 
 /* harmony default export */ const Core_MetadataBoolean = (x_ite_Namespace .add ("MetadataBoolean", MetadataBoolean_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/MetadataDouble.js
+;// ./src/x_ite/Components/Core/MetadataDouble.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36466,7 +36466,7 @@ const MetadataDouble_default_ = MetadataDouble;
 ;
 
 /* harmony default export */ const Core_MetadataDouble = (x_ite_Namespace .add ("MetadataDouble", MetadataDouble_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/MetadataFloat.js
+;// ./src/x_ite/Components/Core/MetadataFloat.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36571,7 +36571,7 @@ const MetadataFloat_default_ = MetadataFloat;
 ;
 
 /* harmony default export */ const Core_MetadataFloat = (x_ite_Namespace .add ("MetadataFloat", MetadataFloat_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/MetadataInteger.js
+;// ./src/x_ite/Components/Core/MetadataInteger.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36676,7 +36676,7 @@ const MetadataInteger_default_ = MetadataInteger;
 ;
 
 /* harmony default export */ const Core_MetadataInteger = (x_ite_Namespace .add ("MetadataInteger", MetadataInteger_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/MetadataSet.js
+;// ./src/x_ite/Components/Core/MetadataSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36851,7 +36851,7 @@ const MetadataSet_default_ = MetadataSet;
 ;
 
 /* harmony default export */ const Core_MetadataSet = (x_ite_Namespace .add ("MetadataSet", MetadataSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/MetadataString.js
+;// ./src/x_ite/Components/Core/MetadataString.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36956,7 +36956,7 @@ const MetadataString_default_ = MetadataString;
 ;
 
 /* harmony default export */ const Core_MetadataString = (x_ite_Namespace .add ("MetadataString", MetadataString_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/X3DChildNode.js
+;// ./src/x_ite/Components/Core/X3DChildNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37058,7 +37058,7 @@ const X3DChildNode_default_ = X3DChildNode;
 ;
 
 /* harmony default export */ const Core_X3DChildNode = (x_ite_Namespace .add ("X3DChildNode", X3DChildNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/X3DInfoNode.js
+;// ./src/x_ite/Components/Core/X3DInfoNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37125,7 +37125,7 @@ const X3DInfoNode_default_ = X3DInfoNode;
 ;
 
 /* harmony default export */ const Core_X3DInfoNode = (x_ite_Namespace .add ("X3DInfoNode", X3DInfoNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/WorldInfo.js
+;// ./src/x_ite/Components/Core/WorldInfo.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37228,7 +37228,7 @@ const WorldInfo_default_ = WorldInfo;
 ;
 
 /* harmony default export */ const Core_WorldInfo = (x_ite_Namespace .add ("WorldInfo", WorldInfo_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/X3DBindableNode.js
+;// ./src/x_ite/Components/Core/X3DBindableNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37333,8 +37333,8 @@ const X3DBindableNode_default_ = X3DBindableNode;
 ;
 
 /* harmony default export */ const Core_X3DBindableNode = (x_ite_Namespace .add ("X3DBindableNode", X3DBindableNode_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(123);
+;// ./src/standard/Math/Geometry/Triangle3.js
+/* provided dependency */ var libtess = __webpack_require__(202);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37502,7 +37502,7 @@ const Triangle3_default_ = Triangle3;
 ;
 
 /* harmony default export */ const Geometry_Triangle3 = (x_ite_Namespace .add ("Triangle3", Triangle3_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/SAT.js
+;// ./src/standard/Math/Algorithms/SAT.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37615,7 +37615,7 @@ const SAT_default_ = SAT;
 ;
 
 /* harmony default export */ const Algorithms_SAT = (x_ite_Namespace .add ("SAT", SAT_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Box3.js
+;// ./src/standard/Math/Geometry/Box3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38284,7 +38284,7 @@ const Box3_default_ = Box3;
 ;
 
 /* harmony default export */ const Geometry_Box3 = (x_ite_Namespace .add ("Box3", Box3_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/X3DBoundedObject.js
+;// ./src/x_ite/Components/Grouping/X3DBoundedObject.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38405,18 +38405,18 @@ Object .assign (X3DBoundedObject .prototype,
    {
       const
          bbox   = new Geometry_Box3 (),
-         size   = new Numbers_Vector3 (),
+         eps    = new Numbers_Vector3 (1e-5, 1e-5, 1e-5),
          matrix = new Numbers_Matrix4 ();
 
       return function (type, renderObject)
       {
          const
             browser         = this .getBrowser (),
-            m               = browser .getRenderingProperty ("ContentScale") === 1 ? 0 : 1e-5,
+            m               = browser .getRenderingProperty ("ContentScale") === 1 ? Numbers_Vector3 .Zero : eps,
             modelViewMatrix = renderObject .getModelViewMatrix ();
 
          this .getBBox (bbox);
-         matrix .set (bbox .center, null, size .set (m, m, m) .max (bbox .size));
+         matrix .set (bbox .center, null, bbox .size .max (m));
 
          modelViewMatrix .push ();
          modelViewMatrix .multLeft (matrix);
@@ -38460,7 +38460,7 @@ const X3DBoundedObject_default_ = X3DBoundedObject;
 ;
 
 /* harmony default export */ const Grouping_X3DBoundedObject = (x_ite_Namespace .add ("X3DBoundedObject", X3DBoundedObject_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/NamedNodesArray.js
+;// ./src/x_ite/Execution/NamedNodesArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38534,7 +38534,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 ;
 
 /* harmony default export */ const Execution_NamedNodesArray = (x_ite_Namespace .add ("NamedNodesArray", NamedNodesArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/X3DImportedNode.js
+;// ./src/x_ite/Execution/X3DImportedNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38830,7 +38830,7 @@ const X3DImportedNode_default_ = X3DImportedNode;
 ;
 
 /* harmony default export */ const Execution_X3DImportedNode = (x_ite_Namespace .add ("X3DImportedNode", X3DImportedNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/ImportedNodesArray.js
+;// ./src/x_ite/Execution/ImportedNodesArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38904,7 +38904,7 @@ const ImportedNodesArray_default_ = ImportedNodesArray;
 ;
 
 /* harmony default export */ const Execution_ImportedNodesArray = (x_ite_Namespace .add ("ImportedNodesArray", ImportedNodesArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Networking/X3DUrlObject.js
+;// ./src/x_ite/Components/Networking/X3DUrlObject.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39194,7 +39194,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 ;
 
 /* harmony default export */ const Networking_X3DUrlObject = (x_ite_Namespace .add ("X3DUrlObject", X3DUrlObject_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Prototype/X3DProtoDeclarationNode.js
+;// ./src/x_ite/Prototype/X3DProtoDeclarationNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39310,7 +39310,7 @@ const X3DProtoDeclarationNode_default_ = X3DProtoDeclarationNode;
 ;
 
 /* harmony default export */ const Prototype_X3DProtoDeclarationNode = (x_ite_Namespace .add ("X3DProtoDeclarationNode", X3DProtoDeclarationNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Prototype/X3DProtoDeclaration.js
+;// ./src/x_ite/Prototype/X3DProtoDeclaration.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39899,8 +39899,8 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 ;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (x_ite_Namespace .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(842);
+;// ./src/x_ite/Parser/X3DParser.js
+/* provided dependency */ var X3DParser_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -40066,7 +40066,7 @@ const X3DParser_default_ = X3DParser;
 ;
 
 /* harmony default export */ const Parser_X3DParser = (x_ite_Namespace .add ("X3DParser", X3DParser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/Expressions.js
+;// ./src/x_ite/Parser/Expressions.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -40154,8 +40154,8 @@ const Expressions_default_ = Expressions;
 ;
 
 /* harmony default export */ const Parser_Expressions = (x_ite_Namespace .add ("Expressions", Expressions_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(842);
+;// ./src/x_ite/Parser/VRMLParser.js
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42794,8 +42794,8 @@ const VRMLParser_default_ = VRMLParser;
 ;
 
 /* harmony default export */ const Parser_VRMLParser = (x_ite_Namespace .add ("VRMLParser", VRMLParser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(842);
+;// ./src/x_ite/Parser/XMLParser.js
+/* provided dependency */ var XMLParser_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44017,7 +44017,7 @@ const XMLParser_default_ = XMLParser;
 ;
 
 /* harmony default export */ const Parser_XMLParser = (x_ite_Namespace .add ("XMLParser", XMLParser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/JSONParser.js
+;// ./src/x_ite/Parser/JSONParser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44437,7 +44437,7 @@ const JSONParser_default_ = JSONParser;
 ;
 
 /* harmony default export */ const Parser_JSONParser = (x_ite_Namespace .add ("JSONParser", JSONParser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DOptimizer.js
+;// ./src/x_ite/Parser/X3DOptimizer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44859,7 +44859,7 @@ const X3DOptimizer_default_ = X3DOptimizer;
 ;
 
 /* harmony default export */ const Parser_X3DOptimizer = (x_ite_Namespace .add ("X3DOptimizer", X3DOptimizer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/URLs.js
+;// ./src/x_ite/Browser/Networking/URLs.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44972,8 +44972,8 @@ const URLs_default_ = URLs;
 ;
 
 /* harmony default export */ const Networking_URLs = (x_ite_Namespace .add ("URLs", URLs_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(842);
+;// ./src/x_ite/Parser/GLTF2Parser.js
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48623,8 +48623,8 @@ const GLTF2Parser_default_ = GLTF2Parser;
 ;
 
 /* harmony default export */ const Parser_GLTF2Parser = (x_ite_Namespace .add ("GLTF2Parser", GLTF2Parser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(842);
+;// ./src/x_ite/Parser/GLB2Parser.js
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48774,8 +48774,8 @@ const GLB2Parser_default_ = GLB2Parser;
 ;
 
 /* harmony default export */ const Parser_GLB2Parser = (x_ite_Namespace .add ("GLB2Parser", GLB2Parser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(842);
+;// ./src/x_ite/Parser/OBJParser.js
+/* provided dependency */ var OBJParser_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48822,8 +48822,6 @@ const GLB2Parser_default_ = GLB2Parser;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
-
 
 
 
@@ -48890,13 +48888,12 @@ function OBJParser (scene)
 
    // Globals
 
+   this .geometryIndices = new Map ();
    this .smoothingGroup  = 0;
    this .smoothingGroups = new Map ();
    this .groups          = new Map ();
    this .materials       = new Map ();
    this .textures        = new Map ();
-   this .point2          = new Numbers_Vector2 ();
-   this .point3          = new Numbers_Vector3 ();
    this .lastIndex       = 0;
 }
 
@@ -48951,6 +48948,10 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
       this .normal          = scene .createNode ("Normal");
       this .coord           = scene .createNode ("Coordinate");
 
+      this .texCoords = [ ];
+      this .normals   = [ ];
+      this .vertices  = [ ];
+
       this .object .children .push (this .group);
 
       scene .getRootNodes () .push (this .object);
@@ -48958,6 +48959,21 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
       // Parse scene.
 
       await this .statements ();
+
+      // Assign indices and points.
+
+      for (const [geometry, indices] of this .geometryIndices)
+      {
+         geometry .texCoordIndex = indices .texCoordIndex;
+         geometry .normalIndex   = indices .normalIndex;
+         geometry .coordIndex    = indices .coordIndex;
+      }
+
+      this .texCoord .point  = this .texCoords;
+      this .normal   .vector = this .normals;
+      this .coord    .point  = this .vertices;
+
+      // Finish scene.
 
       this .optimizeSceneGraph (scene .getRootNodes ());
 
@@ -49225,27 +49241,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
    },
    vts ()
    {
-      const point = this .texCoord .point;
+      const texCoords = this .texCoords;
 
       let result = false;
 
-      while (this .vt (point))
+      while (this .vt (texCoords))
          result = true;
 
       return result;
    },
-   vt (point)
+   vt (texCoords)
    {
       this .comments ();
 
       if (OBJParser_Grammar .vt .parse (this))
       {
-         if (this .vec2 ())
-         {
-            point .push (this .point2);
-
+         if (this .vec2 (texCoords))
             return true;
-         }
 
          throw new Error ("Expected a texture coordinate.");
       }
@@ -49254,27 +49266,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
    },
    vns ()
    {
-      const vector = this .normal .vector;
+      const normals = this .normals;
 
       let result = false;
 
-      while (this .vn (vector))
+      while (this .vn (normals))
          result = true;
 
       return result;
    },
-   vn (vector)
+   vn (normals)
    {
       this .comments ();
 
       if (OBJParser_Grammar .vn .parse (this))
       {
-         if (this .vec3 ())
-         {
-            vector .push (this .point3);
-
+         if (this .vec3 (normals))
             return true;
-         }
 
          throw new Error ("Expected a normal vector.");
       }
@@ -49283,27 +49291,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
    },
    vs ()
    {
-      const point = this .coord .point;
+      const vertices = this .vertices;
 
       let result = false;
 
-      while (this .v (point))
+      while (this .v (vertices))
          result = true;
 
       return result;
    },
-   v (point)
+   v (vertices)
    {
       this .comments ();
 
       if (OBJParser_Grammar .v .parse (this))
       {
-         if (this .vec3 ())
-         {
-            point .push (this .point3);
-
+         if (this .vec3 (vertices))
             return true;
-         }
 
          throw new Error ("Expected a vertex coordinate.");
       }
@@ -49320,6 +49324,12 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
          {
             this .shape    = this .smoothingGroups .get (this .group .getNodeName ()) .get (this .smoothingGroup);
             this .geometry = this .shape .geometry;
+
+            const indices = this .geometryIndices .get (this .geometry);
+
+            this .texCoordIndex = indices .texCoordIndex;
+            this .normalIndex   = indices .normalIndex;
+            this .coordIndex    = indices .coordIndex;
          }
          catch
          {
@@ -49327,8 +49337,18 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
                scene      = this .getExecutionContext (),
                appearance = scene .createNode ("Appearance");
 
-            this .geometry = scene .createNode ("IndexedFaceSet");
-            this .shape    = scene .createNode ("Shape");
+            this .shape         = scene .createNode ("Shape");
+            this .geometry      = scene .createNode ("IndexedFaceSet");
+            this .texCoordIndex = [ ];
+            this .normalIndex   = [ ];
+            this .coordIndex    = [ ];
+
+            this .geometryIndices .set (this .geometry,
+            {
+               texCoordIndex: this .texCoordIndex,
+               normalIndex:   this .normalIndex,
+               coordIndex:    this .coordIndex,
+            });
 
             appearance .material        = this .material;
             appearance .texture         = this .texture;
@@ -49347,10 +49367,10 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
          while (this .f ())
             ;
 
-         if (this .geometry .texCoordIndex .length)
+         if (this .texCoordIndex .length)
             this .geometry .texCoord = this .texCoord;
 
-         if (this .geometry .normalIndex .length)
+         if (this .normalIndex .length)
             this .geometry .normal = this .normal;
 
          this .geometry .coord = this .coord;
@@ -49367,15 +49387,14 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
       if (OBJParser_Grammar .f .parse (this))
       {
          const
-            geometry           = this .geometry,
-            texCoordIndex      = geometry .texCoordIndex,
-            normalIndex        = geometry .normalIndex,
-            coordIndex         = geometry .coordIndex,
+            texCoordIndex      = this .texCoordIndex,
+            normalIndex        = this .normalIndex,
+            coordIndex         = this .coordIndex,
             numTexCoordIndices = texCoordIndex .length,
             numNormalIndices   = normalIndex .length,
-            numTexCoords       = this .texCoord .point .length,
-            numNormals         = this .normal .vector .length,
-            numCoords          = this .coord .point .length;
+            numTexCoords       = this .texCoords .length,
+            numNormals         = this .normals .length,
+            numCoords          = this .vertices .length;
 
          while (this .indices (texCoordIndex, normalIndex, coordIndex, numTexCoords, numNormals, numCoords))
             ;
@@ -49466,36 +49485,38 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
 
       return false;
    },
-   vec2 ()
+   vec2 (array)
    {
       if (this .double ())
       {
-         this .point2 .x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            this .point2 .y = this .value;
+            const y = this .value;
 
+            array .push (x, y);
             return true;
          }
       }
 
       return false;
    },
-   vec3 ()
+   vec3 (array)
    {
       if (this .double ())
       {
-         this .point3 .x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            this .point3 .y = this .value;
+            const y = this .value;
 
             if (this .double ())
             {
-               this .point3 .z = this .value;
+               const z = this .value;
 
+               array .push (x, y, z)
                return true;
             }
          }
@@ -49835,7 +49856,7 @@ Object .assign (MaterialParser .prototype,
          this .value = this .CONSTANTS .get (this .result [2] .toUpperCase ());
 
          if (this .result [1] === "-")
-            this .value = - this .value;
+            this .value = -this .value;
 
          return true;
       }
@@ -49869,7 +49890,7 @@ const OBJParser_default_ = OBJParser;
 ;
 
 /* harmony default export */ const Parser_OBJParser = (x_ite_Namespace .add ("OBJParser", OBJParser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/STLAParser.js
+;// ./src/x_ite/Parser/STLAParser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49960,11 +49981,6 @@ const STLAParser_Grammar = Parser_Expressions ({
 function STLAParser (scene)
 {
    Parser_X3DParser .call (this, scene);
-
-   // Globals
-
-   this .vector = [ ];
-   this .point  = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser .prototype),
@@ -50074,8 +50090,8 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
          geometry .normalPerVertex = false;
          geometry .normal          = normal;
          geometry .coord           = coordinate;
-         normal .vector            = this .vector;
-         coordinate .point         = this .point;
+         normal .vector            = this .normals;
+         coordinate .point         = this .vertices;
 
          if (name)
          {
@@ -50097,21 +50113,21 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
    },
    facets ()
    {
-      this .vector .length = 0;
-      this .point  .length = 0;
+      this .normals  = [ ];
+      this .vertices = [ ];
 
-      while (this .facet ())
+      while (this .facet (this .normals, this .vertices))
          ;
    },
-   facet ()
+   facet (normals, vertices)
    {
       this .comments ()
 
       if (STLAParser_Grammar .facet .parse (this))
       {
-         if (this .normal ())
+         if (this .normal (normals))
          {
-            if (this .loop ())
+            if (this .loop (vertices))
             {
                this .comments ();
 
@@ -50125,7 +50141,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
 
       return false;
    },
-   normal ()
+   normal (normals)
    {
       this .whitespacesNoLineTerminator ();
 
@@ -50133,16 +50149,17 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
       {
          if (this .double ())
          {
-            this .vector .push (this .value);
+            const x = this .value;
 
             if (this .double ())
             {
-               this .vector .push (this .value);
+               const y = this .value;
 
                if (this .double ())
                {
-                  this .vector .push (this .value);
+                  const z = this .value;
 
+                  normals .push (x, y, z);
                   return true;
                }
 
@@ -50157,7 +50174,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
 
       throw new Error ("Expected 'normal' statement.");
    },
-   loop ()
+   loop (vertices)
    {
       this .comments ();
 
@@ -50167,11 +50184,11 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
 
          if (STLAParser_Grammar .loop .parse (this))
          {
-            if (this .vertex ())
+            if (this .vertex (vertices))
             {
-               if (this .vertex ())
+               if (this .vertex (vertices))
                {
-                  if (this .vertex ())
+                  if (this .vertex (vertices))
                   {
                      this .comments ();
 
@@ -50189,7 +50206,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
 
       throw new Error ("Expected 'outer' statement.");
    },
-   vertex ()
+   vertex (vertices)
    {
       this .comments ();
 
@@ -50197,16 +50214,17 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
       {
          if (this .double ())
          {
-            this .point .push (this .value);
+            const x = this .value;
 
             if (this .double ())
             {
-               this .point .push (this .value);
+               const y = this .value;
 
                if (this .double ())
                {
-                  this .point .push (this .value);
+                  const z = this .value;
 
+                  vertices .push (x, y, z);
                   return true;
                }
 
@@ -50250,7 +50268,7 @@ const STLAParser_default_ = STLAParser;
 ;
 
 /* harmony default export */ const Parser_STLAParser = (x_ite_Namespace .add ("STLAParser", STLAParser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/STLBParser.js
+;// ./src/x_ite/Parser/STLBParser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50409,7 +50427,7 @@ const STLBParser_default_ = STLBParser;
 ;
 
 /* harmony default export */ const Parser_STLBParser = (x_ite_Namespace .add ("STLBParser", STLBParser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/PLYAParser.js
+;// ./src/x_ite/Parser/PLYAParser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51017,7 +51035,7 @@ const PLYAParser_default_ = PLYAParser;
 ;
 
 /* harmony default export */ const Parser_PLYAParser = (x_ite_Namespace .add ("PLYAParser", PLYAParser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/PLYBParser.js
+;// ./src/x_ite/Parser/PLYBParser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51243,7 +51261,7 @@ const PLYBParser_default_ = PLYBParser;
 ;
 
 /* harmony default export */ const Parser_PLYBParser = (x_ite_Namespace .add ("PLYBParser", PLYBParser_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Complex.js
+;// ./src/standard/Math/Numbers/Complex.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51496,7 +51514,7 @@ const Complex_default_ = Complex;
 ;
 
 /* harmony default export */ const Numbers_Complex = (x_ite_Namespace .add ("Complex", Complex_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Box2.js
+;// ./src/standard/Math/Geometry/Box2.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51757,7 +51775,7 @@ const Box2_default_ = Box2;
 ;
 
 /* harmony default export */ const Geometry_Box2 = (x_ite_Namespace .add ("Box2", Box2_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/Bezier.js
+;// ./src/standard/Math/Algorithms/Bezier.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51993,7 +52011,7 @@ const Bezier_default_ = Bezier;
 ;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Utility/MatrixStack.js
+;// ./src/standard/Math/Utility/MatrixStack.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52117,9 +52135,9 @@ const MatrixStack_default_ = MatrixStack;
 ;
 
 /* harmony default export */ const Utility_MatrixStack = (x_ite_Namespace .add ("MatrixStack", MatrixStack_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(842);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(123);
+;// ./src/x_ite/Parser/SVGParser.js
+/* provided dependency */ var SVGParser_$ = __webpack_require__(665);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(202);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53048,10 +53066,15 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
 
       // Create nodes.
 
-      const coordinateNode = scene .createNode ("Coordinate");
+      const
+         coordinateNode = scene .createNode ("Coordinate"),
+         vertices       = coordinateNode .point;
 
       for (const points of contours)
-         coordinateNode .point .push (... points);
+      {
+         for (const point of points)
+            vertices .push (point);
+      }
 
       if (this .style .fillType !== "none")
       {
@@ -53104,7 +53127,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
 
             // Create contour indices.
 
-            const indices = geometryNode .coordIndex;
+            const indices = [ ];
 
             for (const points of contours)
             {
@@ -53116,6 +53139,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
 
                indices .push (-1);
             }
+
+            geometryNode .coordIndex = indices;
          }
       }
 
@@ -54841,11 +54866,13 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
    {
       // Callback for when segments intersect and must be split.
 
+      const vertices = coordinateNode .point;
+
       function combineCallback (coords, data, weight)
       {
-         const index = coordinateNode .point .length;
+         const index = vertices .length;
 
-         coordinateNode .point .push (new Numbers_Vector3 (... coords));
+         vertices .push (new Numbers_Vector3 (... coords));
 
          return index;
       }
@@ -54888,8 +54915,8 @@ const SVGParser_default_ = SVGParser;
 ;
 
 /* harmony default export */ const Parser_SVGParser = (x_ite_Namespace .add ("SVGParser", SVGParser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(842);
+;// ./src/x_ite/Parser/GoldenGate.js
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55073,7 +55100,7 @@ const GoldenGate_default_ = GoldenGate;
 ;
 
 /* harmony default export */ const Parser_GoldenGate = (x_ite_Namespace .add ("GoldenGate", GoldenGate_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Plane3.js
+;// ./src/standard/Math/Geometry/Plane3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55253,7 +55280,7 @@ const Plane3_default_ = Plane3;
 ;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/ViewVolume.js
+;// ./src/standard/Math/Geometry/ViewVolume.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55607,7 +55634,7 @@ const ViewVolume_default_ = ViewVolume;
 ;
 
 /* harmony default export */ const Geometry_ViewVolume = (x_ite_Namespace .add ("ViewVolume", ViewVolume_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Rendering/TextureBuffer.js
+;// ./src/x_ite/Rendering/TextureBuffer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55843,7 +55870,7 @@ const TextureBuffer_default_ = TextureBuffer;
 ;
 
 /* harmony default export */ const Rendering_TextureBuffer = (x_ite_Namespace .add ("TextureBuffer", TextureBuffer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Rendering/TraverseType.js
+;// ./src/x_ite/Rendering/TraverseType.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55906,7 +55933,7 @@ const TraverseType_default_ = TraverseType;
 ;
 
 /* harmony default export */ const Rendering_TraverseType = (x_ite_Namespace .add ("TraverseType", TraverseType_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/MergeSort.js
+;// ./src/standard/Math/Algorithms/MergeSort.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56014,7 +56041,7 @@ const MergeSort_default_ = MergeSort;
 ;
 
 /* harmony default export */ const Algorithms_MergeSort = (x_ite_Namespace .add ("MergeSort", MergeSort_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Camera.js
+;// ./src/standard/Math/Geometry/Camera.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56145,7 +56172,7 @@ const Camera_default_ = Camera;
 ;
 
 /* harmony default export */ const Geometry_Camera = (x_ite_Namespace .add ("Camera", Camera_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Line3.js
+;// ./src/standard/Math/Geometry/Line3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56384,7 +56411,7 @@ const Line3_default_ = Line3;
 ;
 
 /* harmony default export */ const Geometry_Line3 = (x_ite_Namespace .add ("Line3", Line3_default_));
-;// CONCATENATED MODULE: ./src/standard/Time/StopWatch.js
+;// ./src/standard/Time/StopWatch.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56472,7 +56499,7 @@ const StopWatch_default_ = StopWatch;
 ;
 
 /* harmony default export */ const Time_StopWatch = (x_ite_Namespace .add ("StopWatch", StopWatch_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Rendering/X3DRenderObject.js
+;// ./src/x_ite/Rendering/X3DRenderObject.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -57801,7 +57828,7 @@ const X3DRenderObject_default_ = X3DRenderObject;
 ;
 
 /* harmony default export */ const Rendering_X3DRenderObject = (x_ite_Namespace .add ("X3DRenderObject", X3DRenderObject_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/BindableStack.js
+;// ./src/x_ite/Execution/BindableStack.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -57968,7 +57995,7 @@ const BindableStack_default_ = BindableStack;
 ;
 
 /* harmony default export */ const Execution_BindableStack = (x_ite_Namespace .add ("BindableStack", BindableStack_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/BindableList.js
+;// ./src/x_ite/Execution/BindableList.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58175,7 +58202,7 @@ const BindableList_default_ = BindableList;
 ;
 
 /* harmony default export */ const Execution_BindableList = (x_ite_Namespace .add ("BindableList", BindableList_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DCast.js
+;// ./src/x_ite/Base/X3DCast.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58254,7 +58281,7 @@ const X3DCast_default_ = X3DCast;
 ;
 
 /* harmony default export */ const Base_X3DCast = (x_ite_Namespace .add ("X3DCast", X3DCast_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/X3DGroupingNode.js
+;// ./src/x_ite/Components/Grouping/X3DGroupingNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58924,7 +58951,7 @@ const X3DGroupingNode_default_ = X3DGroupingNode;
 ;
 
 /* harmony default export */ const Grouping_X3DGroupingNode = (x_ite_Namespace .add ("X3DGroupingNode", X3DGroupingNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/Group.js
+;// ./src/x_ite/Components/Grouping/Group.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59011,7 +59038,7 @@ const Group_default_ = Group;
 ;
 
 /* harmony default export */ const Grouping_Group = (x_ite_Namespace .add ("Group", Group_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/NavigationInfo.js
+;// ./src/x_ite/Components/Navigation/NavigationInfo.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59348,7 +59375,7 @@ const NavigationInfo_default_ = NavigationInfo;
 ;
 
 /* harmony default export */ const Navigation_NavigationInfo = (x_ite_Namespace .add ("NavigationInfo", NavigationInfo_default_));
-;// CONCATENATED MODULE: ./src/standard/Utility/ObjectCache.js
+;// ./src/standard/Utility/ObjectCache.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59424,7 +59451,7 @@ const ObjectCache_default_ = ObjectCache;
 ;
 
 /* harmony default export */ const Utility_ObjectCache = (x_ite_Namespace .add ("ObjectCache", ObjectCache_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js
+;// ./src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59595,7 +59622,7 @@ const X3DFogObject_default_ = X3DFogObject;
 ;
 
 /* harmony default export */ const EnvironmentalEffects_X3DFogObject = (x_ite_Namespace .add ("X3DFogObject", X3DFogObject_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalEffects/Fog.js
+;// ./src/x_ite/Components/EnvironmentalEffects/Fog.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59713,7 +59740,7 @@ const Fog_default_ = Fog;
 ;
 
 /* harmony default export */ const EnvironmentalEffects_Fog = (x_ite_Namespace .add ("Fog", Fog_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Rendering/VertexArray.js
+;// ./src/x_ite/Rendering/VertexArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59820,7 +59847,7 @@ const VertexArray_default_ = VertexArray;
 ;
 
 /* harmony default export */ const Rendering_VertexArray = (x_ite_Namespace .add ("VertexArray", VertexArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/MikkTSpace.js
+;// ./src/x_ite/Browser/Rendering/MikkTSpace.js
 
 
 // See: https://github.com/donmccurdy/mikktspace-wasm
@@ -60026,7 +60053,7 @@ const MikkTSpace_default_ = new class MikkTSpace
 ;
 
 /* harmony default export */ const MikkTSpace = (x_ite_Namespace .add ("MikkTSpace", MikkTSpace_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Shading.js
+;// ./src/x_ite/Browser/Core/Shading.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -60089,7 +60116,7 @@ const Shading_default_ = Shading;
 ;
 
 /* harmony default export */ const Core_Shading = (x_ite_Namespace .add ("Shading", Shading_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DGeometryNode.js
+;// ./src/x_ite/Components/Rendering/X3DGeometryNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61382,7 +61409,7 @@ const X3DGeometryNode_default_ = X3DGeometryNode;
 ;
 
 /* harmony default export */ const Rendering_X3DGeometryNode = (x_ite_Namespace .add ("X3DGeometryNode", X3DGeometryNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Shape/AlphaMode.js
+;// ./src/x_ite/Browser/Shape/AlphaMode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61444,7 +61471,7 @@ const AlphaMode_default_ = AlphaMode;
 ;
 
 /* harmony default export */ const Shape_AlphaMode = (x_ite_Namespace .add ("AlphaMode", AlphaMode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/GeometryContext.js
+;// ./src/x_ite/Browser/Rendering/GeometryContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61532,7 +61559,7 @@ const GeometryContext_default_ = GeometryContext;
 ;
 
 /* harmony default export */ const Rendering_GeometryContext = (x_ite_Namespace .add ("GeometryContext", GeometryContext_default_));
-;// CONCATENATED MODULE: ./src/standard/Utility/BitSet.js
+;// ./src/standard/Utility/BitSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61663,7 +61690,7 @@ const BitSet_default_ = BitSet;
 ;
 
 /* harmony default export */ const Utility_BitSet = (x_ite_Namespace .add ("BitSet", BitSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js
+;// ./src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62313,7 +62340,7 @@ const X3DBackgroundNode_default_ = X3DBackgroundNode;
 ;
 
 /* harmony default export */ const EnvironmentalEffects_X3DBackgroundNode = (x_ite_Namespace .add ("X3DBackgroundNode", X3DBackgroundNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/X3DAppearanceChildNode.js
+;// ./src/x_ite/Components/Shape/X3DAppearanceChildNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62379,7 +62406,7 @@ const X3DAppearanceChildNode_default_ = X3DAppearanceChildNode;
 ;
 
 /* harmony default export */ const Shape_X3DAppearanceChildNode = (x_ite_Namespace .add ("X3DAppearanceChildNode", X3DAppearanceChildNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DTextureNode.js
+;// ./src/x_ite/Components/Texturing/X3DTextureNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62460,7 +62487,7 @@ const X3DTextureNode_default_ = X3DTextureNode;
 ;
 
 /* harmony default export */ const Texturing_X3DTextureNode = (x_ite_Namespace .add ("X3DTextureNode", X3DTextureNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DSingleTextureNode.js
+;// ./src/x_ite/Components/Texturing/X3DSingleTextureNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62722,7 +62749,7 @@ const X3DSingleTextureNode_default_ = X3DSingleTextureNode;
 ;
 
 /* harmony default export */ const Texturing_X3DSingleTextureNode = (x_ite_Namespace .add ("X3DSingleTextureNode", X3DSingleTextureNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DTexture2DNode.js
+;// ./src/x_ite/Components/Texturing/X3DTexture2DNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62902,8 +62929,8 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 ;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (x_ite_Namespace .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(842);
+;// ./src/x_ite/Components/Texturing/ImageTexture.js
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63173,7 +63200,7 @@ const ImageTexture_default_ = ImageTexture;
 ;
 
 /* harmony default export */ const Texturing_ImageTexture = (x_ite_Namespace .add ("ImageTexture", ImageTexture_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalEffects/Background.js
+;// ./src/x_ite/Components/EnvironmentalEffects/Background.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63319,7 +63346,7 @@ const Background_default_ = Background;
 ;
 
 /* harmony default export */ const EnvironmentalEffects_Background = (x_ite_Namespace .add ("Background", Background_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layering/X3DLayerNode.js
+;// ./src/x_ite/Components/Layering/X3DLayerNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63787,7 +63814,7 @@ const X3DLayerNode_default_ = X3DLayerNode;
 ;
 
 /* harmony default export */ const Layering_X3DLayerNode = (x_ite_Namespace .add ("X3DLayerNode", X3DLayerNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/X3DSensorNode.js
+;// ./src/x_ite/Components/Core/X3DSensorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63854,7 +63881,7 @@ const X3DSensorNode_default_ = X3DSensorNode;
 ;
 
 /* harmony default export */ const Core_X3DSensorNode = (x_ite_Namespace .add ("X3DSensorNode", X3DSensorNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Time/X3DTimeDependentNode.js
+;// ./src/x_ite/Components/Time/X3DTimeDependentNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64206,7 +64233,7 @@ const X3DTimeDependentNode_default_ = X3DTimeDependentNode;
 ;
 
 /* harmony default export */ const Time_X3DTimeDependentNode = (x_ite_Namespace .add ("X3DTimeDependentNode", X3DTimeDependentNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Time/TimeSensor.js
+;// ./src/x_ite/Components/Time/TimeSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64415,7 +64442,7 @@ const TimeSensor_default_ = TimeSensor;
 ;
 
 /* harmony default export */ const Time_TimeSensor = (x_ite_Namespace .add ("TimeSensor", TimeSensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/X3DInterpolatorNode.js
+;// ./src/x_ite/Components/Interpolation/X3DInterpolatorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64545,7 +64572,7 @@ const X3DInterpolatorNode_default_ = X3DInterpolatorNode;
 ;
 
 /* harmony default export */ const Interpolation_X3DInterpolatorNode = (x_ite_Namespace .add ("X3DInterpolatorNode", X3DInterpolatorNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/EaseInEaseOut.js
+;// ./src/x_ite/Components/Interpolation/EaseInEaseOut.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64680,7 +64707,7 @@ const EaseInEaseOut_default_ = EaseInEaseOut;
 ;
 
 /* harmony default export */ const Interpolation_EaseInEaseOut = (x_ite_Namespace .add ("EaseInEaseOut", EaseInEaseOut_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/PositionInterpolator.js
+;// ./src/x_ite/Components/Interpolation/PositionInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64791,7 +64818,7 @@ const PositionInterpolator_default_ = PositionInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_PositionInterpolator = (x_ite_Namespace .add ("PositionInterpolator", PositionInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/OrientationInterpolator.js
+;// ./src/x_ite/Components/Interpolation/OrientationInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64911,7 +64938,7 @@ const OrientationInterpolator_default_ = OrientationInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_OrientationInterpolator = (x_ite_Namespace .add ("OrientationInterpolator", OrientationInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/ScalarInterpolator.js
+;// ./src/x_ite/Components/Interpolation/ScalarInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65017,7 +65044,7 @@ const ScalarInterpolator_default_ = ScalarInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_ScalarInterpolator = (x_ite_Namespace .add ("ScalarInterpolator", ScalarInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/X3DViewpointNode.js
+;// ./src/x_ite/Components/Navigation/X3DViewpointNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65623,7 +65650,7 @@ const X3DViewpointNode_default_ = X3DViewpointNode;
 ;
 
 /* harmony default export */ const Navigation_X3DViewpointNode = (x_ite_Namespace .add ("X3DViewpointNode", X3DViewpointNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/Viewpoint.js
+;// ./src/x_ite/Components/Navigation/Viewpoint.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65819,7 +65846,7 @@ const Viewpoint_default_ = Viewpoint;
 ;
 
 /* harmony default export */ const Navigation_Viewpoint = (x_ite_Namespace .add ("Viewpoint", Viewpoint_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layering/Layer.js
+;// ./src/x_ite/Components/Layering/Layer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65930,7 +65957,7 @@ const Layer_default_ = Layer;
 ;
 
 /* harmony default export */ const Layering_Layer = (x_ite_Namespace .add ("Layer", Layer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layering/LayerSet.js
+;// ./src/x_ite/Components/Layering/LayerSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66122,7 +66149,7 @@ const LayerSet_default_ = LayerSet;
 ;
 
 /* harmony default export */ const Layering_LayerSet = (x_ite_Namespace .add ("LayerSet", LayerSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/X3DWorld.js
+;// ./src/x_ite/Execution/X3DWorld.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66286,8 +66313,8 @@ const X3DWorld_default_ = X3DWorld;
 ;
 
 /* harmony default export */ const Execution_X3DWorld = (x_ite_Namespace .add ("X3DWorld", X3DWorld_default_));
-;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(842);
+;// ./src/x_ite/InputOutput/FileLoader.js
+/* provided dependency */ var FileLoader_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66611,7 +66638,7 @@ const FileLoader_default_ = FileLoader;
 ;
 
 /* harmony default export */ const InputOutput_FileLoader = (x_ite_Namespace .add ("FileLoader", FileLoader_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Prototype/X3DExternProtoDeclaration.js
+;// ./src/x_ite/Prototype/X3DExternProtoDeclaration.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67102,7 +67129,7 @@ const X3DExternProtoDeclaration_default_ = X3DExternProtoDeclaration;
 ;
 
 /* harmony default export */ const Prototype_X3DExternProtoDeclaration = (x_ite_Namespace .add ("X3DExternProtoDeclaration", X3DExternProtoDeclaration_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Prototype/ExternProtoDeclarationArray.js
+;// ./src/x_ite/Prototype/ExternProtoDeclarationArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67176,7 +67203,7 @@ const ExternProtoDeclarationArray_default_ = ExternProtoDeclarationArray;
 ;
 
 /* harmony default export */ const Prototype_ExternProtoDeclarationArray = (x_ite_Namespace .add ("ExternProtoDeclarationArray", ExternProtoDeclarationArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Prototype/ProtoDeclarationArray.js
+;// ./src/x_ite/Prototype/ProtoDeclarationArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67250,8 +67277,8 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 ;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (x_ite_Namespace .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(842);
+;// ./src/x_ite/Routing/X3DRoute.js
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67721,7 +67748,7 @@ const X3DRoute_default_ = X3DRoute;
 ;
 
 /* harmony default export */ const Routing_X3DRoute = (x_ite_Namespace .add ("X3DRoute", X3DRoute_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Routing/RouteArray.js
+;// ./src/x_ite/Routing/RouteArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67795,7 +67822,7 @@ const RouteArray_default_ = RouteArray;
 ;
 
 /* harmony default export */ const Routing_RouteArray = (x_ite_Namespace .add ("RouteArray", RouteArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/X3DExecutionContext.js
+;// ./src/x_ite/Execution/X3DExecutionContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68795,7 +68822,7 @@ const X3DExecutionContext_default_ = X3DExecutionContext;
 ;
 
 /* harmony default export */ const Execution_X3DExecutionContext = (x_ite_Namespace .add ("X3DExecutionContext", X3DExecutionContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Core/X3DPrototypeInstance.js
+;// ./src/x_ite/Components/Core/X3DPrototypeInstance.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -69876,7 +69903,7 @@ const X3DPrototypeInstance_default_ = X3DPrototypeInstance;
 ;
 
 /* harmony default export */ const Core_X3DPrototypeInstance = (x_ite_Namespace .add ("X3DPrototypeInstance", X3DPrototypeInstance_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/CoreComponent.js
+;// ./src/x_ite/Components/CoreComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -69965,7 +69992,7 @@ const CoreComponent_default_ = {
 ;
 
 /* harmony default export */ const CoreComponent = (x_ite_Namespace .add ("CoreComponent", CoreComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DGeometricPropertyNode.js
+;// ./src/x_ite/Components/Rendering/X3DGeometricPropertyNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70031,7 +70058,7 @@ const X3DGeometricPropertyNode_default_ = X3DGeometricPropertyNode;
 ;
 
 /* harmony default export */ const Rendering_X3DGeometricPropertyNode = (x_ite_Namespace .add ("X3DGeometricPropertyNode", X3DGeometricPropertyNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalEffects/FogCoordinate.js
+;// ./src/x_ite/Components/EnvironmentalEffects/FogCoordinate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70167,7 +70194,7 @@ const FogCoordinate_default_ = FogCoordinate;
 ;
 
 /* harmony default export */ const EnvironmentalEffects_FogCoordinate = (x_ite_Namespace .add ("FogCoordinate", FogCoordinate_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalEffects/LocalFog.js
+;// ./src/x_ite/Components/EnvironmentalEffects/LocalFog.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70282,7 +70309,7 @@ const LocalFog_default_ = LocalFog;
 ;
 
 /* harmony default export */ const EnvironmentalEffects_LocalFog = (x_ite_Namespace .add ("LocalFog", LocalFog_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalEffects/TextureBackground.js
+;// ./src/x_ite/Components/EnvironmentalEffects/TextureBackground.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70402,7 +70429,7 @@ const TextureBackground_default_ = TextureBackground;
 ;
 
 /* harmony default export */ const EnvironmentalEffects_TextureBackground = (x_ite_Namespace .add ("TextureBackground", TextureBackground_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalEffectsComponent.js
+;// ./src/x_ite/Components/EnvironmentalEffectsComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70477,7 +70504,7 @@ const EnvironmentalEffectsComponent_default_ = {
 ;
 
 /* harmony default export */ const EnvironmentalEffectsComponent = (x_ite_Namespace .add ("EnvironmentalEffectsComponent", EnvironmentalEffectsComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode.js
+;// ./src/x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70613,7 +70640,7 @@ const X3DEnvironmentalSensorNode_default_ = X3DEnvironmentalSensorNode;
 ;
 
 /* harmony default export */ const EnvironmentalSensor_X3DEnvironmentalSensorNode = (x_ite_Namespace .add ("X3DEnvironmentalSensorNode", X3DEnvironmentalSensorNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalSensor/ProximitySensor.js
+;// ./src/x_ite/Components/EnvironmentalSensor/ProximitySensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70880,7 +70907,7 @@ const ProximitySensor_default_ = ProximitySensor;
 ;
 
 /* harmony default export */ const EnvironmentalSensor_ProximitySensor = (x_ite_Namespace .add ("ProximitySensor", ProximitySensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalSensor/TransformSensor.js
+;// ./src/x_ite/Components/EnvironmentalSensor/TransformSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71186,7 +71213,7 @@ const TransformSensor_default_ = TransformSensor;
 ;
 
 /* harmony default export */ const EnvironmentalSensor_TransformSensor = (x_ite_Namespace .add ("TransformSensor", TransformSensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalSensor/VisibilitySensor.js
+;// ./src/x_ite/Components/EnvironmentalSensor/VisibilitySensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71350,7 +71377,7 @@ const VisibilitySensor_default_ = VisibilitySensor;
 ;
 
 /* harmony default export */ const EnvironmentalSensor_VisibilitySensor = (x_ite_Namespace .add ("VisibilitySensor", VisibilitySensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/EnvironmentalSensorComponent.js
+;// ./src/x_ite/Components/EnvironmentalSensorComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71419,7 +71446,7 @@ const EnvironmentalSensorComponent_default_ = {
 ;
 
 /* harmony default export */ const EnvironmentalSensorComponent = (x_ite_Namespace .add ("EnvironmentalSensorComponent", EnvironmentalSensorComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/X3DFollowerNode.js
+;// ./src/x_ite/Components/Followers/X3DFollowerNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71563,7 +71590,7 @@ const X3DFollowerNode_default_ = X3DFollowerNode;
 ;
 
 /* harmony default export */ const Followers_X3DFollowerNode = (x_ite_Namespace .add ("X3DFollowerNode", X3DFollowerNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/X3DChaserNode.js
+;// ./src/x_ite/Components/Followers/X3DChaserNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71797,7 +71824,7 @@ const X3DChaserNode_default_ = X3DChaserNode;
 ;
 
 /* harmony default export */ const Followers_X3DChaserNode = (x_ite_Namespace .add ("X3DChaserNode", X3DChaserNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/ColorChaser.js
+;// ./src/x_ite/Components/Followers/ColorChaser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71930,7 +71957,7 @@ const ColorChaser_default_ = ColorChaser;
 ;
 
 /* harmony default export */ const Followers_ColorChaser = (x_ite_Namespace .add ("ColorChaser", ColorChaser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/X3DDamperNode.js
+;// ./src/x_ite/Components/Followers/X3DDamperNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72099,7 +72126,7 @@ const X3DDamperNode_default_ = X3DDamperNode;
 ;
 
 /* harmony default export */ const Followers_X3DDamperNode = (x_ite_Namespace .add ("X3DDamperNode", X3DDamperNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/ColorDamper.js
+;// ./src/x_ite/Components/Followers/ColorDamper.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72230,7 +72257,7 @@ const ColorDamper_default_ = ColorDamper;
 ;
 
 /* harmony default export */ const Followers_ColorDamper = (x_ite_Namespace .add ("ColorDamper", ColorDamper_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Followers/X3DArrayFollowerTemplate.js
+;// ./src/x_ite/Browser/Followers/X3DArrayFollowerTemplate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72410,7 +72437,7 @@ const X3DArrayFollowerTemplate_default_ = X3DArrayFollowerTemplate;
 ;
 
 /* harmony default export */ const Followers_X3DArrayFollowerTemplate = (x_ite_Namespace .add ("X3DArrayFollowerTemplate", X3DArrayFollowerTemplate_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Followers/X3DArrayChaserTemplate.js
+;// ./src/x_ite/Browser/Followers/X3DArrayChaserTemplate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72492,7 +72519,7 @@ const X3DArrayChaserTemplate_default_ = X3DArrayChaserTemplate;
 ;
 
 /* harmony default export */ const Followers_X3DArrayChaserTemplate = (x_ite_Namespace .add ("X3DArrayChaserTemplate", X3DArrayChaserTemplate_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/CoordinateChaser.js
+;// ./src/x_ite/Components/Followers/CoordinateChaser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72591,7 +72618,7 @@ const CoordinateChaser_default_ = CoordinateChaser;
 ;
 
 /* harmony default export */ const Followers_CoordinateChaser = (x_ite_Namespace .add ("CoordinateChaser", CoordinateChaser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/CoordinateDamper.js
+;// ./src/x_ite/Components/Followers/CoordinateDamper.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72692,7 +72719,7 @@ const CoordinateDamper_default_ = CoordinateDamper;
 ;
 
 /* harmony default export */ const Followers_CoordinateDamper = (x_ite_Namespace .add ("CoordinateDamper", CoordinateDamper_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/OrientationChaser.js
+;// ./src/x_ite/Components/Followers/OrientationChaser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72812,7 +72839,7 @@ const OrientationChaser_default_ = OrientationChaser;
 ;
 
 /* harmony default export */ const Followers_OrientationChaser = (x_ite_Namespace .add ("OrientationChaser", OrientationChaser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/OrientationDamper.js
+;// ./src/x_ite/Components/Followers/OrientationDamper.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72928,7 +72955,7 @@ const OrientationDamper_default_ = OrientationDamper;
 ;
 
 /* harmony default export */ const Followers_OrientationDamper = (x_ite_Namespace .add ("OrientationDamper", OrientationDamper_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/PositionChaser.js
+;// ./src/x_ite/Components/Followers/PositionChaser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73022,7 +73049,7 @@ const PositionChaser_default_ = PositionChaser;
 ;
 
 /* harmony default export */ const Followers_PositionChaser = (x_ite_Namespace .add ("PositionChaser", PositionChaser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/PositionChaser2D.js
+;// ./src/x_ite/Components/Followers/PositionChaser2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73116,7 +73143,7 @@ const PositionChaser2D_default_ = PositionChaser2D;
 ;
 
 /* harmony default export */ const Followers_PositionChaser2D = (x_ite_Namespace .add ("PositionChaser2D", PositionChaser2D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/PositionDamper.js
+;// ./src/x_ite/Components/Followers/PositionDamper.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73212,7 +73239,7 @@ const PositionDamper_default_ = PositionDamper;
 ;
 
 /* harmony default export */ const Followers_PositionDamper = (x_ite_Namespace .add ("PositionDamper", PositionDamper_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/PositionDamper2D.js
+;// ./src/x_ite/Components/Followers/PositionDamper2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73308,7 +73335,7 @@ const PositionDamper2D_default_ = PositionDamper2D;
 ;
 
 /* harmony default export */ const Followers_PositionDamper2D = (x_ite_Namespace .add ("PositionDamper2D", PositionDamper2D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/ScalarChaser.js
+;// ./src/x_ite/Components/Followers/ScalarChaser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73430,7 +73457,7 @@ const ScalarChaser_default_ = ScalarChaser;
 ;
 
 /* harmony default export */ const Followers_ScalarChaser = (x_ite_Namespace .add ("ScalarChaser", ScalarChaser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/ScalarDamper.js
+;// ./src/x_ite/Components/Followers/ScalarDamper.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73542,7 +73569,7 @@ const ScalarDamper_default_ = ScalarDamper;
 ;
 
 /* harmony default export */ const Followers_ScalarDamper = (x_ite_Namespace .add ("ScalarDamper", ScalarDamper_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/TexCoordChaser2D.js
+;// ./src/x_ite/Components/Followers/TexCoordChaser2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73641,7 +73668,7 @@ const TexCoordChaser2D_default_ = TexCoordChaser2D;
 ;
 
 /* harmony default export */ const Followers_TexCoordChaser2D = (x_ite_Namespace .add ("TexCoordChaser2D", TexCoordChaser2D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Followers/TexCoordDamper2D.js
+;// ./src/x_ite/Components/Followers/TexCoordDamper2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73742,7 +73769,7 @@ const TexCoordDamper2D_default_ = TexCoordDamper2D;
 ;
 
 /* harmony default export */ const Followers_TexCoordDamper2D = (x_ite_Namespace .add ("TexCoordDamper2D", TexCoordDamper2D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/FollowersComponent.js
+;// ./src/x_ite/Components/FollowersComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73837,7 +73864,7 @@ const FollowersComponent_default_ = {
 ;
 
 /* harmony default export */ const FollowersComponent = (x_ite_Namespace .add ("FollowersComponent", FollowersComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry3D/Box.js
+;// ./src/x_ite/Components/Geometry3D/Box.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73970,7 +73997,7 @@ const Box_default_ = Box;
 ;
 
 /* harmony default export */ const Geometry3D_Box = (x_ite_Namespace .add ("Box", Box_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry3D/Cone.js
+;// ./src/x_ite/Components/Geometry3D/Cone.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -74165,7 +74192,7 @@ const Cone_default_ = Cone;
 ;
 
 /* harmony default export */ const Geometry3D_Cone = (x_ite_Namespace .add ("Cone", Cone_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry3D/Cylinder.js
+;// ./src/x_ite/Components/Geometry3D/Cylinder.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -74388,7 +74415,7 @@ const Cylinder_default_ = Cylinder;
 ;
 
 /* harmony default export */ const Geometry3D_Cylinder = (x_ite_Namespace .add ("Cylinder", Cylinder_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry3D/ElevationGrid.js
+;// ./src/x_ite/Components/Geometry3D/ElevationGrid.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -74807,7 +74834,7 @@ const ElevationGrid_default_ = ElevationGrid;
 ;
 
 /* harmony default export */ const Geometry3D_ElevationGrid = (x_ite_Namespace .add ("ElevationGrid", ElevationGrid_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry3D/Extrusion.js
+;// ./src/x_ite/Components/Geometry3D/Extrusion.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -75522,7 +75549,7 @@ const Extrusion_default_ = Extrusion;
 ;
 
 /* harmony default export */ const Geometry3D_Extrusion = (x_ite_Namespace .add ("Extrusion", Extrusion_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DComposedGeometryNode.js
+;// ./src/x_ite/Components/Rendering/X3DComposedGeometryNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -75884,7 +75911,7 @@ const X3DComposedGeometryNode_default_ = X3DComposedGeometryNode;
 ;
 
 /* harmony default export */ const Rendering_X3DComposedGeometryNode = (x_ite_Namespace .add ("X3DComposedGeometryNode", X3DComposedGeometryNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry3D/IndexedFaceSet.js
+;// ./src/x_ite/Components/Geometry3D/IndexedFaceSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -76325,7 +76352,7 @@ const IndexedFaceSet_default_ = IndexedFaceSet;
 ;
 
 /* harmony default export */ const Geometry3D_IndexedFaceSet = (x_ite_Namespace .add ("IndexedFaceSet", IndexedFaceSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry3D/Sphere.js
+;// ./src/x_ite/Components/Geometry3D/Sphere.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -76461,7 +76488,7 @@ const Sphere_default_ = Sphere;
 ;
 
 /* harmony default export */ const Geometry3D_Sphere = (x_ite_Namespace .add ("Sphere", Sphere_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry3DComponent.js
+;// ./src/x_ite/Components/Geometry3DComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -76536,7 +76563,7 @@ const Geometry3DComponent_default_ = {
 ;
 
 /* harmony default export */ const Geometry3DComponent = (x_ite_Namespace .add ("Geometry3DComponent", Geometry3DComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/X3DTransformMatrix3DNode.js
+;// ./src/x_ite/Components/Grouping/X3DTransformMatrix3DNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -76667,7 +76694,7 @@ const X3DTransformMatrix3DNode_default_ = X3DTransformMatrix3DNode;
 ;
 
 /* harmony default export */ const Grouping_X3DTransformMatrix3DNode = (x_ite_Namespace .add ("X3DTransformMatrix3DNode", X3DTransformMatrix3DNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/X3DTransformNode.js
+;// ./src/x_ite/Components/Grouping/X3DTransformNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -76755,7 +76782,7 @@ const X3DTransformNode_default_ = X3DTransformNode;
 ;
 
 /* harmony default export */ const Grouping_X3DTransformNode = (x_ite_Namespace .add ("X3DTransformNode", X3DTransformNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/Transform.js
+;// ./src/x_ite/Components/Grouping/Transform.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -76847,7 +76874,7 @@ const Transform_default_ = Transform;
 ;
 
 /* harmony default export */ const Grouping_Transform = (x_ite_Namespace .add ("Transform", Transform_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DPointGeometryNode.js
+;// ./src/x_ite/Components/Rendering/X3DPointGeometryNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77074,7 +77101,7 @@ const X3DPointGeometryNode_default_ = X3DPointGeometryNode;
 ;
 
 /* harmony default export */ const Rendering_X3DPointGeometryNode = (x_ite_Namespace .add ("X3DPointGeometryNode", X3DPointGeometryNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/PointSet.js
+;// ./src/x_ite/Components/Rendering/PointSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77296,7 +77323,7 @@ const PointSet_default_ = PointSet;
 ;
 
 /* harmony default export */ const Rendering_PointSet = (x_ite_Namespace .add ("PointSet", PointSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DLineGeometryNode.js
+;// ./src/x_ite/Components/Rendering/X3DLineGeometryNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77371,7 +77398,6 @@ function X3DLineGeometryNode (executionContext)
 
    this .lineStipples                = new Float32Array ();
    this .lineStippleBuffer           = gl .createBuffer ();
-   this .lineTrianglesBuffer0        = gl .createBuffer ();
    this .thickLinesVertexArrayObject = new Rendering_VertexArray (gl);
 
    this .setGeometryType (1);
@@ -77410,9 +77436,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, this .lineStipples, gl .DYNAMIC_DRAW);
-
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer0);
-      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((16 * 6) * numLines), gl .DYNAMIC_DRAW);
    },
    updateLengthSoFar: (() =>
    {
@@ -77481,7 +77504,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
    },
    displaySimpleThick (gl, renderContext, shaderNode)
    {
-      const linePropertiesNode = renderContext .shapeNode .getAppearance () .getStyleProperties (1);
+      const
+         shapeNode          = renderContext .shapeNode,
+         linePropertiesNode = shapeNode .getAppearance () .getStyleProperties (1);
 
       if (!linePropertiesNode)
          return false;
@@ -77489,24 +77514,140 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
       if (!linePropertiesNode .getTransformLines ())
          return false;
 
+      // Check if pass 1 and/or pass 2 are already run.
+
+      const numLines = this .getVertices () .length / 8;
+
+      if (this [_numLines0] !== numLines)
+         return true;
+
+      if (this [_numLines2] !== numLines)
+         return true;
+
       // Setup vertex attributes.
 
       if (this .thickLinesVertexArrayObject .enable (shaderNode .getProgram ()))
       {
+         if (this .hasNormals)
+         {
+            const
+               stride       = (9 + 4 + 3) * Float32Array .BYTES_PER_ELEMENT,
+               normalOffset = 13 * Float32Array .BYTES_PER_ELEMENT;
+
+            shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer2, stride, normalOffset);
+         }
+
          const
             stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
             coordIndexOffset  = 0,
             lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
             vertexOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
 
-         shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer0, stride, coordIndexOffset);
-         shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer0, stride, lineStippleOffset);
-         shaderNode .enableVertexAttribute      (gl, this .lineTrianglesBuffer0, stride, vertexOffset);
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this [_lineTrianglesBuffer0], stride, coordIndexOffset);
+
+         shaderNode .enableLineStippleAttribute (gl, this [_lineTrianglesBuffer0], stride, lineStippleOffset);
+         shaderNode .enableVertexAttribute      (gl, this [_lineTrianglesBuffer0], stride, vertexOffset);
       }
 
       gl .frontFace (gl .CCW);
       gl .enable (gl .CULL_FACE);
       gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
+
+      return true;
+   },
+   displaySimpleInstanced (gl, shaderNode, shapeNode)
+   {
+      if (this .displaySimpleInstancedThick (gl, shaderNode, shapeNode))
+         return;
+
+      const instances = shapeNode .getInstances ();
+
+      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+      {
+         const { instancesStride, matrixOffset, normalMatrixOffset } = shapeNode;
+
+         shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+         if (normalMatrixOffset !== undefined)
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
+         shaderNode .enableVertexAttribute      (gl, this .vertexBuffer,    0, 0);
+
+         this .updateInstances = false;
+      }
+
+      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+   },
+   displaySimpleInstancedThick (gl, shaderNode, shapeNode)
+   {
+      const linePropertiesNode = shapeNode .getAppearance () .getStyleProperties (1);
+
+      if (!linePropertiesNode)
+         return false;
+
+      if (!linePropertiesNode .getTransformLines ())
+         return false;
+
+      // Check if pass 1 and/or pass 2 are already run.
+
+      const numLines = this .getVertices () .length / 8 * shapeNode .getNumInstances ();
+
+      if (shapeNode [_numLines0] !== numLines)
+         return true;
+
+      if (shapeNode [_numLines2] !== numLines)
+         return true;
+
+      // Setup vertex attributes.
+
+      const instances = shapeNode .getInstances ();
+
+      if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+      {
+         shaderNode .enableInstanceMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer1], 0, 0, 0);
+
+         if (this .hasNormals)
+         {
+            const
+               stride             = (9 + 4 + 3) * Float32Array .BYTES_PER_ELEMENT,
+               normalMatrixOffset = 0,
+               normalOffset       = 13 * Float32Array .BYTES_PER_ELEMENT;
+
+            if (shapeNode .normalMatrixOffset)
+               shaderNode .enableInstanceNormalMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, normalMatrixOffset, 0);
+
+            shaderNode .enableNormalAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, normalOffset);
+         }
+
+         const
+            stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
+            coordIndexOffset  = 0,
+            lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+            vertexOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
+
+         // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+         //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, coordIndexOffset);
+
+         shaderNode .enableLineStippleAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, lineStippleOffset);
+         shaderNode .enableVertexAttribute      (gl, shapeNode [_lineTrianglesBuffer0], stride, vertexOffset);
+
+         this .updateInstances = false;
+      }
+
+      gl .frontFace (gl .CCW);
+      gl .enable (gl .CULL_FACE);
+      gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3 * shapeNode .getNumInstances ());
 
       return true;
    },
@@ -77662,11 +77803,22 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
 
          const numLines = this .getVertices () .length / 8;
 
+         // Create lineTrianglesBuffer0
+
+         if (this [_numLines0] !== numLines)
+         {
+            this [_numLines0]              = numLines;
+            this [_lineTrianglesBuffer0] ??= gl .createBuffer ();
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this [_lineTrianglesBuffer0]);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((16 * 6) * numLines), gl .DYNAMIC_DRAW);
+         }
+
          // Transform lines.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
-         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .lineTrianglesBuffer0);
+         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this [_lineTrianglesBuffer0]);
          gl .enable (gl .RASTERIZER_DISCARD);
          gl .beginTransformFeedback (gl .POINTS);
          gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
@@ -77677,7 +77829,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
          // DEBUG
 
          // const data = new Float32Array (16 * 6 * this .vertexCount / 2);
-         // gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer0);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, this [_lineTrianglesBuffer0]);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data);
 
@@ -77717,9 +77869,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
 
             // Create lineTrianglesBuffer2
 
-            if (this .numLines2 !== numLines)
+            if (this [_numLines2] !== numLines)
             {
-               this .numLines2              = numLines;
+               this [_numLines2]              = numLines;
                this .lineTrianglesBuffer2 ??= gl .createBuffer ();
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer2);
@@ -77784,16 +77936,16 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
             // for (let i = 0, length = attribNodes .length; i < length; ++ i)
             //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer0, stride, coordIndexOffset);
-            shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer0, stride, lineStippleOffset);
+            shaderNode .enableCoordIndexAttribute  (gl, this [_lineTrianglesBuffer0], stride, coordIndexOffset);
+            shaderNode .enableLineStippleAttribute (gl, this [_lineTrianglesBuffer0], stride, lineStippleOffset);
 
             if (this .hasFogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .lineTrianglesBuffer0, stride, fogCoordOffset);
+               shaderNode .enableFogDepthAttribute (gl, this [_lineTrianglesBuffer0], stride, fogCoordOffset);
 
             if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .lineTrianglesBuffer0, stride, colorOffset);
+               shaderNode .enableColorAttribute (gl, this [_lineTrianglesBuffer0], stride, colorOffset);
 
-            shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer0, stride, vertexOffset);
+            shaderNode .enableVertexAttribute (gl, this [_lineTrianglesBuffer0], stride, vertexOffset);
          }
 
          gl .frontFace (gl .CCW);
@@ -78073,7 +78225,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
 
          // Pass 2
 
-         if (this .hasNormals && shapeNode .normalMatrixOffset)
+         if (this .hasNormals)
          {
             const transformShaderNode2 = browser .getLineTransformInstancedShader (2);
 
@@ -78217,7 +78369,7 @@ const X3DLineGeometryNode_default_ = X3DLineGeometryNode;
 ;
 
 /* harmony default export */ const Rendering_X3DLineGeometryNode = (x_ite_Namespace .add ("X3DLineGeometryNode", X3DLineGeometryNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/LineSet.js
+;// ./src/x_ite/Components/Rendering/LineSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78457,7 +78609,7 @@ const LineSet_default_ = LineSet;
 ;
 
 /* harmony default export */ const Rendering_LineSet = (x_ite_Namespace .add ("LineSet", LineSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/TriangleSet.js
+;// ./src/x_ite/Components/Rendering/TriangleSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78569,7 +78721,7 @@ const TriangleSet_default_ = TriangleSet;
 ;
 
 /* harmony default export */ const Rendering_TriangleSet = (x_ite_Namespace .add ("TriangleSet", TriangleSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Tangent.js
+;// ./src/x_ite/Components/Rendering/Tangent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78707,7 +78859,7 @@ const Tangent_default_ = Tangent;
 ;
 
 /* harmony default export */ const Rendering_Tangent = (x_ite_Namespace .add ("Tangent", Tangent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DColorNode.js
+;// ./src/x_ite/Components/Rendering/X3DColorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78788,7 +78940,7 @@ const X3DColorNode_default_ = X3DColorNode;
 ;
 
 /* harmony default export */ const Rendering_X3DColorNode = (x_ite_Namespace .add ("X3DColorNode", X3DColorNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Color.js
+;// ./src/x_ite/Components/Rendering/Color.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78922,7 +79074,7 @@ const Color_default_ = Color;
 ;
 
 /* harmony default export */ const Rendering_Color = (x_ite_Namespace .add ("Color", Color_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/ColorRGBA.js
+;// ./src/x_ite/Components/Rendering/ColorRGBA.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79058,7 +79210,7 @@ const ColorRGBA_default_ = ColorRGBA;
 ;
 
 /* harmony default export */ const Rendering_ColorRGBA = (x_ite_Namespace .add ("ColorRGBA", ColorRGBA_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DNormalNode.js
+;// ./src/x_ite/Components/Rendering/X3DNormalNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79125,7 +79277,7 @@ const X3DNormalNode_default_ = X3DNormalNode;
 ;
 
 /* harmony default export */ const Rendering_X3DNormalNode = (x_ite_Namespace .add ("X3DNormalNode", X3DNormalNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Normal.js
+;// ./src/x_ite/Components/Rendering/Normal.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79259,7 +79411,7 @@ const Normal_default_ = Normal;
 ;
 
 /* harmony default export */ const Rendering_Normal = (x_ite_Namespace .add ("Normal", Normal_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DCoordinateNode.js
+;// ./src/x_ite/Components/Rendering/X3DCoordinateNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79448,7 +79600,7 @@ const X3DCoordinateNode_default_ = X3DCoordinateNode;
 ;
 
 /* harmony default export */ const Rendering_X3DCoordinateNode = (x_ite_Namespace .add ("X3DCoordinateNode", X3DCoordinateNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Coordinate.js
+;// ./src/x_ite/Components/Rendering/Coordinate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79531,7 +79683,7 @@ const Coordinate_default_ = Coordinate;
 ;
 
 /* harmony default export */ const Rendering_Coordinate = (x_ite_Namespace .add ("Coordinate", Coordinate_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DTextureCoordinateNode.js
+;// ./src/x_ite/Components/Texturing/X3DTextureCoordinateNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79598,7 +79750,7 @@ const X3DTextureCoordinateNode_default_ = X3DTextureCoordinateNode;
 ;
 
 /* harmony default export */ const Texturing_X3DTextureCoordinateNode = (x_ite_Namespace .add ("X3DTextureCoordinateNode", X3DTextureCoordinateNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MultiTextureCoordinate.js
+;// ./src/x_ite/Components/Texturing/MultiTextureCoordinate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79781,7 +79933,7 @@ const MultiTextureCoordinate_default_ = MultiTextureCoordinate;
 ;
 
 /* harmony default export */ const Texturing_MultiTextureCoordinate = (x_ite_Namespace .add ("MultiTextureCoordinate", MultiTextureCoordinate_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DSingleTextureCoordinateNode.js
+;// ./src/x_ite/Components/Texturing/X3DSingleTextureCoordinateNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79872,7 +80024,7 @@ const X3DSingleTextureCoordinateNode_default_ = X3DSingleTextureCoordinateNode;
 ;
 
 /* harmony default export */ const Texturing_X3DSingleTextureCoordinateNode = (x_ite_Namespace .add ("X3DSingleTextureCoordinateNode", X3DSingleTextureCoordinateNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/TextureCoordinate.js
+;// ./src/x_ite/Components/Texturing/TextureCoordinate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80028,7 +80180,7 @@ const TextureCoordinate_default_ = TextureCoordinate;
 ;
 
 /* harmony default export */ const Texturing_TextureCoordinate = (x_ite_Namespace .add ("TextureCoordinate", TextureCoordinate_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType.js
+;// ./src/x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80098,7 +80250,7 @@ const TextureCoordinateGeneratorModeType_default_ = ModeType;
 ;
 
 /* harmony default export */ const TextureCoordinateGeneratorModeType = (x_ite_Namespace .add ("TextureCoordinateGeneratorModeType", TextureCoordinateGeneratorModeType_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/TextureCoordinateGenerator.js
+;// ./src/x_ite/Components/Texturing/TextureCoordinateGenerator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80243,7 +80395,7 @@ const TextureCoordinateGenerator_default_ = TextureCoordinateGenerator;
 ;
 
 /* harmony default export */ const Texturing_TextureCoordinateGenerator = (x_ite_Namespace .add ("TextureCoordinateGenerator", TextureCoordinateGenerator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/StaticGroup.js
+;// ./src/x_ite/Components/Grouping/StaticGroup.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81114,7 +81266,7 @@ const StaticGroup_default_ = StaticGroup;
 ;
 
 /* harmony default export */ const Grouping_StaticGroup = (x_ite_Namespace .add ("StaticGroup", StaticGroup_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/Switch.js
+;// ./src/x_ite/Components/Grouping/Switch.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81361,7 +81513,7 @@ const Switch_default_ = Switch;
 ;
 
 /* harmony default export */ const Grouping_Switch = (x_ite_Namespace .add ("Switch", Switch_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/GroupingComponent.js
+;// ./src/x_ite/Components/GroupingComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81438,7 +81590,7 @@ const GroupingComponent_default_ = {
 ;
 
 /* harmony default export */ const GroupingComponent = (x_ite_Namespace .add ("GroupingComponent", GroupingComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/ColorInterpolator.js
+;// ./src/x_ite/Components/Interpolation/ColorInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81556,7 +81708,7 @@ const ColorInterpolator_default_ = ColorInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_ColorInterpolator = (x_ite_Namespace .add ("ColorInterpolator", ColorInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/CoordinateInterpolator.js
+;// ./src/x_ite/Components/Interpolation/CoordinateInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81674,7 +81826,7 @@ const CoordinateInterpolator_default_ = CoordinateInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_CoordinateInterpolator = (x_ite_Namespace .add ("CoordinateInterpolator", CoordinateInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/CoordinateInterpolator2D.js
+;// ./src/x_ite/Components/Interpolation/CoordinateInterpolator2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81789,7 +81941,7 @@ const CoordinateInterpolator2D_default_ = CoordinateInterpolator2D;
 ;
 
 /* harmony default export */ const Interpolation_CoordinateInterpolator2D = (x_ite_Namespace .add ("CoordinateInterpolator2D", CoordinateInterpolator2D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/NormalInterpolator.js
+;// ./src/x_ite/Components/Interpolation/NormalInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81933,7 +82085,7 @@ const NormalInterpolator_default_ = NormalInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_NormalInterpolator = (x_ite_Namespace .add ("NormalInterpolator", NormalInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/PositionInterpolator2D.js
+;// ./src/x_ite/Components/Interpolation/PositionInterpolator2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82044,7 +82196,7 @@ const PositionInterpolator2D_default_ = PositionInterpolator2D;
 ;
 
 /* harmony default export */ const Interpolation_PositionInterpolator2D = (x_ite_Namespace .add ("PositionInterpolator2D", PositionInterpolator2D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator.js
+;// ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82234,7 +82386,7 @@ const CatmullRomSplineInterpolator_default_ = CatmullRomSplineInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_CatmullRomSplineInterpolator = (x_ite_Namespace .add ("CatmullRomSplineInterpolator", CatmullRomSplineInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate.js
+;// ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82345,7 +82497,7 @@ const CatmullRomSplineInterpolatorTemplate_default_ = CatmullRomSplineInterpolat
 ;
 
 /* harmony default export */ const Interpolation_CatmullRomSplineInterpolatorTemplate = (x_ite_Namespace .add ("CatmullRomSplineInterpolatorTemplate", CatmullRomSplineInterpolatorTemplate_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator3.js
+;// ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82402,7 +82554,7 @@ const CatmullRomSplineInterpolator3_default_ = CatmullRomSplineInterpolator3;
 ;
 
 /* harmony default export */ const Interpolation_CatmullRomSplineInterpolator3 = (x_ite_Namespace .add ("CatmullRomSplineInterpolator3", CatmullRomSplineInterpolator3_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/SplinePositionInterpolator.js
+;// ./src/x_ite/Components/Interpolation/SplinePositionInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82535,7 +82687,7 @@ const SplinePositionInterpolator_default_ = SplinePositionInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_SplinePositionInterpolator = (x_ite_Namespace .add ("SplinePositionInterpolator", SplinePositionInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator2.js
+;// ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator2.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82592,7 +82744,7 @@ const CatmullRomSplineInterpolator2_default_ = CatmullRomSplineInterpolator2;
 ;
 
 /* harmony default export */ const Interpolation_CatmullRomSplineInterpolator2 = (x_ite_Namespace .add ("CatmullRomSplineInterpolator2", CatmullRomSplineInterpolator2_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/SplinePositionInterpolator2D.js
+;// ./src/x_ite/Components/Interpolation/SplinePositionInterpolator2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82725,7 +82877,7 @@ const SplinePositionInterpolator2D_default_ = SplinePositionInterpolator2D;
 ;
 
 /* harmony default export */ const Interpolation_SplinePositionInterpolator2D = (x_ite_Namespace .add ("SplinePositionInterpolator2D", SplinePositionInterpolator2D_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator1.js
+;// ./src/x_ite/Browser/Interpolation/CatmullRomSplineInterpolator1.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82816,7 +82968,7 @@ const CatmullRomSplineInterpolator1_default_ = CatmullRomSplineInterpolator1;
 ;
 
 /* harmony default export */ const Interpolation_CatmullRomSplineInterpolator1 = (x_ite_Namespace .add ("CatmullRomSplineInterpolator1", CatmullRomSplineInterpolator1_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/SplineScalarInterpolator.js
+;// ./src/x_ite/Components/Interpolation/SplineScalarInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82949,7 +83101,7 @@ const SplineScalarInterpolator_default_ = SplineScalarInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_SplineScalarInterpolator = (x_ite_Namespace .add ("SplineScalarInterpolator", SplineScalarInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Interpolation/SquatInterpolator.js
+;// ./src/x_ite/Browser/Interpolation/SquatInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -83065,7 +83217,7 @@ const SquatInterpolator_default_ = SquatInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_SquatInterpolator = (x_ite_Namespace .add ("SquatInterpolator", SquatInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/SquadOrientationInterpolator.js
+;// ./src/x_ite/Components/Interpolation/SquadOrientationInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -83188,7 +83340,7 @@ const SquadOrientationInterpolator_default_ = SquadOrientationInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_SquadOrientationInterpolator = (x_ite_Namespace .add ("SquadOrientationInterpolator", SquadOrientationInterpolator_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/InterpolationComponent.js
+;// ./src/x_ite/Components/InterpolationComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -83277,7 +83429,7 @@ const InterpolationComponent_default_ = {
 ;
 
 /* harmony default export */ const InterpolationComponent = (x_ite_Namespace .add ("InterpolationComponent", InterpolationComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layering/X3DViewportNode.js
+;// ./src/x_ite/Components/Layering/X3DViewportNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -83344,7 +83496,7 @@ const X3DViewportNode_default_ = X3DViewportNode;
 ;
 
 /* harmony default export */ const Layering_X3DViewportNode = (x_ite_Namespace .add ("X3DViewportNode", X3DViewportNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layering/Viewport.js
+;// ./src/x_ite/Components/Layering/Viewport.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -83510,7 +83662,7 @@ const Viewport_default_ = Viewport;
 ;
 
 /* harmony default export */ const Layering_Viewport = (x_ite_Namespace .add ("Viewport", Viewport_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/LayeringComponent.js
+;// ./src/x_ite/Components/LayeringComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -83581,7 +83733,7 @@ const LayeringComponent_default_ = {
 ;
 
 /* harmony default export */ const LayeringComponent = (x_ite_Namespace .add ("LayeringComponent", LayeringComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Lighting/X3DLightNode.js
+;// ./src/x_ite/Components/Lighting/X3DLightNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -83809,7 +83961,7 @@ const X3DLightNode_default_ = X3DLightNode;
 ;
 
 /* harmony default export */ const Lighting_X3DLightNode = (x_ite_Namespace .add ("X3DLightNode", X3DLightNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Lighting/DirectionalLight.js
+;// ./src/x_ite/Components/Lighting/DirectionalLight.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -84089,7 +84241,7 @@ const DirectionalLight_default_ = DirectionalLight;
 ;
 
 /* harmony default export */ const Lighting_DirectionalLight = (x_ite_Namespace .add ("DirectionalLight", DirectionalLight_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Lighting/EnvironmentLight.js
+;// ./src/x_ite/Components/Lighting/EnvironmentLight.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -84336,7 +84488,7 @@ const EnvironmentLight_default_ = EnvironmentLight;
 ;
 
 /* harmony default export */ const Lighting_EnvironmentLight = (x_ite_Namespace .add ("EnvironmentLight", EnvironmentLight_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Lighting/PointLight.js
+;// ./src/x_ite/Components/Lighting/PointLight.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -84664,7 +84816,7 @@ const PointLight_default_ = PointLight;
 ;
 
 /* harmony default export */ const Lighting_PointLight = (x_ite_Namespace .add ("PointLight", PointLight_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Lighting/SpotLight.js
+;// ./src/x_ite/Components/Lighting/SpotLight.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -85018,7 +85170,7 @@ const SpotLight_default_ = SpotLight;
 ;
 
 /* harmony default export */ const Lighting_SpotLight = (x_ite_Namespace .add ("SpotLight", SpotLight_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/LightingComponent.js
+;// ./src/x_ite/Components/LightingComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -85089,7 +85241,7 @@ const LightingComponent_default_ = {
 ;
 
 /* harmony default export */ const LightingComponent = (x_ite_Namespace .add ("LightingComponent", LightingComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/Billboard.js
+;// ./src/x_ite/Components/Navigation/Billboard.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -85263,7 +85415,7 @@ const Billboard_default_ = Billboard;
 ;
 
 /* harmony default export */ const Navigation_Billboard = (x_ite_Namespace .add ("Billboard", Billboard_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/Collision.js
+;// ./src/x_ite/Components/Navigation/Collision.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -85436,7 +85588,7 @@ const Collision_default_ = Collision;
 ;
 
 /* harmony default export */ const Navigation_Collision = (x_ite_Namespace .add ("Collision", Collision_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/LOD.js
+;// ./src/x_ite/Components/Navigation/LOD.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -85763,7 +85915,7 @@ const LOD_default_ = LOD;
 ;
 
 /* harmony default export */ const Navigation_LOD = (x_ite_Namespace .add ("LOD", LOD_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/OrthoViewpoint.js
+;// ./src/x_ite/Components/Navigation/OrthoViewpoint.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -86127,7 +86279,7 @@ const OrthoViewpoint_default_ = OrthoViewpoint;
 ;
 
 /* harmony default export */ const Navigation_OrthoViewpoint = (x_ite_Namespace .add ("OrthoViewpoint", OrthoViewpoint_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/ViewpointGroup.js
+;// ./src/x_ite/Components/Navigation/ViewpointGroup.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -86319,7 +86471,7 @@ const ViewpointGroup_default_ = ViewpointGroup;
 ;
 
 /* harmony default export */ const Navigation_ViewpointGroup = (x_ite_Namespace .add ("ViewpointGroup", ViewpointGroup_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NavigationComponent.js
+;// ./src/x_ite/Components/NavigationComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -86396,7 +86548,7 @@ const NavigationComponent_default_ = {
 ;
 
 /* harmony default export */ const NavigationComponent = (x_ite_Namespace .add ("NavigationComponent", NavigationComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer.js
+;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -86485,7 +86637,7 @@ const PointingDeviceSensorContainer_default_ = PointingDeviceSensorContainer;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_PointingDeviceSensorContainer = (x_ite_Namespace .add ("PointingDeviceSensorContainer", PointingDeviceSensorContainer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode.js
+;// ./src/x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -86610,7 +86762,7 @@ const X3DPointingDeviceSensorNode_default_ = X3DPointingDeviceSensorNode;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorNode = (x_ite_Namespace .add ("X3DPointingDeviceSensorNode", X3DPointingDeviceSensorNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode.js
+;// ./src/x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -86709,7 +86861,7 @@ const X3DTouchSensorNode_default_ = X3DTouchSensorNode;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_X3DTouchSensorNode = (x_ite_Namespace .add ("X3DTouchSensorNode", X3DTouchSensorNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/PointingDeviceSensor/TouchSensor.js
+;// ./src/x_ite/Components/PointingDeviceSensor/TouchSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -86799,7 +86951,7 @@ const TouchSensor_default_ = TouchSensor;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_TouchSensor = (x_ite_Namespace .add ("TouchSensor", TouchSensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Networking/Anchor.js
+;// ./src/x_ite/Components/Networking/Anchor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87005,7 +87157,7 @@ const Anchor_default_ = Anchor;
 ;
 
 /* harmony default export */ const Networking_Anchor = (x_ite_Namespace .add ("Anchor", Anchor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Networking/Inline.js
+;// ./src/x_ite/Components/Networking/Inline.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87306,7 +87458,7 @@ const Inline_default_ = Inline;
 ;
 
 /* harmony default export */ const Networking_Inline = (x_ite_Namespace .add ("Inline", Inline_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Networking/X3DNetworkSensorNode.js
+;// ./src/x_ite/Components/Networking/X3DNetworkSensorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87373,7 +87525,7 @@ const X3DNetworkSensorNode_default_ = X3DNetworkSensorNode;
 ;
 
 /* harmony default export */ const Networking_X3DNetworkSensorNode = (x_ite_Namespace .add ("X3DNetworkSensorNode", X3DNetworkSensorNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Networking/LoadSensor.js
+;// ./src/x_ite/Components/Networking/LoadSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87629,7 +87781,7 @@ const LoadSensor_default_ = LoadSensor;
 ;
 
 /* harmony default export */ const Networking_LoadSensor = (x_ite_Namespace .add ("LoadSensor", LoadSensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NetworkingComponent.js
+;// ./src/x_ite/Components/NetworkingComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87700,7 +87852,7 @@ const NetworkingComponent_default_ = {
 ;
 
 /* harmony default export */ const NetworkingComponent = (x_ite_Namespace .add ("NetworkingComponent", NetworkingComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/PointingDeviceSensor/X3DDragSensorNode.js
+;// ./src/x_ite/Components/PointingDeviceSensor/X3DDragSensorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87769,7 +87921,7 @@ const X3DDragSensorNode_default_ = X3DDragSensorNode;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_X3DDragSensorNode = (x_ite_Namespace .add ("X3DDragSensorNode", X3DDragSensorNode_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Cylinder3.js
+;// ./src/standard/Math/Geometry/Cylinder3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87932,7 +88084,7 @@ const Cylinder3_default_ = Cylinder3;
 ;
 
 /* harmony default export */ const Geometry_Cylinder3 = (x_ite_Namespace .add ("Cylinder3", Cylinder3_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/PointingDeviceSensor/CylinderSensor.js
+;// ./src/x_ite/Components/PointingDeviceSensor/CylinderSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -88240,7 +88392,7 @@ const CylinderSensor_default_ = CylinderSensor;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_CylinderSensor = (x_ite_Namespace .add ("CylinderSensor", CylinderSensor_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Line2.js
+;// ./src/standard/Math/Geometry/Line2.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -88399,7 +88551,7 @@ const Line2_default_ = Line2;
 ;
 
 /* harmony default export */ const Geometry_Line2 = (x_ite_Namespace .add ("Line2", Line2_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/PointingDeviceSensor/PlaneSensor.js
+;// ./src/x_ite/Components/PointingDeviceSensor/PlaneSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -88706,7 +88858,7 @@ const PlaneSensor_default_ = PlaneSensor;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_PlaneSensor = (x_ite_Namespace .add ("PlaneSensor", PlaneSensor_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Sphere3.js
+;// ./src/standard/Math/Geometry/Sphere3.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -88901,7 +89053,7 @@ const Sphere3_default_ = Sphere3;
 ;
 
 /* harmony default export */ const Geometry_Sphere3 = (x_ite_Namespace .add ("Sphere3", Sphere3_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/PointingDeviceSensor/SphereSensor.js
+;// ./src/x_ite/Components/PointingDeviceSensor/SphereSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89106,7 +89258,7 @@ const SphereSensor_default_ = SphereSensor;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_SphereSensor = (x_ite_Namespace .add ("SphereSensor", SphereSensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/PointingDeviceSensorComponent.js
+;// ./src/x_ite/Components/PointingDeviceSensorComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89181,7 +89333,7 @@ const PointingDeviceSensorComponent_default_ = {
 ;
 
 /* harmony default export */ const PointingDeviceSensorComponent = (x_ite_Namespace .add ("PointingDeviceSensorComponent", PointingDeviceSensorComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/ClipPlane.js
+;// ./src/x_ite/Components/Rendering/ClipPlane.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89348,7 +89500,7 @@ const ClipPlane_default_ = ClipPlane;
 ;
 
 /* harmony default export */ const Rendering_ClipPlane = (x_ite_Namespace .add ("ClipPlane", ClipPlane_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/CoordinateDouble.js
+;// ./src/x_ite/Components/Rendering/CoordinateDouble.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89429,7 +89581,7 @@ const CoordinateDouble_default_ = CoordinateDouble;
 ;
 
 /* harmony default export */ const Rendering_CoordinateDouble = (x_ite_Namespace .add ("CoordinateDouble", CoordinateDouble_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/IndexedLineSet.js
+;// ./src/x_ite/Components/Rendering/IndexedLineSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89731,7 +89883,7 @@ const IndexedLineSet_default_ = IndexedLineSet;
 ;
 
 /* harmony default export */ const Rendering_IndexedLineSet = (x_ite_Namespace .add ("IndexedLineSet", IndexedLineSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/IndexedTriangleFanSet.js
+;// ./src/x_ite/Components/Rendering/IndexedTriangleFanSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89891,7 +90043,7 @@ const IndexedTriangleFanSet_default_ = IndexedTriangleFanSet;
 ;
 
 /* harmony default export */ const Rendering_IndexedTriangleFanSet = (x_ite_Namespace .add ("IndexedTriangleFanSet", IndexedTriangleFanSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/IndexedTriangleSet.js
+;// ./src/x_ite/Components/Rendering/IndexedTriangleSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90008,7 +90160,7 @@ const IndexedTriangleSet_default_ = IndexedTriangleSet;
 ;
 
 /* harmony default export */ const Rendering_IndexedTriangleSet = (x_ite_Namespace .add ("IndexedTriangleSet", IndexedTriangleSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/IndexedTriangleStripSet.js
+;// ./src/x_ite/Components/Rendering/IndexedTriangleStripSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90176,7 +90328,7 @@ const IndexedTriangleStripSet_default_ = IndexedTriangleStripSet;
 ;
 
 /* harmony default export */ const Rendering_IndexedTriangleStripSet = (x_ite_Namespace .add ("IndexedTriangleStripSet", IndexedTriangleStripSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/TriangleFanSet.js
+;// ./src/x_ite/Components/Rendering/TriangleFanSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90318,7 +90470,7 @@ const TriangleFanSet_default_ = TriangleFanSet;
 ;
 
 /* harmony default export */ const Rendering_TriangleFanSet = (x_ite_Namespace .add ("TriangleFanSet", TriangleFanSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/TriangleStripSet.js
+;// ./src/x_ite/Components/Rendering/TriangleStripSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90464,7 +90616,7 @@ const TriangleStripSet_default_ = TriangleStripSet;
 ;
 
 /* harmony default export */ const Rendering_TriangleStripSet = (x_ite_Namespace .add ("TriangleStripSet", TriangleStripSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/RenderingComponent.js
+;// ./src/x_ite/Components/RenderingComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90569,7 +90721,7 @@ const RenderingComponent_default_ = {
 ;
 
 /* harmony default export */ const RenderingComponent = (x_ite_Namespace .add ("RenderingComponent", RenderingComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DShaderNode.js
+;// ./src/x_ite/Components/Shaders/X3DShaderNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90666,7 +90818,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 ;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (x_ite_Namespace .add ("X3DShaderNode", X3DShaderNode_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/MaterialTextures.js
+;// ./src/assets/shaders/MaterialTextures.js
 const MaterialTextures_default_ = {
    names: [
       "x3d_AmbientTexture",
@@ -90788,8 +90940,8 @@ mediump samplerCube textureCube;
 ;
 
 /* harmony default export */ const MaterialTextures = (x_ite_Namespace .add ("MaterialTextures", MaterialTextures_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(842);
+;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -92247,7 +92399,7 @@ const X3DProgrammableShaderObject_default_ = X3DProgrammableShaderObject;
 ;
 
 /* harmony default export */ const Shaders_X3DProgrammableShaderObject = (x_ite_Namespace .add ("X3DProgrammableShaderObject", X3DProgrammableShaderObject_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ComposedShader.js
+;// ./src/x_ite/Components/Shaders/ComposedShader.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -92462,7 +92614,7 @@ const ComposedShader_default_ = ComposedShader;
 ;
 
 /* harmony default export */ const Shaders_ComposedShader = (x_ite_Namespace .add ("ComposedShader", ComposedShader_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DVertexAttributeNode.js
+;// ./src/x_ite/Components/Shaders/X3DVertexAttributeNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -92544,7 +92696,7 @@ const X3DVertexAttributeNode_default_ = X3DVertexAttributeNode;
 ;
 
 /* harmony default export */ const Shaders_X3DVertexAttributeNode = (x_ite_Namespace .add ("X3DVertexAttributeNode", X3DVertexAttributeNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/FloatVertexAttribute.js
+;// ./src/x_ite/Components/Shaders/FloatVertexAttribute.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -92681,7 +92833,7 @@ const FloatVertexAttribute_default_ = FloatVertexAttribute;
 ;
 
 /* harmony default export */ const Shaders_FloatVertexAttribute = (x_ite_Namespace .add ("FloatVertexAttribute", FloatVertexAttribute_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/Matrix3VertexAttribute.js
+;// ./src/x_ite/Components/Shaders/Matrix3VertexAttribute.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -92809,7 +92961,7 @@ const Matrix3VertexAttribute_default_ = Matrix3VertexAttribute;
 ;
 
 /* harmony default export */ const Shaders_Matrix3VertexAttribute = (x_ite_Namespace .add ("Matrix3VertexAttribute", Matrix3VertexAttribute_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/Matrix4VertexAttribute.js
+;// ./src/x_ite/Components/Shaders/Matrix4VertexAttribute.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -92936,7 +93088,7 @@ const Matrix4VertexAttribute_default_ = Matrix4VertexAttribute;
 ;
 
 /* harmony default export */ const Shaders_Matrix4VertexAttribute = (x_ite_Namespace .add ("Matrix4VertexAttribute", Matrix4VertexAttribute_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/PackagedShader.js
+;// ./src/x_ite/Components/Shaders/PackagedShader.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -93055,7 +93207,7 @@ const PackagedShader_default_ = PackagedShader;
 ;
 
 /* harmony default export */ const Shaders_PackagedShader = (x_ite_Namespace .add ("PackagedShader", PackagedShader_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ProgramShader.js
+;// ./src/x_ite/Components/Shaders/ProgramShader.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -93144,7 +93296,7 @@ const ProgramShader_default_ = ProgramShader;
 ;
 
 /* harmony default export */ const Shaders_ProgramShader = (x_ite_Namespace .add ("ProgramShader", ProgramShader_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/ModeType.js
+;// ./src/x_ite/Browser/Texturing/ModeType.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -93222,7 +93374,7 @@ const ModeType_default_ = ModeType_ModeType;
 ;
 
 /* harmony default export */ const Texturing_ModeType = (x_ite_Namespace .add ("ModeType", ModeType_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/SourceType.js
+;// ./src/x_ite/Browser/Texturing/SourceType.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -93284,7 +93436,7 @@ const SourceType_default_ = SourceType;
 ;
 
 /* harmony default export */ const Texturing_SourceType = (x_ite_Namespace .add ("SourceType", SourceType_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/FunctionType.js
+;// ./src/x_ite/Browser/Texturing/FunctionType.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -93345,13 +93497,13 @@ const FunctionType_default_ = FunctionType;
 ;
 
 /* harmony default export */ const Texturing_FunctionType = (x_ite_Namespace .add ("FunctionType", FunctionType_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/RenderingConfiguration.js
+;// ./src/x_ite/Browser/Rendering/RenderingConfiguration.js
 // The numbers must remain in single digits, otherwise the number base must
 // be increased in the number output for the material shader key.
 
 const maxClipPlanes = 6;
 
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/TexturingConfiguration.js
+;// ./src/x_ite/Browser/Texturing/TexturingConfiguration.js
 // The numbers must remain in single digits, otherwise the number base must
 // be increased in the number output for the material shader key.
 
@@ -93359,7 +93511,7 @@ const maxTextureTransforms = 4;
 const maxTexCoords         = 4;
 const maxTextures          = 4;
 
-;// CONCATENATED MODULE: ./src/assets/shaders/Types.glsl.js
+;// ./src/assets/shaders/Types.glsl.js
 
 
 
@@ -93488,7 +93640,7 @@ struct x3d_TextureCoordinateGeneratorParameters{mediump int mode;mediump float p
 ;
 
 /* harmony default export */ const Types_glsl = (x_ite_Namespace .add ("Types.glsl", Types_glsl_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Shaders/ShaderSource.js
+;// ./src/x_ite/Browser/Shaders/ShaderSource.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -93611,7 +93763,7 @@ const ShaderSource_default_ = ShaderSource;
 ;
 
 /* harmony default export */ const Shaders_ShaderSource = (x_ite_Namespace .add ("ShaderSource", ShaderSource_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Fragment1.glsl.js
+;// ./src/assets/shaders/webgl1/common/Fragment1.glsl.js
 
 
 const Fragment1_glsl_default_ = /* glsl */ `
@@ -93699,7 +93851,7 @@ gl_FragDepthEXT=log2(depth)*x3d_LogarithmicFarFactor1_2;
 ;
 
 /* harmony default export */ const Fragment1_glsl = (x_ite_Namespace .add ("Fragment1.glsl", Fragment1_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Texture1.glsl.js
+;// ./src/assets/shaders/webgl1/common/Texture1.glsl.js
 
 
 const Texture1_glsl_default_ = /* glsl */ `
@@ -93857,7 +94009,7 @@ currentColor*=mix(vec3(1.0),T.rgb*x3d_TextureProjectorColor[i],T.a*x3d_TexturePr
 ;
 
 /* harmony default export */ const Texture1_glsl = (x_ite_Namespace .add ("Texture1.glsl", Texture1_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Vertex1.glsl.js
+;// ./src/assets/shaders/webgl1/common/Vertex1.glsl.js
 
 
 const Vertex1_glsl_default_ = /* glsl */ `
@@ -93951,7 +94103,7 @@ depth=1.0+gl_Position.w;
 ;
 
 /* harmony default export */ const Vertex1_glsl = (x_ite_Namespace .add ("Vertex1.glsl", Vertex1_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/ClipPlanes2.glsl.js
+;// ./src/assets/shaders/webgl2/common/ClipPlanes2.glsl.js
 const ClipPlanes2_glsl_default_ = /* glsl */ `
 #if defined(X3D_CLIP_PLANES)
 uniform vec4 x3d_ClipPlane[X3D_NUM_CLIP_PLANES];void clip(){for(int i=0;i<X3D_NUM_CLIP_PLANES;++i){if(dot(vertex,x3d_ClipPlane[i].xyz)-x3d_ClipPlane[i].w<0.0)discard;}}
@@ -93960,7 +94112,7 @@ uniform vec4 x3d_ClipPlane[X3D_NUM_CLIP_PLANES];void clip(){for(int i=0;i<X3D_NU
 ;
 
 /* harmony default export */ const ClipPlanes2_glsl = (x_ite_Namespace .add ("ClipPlanes2.glsl", ClipPlanes2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Fog2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Fog2.glsl.js
 const Fog2_glsl_default_ = /* glsl */ `
 #if defined(X3D_FOG)
 uniform x3d_FogParameters x3d_Fog;float getFogInterpolant(){
@@ -93980,7 +94132,7 @@ return exp(-dV/max(0.001,visibilityRange-dV));
 ;
 
 /* harmony default export */ const Fog2_glsl = (x_ite_Namespace .add ("Fog2.glsl", Fog2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Fragment2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Fragment2.glsl.js
 
 
 const Fragment2_glsl_default_ = /* glsl */ `
@@ -94088,7 +94240,7 @@ gl_FragDepth=log2(depth)*x3d_LogarithmicFarFactor1_2;
 ;
 
 /* harmony default export */ const Fragment2_glsl = (x_ite_Namespace .add ("Fragment2.glsl", Fragment2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Hatch2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Hatch2.glsl.js
 const Hatch2_glsl_default_ = /* glsl */ `
 #if(defined(X3D_GEOMETRY_2D)||defined(X3D_GEOMETRY_3D))&&defined(X3D_STYLE_PROPERTIES)
 uniform x3d_FillPropertiesParameters x3d_FillProperties;vec4 getHatchColor(vec4 color){vec4 finalColor=x3d_FillProperties.filled?color:vec4(0.0);
@@ -94107,7 +94259,7 @@ return finalColor;}
 ;
 
 /* harmony default export */ const Hatch2_glsl = (x_ite_Namespace .add ("Hatch2.glsl", Hatch2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Lighting2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Lighting2.glsl.js
 const Lighting2_glsl_default_ = /* glsl */ `
 #if defined(X3D_LIGHTING)
 float getAttenuation(const in vec3 attenuation,const in float distanceToLight){return 1.0/max(dot(attenuation,vec3(1.0,distanceToLight,distanceToLight*distanceToLight)),1.0);}float getSpotFactor(const in vec3 pointToLight,const in vec3 direction,const in float cutOffAngle,const in float beamWidth){float spotAngle=acos(clamp(dot(-pointToLight,direction),-1.0,1.0));if(spotAngle>=cutOffAngle)return 0.0;else if(spotAngle<=beamWidth)return 1.0;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
@@ -94116,13 +94268,13 @@ float getAttenuation(const in vec3 attenuation,const in float distanceToLight){r
 ;
 
 /* harmony default export */ const Lighting2_glsl = (x_ite_Namespace .add ("Lighting2.glsl", Lighting2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Line22.glsl.js
+;// ./src/assets/shaders/webgl2/common/Line22.glsl.js
 const Line22_glsl_default_ = /* glsl */ `
 struct Line2{vec2 point;vec2 direction;};Line2 line2(const in vec2 point1,const in vec2 point2){return Line2(point1,normalize(point2-point1));}vec2 closest_point(const in Line2 line,const in vec2 point){vec2 r=point-line.point;float d=dot(r,line.direction);return line.direction*d+line.point;}`
 ;
 
 /* harmony default export */ const Line22_glsl = (x_ite_Namespace .add ("Line22.glsl", Line22_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Material2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Material2.glsl.js
 const Material2_glsl_default_ = /* glsl */ `
 uniform x3d_MaterialParameters x3d_Material;
 #if defined(X3D_LIGHTING)
@@ -94138,7 +94290,7 @@ finalColor+=attenuationSpotFactor*light.color*(ambientTerm+diffuseSpecularTerm);
 ;
 
 /* harmony default export */ const Material2_glsl = (x_ite_Namespace .add ("Material2.glsl", Material2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Normal2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Normal2.glsl.js
 const Normal2_glsl_default_ = /* glsl */ `
 struct NormalInfo{vec3 ng;vec3 ntex;vec3 n;vec3 t;vec3 b;};
 #if defined(X3D_NORMAL_TEXTURE)
@@ -94187,7 +94339,7 @@ info.t=t;info.b=b;return info;}vec3 getNormalVector(const in float normalScale){
 ;
 
 /* harmony default export */ const Normal2_glsl = (x_ite_Namespace .add ("Normal2.glsl", Normal2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Instancing2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Instancing2.glsl.js
 const Instancing2_glsl_default_ = /* glsl */ `
 #if defined(X3D_INSTANCING)
 #if defined(X3D_TEX_COORD_RAMP)
@@ -94210,13 +94362,13 @@ in mat4 x3d_InstanceMatrix;vec4 getInstanceVertex(const in vec4 vertex){return x
 ;
 
 /* harmony default export */ const Instancing2_glsl = (x_ite_Namespace .add ("Instancing2.glsl", Instancing2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Perlin2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Perlin2.glsl.js
 const Perlin2_glsl_default_ = /* glsl */ `
 float rand(const in vec2 co){return fract(sin(dot(co.xy,vec2(12.9898,78.233)))*43758.5453);}float rand(const in vec2 co,const in float l){return rand(vec2(rand(co),l));}float rand(const in vec2 co,const in float l,const in float t){return rand(vec2(rand(co,l),t));}float perlin(const in vec2 p,const in float dim,const in float time){const float M_PI=3.14159265358979323846;vec2 pos=floor(p*dim);vec2 posx=pos+vec2(1.0,0.0);vec2 posy=pos+vec2(0.0,1.0);vec2 posxy=pos+vec2(1.0);float c=rand(pos,dim,time);float cx=rand(posx,dim,time);float cy=rand(posy,dim,time);float cxy=rand(posxy,dim,time);vec2 d=fract(p*dim);d=-0.5*cos(d*M_PI)+0.5;float ccx=mix(c,cx,d.x);float cycxy=mix(cy,cxy,d.x);float center=mix(ccx,cycxy,d.y);return center*2.0-1.0;}vec3 perlin(const in vec3 p){return vec3(perlin(p.xy,1.0,0.0),perlin(p.yz,1.0,0.0),perlin(p.zx,1.0,0.0));}`
 ;
 
 /* harmony default export */ const Perlin2_glsl = (x_ite_Namespace .add ("Perlin2.glsl", Perlin2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Point2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Point2.glsl.js
 
 
 const Point2_glsl_default_ = /* glsl */ `
@@ -94250,7 +94402,7 @@ vec4 getPointColor(in vec4 color){if(pointSize>1.0)color.a*=clamp(pointSize*(0.5
 ;
 
 /* harmony default export */ const Point2_glsl = (x_ite_Namespace .add ("Point2.glsl", Point2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/PointSize2.glsl.js
+;// ./src/assets/shaders/webgl2/common/PointSize2.glsl.js
 const PointSize2_glsl_default_ = /* glsl */ `
 #if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
@@ -94271,7 +94423,7 @@ return pointSize+1.0-step(pointSize,1.0);
 ;
 
 /* harmony default export */ const PointSize2_glsl = (x_ite_Namespace .add ("PointSize2.glsl", PointSize2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Shadow2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Shadow2.glsl.js
 const maxLights = 8;
 
 const Shadow2_glsl_default_ = /* glsl */ `
@@ -94316,7 +94468,7 @@ vec4 shadowCoord=light.shadowMatrix*vec4(vertex,1.0);shadowCoord.z-=light.shadow
 ;
 
 /* harmony default export */ const Shadow2_glsl = (x_ite_Namespace .add ("Shadow2.glsl", Shadow2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Skin2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Skin2.glsl.js
 const Skin2_glsl_default_ = /* glsl */ `
 #if defined(X3D_SKINNING)
 in float x3d_CoordIndex;uniform sampler2D x3d_JointsTexture;uniform sampler2D x3d_DisplacementsTexture;uniform sampler2D x3d_JointMatricesTexture;mat4 getJointMatrix(const in int joint){vec4 a=texelFetch(x3d_JointMatricesTexture,joint*8,0);vec4 b=texelFetch(x3d_JointMatricesTexture,joint*8+1,0);vec4 c=texelFetch(x3d_JointMatricesTexture,joint*8+2,0);vec4 d=texelFetch(x3d_JointMatricesTexture,joint*8+3,0);return mat4(a,b,c,d);}mat3 getDisplacementJointMatrix(const in int joint){mat4 m=getJointMatrix(joint);return mat3(m[0].xyz,m[1].xyz,m[2].xyz);}
@@ -94361,7 +94513,7 @@ skinTangent+=(jointNormalMatrix*tangent-tangent)*weight;
 ;
 
 /* harmony default export */ const Skin2_glsl = (x_ite_Namespace .add ("Skin2.glsl", Skin2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Stipple2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Stipple2.glsl.js
 const Stipple2_glsl_default_ = /* glsl */ `
 #if defined(X3D_GEOMETRY_1D)&&defined(X3D_STYLE_PROPERTIES)
 #pragma X3D include "Line2.glsl"
@@ -94383,7 +94535,7 @@ if(x3d_LineProperties.linetype==16)return;int linetype=x3d_LineProperties.linety
 ;
 
 /* harmony default export */ const Stipple2_glsl = (x_ite_Namespace .add ("Stipple2.glsl", Stipple2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Texture2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Texture2.glsl.js
 
 
 const Texture2_glsl_default_ = /* glsl */ `
@@ -94517,7 +94669,7 @@ currentColor*=mix(vec3(1.0),T.rgb*x3d_TextureProjectorColor[i],T.a*x3d_TexturePr
 ;
 
 /* harmony default export */ const Texture2_glsl = (x_ite_Namespace .add ("Texture2.glsl", Texture2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Utils2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Utils2.glsl.js
 const Utils2_glsl_default_ = /* glsl */ `
 #if defined(X3D_SKINNING)||defined(X3D_INSTANCING)
 vec4 texelFetch(const in sampler2D _sampler,const in int index,const in int lod){int x=textureSize(_sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(_sampler,p,lod);return t;}
@@ -94526,7 +94678,7 @@ vec4 texelFetch(const in sampler2D _sampler,const in int index,const in int lod)
 ;
 
 /* harmony default export */ const Utils2_glsl = (x_ite_Namespace .add ("Utils2.glsl", Utils2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Vertex2.glsl.js
+;// ./src/assets/shaders/webgl2/common/Vertex2.glsl.js
 
 
 const Vertex2_glsl_default_ = /* glsl */ `
@@ -94643,13 +94795,13 @@ depth=1.0+gl_Position.w;
 ;
 
 /* harmony default export */ const Vertex2_glsl = (x_ite_Namespace .add ("Vertex2.glsl", Vertex2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/FullScreen1.vs.js
+;// ./src/assets/shaders/webgl1/FullScreen1.vs.js
 const FullScreen1_vs_default_ = /* glsl */ `
 precision highp float;precision highp int;precision highp sampler2D;attribute vec2 x3d_Vertex;varying vec2 texCoord;void main(){texCoord=x3d_Vertex;gl_Position=vec4(x3d_Vertex,0.0,1.0);}`
 ;
 
 /* harmony default export */ const FullScreen1_vs = (x_ite_Namespace .add ("FullScreen1.vs", FullScreen1_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Default1.vs.js
+;// ./src/assets/shaders/webgl1/Default1.vs.js
 const Default1_vs_default_ = /* glsl */ `
 precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
 #pragma X3D include "common/Vertex.glsl"
@@ -94657,7 +94809,7 @@ void main(){vertex_main();}`
 ;
 
 /* harmony default export */ const Default1_vs = (x_ite_Namespace .add ("Default1.vs", Default1_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Depth1.fs.js
+;// ./src/assets/shaders/webgl1/Depth1.fs.js
 const Depth1_fs_default_ = /* glsl */ `
 precision highp float;precision highp int;precision highp sampler2D;varying vec3 vertex;
 #pragma X3D include "common/ClipPlanes.glsl"
@@ -94675,7 +94827,7 @@ gl_FragColor=vec4(gl_FragCoord.z);}`
 ;
 
 /* harmony default export */ const Depth1_fs = (x_ite_Namespace .add ("Depth1.fs", Depth1_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Depth1.vs.js
+;// ./src/assets/shaders/webgl1/Depth1.vs.js
 const Depth1_vs_default_ = /* glsl */ `
 precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;attribute vec4 x3d_Vertex;varying vec3 vertex;
 #pragma X3D include "common/PointSize.glsl"
@@ -94689,7 +94841,7 @@ gl_Position=x3d_ProjectionMatrix*position;}`
 ;
 
 /* harmony default export */ const Depth1_vs = (x_ite_Namespace .add ("Depth1.vs", Depth1_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Gouraud1.fs.js
+;// ./src/assets/shaders/webgl1/Gouraud1.fs.js
 const Gouraud1_fs_default_ = /* glsl */ `
 precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
 #pragma X3D include "common/Fragment.glsl"
@@ -94713,7 +94865,7 @@ return finalColor;}void main(){fragment_main();}`
 ;
 
 /* harmony default export */ const Gouraud1_fs = (x_ite_Namespace .add ("Gouraud1.fs", Gouraud1_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Gouraud1.vs.js
+;// ./src/assets/shaders/webgl1/Gouraud1.vs.js
 const Gouraud1_vs_default_ = /* glsl */ `
 precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
 #pragma X3D include "common/Vertex.glsl"
@@ -94747,7 +94899,7 @@ backColor=getMaterialColor(-normal,vertex,x3d_Material);
 ;
 
 /* harmony default export */ const Gouraud1_vs = (x_ite_Namespace .add ("Gouraud1.vs", Gouraud1_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Physical1.fs.js
+;// ./src/assets/shaders/webgl1/Physical1.fs.js
 const Physical1_fs_default_ = /* glsl */ `
 #extension GL_OES_standard_derivatives:enable
 #extension GL_EXT_frag_depth:enable
@@ -94758,7 +94910,7 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 ;
 
 /* harmony default export */ const Physical1_fs = (x_ite_Namespace .add ("Physical1.fs", Physical1_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Phong1.fs.js
+;// ./src/assets/shaders/webgl1/Phong1.fs.js
 
 
 const Phong1_fs_default_ = /* glsl */ `
@@ -94830,7 +94982,7 @@ finalColor+=getEmissiveColor();return vec4(finalColor,alpha);}void main(){fragme
 ;
 
 /* harmony default export */ const Phong1_fs = (x_ite_Namespace .add ("Phong1.fs", Phong1_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Pointing1.fs.js
+;// ./src/assets/shaders/webgl1/Pointing1.fs.js
 const Pointing1_fs_default_ = /* glsl */ `
 #extension GL_EXT_draw_buffers:enable
 precision highp float;precision highp int;precision highp sampler2D;varying vec3 vertex;varying vec3 normal;
@@ -94852,7 +95004,7 @@ gl_FragData[0]=vec4(vertex,x3d_Id);gl_FragData[1]=vec4(normal,0.0);gl_FragData[2
 ;
 
 /* harmony default export */ const Pointing1_fs = (x_ite_Namespace .add ("Pointing1.fs", Pointing1_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Pointing1.vs.js
+;// ./src/assets/shaders/webgl1/Pointing1.vs.js
 const Pointing1_vs_default_ = /* glsl */ `
 precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;attribute vec4 x3d_Vertex;attribute vec3 x3d_Normal;
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
@@ -94877,7 +95029,7 @@ gl_Position=x3d_ProjectionMatrix*position;}`
 ;
 
 /* harmony default export */ const Pointing1_vs = (x_ite_Namespace .add ("Pointing1.vs", Pointing1_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Unlit1.fs.js
+;// ./src/assets/shaders/webgl1/Unlit1.fs.js
 
 
 const Unlit1_fs_default_ = /* glsl */ `
@@ -94906,13 +95058,13 @@ return finalColor;}void main(){fragment_main();}`
 ;
 
 /* harmony default export */ const Unlit1_fs = (x_ite_Namespace .add ("Unlit1.fs", Unlit1_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/FullScreen2.vs.js
+;// ./src/assets/shaders/webgl2/FullScreen2.vs.js
 const FullScreen2_vs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;in vec2 x3d_Vertex;out vec2 texCoord;void main(){texCoord=x3d_Vertex;gl_Position=vec4(x3d_Vertex,0.0,1.0);}`
 ;
 
 /* harmony default export */ const FullScreen2_vs = (x_ite_Namespace .add ("FullScreen2.vs", FullScreen2_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Default2.vs.js
+;// ./src/assets/shaders/webgl2/Default2.vs.js
 const Default2_vs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #pragma X3D include "common/Vertex.glsl"
@@ -94920,7 +95072,7 @@ void main(){vertex_main();}`
 ;
 
 /* harmony default export */ const Default2_vs = (x_ite_Namespace .add ("Default2.vs", Default2_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Depth2.fs.js
+;// ./src/assets/shaders/webgl2/Depth2.fs.js
 const Depth2_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;in vec3 vertex;out vec4 x3d_FragColor;
 #pragma X3D include "common/ClipPlanes.glsl"
@@ -94938,7 +95090,7 @@ x3d_FragColor=vec4(gl_FragCoord.z);}`
 ;
 
 /* harmony default export */ const Depth2_fs = (x_ite_Namespace .add ("Depth2.fs", Depth2_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Depth2.vs.js
+;// ./src/assets/shaders/webgl2/Depth2.vs.js
 const Depth2_vs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;out vec3 vertex;
 #pragma X3D include "common/Utils.glsl"
@@ -94955,7 +95107,7 @@ gl_Position=x3d_ProjectionMatrix*position;}`
 ;
 
 /* harmony default export */ const Depth2_vs = (x_ite_Namespace .add ("Depth2.vs", Depth2_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Gouraud2.fs.js
+;// ./src/assets/shaders/webgl2/Gouraud2.fs.js
 const Gouraud2_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #pragma X3D include "common/Fragment.glsl"
@@ -94979,7 +95131,7 @@ return finalColor;}void main(){fragment_main();}`
 ;
 
 /* harmony default export */ const Gouraud2_fs = (x_ite_Namespace .add ("Gouraud2.fs", Gouraud2_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Gouraud2.vs.js
+;// ./src/assets/shaders/webgl2/Gouraud2.vs.js
 const Gouraud2_vs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #pragma X3D include "common/Vertex.glsl"
@@ -95013,13 +95165,13 @@ backColor=getMaterialColor(-n,vertex,x3d_Material);
 ;
 
 /* harmony default export */ const Gouraud2_vs = (x_ite_Namespace .add ("Gouraud2.vs", Gouraud2_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/LineTransform2.fs.js
+;// ./src/assets/shaders/webgl2/LineTransform2.fs.js
 const LineTransform2_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;void main(){}`
 ;
 
 /* harmony default export */ const LineTransform2_fs = (x_ite_Namespace .add ("LineTransform2.fs", LineTransform2_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/LineTransform2.vs.js
+;// ./src/assets/shaders/webgl2/LineTransform2.vs.js
 const LineTransform2_vs_default_ = /* glsl */ `#version 300 es
 precision highp float;
 #if defined(X3D_PASS_0)
@@ -95057,13 +95209,13 @@ out mat3 instanceNormalMatrix0;out vec4 tangent0;out vec3 normal0;out mat3 insta
 ;
 
 /* harmony default export */ const LineTransform2_vs = (x_ite_Namespace .add ("LineTransform2.vs", LineTransform2_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/OITCompose2.fs.js
+;// ./src/assets/shaders/webgl2/OITCompose2.fs.js
 const OITCompose2_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;uniform sampler2D x3d_AccumRevealageTexture;uniform sampler2D x3d_AlphaTexture;out vec4 x3d_FragColor;void main(){ivec2 fragCoord=ivec2(gl_FragCoord.xy);vec4 accum=texelFetch(x3d_AccumRevealageTexture,fragCoord,0);if(accum.a>=1.0)discard;float alpha=texelFetch(x3d_AlphaTexture,fragCoord,0).r;float revealage=1.0-accum.a;x3d_FragColor=vec4(revealage*accum.rgb/clamp(alpha,0.001,50000.0),revealage);}`
 ;
 
 /* harmony default export */ const OITCompose2_fs = (x_ite_Namespace .add ("OITCompose2.fs", OITCompose2_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Physical2.js
+;// ./src/assets/shaders/webgl2/Physical2.js
 const Physical2_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #pragma X3D include "pbr/PBR.glsl"
@@ -95071,7 +95223,7 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 ;
 
 /* harmony default export */ const Physical2 = (x_ite_Namespace .add ("Physical2", Physical2_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Phong2.fs.js
+;// ./src/assets/shaders/webgl2/Phong2.fs.js
 
 
 const Phong2_fs_default_ = /* glsl */ `#version 300 es
@@ -95139,7 +95291,7 @@ finalColor+=getEmissiveColor();return vec4(finalColor,alpha);}void main(){fragme
 ;
 
 /* harmony default export */ const Phong2_fs = (x_ite_Namespace .add ("Phong2.fs", Phong2_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Pointing2.fs.js
+;// ./src/assets/shaders/webgl2/Pointing2.fs.js
 const Pointing2_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;in vec3 vertex;in vec3 normal;in vec4 texCoord;
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
@@ -95165,7 +95317,7 @@ x3d_FragData0=vec4(vertex,x3d_Id);x3d_FragData1=vec4(normal,0.0);x3d_FragData2=t
 ;
 
 /* harmony default export */ const Pointing2_fs = (x_ite_Namespace .add ("Pointing2.fs", Pointing2_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Pointing2.vs.js
+;// ./src/assets/shaders/webgl2/Pointing2.vs.js
 const Pointing2_vs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
 #if defined(X3D_NORMALS)
@@ -95207,7 +95359,7 @@ gl_Position=x3d_ProjectionMatrix*position;}`
 ;
 
 /* harmony default export */ const Pointing2_vs = (x_ite_Namespace .add ("Pointing2.vs", Pointing2_vs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Unlit2.fs.js
+;// ./src/assets/shaders/webgl2/Unlit2.fs.js
 
 
 const Unlit2_fs_default_ = /* glsl */ `#version 300 es
@@ -95234,7 +95386,7 @@ return finalColor;}void main(){fragment_main();}`
 ;
 
 /* harmony default export */ const Unlit2_fs = (x_ite_Namespace .add ("Unlit2.fs", Unlit2_fs_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/BRDF2.glsl.js
+;// ./src/assets/shaders/webgl2/pbr/BRDF2.glsl.js
 const BRDF2_glsl_default_ = /* glsl */ `
 const float M_PI=3.1415926535897932384626433832795;float max3(const in vec3 value){return max(max(value.x,value.y),value.z);}vec3 rgb_mix(const in vec3 base,const in vec3 layer,const in vec3 rgb_alpha){float rgb_alpha_max=max(rgb_alpha.r,max(rgb_alpha.g,rgb_alpha.b));return(1.0-rgb_alpha_max)*base+rgb_alpha*layer;}vec3 F_Schlick(const in vec3 f0,const in vec3 f90,const in float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}float F_Schlick(const in float f0,const in float f90,const in float VdotH){float x=clamp(1.0-VdotH,0.0,1.0);float x2=x*x;float x5=x*x2*x2;return f0+(f90-f0)*x5;}float F_Schlick(const in float f0,const in float VdotH){float f90=1.0;return F_Schlick(f0,f90,VdotH);}vec3 F_Schlick(const in vec3 f0,const in float f90,const in float VdotH){float x=clamp(1.0-VdotH,0.0,1.0);float x2=x*x;float x5=x*x2*x2;return f0+(f90-f0)*x5;}vec3 F_Schlick(const in vec3 f0,const in float VdotH){float f90=1.0;return F_Schlick(f0,f90,VdotH);}vec3 Schlick_to_F0(const in vec3 f,const in vec3 f90,const in float VdotH){float x=clamp(1.0-VdotH,0.0,1.0);float x2=x*x;float x5=clamp(x*x2*x2,0.0,0.9999);return(f-f90*x5)/(1.0-x5);}float Schlick_to_F0(const in float f,const in float f90,const in float VdotH){float x=clamp(1.0-VdotH,0.0,1.0);float x2=x*x;float x5=clamp(x*x2*x2,0.0,0.9999);return(f-f90*x5)/(1.0-x5);}vec3 Schlick_to_F0(const in vec3 f,const in float VdotH){return Schlick_to_F0(f,vec3(1.0),VdotH);}float Schlick_to_F0(const in float f,const in float VdotH){return Schlick_to_F0(f,1.0,VdotH);}float V_GGX(const in float NdotL,const in float NdotV,const in float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float GGXV=NdotL*sqrt(NdotV*NdotV*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGXL=NdotV*sqrt(NdotL*NdotL*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGX=GGXV+GGXL;if(GGX>0.0){return 0.5/GGX;}return 0.0;}float D_GGX(const in float NdotH,const in float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float f=(NdotH*NdotH)*(alphaRoughnessSq-1.0)+1.0;return alphaRoughnessSq/(M_PI*f*f);}
 #if defined(X3D_LIGHTING)
@@ -95253,7 +95405,7 @@ float lambdaSheenNumericHelper(const in float x,const in float alphaG){float one
 ;
 
 /* harmony default export */ const BRDF2_glsl = (x_ite_Namespace .add ("BRDF2.glsl", BRDF2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/IBL2.glsl.js
+;// ./src/assets/shaders/webgl2/pbr/IBL2.glsl.js
 const IBL2_glsl_default_ = /* glsl */ `
 #if defined(X3D_USE_IBL)
 uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;vec3 getDiffuseLight(const in vec3 n){vec3 texCoord=x3d_EnvironmentLightSource.rotation*n*vec3(-1.0,1.0,1.0);
@@ -95343,7 +95495,7 @@ vec3 sheenLight=getSheenLight(reflection,lod);return sheenLight*sheenColor*brdf;
 ;
 
 /* harmony default export */ const IBL2_glsl = (x_ite_Namespace .add ("IBL2.glsl", IBL2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/Iridescence2.glsl.js
+;// ./src/assets/shaders/webgl2/pbr/Iridescence2.glsl.js
 const Iridescence2_glsl_default_ = /* glsl */ `
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
 const mat3 XYZ_TO_REC709=mat3(3.2404542,-0.9692660,0.0556434,-1.5371385,1.8760108,-0.2040259,-0.4985314,0.0415560,1.0572252);float sq(const in float v){return v*v;}vec3 sq(const in vec3 v){return v*v;}vec3 Fresnel0ToIor(const in vec3 fresnel0){vec3 sqrtF0=sqrt(fresnel0);return(vec3(1.0)+sqrtF0)/(vec3(1.0)-sqrtF0);}vec3 IorToFresnel0(const in vec3 transmittedIor,const in float incidentIor){return sq((transmittedIor-vec3(incidentIor))/(transmittedIor+vec3(incidentIor)));}float IorToFresnel0(const in float transmittedIor,const in float incidentIor){return sq((transmittedIor-incidentIor)/(transmittedIor+incidentIor));}vec3 evalSensitivity(const in float OPD,const in vec3 shift){float phase=2.0*M_PI*OPD*1.0e-9;vec3 val=vec3(5.4856e-13,4.4201e-13,5.2481e-13);vec3 pos=vec3(1.6810e+06,1.7953e+06,2.2084e+06);vec3 var=vec3(4.3278e+09,9.3046e+09,6.6121e+09);vec3 xyz=val*sqrt(2.0*M_PI*var)*cos(pos*phase+shift)*exp(-sq(phase)*var);xyz.x+=9.7470e-14*sqrt(2.0*M_PI*4.5282e+09)*cos(2.2399e+06*phase+shift[0])*exp(-4.5282e+09*sq(phase));xyz/=1.0685e-7;vec3 srgb=XYZ_TO_REC709*xyz;return srgb;}vec3 evalIridescence(const in float outsideIOR,const in float eta2,const in float cosTheta1,const in float thinFilmThickness,const in vec3 baseF0){vec3 I;float iridescenceIor=mix(outsideIOR,eta2,smoothstep(0.0,0.03,thinFilmThickness));float sinTheta2Sq=sq(outsideIOR/iridescenceIor)*(1.0-sq(cosTheta1));float cosTheta2Sq=1.0-sinTheta2Sq;if(cosTheta2Sq<0.0)return vec3(1.0);float cosTheta2=sqrt(cosTheta2Sq);float R0=IorToFresnel0(iridescenceIor,outsideIOR);float R12=F_Schlick(R0,cosTheta1);float R21=R12;float T121=1.0-R12;float phi12=0.0;if(iridescenceIor<outsideIOR)phi12=M_PI;float phi21=M_PI-phi12;vec3 baseIOR=Fresnel0ToIor(clamp(baseF0,0.0,0.9999));vec3 R1=IorToFresnel0(baseIOR,iridescenceIor);vec3 R23=F_Schlick(R1,cosTheta2);vec3 phi23=vec3(0.0);if(baseIOR[0]<iridescenceIor)phi23[0]=M_PI;if(baseIOR[1]<iridescenceIor)phi23[1]=M_PI;if(baseIOR[2]<iridescenceIor)phi23[2]=M_PI;float OPD=2.0*iridescenceIor*thinFilmThickness*cosTheta2;vec3 phi=vec3(phi21)+phi23;vec3 R123=clamp(R12*R23,1e-5,0.9999);vec3 r123=sqrt(R123);vec3 Rs=sq(T121)*R23/(vec3(1.0)-R123);vec3 C0=R12+Rs;I=C0;vec3 Cm=Rs-T121;for(int m=1;m<=2;++m){Cm*=r123;vec3 Sm=2.0*evalSensitivity(float(m)*OPD,float(m)*phi);I+=Cm*Sm;}return max(I,vec3(0.0));}
@@ -95352,7 +95504,7 @@ const mat3 XYZ_TO_REC709=mat3(3.2404542,-0.9692660,0.0556434,-1.5371385,1.876010
 ;
 
 /* harmony default export */ const Iridescence2_glsl = (x_ite_Namespace .add ("Iridescence2.glsl", Iridescence2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js
+;// ./src/assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js
 
 
 const MaterialInfo2_glsl_default_ = /* glsl */ `
@@ -95543,7 +95695,7 @@ vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRo
 ;
 
 /* harmony default export */ const MaterialInfo2_glsl = (x_ite_Namespace .add ("MaterialInfo2.glsl", MaterialInfo2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/PBR2.glsl.js
+;// ./src/assets/shaders/webgl2/pbr/PBR2.glsl.js
 const PBR2_glsl_default_ = /* glsl */ `
 #pragma X3D include "../common/Fragment.glsl"
 #pragma X3D include "../common/Normal.glsl"
@@ -95695,7 +95847,7 @@ return vec4(color,baseColor.a);}void main(){fragment_main();}`
 ;
 
 /* harmony default export */ const PBR2_glsl = (x_ite_Namespace .add ("PBR2.glsl", PBR2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/Punctual2.glsl.js
+;// ./src/assets/shaders/webgl2/pbr/Punctual2.glsl.js
 const Punctual2_glsl_default_ = /* glsl */ `
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)
 float applyIorToRoughness(const in float roughness,const in float ior){return roughness*clamp(ior*2.0-2.0,0.0,1.0);}
@@ -95717,7 +95869,7 @@ vec3 getPunctualRadianceTransmission(const in vec3 n,const in vec3 v,const in ve
 ;
 
 /* harmony default export */ const Punctual2_glsl = (x_ite_Namespace .add ("Punctual2.glsl", Punctual2_glsl_default_));
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/ToneMapping2.glsl.js
+;// ./src/assets/shaders/webgl2/pbr/ToneMapping2.glsl.js
 const ToneMapping2_glsl_default_ = /* glsl */ `
 const float GAMMA=2.2;const float INV_GAMMA=1.0/GAMMA;vec3 linearToSRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearToSRGB(const in vec4 color){return vec4(linearToSRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
 #if defined(X3D_TONEMAP_ACES_NARKOWICZ)
@@ -95757,7 +95909,7 @@ return linearToSRGB(color);
 ;
 
 /* harmony default export */ const ToneMapping2_glsl = (x_ite_Namespace .add ("ToneMapping2.glsl", ToneMapping2_glsl_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Shaders/ShaderRegistry.js
+;// ./src/x_ite/Browser/Shaders/ShaderRegistry.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95965,7 +96117,7 @@ const ShaderRegistry_default_ = ShaderRegistry;
 ;
 
 /* harmony default export */ const Shaders_ShaderRegistry = (x_ite_Namespace .add ("ShaderRegistry", ShaderRegistry_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Shaders/ShaderCompiler.js
+;// ./src/x_ite/Browser/Shaders/ShaderCompiler.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96064,8 +96216,8 @@ const ShaderCompiler_default_ = ShaderCompiler;
 ;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (x_ite_Namespace .add ("ShaderCompiler", ShaderCompiler_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(842);
+;// ./src/x_ite/Components/Shaders/ShaderPart.js
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96288,7 +96440,7 @@ const ShaderPart_default_ = ShaderPart;
 ;
 
 /* harmony default export */ const Shaders_ShaderPart = (x_ite_Namespace .add ("ShaderPart", ShaderPart_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderProgram.js
+;// ./src/x_ite/Components/Shaders/ShaderProgram.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96403,7 +96555,7 @@ const ShaderProgram_default_ = ShaderProgram;
 ;
 
 /* harmony default export */ const Shaders_ShaderProgram = (x_ite_Namespace .add ("ShaderProgram", ShaderProgram_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/ShadersComponent.js
+;// ./src/x_ite/Components/ShadersComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96486,7 +96638,7 @@ const ShadersComponent_default_ = {
 ;
 
 /* harmony default export */ const ShadersComponent = (x_ite_Namespace .add ("ShadersComponent", ShadersComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/AcousticProperties.js
+;// ./src/x_ite/Components/Shape/AcousticProperties.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96572,7 +96724,7 @@ const AcousticProperties_default_ = AcousticProperties;
 ;
 
 /* harmony default export */ const Shape_AcousticProperties = (x_ite_Namespace .add ("AcousticProperties", AcousticProperties_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/X3DAppearanceNode.js
+;// ./src/x_ite/Components/Shape/X3DAppearanceNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96662,8 +96814,8 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 ;
 
 /* harmony default export */ const Shape_X3DAppearanceNode = (x_ite_Namespace .add ("X3DAppearanceNode", X3DAppearanceNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(842);
+;// ./src/x_ite/Components/Shape/Appearance.js
+/* provided dependency */ var Appearance_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97086,7 +97238,7 @@ const Appearance_default_ = Appearance;
 ;
 
 /* harmony default export */ const Shape_Appearance = (x_ite_Namespace .add ("Appearance", Appearance_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/FillProperties.js
+;// ./src/x_ite/Components/Shape/FillProperties.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97253,7 +97405,7 @@ const FillProperties_default_ = FillProperties;
 ;
 
 /* harmony default export */ const Shape_FillProperties = (x_ite_Namespace .add ("FillProperties", FillProperties_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/LineProperties.js
+;// ./src/x_ite/Components/Shape/LineProperties.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97423,7 +97575,7 @@ const LineProperties_default_ = LineProperties;
 ;
 
 /* harmony default export */ const Shape_LineProperties = (x_ite_Namespace .add ("LineProperties", LineProperties_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/X3DMaterialNode.js
+;// ./src/x_ite/Components/Shape/X3DMaterialNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97809,7 +97961,7 @@ const X3DMaterialNode_default_ = X3DMaterialNode;
 ;
 
 /* harmony default export */ const Shape_X3DMaterialNode = (x_ite_Namespace .add ("X3DMaterialNode", X3DMaterialNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/X3DOneSidedMaterialNode.js
+;// ./src/x_ite/Components/Shape/X3DOneSidedMaterialNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97991,7 +98143,7 @@ const X3DOneSidedMaterialNode_default_ = X3DOneSidedMaterialNode;
 ;
 
 /* harmony default export */ const Shape_X3DOneSidedMaterialNode = (x_ite_Namespace .add ("X3DOneSidedMaterialNode", X3DOneSidedMaterialNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Material.js
+;// ./src/x_ite/Components/Shape/Material.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98386,7 +98538,7 @@ const Material_default_ = Material;
 ;
 
 /* harmony default export */ const Shape_Material = (x_ite_Namespace .add ("Material", Material_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/PhysicalMaterial.js
+;// ./src/x_ite/Components/Shape/PhysicalMaterial.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98710,7 +98862,7 @@ const PhysicalMaterial_default_ = PhysicalMaterial;
 ;
 
 /* harmony default export */ const Shape_PhysicalMaterial = (x_ite_Namespace .add ("PhysicalMaterial", PhysicalMaterial_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/PointProperties.js
+;// ./src/x_ite/Components/Shape/PointProperties.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98863,7 +99015,7 @@ const PointProperties_default_ = PointProperties;
 ;
 
 /* harmony default export */ const Shape_PointProperties = (x_ite_Namespace .add ("PointProperties", PointProperties_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/X3DShapeNode.js
+;// ./src/x_ite/Components/Shape/X3DShapeNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99102,7 +99254,7 @@ const X3DShapeNode_default_ = X3DShapeNode;
 ;
 
 /* harmony default export */ const Shape_X3DShapeNode = (x_ite_Namespace .add ("X3DShapeNode", X3DShapeNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Shape.js
+;// ./src/x_ite/Components/Shape/Shape.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99303,7 +99455,7 @@ const Shape_default_ = Shape;
 ;
 
 /* harmony default export */ const Shape_Shape = (x_ite_Namespace .add ("Shape", Shape_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/TwoSidedMaterial.js
+;// ./src/x_ite/Components/Shape/TwoSidedMaterial.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99585,7 +99737,7 @@ const TwoSidedMaterial_default_ = TwoSidedMaterial;
 ;
 
 /* harmony default export */ const Shape_TwoSidedMaterial = (x_ite_Namespace .add ("TwoSidedMaterial", TwoSidedMaterial_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/UnlitMaterial.js
+;// ./src/x_ite/Components/Shape/UnlitMaterial.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99734,7 +99886,7 @@ const UnlitMaterial_default_ = UnlitMaterial;
 ;
 
 /* harmony default export */ const Shape_UnlitMaterial = (x_ite_Namespace .add ("UnlitMaterial", UnlitMaterial_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/ShapeComponent.js
+;// ./src/x_ite/Components/ShapeComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99825,7 +99977,7 @@ const ShapeComponent_default_ = {
 ;
 
 /* harmony default export */ const ShapeComponent = (x_ite_Namespace .add ("ShapeComponent", ShapeComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundNode.js
+;// ./src/x_ite/Components/Sound/X3DSoundNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99892,7 +100044,7 @@ const X3DSoundNode_default_ = X3DSoundNode;
 ;
 
 /* harmony default export */ const Sound_X3DSoundNode = (x_ite_Namespace .add ("X3DSoundNode", X3DSoundNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
+;// ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100122,7 +100274,7 @@ const X3DSoundProcessingNode_default_ = X3DSoundProcessingNode;
 ;
 
 /* harmony default export */ const Sound_X3DSoundProcessingNode = (x_ite_Namespace .add ("X3DSoundProcessingNode", X3DSoundProcessingNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Analyser.js
+;// ./src/x_ite/Components/Sound/Analyser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100308,7 +100460,7 @@ const Analyser_default_ = Analyser;
 ;
 
 /* harmony default export */ const Sound_Analyser = (x_ite_Namespace .add ("Analyser", Analyser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundSourceNode.js
+;// ./src/x_ite/Components/Sound/X3DSoundSourceNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100496,7 +100648,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 ;
 
 /* harmony default export */ const Sound_X3DSoundSourceNode = (x_ite_Namespace .add ("X3DSoundSourceNode", X3DSoundSourceNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Sound/AudioElement.js
+;// ./src/x_ite/Browser/Sound/AudioElement.js
 
 /*******************************************************************************
  *
@@ -100711,7 +100863,7 @@ const AudioElement_default_ = {
 ;
 
 /* harmony default export */ const AudioElement = (x_ite_Namespace .add ("AudioElement", AudioElement_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
+;// ./src/x_ite/Components/Sound/AudioClip.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100873,7 +101025,7 @@ const AudioClip_default_ = AudioClip;
 ;
 
 /* harmony default export */ const Sound_AudioClip = (x_ite_Namespace .add ("AudioClip", AudioClip_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundDestinationNode.js
+;// ./src/x_ite/Components/Sound/X3DSoundDestinationNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101057,7 +101209,7 @@ const X3DSoundDestinationNode_default_ = X3DSoundDestinationNode;
 ;
 
 /* harmony default export */ const Sound_X3DSoundDestinationNode = (x_ite_Namespace .add ("X3DSoundDestinationNode", X3DSoundDestinationNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioDestination.js
+;// ./src/x_ite/Components/Sound/AudioDestination.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101212,7 +101364,7 @@ const AudioDestination_default_ = AudioDestination;
 ;
 
 /* harmony default export */ const Sound_AudioDestination = (x_ite_Namespace .add ("AudioDestination", AudioDestination_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/BiquadFilter.js
+;// ./src/x_ite/Components/Sound/BiquadFilter.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101370,7 +101522,7 @@ const BiquadFilter_default_ = BiquadFilter;
 ;
 
 /* harmony default export */ const Sound_BiquadFilter = (x_ite_Namespace .add ("BiquadFilter", BiquadFilter_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/BufferAudioSource.js
+;// ./src/x_ite/Components/Sound/BufferAudioSource.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101642,7 +101794,7 @@ const BufferAudioSource_default_ = BufferAudioSource;
 ;
 
 /* harmony default export */ const Sound_BufferAudioSource = (x_ite_Namespace .add ("BufferAudioSource", BufferAudioSource_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundChannelNode.js
+;// ./src/x_ite/Components/Sound/X3DSoundChannelNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101867,7 +102019,7 @@ const X3DSoundChannelNode_default_ = X3DSoundChannelNode;
 ;
 
 /* harmony default export */ const Sound_X3DSoundChannelNode = (x_ite_Namespace .add ("X3DSoundChannelNode", X3DSoundChannelNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/ChannelMerger.js
+;// ./src/x_ite/Components/Sound/ChannelMerger.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102010,7 +102162,7 @@ const ChannelMerger_default_ = ChannelMerger;
 ;
 
 /* harmony default export */ const Sound_ChannelMerger = (x_ite_Namespace .add ("ChannelMerger", ChannelMerger_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/ChannelSelector.js
+;// ./src/x_ite/Components/Sound/ChannelSelector.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102128,7 +102280,7 @@ const ChannelSelector_default_ = ChannelSelector;
 ;
 
 /* harmony default export */ const Sound_ChannelSelector = (x_ite_Namespace .add ("ChannelSelector", ChannelSelector_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/ChannelSplitter.js
+;// ./src/x_ite/Components/Sound/ChannelSplitter.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102305,7 +102457,7 @@ const ChannelSplitter_default_ = ChannelSplitter;
 ;
 
 /* harmony default export */ const Sound_ChannelSplitter = (x_ite_Namespace .add ("ChannelSplitter", ChannelSplitter_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Convolver.js
+;// ./src/x_ite/Components/Sound/Convolver.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102456,7 +102608,7 @@ const Convolver_default_ = Convolver;
 ;
 
 /* harmony default export */ const Sound_Convolver = (x_ite_Namespace .add ("Convolver", Convolver_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Delay.js
+;// ./src/x_ite/Components/Sound/Delay.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102597,7 +102749,7 @@ const Delay_default_ = Delay;
 ;
 
 /* harmony default export */ const Sound_Delay = (x_ite_Namespace .add ("Delay", Delay_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/DynamicsCompressor.js
+;// ./src/x_ite/Components/Sound/DynamicsCompressor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102755,7 +102907,7 @@ const DynamicsCompressor_default_ = DynamicsCompressor;
 ;
 
 /* harmony default export */ const Sound_DynamicsCompressor = (x_ite_Namespace .add ("DynamicsCompressor", DynamicsCompressor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Gain.js
+;// ./src/x_ite/Components/Sound/Gain.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102854,7 +103006,7 @@ const Gain_default_ = Gain;
 ;
 
 /* harmony default export */ const Sound_Gain = (x_ite_Namespace .add ("Gain", Gain_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/ListenerPointSource.js
+;// ./src/x_ite/Components/Sound/ListenerPointSource.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103030,7 +103182,7 @@ const ListenerPointSource_default_ = ListenerPointSource;
 ;
 
 /* harmony default export */ const Sound_ListenerPointSource = (x_ite_Namespace .add ("ListenerPointSource", ListenerPointSource_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/MicrophoneSource.js
+;// ./src/x_ite/Components/Sound/MicrophoneSource.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103228,7 +103380,7 @@ const MicrophoneSource_default_ = MicrophoneSource;
 ;
 
 /* harmony default export */ const Sound_MicrophoneSource = (x_ite_Namespace .add ("MicrophoneSource", MicrophoneSource_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/OscillatorSource.js
+;// ./src/x_ite/Components/Sound/OscillatorSource.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103431,7 +103583,7 @@ const OscillatorSource_default_ = OscillatorSource;
 ;
 
 /* harmony default export */ const Sound_OscillatorSource = (x_ite_Namespace .add ("OscillatorSource", OscillatorSource_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/PeriodicWave.js
+;// ./src/x_ite/Components/Sound/PeriodicWave.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103540,7 +103692,7 @@ const PeriodicWave_default_ = PeriodicWave;
 ;
 
 /* harmony default export */ const Sound_PeriodicWave = (x_ite_Namespace .add ("PeriodicWave", PeriodicWave_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Sound.js
+;// ./src/x_ite/Components/Sound/Sound.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103945,7 +104097,7 @@ const Sound_default_ = Sound;
 ;
 
 /* harmony default export */ const Sound_Sound = (x_ite_Namespace .add ("Sound", Sound_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/SpatialSound.js
+;// ./src/x_ite/Components/Sound/SpatialSound.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104278,7 +104430,7 @@ const SpatialSound_default_ = SpatialSound;
 ;
 
 /* harmony default export */ const Sound_SpatialSound = (x_ite_Namespace .add ("SpatialSound", SpatialSound_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/StreamAudioDestination.js
+;// ./src/x_ite/Components/Sound/StreamAudioDestination.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104394,7 +104546,7 @@ const StreamAudioDestination_default_ = StreamAudioDestination;
 ;
 
 /* harmony default export */ const Sound_StreamAudioDestination = (x_ite_Namespace .add ("StreamAudioDestination", StreamAudioDestination_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/StreamAudioSource.js
+;// ./src/x_ite/Components/Sound/StreamAudioSource.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104500,7 +104652,7 @@ const StreamAudioSource_default_ = StreamAudioSource;
 ;
 
 /* harmony default export */ const Sound_StreamAudioSource = (x_ite_Namespace .add ("StreamAudioSource", StreamAudioSource_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/WaveShaper.js
+;// ./src/x_ite/Components/Sound/WaveShaper.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104641,7 +104793,7 @@ const WaveShaper_default_ = WaveShaper;
 ;
 
 /* harmony default export */ const Sound_WaveShaper = (x_ite_Namespace .add ("WaveShaper", WaveShaper_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/SoundComponent.js
+;// ./src/x_ite/Components/SoundComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104754,7 +104906,7 @@ const SoundComponent_default_ = {
 ;
 
 /* harmony default export */ const SoundComponent = (x_ite_Namespace .add ("SoundComponent", SoundComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/GifMedia.js
+;// ./src/x_ite/Browser/Texturing/GifMedia.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104885,9 +105037,9 @@ const GifMedia_default_ = GifMedia;
 ;
 
 /* harmony default export */ const Texturing_GifMedia = (x_ite_Namespace .add ("GifMedia", GifMedia_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(842);
-/* provided dependency */ var SuperGif = __webpack_require__(621);
+;// ./src/x_ite/Components/Texturing/MovieTexture.js
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(665);
+/* provided dependency */ var SuperGif = __webpack_require__(914);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105181,7 +105333,7 @@ const MovieTexture_default_ = MovieTexture;
 ;
 
 /* harmony default export */ const Texturing_MovieTexture = (x_ite_Namespace .add ("MovieTexture", MovieTexture_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MultiTexture.js
+;// ./src/x_ite/Components/Texturing/MultiTexture.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105514,7 +105666,7 @@ const MultiTexture_default_ = MultiTexture;
 ;
 
 /* harmony default export */ const Texturing_MultiTexture = (x_ite_Namespace .add ("MultiTexture", MultiTexture_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DTextureTransformNode.js
+;// ./src/x_ite/Components/Texturing/X3DTextureTransformNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105581,7 +105733,7 @@ const X3DTextureTransformNode_default_ = X3DTextureTransformNode;
 ;
 
 /* harmony default export */ const Texturing_X3DTextureTransformNode = (x_ite_Namespace .add ("X3DTextureTransformNode", X3DTextureTransformNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MultiTextureTransform.js
+;// ./src/x_ite/Components/Texturing/MultiTextureTransform.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105721,7 +105873,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 ;
 
 /* harmony default export */ const Texturing_MultiTextureTransform = (x_ite_Namespace .add ("MultiTextureTransform", MultiTextureTransform_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
+;// ./src/x_ite/Components/Texturing/PixelTexture.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105993,7 +106145,7 @@ const PixelTexture_default_ = PixelTexture;
 ;
 
 /* harmony default export */ const Texturing_PixelTexture = (x_ite_Namespace .add ("PixelTexture", PixelTexture_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/TextureProperties.js
+;// ./src/x_ite/Components/Texturing/TextureProperties.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106185,7 +106337,7 @@ const TextureProperties_default_ = TextureProperties;
 ;
 
 /* harmony default export */ const Texturing_TextureProperties = (x_ite_Namespace .add ("TextureProperties", TextureProperties_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DSingleTextureTransformNode.js
+;// ./src/x_ite/Components/Texturing/X3DSingleTextureTransformNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106281,7 +106433,7 @@ const X3DSingleTextureTransformNode_default_ = X3DSingleTextureTransformNode;
 ;
 
 /* harmony default export */ const Texturing_X3DSingleTextureTransformNode = (x_ite_Namespace .add ("X3DSingleTextureTransformNode", X3DSingleTextureTransformNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/TextureTransform.js
+;// ./src/x_ite/Components/Texturing/TextureTransform.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106425,7 +106577,7 @@ const TextureTransform_default_ = TextureTransform;
 ;
 
 /* harmony default export */ const Texturing_TextureTransform = (x_ite_Namespace .add ("TextureTransform", TextureTransform_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/TexturingComponent.js
+;// ./src/x_ite/Components/TexturingComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106520,7 +106672,7 @@ const TexturingComponent_default_ = {
 ;
 
 /* harmony default export */ const TexturingComponent = (x_ite_Namespace .add ("TexturingComponent", TexturingComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/TimeComponent.js
+;// ./src/x_ite/Components/TimeComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106585,7 +106737,7 @@ const TimeComponent_default_ = {
 ;
 
 /* harmony default export */ const TimeComponent = (x_ite_Namespace .add ("TimeComponent", TimeComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Context.js
+;// ./src/x_ite/Browser/Core/Context.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106759,7 +106911,7 @@ const Context_default_ = Context;
 ;
 
 /* harmony default export */ const Core_Context = (x_ite_Namespace .add ("Context", Context_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/GeometryTypes.js
+;// ./src/x_ite/Browser/ParticleSystems/GeometryTypes.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106822,7 +106974,7 @@ const GeometryTypes_default_ = GeometryTypes;
 ;
 
 /* harmony default export */ const ParticleSystems_GeometryTypes = (x_ite_Namespace .add ("GeometryTypes", GeometryTypes_default_));
-;// CONCATENATED MODULE: ./src/locale/de.js
+;// ./src/locale/de.js
 const de_default_ = [
    [
       "Less Properties",
@@ -107052,7 +107204,7 @@ const de_default_ = [
 ;
 
 /* harmony default export */ const de = (x_ite_Namespace .add ("de", de_default_));
-;// CONCATENATED MODULE: ./src/locale/fr.js
+;// ./src/locale/fr.js
 const fr_default_ = [
    [
       "Less Properties",
@@ -107278,7 +107430,7 @@ const fr_default_ = [
 ;
 
 /* harmony default export */ const fr = (x_ite_Namespace .add ("fr", fr_default_));
-;// CONCATENATED MODULE: ./src/locale/gettext.js
+;// ./src/locale/gettext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107354,8 +107506,8 @@ const gettext_default_ = (string) => locale .get (string) || string;
 ;
 
 /* harmony default export */ const gettext = (x_ite_Namespace .add ("gettext", gettext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Core/BrowserTimings.js
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107802,7 +107954,7 @@ const BrowserTimings_default_ = BrowserTimings;
 ;
 
 /* harmony default export */ const Core_BrowserTimings = (x_ite_Namespace .add ("BrowserTimings", BrowserTimings_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/PrimitiveQuality.js
+;// ./src/x_ite/Browser/Core/PrimitiveQuality.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107863,7 +108015,7 @@ const PrimitiveQuality_default_ = PrimitiveQuality;
 ;
 
 /* harmony default export */ const Core_PrimitiveQuality = (x_ite_Namespace .add ("PrimitiveQuality", PrimitiveQuality_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/TextureQuality.js
+;// ./src/x_ite/Browser/Core/TextureQuality.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107924,7 +108076,7 @@ const TextureQuality_default_ = TextureQuality;
 ;
 
 /* harmony default export */ const Core_TextureQuality = (x_ite_Namespace .add ("TextureQuality", TextureQuality_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/TextCompression.js
+;// ./src/x_ite/Browser/Core/TextCompression.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107984,8 +108136,8 @@ const TextCompression_default_ = TextCompression;
 ;
 
 /* harmony default export */ const Core_TextCompression = (x_ite_Namespace .add ("TextCompression", TextCompression_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Core/BrowserOptions.js
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108433,7 +108585,7 @@ const BrowserOptions_default_ = BrowserOptions;
 ;
 
 /* harmony default export */ const Core_BrowserOptions = (x_ite_Namespace .add ("BrowserOptions", BrowserOptions_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserProperties.js
+;// ./src/x_ite/Browser/Core/BrowserProperties.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108521,7 +108673,7 @@ const BrowserProperties_default_ = BrowserProperties;
 ;
 
 /* harmony default export */ const Core_BrowserProperties = (x_ite_Namespace .add ("BrowserProperties", BrowserProperties_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/RenderingProperties.js
+;// ./src/x_ite/Browser/Core/RenderingProperties.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108631,8 +108783,8 @@ const RenderingProperties_default_ = RenderingProperties;
 ;
 
 /* harmony default export */ const Core_RenderingProperties = (x_ite_Namespace .add ("RenderingProperties", RenderingProperties_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Core/Notification.js
+/* provided dependency */ var Notification_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108753,9 +108905,9 @@ const Notification_default_ = Notification;
 ;
 
 /* harmony default export */ const Core_Notification = (x_ite_Namespace .add ("Notification", Notification_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(690);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Core/ContextMenu.js
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(57);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109467,7 +109619,7 @@ const ContextMenu_default_ = ContextMenu;
 ;
 
 /* harmony default export */ const Core_ContextMenu = (x_ite_Namespace .add ("ContextMenu", ContextMenu_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
+;// ./src/x_ite/Configuration/ComponentInfo.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109616,7 +109768,7 @@ const ComponentInfo_default_ = ComponentInfo;
 ;
 
 /* harmony default export */ const Configuration_ComponentInfo = (x_ite_Namespace .add ("ComponentInfo", ComponentInfo_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfoArray.js
+;// ./src/x_ite/Configuration/ComponentInfoArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109696,7 +109848,7 @@ const ComponentInfoArray_default_ = ComponentInfoArray;
 ;
 
 /* harmony default export */ const Configuration_ComponentInfoArray = (x_ite_Namespace .add ("ComponentInfoArray", ComponentInfoArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/UnitInfo.js
+;// ./src/x_ite/Configuration/UnitInfo.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109858,7 +110010,7 @@ const UnitInfo_default_ = UnitInfo;
 ;
 
 /* harmony default export */ const Configuration_UnitInfo = (x_ite_Namespace .add ("UnitInfo", UnitInfo_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/UnitInfoArray.js
+;// ./src/x_ite/Configuration/UnitInfoArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109932,7 +110084,7 @@ const UnitInfoArray_default_ = UnitInfoArray;
 ;
 
 /* harmony default export */ const Configuration_UnitInfoArray = (x_ite_Namespace .add ("UnitInfoArray", UnitInfoArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/X3DExportedNode.js
+;// ./src/x_ite/Execution/X3DExportedNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110143,7 +110295,7 @@ const X3DExportedNode_default_ = X3DExportedNode;
 ;
 
 /* harmony default export */ const Execution_X3DExportedNode = (x_ite_Namespace .add ("X3DExportedNode", X3DExportedNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/ExportedNodesArray.js
+;// ./src/x_ite/Execution/ExportedNodesArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110217,7 +110369,7 @@ const ExportedNodesArray_default_ = ExportedNodesArray;
 ;
 
 /* harmony default export */ const Execution_ExportedNodesArray = (x_ite_Namespace .add ("ExportedNodesArray", ExportedNodesArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Execution/X3DScene.js
+;// ./src/x_ite/Execution/X3DScene.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111342,7 +111494,7 @@ const X3DScene_default_ = X3DScene;
 ;
 
 /* harmony default export */ const Execution_X3DScene = (x_ite_Namespace .add ("X3DScene", X3DScene_default_));
-;// CONCATENATED MODULE: ./src/standard/Utility/DataStorage.js
+;// ./src/standard/Utility/DataStorage.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111476,8 +111628,8 @@ const DataStorage_default_ = DataStorage;
 ;
 
 /* harmony default export */ const Utility_DataStorage = (x_ite_Namespace .add ("DataStorage", DataStorage_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Core/X3DCoreContext.js
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112318,7 +112470,7 @@ const X3DCoreContext_default_ = X3DCoreContext;
 ;
 
 /* harmony default export */ const Core_X3DCoreContext = (x_ite_Namespace .add ("X3DCoreContext", X3DCoreContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext.js
+;// ./src/x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112398,7 +112550,7 @@ const X3DEnvironmentalEffectsContext_default_ = X3DEnvironmentalEffectsContext;
 ;
 
 /* harmony default export */ const EnvironmentalEffects_X3DEnvironmentalEffectsContext = (x_ite_Namespace .add ("X3DEnvironmentalEffectsContext", X3DEnvironmentalEffectsContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry3D/BoxOptions.js
+;// ./src/x_ite/Browser/Geometry3D/BoxOptions.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112522,7 +112674,7 @@ const BoxOptions_default_ = BoxOptions;
 ;
 
 /* harmony default export */ const Geometry3D_BoxOptions = (x_ite_Namespace .add ("BoxOptions", BoxOptions_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry3D/ConeOptions.js
+;// ./src/x_ite/Browser/Geometry3D/ConeOptions.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112808,7 +112960,7 @@ const ConeOptions_default_ = ConeOptions;
 ;
 
 /* harmony default export */ const Geometry3D_ConeOptions = (x_ite_Namespace .add ("ConeOptions", ConeOptions_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry3D/CylinderOptions.js
+;// ./src/x_ite/Browser/Geometry3D/CylinderOptions.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113148,7 +113300,7 @@ const CylinderOptions_default_ = CylinderOptions;
 ;
 
 /* harmony default export */ const Geometry3D_CylinderOptions = (x_ite_Namespace .add ("CylinderOptions", CylinderOptions_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry3D/QuadSphereOptions.js
+;// ./src/x_ite/Browser/Geometry3D/QuadSphereOptions.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113443,7 +113595,7 @@ const QuadSphereOptions_default_ = QuadSphereOptions;
 ;
 
 /* harmony default export */ const Geometry3D_QuadSphereOptions = (x_ite_Namespace .add ("QuadSphereOptions", QuadSphereOptions_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry3D/X3DGeometry3DContext.js
+;// ./src/x_ite/Browser/Geometry3D/X3DGeometry3DContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113575,7 +113727,7 @@ const X3DGeometry3DContext_default_ = X3DGeometry3DContext;
 ;
 
 /* harmony default export */ const Geometry3D_X3DGeometry3DContext = (x_ite_Namespace .add ("X3DGeometry3DContext", X3DGeometry3DContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Grouping/X3DGroupingContext.js
+;// ./src/x_ite/Browser/Grouping/X3DGroupingContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113663,7 +113815,7 @@ const X3DGroupingContext_default_ = X3DGroupingContext;
 ;
 
 /* harmony default export */ const Grouping_X3DGroupingContext = (x_ite_Namespace .add ("X3DGroupingContext", X3DGroupingContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Layering/X3DLayeringContext.js
+;// ./src/x_ite/Browser/Layering/X3DLayeringContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113737,7 +113889,7 @@ const X3DLayeringContext_default_ = X3DLayeringContext;
 ;
 
 /* harmony default export */ const Layering_X3DLayeringContext = (x_ite_Namespace .add ("X3DLayeringContext", X3DLayeringContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Lighting/X3DLightingContext.js
+;// ./src/x_ite/Browser/Lighting/X3DLightingContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113879,7 +114031,7 @@ const X3DLightingContext_default_ = X3DLightingContext;
 ;
 
 /* harmony default export */ const Lighting_X3DLightingContext = (x_ite_Namespace .add ("X3DLightingContext", X3DLightingContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DViewer.js
+;// ./src/x_ite/Browser/Navigation/X3DViewer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114087,9 +114239,9 @@ const X3DViewer_default_ = X3DViewer;
 ;
 
 /* harmony default export */ const Navigation_X3DViewer = (x_ite_Namespace .add ("X3DViewer", X3DViewer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(368);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(177);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115003,9 +115155,9 @@ const ExamineViewer_default_ = ExamineViewer;
 ;
 
 /* harmony default export */ const Navigation_ExamineViewer = (x_ite_Namespace .add ("ExamineViewer", ExamineViewer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(368);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(177);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115782,7 +115934,7 @@ const X3DFlyViewer_default_ = X3DFlyViewer;
 ;
 
 /* harmony default export */ const Navigation_X3DFlyViewer = (x_ite_Namespace .add ("X3DFlyViewer", X3DFlyViewer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/WalkViewer.js
+;// ./src/x_ite/Browser/Navigation/WalkViewer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115916,7 +116068,7 @@ const WalkViewer_default_ = WalkViewer;
 ;
 
 /* harmony default export */ const Navigation_WalkViewer = (x_ite_Namespace .add ("WalkViewer", WalkViewer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/FlyViewer.js
+;// ./src/x_ite/Browser/Navigation/FlyViewer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116019,9 +116171,9 @@ const FlyViewer_default_ = FlyViewer;
 ;
 
 /* harmony default export */ const Navigation_FlyViewer = (x_ite_Namespace .add ("FlyViewer", FlyViewer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(368);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(177);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116268,7 +116420,7 @@ const PlaneViewer_default_ = PlaneViewer;
 ;
 
 /* harmony default export */ const Navigation_PlaneViewer = (x_ite_Namespace .add ("PlaneViewer", PlaneViewer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/NoneViewer.js
+;// ./src/x_ite/Browser/Navigation/NoneViewer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116349,9 +116501,9 @@ const NoneViewer_default_ = NoneViewer;
 ;
 
 /* harmony default export */ const Navigation_NoneViewer = (x_ite_Namespace .add ("NoneViewer", NoneViewer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(368);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(177);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116874,7 +117026,7 @@ const LookAtViewer_default_ = LookAtViewer;
 ;
 
 /* harmony default export */ const Navigation_LookAtViewer = (x_ite_Namespace .add ("LookAtViewer", LookAtViewer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DNavigationContext.js
+;// ./src/x_ite/Browser/Navigation/X3DNavigationContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117129,7 +117281,7 @@ const X3DNavigationContext_default_ = X3DNavigationContext;
 ;
 
 /* harmony default export */ const Navigation_X3DNavigationContext = (x_ite_Namespace .add ("X3DNavigationContext", X3DNavigationContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/X3DNetworkingContext.js
+;// ./src/x_ite/Browser/Networking/X3DNetworkingContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117359,7 +117511,7 @@ const X3DNetworkingContext_default_ = X3DNetworkingContext;
 ;
 
 /* harmony default export */ const Networking_X3DNetworkingContext = (x_ite_Namespace .add ("X3DNetworkingContext", X3DNetworkingContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Picking/X3DPickingContext.js
+;// ./src/x_ite/Browser/Picking/X3DPickingContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117495,9 +117647,9 @@ const X3DPickingContext_default_ = X3DPickingContext;
 ;
 
 /* harmony default export */ const Picking_X3DPickingContext = (x_ite_Namespace .add ("X3DPickingContext", X3DPickingContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(368);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(177);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117771,7 +117923,7 @@ const PointingDevice_default_ = PointingDevice;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_PointingDevice = (x_ite_Namespace .add ("PointingDevice", PointingDevice_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Rendering/PointingBuffer.js
+;// ./src/x_ite/Rendering/PointingBuffer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117953,7 +118105,7 @@ const PointingBuffer_default_ = PointingBuffer;
 ;
 
 /* harmony default export */ const Rendering_PointingBuffer = (x_ite_Namespace .add ("PointingBuffer", PointingBuffer_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext.js
+;// ./src/x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118402,7 +118554,7 @@ const X3DPointingDeviceSensorContext_default_ = X3DPointingDeviceSensorContext;
 ;
 
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorContext = (x_ite_Namespace .add ("X3DPointingDeviceSensorContext", X3DPointingDeviceSensorContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Rendering/MultiSampleFrameBuffer.js
+;// ./src/x_ite/Rendering/MultiSampleFrameBuffer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118851,7 +119003,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 ;
 
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (x_ite_Namespace .add ("MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_));
-;// CONCATENATED MODULE: ./src/standard/Utility/Lock.js
+;// ./src/standard/Utility/Lock.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118943,8 +119095,8 @@ const Lock_default_ = Lock;
 ;
 
 /* harmony default export */ const Utility_Lock = (x_ite_Namespace .add ("Lock", Lock_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119607,7 +119759,7 @@ const X3DRenderingContext_default_ = X3DRenderingContext;
 ;
 
 /* harmony default export */ const Rendering_X3DRenderingContext = (x_ite_Namespace .add ("X3DRenderingContext", X3DRenderingContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Scripting/X3DScriptingContext.js
+;// ./src/x_ite/Browser/Scripting/X3DScriptingContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119673,7 +119825,7 @@ const X3DScriptingContext_default_ = X3DScriptingContext;
 ;
 
 /* harmony default export */ const Scripting_X3DScriptingContext = (x_ite_Namespace .add ("X3DScriptingContext", X3DScriptingContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Shaders/X3DShadersContext.js
+;// ./src/x_ite/Browser/Shaders/X3DShadersContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119884,7 +120036,7 @@ const X3DShadersContext_default_ = X3DShadersContext;
 ;
 
 /* harmony default export */ const Shaders_X3DShadersContext = (x_ite_Namespace .add ("X3DShadersContext", X3DShadersContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Shape/X3DShapeContext.js
+;// ./src/x_ite/Browser/Shape/X3DShapeContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120124,7 +120276,7 @@ const X3DShapeContext_default_ = X3DShapeContext;
 ;
 
 /* harmony default export */ const Shape_X3DShapeContext = (x_ite_Namespace .add ("X3DShapeContext", X3DShapeContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Sound/X3DSoundContext.js
+;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120257,8 +120409,8 @@ const X3DSoundContext_default_ = X3DSoundContext;
 ;
 
 /* harmony default export */ const Sound_X3DSoundContext = (x_ite_Namespace .add ("X3DSoundContext", X3DSoundContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(665);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -120347,7 +120499,7 @@ const KTXDecoder_default_ = class KTXDecoder
 ;
 
 /* harmony default export */ const KTXDecoder = (x_ite_Namespace .add ("KTXDecoder", KTXDecoder_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/X3DTexturingContext.js
+;// ./src/x_ite/Browser/Texturing/X3DTexturingContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120777,7 +120929,7 @@ const X3DTexturingContext_default_ = X3DTexturingContext;
 ;
 
 /* harmony default export */ const Texturing_X3DTexturingContext = (x_ite_Namespace .add ("X3DTexturingContext", X3DTexturingContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Time/X3DTimeContext.js
+;// ./src/x_ite/Browser/Time/X3DTimeContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120890,7 +121042,7 @@ const X3DTimeContext_default_ = X3DTimeContext;
 ;
 
 /* harmony default export */ const Time_X3DTimeContext = (x_ite_Namespace .add ("X3DTimeContext", X3DTimeContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoutingContext.js
+;// ./src/x_ite/Routing/X3DRoutingContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121010,7 +121162,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 ;
 
 /* harmony default export */ const Routing_X3DRoutingContext = (x_ite_Namespace .add ("X3DRoutingContext", X3DRoutingContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/AbstractNodesArray.js
+;// ./src/x_ite/Configuration/AbstractNodesArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121092,7 +121244,7 @@ const AbstractNodesArray_default_ = AbstractNodesArray;
 ;
 
 /* harmony default export */ const Configuration_AbstractNodesArray = (x_ite_Namespace .add ("AbstractNodesArray", AbstractNodesArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/AbstractNodes.js
+;// ./src/x_ite/Configuration/AbstractNodes.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121146,7 +121298,7 @@ const AbstractNodes_default_ = new Configuration_AbstractNodesArray ();
 ;
 
 /* harmony default export */ const AbstractNodes = (x_ite_Namespace .add ("AbstractNodes", AbstractNodes_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/ConcreteNodesArray.js
+;// ./src/x_ite/Configuration/ConcreteNodesArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121237,7 +121389,7 @@ const ConcreteNodesArray_default_ = ConcreteNodesArray;
 ;
 
 /* harmony default export */ const Configuration_ConcreteNodesArray = (x_ite_Namespace .add ("ConcreteNodesArray", ConcreteNodesArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/ConcreteNodes.js
+;// ./src/x_ite/Configuration/ConcreteNodes.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121291,7 +121443,7 @@ const ConcreteNodes_default_ = new Configuration_ConcreteNodesArray ();
 ;
 
 /* harmony default export */ const ConcreteNodes = (x_ite_Namespace .add ("ConcreteNodes", ConcreteNodes_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
+;// ./src/x_ite/Browser/X3DBrowserContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121733,7 +121885,7 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 ;
 
 /* harmony default export */ const Browser_X3DBrowserContext = (x_ite_Namespace .add ("X3DBrowserContext", X3DBrowserContext_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components.js
+;// ./src/x_ite/Components.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121836,8 +121988,8 @@ const Components_default_ = Components;
 ;
 
 /* harmony default export */ const x_ite_Components = (x_ite_Namespace .add ("Components", Components_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/DOMIntegration.js
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(665);
 /*******************************************************************************
  * MIT License
  *
@@ -122236,7 +122388,7 @@ const DOMIntegration_default_ = DOMIntegration;
 ;
 
 /* harmony default export */ const Browser_DOMIntegration = (x_ite_Namespace .add ("DOMIntegration", DOMIntegration_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/ProfileInfo.js
+;// ./src/x_ite/Configuration/ProfileInfo.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122341,7 +122493,7 @@ const ProfileInfo_default_ = ProfileInfo;
 ;
 
 /* harmony default export */ const Configuration_ProfileInfo = (x_ite_Namespace .add ("ProfileInfo", ProfileInfo_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/ProfileInfoArray.js
+;// ./src/x_ite/Configuration/ProfileInfoArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122422,7 +122574,7 @@ const ProfileInfoArray_default_ = ProfileInfoArray;
 ;
 
 /* harmony default export */ const Configuration_ProfileInfoArray = (x_ite_Namespace .add ("ProfileInfoArray", ProfileInfoArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/SupportedComponents.js
+;// ./src/x_ite/Configuration/SupportedComponents.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122734,7 +122886,7 @@ const SupportedComponents_default_ = SupportedComponents;
 ;
 
 /* harmony default export */ const Configuration_SupportedComponents = (x_ite_Namespace .add ("SupportedComponents", SupportedComponents_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/SupportedProfiles.js
+;// ./src/x_ite/Configuration/SupportedProfiles.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122974,7 +123126,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 ;
 
 /* harmony default export */ const Configuration_SupportedProfiles = (x_ite_Namespace .add ("SupportedProfiles", SupportedProfiles_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/FieldTypesArray.js
+;// ./src/x_ite/Configuration/FieldTypesArray.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -123047,7 +123199,7 @@ const FieldTypesArray_default_ = FieldTypesArray;
 ;
 
 /* harmony default export */ const Configuration_FieldTypesArray = (x_ite_Namespace .add ("FieldTypesArray", FieldTypesArray_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/FieldTypes.js
+;// ./src/x_ite/Configuration/FieldTypes.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -123102,8 +123254,8 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 ;
 
 /* harmony default export */ const FieldTypes = (x_ite_Namespace .add ("FieldTypes", FieldTypes_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(842);
+;// ./src/x_ite/Browser/X3DBrowser.js
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124169,8 +124321,8 @@ const X3DBrowser_default_ = X3DBrowser;
 ;
 
 /* harmony default export */ const Browser_X3DBrowser = (x_ite_Namespace .add ("X3DBrowser", X3DBrowser_default_));
-;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(842);
+;// ./src/x_ite/X3DCanvasElement.js
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124326,7 +124478,7 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 ;
 
 /* harmony default export */ const x_ite_X3DCanvasElement = (x_ite_Namespace .add ("X3DCanvasElement", X3DCanvasElement_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/QuickSort.js
+;// ./src/standard/Math/Algorithms/QuickSort.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124436,9 +124588,9 @@ const QuickSort_default_ = QuickSort;
 ;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
-;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(842);
-/* provided dependency */ var pako = __webpack_require__(538);
+;// ./src/lib/jquery.js
+/* provided dependency */ var jquery_$ = __webpack_require__(665);
+/* provided dependency */ var pako = __webpack_require__(381);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -124514,14 +124666,14 @@ const jquery_default_ = jquery_$;
 ;
 
 /* harmony default export */ const jquery = (x_ite_Namespace .add ("jquery", jquery_default_));
-;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(123);
+;// ./src/lib/libtess.js
+/* provided dependency */ var libtess_libtess = __webpack_require__(202);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (x_ite_Namespace .add ("libtess", libtess_default_));
-;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(842);
+;// ./src/x_ite/X3D.js
+/* provided dependency */ var X3D_$ = __webpack_require__(665);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124771,7 +124923,7 @@ x_ite_Namespace, x_ite_Namespace .Fields,
    },
 }));
 
-;// CONCATENATED MODULE: ./src/x_ite.js
+;// ./src/x_ite.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

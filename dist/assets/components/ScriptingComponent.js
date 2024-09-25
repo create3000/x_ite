@@ -71,100 +71,100 @@ module.exports = __X_ITE_X3D__ .jquery;
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBaseNode"
+;// external "__X_ITE_X3D__ .X3DBaseNode"
 const external_X_ITE_X3D_X3DBaseNode_namespaceObject = __X_ITE_X3D__ .X3DBaseNode;
 var external_X_ITE_X3D_X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBaseNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DField"
+;// external "__X_ITE_X3D__ .X3DField"
 const external_X_ITE_X3D_X3DField_namespaceObject = __X_ITE_X3D__ .X3DField;
 var external_X_ITE_X3D_X3DField_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DField_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DArrayField"
+;// external "__X_ITE_X3D__ .X3DArrayField"
 const external_X_ITE_X3D_X3DArrayField_namespaceObject = __X_ITE_X3D__ .X3DArrayField;
 var external_X_ITE_X3D_X3DArrayField_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DArrayField_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBrowser"
+;// external "__X_ITE_X3D__ .X3DBrowser"
 const external_X_ITE_X3D_X3DBrowser_namespaceObject = __X_ITE_X3D__ .X3DBrowser;
 var external_X_ITE_X3D_X3DBrowser_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBrowser_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ComponentInfo"
+;// external "__X_ITE_X3D__ .ComponentInfo"
 const external_X_ITE_X3D_ComponentInfo_namespaceObject = __X_ITE_X3D__ .ComponentInfo;
 var external_X_ITE_X3D_ComponentInfo_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ComponentInfo_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ComponentInfoArray"
+;// external "__X_ITE_X3D__ .ComponentInfoArray"
 const external_X_ITE_X3D_ComponentInfoArray_namespaceObject = __X_ITE_X3D__ .ComponentInfoArray;
 var external_X_ITE_X3D_ComponentInfoArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ComponentInfoArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ProfileInfo"
+;// external "__X_ITE_X3D__ .ProfileInfo"
 const external_X_ITE_X3D_ProfileInfo_namespaceObject = __X_ITE_X3D__ .ProfileInfo;
 var external_X_ITE_X3D_ProfileInfo_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ProfileInfo_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ProfileInfoArray"
+;// external "__X_ITE_X3D__ .ProfileInfoArray"
 const external_X_ITE_X3D_ProfileInfoArray_namespaceObject = __X_ITE_X3D__ .ProfileInfoArray;
 var external_X_ITE_X3D_ProfileInfoArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ProfileInfoArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ConcreteNodesArray"
+;// external "__X_ITE_X3D__ .ConcreteNodesArray"
 const external_X_ITE_X3D_ConcreteNodesArray_namespaceObject = __X_ITE_X3D__ .ConcreteNodesArray;
 var external_X_ITE_X3D_ConcreteNodesArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ConcreteNodesArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .AbstractNodesArray"
+;// external "__X_ITE_X3D__ .AbstractNodesArray"
 const external_X_ITE_X3D_AbstractNodesArray_namespaceObject = __X_ITE_X3D__ .AbstractNodesArray;
 var external_X_ITE_X3D_AbstractNodesArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_AbstractNodesArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .UnitInfo"
+;// external "__X_ITE_X3D__ .UnitInfo"
 const external_X_ITE_X3D_UnitInfo_namespaceObject = __X_ITE_X3D__ .UnitInfo;
 var external_X_ITE_X3D_UnitInfo_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_UnitInfo_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .UnitInfoArray"
+;// external "__X_ITE_X3D__ .UnitInfoArray"
 const external_X_ITE_X3D_UnitInfoArray_namespaceObject = __X_ITE_X3D__ .UnitInfoArray;
 var external_X_ITE_X3D_UnitInfoArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_UnitInfoArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .NamedNodesArray"
+;// external "__X_ITE_X3D__ .NamedNodesArray"
 const external_X_ITE_X3D_NamedNodesArray_namespaceObject = __X_ITE_X3D__ .NamedNodesArray;
 var external_X_ITE_X3D_NamedNodesArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_NamedNodesArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ImportedNodesArray"
+;// external "__X_ITE_X3D__ .ImportedNodesArray"
 const external_X_ITE_X3D_ImportedNodesArray_namespaceObject = __X_ITE_X3D__ .ImportedNodesArray;
 var external_X_ITE_X3D_ImportedNodesArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ImportedNodesArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DImportedNode"
+;// external "__X_ITE_X3D__ .X3DImportedNode"
 const external_X_ITE_X3D_X3DImportedNode_namespaceObject = __X_ITE_X3D__ .X3DImportedNode;
 var external_X_ITE_X3D_X3DImportedNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DImportedNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ExportedNodesArray"
+;// external "__X_ITE_X3D__ .ExportedNodesArray"
 const external_X_ITE_X3D_ExportedNodesArray_namespaceObject = __X_ITE_X3D__ .ExportedNodesArray;
 var external_X_ITE_X3D_ExportedNodesArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ExportedNodesArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DExportedNode"
+;// external "__X_ITE_X3D__ .X3DExportedNode"
 const external_X_ITE_X3D_X3DExportedNode_namespaceObject = __X_ITE_X3D__ .X3DExportedNode;
 var external_X_ITE_X3D_X3DExportedNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DExportedNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DExecutionContext"
+;// external "__X_ITE_X3D__ .X3DExecutionContext"
 const external_X_ITE_X3D_X3DExecutionContext_namespaceObject = __X_ITE_X3D__ .X3DExecutionContext;
 var external_X_ITE_X3D_X3DExecutionContext_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DExecutionContext_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DScene"
+;// external "__X_ITE_X3D__ .X3DScene"
 const external_X_ITE_X3D_X3DScene_namespaceObject = __X_ITE_X3D__ .X3DScene;
 var external_X_ITE_X3D_X3DScene_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DScene_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ExternProtoDeclarationArray"
+;// external "__X_ITE_X3D__ .ExternProtoDeclarationArray"
 const external_X_ITE_X3D_ExternProtoDeclarationArray_namespaceObject = __X_ITE_X3D__ .ExternProtoDeclarationArray;
 var external_X_ITE_X3D_ExternProtoDeclarationArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ExternProtoDeclarationArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ProtoDeclarationArray"
+;// external "__X_ITE_X3D__ .ProtoDeclarationArray"
 const external_X_ITE_X3D_ProtoDeclarationArray_namespaceObject = __X_ITE_X3D__ .ProtoDeclarationArray;
 var external_X_ITE_X3D_ProtoDeclarationArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ProtoDeclarationArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DExternProtoDeclaration"
+;// external "__X_ITE_X3D__ .X3DExternProtoDeclaration"
 const external_X_ITE_X3D_X3DExternProtoDeclaration_namespaceObject = __X_ITE_X3D__ .X3DExternProtoDeclaration;
 var external_X_ITE_X3D_X3DExternProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DExternProtoDeclaration_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DProtoDeclaration"
+;// external "__X_ITE_X3D__ .X3DProtoDeclaration"
 const external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject = __X_ITE_X3D__ .X3DProtoDeclaration;
 var external_X_ITE_X3D_X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DProtoDeclarationNode"
+;// external "__X_ITE_X3D__ .X3DProtoDeclarationNode"
 const external_X_ITE_X3D_X3DProtoDeclarationNode_namespaceObject = __X_ITE_X3D__ .X3DProtoDeclarationNode;
 var external_X_ITE_X3D_X3DProtoDeclarationNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DProtoDeclarationNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .RouteArray"
+;// external "__X_ITE_X3D__ .RouteArray"
 const external_X_ITE_X3D_RouteArray_namespaceObject = __X_ITE_X3D__ .RouteArray;
 var external_X_ITE_X3D_RouteArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_RouteArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DRoute"
+;// external "__X_ITE_X3D__ .X3DRoute"
 const external_X_ITE_X3D_X3DRoute_namespaceObject = __X_ITE_X3D__ .X3DRoute;
 var external_X_ITE_X3D_X3DRoute_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DRoute_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Scripting/evaluate.js
+;// ./src/x_ite/Browser/Scripting/evaluate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -236,19 +236,19 @@ const __default__ = evaluate;
 ;
 
 /* harmony default export */ const Scripting_evaluate = (external_X_ITE_X3D_Namespace_default().add ("evaluate", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+;// external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DUrlObject"
+;// external "__X_ITE_X3D__ .X3DUrlObject"
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
 var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Scripting/X3DScriptNode.js
+;// ./src/x_ite/Components/Scripting/X3DScriptNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -330,13 +330,13 @@ const X3DScriptNode_default_ = X3DScriptNode;
 ;
 
 /* harmony default export */ const Scripting_X3DScriptNode = (external_X_ITE_X3D_Namespace_default().add ("X3DScriptNode", X3DScriptNode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FileLoader"
+;// external "__X_ITE_X3D__ .FileLoader"
 const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
 var external_X_ITE_X3D_FileLoader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FileLoader_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .SFNodeCache"
+;// external "__X_ITE_X3D__ .SFNodeCache"
 const external_X_ITE_X3D_SFNodeCache_namespaceObject = __X_ITE_X3D__ .SFNodeCache;
 var external_X_ITE_X3D_SFNodeCache_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_SFNodeCache_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Scripting/Script.js
+;// ./src/x_ite/Components/Scripting/Script.js
 /* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
@@ -827,7 +827,7 @@ const Script_default_ = Script;
 ;
 
 /* harmony default export */ const Scripting_Script = (external_X_ITE_X3D_Namespace_default().add ("Script", Script_default_));
-;// CONCATENATED MODULE: ./src/assets/components/ScriptingComponent.js
+;// ./src/assets/components/ScriptingComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

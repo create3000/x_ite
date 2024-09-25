@@ -71,25 +71,25 @@ module.exports = __X_ITE_X3D__ .jquery;
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextureProperties"
+;// external "__X_ITE_X3D__ .TextureProperties"
 const external_X_ITE_X3D_TextureProperties_namespaceObject = __X_ITE_X3D__ .TextureProperties;
 var external_X_ITE_X3D_TextureProperties_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureProperties_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ViewVolume"
+;// external "__X_ITE_X3D__ .ViewVolume"
 const external_X_ITE_X3D_ViewVolume_namespaceObject = __X_ITE_X3D__ .ViewVolume;
 var external_X_ITE_X3D_ViewVolume_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ViewVolume_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Layout/X3DLayoutContext.js
+;// ./src/x_ite/Browser/Layout/X3DLayoutContext.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -226,25 +226,25 @@ const __default__ = X3DLayoutContext;
 ;
 
 /* harmony default export */ const Layout_X3DLayoutContext = (external_X_ITE_X3D_Namespace_default().add ("X3DLayoutContext", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+;// external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/X3DLayoutNode.js
+;// ./src/x_ite/Components/Layout/X3DLayoutNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -311,13 +311,13 @@ const X3DLayoutNode_default_ = X3DLayoutNode;
 ;
 
 /* harmony default export */ const Layout_X3DLayoutNode = (external_X_ITE_X3D_Namespace_default().add ("X3DLayoutNode", X3DLayoutNode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector2"
+;// external "__X_ITE_X3D__ .Vector2"
 const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
 var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+;// external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/Layout.js
+;// ./src/x_ite/Components/Layout/Layout.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -944,16 +944,16 @@ const Layout_default_ = Layout;
 ;
 
 /* harmony default export */ const Layout_Layout = (external_X_ITE_X3D_Namespace_default().add ("Layout", Layout_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
+;// external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+;// external "__X_ITE_X3D__ .TraverseType"
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/LayoutGroup.js
+;// ./src/x_ite/Components/Layout/LayoutGroup.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1126,13 +1126,13 @@ const LayoutGroup_default_ = LayoutGroup;
 ;
 
 /* harmony default export */ const Layout_LayoutGroup = (external_X_ITE_X3D_Namespace_default().add ("LayoutGroup", LayoutGroup_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLayerNode"
+;// external "__X_ITE_X3D__ .X3DLayerNode"
 const external_X_ITE_X3D_X3DLayerNode_namespaceObject = __X_ITE_X3D__ .X3DLayerNode;
 var external_X_ITE_X3D_X3DLayerNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLayerNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .OrthoViewpoint"
+;// external "__X_ITE_X3D__ .OrthoViewpoint"
 const external_X_ITE_X3D_OrthoViewpoint_namespaceObject = __X_ITE_X3D__ .OrthoViewpoint;
 var external_X_ITE_X3D_OrthoViewpoint_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_OrthoViewpoint_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/LayoutLayer.js
+;// ./src/x_ite/Components/Layout/LayoutLayer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1246,25 +1246,25 @@ const LayoutLayer_default_ = LayoutLayer;
 ;
 
 /* harmony default export */ const Layout_LayoutLayer = (external_X_ITE_X3D_Namespace_default().add ("LayoutLayer", LayoutLayer_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFontStyleNode"
+;// external "__X_ITE_X3D__ .X3DFontStyleNode"
 const external_X_ITE_X3D_X3DFontStyleNode_namespaceObject = __X_ITE_X3D__ .X3DFontStyleNode;
 var external_X_ITE_X3D_X3DFontStyleNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFontStyleNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DTextGeometry"
+;// external "__X_ITE_X3D__ .X3DTextGeometry"
 const external_X_ITE_X3D_X3DTextGeometry_namespaceObject = __X_ITE_X3D__ .X3DTextGeometry;
 var external_X_ITE_X3D_X3DTextGeometry_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTextGeometry_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextAlignment"
+;// external "__X_ITE_X3D__ .TextAlignment"
 const external_X_ITE_X3D_TextAlignment_namespaceObject = __X_ITE_X3D__ .TextAlignment;
 var external_X_ITE_X3D_TextAlignment_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextAlignment_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .PixelTexture"
+;// external "__X_ITE_X3D__ .PixelTexture"
 const external_X_ITE_X3D_PixelTexture_namespaceObject = __X_ITE_X3D__ .PixelTexture;
 var external_X_ITE_X3D_PixelTexture_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PixelTexture_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Box3"
+;// external "__X_ITE_X3D__ .Box3"
 const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
 var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+;// external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Layout/ScreenText.js
+;// ./src/x_ite/Browser/Layout/ScreenText.js
 /* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
@@ -1688,7 +1688,7 @@ const ScreenText_default_ = ScreenText;
 ;
 
 /* harmony default export */ const Layout_ScreenText = (external_X_ITE_X3D_Namespace_default().add ("ScreenText", ScreenText_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/ScreenFontStyle.js
+;// ./src/x_ite/Components/Layout/ScreenFontStyle.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1794,10 +1794,10 @@ const ScreenFontStyle_default_ = ScreenFontStyle;
 ;
 
 /* harmony default export */ const Layout_ScreenFontStyle = (external_X_ITE_X3D_Namespace_default().add ("ScreenFontStyle", ScreenFontStyle_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DProtoDeclaration"
+;// external "__X_ITE_X3D__ .X3DProtoDeclaration"
 const external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject = __X_ITE_X3D__ .X3DProtoDeclaration;
 var external_X_ITE_X3D_X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/ScreenGroup.js
+;// ./src/x_ite/Components/Layout/ScreenGroup.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1929,7 +1929,7 @@ const ScreenGroup_default_ = ScreenGroup;
 ;
 
 /* harmony default export */ const Layout_ScreenGroup = (external_X_ITE_X3D_Namespace_default().add ("ScreenGroup", ScreenGroup_default_));
-;// CONCATENATED MODULE: ./src/assets/components/LayoutComponent.js
+;// ./src/assets/components/LayoutComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

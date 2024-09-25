@@ -39,34 +39,34 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSensorNode"
+;// external "__X_ITE_X3D__ .X3DSensorNode"
 const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
 var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+;// external "__X_ITE_X3D__ .TraverseType"
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Picking/MatchCriterion.js
+;// ./src/x_ite/Browser/Picking/MatchCriterion.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -127,7 +127,7 @@ const __default__ = MatchCriterion;
 ;
 
 /* harmony default export */ const Picking_MatchCriterion = (external_X_ITE_X3D_Namespace_default().add ("MatchCriterion", __default__));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Picking/IntersectionType.js
+;// ./src/x_ite/Browser/Picking/IntersectionType.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -187,7 +187,7 @@ const IntersectionType_default_ = IntersectionType;
 ;
 
 /* harmony default export */ const Picking_IntersectionType = (external_X_ITE_X3D_Namespace_default().add ("IntersectionType", IntersectionType_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Picking/SortOrder.js
+;// ./src/x_ite/Browser/Picking/SortOrder.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -249,16 +249,16 @@ const SortOrder_default_ = SortOrder;
 ;
 
 /* harmony default export */ const Picking_SortOrder = (external_X_ITE_X3D_Namespace_default().add ("SortOrder", SortOrder_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .QuickSort"
+;// external "__X_ITE_X3D__ .QuickSort"
 const external_X_ITE_X3D_QuickSort_namespaceObject = __X_ITE_X3D__ .QuickSort;
 var external_X_ITE_X3D_QuickSort_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_QuickSort_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ObjectCache"
+;// external "__X_ITE_X3D__ .ObjectCache"
 const external_X_ITE_X3D_ObjectCache_namespaceObject = __X_ITE_X3D__ .ObjectCache;
 var external_X_ITE_X3D_ObjectCache_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ObjectCache_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/X3DPickSensorNode.js
+;// ./src/x_ite/Components/Picking/X3DPickSensorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -692,16 +692,16 @@ const X3DPickSensorNode_default_ = X3DPickSensorNode;
 ;
 
 /* harmony default export */ const Picking_X3DPickSensorNode = (external_X_ITE_X3D_Namespace_default().add ("X3DPickSensorNode", X3DPickSensorNode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Box3"
+;// external "__X_ITE_X3D__ .Box3"
 const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
 var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Line3"
+;// external "__X_ITE_X3D__ .Line3"
 const external_X_ITE_X3D_Line3_namespaceObject = __X_ITE_X3D__ .Line3;
 var external_X_ITE_X3D_Line3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Line3_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/LinePickSensor.js
+;// ./src/x_ite/Components/Picking/LinePickSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1027,10 +1027,10 @@ const LinePickSensor_default_ = LinePickSensor;
 ;
 
 /* harmony default export */ const Picking_LinePickSensor = (external_X_ITE_X3D_Namespace_default().add ("LinePickSensor", LinePickSensor_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
+;// external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/X3DPickableObject.js
+;// ./src/x_ite/Components/Picking/X3DPickableObject.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1118,7 +1118,7 @@ const X3DPickableObject_default_ = X3DPickableObject;
 ;
 
 /* harmony default export */ const Picking_X3DPickableObject = (external_X_ITE_X3D_Namespace_default().add ("X3DPickableObject", X3DPickableObject_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/PickableGroup.js
+;// ./src/x_ite/Components/Picking/PickableGroup.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1327,16 +1327,16 @@ const PickableGroup_default_ = PickableGroup;
 ;
 
 /* harmony default export */ const Picking_PickableGroup = (external_X_ITE_X3D_Namespace_default().add ("PickableGroup", PickableGroup_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+;// external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .AmmoClass"
+;// external "__X_ITE_X3D__ .AmmoClass"
 const external_X_ITE_X3D_AmmoClass_namespaceObject = __X_ITE_X3D__ .AmmoClass;
 var external_X_ITE_X3D_AmmoClass_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_AmmoClass_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Picking/VolumePicker.js
+;// ./src/x_ite/Browser/Picking/VolumePicker.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1517,7 +1517,7 @@ const VolumePicker_default_ = VolumePicker;
 ;
 
 /* harmony default export */ const Picking_VolumePicker = (external_X_ITE_X3D_Namespace_default().add ("VolumePicker", VolumePicker_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/PointPickSensor.js
+;// ./src/x_ite/Components/Picking/PointPickSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1854,7 +1854,7 @@ const PointPickSensor_default_ = PointPickSensor;
 ;
 
 /* harmony default export */ const Picking_PointPickSensor = (external_X_ITE_X3D_Namespace_default().add ("PointPickSensor", PointPickSensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/PrimitivePickSensor.js
+;// ./src/x_ite/Components/Picking/PrimitivePickSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2111,7 +2111,7 @@ const PrimitivePickSensor_default_ = PrimitivePickSensor;
 ;
 
 /* harmony default export */ const Picking_PrimitivePickSensor = (external_X_ITE_X3D_Namespace_default().add ("PrimitivePickSensor", PrimitivePickSensor_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/VolumePickSensor.js
+;// ./src/x_ite/Components/Picking/VolumePickSensor.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2343,7 +2343,7 @@ const VolumePickSensor_default_ = VolumePickSensor;
 ;
 
 /* harmony default export */ const Picking_VolumePickSensor = (external_X_ITE_X3D_Namespace_default().add ("VolumePickSensor", VolumePickSensor_default_));
-;// CONCATENATED MODULE: ./src/assets/components/PickingComponent.js
+;// ./src/assets/components/PickingComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

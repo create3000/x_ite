@@ -39,43 +39,43 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLightNode"
+;// external "__X_ITE_X3D__ .X3DLightNode"
 const external_X_ITE_X3D_X3DLightNode_namespaceObject = __X_ITE_X3D__ .X3DLightNode;
 var external_X_ITE_X3D_X3DLightNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLightNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+;// external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/X3DTextureProjectorNode.js
+;// ./src/x_ite/Components/TextureProjection/X3DTextureProjectorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -251,16 +251,16 @@ const __default__ = X3DTextureProjectorNode;
 ;
 
 /* harmony default export */ const TextureProjection_X3DTextureProjectorNode = (external_X_ITE_X3D_Namespace_default().add ("X3DTextureProjectorNode", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Camera"
+;// external "__X_ITE_X3D__ .Camera"
 const external_X_ITE_X3D_Camera_namespaceObject = __X_ITE_X3D__ .Camera;
 var external_X_ITE_X3D_Camera_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Camera_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .MatrixStack"
+;// external "__X_ITE_X3D__ .MatrixStack"
 const external_X_ITE_X3D_MatrixStack_namespaceObject = __X_ITE_X3D__ .MatrixStack;
 var external_X_ITE_X3D_MatrixStack_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_MatrixStack_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ObjectCache"
+;// external "__X_ITE_X3D__ .ObjectCache"
 const external_X_ITE_X3D_ObjectCache_namespaceObject = __X_ITE_X3D__ .ObjectCache;
 var external_X_ITE_X3D_ObjectCache_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ObjectCache_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/TextureProjector.js
+;// ./src/x_ite/Components/TextureProjection/TextureProjector.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -494,7 +494,7 @@ const TextureProjector_default_ = TextureProjector;
 ;
 
 /* harmony default export */ const TextureProjection_TextureProjector = (external_X_ITE_X3D_Namespace_default().add ("TextureProjector", TextureProjector_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/TextureProjectorParallel.js
+;// ./src/x_ite/Components/TextureProjection/TextureProjectorParallel.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -783,7 +783,7 @@ const TextureProjectorParallel_default_ = TextureProjectorParallel;
 ;
 
 /* harmony default export */ const TextureProjection_TextureProjectorParallel = (external_X_ITE_X3D_Namespace_default().add ("TextureProjectorParallel", TextureProjectorParallel_default_));
-;// CONCATENATED MODULE: ./src/assets/components/TextureProjectionComponent.js
+;// ./src/assets/components/TextureProjectionComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

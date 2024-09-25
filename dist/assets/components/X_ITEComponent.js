@@ -39,31 +39,31 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .BitSet"
+;// external "__X_ITE_X3D__ .BitSet"
 const external_X_ITE_X3D_BitSet_namespaceObject = __X_ITE_X3D__ .BitSet;
 var external_X_ITE_X3D_BitSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_BitSet_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/X3DMaterialExtensionNode.js
+;// ./src/x_ite/Components/X_ITE/X3DMaterialExtensionNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -145,10 +145,10 @@ const __default__ = X3DMaterialExtensionNode;
 ;
 
 /* harmony default export */ const X_ITE_X3DMaterialExtensionNode = (external_X_ITE_X3D_Namespace_default().add ("X3DMaterialExtensionNode", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/X_ITE/ExtensionKeys.js
+;// ./src/x_ite/Browser/X_ITE/ExtensionKeys.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -218,7 +218,7 @@ const ExtensionKeys_default_ = ExtensionKeys;
 ;
 
 /* harmony default export */ const X_ITE_ExtensionKeys = (external_X_ITE_X3D_Namespace_default().add ("ExtensionKeys", ExtensionKeys_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/AnisotropyMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/AnisotropyMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -368,10 +368,10 @@ const AnisotropyMaterialExtension_default_ = AnisotropyMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_AnisotropyMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("AnisotropyMaterialExtension", AnisotropyMaterialExtension_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DAppearanceChildNode"
+;// external "__X_ITE_X3D__ .X3DAppearanceChildNode"
 const external_X_ITE_X3D_X3DAppearanceChildNode_namespaceObject = __X_ITE_X3D__ .X3DAppearanceChildNode;
 var external_X_ITE_X3D_X3DAppearanceChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DAppearanceChildNode_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/BlendMode.js
+;// ./src/x_ite/Components/X_ITE/BlendMode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -554,10 +554,10 @@ const BlendMode_default_ = BlendMode;
 ;
 
 /* harmony default export */ const X_ITE_BlendMode = (external_X_ITE_X3D_Namespace_default().add ("BlendMode", BlendMode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+;// external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/ClearcoatMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/ClearcoatMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -745,7 +745,7 @@ const ClearcoatMaterialExtension_default_ = ClearcoatMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_ClearcoatMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("ClearcoatMaterialExtension", ClearcoatMaterialExtension_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DepthMode.js
+;// ./src/x_ite/Components/X_ITE/DepthMode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -896,7 +896,7 @@ const DepthMode_default_ = DepthMode;
 ;
 
 /* harmony default export */ const X_ITE_DepthMode = (external_X_ITE_X3D_Namespace_default().add ("DepthMode", DepthMode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DiffuseTransmissionMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/DiffuseTransmissionMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1075,7 +1075,7 @@ const DiffuseTransmissionMaterialExtension_default_ = DiffuseTransmissionMateria
 ;
 
 /* harmony default export */ const X_ITE_DiffuseTransmissionMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("DiffuseTransmissionMaterialExtension", DiffuseTransmissionMaterialExtension_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DispersionMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/DispersionMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1187,7 +1187,7 @@ const DispersionMaterialExtension_default_ = DispersionMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_DispersionMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("DispersionMaterialExtension", DispersionMaterialExtension_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1299,24 +1299,24 @@ const EmissiveStrengthMaterialExtension_default_ = EmissiveStrengthMaterialExten
 ;
 
 /* harmony default export */ const X_ITE_EmissiveStrengthMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("EmissiveStrengthMaterialExtension", EmissiveStrengthMaterialExtension_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DShapeNode"
+;// external "__X_ITE_X3D__ .X3DShapeNode"
 const external_X_ITE_X3D_X3DShapeNode_namespaceObject = __X_ITE_X3D__ .X3DShapeNode;
 var external_X_ITE_X3D_X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DShapeNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+;// external "__X_ITE_X3D__ .TraverseType"
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .VertexArray"
+;// external "__X_ITE_X3D__ .VertexArray"
 const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArray;
 var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Box3"
+;// external "__X_ITE_X3D__ .Box3"
 const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
 var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/InstancedShape.js
+;// ./src/x_ite/Components/X_ITE/InstancedShape.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1614,7 +1614,7 @@ const InstancedShape_default_ = InstancedShape;
 ;
 
 /* harmony default export */ const X_ITE_InstancedShape = (external_X_ITE_X3D_Namespace_default().add ("InstancedShape", InstancedShape_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/IORMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/IORMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1726,7 +1726,7 @@ const IORMaterialExtension_default_ = IORMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_IORMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("IORMaterialExtension", IORMaterialExtension_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/IridescenceMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/IridescenceMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1910,7 +1910,7 @@ const IridescenceMaterialExtension_default_ = IridescenceMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_IridescenceMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("IridescenceMaterialExtension", IridescenceMaterialExtension_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SheenMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/SheenMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2099,10 +2099,10 @@ const SheenMaterialExtension_default_ = SheenMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_SheenMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("SheenMaterialExtension", SheenMaterialExtension_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DOneSidedMaterialNode"
+;// external "__X_ITE_X3D__ .X3DOneSidedMaterialNode"
 const external_X_ITE_X3D_X3DOneSidedMaterialNode_namespaceObject = __X_ITE_X3D__ .X3DOneSidedMaterialNode;
 var external_X_ITE_X3D_X3DOneSidedMaterialNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DOneSidedMaterialNode_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SpecularGlossinessMaterial.js
+;// ./src/x_ite/Components/X_ITE/SpecularGlossinessMaterial.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2442,7 +2442,7 @@ const SpecularGlossinessMaterial_default_ = SpecularGlossinessMaterial;
 ;
 
 /* harmony default export */ const X_ITE_SpecularGlossinessMaterial = (external_X_ITE_X3D_Namespace_default().add ("SpecularGlossinessMaterial", SpecularGlossinessMaterial_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SpecularMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/SpecularMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2621,7 +2621,7 @@ const SpecularMaterialExtension_default_ = SpecularMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_SpecularMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("SpecularMaterialExtension", SpecularMaterialExtension_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/TransmissionMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/TransmissionMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2795,7 +2795,7 @@ const TransmissionMaterialExtension_default_ = TransmissionMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_TransmissionMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("TransmissionMaterialExtension", TransmissionMaterialExtension_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/VolumeMaterialExtension.js
+;// ./src/x_ite/Components/X_ITE/VolumeMaterialExtension.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2963,7 +2963,7 @@ const VolumeMaterialExtension_default_ = VolumeMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_VolumeMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("VolumeMaterialExtension", VolumeMaterialExtension_default_));
-;// CONCATENATED MODULE: ./src/assets/components/X_ITEComponent.js
+;// ./src/assets/components/X_ITEComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

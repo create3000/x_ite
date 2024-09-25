@@ -39,31 +39,31 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/Contour2D.js
+;// ./src/x_ite/Components/NURBS/Contour2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -222,7 +222,7 @@ const __default__ = Contour2D;
 ;
 
 /* harmony default export */ const NURBS_Contour2D = (external_X_ITE_X3D_Namespace_default().add ("Contour2D", __default__));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DNurbsControlCurveNode.js
+;// ./src/x_ite/Components/NURBS/X3DNurbsControlCurveNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -288,10 +288,10 @@ const X3DNurbsControlCurveNode_default_ = X3DNurbsControlCurveNode;
 ;
 
 /* harmony default export */ const NURBS_X3DNurbsControlCurveNode = (external_X_ITE_X3D_Namespace_default().add ("X3DNurbsControlCurveNode", X3DNurbsControlCurveNode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/ContourPolyline2D.js
+;// ./src/x_ite/Components/NURBS/ContourPolyline2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -414,16 +414,16 @@ const ContourPolyline2D_default_ = ContourPolyline2D;
 ;
 
 /* harmony default export */ const NURBS_ContourPolyline2D = (external_X_ITE_X3D_Namespace_default().add ("ContourPolyline2D", ContourPolyline2D_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGeometryNode"
+;// external "__X_ITE_X3D__ .X3DGeometryNode"
 const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
 var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector2"
+;// external "__X_ITE_X3D__ .Vector2"
 const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
 var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector4"
+;// external "__X_ITE_X3D__ .Vector4"
 const external_X_ITE_X3D_Vector4_namespaceObject = __X_ITE_X3D__ .Vector4;
 var external_X_ITE_X3D_Vector4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector4_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/NURBS/NURBS.js
+;// ./src/x_ite/Browser/NURBS/NURBS.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -889,7 +889,7 @@ const NURBS_default_ = NURBS;
 ;
 
 /* harmony default export */ const NURBS_NURBS = (external_X_ITE_X3D_Namespace_default().add ("NURBS", NURBS_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DParametricGeometryNode.js
+;// ./src/x_ite/Components/NURBS/X3DParametricGeometryNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -963,10 +963,10 @@ const X3DParametricGeometryNode_default_ = X3DParametricGeometryNode;
 ;
 
 /* harmony default export */ const NURBS_X3DParametricGeometryNode = (external_X_ITE_X3D_Namespace_default().add ("X3DParametricGeometryNode", X3DParametricGeometryNode_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLineGeometryNode"
+;// external "__X_ITE_X3D__ .X3DLineGeometryNode"
 const external_X_ITE_X3D_X3DLineGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DLineGeometryNode;
 var external_X_ITE_X3D_X3DLineGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLineGeometryNode_namespaceObject);
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/is-ndarray.js
+;// ./src/lib/nurbs/src/utils/is-ndarray.js
 
 // Source: https://github.com/scijs/isndarray
 // By Kyle Robinson Young, MIT Licensed.
@@ -986,7 +986,7 @@ const is_ndarray_default_ = function (arr)
 ;
 
 /* harmony default export */ const is_ndarray = (external_X_ITE_X3D_Namespace_default().add ("is-ndarray", is_ndarray_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/is-ndarray-like.js
+;// ./src/lib/nurbs/src/utils/is-ndarray-like.js
 
 const is_ndarray_like_default_ = function (arr)
 {
@@ -1003,7 +1003,7 @@ const is_ndarray_like_default_ = function (arr)
 ;
 
 /* harmony default export */ const is_ndarray_like = (external_X_ITE_X3D_Namespace_default().add ("is-ndarray-like", is_ndarray_like_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/is-array-like.js
+;// ./src/lib/nurbs/src/utils/is-array-like.js
 
 const is_array_like_default_ = function isArrayLike (data)
 {
@@ -1012,7 +1012,7 @@ const is_array_like_default_ = function isArrayLike (data)
 ;
 
 /* harmony default export */ const is_array_like = (external_X_ITE_X3D_Namespace_default().add ("is-array-like", is_array_like_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/infer-type.js
+;// ./src/lib/nurbs/src/utils/infer-type.js
 
 
 
@@ -1060,7 +1060,7 @@ const infer_type_default_ = inferType;
 ;
 
 /* harmony default export */ const infer_type = (external_X_ITE_X3D_Namespace_default().add ("infer-type", infer_type_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/cache-key.js
+;// ./src/lib/nurbs/src/utils/cache-key.js
 
 
 
@@ -1114,7 +1114,7 @@ const cache_key_default_ = function (nurbs, debug, checkBounds, pointType, weigh
 ;
 
 /* harmony default export */ const cache_key = (external_X_ITE_X3D_Namespace_default().add ("cache-key", cache_key_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/variable.js
+;// ./src/lib/nurbs/src/utils/variable.js
 
 var createVariable = function createVariable (name, nurbs) {
    return function (i, period) {
@@ -1144,7 +1144,7 @@ const variable_default_ = createVariable;
 ;
 
 /* harmony default export */ const variable = (external_X_ITE_X3D_Namespace_default().add ("variable", variable_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/create-accessors.js
+;// ./src/lib/nurbs/src/utils/create-accessors.js
 
 
 
@@ -1251,7 +1251,7 @@ const create_accessors_default_ = function (nurbs)
 ;
 
 /* harmony default export */ const create_accessors = (external_X_ITE_X3D_Namespace_default().add ("create-accessors", create_accessors_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/numerical-derivative.js
+;// ./src/lib/nurbs/src/numerical-derivative.js
 
 var args = [];
 var tmp = [];
@@ -1304,7 +1304,7 @@ const numerical_derivative_default_ = function numericalDerivative (out, order, 
 ;
 
 /* harmony default export */ const numerical_derivative = (external_X_ITE_X3D_Namespace_default().add ("numerical-derivative", numerical_derivative_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/ndloop.js
+;// ./src/lib/nurbs/src/utils/ndloop.js
 
 const ndloop_default_ = function ndloop (n, callback) {
    for (var m = 1, k = 0, i = []; k < n.length; k++) {
@@ -1326,7 +1326,7 @@ const ndloop_default_ = function ndloop (n, callback) {
 ;
 
 /* harmony default export */ const ndloop = (external_X_ITE_X3D_Namespace_default().add ("ndloop", ndloop_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/accessor-preamble.js
+;// ./src/lib/nurbs/src/utils/accessor-preamble.js
 
 
 
@@ -1357,7 +1357,7 @@ const accessor_preamble_default_ = function (nurbs, variableName, propertyName, 
 ;
 
 /* harmony default export */ const accessor_preamble = (external_X_ITE_X3D_Namespace_default().add ("accessor-preamble", accessor_preamble_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/size-getter.js
+;// ./src/lib/nurbs/src/utils/size-getter.js
 
 
 
@@ -1377,7 +1377,7 @@ const size_getter_default_ = function (data, dataVariableName, dimension) {
 ;
 
 /* harmony default export */ const size_getter = (external_X_ITE_X3D_Namespace_default().add ("size-getter", size_getter_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/evaluator.js
+;// ./src/lib/nurbs/src/evaluator.js
 
 
 
@@ -1783,7 +1783,7 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
 ;
 
 /* harmony default export */ const evaluator = (external_X_ITE_X3D_Namespace_default().add ("evaluator", evaluator_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/transform.js
+;// ./src/lib/nurbs/src/transform.js
 
 
 
@@ -1857,7 +1857,7 @@ const transform_default_ = function createTransform (cacheKey, nurbs, accessors,
 ;
 
 /* harmony default export */ const transform = (external_X_ITE_X3D_Namespace_default().add ("transform", transform_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/src/support.js
+;// ./src/lib/nurbs/src/support.js
 
 
 
@@ -2001,7 +2001,7 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
 ;
 
 /* harmony default export */ const support = (external_X_ITE_X3D_Namespace_default().add ("support", support_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/extras/sample.js
+;// ./src/lib/nurbs/extras/sample.js
 const
    tmp1       = [ ],
    pointIndex = new Map (),
@@ -2213,7 +2213,7 @@ const sample_default_ = sample;
 ;
 
 /* harmony default export */ const extras_sample = (external_X_ITE_X3D_Namespace_default().add ("sample", sample_default_));
-;// CONCATENATED MODULE: ./src/lib/nurbs/nurbs.js
+;// ./src/lib/nurbs/nurbs.js
 
 
 
@@ -2542,7 +2542,7 @@ const nurbs_default_ = nurbs;
 ;
 
 /* harmony default export */ const nurbs_nurbs = (external_X_ITE_X3D_Namespace_default().add ("nurbs", nurbs_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsCurve.js
+;// ./src/x_ite/Components/NURBS/NurbsCurve.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2765,7 +2765,7 @@ const NurbsCurve_default_ = NurbsCurve;
 ;
 
 /* harmony default export */ const NURBS_NurbsCurve = (external_X_ITE_X3D_Namespace_default().add ("NurbsCurve", NurbsCurve_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsCurve2D.js
+;// ./src/x_ite/Components/NURBS/NurbsCurve2D.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2959,16 +2959,16 @@ const NurbsCurve2D_default_ = NurbsCurve2D;
 ;
 
 /* harmony default export */ const NURBS_NurbsCurve2D = (external_X_ITE_X3D_Namespace_default().add ("NurbsCurve2D", NurbsCurve2D_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+;// external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+;// external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+;// external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsOrientationInterpolator.js
+;// ./src/x_ite/Components/NURBS/NurbsOrientationInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3121,10 +3121,10 @@ const NurbsOrientationInterpolator_default_ = NurbsOrientationInterpolator;
 ;
 
 /* harmony default export */ const NURBS_NurbsOrientationInterpolator = (external_X_ITE_X3D_Namespace_default().add ("NurbsOrientationInterpolator", NurbsOrientationInterpolator_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Triangle3"
+;// external "__X_ITE_X3D__ .Triangle3"
 const external_X_ITE_X3D_Triangle3_namespaceObject = __X_ITE_X3D__ .Triangle3;
 var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Triangle3_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js
+;// ./src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3533,7 +3533,7 @@ const X3DNurbsSurfaceGeometryNode_default_ = X3DNurbsSurfaceGeometryNode;
 ;
 
 /* harmony default export */ const NURBS_X3DNurbsSurfaceGeometryNode = (external_X_ITE_X3D_Namespace_default().add ("X3DNurbsSurfaceGeometryNode", X3DNurbsSurfaceGeometryNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsPatchSurface.js
+;// ./src/x_ite/Components/NURBS/NurbsPatchSurface.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3627,7 +3627,7 @@ const NurbsPatchSurface_default_ = NurbsPatchSurface;
 ;
 
 /* harmony default export */ const NURBS_NurbsPatchSurface = (external_X_ITE_X3D_Namespace_default().add ("NurbsPatchSurface", NurbsPatchSurface_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsPositionInterpolator.js
+;// ./src/x_ite/Components/NURBS/NurbsPositionInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3769,10 +3769,10 @@ const NurbsPositionInterpolator_default_ = NurbsPositionInterpolator;
 ;
 
 /* harmony default export */ const NURBS_NurbsPositionInterpolator = (external_X_ITE_X3D_Namespace_default().add ("NurbsPositionInterpolator", NurbsPositionInterpolator_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBoundedObject"
+;// external "__X_ITE_X3D__ .X3DBoundedObject"
 const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
 var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSet.js
+;// ./src/x_ite/Components/NURBS/NurbsSet.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3944,7 +3944,7 @@ const NurbsSet_default_ = NurbsSet;
 ;
 
 /* harmony default export */ const NURBS_NurbsSet = (external_X_ITE_X3D_Namespace_default().add ("NurbsSet", NurbsSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSurfaceInterpolator.js
+;// ./src/x_ite/Components/NURBS/NurbsSurfaceInterpolator.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -4117,10 +4117,10 @@ const NurbsSurfaceInterpolator_default_ = NurbsSurfaceInterpolator;
 ;
 
 /* harmony default export */ const NURBS_NurbsSurfaceInterpolator = (external_X_ITE_X3D_Namespace_default().add ("NurbsSurfaceInterpolator", NurbsSurfaceInterpolator_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Extrusion"
+;// external "__X_ITE_X3D__ .Extrusion"
 const external_X_ITE_X3D_Extrusion_namespaceObject = __X_ITE_X3D__ .Extrusion;
 var external_X_ITE_X3D_Extrusion_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Extrusion_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSweptSurface.js
+;// ./src/x_ite/Components/NURBS/NurbsSweptSurface.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -4286,7 +4286,7 @@ const NurbsSweptSurface_default_ = NurbsSweptSurface;
 ;
 
 /* harmony default export */ const NURBS_NurbsSweptSurface = (external_X_ITE_X3D_Namespace_default().add ("NurbsSweptSurface", NurbsSweptSurface_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSwungSurface.js
+;// ./src/x_ite/Components/NURBS/NurbsSwungSurface.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -4452,7 +4452,7 @@ const NurbsSwungSurface_default_ = NurbsSwungSurface;
 ;
 
 /* harmony default export */ const NURBS_NurbsSwungSurface = (external_X_ITE_X3D_Namespace_default().add ("NurbsSwungSurface", NurbsSwungSurface_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsTextureCoordinate.js
+;// ./src/x_ite/Components/NURBS/NurbsTextureCoordinate.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -4592,7 +4592,7 @@ const NurbsTextureCoordinate_default_ = NurbsTextureCoordinate;
 ;
 
 /* harmony default export */ const NURBS_NurbsTextureCoordinate = (external_X_ITE_X3D_Namespace_default().add ("NurbsTextureCoordinate", NurbsTextureCoordinate_default_));
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle2.js
+;// ./src/standard/Math/Geometry/Triangle2.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -4731,10 +4731,10 @@ const Triangle2_default_ = Triangle2;
 ;
 
 /* harmony default export */ const Geometry_Triangle2 = (external_X_ITE_X3D_Namespace_default().add ("Triangle2", Triangle2_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .libtess"
+;// external "__X_ITE_X3D__ .libtess"
 const external_X_ITE_X3D_libtess_namespaceObject = __X_ITE_X3D__ .libtess;
 var external_X_ITE_X3D_libtess_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_libtess_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsTrimmedSurface.js
+;// ./src/x_ite/Components/NURBS/NurbsTrimmedSurface.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -5162,7 +5162,7 @@ const NurbsTrimmedSurface_default_ = NurbsTrimmedSurface;
 ;
 
 /* harmony default export */ const NURBS_NurbsTrimmedSurface = (external_X_ITE_X3D_Namespace_default().add ("NurbsTrimmedSurface", NurbsTrimmedSurface_default_));
-;// CONCATENATED MODULE: ./src/assets/components/NURBSComponent.js
+;// ./src/assets/components/NURBSComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

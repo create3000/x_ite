@@ -39,31 +39,31 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+;// external "__X_ITE_X3D__ .X3DFieldDefinition"
 const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
 var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+;// external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+;// external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/DISEntityManager.js
+;// ./src/x_ite/Components/DIS/DISEntityManager.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -159,13 +159,13 @@ const __default__ = DISEntityManager;
 ;
 
 /* harmony default export */ const DIS_DISEntityManager = (external_X_ITE_X3D_Namespace_default().add ("DISEntityManager", __default__));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DInfoNode"
+;// external "__X_ITE_X3D__ .X3DInfoNode"
 const external_X_ITE_X3D_X3DInfoNode_namespaceObject = __X_ITE_X3D__ .X3DInfoNode;
 var external_X_ITE_X3D_X3DInfoNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DInfoNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DUrlObject"
+;// external "__X_ITE_X3D__ .X3DUrlObject"
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
 var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/DISEntityTypeMapping.js
+;// ./src/x_ite/Components/DIS/DISEntityTypeMapping.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -276,13 +276,13 @@ const DISEntityTypeMapping_default_ = DISEntityTypeMapping;
 ;
 
 /* harmony default export */ const DIS_DISEntityTypeMapping = (external_X_ITE_X3D_Namespace_default().add ("DISEntityTypeMapping", DISEntityTypeMapping_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
+;// external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSensorNode"
+;// external "__X_ITE_X3D__ .X3DSensorNode"
 const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
 var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/EspduTransform.js
+;// ./src/x_ite/Components/DIS/EspduTransform.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -477,10 +477,10 @@ const EspduTransform_default_ = EspduTransform;
 ;
 
 /* harmony default export */ const DIS_EspduTransform = (external_X_ITE_X3D_Namespace_default().add ("EspduTransform", EspduTransform_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBoundedObject"
+;// external "__X_ITE_X3D__ .X3DBoundedObject"
 const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
 var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/ReceiverPdu.js
+;// ./src/x_ite/Components/DIS/ReceiverPdu.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -620,7 +620,7 @@ const ReceiverPdu_default_ = ReceiverPdu;
 ;
 
 /* harmony default export */ const DIS_ReceiverPdu = (external_X_ITE_X3D_Namespace_default().add ("ReceiverPdu", ReceiverPdu_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/SignalPdu.js
+;// ./src/x_ite/Components/DIS/SignalPdu.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -759,7 +759,7 @@ const SignalPdu_default_ = SignalPdu;
 ;
 
 /* harmony default export */ const DIS_SignalPdu = (external_X_ITE_X3D_Namespace_default().add ("SignalPdu", SignalPdu_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/TransmitterPdu.js
+;// ./src/x_ite/Components/DIS/TransmitterPdu.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -914,7 +914,7 @@ const TransmitterPdu_default_ = TransmitterPdu;
 ;
 
 /* harmony default export */ const DIS_TransmitterPdu = (external_X_ITE_X3D_Namespace_default().add ("TransmitterPdu", TransmitterPdu_default_));
-;// CONCATENATED MODULE: ./src/assets/components/DISComponent.js
+;// ./src/assets/components/DISComponent.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
