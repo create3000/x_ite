@@ -2732,7 +2732,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       {
          const index = vertices .length;
 
-         vertices .push (coords);
+         vertices .push (new Vector3 (... coords));
 
          return index;
       }
