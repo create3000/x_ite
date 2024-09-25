@@ -926,8 +926,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          }
       }
 
-      // Currently used for ScreenText and Tools.
-      this .getGeometry () .traverse (type, renderObject);
+      if (this .geometryType === GeometryTypes .GEOMETRY)
+      {
+         // Currently used for ScreenText and Tools.
+         this .getGeometry () ?.traverse (type, renderObject);
+      }
    },
    displaySimple (gl, renderContext, shaderNode)
    {
