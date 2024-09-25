@@ -13,7 +13,7 @@ export default /* glsl */ `
    varying vec4 color;
 #endif
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 

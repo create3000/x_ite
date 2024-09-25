@@ -8,7 +8,7 @@ in vec3 vertex;
 in vec3 normal;
 in vec4 texCoord;
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    in vec4 texCoord0;
 #else
    vec4 texCoord0 = vec4 (0.0, 0.0, 0.0, 1.0);

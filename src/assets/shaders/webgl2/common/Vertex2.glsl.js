@@ -20,7 +20,7 @@ uniform mat4 x3d_ModelViewMatrix;
    in vec4 x3d_Color;
 #endif
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
@@ -44,7 +44,7 @@ in vec4 x3d_Vertex;
    out vec4 color;
 #endif
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
@@ -135,7 +135,7 @@ vertex_main ()
       color = x3d_Color;
    #endif
 
-   #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   #if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
          ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 

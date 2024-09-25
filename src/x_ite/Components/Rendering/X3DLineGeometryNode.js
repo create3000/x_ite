@@ -194,13 +194,24 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       if (this .thickLinesVertexArrayObject .enable (shaderNode .getProgram ()))
       {
+         if (this .hasNormals)
+         {
+            const
+               stride       = (9 + 4 + 3) * Float32Array .BYTES_PER_ELEMENT,
+               normalOffset = 13 * Float32Array .BYTES_PER_ELEMENT;
+
+            shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer2, stride, normalOffset);
+         }
+
          const
             stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
             coordIndexOffset  = 0,
             lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
             vertexOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
 
-         shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer0, stride, coordIndexOffset);
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .lineTrianglesBuffer0, stride, coordIndexOffset);
+
          shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer0, stride, lineStippleOffset);
          shaderNode .enableVertexAttribute      (gl, this .lineTrianglesBuffer0, stride, vertexOffset);
       }
@@ -208,6 +219,94 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       gl .frontFace (gl .CCW);
       gl .enable (gl .CULL_FACE);
       gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
+
+      return true;
+   },
+   displaySimpleInstanced (gl, shaderNode, shapeNode)
+   {
+      if (this .displaySimpleInstancedThick (gl, shaderNode, shapeNode))
+         return;
+
+      const instances = shapeNode .getInstances ();
+
+      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+      {
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+
+         if (particleOffset !== undefined)
+            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
+
+         shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+         if (normalMatrixOffset !== undefined)
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
+         shaderNode .enableVertexAttribute      (gl, this .vertexBuffer,    0, 0);
+
+         this .updateInstances = false;
+      }
+
+      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+   },
+   displaySimpleInstancedThick (gl, shaderNode, shapeNode)
+   {
+      const linePropertiesNode = shapeNode .getAppearance () .getStyleProperties (1);
+
+      if (!linePropertiesNode)
+         return false;
+
+      if (!linePropertiesNode .getTransformLines ())
+         return false;
+
+      // Setup vertex attributes.
+
+      const instances = shapeNode .getInstances ();
+
+      if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+      {
+         shaderNode .enableInstanceMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer1], 0, 0, 0);
+
+         if (this .hasNormals)
+         {
+            const
+               stride             = (9 + 4 + 3) * Float32Array .BYTES_PER_ELEMENT,
+               normalMatrixOffset = 0,
+               normalOffset       = 13 * Float32Array .BYTES_PER_ELEMENT;
+
+            if (shapeNode .normalMatrixOffset)
+               shaderNode .enableInstanceNormalMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, normalMatrixOffset, 0);
+
+            shaderNode .enableNormalAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, normalOffset);
+         }
+
+         const
+            stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
+            coordIndexOffset  = 0,
+            lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+            vertexOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
+
+         // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+         //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, coordIndexOffset);
+
+         shaderNode .enableLineStippleAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, lineStippleOffset);
+         shaderNode .enableVertexAttribute      (gl, shapeNode [_lineTrianglesBuffer0], stride, vertexOffset);
+
+         this .updateInstances = false;
+      }
+
+      gl .frontFace (gl .CCW);
+      gl .enable (gl .CULL_FACE);
+      gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3 * shapeNode .getNumInstances ());
 
       return true;
    },

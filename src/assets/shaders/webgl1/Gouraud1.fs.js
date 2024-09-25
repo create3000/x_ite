@@ -8,7 +8,7 @@ precision highp samplerCube;
 
 varying vec4 frontColor;
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    varying vec4 backColor;
 #endif
 

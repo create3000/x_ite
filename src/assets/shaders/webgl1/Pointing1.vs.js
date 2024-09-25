@@ -8,14 +8,14 @@ uniform mat4 x3d_ModelViewMatrix;
 attribute vec4 x3d_Vertex;
 attribute vec3 x3d_Normal;
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    attribute vec4 x3d_TexCoord0;
 #endif
 
 varying vec3 vertex;
 varying vec3 normal;
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    varying vec4 texCoord0;
 #endif
 
@@ -35,7 +35,7 @@ main ()
    vertex = position .xyz;
    normal = x3d_Normal;
 
-   #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   #if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
       texCoord0 = x3d_TexCoord0;
    #endif
 

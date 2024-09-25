@@ -8,7 +8,7 @@ precision highp sampler2D;
 varying vec3 vertex;
 varying vec3 normal;
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    varying vec4 texCoord0;
 #else
    vec4 texCoord0 = vec4 (0.0, 0.0, 0.0, 1.0);
