@@ -194,7 +194,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       // Check if pass 1 and/or pass 2 are already run.
 
-      const numLines = this .getVertices () .length / 8 * shapeNode .getNumInstances ();
+      const numLines = this .getVertices () .length / 8;
 
       if (this .numLines2 !== numLines)
          return true;
