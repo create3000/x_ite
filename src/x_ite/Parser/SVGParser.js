@@ -926,10 +926,12 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       // Create nodes.
 
-      const coordinateNode = scene .createNode ("Coordinate");
+      const
+         coordinateNode = scene .createNode ("Coordinate"),
+         vertices       = coordinateNode .point;
 
-      for (const points of contours)
-         coordinateNode .point .push (... points);
+      for (const contour of contours)
+         vertices .push (... contour);
 
       if (this .style .fillType !== "none")
       {
@@ -2721,13 +2723,13 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       // Callback for when segments intersect and must be split.
 
-      const points = coordinateNode .point;
+      const vertices = coordinateNode .point;
 
       function combineCallback (coords, data, weight)
       {
-         const index = points .length;
+         const index = vertices .length;
 
-         points .push (coords);
+         vertices .push (coords);
 
          return index;
       }
