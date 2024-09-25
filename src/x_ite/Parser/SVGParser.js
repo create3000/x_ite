@@ -930,8 +930,11 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          coordinateNode = scene .createNode ("Coordinate"),
          vertices       = coordinateNode .point;
 
-      for (const contour of contours)
-         vertices .push (... contour);
+      for (const points of contours)
+      {
+         for (const point of points)
+            vertices .push (point);
+      }
 
       if (this .style .fillType !== "none")
       {
