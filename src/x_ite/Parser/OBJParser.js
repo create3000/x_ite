@@ -110,6 +110,7 @@ function OBJParser (scene)
 
    // Globals
 
+   this .geometryIndices = new Map ();
    this .smoothingGroup  = 0;
    this .smoothingGroups = new Map ();
    this .groups          = new Map ();
@@ -181,9 +182,20 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       await this .statements ();
 
+      // Assign indices and points.
+
+      for (const [geometry, indices] of this .geometryIndices)
+      {
+         geometry .texCoordIndex = indices .texCoordIndex;
+         geometry .normalIndex   = indices .normalIndex;
+         geometry .coordIndex    = indices .coordIndex;
+      }
+
       this .texCoord .point  = this .texCoords;
       this .normal   .vector = this .normals;
       this .coord    .point  = this .vertices;
+
+      // Finish scene.
 
       this .optimizeSceneGraph (scene .getRootNodes ());
 
@@ -534,6 +546,12 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          {
             this .shape    = this .smoothingGroups .get (this .group .getNodeName ()) .get (this .smoothingGroup);
             this .geometry = this .shape .geometry;
+
+            const indices = this .geometryIndices .get (this .geometry);
+
+            this .texCoordIndex = indices .texCoordIndex;
+            this .normalIndex   = indices .normalIndex;
+            this .coordIndex    = indices .coordIndex;
          }
          catch
          {
@@ -541,8 +559,18 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
                scene      = this .getExecutionContext (),
                appearance = scene .createNode ("Appearance");
 
-            this .geometry = scene .createNode ("IndexedFaceSet");
-            this .shape    = scene .createNode ("Shape");
+            this .shape         = scene .createNode ("Shape");
+            this .geometry      = scene .createNode ("IndexedFaceSet");
+            this .texCoordIndex = [ ];
+            this .normalIndex   = [ ];
+            this .coordIndex    = [ ];
+
+            this .geometryIndices .set (this .geometry,
+            {
+               texCoordIndex: this .texCoordIndex,
+               normalIndex:   this .normalIndex,
+               coordIndex:    this .coordIndex,
+            });
 
             appearance .material        = this .material;
             appearance .texture         = this .texture;
@@ -561,10 +589,10 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          while (this .f ())
             ;
 
-         if (this .geometry .texCoordIndex .length)
+         if (this .texCoordIndex .length)
             this .geometry .texCoord = this .texCoord;
 
-         if (this .geometry .normalIndex .length)
+         if (this .normalIndex .length)
             this .geometry .normal = this .normal;
 
          this .geometry .coord = this .coord;
@@ -581,10 +609,9 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       if (Grammar .f .parse (this))
       {
          const
-            geometry           = this .geometry,
-            texCoordIndex      = geometry .texCoordIndex,
-            normalIndex        = geometry .normalIndex,
-            coordIndex         = geometry .coordIndex,
+            texCoordIndex      = this .texCoordIndex,
+            normalIndex        = this .normalIndex,
+            coordIndex         = this .coordIndex,
             numTexCoordIndices = texCoordIndex .length,
             numNormalIndices   = normalIndex .length,
             numTexCoords       = this .texCoords .length,
