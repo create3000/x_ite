@@ -10,9 +10,9 @@
     <meta name='created' content='Sat, 28 Jan 2023 13:31:50 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.4, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.20, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Tue, 02 Jul 2024 15:38:50 GMT'/>
+    <meta name='modified' content='Thu, 26 Sep 2024 15:34:32 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -38,19 +38,31 @@
         type='"NONE"'/>
     <Background DEF='White'
         transparency='1'/>
-    <Transform DEF='Rectangle2D_1'
+    <Transform DEF='Image'
         scale='16 5 1'>
       <Shape>
         <Appearance>
           <UnlitMaterial
-              emissiveColor='0.7372549 0.7372549 0.7372549'/>
+              emissiveColor='0.8949219 0.8949219 0.8949219'/>
           <ImageTexture
-              url='"colors.jpg"'>
+              url='"triangles.jpg"'>
             <TextureProperties
                 generateMipMaps='true'
                 minificationFilter='NICEST'
                 magnificationFilter='NICEST'/>
           </ImageTexture>
+        </Appearance>
+        <Rectangle2D/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Rectangle2D'
+        translation='0 -0.65 0'
+        scale='14.94663 1 1'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0 0 0'
+              transparency='0.5567618'/>
         </Appearance>
         <Rectangle2D/>
       </Shape>
@@ -73,7 +85,7 @@
             <UnlitMaterial/>
           </Appearance>
           <Text DEF='_4'
-              string='"X_ITE v10.0.2"'
+              string='"X_ITE v10.5.3"'
               solid='true'>
             <FontStyle
                 family='"Michroma-Regular.ttf", "SANS"'
