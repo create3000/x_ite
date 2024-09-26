@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.20, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Thu, 26 Sep 2024 15:38:57 GMT'/>
+    <meta name='modified' content='Thu, 26 Sep 2024 15:46:59 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -36,7 +36,7 @@
     </WorldInfo>
     <NavigationInfo
         type='"NONE"'/>
-    <Background DEF='White'
+    <Background DEF='Transparent'
         transparency='1'/>
     <Transform DEF='Image'
         scale='16 5 1'>
@@ -52,7 +52,7 @@
                 magnificationFilter='NICEST'/>
           </ImageTexture>
         </Appearance>
-        <Rectangle2D/>
+        <Rectangle2D DEF='_1'/>
       </Shape>
     </Transform>
     <Transform DEF='Rectangle2D'
@@ -64,27 +64,27 @@
               emissiveColor='0 0 0'
               transparency='0.5567618'/>
         </Appearance>
-        <Rectangle2D/>
+        <Rectangle2D USE='_1'/>
       </Shape>
     </Transform>
     <Transform DEF='Text'
         rotation='1 0 0 180'
         center='-3.834375 -0.643363 1'>
       <Group DEF='Animation'>
-        <TimeSensor DEF='_1'
+        <TimeSensor DEF='_2'
             cycleInterval='0.5'
             startTime='1719933110.913'/>
-        <OrientationInterpolator DEF='_2'
+        <OrientationInterpolator DEF='_3'
             key='0, 0.5, 1'
             keyValue='1 0 0 0, 1 0 0 90, 1 0 0 180'/>
       </Group>
       <Transform DEF='Front'
           translation='-9 -0.643363 1'>
-        <Shape DEF='_3'>
+        <Shape DEF='_4'>
           <Appearance>
             <UnlitMaterial/>
           </Appearance>
-          <Text DEF='_4'
+          <Text DEF='_5'
               string='"X_ITE v10.5.3"'
               solid='true'>
             <FontStyle
@@ -97,10 +97,10 @@
       <Transform DEF='Back'
           translation='-9 -0.643363 1'
           rotation='1 0 0 180'>
-        <Shape USE='_3'/>
+        <Shape USE='_4'/>
       </Transform>
     </Transform>
-    <TouchSensor DEF='_5'/>
+    <TouchSensor DEF='_6'/>
     <Script DEF='X_ITE'>
       <field accessType='outputOnly' type='MFString' name='string_changed'/>
 <![CDATA[ecmascript:
@@ -111,9 +111,9 @@ function initialize ()
 }
 ]]>
     </Script>
-    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_4' toField='set_string'/>
-    <ROUTE fromNode='_5' fromField='touchTime' toNode='_1' toField='set_startTime'/>
-    <ROUTE fromNode='_1' fromField='fraction_changed' toNode='_2' toField='set_fraction'/>
-    <ROUTE fromNode='_2' fromField='value_changed' toNode='Text' toField='set_rotation'/>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
+    <ROUTE fromNode='_6' fromField='touchTime' toNode='_2' toField='set_startTime'/>
+    <ROUTE fromNode='_2' fromField='fraction_changed' toNode='_3' toField='set_fraction'/>
+    <ROUTE fromNode='_3' fromField='value_changed' toNode='Text' toField='set_rotation'/>
   </Scene>
 </X3D>
