@@ -26,16 +26,14 @@ permalink: /
 
 ## Overview
 
-X_ITE is a comprehensive 3D library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D, VRML and other sources online within an HTML5 page with X_ITE that works with web browsers **without** prior plug-in installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X_ITE can also be used as a VRML viewer.
+X_ITE is a comprehensive 3D library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D, glTF, VRML and other sources online within an HTML5 page with X_ITE that works with web browsers **without** prior plug-in installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D and glTF content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X_ITE can also be used as a VRML viewer.
 
 X3D is an ISO-ratified, royalty-free open standards file format and run-time architecture to represent and communicate 3D scenes and objects specified by the [Web 3D Consortium](https://www.web3d.org). X3D has evolved from its beginnings as the Virtual Reality Modeling Language (VRML) to the considerably more mature and refined ISO X3D standard. X3D provides a system for the storage, retrieval and playback of real time 3D scene in multiple applications, all within an open architecture to support a wide array of domains and user scenarios.
 
-X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, prototyping capabilities and event driven programming to provide you with an improved quality level of virtual effects and tools ready for the Internet.
+glTF (GL Transmission Format) is an open standard file format designed for efficient transmission and loading of 3D models in real-time applications, such as web and mobile platforms. It optimizes the storage and rendering of 3D assets, including geometry, textures, materials, and animations, while minimizing file sizes and loading times.
 
->**Tip:** X_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
+>**Tip:** If you ever run into trouble, please [report a bug or just ask a question](/x_ite/report-a-bug/).
 {: .prompt-tip }
-
-If you ever run into trouble, please [report a bug or just ask a question](/x_ite/report-a-bug/).
 
 ### Become a Patreon of X_ITE
 
