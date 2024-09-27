@@ -7,9 +7,9 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
-## X_ITE v10.5.0 Released
+## X_ITE v10.5 Series
 
-*Leipzig, 8th September 2024:* This release fixed some old issues.
+*Leipzig, 8th September 2024:* These series fixes some long standing issues.
 
 * Improved rendering of opaque points, especially with [PointSet](/x_ite/components/rendering/pointset/).
 * Implemented [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/).
@@ -17,7 +17,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Improved rendering of thick lines.
 * [StaticGroup](/x_ite/components/grouping/staticgroup/) is now doing extensive optimizations.
 
-## X_ITE v10.4.0 Released
+## X_ITE v10.4 Series
 
 *Leipzig, 27th August 2024:* With this version of X_ITE we have now implemented render optimizations for StaticGroup nodes. A StaticGroup node will now completely remove all transformations and bake them into the geometry. Furthermore, assuming the Appearance node is exactly the same (cloned) and the geometry nodes are compatible, the geometry nodes will be merged into a single one.
 
@@ -31,7 +31,7 @@ Another test file using an Inline node with a glTF sample (1.5 million triangles
 
 * [StaticGroup with Inline](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroupWithInline.x3d)
 
-## X_ITE v10.3.0 Released
+## X_ITE v10.3 Series
 
 *Leipzig, 18th August 2024:* With this release there is now basic WebXR support built directly into X_ITE. If WebXR is possible then a new button (Cardboard Glasses) appears in the lower right corner of the \<x3d-canvas\>. In addition, there are now three new [attributes](/x_ite/#attributes-of-the-x3d-canvas-element) (*xrButton, xrMovementControl, xrSessionMode*) and the corresponding [browser options](/x_ite/reference/browser-services/#browser-options) (*XRButton, XRMovementControl, XRSessionMode*).
 
@@ -40,7 +40,7 @@ If you don't have a VR headset, there is a browser extension for Chrome and Fire
 * [WebXR Emulator for Chrome](https://chromewebstore.google.com/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje)
 * [WebXR Emulator for Firefox](https://addons.mozilla.org/de/firefox/addon/webxr-api-emulator/)
 
-## X_ITE v10.2.0 Released
+## X_ITE v10.2 Series
 
 *Leipzig, 4th August 2024:* This release comes with the following improvements:
 
@@ -48,13 +48,13 @@ If you don't have a VR headset, there is a browser extension for Chrome and Fire
 - Implemented KHR_mesh_quantization in glTF parser.
 - Tangents are now automatically generated using MikkTSpace algorithm, if not present.
 
-## X_ITE v10.1.0 Released
+## X_ITE v10.1 Series
 
 *Leipzig, 28th July 2024:* This release comes with a new [browser option](/x_ite/reference/browser-services/#browser-options) `TextCompression` which determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, i.e. either by adjusting char spacing or by scaling. These are the two options suggested by the X3D specification, and we can now offer both to let the user choose which one they want. The option can be changed programmatically via `setBrowserOption` or via a new attribute of the \<x3d-canvas\> element.
 
 We also noticed two problems with text rendering, particularly with vertical text, where the text did not start or end at the origin. Also *maxExtent* is now implemented as specified by X3D.
 
-## X_ITE v10.0.0 Released
+## X_ITE v10.0 Series
 
 *Leipzig, 23rd June 2024:* With this release, all glTF material extensions are now available, i.e. when a glTF file is parsed, these extensions are automatically converted to X3D. There is now an X3D node for each glTF extension. These nodes can also be referenced directly in X3D files. Extensions for glTF materials are converted to the new X3DMaterialExtensionNode nodes, which can be used as a child of [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) node and the new [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) node. These material nodes now have a new field »extensions« for this purpose. The introduction of the »extensions« field has only a minimal impact and leads to the greatest possible compatibility.
 

@@ -228,7 +228,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                appearanceNode = shapeNode .getAppearance (),
                geometryNode   = shapeNode .getGeometry ();
 
-            if (!geometryNode .getVertices () .length)
+            if (geometryNode ?.getVertices () .length === 0)
                continue;
 
             if (shapeNode .getShapeKey () > 0 || this .hasTextureCoordinateGenerator (geometryNode))
