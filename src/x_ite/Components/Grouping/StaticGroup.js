@@ -228,21 +228,23 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                appearanceNode = shapeNode .getAppearance (),
                geometryNode   = shapeNode .getGeometry ();
 
-            if (!geometryNode ?.getVertices () .length)
+            if (shapeNode .getType () .includes (X3DConstants .ParticleSystem))
             {
-               if (shapeNode .getType () .includes (X3DConstants .ParticleSystem))
+               if (shapeNode ._geometryType .getValue () === "GEOMETRY")
                {
-                  if (shapeNode ._geometryType .getValue () === "GEOMETRY")
-                     continue;
-
-                  if (!shapeNode ._isActive .getValue ())
-                     continue;
-
-                  if (!shapeNode ._createParticles .getValue ())
+                  if (!geometryNode ?.getVertices () .length)
                      continue;
                }
-               else
+
+               if (!shapeNode ._isActive .getValue ())
                   continue;
+
+               if (!shapeNode ._createParticles .getValue ())
+                  continue;
+            }
+            else if (!geometryNode ?.getVertices () .length)
+            {
+               continue;
             }
 
             // Sort out ParticleSystem and InstancedShape nodes.
