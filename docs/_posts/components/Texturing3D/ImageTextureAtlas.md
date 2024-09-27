@@ -132,14 +132,14 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 Any image file format supported by the web browser, but at least:
 
-| Encoding | File Extension | MIME Type  | Comment  |
-|----------|----------------|------------|----------|
-| PNG      | .png           | image/png  | lossless |
-| AVIF     | .avif          | image/avif | lossy    |
-| WebP     | .webp          | image/webp | lossy    |
-| JPEG     | .jpeg, .jpg    | image/jpeg | lossy    |
-| GIF      | .gif           | image/gif  | lossy    |
-| SVG      | .svg           | image/svg  |          |
+| Encoding | File Extension | MIME Type  | Comment        |
+|----------|----------------|------------|----------------|
+| PNG      | .png           | image/png  | lossless       |
+| AVIF     | .avif          | image/avif | lossless/lossy |
+| WebP     | .webp          | image/webp | lossless/lossy |
+| JPEG     | .jpeg, .jpg    | image/jpeg | lossy          |
+| GIF      | .gif           | image/gif  | lossy          |
+| SVG      | .svg           | image/svg  |                |
 
 An example image can be found [here](/x_ite/assets/img/components/scan1.png).
 

@@ -107,8 +107,8 @@ Any image file format supported by the web browser, but at least:
 | Encoding | File Extension  | MIME Type  | Comment                   |
 |----------|-----------------|------------|---------------------------|
 | PNG      | .png            | image/png  | lossless                  |
-| AVIF     | .avif           | image/avif | lossy                     |
-| WebP     | .webp           | image/webp | lossy                     |
+| AVIF     | .avif           | image/avif | lossless/lossy            |
+| WebP     | .webp           | image/webp | lossless/lossy            |
 | JPEG     | .jpeg, .jpg     | image/jpeg | lossy                     |
 | GIF      | .gif            | image/gif  | lossy                     |
 | SVG      | .svg            | image/svg  |                           |
