@@ -114,6 +114,8 @@ Any image file format supported by the web browser, but at least:
 | SVG      | .svg            | image/svg  |                           |
 | KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_CUBE_MAP, WebGL 2 |
 
+Images from PNG to SVG format can be in panorama format or skybox format.
+
 ### Panorama Format (Spherical or Equirectangular Projection)
 
 Panorama images must have an exact aspect ratio of 2:1 of width to height.
