@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          {
             ul .remove ();
 
-            if (options .events && typeof options .events .hide === "function")
+            if (typeof options .events ?.hide === "function")
                options .events .hide ();
          });
 
@@ -211,7 +211,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Show
 
-      if (options .events && typeof options .events .show === "function")
+      if (typeof options .events ?.show === "function")
          options .events .show (ul);
 
       return false;
