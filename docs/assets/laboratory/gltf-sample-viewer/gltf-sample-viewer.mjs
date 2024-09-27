@@ -829,7 +829,7 @@ class SampleViewer
 
       const
          url         = new URL (`images/${image}`, import .meta .url),
-         diffuseURL  = new X3D .MFString (`${url}-diffuse.avif`,  `${url}-diffuse.jpg` ),
+         diffuseURL  = new X3D .MFString (`${url}-diffuse.avif`,  `${url}-diffuse.jpg`),
          specularURL = new X3D .MFString (`${url}-specular.avif`, `${url}-specular.jpg`);
 
       if (!environmentLight .diffuseTexture .url .equals (diffuseURL))
