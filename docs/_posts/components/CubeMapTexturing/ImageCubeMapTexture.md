@@ -114,7 +114,17 @@ Any image file format supported by the web browser, but at least:
 | SVG      | .svg            | image/svg  |                           |
 | KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_CUBE_MAP, WebGL 2 |
 
-PNG, JPEG and GIF can be in panorama (Spherical or Equirectangular projection, [example](/x_ite/assets/img/components/helipad.jpg)) or skybox format ([scheme](/x_ite/assets/img/components/skybox.svg), [example](/x_ite/assets/img/components/skybox_texture.jpg)). Panorama images must have an exact aspect ratio of 2:1 of width to height. Skybox images must have an exact aspect ratio of 4:3 of width to height.
+### Panorama Format (Spherical or Equirectangular Projection)
+
+Panorama images must have an exact aspect ratio of 2:1 of width to height.
+
+![Panorama Format](/assets/img/components/helipad.jpg){: .normal .w-50 }
+
+### Skybox Format
+
+Skybox images must have an exact aspect ratio of 4:3 of width to height.
+
+![Skybox Format](/assets/img/components/skybox_texture.jpg){: .normal .w-50 }![Skybox Scheme](/assets/img/components/skybox.svg){: .normal .w-50 }
 
 ## Advice
 
