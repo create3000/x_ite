@@ -119,11 +119,11 @@ Any image file format supported by the web browser, but at least:
 
 | Encoding | File Extension  | MIME Type  | Comment             |
 |----------|-----------------|------------|---------------------|
-| PNG      | .png            | image/png  |                     |
-| AVIF     | .avif           | image/avif |                           |
-| WebP     | .webp           | image/webp |                     |
-| JPEG     | .jpeg, .jpg     | image/jpeg |                     |
-| GIF      | .gif            | image/gif  |                     |
+| PNG      | .png            | image/png  | lossless            |
+| AVIF     | .avif           | image/avif | lossy               |
+| WebP     | .webp           | image/webp | lossy               |
+| JPEG     | .jpeg, .jpg     | image/jpeg | lossy               |
+| GIF      | .gif            | image/gif  | lossy               |
 | SVG      | .svg            | image/svg  |                     |
 | KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_2D, WebGL 2 |
 
