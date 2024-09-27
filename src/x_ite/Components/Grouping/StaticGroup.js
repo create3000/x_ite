@@ -248,6 +248,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                   continue;
             }
 
+            // Sort out ParticleSystem and InstancedShape nodes.
             if (shapeNode .getShapeKey () > 0 || this .hasTextureCoordinateGenerator (geometryNode))
             {
                const group = singlesIndex [renderContext .modelViewMatrix] ??= [ ];
