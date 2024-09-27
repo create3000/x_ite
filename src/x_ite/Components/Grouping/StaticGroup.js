@@ -228,6 +228,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                appearanceNode = shapeNode .getAppearance (),
                geometryNode   = shapeNode .getGeometry ();
 
+            // ParticleSystem could have no geometry.
             if (geometryNode ?.getVertices () .length === 0)
                continue;
 
