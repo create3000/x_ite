@@ -147,8 +147,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          .addClass ("context-menu-root")
          .addClass ("context-menu-list")
          .addClass (menu .className)
-         .appendTo (options .appendTo)
-         .offset ({ "left": event .pageX, "top": event .pageY });
+         .offset ({ "left": event .pageX, "top": event .pageY })
+         .appendTo (options .appendTo);
 
       for (const k in menu .items)
          ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
