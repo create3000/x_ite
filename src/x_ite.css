@@ -321,8 +321,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   min-width: 120px;
   margin: 0;
   margin-left: 1px;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
   background: rgba(0,0,0,0.61803);
   background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -344,6 +342,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: fixed;
   z-index: 10000;
   isolation: isolate;
+  /* backdrop-filter should be applied to both root and children, but there is a bug in Chrome and Safari, so it is only applied here. */
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .x_ite-private-menu .context-menu-list {
