@@ -228,9 +228,25 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                appearanceNode = shapeNode .getAppearance (),
                geometryNode   = shapeNode .getGeometry ();
 
-            // ParticleSystem could have no geometry.
-            if (geometryNode ?.getVertices () .length === 0)
-               continue;
+            if (!geometryNode ?.getVertices () .length)
+            {
+               if (shapeNode .getType () .includes (X3DConstants .ParticleSystem))
+               {
+                  if (shapeNode ._geometryType .getValue () === "GEOMETRY")
+                     continue;
+
+                  if (shapeNode ._enabled .getValue () === false)
+                     continue;
+
+                  if (shapeNode ._createParticles .getValue () === false)
+                     continue;
+
+                  if (shapeNode ._maxParticles .getValue () === 0)
+                     continue;
+               }
+               else
+                  continue;
+            }
 
             if (shapeNode .getShapeKey () > 0 || this .hasTextureCoordinateGenerator (geometryNode))
             {
