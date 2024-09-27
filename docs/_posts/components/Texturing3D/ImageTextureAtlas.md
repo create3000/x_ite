@@ -135,9 +135,10 @@ Any image file format supported by the web browser, but at least:
 | Encoding | File Extension | MIME Type  |
 |----------|----------------|------------|
 | PNG      | .png           | image/png  |
+| AVIF     | .avif           | image/avif |                           |
+| WebP     | .webp          | image/webp |
 | JPEG     | .jpeg, .jpg    | image/jpeg |
 | GIF      | .gif           | image/gif  |
-| WebP     | .webp          | image/webp |
 | SVG      | .svg           | image/svg  |
 
 An example image can be found [here](/x_ite/assets/img/components/scan1.png).

@@ -120,9 +120,10 @@ Any image file format supported by the web browser, but at least:
 | Encoding | File Extension  | MIME Type  | Comment             |
 |----------|-----------------|------------|---------------------|
 | PNG      | .png            | image/png  |                     |
+| AVIF     | .avif           | image/avif |                           |
+| WebP     | .webp           | image/webp |                     |
 | JPEG     | .jpeg, .jpg     | image/jpeg |                     |
 | GIF      | .gif            | image/gif  |                     |
-| WebP     | .webp           | image/webp |                     |
 | SVG      | .svg            | image/svg  |                     |
 | KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_2D, WebGL 2 |
 
