@@ -338,6 +338,13 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   list-style-type: none;
 }
 
+@-moz-document url-prefix() {
+  .x_ite-private-menu.context-menu-list,
+  .x_ite-private-menu .context-menu-list {
+    backdrop-filter: blur(8px);
+  }
+}
+
 .x_ite-private-menu.context-menu-list {
   position: fixed;
   z-index: 10000;
