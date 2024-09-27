@@ -235,13 +235,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                   if (shapeNode ._geometryType .getValue () === "GEOMETRY")
                      continue;
 
-                  if (shapeNode ._enabled .getValue () === false)
+                  if (!shapeNode ._isActive .getValue ())
                      continue;
 
-                  if (shapeNode ._createParticles .getValue () === false)
-                     continue;
-
-                  if (shapeNode ._maxParticles .getValue () === 0)
+                  if (!shapeNode ._createParticles .getValue ())
                      continue;
                }
                else
