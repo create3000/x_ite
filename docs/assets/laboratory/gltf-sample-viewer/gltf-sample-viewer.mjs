@@ -828,8 +828,9 @@ class SampleViewer
       environmentLight .intensity = parseFloat (intensity);
 
       const
-         diffuseURL  = new X3D .MFString (new URL (`images/${image}-diffuse.jpg`,  import .meta .url)),
-         specularURL = new X3D .MFString (new URL (`images/${image}-specular.jpg`, import .meta .url));
+         url         = new URL (`images/${image}`, import .meta .url),
+         diffuseURL  = new X3D .MFString (`${url}-diffuse.avif`,  `${url}-diffuse.jpg` ),
+         specularURL = new X3D .MFString (`${url}-specular.avif`, `${url}-specular.jpg`);
 
       if (!environmentLight .diffuseTexture .url .equals (diffuseURL))
          environmentLight .diffuseTexture .url = diffuseURL;
