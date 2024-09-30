@@ -333,26 +333,26 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu.context-menu-list,
-.x_ite-private-menu.context-menu-backdrop {
+.x_ite-private-menu.context-menu-background {
   position: fixed;
   z-index: 10000;
   isolation: isolate;
 }
 
 .x_ite-private-menu .context-menu-list,
-.x_ite-private-menu .context-menu-backdrop {
+.x_ite-private-menu .context-menu-background {
   position: absolute;
 }
 
 .x_ite-private-menu .context-menu-list,
-.x_ite-private-menu .context-menu-backdrop {
+.x_ite-private-menu .context-menu-background {
   top: -9px;
   /* re-positioned by js */
   right: -5px;
 }
 
-.x_ite-private-menu.context-menu-backdrop,
-.x_ite-private-menu .context-menu-backdrop {
+.x_ite-private-menu.context-menu-background,
+.x_ite-private-menu .context-menu-background {
   display: none;
   box-sizing: border-box;
   min-width: 120px;
@@ -384,7 +384,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item:hover > .context-menu-list,
-.x_ite-private-menu .context-menu-item:hover > .context-menu-backdrop {
+.x_ite-private-menu .context-menu-item:hover > .context-menu-background {
   display: block;
 }
 

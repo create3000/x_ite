@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       // Menu
       $("<div></div>")
          .hide ()
-         .addClass ("x_ite-private-menu context-menu-backdrop")
+         .addClass ("x_ite-private-menu context-menu-background")
          .offset ({ "left": event .pageX, "top": event .pageY })
          .appendTo (options .appendTo);
 
@@ -292,7 +292,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       if (typeof item .items === "object" && level < 3)
       {
          $("<div></div>")
-            .addClass ("context-menu-backdrop")
+            .addClass ("context-menu-background")
             .css ({ "z-index": level })
             .appendTo (li);
 
