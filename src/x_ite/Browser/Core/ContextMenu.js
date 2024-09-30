@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          delete this .hide;
 
          layer .remove ();
-         ul .children ("div, li") .fadeOut (300, () => ul .remove ());
+         ul .children () .fadeOut (300, () => ul .remove ());
 
          return false;
       };
@@ -148,9 +148,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Show
 
-      ul .children ("div, li") .hide ();
+      ul .children () .hide ();
       ul .show ();
-      ul .children ("div, li") .fadeIn (300);
+      ul .children () .fadeIn (300);
 
       // Reposition menu if to right or to low.
 
