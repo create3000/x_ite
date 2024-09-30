@@ -119,8 +119,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       // Layer
 
       const layer = $("<div></div>")
-         .addClass ("context-menu-layer")
-         .addClass (menu .className)
+         .addClass (["context-menu-layer", menu .className])
          .appendTo (options .appendTo);
 
       const hide = this .hide = () =>
@@ -144,15 +143,13 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       $("<div></div>")
          .hide ()
-         .addClass ("x_ite-private-menu context-menu-background")
+         .addClass (["x_ite-private-menu", "context-menu-background"])
          .offset ({ "left": event .pageX, "top": event .pageY })
          .appendTo (options .appendTo);
 
       const ul = $("<ul></ul>")
          .hide ()
-         .addClass ("context-menu-root")
-         .addClass ("context-menu-list")
-         .addClass (menu .className)
+         .addClass (["context-menu-root", "context-menu-list", menu .className])
          .offset ({ "left": event .pageX, "top": event .pageY })
          .appendTo (options .appendTo);
 
