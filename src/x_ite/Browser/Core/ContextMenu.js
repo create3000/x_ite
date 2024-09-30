@@ -129,9 +129,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
          layer .remove ();
 
-         ul [options .animation .hide] (options .animation .duration, function ()
+         ul .prev () .addBack () [options .animation .hide] (options .animation .duration, () =>
          {
-            ul .remove ();
+            ul .prev () .addBack () .remove ();
 
             if (typeof options .events ?.hide === "function")
                options .events .hide ();
@@ -141,6 +141,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       };
 
       // Menu
+      $("<div></div>")
+         .hide ()
+         .addClass ("x_ite-private-menu context-menu-backdrop")
+         .offset ({ "left": event .pageX, "top": event .pageY })
+         .appendTo (options .appendTo);
 
       const ul = $("<ul></ul>")
          .hide ()
@@ -153,17 +158,20 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       for (const k in menu .items)
          ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
 
-      ul [options .animation .show] (options .animation .duration);
+      ul .prev () .addBack () [options .animation .show] (options .animation .duration);
 
       // Reposition menu if to right or to low.
 
-      ul .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
+      ul .prev () .css ("width",  ul .outerWidth ());
+      ul .prev () .css ("height", ul .outerHeight ());
+
+      ul .prev () .addBack () .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
 
       if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
-         ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
+         ul .prev () .addBack () .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
 
       if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
-         ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
+         ul  .prev () .addBack ().offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
 
       // Display submenus on the left or right side.
       // If the submenu is higher than vh, add scrollbars.
@@ -176,11 +184,15 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             width    = e .outerWidth () + ul .outerWidth (),
             position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
 
-         e .css ("width", e .outerWidth ());
+         e .prev () .css ("width",  e .outerWidth ());
+         e .prev () .css ("height", e .outerHeight ());
+         e .prev () .css (position, e .parent () .closest ("ul") .width ());
+
+         e .css ("width",  e .outerWidth ());
          e .css (position, e .parent () .closest ("ul") .width ());
 
          if (e .outerHeight () >= $(window) .height ())
-            e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
+            e .prev () .addBack ().css ({ "max-height": "100vh", "overflow-y": "scroll" });
       });
 
       // If the submenu is higher than vh, reposition it.
@@ -280,6 +292,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       if (typeof item .items === "object" && level < 3)
       {
+         $("<div></div>")
+            .addClass ("context-menu-backdrop")
+            .css ({ "z-index": level })
+            .appendTo (li);
+
          const ul = $("<ul></ul>")
             .addClass ("context-menu-list")
             .css ({ "z-index": level })
