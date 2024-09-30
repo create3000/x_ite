@@ -172,7 +172,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          ul .prev () .addBack () .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
 
       if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
-         ul  .prev () .addBack ().offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
+         ul .prev () .addBack () .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
 
       // Display submenus on the left or right side.
       // If the submenu is higher than vh, add scrollbars.
