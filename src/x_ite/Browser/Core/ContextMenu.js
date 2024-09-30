@@ -171,6 +171,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             width    = e .outerWidth () + ul .outerWidth (),
             position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
 
+         e .children (":first-child") .css ("height", e .innerHeight ());
+
          e
             .css ("width",  e .outerWidth ())
             .css (position, e .parent () .closest ("ul") .width () - 12);
