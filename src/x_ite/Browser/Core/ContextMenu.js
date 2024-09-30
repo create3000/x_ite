@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       };
 
       // Menu
-      
+
       $("<div></div>")
          .hide ()
          .addClass ("x_ite-private-menu context-menu-background")
