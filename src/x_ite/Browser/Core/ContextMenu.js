@@ -184,15 +184,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             width    = e .outerWidth () + ul .outerWidth (),
             position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
 
-         e .prev () .css ("width",  e .outerWidth ());
          e .prev () .css ("height", e .outerHeight ());
-         e .prev () .css (position, e .parent () .closest ("ul") .width ());
-
-         e .css ("width",  e .outerWidth ());
-         e .css (position, e .parent () .closest ("ul") .width ());
+         e .prev () .addBack () .css ("width",  e .outerWidth ());
+         e .prev () .addBack () .css (position, e .parent () .closest ("ul") .width ());
 
          if (e .outerHeight () >= $(window) .height ())
-            e .prev () .addBack ().css ({ "max-height": "100vh", "overflow-y": "scroll" });
+            e .prev () .addBack () .css ({ "max-height": "100vh", "overflow-y": "scroll" });
       });
 
       // If the submenu is higher than vh, reposition it.
@@ -203,7 +200,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
          const
             t = $(event .target) .closest ("li"),
-            e = t .children ("ul");
+            e = t .children ("ul") .prev () .addBack ();
 
          if (!e .length)
             return;
