@@ -332,31 +332,31 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   list-style-type: none;
 }
 
-.x_ite-private-menu.context-menu-list,
-.x_ite-private-menu.context-menu-background {
+.x_ite-private-menu.context-menu-list {
   position: fixed;
   z-index: 10000;
   isolation: isolate;
 }
 
-.x_ite-private-menu .context-menu-list,
-.x_ite-private-menu .context-menu-background {
+.x_ite-private-menu .context-menu-list {
   position: absolute;
 }
 
-.x_ite-private-menu .context-menu-list,
-.x_ite-private-menu .context-menu-background {
-  top: -9px;
+.x_ite-private-menu .context-menu-list {
+  top: -13px;
   /* re-positioned by js */
-  right: -5px;
 }
 
-.x_ite-private-menu.context-menu-background,
 .x_ite-private-menu .context-menu-background {
-  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0px;
   box-sizing: border-box;
   min-width: 120px;
-  margin: 0;
+  margin: 0px;
   margin-left: 1px;
   border: 4px solid rgba(60,60,60,0.61803);
   border-radius: 5px;
@@ -382,12 +382,23 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   text-align: left;
 }
 
+.x_ite-private-menu .context-menu-item {
+  margin: 0 4px 0 4px;
+}
+
+.x_ite-private-menu .context-menu-item:first-of-type {
+  margin-top: 4px;
+}
+
+.x_ite-private-menu .context-menu-item:last-of-type {
+  margin-bottom: 4px;
+}
+
 .x_ite-private-menu .context-menu-item:hover:not(.context-menu-not-selectable) {
   background-color: rgba(255, 69, 58, 0.8);
 }
 
-.x_ite-private-menu .context-menu-item:hover > .context-menu-list,
-.x_ite-private-menu .context-menu-item:hover > .context-menu-background {
+.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
   display: block;
 }
 

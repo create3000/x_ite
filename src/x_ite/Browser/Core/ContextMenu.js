@@ -73,7 +73,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          element: browser .getElement (),
          appendTo: browser .getShadow (),
          build: this .build .bind (this),
-         animation: { duration: 500, show: "fadeIn", hide: "fadeOut" },
       };
 
       this [_options] .element .on ("contextmenu.ContextMenu", event => this .show (event));
@@ -127,25 +126,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          delete this .hide;
 
          layer .remove ();
-
-         ul .prev () .addBack () [options .animation .hide] (options .animation .duration, () =>
-         {
-            ul .prev () .addBack () .remove ();
-
-            if (typeof options .events ?.hide === "function")
-               options .events .hide ();
-         });
+         ul .remove ();
 
          return false;
       };
 
       // Menu
-
-      $("<div></div>")
-         .hide ()
-         .addClass (["x_ite-private-menu", "context-menu-background"])
-         .offset ({ "left": event .pageX, "top": event .pageY })
-         .appendTo (options .appendTo);
 
       const ul = $("<ul></ul>")
          .hide ()
@@ -153,24 +139,26 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          .offset ({ "left": event .pageX, "top": event .pageY })
          .appendTo (options .appendTo);
 
+      $("<div></div>")
+         .addClass ("context-menu-background")
+         .appendTo (ul);
+
       for (const k in menu .items)
          ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
 
-      ul .prev () .addBack () [options .animation .show] (options .animation .duration);
+      // Show
+
+      ul .show ();
 
       // Reposition menu if to right or to low.
 
-      ul .prev ()
-         .css ("width",  ul .outerWidth ())
-         .css ("height", ul .outerHeight ());
-
-      ul .prev () .addBack () .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
+      ul .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
 
       if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
-         ul .prev () .addBack () .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
+         ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
 
       if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
-         ul .prev () .addBack () .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
+         ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
 
       // Display submenus on the left or right side.
       // If the submenu is higher than vh, add scrollbars.
@@ -183,13 +171,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             width    = e .outerWidth () + ul .outerWidth (),
             position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
 
-         e .prev () .css ("height", e .outerHeight ());
-         e .prev () .addBack ()
+         e
             .css ("width",  e .outerWidth ())
-            .css (position, e .parent () .closest ("ul") .width ());
+            .css (position, e .parent () .closest ("ul") .width () - 12);
 
          if (e .outerHeight () >= $(window) .height ())
-            e .prev () .addBack () .css ({ "max-height": "100vh", "overflow-y": "scroll" });
+            e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
       });
 
       // If the submenu is higher than vh, reposition it.
@@ -205,23 +192,18 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          if (!e .length)
             return;
 
-         e .prev () .addBack () .css ("top", "");
+         e .css ("top", "");
 
          const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
 
          if (bottom > 0)
-            e .prev () .addBack () .offset ({ "top": e .offset () .top - bottom });
+            e .offset ({ "top": e .offset () .top - bottom });
       });
 
       // Layer
 
       layer .on ("click contextmenu", hide);
       ul .on ("contextmenu", hide);
-
-      // Show
-
-      if (typeof options .events ?.show === "function")
-         options .events .show (ul);
 
       return false;
    },
@@ -289,15 +271,14 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       if (typeof item .items === "object" && level < 3)
       {
-         $("<div></div>")
-            .addClass ("context-menu-background")
-            .css ({ "z-index": level })
-            .appendTo (li);
-
          const ul = $("<ul></ul>")
             .addClass ("context-menu-list")
             .css ({ "z-index": level })
             .appendTo (li);
+
+         $("<div></div>")
+            .addClass ("context-menu-background")
+            .appendTo (ul);
 
          for (const k in item .items)
             ul .append (this .createItem (item .items [k], key, k, level + 1, hide));
