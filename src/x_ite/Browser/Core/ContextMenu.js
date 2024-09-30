@@ -162,8 +162,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Reposition menu if to right or to low.
 
-      ul .prev () .css ("width",  ul .outerWidth ());
-      ul .prev () .css ("height", ul .outerHeight ());
+      ul .prev ()
+         .css ("width",  ul .outerWidth ())
+         .css ("height", ul .outerHeight ());
 
       ul .prev () .addBack () .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
 
@@ -185,8 +186,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
 
          e .prev () .css ("height", e .outerHeight ());
-         e .prev () .addBack () .css ("width",  e .outerWidth ());
-         e .prev () .addBack () .css (position, e .parent () .closest ("ul") .width ());
+         e .prev () .addBack ()
+            .css ("width",  e .outerWidth ())
+            .css (position, e .parent () .closest ("ul") .width ());
 
          if (e .outerHeight () >= $(window) .height ())
             e .prev () .addBack () .css ({ "max-height": "100vh", "overflow-y": "scroll" });
@@ -200,17 +202,17 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
          const
             t = $(event .target) .closest ("li"),
-            e = t .children ("ul") .prev () .addBack ();
+            e = t .children ("ul");
 
          if (!e .length)
             return;
 
-         e .css ("top", "");
+         e .prev () .addBack () .css ("top", "");
 
          const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
 
          if (bottom > 0)
-            e .offset ({ "top": e .offset () .top - bottom });
+            e .prev () .addBack () .offset ({ "top": e .offset () .top - bottom });
       });
 
       // Layer
