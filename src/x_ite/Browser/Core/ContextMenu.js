@@ -73,6 +73,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          element: browser .getElement (),
          appendTo: browser .getShadow (),
          build: this .build .bind (this),
+         animation: 300,
       };
 
       this [_options] .element .on ("contextmenu.ContextMenu", event => this .show (event));
@@ -126,7 +127,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          delete this .hide;
 
          layer .remove ();
-         ul .children () .fadeOut (300, () => ul .remove ());
+         ul .children () .fadeOut (options .animation ?? 0, () => ul .remove ());
 
          return false;
       };
@@ -150,7 +151,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       ul .children () .hide ();
       ul .show ();
-      ul .children () .fadeIn (300);
+      ul .children () .fadeIn (options .animation ?? 0);
 
       // Reposition menu if to right or to low.
 
