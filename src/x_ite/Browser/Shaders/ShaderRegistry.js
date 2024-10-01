@@ -93,7 +93,7 @@ import GouraudVertex2         from "../../../assets/shaders/webgl2/Gouraud2.vs.j
 import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform2.fs.js";
 import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform2.vs.js";
 import OITComposeFragment2    from "../../../assets/shaders/webgl2/OITCompose2.fs.js";
-import PhysicalFragment2      from "../../../assets/shaders/webgl2/Physical2.js";
+import PhysicalFragment2      from "../../../assets/shaders/webgl2/Physical2.fs.js";
 import PhongFragment2         from "../../../assets/shaders/webgl2/Phong2.fs.js";
 import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.js";
 import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.js";
