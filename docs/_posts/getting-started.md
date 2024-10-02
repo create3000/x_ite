@@ -626,6 +626,10 @@ $ npm install x_ite
 
 Maybe you are curious now [how to use X_ITE with Electron](/x_ite/how-to-use-x-ite-with-electron/)?
 
+### VS Code Extension
+
+Discover the [X_ITE VS Code Extension](https://marketplace.visualstudio.com/items?itemName=create3000.x-ite-vscode) on the VS Code Marketplace.
+
 ## Embedding X_ITE within a Web Page
 
 To display your X3D scene in a HTML5 page, you must first obtain a file in one of the [supported formats](#supported-file-formats).
