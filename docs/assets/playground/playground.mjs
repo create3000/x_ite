@@ -146,7 +146,7 @@ class Playground
       if (activeViewpoint)
       {
          var
-            positionOffset         = activeViewpoint ._positionOffset    .copy (),
+            positionOffset         = activeViewpoint ._positionOffset .copy (),
             orientationOffset      = activeViewpoint ._orientationOffset .copy (),
             centerOfRotationOffset = activeViewpoint ._centerOfRotationOffset .copy (),
             nearDistance           = activeViewpoint .nearDistance,
