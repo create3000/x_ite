@@ -146,16 +146,24 @@ class Playground
       if (activeViewpoint)
       {
          var
-            positionOffset    = activeViewpoint ._positionOffset    .copy (),
-            orientationOffset = activeViewpoint ._orientationOffset .copy ();
+            positionOffset         = activeViewpoint ._positionOffset    .copy (),
+            orientationOffset      = activeViewpoint ._orientationOffset .copy (),
+            centerOfRotationOffset = activeViewpoint ._centerOfRotationOffset .copy (),
+            nearDistance           = activeViewpoint .nearDistance,
+            farDistance            = activeViewpoint .farDistance;
       }
 
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
       if (activeViewpoint && browser .getActiveViewpoint ())
       {
-         browser .getActiveViewpoint () ._positionOffset    = positionOffset;
-         browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
+         const activeViewpoint = browser .getActiveViewpoint ();
+
+         activeViewpoint ._positionOffset         = positionOffset;
+         activeViewpoint ._orientationOffset      = orientationOffset;
+         activeViewpoint ._centerOfRotationOffset = centerOfRotationOffset;
+         activeViewpoint .nearDistance            = nearDistance,
+         activeViewpoint .farDistance             = farDistance;
       }
 
       monaco .editor .setModelLanguage (editor .getModel (), browser .currentScene .encoding .toLowerCase ());
