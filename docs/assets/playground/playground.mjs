@@ -149,6 +149,7 @@ class Playground
             positionOffset         = activeViewpoint ._positionOffset .copy (),
             orientationOffset      = activeViewpoint ._orientationOffset .copy (),
             centerOfRotationOffset = activeViewpoint ._centerOfRotationOffset .copy (),
+            fieldOfViewScale       = activeViewpoint ._fieldOfViewScale .getValue (),
             nearDistance           = activeViewpoint .nearDistance,
             farDistance            = activeViewpoint .farDistance;
       }
@@ -162,6 +163,7 @@ class Playground
          activeViewpoint ._positionOffset         = positionOffset;
          activeViewpoint ._orientationOffset      = orientationOffset;
          activeViewpoint ._centerOfRotationOffset = centerOfRotationOffset;
+         activeViewpoint ._fieldOfViewScale       = fieldOfViewScale;
          activeViewpoint .nearDistance            = nearDistance,
          activeViewpoint .farDistance             = farDistance;
       }
