@@ -5,8 +5,6 @@
 //  * Holger Seelig <https://github.com/create3000>
 //  * Elmar <https://github.com/krisutofu>
 
-// Handle both importing via UMD and modules:
-export default X3D;
 export = X3D;
 
 type X3D = typeof X3D;
