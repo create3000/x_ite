@@ -1,6 +1,9 @@
 // Type definitions for X3D
 // Project: X_ITE
-// Definitions by: Glen Whitney <https://github.com/gwhitney>, Holger Seelig <https://github.com/create3000>
+// Definitions by:
+//  * Glen Whitney <https://github.com/gwhitney>,
+//  * Holger Seelig <https://github.com/create3000>
+//  * Elmar <https://github.com/krisutofu>
 
 // Handle both importing via UMD and modules:
 export default X3D;
