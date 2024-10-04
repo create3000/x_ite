@@ -23,13 +23,13 @@ function main ()
 function ConcreteNodesConstants ()
 {
    const string = `// CONCRETE NODE TYPES CONSTANTS START
-   // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
+      // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
-   // Concrete Node Types
+      // Concrete Node Types
 
-${[... concreteNodes .keys ()] .map (typeName => `   readonly ${typeName}: number;`) .join ("\n")}
+${[... concreteNodes .keys ()] .map (typeName => `      readonly ${typeName}: number;`) .join ("\n")}
 
-   // CONCRETE NODE TYPES CONSTANTS END`;
+      // CONCRETE NODE TYPES CONSTANTS END`;
 
    ts = ts .replace (/(\/\/ CONCRETE NODE TYPES CONSTANTS START).*?(\/\/ CONCRETE NODE TYPES CONSTANTS END)/s, string);
 }
@@ -37,13 +37,13 @@ ${[... concreteNodes .keys ()] .map (typeName => `   readonly ${typeName}: numbe
 function AbstractNodesConstants ()
 {
    const string = `// ABSTRACT NODE TYPES CONSTANTS START
-   // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
+      // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
-   // Abstract Node Types
+      // Abstract Node Types
 
-${[... abstractNodes .keys ()] .map (typeName => `   readonly ${typeName}: number;`) .join ("\n")}
+${[... abstractNodes .keys ()] .map (typeName => `      readonly ${typeName}: number;`) .join ("\n")}
 
-   // ABSTRACT NODE TYPES CONSTANTS END`;
+      // ABSTRACT NODE TYPES CONSTANTS END`;
 
    ts = ts .replace (/(\/\/ ABSTRACT NODE TYPES CONSTANTS START).*?(\/\/ ABSTRACT NODE TYPES CONSTANTS END)/s, string);
 }
@@ -84,19 +84,19 @@ function ConcreteNode (node)
    //    console .log (node .InterfaceDefinition .field);
 
    const properties = fields
-      .map (field => `   /**
-   *${FieldDescription (field)}
-   */
-   ${FieldAccessType (field)}${field .name}: ${FieldType (field)};`)
+      .map (field => `      /**
+       *${FieldDescription (field)}
+       */
+      ${FieldAccessType (field)}${field .name}: ${FieldType (field)};`)
       .join ("\n");
 
    // Generate class
 
-   const string = `/** ${node .InterfaceDefinition .appinfo} */
-interface ${node .name}Proxy${inheritance ? ` extends ${inheritance}`: ""}
-{
+   const string = `   /** ${node .InterfaceDefinition .appinfo} */
+   interface ${node .name}Proxy${inheritance ? ` extends ${inheritance}`: ""}
+   {
 ${properties}
-}`;
+   }`;
 
    return string;
 }
@@ -112,7 +112,7 @@ function FieldDescription (field)
 
    strings .push (` This field is of access type '${field .accessType}' and type ${type}.`);
 
-   return strings .join ("\n   *");
+   return strings .join ("\n       *");
 }
 
 function FieldAccessType (field)
@@ -197,19 +197,19 @@ function AbstractNode (node)
 function NodeTypes ()
 {
    const string = `// NODES START
-// DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
+   // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
 ${[... concreteNodes .values ()] .map (ConcreteNode) .join ("\n\n")}
 
 ${[... abstractNodes .values ()] .map (AbstractNode) .join ("\n\n")}
 
-type ConcreteNodeTypes = {
-${[... concreteNodes .keys ()] .map (typeName => `   ${typeName}: ${typeName}Proxy,`) .join ("\n")}
-}
-&
-{ [name: string]: X3DNodeProxy } // catch all;
+   type ConcreteNodeTypes = {
+${[... concreteNodes .keys ()] .map (typeName => `      ${typeName}: ${typeName}Proxy,`) .join ("\n")}
+   }
+   &
+   { [name: string]: X3DNodeProxy } // catch all;
 
-// NODES END`;
+   // NODES END`;
 
    ts = ts .replace (/(\/\/ NODES START).*?(\/\/ NODES END)/s, string);
 }

@@ -4,6 +4,23 @@
 <!-- This file is an extension of https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" version="4.0"
 	xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
+
+	<AbstractNodeTypes>
+
+      <AbstractNodeType name="X3DMaterialExtensionNode">
+         <InterfaceDefinition appinfo="Nodes of this type can be used for material extensions.">
+            <componentInfo name="X_ITE" level="1"/>
+            <Inheritance baseType="X3DNode"/>
+            <field name="metadata"
+                   type="SFNode"
+                   accessType="inputOutput"
+                   default="NULL"
+                   acceptableNodeTypes="X3DMetadataObject"
+                   inheritedFrom="X3DNode"/>
+         </InterfaceDefinition>
+      </AbstractNodeType>
+
+	</AbstractNodeTypes>
 	<ConcreteNodes>
 
 		<ConcreteNode name="EnvironmentLight">
@@ -16,7 +33,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				></field>
 				<field name="global"
@@ -107,7 +124,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="vector"
@@ -130,7 +147,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="description"
@@ -222,7 +239,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="anisotropyStrength"
@@ -264,7 +281,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="blendColor"
@@ -412,7 +429,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="clearcoat"
@@ -481,7 +498,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="polygonOffset"
@@ -537,7 +554,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="dispersion"
@@ -560,7 +577,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="emissiveStrength"
@@ -583,7 +600,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="indexOfRefraction"
@@ -606,7 +623,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="translations"
@@ -698,7 +715,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="iridescence"
@@ -768,7 +785,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="sheenColor"
@@ -825,7 +842,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="diffuseColor"
@@ -967,7 +984,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="specular"
@@ -1024,7 +1041,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="transmission"
@@ -1060,7 +1077,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				/>
 				<field name="thickness"
@@ -1112,7 +1129,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DMetadataObject"
+					acceptableNodeTypes="X3DMetadataObject"
 					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 				></field>
 				<field name="diffuseTransmission"
