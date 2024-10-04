@@ -7,6 +7,17 @@
 
 	<AbstractNodeTypes>
 
+		<AbstractNodeType name="X3DShapeNode">
+			<InterfaceDefinition>
+				<field name="pointerEvents"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="*pointerEvents* defines whether this Shape becomes target for pointer events."
+				/>
+			</InterfaceDefinition>
+		</AbstractNodeType>
+
       <AbstractNodeType name="X3DMaterialExtensionNode">
          <InterfaceDefinition appinfo="Nodes of this type can be used for material extensions.">
             <componentInfo name="X_ITE" level="1"/>
@@ -625,6 +636,29 @@
 				<containerField default="children" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
+		<ConcreteNode name="Shape">
+			<InterfaceDefinition>
+				<field name="pointerEvents"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="*pointerEvents* defines whether this Shape becomes target for pointer events."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="ParticleSystem">
+			<InterfaceDefinition>
+				<field name="pointerEvents"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="*pointerEvents* defines whether this Shape becomes target for pointer events."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
 		<ConcreteNode name="InstancedShape">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/instancedshape"
@@ -717,6 +751,7 @@
 				<containerField default="extensions" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="IridescenceMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/iridescencematerialextension"
@@ -1367,6 +1402,18 @@
 					accessType="inputOutput"
 					acceptableNodeTypes="Tangent"
 					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="BoundedPhysicsModel">
+			<InterfaceDefinition>
+				<field name="damping"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					description="Damping that particles experience in the event of a collision."
 				/>
 			</InterfaceDefinition>
 		</ConcreteNode>

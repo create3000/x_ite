@@ -3891,6 +3891,12 @@ declare namespace X3D
    interface BoundedPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
    {
       /**
+       * Damping that particles experience in the event of a collision.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      damping: number;
+      /**
        * Enables/disables node operation.
        *
        * This field is of access type 'inputOutput' and type SFBool.
@@ -13880,6 +13886,12 @@ declare namespace X3D
        */
       physics: MFNode <X3DParticlePhysicsModelNodeProxy>;
       /**
+       * *pointerEvents* defines whether this Shape becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
        * texture coordinates of the provided texture(s) in the Appearance node, over time.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
@@ -16403,6 +16415,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       metadata: X3DMetadataObjectProxy | null;
+      /**
+       * *pointerEvents* defines whether this Shape becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
       /**
        * Whether or not renderable content within this node is visually displayed.
        *
@@ -21658,6 +21676,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       metadata: X3DMetadataObjectProxy | null;
+      /**
+       * *pointerEvents* defines whether this Shape becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
       /**
        * This field is of access type 'inputOutput' and type SFBool.
        */
