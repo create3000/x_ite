@@ -82,7 +82,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DEnvironmentTextureNode"
+					acceptableNodeTypes="X3DEnvironmentTextureNode"
 					description="Input/Output field *diffuseTexture*."
 				></field>
 				<field name="diffuseCoefficients"
@@ -94,7 +94,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DEnvironmentTextureNode"
+					acceptableNodeTypes="X3DEnvironmentTextureNode"
 					description="Input/Output field *specularTexture*."
 				></field>
 				<field name="shadows"
@@ -224,6 +224,7 @@
 					type="SFNode"
 					accessType="initializeOnly"
 					default="NULL"
+					acceptableNodeTypes="TextureProperties"
 					description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."
 				/>
 				<containerField default="texture" type="xs:NMTOKEN" />
@@ -265,7 +266,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength."
 				/>
 				<containerField default="blendMode" type="xs:NMTOKEN" />
@@ -449,7 +450,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The clearcoat layer intensity texture."
 				/>
 				<field name="clearcoatRoughness"
@@ -469,7 +470,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The clearcoat layer roughness texture."
 				/>
 				<field name="clearcoatNormalTextureMapping"
@@ -482,7 +483,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The clearcoat normal map texture."
 				/>
 				<containerField default="depthMode" type="xs:NMTOKEN" />
@@ -692,14 +693,14 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DAppearanceNode"
+					acceptableNodeTypes="X3DAppearanceNode"
 					description="Input/Output field *appearance*."
 				/>
 				<field name="geometry"
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DGeometryNode"
+					acceptableNodeTypes="X3DGeometryNode"
 					description="Input/Output field *geometry*."
 				/>
 				<containerField default="extensions" type="xs:NMTOKEN" />
@@ -735,7 +736,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The iridescence intensity texture."
 				/>
 				<field name="iridescenceIndexOfRefraction"
@@ -769,7 +770,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The thickness texture of the thin-film layer."
 				/>
 				<containerField default="extensions" type="xs:NMTOKEN" />
@@ -806,7 +807,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The sheen color (RGB). The sheen color is in sRGB transfer function."
 				/>
 				<field name="sheenRoughness"
@@ -826,7 +827,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The sheen roughness (Alpha) texture."
 				/>
 				<containerField default="material" type="xs:NMTOKEN" />
@@ -863,7 +864,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The diffuse texture."
 				/>
 				<field name="specularColor"
@@ -892,7 +893,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="The specular-glossiness texture."
 				/>
 				<field name="emissiveColor"
@@ -913,7 +914,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="When applying emissiveColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel."
 				/>
 				<field name="occlusionStrength"
@@ -934,7 +935,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="When applying occlusionStrength for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel."
 				/>
 				<field name="normalScale"
@@ -954,7 +955,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="When applying normalScale for this material node, the contained texture modulates the texture across the surface."
 				/>
 				<field name="transparency"
@@ -968,7 +969,7 @@
 				<field name="extensions"
 					type="MFNode"
 					accessType="inputOutput"
-					inheritedFrom="X3DMaterialExtensionNode"
+					acceptableNodeTypes="X3DMaterialExtensionNode"
 					description="Input/Output field *extensions*."
 				/>
 				<containerField default="extensions" type="xs:NMTOKEN" />
@@ -1004,7 +1005,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description=" texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor."
 				/>
 				<field name="specularColor"
@@ -1025,7 +1026,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="A texture that defines the F0 color of the specular reflection, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by specularColorFactor."
 				/>
 				<containerField default="extensions" type="xs:NMTOKEN" />
@@ -1061,7 +1062,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor."
 				/>
 				<containerField default="extensions" type="xs:NMTOKEN" />
@@ -1097,7 +1098,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="A texture that defines the thickness, stored in the G channel. This will be multiplied by thicknessFactor."
 				/>
 				<field name="attenuationDistance"
@@ -1149,7 +1150,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="A texture that defines the strength of the diffuse transmission effect, stored in the alpha (A) channel. Will be multiplied by the diffuseTransmissionFactor."
 				></field>
 				<field name="diffuseTransmissionColor"
@@ -1170,7 +1171,7 @@
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
-					inheritedFrom="X3DSingleTextureNode"
+					acceptableNodeTypes="X3DSingleTextureNode"
 					description="A texture that defines the color of the transmitted light, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by diffuseTransmissionColorFactor."
 				></field>
 				<containerField default="extensions" type="xs:NMTOKEN" />

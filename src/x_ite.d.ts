@@ -1387,6 +1387,7 @@ declare namespace X3D
       readonly X3DLayerNode: number;
       readonly X3DLayoutNode: number;
       readonly X3DLightNode: number;
+      readonly X3DMaterialExtensionNode: number;
       readonly X3DMaterialNode: number;
       readonly X3DMetadataObject: number;
       readonly X3DNBodyCollidableNode: number;
@@ -2926,7 +2927,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      anisotropyTexture: SFNode | null;
+      anisotropyTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *anisotropyTextureMapping*.
        *
@@ -3661,10 +3662,7 @@ declare namespace X3D
    interface BlendModeProxy extends X3DAppearanceChildNodeProxy
    {
       /**
-       * Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
-   - FUNC_ADD
-   - FUNC_SUBTRACT
-   - FUNC_REVERSE_SUBTRACT
+       * Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -3676,10 +3674,7 @@ declare namespace X3D
        */
       blendColor: SFColorRGBA;
       /**
-       * Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
-   - FUNC_ADD
-   - FUNC_SUBTRACT
-   - FUNC_REVERSE_SUBTRACT
+       * Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -3709,21 +3704,7 @@ declare namespace X3D
        */
       sourceAlphaFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
       /**
-       * Specifies how the red, green, and blue source blending factors are computed.Source and destination parameters must be one of the following symbolic constants:
-   - ZERO
-   - ONE
-   - SRC_COLOR
-   - ONE_MINUS_SRC_COLOR
-   - DST_COLOR
-   - ONE_MINUS_DST_COLOR
-   - SRC_ALPHA
-   - ONE_MINUS_SRC_ALPHA
-   - DST_ALPHA
-   - ONE_MINUS_DST_ALPHA
-   - CONSTANT_COLOR
-   - ONE_MINUS_CONSTANT_COLOR
-   - CONSTANT_ALPHA
-   - ONE_MINUS_CONSTANT_ALPHA
+       * Specifies how the red, green, and blue source blending factors are computed.Source and destination parameters must be one of the following symbolic constants:, ZERO, ONE, SRC_COLOR, ONE_MINUS_SRC_COLOR, DST_COLOR, ONE_MINUS_DST_COLOR, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, DST_ALPHA, ONE_MINUS_DST_ALPHA, CONSTANT_COLOR, ONE_MINUS_CONSTANT_COLOR, CONSTANT_ALPHA, ONE_MINUS_CONSTANT_ALPHA
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -4599,7 +4580,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      clearcoatNormalTexture: SFNode | null;
+      clearcoatNormalTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *clearcoatNormalTextureMapping*.
        *
@@ -4617,7 +4598,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      clearcoatRoughnessTexture: SFNode | null;
+      clearcoatRoughnessTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *clearcoatRoughnessTextureMapping*.
        *
@@ -4629,7 +4610,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      clearcoatTexture: SFNode | null;
+      clearcoatTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *clearcoatTextureMapping*.
        *
@@ -5321,7 +5302,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
-      field: MFNode /*<fieldProxy>*/;
+      field: MFNode <SFNode>;
       /**
        * isSelected indicates this shader instance is selected for use by browser Warning: it is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
        *
@@ -6312,7 +6293,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      diffuseTransmissionColorTexture: SFNode | null;
+      diffuseTransmissionColorTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *diffuseTransmissionColorTextureMapping*.
        *
@@ -6324,7 +6305,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      diffuseTransmissionTexture: SFNode | null;
+      diffuseTransmissionTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *diffuseTransmissionTextureMapping*.
        *
@@ -7090,7 +7071,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      diffuseTexture: SFNode | null;
+      diffuseTexture: X3DEnvironmentTextureNodeProxy | null;
       /**
        * Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
        *
@@ -7138,7 +7119,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      specularTexture: SFNode | null;
+      specularTexture: X3DEnvironmentTextureNodeProxy | null;
    }
 
    /** EspduTransform is a networked Transform node that can contain most nodes. */
@@ -10815,7 +10796,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      iridescenceTexture: SFNode | null;
+      iridescenceTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *iridescenceTextureMapping*.
        *
@@ -10839,7 +10820,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      iridescenceThicknessTexture: SFNode | null;
+      iridescenceThicknessTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *iridescenceThicknessTextureMapping*.
        *
@@ -13675,7 +13656,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
-      field: MFNode /*<fieldProxy>*/;
+      field: MFNode <SFNode>;
       /**
        * isSelected indicates this shader instance is selected for use by browser Warning: it is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
        *
@@ -16035,7 +16016,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
-      field: MFNode /*<fieldProxy>*/;
+      field: MFNode <SFNode>;
       /**
        * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
        *
@@ -16259,7 +16240,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
-      field: MFNode /*<fieldProxy>*/;
+      field: MFNode <SFNode>;
       /**
        * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
        *
@@ -16365,7 +16346,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      sheenColorTexture: SFNode | null;
+      sheenColorTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *sheenColorTextureMapping*.
        *
@@ -16383,7 +16364,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      sheenRoughnessTexture: SFNode | null;
+      sheenRoughnessTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *sheenRoughnessTextureMapping*.
        *
@@ -17020,7 +17001,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      diffuseTexture: SFNode | null;
+      diffuseTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *diffuseTextureMapping*.
        *
@@ -17038,7 +17019,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      emissiveTexture: SFNode | null;
+      emissiveTexture: X3DSingleTextureNodeProxy | null;
       /**
        * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
        *
@@ -17050,7 +17031,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
-      extensions: MFNode <SFNode>;
+      extensions: MFNode <X3DMaterialExtensionNodeProxy>;
       /**
        * The glossiness or smoothness of the material.
        *
@@ -17074,7 +17055,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      normalTexture: SFNode | null;
+      normalTexture: X3DSingleTextureNodeProxy | null;
       /**
        * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
        *
@@ -17092,7 +17073,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      occlusionTexture: SFNode | null;
+      occlusionTexture: X3DSingleTextureNodeProxy | null;
       /**
        * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
        *
@@ -17110,7 +17091,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      specularGlossinessTexture: SFNode | null;
+      specularGlossinessTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *specularGlossinessTextureMapping*.
        *
@@ -17151,7 +17132,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      specularColorTexture: SFNode | null;
+      specularColorTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *specularColorTextureMapping*.
        *
@@ -17163,7 +17144,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      specularTexture: SFNode | null;
+      specularTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *specularTextureMapping*.
        *
@@ -19052,7 +19033,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      transmissionTexture: SFNode | null;
+      transmissionTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *transmissionTextureMapping*.
        *
@@ -20255,7 +20236,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      thicknessTexture: SFNode | null;
+      thicknessTexture: X3DSingleTextureNodeProxy | null;
       /**
        * Input/Output field *thicknessTextureMapping*.
        *
@@ -21017,8 +20998,8 @@ declare namespace X3D
       shadows: boolean;
    }
 
-   /** Base type for all Material nodes. */
-   interface X3DMaterialNodeProxy extends X3DAppearanceChildNodeProxy
+   /** Nodes of this type can be used for material extensions. */
+   interface X3DMaterialExtensionNodeProxy extends X3DNodeProxy
    {
       /**
        * This field is of access type 'inputOutput' and type SFNode.
@@ -21026,9 +21007,13 @@ declare namespace X3D
       metadata: X3DMetadataObjectProxy | null;
    }
 
-   interface X3DMaterialExtensionNodeProxy extends X3DMaterialNodeProxy
+   /** Base type for all Material nodes. */
+   interface X3DMaterialNodeProxy extends X3DAppearanceChildNodeProxy
    {
-
+      /**
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
    }
 
    /** Each node inheriting the X3DMetadataObject interface contains a single array of strictly typed values: MFBool, MFInt32, MFFloat, MFDouble, MFString, or MFNode, the latter having children that are all Metadata nodes. */

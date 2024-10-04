@@ -106,7 +106,7 @@ function FieldDescription (field)
    let strings = [ ];
 
    if (field .description)
-      strings .push (` ${field .description}`, "");
+      strings .push (` ${field .description .replace (/\n- /g, ", ")}`, "");
 
    const type = field .type === "xs:NMTOKEN" ? "SFString" : field .type;
 
@@ -163,7 +163,9 @@ function FieldType (field)
       {
          const types = field .acceptableNodeTypes
             ?.split (/[|,]/)
-            .map (type => `${type .trim ()}Proxy`) ?? [ ];
+            .map (type => `${type .trim ()}Proxy`)
+            .filter (type => type !== "fieldProxy")
+         ?? [ ];
 
          if (!types .length)
             types .push ("SFNode");
