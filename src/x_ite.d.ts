@@ -4,114 +4,115 @@
 
 // Handle both importing via UMD and modules:
 export default X3D;
-export = X3D;
+// export = X3D;
 
-declare const X3D: X3D;
+type X3D = typeof X3D;
+
+/**
+ * There is the X3D object which is globally available, it expects one function handler that is called when the browsers (\<x3d-canvas\> elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
+ */
+declare function X3D(callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
 
 /**
  * Namespace for all X3D objects.
  */
-interface X3D
+declare namespace X3D
 {
-   /**
-    * There is the X3D object which is globally available, it expects one function handler that is called when the browsers (\<x3d-canvas\> elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
-    */
-   (callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
-
    /**
     * In X_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
     */
-   noConflict (): X3D;
+   function noConflict(): X3D;
    /**
     * Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
     */
-   createBrowser (): X3DCanvasElement;
+   function createBrowser(): X3DCanvasElement;
    /**
     * The selector argument must be a string containing a valid CSS selector expression to match elements against, or a valid X3DCanvasElement. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
     */
-   getBrowser (selector?: string | X3DCanvasElement): X3DBrowser;
+   function getBrowser(selector?: string | X3DCanvasElement): X3DBrowser;
 
-   readonly X3DConstants: X3DConstants;
-   readonly X3DBrowser: typeof X3DBrowser;
-   readonly X3DExecutionContext: typeof X3DExecutionContext;
-   readonly X3DScene: typeof X3DScene;
-   readonly ComponentInfo: typeof ComponentInfo;
-   readonly ComponentInfoArray: typeof ComponentInfoArray;
-   readonly ProfileInfo: typeof ProfileInfo;
-   readonly ProfileInfoArray: typeof ProfileInfoArray;
-   readonly UnitInfo: typeof UnitInfo;
-   readonly UnitInfoArray: typeof UnitInfoArray;
-   readonly ExternProtoDeclarationArray: typeof ExternProtoDeclarationArray;
-   readonly ProtoDeclarationArray: typeof ProtoDeclarationArray;
-   readonly X3DExternProtoDeclaration: typeof X3DExternProtoDeclaration;
-   readonly X3DProtoDeclaration: typeof X3DProtoDeclaration;
-   readonly NamedNodesArray: typeof NamedNodesArray;
-   readonly ImportedNodesArray: typeof ImportedNodesArray;
-   readonly X3DImportedNode: typeof X3DImportedNode;
-   readonly ExportedNodesArray: typeof ExportedNodesArray;
-   readonly X3DExportedNode: typeof X3DExportedNode;
-   readonly RouteArray: typeof RouteArray;
-   readonly X3DRoute: typeof X3DRoute;
+   //readonly X3DConstants: X3DConstants;
+   //readonly X3DBrowser: typeof X3DBrowser;
+   //readonly X3DExecutionContext: typeof X3DExecutionContext;
+   //readonly X3DScene: typeof X3DScene;
+   //readonly ComponentInfo: typeof ComponentInfo;
+   //readonly ComponentInfoArray: typeof ComponentInfoArray;
+   //readonly ProfileInfo: typeof ProfileInfo;
+   //readonly ProfileInfoArray: typeof ProfileInfoArray;
+   //readonly UnitInfo: typeof UnitInfo;
+   //readonly UnitInfoArray: typeof UnitInfoArray;
+   //readonly ExternProtoDeclarationArray: typeof ExternProtoDeclarationArray;
+   //readonly ProtoDeclarationArray: typeof ProtoDeclarationArray;
+   //readonly X3DExternProtoDeclaration: typeof X3DExternProtoDeclaration;
+   //readonly X3DProtoDeclaration: typeof X3DProtoDeclaration;
+   //readonly NamedNodesArray: typeof NamedNodesArray;
+   //readonly ImportedNodesArray: typeof ImportedNodesArray;
+   //readonly X3DImportedNode: typeof X3DImportedNode;
+   //readonly ExportedNodesArray: typeof ExportedNodesArray;
+   //readonly X3DExportedNode: typeof X3DExportedNode;
+   //readonly RouteArray: typeof RouteArray;
+   //readonly X3DRoute: typeof X3DRoute;
+//
+   //readonly X3DFieldDefinition: typeof X3DFieldDefinition;
+   //readonly FieldDefinitionArray: typeof FieldDefinitionArray;
+//
+   //readonly X3DField: typeof X3DField;
+   //readonly X3DArrayField: typeof X3DArrayField;
+//
+   //// SF* fields
+//
+   //readonly SFBool: typeof SFBool;
+   //readonly SFColor: typeof SFColor;
+   //readonly SFColorRGBA: typeof SFColorRGBA;
+   //readonly SFDouble: typeof SFDouble;
+   //readonly SFFloat: typeof SFFloat;
+   //readonly SFImage: typeof SFImage;
+   //readonly SFInt32: typeof SFInt32;
+   //readonly SFMatrix3d: typeof SFMatrix3d;
+   //readonly SFMatrix3f: typeof SFMatrix3f;
+   //readonly SFMatrix4d: typeof SFMatrix4d;
+   //readonly SFMatrix4f: typeof SFMatrix4f;
+   //readonly SFNode: typeof SFNode;
+   //readonly SFRotation: typeof SFRotation;
+   //readonly SFString: typeof SFString;
+   //readonly SFTime: typeof SFTime;
+   //readonly SFVec2d: typeof SFVec2d;
+   //readonly SFVec2f: typeof SFVec2f;
+   //readonly SFVec3d: typeof SFVec3d;
+   //readonly SFVec3f: typeof SFVec3f;
+   //readonly SFVec4d: typeof SFVec4d;
+   //readonly SFVec4f: typeof SFVec4f;
+//
+   //// MF* fields
+//
+   //readonly MFBool: typeof MFBool;
+   //readonly MFColor: typeof MFColor;
+   //readonly MFColorRGBA: typeof MFColorRGBA;
+   //readonly MFDouble: typeof MFDouble;
+   //readonly MFFloat: typeof MFFloat;
+   //readonly MFImage: typeof MFImage;
+   //readonly MFInt32: typeof MFInt32;
+   //readonly MFMatrix3d: typeof MFMatrix3d;
+   //readonly MFMatrix3f: typeof MFMatrix3f;
+   //readonly MFMatrix4d: typeof MFMatrix4d;
+   //readonly MFMatrix4f: typeof MFMatrix4f;
+   //readonly MFNode: typeof MFNode;
+   //readonly MFRotation: typeof MFRotation;
+   //readonly MFString: typeof MFString;
+   //readonly MFTime: typeof MFTime;
+   //readonly MFVec2d: typeof MFVec2d;
+   //readonly MFVec2f: typeof MFVec2f;
+   //readonly MFVec3d: typeof MFVec3d;
+   //readonly MFVec3f: typeof MFVec3f;
+   //readonly MFVec4d: typeof MFVec4d;
+   //readonly MFVec4f: typeof MFVec4f;
 
-   readonly X3DFieldDefinition: typeof X3DFieldDefinition;
-   readonly FieldDefinitionArray: typeof FieldDefinitionArray;
-
-   readonly X3DField: typeof X3DField;
-   readonly X3DArrayField: typeof X3DArrayField;
-
-   // SF* fields
-
-   readonly SFBool: typeof SFBool;
-   readonly SFColor: typeof SFColor;
-   readonly SFColorRGBA: typeof SFColorRGBA;
-   readonly SFDouble: typeof SFDouble;
-   readonly SFFloat: typeof SFFloat;
-   readonly SFImage: typeof SFImage;
-   readonly SFInt32: typeof SFInt32;
-   readonly SFMatrix3d: typeof SFMatrix3d;
-   readonly SFMatrix3f: typeof SFMatrix3f;
-   readonly SFMatrix4d: typeof SFMatrix4d;
-   readonly SFMatrix4f: typeof SFMatrix4f;
-   readonly SFNode: typeof SFNode;
-   readonly SFRotation: typeof SFRotation;
-   readonly SFString: typeof SFString;
-   readonly SFTime: typeof SFTime;
-   readonly SFVec2d: typeof SFVec2d;
-   readonly SFVec2f: typeof SFVec2f;
-   readonly SFVec3d: typeof SFVec3d;
-   readonly SFVec3f: typeof SFVec3f;
-   readonly SFVec4d: typeof SFVec4d;
-   readonly SFVec4f: typeof SFVec4f;
-
-   // MF* fields
-
-   readonly MFBool: typeof MFBool;
-   readonly MFColor: typeof MFColor;
-   readonly MFColorRGBA: typeof MFColorRGBA;
-   readonly MFDouble: typeof MFDouble;
-   readonly MFFloat: typeof MFFloat;
-   readonly MFImage: typeof MFImage;
-   readonly MFInt32: typeof MFInt32;
-   readonly MFMatrix3d: typeof MFMatrix3d;
-   readonly MFMatrix3f: typeof MFMatrix3f;
-   readonly MFMatrix4d: typeof MFMatrix4d;
-   readonly MFMatrix4f: typeof MFMatrix4f;
-   readonly MFNode: typeof MFNode;
-   readonly MFRotation: typeof MFRotation;
-   readonly MFString: typeof MFString;
-   readonly MFTime: typeof MFTime;
-   readonly MFVec2d: typeof MFVec2d;
-   readonly MFVec2f: typeof MFVec2f;
-   readonly MFVec3d: typeof MFVec3d;
-   readonly MFVec3f: typeof MFVec3f;
-   readonly MFVec4d: typeof MFVec4d;
-   readonly MFVec4f: typeof MFVec4f;
-}
+// namespace until end of file!
 
 /**
  * The X3DCanvasElement, \<x3d-canvas\>, is the main element that displays the X3D content. It defines some functions to be used with this object.
  */
-declare class X3DCanvasElement extends HTMLElement
+class X3DCanvasElement extends HTMLElement
 {
    /**
     * A reference to the X3DBrowser object that is associated with this element.
@@ -135,7 +136,7 @@ declare class X3DCanvasElement extends HTMLElement
 /**
  * This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.
  */
-declare class X3DBrowser
+class X3DBrowser
 {
    /**
     * A browser-implementation specific string describing the browser.
@@ -208,7 +209,7 @@ declare class X3DBrowser
    /**
     * The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
     */
-   getComponent (name : string, level : number?): ComponentInfo;
+   getComponent (name : string, level?: number): ComponentInfo;
    /**
     * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
     */
@@ -461,7 +462,7 @@ type RenderingProperty = {
    LogarithmicDepthBuffer: boolean,
 }
 
-declare class ContextMenu
+class ContextMenu
 {
    getUserMenu (): UserMenuCallback;
    setUserMenu (cb: UserMenuCallback): void;
@@ -517,7 +518,7 @@ type UserMenuItem = {
 /**
  * A scene is an extension of the execution context services with additional services provided.
  */
-declare class X3DScene extends X3DExecutionContext
+class X3DScene extends X3DExecutionContext
 {
    /**
     * When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
@@ -628,7 +629,7 @@ declare class X3DScene extends X3DExecutionContext
 /**
  * This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
  */
-declare class X3DExecutionContext
+class X3DExecutionContext
 {
    /**
     * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read only.
@@ -740,7 +741,7 @@ declare class X3DExecutionContext
 /**
  * ConcreteNodesArray is an object that represents an array of classes derived from X3DNode. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *concreteNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class ConcreteNodesArray extends X3DInfoArray <X3DConcreteNode> { }
+class ConcreteNodesArray extends X3DInfoArray <X3DConcreteNode> { }
 
 /**
  * The X3DConcreteNode interface defines an interface for concrete node types, it extends the X3DAbstractNode interface. The object consists solely of read-only properties. It does not define any additional functions.
@@ -750,11 +751,11 @@ interface X3DConcreteNode extends X3DAbstractNode
    /**
     * The default container field name for this node. This property is read only.
     */
-   static readonly containerField: string;
+   readonly containerField: string;
    /**
     * Returns an array with two strings defining the first version and last version where this node is specified. This property is read only.
     */
-   static readonly specificationRange:
+   readonly specificationRange:
    {
       readonly from: string,
       readonly to: string,
@@ -762,13 +763,13 @@ interface X3DConcreteNode extends X3DAbstractNode
    /**
     * Returns a list of fields defined for the SFNode object.
     */
-   static readonly fieldDefinitions: FieldDefinitionArray;
+   readonly fieldDefinitions: FieldDefinitionArray;
 }
 
 /**
  * AbstractNodesArray is an object that represents an array of classes derived from X3DNode. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *abstractNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class AbstractNodesArray extends X3DInfoArray <X3DAbstractNode> { }
+class AbstractNodesArray extends X3DInfoArray <X3DAbstractNode> { }
 
 /**
  * The X3DAbstractNode interface defines an interface for concrete node types. The object consists solely of read-only properties. It does not define any additional functions.
@@ -778,11 +779,11 @@ interface X3DAbstractNode
    /**
     * The node type name for this class. This property is read only.
     */
-   static readonly typeName: string;
+   readonly typeName: string;
    /**
     * Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
     */
-   static readonly componentInfo:
+   readonly componentInfo:
    {
       readonly name: string,
       readonly level: number,
@@ -792,17 +793,17 @@ interface X3DAbstractNode
 /**
  * FieldTypesArray is an object that represents an array of classes derived from X3DField. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *FieldTypesArray*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class FieldTypesArray extends X3DInfoArray <X3DField> { }
+class FieldTypesArray extends X3DInfoArray <X3DField> { }
 
 /**
  * ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { }
+class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { }
 
 /**
  * This object stores information about a particular X3D profile.
  */
-declare class ProfileInfo
+class ProfileInfo
 {
    /**
     * A string of the formal name of this profile. This property is read only.
@@ -825,12 +826,12 @@ declare class ProfileInfo
 /**
  * ComponentInfoArray is an object that represents an array of ComponentInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *componentInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class ComponentInfoArray extends X3DInfoArray <ComponentInfo> { }
+class ComponentInfoArray extends X3DInfoArray <ComponentInfo> { }
 
 /**
  * The ComponentInfo object stores information about a particular X3D component. The object consists solely of read-only properties. It does not define any additional functions.
  */
-declare class ComponentInfo
+class ComponentInfo
 {
    /**
     * A string of the formal name of this profile. This property is read only.
@@ -853,12 +854,12 @@ declare class ComponentInfo
 /**
  * UnitInfoArray is an object that represents an array of UnitInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *unitInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class UnitInfoArray extends X3DInfoArray <UnitInfo> { }
+class UnitInfoArray extends X3DInfoArray <UnitInfo> { }
 
 /**
  * The UnitInfo object stores information about a particular unit declaration. The object consists solely of read-only properties. It does not define any additional functions.
  */
-declare class UnitInfo
+class UnitInfo
 {
    /**
     * The category of default unit being modified as defined in the table. This property is read only.
@@ -877,12 +878,12 @@ declare class UnitInfo
 /**
  * NamedNodesArray is an object that represents an array of SFNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *namedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class NamedNodesArray extends X3DInfoArray <SFNode> { }
+class NamedNodesArray extends X3DInfoArray <SFNode> { }
 
 /**
  * ImportedNodesArray is an object that represents an array of X3DImportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *importedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class ImportedNodesArray extends X3DInfoArray <X3DImportedNode> { }
+class ImportedNodesArray extends X3DInfoArray <X3DImportedNode> { }
 
 /**
  * The X3DImportedNode object stores information about a particular import declaration. The object consists solely of read-only properties. It does not define any additional functions.
@@ -910,7 +911,7 @@ class X3DImportedNode
 /**
  * ExportedNodesArray is an object that represents an array of X3DExportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *exportedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class ExportedNodesArray extends X3DInfoArray <X3DExportedNode> { }
+class ExportedNodesArray extends X3DInfoArray <X3DExportedNode> { }
 
 /**
  * The X3DExportedNode object stores information about a particular export declaration. The object consists solely of read-only properties. It does not define any additional functions.
@@ -930,12 +931,12 @@ class X3DExportedNode
 /**
  * ProtoDeclarationArray is an object that represents an array of X3DProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *protoDeclarationArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class ProtoDeclarationArray extends X3DInfoArray <X3DProtoDeclaration> { }
+class ProtoDeclarationArray extends X3DInfoArray <X3DProtoDeclaration> { }
 
 /**
  * A PROTO declaration is represented by the X3DProtoDeclaration object. This object can only be fetched using the X3DExecutionContext object.
  */
-declare class X3DProtoDeclaration
+class X3DProtoDeclaration
 {
    /**
     * A string of the declared name of this prototype. This property is read only.
@@ -977,12 +978,12 @@ declare class X3DProtoDeclaration
 /**
  * ExternProtoDeclarationArray is an object that represents an array of X3DExternProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *externProtoDeclarationArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class ExternProtoDeclarationArray extends X3DInfoArray <X3DExternProtoDeclaration> { }
+class ExternProtoDeclarationArray extends X3DInfoArray <X3DExternProtoDeclaration> { }
 
 /**
  * An EXTERNPROTO declaration is represented by the X3DExternProtoDeclaration object. EXTERNPROTO declarations can only be fetched using the X3DExecutionContext object.
  */
-declare class X3DExternProtoDeclaration
+class X3DExternProtoDeclaration
 {
    /**
     * A string of the declared name of this extern prototype. This property is read only.
@@ -1036,12 +1037,12 @@ declare class X3DExternProtoDeclaration
 /**
  * RouteArray is an object that represents an array of X3DRoute objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *routeArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
  */
-declare class RouteArray extends X3DInfoArray <X3DRoute> { }
+class RouteArray extends X3DInfoArray <X3DRoute> { }
 
 /**
  * Routes are represented by the X3DRoute object. Routes can only be created through calls to the addRoute () function of X3DExecutionContext.
  */
-declare class X3DRoute
+class X3DRoute
 {
    /**
     * A reference to the node that is the source of this route.
@@ -1061,7 +1062,7 @@ declare class X3DRoute
    readonly destinationField: string;
 }
 
-declare class X3DInfoArray <T>
+class X3DInfoArray <T>
 {
    [Symbol .iterator](): IterableIterator <T>;
    readonly [index: number]: T;
@@ -1518,12 +1519,12 @@ interface X3DConstants
 /**
  * FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *fieldDefinitionArrayName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array).
  */
-declare class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { }
+class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { }
 
 /**
  * The X3DFieldDefinition object represents all of the descriptive properties of a single field of a node.
  */
-declare class X3DFieldDefinition
+class X3DFieldDefinition
 {
    /**
     * Value from the X3DConstants object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
@@ -1546,7 +1547,7 @@ declare class X3DFieldDefinition
 /**
  * The X3DField object is the base object of all SF* field and X3DArrayField.
  */
-declare class X3DField
+class X3DField
 {
    /**
     * Returns a copy of this X3DField.
@@ -1578,7 +1579,7 @@ declare class X3DField
    getFieldInterests (): Set <this>
    addFieldCallback (key: any, callback: (value: unknown) => void): void;
    removeFieldCallback (key: any): void;
-   getFieldCallbacks (): Map <any, (value: this) => void>;
+   getFieldCallbacks (): Map <any, (value: unknown) => void>;
    addInputRoute (route: X3DRoute): void;
    removeInputRoute (route: X3DRoute): void;
    getInputRoutes (): Set <X3DRoute>;
@@ -1597,7 +1598,7 @@ declare class X3DField
 /**
  * The SFBool object corresponds to an X3D SFBool field.
  */
-declare class SFBool extends X3DField
+class SFBool extends X3DField
 {
    static readonly typeName: "SFBool";
 
@@ -1610,7 +1611,7 @@ declare class SFBool extends X3DField
 /**
  * The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
  */
-declare class SFColor extends X3DField
+class SFColor extends X3DField
 {
    static readonly typeName: "SFColor";
 
@@ -1666,7 +1667,7 @@ declare class SFColor extends X3DField
 /**
  * The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
  */
-declare class SFColorRGBA extends X3DField
+class SFColorRGBA extends X3DField
 {
    static readonly typeName: "SFColorRGBA";
 
@@ -1726,7 +1727,7 @@ declare class SFColorRGBA extends X3DField
 /**
  * The SFDouble object corresponds to an X3D SFDouble field.
  */
-declare class SFDouble extends X3DField
+class SFDouble extends X3DField
 {
    static readonly typeName: "SFDouble";
 
@@ -1739,7 +1740,7 @@ declare class SFDouble extends X3DField
 /**
  * The SFFloat object corresponds to an X3D SFFloat field.
  */
-declare class SFFloat extends X3DField
+class SFFloat extends X3DField
 {
    static readonly typeName: "SFFloat";
 
@@ -1752,7 +1753,7 @@ declare class SFFloat extends X3DField
 /**
  * The SFImage object corresponds to an X3D SFImage field.
  */
-declare class SFImage extends X3DField
+class SFImage extends X3DField
 {
    static readonly typeName: "SFImage";
 
@@ -1799,7 +1800,7 @@ declare class SFImage extends X3DField
 /**
  * The SFInt32 object corresponds to an X3D SFInt32 field.
  */
-declare class SFInt32 extends X3DField
+class SFInt32 extends X3DField
 {
    static readonly typeName: "SFInt32";
 
@@ -1812,7 +1813,7 @@ declare class SFInt32 extends X3DField
 /**
  * The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
  */
-declare class SFMatrix3 extends X3DField
+class SFMatrix3 extends X3DField
 {
    /**
     * A new matrix initialized with the identity matrix is created and returned.
@@ -1895,7 +1896,7 @@ declare class SFMatrix3 extends X3DField
 /**
  * The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
  */
-declare class SFMatrix3d extends SFMatrix3
+class SFMatrix3d extends SFMatrix3
 {
    static readonly typeName: "SFMatrix3d";
 }
@@ -1903,7 +1904,7 @@ declare class SFMatrix3d extends SFMatrix3
 /**
  * The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
  */
-declare class SFMatrix3f extends SFMatrix3
+class SFMatrix3f extends SFMatrix3
 {
    static readonly typeName: "SFMatrix3f";
 }
@@ -1911,7 +1912,7 @@ declare class SFMatrix3f extends SFMatrix3
 /**
  * The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
  */
-declare class SFMatrix4 extends X3DField
+class SFMatrix4 extends X3DField
 {
    /**
     * A new matrix initialized with the identity matrix is created and returned.
@@ -1995,7 +1996,7 @@ declare class SFMatrix4 extends X3DField
 /**
  * The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
  */
-declare class SFMatrix4d extends SFMatrix4
+class SFMatrix4d extends SFMatrix4
 {
    static readonly typeName: "SFMatrix4d";
 }
@@ -2003,7 +2004,7 @@ declare class SFMatrix4d extends SFMatrix4
 /**
  * The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
  */
-declare class SFMatrix4f extends SFMatrix4
+class SFMatrix4f extends SFMatrix4
 {
    static readonly typeName: "SFMatrix4f";
 }
@@ -2011,7 +2012,7 @@ declare class SFMatrix4f extends SFMatrix4
 /**
  * The SFNode object corresponds to an X3D SFNode field.
  */
-declare class SFNode extends X3DField
+class SFNode extends X3DField
 {
    static readonly typeName: "SFNode";
 
@@ -2105,7 +2106,7 @@ type ToStringOptions = {
 /**
  * The SFRotation object corresponds to an X3D SFRotation field.
  */
-declare class SFRotation extends X3DField
+class SFRotation extends X3DField
 {
    static readonly typeName: "SFRotation";
 
@@ -2193,7 +2194,7 @@ declare class SFRotation extends X3DField
 /**
  * The SFString object corresponds to an X3D SFString field.
  */
-declare class SFString extends X3DField
+class SFString extends X3DField
 {
    static readonly typeName: "SFString";
 
@@ -2208,7 +2209,7 @@ declare class SFString extends X3DField
 /**
  * The SFTime object corresponds to an X3D SFTime field.
  */
-declare class SFTime extends X3DField
+class SFTime extends X3DField
 {
    static readonly typeName: "SFTime";
 
@@ -2221,7 +2222,7 @@ declare class SFTime extends X3DField
 /**
  * The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2d/fObjectName[0]* or *sfVec2d/fObjectName[1]).*
  */
-declare class SFVec2 extends X3DField
+class SFVec2 extends X3DField
 {
    /**
     * A new vector initialized with zero values is created and returned.
@@ -2313,7 +2314,7 @@ declare class SFVec2 extends X3DField
 /**
  * The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2d/fObjectName[0]* or *sfVec2d/fObjectName[1]).*
  */
-declare class SFVec2d extends SFVec2
+class SFVec2d extends SFVec2
 {
    static readonly typeName: "SFVec2d";
 }
@@ -2321,7 +2322,7 @@ declare class SFVec2d extends SFVec2
 /**
  * The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2d/fObjectName[0]* or *sfVec2d/fObjectName[1]).*
  */
-declare class SFVec2f extends SFVec2
+class SFVec2f extends SFVec2
 {
    static readonly typeName: "SFVec2f";
 }
@@ -2329,7 +2330,7 @@ declare class SFVec2f extends SFVec2
 /**
  * The SFVec3d/f object corresponds to an X3D SFVec3d/f field. Each component of the vector can be accessed using the x, y, and z properties or using C-style array dereferencing (i.e. *sfVec3d/fObjectName[0], sfVec3d/fObjectName[1]* or *sfVec3d/fObjectName[2]).*
  */
-declare class SFVec3 extends X3DField
+class SFVec3 extends X3DField
 {
    /**
     * A new vector initialized with zero values is created and returned.
@@ -2429,7 +2430,7 @@ declare class SFVec3 extends X3DField
 /**
  * The SFVec3d/f object corresponds to an X3D SFVec3d/f field. Each component of the vector can be accessed using the x, y, and z properties or using C-style array dereferencing (i.e. *sfVec3d/fObjectName[0], sfVec3d/fObjectName[1]* or *sfVec3d/fObjectName[2]).*
  */
-declare class SFVec3d extends SFVec3
+class SFVec3d extends SFVec3
 {
    static readonly typeName: "SFVec3d";
 }
@@ -2437,7 +2438,7 @@ declare class SFVec3d extends SFVec3
 /**
  * The SFVec3d/f object corresponds to an X3D SFVec3d/f field. Each component of the vector can be accessed using the x, y, and z properties or using C-style array dereferencing (i.e. *sfVec3d/fObjectName[0], sfVec3d/fObjectName[1]* or *sfVec3d/fObjectName[2]).*
  */
-declare class SFVec3f extends SFVec3
+class SFVec3f extends SFVec3
 {
    static readonly typeName: "SFVec3f";
 }
@@ -2445,7 +2446,7 @@ declare class SFVec3f extends SFVec3
 /**
  * The SFVec4d/f object corresponds to an X3D SFVec4d/f field. Each component of the vector can be accessed using the x, y, z and w properties or using C-style array dereferencing (i.e. *sfVec4d/fObjectName[0], sfVec4d/fObjectName[1], sfVec4d/fObjectName[2]* or *sfVec4d/fObjectName[3]).*
  */
-declare class SFVec4 extends X3DField
+class SFVec4 extends X3DField
 {
    /**
     * A new vector initialized with zero values is created and returned.
@@ -2545,7 +2546,7 @@ declare class SFVec4 extends X3DField
 /**
  * The SFVec4d/f object corresponds to an X3D SFVec4d/f field. Each component of the vector can be accessed using the x, y, z and w properties or using C-style array dereferencing (i.e. *sfVec4d/fObjectName[0], sfVec4d/fObjectName[1], sfVec4d/fObjectName[2]* or *sfVec4d/fObjectName[3]).*
  */
-declare class SFVec4d extends SFVec4
+class SFVec4d extends SFVec4
 {
    static readonly typeName: "SFVec4d";
 }
@@ -2553,12 +2554,12 @@ declare class SFVec4d extends SFVec4
 /**
  * The SFVec4d/f object corresponds to an X3D SFVec4d/f field. Each component of the vector can be accessed using the x, y, z and w properties or using C-style array dereferencing (i.e. *sfVec4d/fObjectName[0], sfVec4d/fObjectName[1], sfVec4d/fObjectName[2]* or *sfVec4d/fObjectName[3]).*
  */
-declare class SFVec4f extends SFVec4
+class SFVec4f extends SFVec4
 {
    static readonly typeName: "SFVec4f";
 }
 
-declare class X3DArrayField <T> extends X3DField
+class X3DArrayField <T> extends X3DField
 {
    /**
     * The creation method can be passed 0 or more single value expressions to initialize the elements of the array.
@@ -2610,107 +2611,107 @@ type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolea
 type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void
 type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U
 
-declare class MFBool extends X3DArrayField <boolean>
+class MFBool extends X3DArrayField <boolean>
 {
    static readonly typeName: "MFBool";
 }
 
-declare class MFColor extends X3DArrayField <SFColor>
+class MFColor extends X3DArrayField <SFColor>
 {
    static readonly typeName: "MFColor";
 }
 
-declare class MFColorRGBA extends X3DArrayField <SFColorRGBA>
+class MFColorRGBA extends X3DArrayField <SFColorRGBA>
 {
    static readonly typeName: "MFColorRGBA";
 }
 
-declare class MFDouble extends X3DArrayField <number>
+class MFDouble extends X3DArrayField <number>
 {
    static readonly typeName: "MFDouble";
 }
 
-declare class MFFloat extends X3DArrayField <number>
+class MFFloat extends X3DArrayField <number>
 {
    static readonly typeName: "MFFloat";
 }
 
-declare class MFImage extends X3DArrayField <SFImage>
+class MFImage extends X3DArrayField <SFImage>
 {
    static readonly typeName: "MFImage";
 }
 
-declare class MFInt32 extends X3DArrayField <number>
+class MFInt32 extends X3DArrayField <number>
 {
    static readonly typeName: "MFInt32";
 }
 
-declare class MFMatrix3d extends X3DArrayField <SFMatrix3d>
+class MFMatrix3d extends X3DArrayField <SFMatrix3d>
 {
    static readonly typeName: "MFMatrix3d";
 }
 
-declare class MFMatrix3f extends X3DArrayField <SFMatrix3f>
+class MFMatrix3f extends X3DArrayField <SFMatrix3f>
 {
    static readonly typeName: "MFMatrix3f";
 }
 
-declare class MFMatrix4d extends X3DArrayField <SFMatrix4d>
+class MFMatrix4d extends X3DArrayField <SFMatrix4d>
 {
    static readonly typeName: "MFMatrix4d";
 }
 
-declare class MFMatrix4f extends X3DArrayField <SFMatrix4f>
+class MFMatrix4f extends X3DArrayField <SFMatrix4f>
 {
    static readonly typeName: "MFMatrix4f";
 }
 
-declare class MFNode <T extends SFNode | null = SFNode | null> extends X3DArrayField <T>
+class MFNode <T extends SFNode | null = SFNode | null> extends X3DArrayField <T>
 {
    static readonly typeName: "MFNode";
 }
 
-declare class MFRotation extends X3DArrayField <SFRotation>
+class MFRotation extends X3DArrayField <SFRotation>
 {
    static readonly typeName: "MFRotation";
 }
 
-declare class MFString <T extends string = string> extends X3DArrayField <T>
+class MFString <T extends string = string> extends X3DArrayField <T>
 {
    static readonly typeName: "MFString";
 }
 
-declare class MFTime extends X3DArrayField <number>
+class MFTime extends X3DArrayField <number>
 {
    static readonly typeName: "MFTime";
 }
 
-declare class MFVec2d extends X3DArrayField <SFVec2d>
+class MFVec2d extends X3DArrayField <SFVec2d>
 {
    static readonly typeName: "MFVec2d";
 }
 
-declare class MFVec2f extends X3DArrayField <SFVec2f>
+class MFVec2f extends X3DArrayField <SFVec2f>
 {
    static readonly typeName: "MFVec2f";
 }
 
-declare class MFVec3d extends X3DArrayField <SFVec3d>
+class MFVec3d extends X3DArrayField <SFVec3d>
 {
    static readonly typeName: "MFVec3d";
 }
 
-declare class MFVec3f extends X3DArrayField <SFVec3f>
+class MFVec3f extends X3DArrayField <SFVec3f>
 {
    static readonly typeName: "MFVec3f";
 }
 
-declare class MFVec4d extends X3DArrayField <SFVec4d>
+class MFVec4d extends X3DArrayField <SFVec4d>
 {
    static readonly typeName: "MFVec4d";
 }
 
-declare class MFVec4f extends X3DArrayField <SFVec4f>
+class MFVec4f extends X3DArrayField <SFVec4f>
 {
    static readonly typeName: "MFVec4f";
 }
@@ -3013,7 +3014,7 @@ interface AnisotropyMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
 }
 
 /** Appearance specifies the visual properties of geometry by containing the Material, ImageTexture/MovieTexture/PixelTexture, FillProperties, LineProperties, programmable shader nodes (ComposedShader, PackagedShader, ProgramShader) and TextureTransform nodes. */
@@ -3776,7 +3777,7 @@ interface BlendModeProxy extends X3DAppearanceChildNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * Specifies how the alpha source blending factors are computed.
    *
@@ -4716,7 +4717,7 @@ interface ClearcoatMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
 }
 
 /** ClipPlane specifies a single plane equation used to clip (i. */
@@ -5396,7 +5397,7 @@ interface ComposedShaderProxy extends X3DShaderNodeProxy, X3DProgrammableShaderO
    *
    * This field is of access type 'inputOutput' and type MFNode.
    */
-   field: MFNode <fieldProxy>;
+   field: MFNode /*<fieldProxy>*/;
    /**
    * isSelected indicates this shader instance is selected for use by browser Warning: it is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
    *
@@ -6358,7 +6359,7 @@ interface DepthModeProxy extends X3DAppearanceChildNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * Specifies the scale factors and units to calculate depth values.The offset is added before the depth test is performed and before the value is written into the depth buffer.The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0.
    *
@@ -6411,7 +6412,7 @@ interface DiffuseTransmissionMaterialExtensionProxy extends X3DMaterialExtension
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
 }
 
 /** DirectionalLight might not be scoped by parent Group or Transform at levels 1 or 2. */
@@ -6652,7 +6653,7 @@ interface DispersionMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
 }
 
 /** DoubleAxisHingeJoint has two independent axes located around a common anchor point. */
@@ -7136,7 +7137,7 @@ interface EmissiveStrengthMaterialExtensionProxy extends X3DMaterialExtensionNod
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
 }
 
 /** EnvironmentLight ... This node only affects the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
@@ -7183,7 +7184,7 @@ interface EnvironmentLightProxy extends X3DLightNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * Enables/disables this light source.
    *
@@ -10032,7 +10033,7 @@ interface ImageTextureAtlasProxy extends X3DTexture3DNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * Total number of images.
    *
@@ -10074,7 +10075,7 @@ interface ImageTextureAtlasProxy extends X3DTexture3DNodeProxy
    *
    * This field is of access type 'initializeOnly' and type SFNode.
    */
-   textureProperties: SFNode | null;
+   textureProperties: TexturePropertiesProxy | null;
    /**
    * Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
    *
@@ -10696,7 +10697,7 @@ interface InstancedShapeProxy extends X3DShapeNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   appearance: SFNode | null;
+   appearance: X3DAppearanceNodeProxy | null;
    /**
    * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
    *
@@ -10732,13 +10733,13 @@ interface InstancedShapeProxy extends X3DShapeNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   geometry: SFNode | null;
+   geometry: X3DGeometryNodeProxy | null;
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * *pointerEvents* defines whether this Shape becomes target for pointer events.
    *
@@ -10867,7 +10868,7 @@ interface IORMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
 }
 
 /** IridescenceMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
@@ -10926,7 +10927,7 @@ interface IridescenceMaterialExtensionProxy extends X3DMaterialExtensionNodeProx
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
 }
 
 /** IsoSurfaceVolumeData displays one or more surfaces extracted from a voxel dataset. */
@@ -13750,7 +13751,7 @@ interface PackagedShaderProxy extends X3DShaderNodeProxy, X3DUrlObjectProxy, X3D
    *
    * This field is of access type 'inputOutput' and type MFNode.
    */
-   field: MFNode <fieldProxy>;
+   field: MFNode /*<fieldProxy>*/;
    /**
    * isSelected indicates this shader instance is selected for use by browser Warning: it is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
    *
@@ -16110,7 +16111,7 @@ interface ScriptProxy extends X3DScriptNodeProxy
    *
    * This field is of access type 'inputOutput' and type MFNode.
    */
-   field: MFNode <fieldProxy>;
+   field: MFNode /*<fieldProxy>*/;
    /**
    * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
    *
@@ -16334,7 +16335,7 @@ interface ShaderProgramProxy extends X3DNodeProxy, X3DUrlObjectProxy, X3DProgram
    *
    * This field is of access type 'inputOutput' and type MFNode.
    */
-   field: MFNode <fieldProxy>;
+   field: MFNode /*<fieldProxy>*/;
    /**
    * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
    *
@@ -16428,7 +16429,7 @@ interface SheenMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * The sheen color in linear space.
    *
@@ -17137,7 +17138,7 @@ interface SpecularGlossinessMaterialProxy extends X3DOneSidedMaterialNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * *normalScale* controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
    *
@@ -17208,7 +17209,7 @@ interface SpecularMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * The strength of the specular reflection.
    *
@@ -17976,7 +17977,7 @@ interface TangentProxy extends X3DGeometricPropertyNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
    *
@@ -19115,7 +19116,7 @@ interface TransmissionMaterialExtensionProxy extends X3DMaterialExtensionNodePro
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * The base percentage of light that is transmitted through the surface.
    *
@@ -20318,7 +20319,7 @@ interface VolumeMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   metadata: SFNode | null;
+   metadata: X3DMetadataObjectProxy | null;
    /**
    * The thickness of the volume beneath the surface. The value is given in the coordinate space of the mesh. If the value is 0 the material is thin-walled. Otherwise the material is a volume boundary. The doubleSided property has no effect on volume boundaries.
    *
@@ -21099,6 +21100,11 @@ interface X3DMaterialNodeProxy extends X3DAppearanceChildNodeProxy
    * This field is of access type 'inputOutput' and type SFNode.
    */
    metadata: X3DMetadataObjectProxy | null;
+}
+
+interface X3DMaterialExtensionNodeProxy extends X3DMaterialNodeProxy
+{
+
 }
 
 /** Each node inheriting the X3DMetadataObject interface contains a single array of strictly typed values: MFBool, MFInt32, MFFloat, MFDouble, MFString, or MFNode, the latter having children that are all Metadata nodes. */
@@ -22572,3 +22578,4 @@ type ConcreteNodeTypes = {
 { [name: string]: X3DNodeProxy } // catch all;
 
 // NODES END
+}
