@@ -2969,6 +2969,18 @@ declare namespace X3D
        */
       backMaterial: X3DMaterialNodeProxy | null;
       /**
+       * Input/Output field *blendMode*.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      blendMode: BlendModeProxy | null;
+      /**
+       * Input/Output field *depthMode*.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      depthMode: DepthModeProxy | null;
+      /**
        * Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -6998,6 +7010,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -8292,6 +8310,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -10108,6 +10132,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -10190,6 +10220,12 @@ declare namespace X3D
        * This field is of access type 'inputOnly' and type MFInt32.
        */
       set_coordIndex: MFInt32;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
    }
 
    /** IndexedQuadSet is a geometry node that defines quadrilaterals. */
@@ -10267,6 +10303,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -10351,6 +10393,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -10434,6 +10482,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -10516,6 +10570,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11382,6 +11442,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       normal: X3DNormalNodeProxy | null;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * vertexCount describes how many vertices are used in each individual polyline segment from the Coordinate point values.
        *
@@ -13914,6 +13980,12 @@ declare namespace X3D
        */
       emissiveTextureMapping: string;
       /**
+       * Input/Output field *extensions*.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      extensions: MFNode <X3DMaterialExtensionNodeProxy>;
+      /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -14494,6 +14566,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       normal: X3DNormalNodeProxy | null;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
    }
 
    /** Polyline2D is a geometry node that defines a connected set of vertices in a contiguous set of line segments in X-Y plane. */
@@ -15174,6 +15252,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -19418,6 +19502,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -19488,6 +19578,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -19588,6 +19684,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFInt32.
        */
       stripCount: MFInt32;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -20680,6 +20782,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * This field is of access type 'inputOutput' and type SFNode.
        */

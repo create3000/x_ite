@@ -20,6 +20,17 @@
          </InterfaceDefinition>
       </AbstractNodeType>
 
+		<AbstractNodeType name="X3DComposedGeometryNode">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</AbstractNodeType>
+
 	</AbstractNodeTypes>
 	<ConcreteNodes>
 
@@ -1175,6 +1186,188 @@
 					description="A texture that defines the color of the transmitted light, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by diffuseTransmissionColorFactor."
 				></field>
 				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="PhysicalMaterial">
+			<InterfaceDefinition>
+				<field name="extensions"
+					type="MFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="X3DMaterialExtensionNode"
+					description="Input/Output field *extensions*."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="Appearance">
+			<InterfaceDefinition>
+				<field name="blendMode"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="BlendMode"
+					description="Input/Output field *blendMode*."
+				/>
+				<field name="depthMode"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="DepthMode"
+					description="Input/Output field *depthMode*."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="IndexedQuadSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="QuadSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="ElevationGrid">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="IndexedFaceSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="GeoElevationGrid">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="IndexedLineSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="IndexedTriangleFanSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="IndexedTriangleSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="IndexedTriangleStripSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="LineSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="PointSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="TriangleFanSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="TriangleSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="TriangleStripSet">
+			<InterfaceDefinition>
+				<field name="tangent"
+					type="SFNode"
+					accessType="inputOutput"
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+				/>
 			</InterfaceDefinition>
 		</ConcreteNode>
 
