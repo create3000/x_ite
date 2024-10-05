@@ -7,13 +7,13 @@
 
 	<AbstractNodeTypes>
 
-		<AbstractNodeType name="X3DShapeNode">
+		<AbstractNodeType name="X3DComposedGeometryNode">
 			<InterfaceDefinition>
-				<field name="pointerEvents"
-					type="SFBool"
+				<field name="tangent"
+					type="SFNode"
 					accessType="inputOutput"
-					default="TRUE"
-					description="*pointerEvents* defines whether this Shape becomes target for pointer events."
+					acceptableNodeTypes="Tangent"
+					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
 				/>
 			</InterfaceDefinition>
 		</AbstractNodeType>
@@ -31,13 +31,13 @@
          </InterfaceDefinition>
       </AbstractNodeType>
 
-		<AbstractNodeType name="X3DComposedGeometryNode">
+		<AbstractNodeType name="X3DShapeNode">
 			<InterfaceDefinition>
-				<field name="tangent"
-					type="SFNode"
+				<field name="pointerEvents"
+					type="SFBool"
 					accessType="inputOutput"
-					acceptableNodeTypes="Tangent"
-					description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
+					default="TRUE"
+					description="pointerEvents defines whether this Shape becomes target for pointer events."
 				/>
 			</InterfaceDefinition>
 		</AbstractNodeType>
@@ -76,7 +76,7 @@
 					default="1 1 1"
 					minInclusive="0"
 					maxInclusive="1"
-					description="*color* of light, applied to colors of objects."
+					description="color of light, applied to colors of objects."
 				></field>
 				<field name="intensity"
 					type="SFFloat"
@@ -98,32 +98,32 @@
 					accessType="inputOutput"
 					default="0 0 1 0"
 					minInclusive="-1"
-					description="Input/Output field *rotation*."
+					description="Input/Output field rotation."
 				></field>
 				<field name="diffuseTexture"
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
 					acceptableNodeTypes="X3DEnvironmentTextureNode"
-					description="Input/Output field *diffuseTexture*."
+					description="Input/Output field diffuseTexture."
 				></field>
 				<field name="diffuseCoefficients"
 					type="MFFloat"
 					accessType="inputOutput"
-					description="Input/Output field *diffuseCoefficients*."
+					description="Input/Output field diffuseCoefficients."
 				></field>
 				<field name="specularTexture"
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
 					acceptableNodeTypes="X3DEnvironmentTextureNode"
-					description="Input/Output field *specularTexture*."
+					description="Input/Output field specularTexture."
 				></field>
 				<field name="shadows"
 					type="SFBool"
 					accessType="inputOutput"
 					default="FALSE"
-					description="*shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry."
+					description="shadows field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry."
 				></field>
 				<field name="shadowIntensity"
 					type="SFFloat"
@@ -131,11 +131,12 @@
 					default="1"
 					minInclusive="0"
 					maxInclusive="1"
-					description="*shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows)."
+					description="shadowIntensity field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows)."
 				></field>
 				<containerField default="children" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="Tangent">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/rendering/tangent"
@@ -159,6 +160,7 @@
 				<containerField default="tangent" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="ImageTextureAtlas">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/texturing3d/imagetextureatlas"
@@ -182,7 +184,7 @@
 					type="SFBool"
 					accessType="inputOutput"
 					default="TRUE"
-					description="*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene."
+					description="load=true means load immediately, load=false means defer loading or else unload a previously loaded scene."
 				/>
 				<field name="url"
 					type="MFString"
@@ -194,14 +196,14 @@
 					accessType="inputOutput"
 					default="0"
 					minInclusive="0"
-					description="*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed."
+					description="autoRefresh defines interval in seconds before automatic reload of current url asset is performed."
 				/>
 				<field name="autoRefreshTimeLimit"
 					type="SFTime"
 					accessType="inputOutput"
 					default="3600"
 					minInclusive="0"
-					description="*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur."
+					description="autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur."
 				/>
 				<field name="slicesOverX"
 					type="SFInt32"
@@ -252,6 +254,7 @@
 				<containerField default="texture" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="AnisotropyMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/anisotropymaterialextension"
@@ -282,7 +285,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *anisotropyTextureMapping*."
+					description="Input/Output field anisotropyTextureMapping."
 				/>
 				<field name="anisotropyTexture"
 					type="SFNode"
@@ -294,6 +297,7 @@
 				<containerField default="blendMode" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="BlendMode">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/blendmode"
@@ -313,13 +317,13 @@
 					default="0 0 0 0"
 					minInclusive="0"
 					maxInclusive="1"
-					description="The *blendColor* may be used to calculate the source and destination blending factors."
+					description="The blendColor may be used to calculate the source and destination blending factors."
 				/>
 				<field name="sourceColorFactor"
 					type="SFString"
 					accessType="inputOutput"
 					default="SRC_ALPHA"
-					description="Specifies how the red, green, and blue source blending factors are computed.Source and destination parameters must be one of the following symbolic constants:
+					description="Specifies how the red, green, and blue source blending factors are computed. Source and destination parameters must be one of the following symbolic constants:
 - ZERO
 - ONE
 - SRC_COLOR
@@ -442,6 +446,7 @@
 				<containerField default="blendMode" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="ClearcoatMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/clearcoatmaterialextension"
@@ -466,7 +471,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *clearcoatTextureMapping*."
+					description="Input/Output field clearcoatTextureMapping."
 				/>
 				<field name="clearcoatTexture"
 					type="SFNode"
@@ -486,7 +491,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *clearcoatRoughnessTextureMapping*."
+					description="Input/Output field clearcoatRoughnessTextureMapping."
 				/>
 				<field name="clearcoatRoughnessTexture"
 					type="SFNode"
@@ -499,7 +504,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *clearcoatNormalTextureMapping*."
+					description="Input/Output field clearcoatNormalTextureMapping."
 				/>
 				<field name="clearcoatNormalTexture"
 					type="SFNode"
@@ -511,6 +516,7 @@
 				<containerField default="depthMode" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="DepthMode">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/depthmode"
@@ -528,7 +534,7 @@
 					type="SFVec2f"
 					accessType="inputOutput"
 					default="0 0"
-					description="Specifies the scale factors and units to calculate depth values.The offset is added before the depth test is performed and before the value is written into the depth buffer.The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0."
+					description="Specifies the scale factors and units to calculate depth values. The offset is added before the depth test is performed and before the value is written into the depth buffer. The first value is factor, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0. The second value is units, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0."
 				/>
 				<field name="depthRange"
 					type="SFVec2f"
@@ -536,7 +542,7 @@
 					default="0 1"
 					minInclusive="0"
 					maxInclusive="1"
-					description="Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0. The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1."
+					description="Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates. The first value is zNear, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0. The second value is zFar, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1."
 				/>
 				<field name="depthTest"
 					type="SFBool"
@@ -548,7 +554,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default="LESS_EQUAL"
-					description="Specifies a function that compares incoming pixel depth to the current depth buffer value.Must be one of the following symbolic constants:* NEVER* LESS* EQUAL* LESS_EQUAL* GREATER* NOT_EQUAL* GREATER_EQUAL* ALWAYS">
+					description="Specifies a function that compares incoming pixel depth to the current depth buffer value. Must be one of the following symbolic constants: NEVER, LESS, EQUAL, LESS_EQUAL, GREATER, NOT_EQUAL, GREATER_EQUAL, ALWAYS.">
 					<enumeration value="NEVER" />
 					<enumeration value="LESS" />
 					<enumeration value="EQUAL" />
@@ -567,6 +573,7 @@
 				<containerField default="depthMode" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="DispersionMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/dispersionmaterialextension"
@@ -590,6 +597,7 @@
 				<containerField default="extensions" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="EmissiveStrengthMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/emissivestrengthmaterialextension"
@@ -613,6 +621,7 @@
 				<containerField default="extensions" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="IORMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/iormaterialextension"
@@ -643,7 +652,7 @@
 					type="SFBool"
 					accessType="inputOutput"
 					default="TRUE"
-					description="*pointerEvents* defines whether this Shape becomes target for pointer events."
+					description="pointerEvents defines whether this Shape becomes target for pointer events."
 				/>
 			</InterfaceDefinition>
 		</ConcreteNode>
@@ -654,7 +663,7 @@
 					type="SFBool"
 					accessType="inputOutput"
 					default="TRUE"
-					description="*pointerEvents* defines whether this Shape becomes target for pointer events."
+					description="pointerEvents defines whether this Shape becomes target for pointer events."
 				/>
 			</InterfaceDefinition>
 		</ConcreteNode>
@@ -675,39 +684,39 @@
 				<field name="translations"
 					type="MFVec3f"
 					accessType="inputOutput"
-					description="Input/Output field *translations*."
+					description="Input/Output field translations."
 				/>
 				<field name="rotations"
 					type="MFRotation"
 					accessType="inputOutput"
-					description="Input/Output field *rotations*."
+					description="Input/Output field rotations."
 				/>
 				<field name="scales"
 					type="MFVec3f"
 					accessType="inputOutput"
-					description="Input/Output field *scales*."
+					description="Input/Output field scales."
 				/>
 				<field name="scaleOrientations"
 					type="MFRotation"
 					accessType="inputOutput"
-					description="Input/Output field *scaleOrientations*."
+					description="Input/Output field scaleOrientations."
 				/>
 				<field name="centers"
 					type="MFVec3f"
 					accessType="inputOutput"
-					description="Input/Output field *centers*."
+					description="Input/Output field centers."
 				/>
 				<field name="pointerEvents"
 					type="SFBool"
 					accessType="inputOutput"
 					default="TRUE"
-					description="*pointerEvents* defines whether this Shape becomes target for pointer events."
+					description="pointerEvents defines whether this Shape becomes target for pointer events."
 				/>
 				<field name="castShadow"
 					type="SFBool"
 					accessType="inputOutput"
 					default="TRUE"
-					description="Input/Output field *castShadow*."
+					description="Input/Output field castShadow."
 				/>
 				<field name="visible"
 					type="SFBool"
@@ -739,14 +748,14 @@
 					accessType="inputOutput"
 					default="NULL"
 					acceptableNodeTypes="X3DAppearanceNode"
-					description="Input/Output field *appearance*."
+					description="Input/Output field appearance."
 				/>
 				<field name="geometry"
 					type="SFNode"
 					accessType="inputOutput"
 					default="NULL"
 					acceptableNodeTypes="X3DGeometryNode"
-					description="Input/Output field *geometry*."
+					description="Input/Output field geometry."
 				/>
 				<containerField default="extensions" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
@@ -776,7 +785,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *iridescenceTextureMapping*."
+					description="Input/Output field iridescenceTextureMapping."
 				/>
 				<field name="iridescenceTexture"
 					type="SFNode"
@@ -810,7 +819,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *iridescenceThicknessTextureMapping*."
+					description="Input/Output field iridescenceThicknessTextureMapping."
 				/>
 				<field name="iridescenceThicknessTexture"
 					type="SFNode"
@@ -822,6 +831,7 @@
 				<containerField default="extensions" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="SheenMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/sheenmaterialextension"
@@ -847,7 +857,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *sheenColorTextureMapping*."
+					description="Input/Output field sheenColorTextureMapping."
 				/>
 				<field name="sheenColorTexture"
 					type="SFNode"
@@ -867,7 +877,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *sheenRoughnessTextureMapping*."
+					description="Input/Output field sheenRoughnessTextureMapping."
 				/>
 				<field name="sheenRoughnessTexture"
 					type="SFNode"
@@ -879,6 +889,7 @@
 				<containerField default="material" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="SpecularGlossinessMaterial">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/specularglossinessmaterial"
@@ -904,7 +915,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *diffuseTextureMapping*."
+					description="Input/Output field diffuseTextureMapping."
 				/>
 				<field name="diffuseTexture"
 					type="SFNode"
@@ -933,7 +944,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *specularGlossinessTextureMapping*."
+					description="Input/Output field specularGlossinessTextureMapping."
 				/>
 				<field name="specularGlossinessTexture"
 					type="SFNode"
@@ -969,7 +980,7 @@
 					default="1"
 					minInclusive="0"
 					maxInclusive="1"
-					description="*occlusionStrength* indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting."
+					description="occlusionStrength indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting."
 				/>
 				<field name="occlusionTextureMapping"
 					type="SFString"
@@ -989,7 +1000,7 @@
 					accessType="inputOutput"
 					default="1"
 					minInclusive="0"
-					description="*normalScale* controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material."
+					description="normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material."
 				/>
 				<field name="normalTextureMapping"
 					type="SFString"
@@ -1010,17 +1021,18 @@
 					default="0"
 					minInclusive="0"
 					maxInclusive="1"
-					description="How 'clear' an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile"
+					description="How 'clear' an object is: 1.0 is completely transparent, 0.0 is completely opaque."
 				/>
 				<field name="extensions"
 					type="MFNode"
 					accessType="inputOutput"
 					acceptableNodeTypes="X3DMaterialExtensionNode"
-					description="Input/Output field *extensions*."
+					description="Input/Output field extensions."
 				/>
 				<containerField default="extensions" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="SpecularMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/specularmaterialextension"
@@ -1045,7 +1057,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *specularTextureMapping*."
+					description="Input/Output field specularTextureMapping."
 				/>
 				<field name="specularTexture"
 					type="SFNode"
@@ -1066,7 +1078,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *specularColorTextureMapping*."
+					description="Input/Output field specularColorTextureMapping."
 				/>
 				<field name="specularColorTexture"
 					type="SFNode"
@@ -1078,6 +1090,7 @@
 				<containerField default="extensions" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+
 		<ConcreteNode name="TransmissionMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/transmissionmaterialextension"
@@ -1102,7 +1115,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *transmissionTextureMapping*."
+					description="Input/Output field transmissionTextureMapping."
 				/>
 				<field name="transmissionTexture"
 					type="SFNode"
@@ -1114,6 +1127,7 @@
 				<containerField default="extensions" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
+		
 		<ConcreteNode name="VolumeMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/volumematerialextension"
@@ -1138,7 +1152,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *thicknessTextureMapping*."
+					description="Input/Output field thicknessTextureMapping."
 				/>
 				<field name="thicknessTexture"
 					type="SFNode"
@@ -1190,7 +1204,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *diffuseTransmissionTextureMapping*."
+					description="Input/Output field diffuseTransmissionTextureMapping."
 				></field>
 				<field name="diffuseTransmissionTexture"
 					type="SFNode"
@@ -1211,7 +1225,7 @@
 					type="SFString"
 					accessType="inputOutput"
 					default=""
-					description="Input/Output field *diffuseTransmissionColorTextureMapping*."
+					description="Input/Output field diffuseTransmissionColorTextureMapping."
 				></field>
 				<field name="diffuseTransmissionColorTexture"
 					type="SFNode"
@@ -1230,7 +1244,7 @@
 					type="MFNode"
 					accessType="inputOutput"
 					acceptableNodeTypes="X3DMaterialExtensionNode"
-					description="Input/Output field *extensions*."
+					description="Input/Output field extensions."
 				/>
 			</InterfaceDefinition>
 		</ConcreteNode>
@@ -1241,13 +1255,13 @@
 					type="SFNode"
 					accessType="inputOutput"
 					acceptableNodeTypes="BlendMode"
-					description="Input/Output field *blendMode*."
+					description="Input/Output field blendMode."
 				/>
 				<field name="depthMode"
 					type="SFNode"
 					accessType="inputOutput"
 					acceptableNodeTypes="DepthMode"
-					description="Input/Output field *depthMode*."
+					description="Input/Output field depthMode."
 				/>
 			</InterfaceDefinition>
 		</ConcreteNode>
