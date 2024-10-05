@@ -1127,7 +1127,7 @@
 				<containerField default="extensions" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
 		</ConcreteNode>
-		
+
 		<ConcreteNode name="VolumeMaterialExtension">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/volumematerialextension"
