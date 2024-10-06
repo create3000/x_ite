@@ -2930,7 +2930,7 @@ declare namespace X3D
        */
       anisotropyTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *anisotropyTextureMapping*.
+       * Input/Output field anisotropyTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -2968,6 +2968,18 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       backMaterial: X3DMaterialNodeProxy | null;
+      /**
+       * Input/Output field blendMode.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      blendMode: BlendModeProxy | null;
+      /**
+       * Input/Output field depthMode.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      depthMode: DepthModeProxy | null;
       /**
        * Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
        *
@@ -3669,7 +3681,7 @@ declare namespace X3D
        */
       alphaEquation: "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT";
       /**
-       * The *blendColor* may be used to calculate the source and destination blending factors.
+       * The blendColor may be used to calculate the source and destination blending factors.
        *
        * This field is of access type 'inputOutput' and type SFColorRGBA.
        */
@@ -3705,7 +3717,7 @@ declare namespace X3D
        */
       sourceAlphaFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
       /**
-       * Specifies how the red, green, and blue source blending factors are computed.Source and destination parameters must be one of the following symbolic constants:, ZERO, ONE, SRC_COLOR, ONE_MINUS_SRC_COLOR, DST_COLOR, ONE_MINUS_DST_COLOR, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, DST_ALPHA, ONE_MINUS_DST_ALPHA, CONSTANT_COLOR, ONE_MINUS_CONSTANT_COLOR, CONSTANT_ALPHA, ONE_MINUS_CONSTANT_ALPHA
+       * Specifies how the red, green, and blue source blending factors are computed. Source and destination parameters must be one of the following symbolic constants:, ZERO, ONE, SRC_COLOR, ONE_MINUS_SRC_COLOR, DST_COLOR, ONE_MINUS_DST_COLOR, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, DST_ALPHA, ONE_MINUS_DST_ALPHA, CONSTANT_COLOR, ONE_MINUS_CONSTANT_COLOR, CONSTANT_ALPHA, ONE_MINUS_CONSTANT_ALPHA
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -3878,6 +3890,12 @@ declare namespace X3D
    /** BoundedPhysicsModel provides user-defined geometrical boundaries for particle motion. */
    interface BoundedPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
    {
+      /**
+       * Damping that particles experience in the event of a collision.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      damping: number;
       /**
        * Enables/disables node operation.
        *
@@ -4583,7 +4601,7 @@ declare namespace X3D
        */
       clearcoatNormalTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *clearcoatNormalTextureMapping*.
+       * Input/Output field clearcoatNormalTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -4601,7 +4619,7 @@ declare namespace X3D
        */
       clearcoatRoughnessTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *clearcoatRoughnessTextureMapping*.
+       * Input/Output field clearcoatRoughnessTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -4613,7 +4631,7 @@ declare namespace X3D
        */
       clearcoatTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *clearcoatTextureMapping*.
+       * Input/Output field clearcoatTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -6237,7 +6255,7 @@ declare namespace X3D
    interface DepthModeProxy extends X3DAppearanceChildNodeProxy
    {
       /**
-       * Specifies a function that compares incoming pixel depth to the current depth buffer value.Must be one of the following symbolic constants:* NEVER* LESS* EQUAL* LESS_EQUAL* GREATER* NOT_EQUAL* GREATER_EQUAL* ALWAYS
+       * Specifies a function that compares incoming pixel depth to the current depth buffer value. Must be one of the following symbolic constants: NEVER, LESS, EQUAL, LESS_EQUAL, GREATER, NOT_EQUAL, GREATER_EQUAL, ALWAYS.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -6249,7 +6267,7 @@ declare namespace X3D
        */
       depthMask: boolean;
       /**
-       * Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0. The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
+       * Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates. The first value is zNear, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0. The second value is zFar, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
        *
        * This field is of access type 'inputOutput' and type SFVec2f.
        */
@@ -6267,7 +6285,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Specifies the scale factors and units to calculate depth values.The offset is added before the depth test is performed and before the value is written into the depth buffer.The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0.
+       * Specifies the scale factors and units to calculate depth values. The offset is added before the depth test is performed and before the value is written into the depth buffer. The first value is factor, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0. The second value is units, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0.
        *
        * This field is of access type 'inputOutput' and type SFVec2f.
        */
@@ -6296,7 +6314,7 @@ declare namespace X3D
        */
       diffuseTransmissionColorTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *diffuseTransmissionColorTextureMapping*.
+       * Input/Output field diffuseTransmissionColorTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -6308,7 +6326,7 @@ declare namespace X3D
        */
       diffuseTransmissionTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *diffuseTransmissionTextureMapping*.
+       * Input/Output field diffuseTransmissionTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -6998,6 +7016,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -7056,19 +7080,19 @@ declare namespace X3D
        */
       ambientIntensity: number;
       /**
-       * *color* of light, applied to colors of objects.
+       * color of light, applied to colors of objects.
        *
        * This field is of access type 'inputOutput' and type SFColor.
        */
       color: SFColor;
       /**
-       * Input/Output field *diffuseCoefficients*.
+       * Input/Output field diffuseCoefficients.
        *
        * This field is of access type 'inputOutput' and type MFFloat.
        */
       diffuseCoefficients: MFFloat;
       /**
-       * Input/Output field *diffuseTexture*.
+       * Input/Output field diffuseTexture.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -7098,25 +7122,25 @@ declare namespace X3D
        */
       on: boolean;
       /**
-       * Input/Output field *rotation*.
+       * Input/Output field rotation.
        *
        * This field is of access type 'inputOutput' and type SFRotation.
        */
       rotation: SFRotation;
       /**
-       * *shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
+       * shadowIntensity field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       shadowIntensity: number;
       /**
-       * *shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
+       * shadows field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       shadows: boolean;
       /**
-       * Input/Output field *specularTexture*.
+       * Input/Output field specularTexture.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -8292,6 +8316,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -9911,13 +9941,13 @@ declare namespace X3D
    interface ImageTextureAtlasProxy extends X3DTexture3DNodeProxy
    {
       /**
-       * *autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
+       * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
        *
        * This field is of access type 'inputOutput' and type SFTime.
        */
       autoRefresh: number;
       /**
-       * *autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
+       * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
        *
        * This field is of access type 'inputOutput' and type SFTime.
        */
@@ -9929,7 +9959,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * *load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -10108,6 +10138,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -10190,6 +10226,12 @@ declare namespace X3D
        * This field is of access type 'inputOnly' and type MFInt32.
        */
       set_coordIndex: MFInt32;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
    }
 
    /** IndexedQuadSet is a geometry node that defines quadrilaterals. */
@@ -10267,6 +10309,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -10351,6 +10399,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -10433,6 +10487,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -10517,6 +10577,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -10599,7 +10665,7 @@ declare namespace X3D
    interface InstancedShapeProxy extends X3DShapeNodeProxy
    {
       /**
-       * Input/Output field *appearance*.
+       * Input/Output field appearance.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10623,19 +10689,19 @@ declare namespace X3D
        */
       bboxSize: SFVec3f;
       /**
-       * Input/Output field *castShadow*.
+       * Input/Output field castShadow.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       castShadow: boolean;
       /**
-       * Input/Output field *centers*.
+       * Input/Output field centers.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       centers: MFVec3f;
       /**
-       * Input/Output field *geometry*.
+       * Input/Output field geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10647,31 +10713,31 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * *pointerEvents* defines whether this Shape becomes target for pointer events.
+       * pointerEvents defines whether this Shape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       pointerEvents: boolean;
       /**
-       * Input/Output field *rotations*.
+       * Input/Output field rotations.
        *
        * This field is of access type 'inputOutput' and type MFRotation.
        */
       rotations: MFRotation;
       /**
-       * Input/Output field *scaleOrientations*.
+       * Input/Output field scaleOrientations.
        *
        * This field is of access type 'inputOutput' and type MFRotation.
        */
       scaleOrientations: MFRotation;
       /**
-       * Input/Output field *scales*.
+       * Input/Output field scales.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       scales: MFVec3f;
       /**
-       * Input/Output field *translations*.
+       * Input/Output field translations.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
@@ -10799,7 +10865,7 @@ declare namespace X3D
        */
       iridescenceTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *iridescenceTextureMapping*.
+       * Input/Output field iridescenceTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -10823,7 +10889,7 @@ declare namespace X3D
        */
       iridescenceThicknessTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *iridescenceThicknessTextureMapping*.
+       * Input/Output field iridescenceThicknessTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -11382,6 +11448,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       normal: X3DNormalNodeProxy | null;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * vertexCount describes how many vertices are used in each individual polyline segment from the Coordinate point values.
        *
@@ -13814,6 +13886,12 @@ declare namespace X3D
        */
       physics: MFNode <X3DParticlePhysicsModelNodeProxy>;
       /**
+       * pointerEvents defines whether this Shape becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
        * texture coordinates of the provided texture(s) in the Appearance node, over time.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
@@ -13913,6 +13991,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFString.
        */
       emissiveTextureMapping: string;
+      /**
+       * Input/Output field extensions.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      extensions: MFNode <X3DMaterialExtensionNodeProxy>;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -14494,6 +14578,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       normal: X3DNormalNodeProxy | null;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
    }
 
    /** Polyline2D is a geometry node that defines a connected set of vertices in a contiguous set of line segments in X-Y plane. */
@@ -15174,6 +15264,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -16320,6 +16416,12 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
+       * pointerEvents defines whether this Shape becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
        * Whether or not renderable content within this node is visually displayed.
        *
        * This field is of access type 'inputOutput' and type SFBool.
@@ -16349,7 +16451,7 @@ declare namespace X3D
        */
       sheenColorTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *sheenColorTextureMapping*.
+       * Input/Output field sheenColorTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -16367,7 +16469,7 @@ declare namespace X3D
        */
       sheenRoughnessTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *sheenRoughnessTextureMapping*.
+       * Input/Output field sheenRoughnessTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -17004,7 +17106,7 @@ declare namespace X3D
        */
       diffuseTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *diffuseTextureMapping*.
+       * Input/Output field diffuseTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -17028,7 +17130,7 @@ declare namespace X3D
        */
       emissiveTextureMapping: string;
       /**
-       * Input/Output field *extensions*.
+       * Input/Output field extensions.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -17046,7 +17148,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * *normalScale* controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
+       * normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -17064,7 +17166,7 @@ declare namespace X3D
        */
       normalTextureMapping: string;
       /**
-       * *occlusionStrength* indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting.
+       * occlusionStrength indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -17094,13 +17196,13 @@ declare namespace X3D
        */
       specularGlossinessTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *specularGlossinessTextureMapping*.
+       * Input/Output field specularGlossinessTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
       specularGlossinessTextureMapping: string;
       /**
-       * How 'clear' an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+       * How 'clear' an object is: 1.0 is completely transparent, 0.0 is completely opaque.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -17135,7 +17237,7 @@ declare namespace X3D
        */
       specularColorTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *specularColorTextureMapping*.
+       * Input/Output field specularColorTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -17147,7 +17249,7 @@ declare namespace X3D
        */
       specularTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *specularTextureMapping*.
+       * Input/Output field specularTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -19036,7 +19138,7 @@ declare namespace X3D
        */
       transmissionTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *transmissionTextureMapping*.
+       * Input/Output field transmissionTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -19418,6 +19520,12 @@ declare namespace X3D
        */
       solid: boolean;
       /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
+      /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -19488,6 +19596,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -19588,6 +19702,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFInt32.
        */
       stripCount: MFInt32;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -20239,7 +20359,7 @@ declare namespace X3D
        */
       thicknessTexture: X3DSingleTextureNodeProxy | null;
       /**
-       * Input/Output field *thicknessTextureMapping*.
+       * Input/Output field thicknessTextureMapping.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -20680,6 +20800,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      tangent: TangentProxy | null;
       /**
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -21550,6 +21676,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       metadata: X3DMetadataObjectProxy | null;
+      /**
+       * pointerEvents defines whether this Shape becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
       /**
        * This field is of access type 'inputOutput' and type SFBool.
        */
