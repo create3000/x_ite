@@ -147,7 +147,7 @@ getMaterialColor ()
    #endif
 
    // Calculate lighting contribution from image based lighting source (IBL)
-   #if defined (X3D_USE_IBL) || defined (X3D_TRANSMISSION_MATERIAL_EXT)
+   #if defined (X3D_USE_IBL)
       f_diffuse = getDiffuseLight (n) * baseColor .rgb;
 
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
