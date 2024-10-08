@@ -83,16 +83,27 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
    {
       const orientation = this ._orientation;
 
-      if (orientation .length)
-      {
-         const
-            firstOrientation = orientation [0] .getValue (),
-            lastOrientation  = orientation [orientation .length - 1] .getValue ();
+      if (!orientation .length)
+         return true;
 
-         return firstOrientation .equals (lastOrientation);
-      }
+      const
+         first = orientation .at (0)  .getValue (),
+         last  = orientation .at (-1) .getValue ();
 
-      return true;
+      return first .equals (last);
+   },
+   getClosedScale ()
+   {
+      const scale = this ._scale;
+
+      if (!scale .length)
+         return true;
+
+      const
+         first = scale .at (0)  .getValue (),
+         last  = scale .at (-1) .getValue ();
+
+      return first .equals (last);
    },
    createPoints: (() =>
    {
@@ -162,7 +173,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             numSpines   = spine .length,
             firstSpine  = spine [0] .getValue (),
             lastSpine   = spine [spine .length - 1] .getValue (),
-            closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
+            closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation () && this .getClosedScale ();
 
          // Extend or shrink static rotations array:
          for (let i = rotations .length; i < numSpines; ++ i)
@@ -357,7 +368,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          const
             firstSpine  = spine [0] .getValue (),
             lastSpine   = spine [numSpines - 1] .getValue (),
-            closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
+            closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation () && this .getClosedScale ();
 
          const
             firstCrossSection  = crossSection [0] .getValue (),
