@@ -79,29 +79,14 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
       this ._set_scale        .addFieldInterest (this ._scale);
       this ._set_spine        .addFieldInterest (this ._spine);
    },
-   getClosedOrientation ()
+   getClosed (array)
    {
-      const orientation = this ._orientation;
-
-      if (!orientation .length)
+      if (!array .length)
          return true;
 
       const
-         first = orientation .at (0)  .getValue (),
-         last  = orientation .at (-1) .getValue ();
-
-      return first .equals (last);
-   },
-   getClosedScale ()
-   {
-      const scale = this ._scale;
-
-      if (!scale .length)
-         return true;
-
-      const
-         first = scale .at (0)  .getValue (),
-         last  = scale .at (-1) .getValue ();
+         first = array .at (0)  .getValue (),
+         last  = array .at (-1) .getValue ();
 
       return first .equals (last);
    },
@@ -169,11 +154,12 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          // calculate SCP rotations
 
          const
-            spine       = this ._spine,
-            numSpines   = spine .length,
-            firstSpine  = spine [0] .getValue (),
-            lastSpine   = spine [spine .length - 1] .getValue (),
-            closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation () && this .getClosedScale ();
+            spine     = this ._spine,
+            numSpines = spine .length;
+
+         const closedSpine = this .getClosed (spine)
+            && this .getClosed (this ._orientation)
+            && this .getClosed (this ._scale);
 
          // Extend or shrink static rotations array:
          for (let i = rotations .length; i < numSpines; ++ i)
@@ -189,7 +175,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          // SCP for the first point:
          if (closedSpine)
          {
-            const s = firstSpine;
+            const s = spine .at (0) .getValue ();
 
             // Find first defined Y-axis.
             for (let i = 1, length = numSpines - 2; i < length; ++ i)
@@ -248,7 +234,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
 
          // Get first spine
-         const s = firstSpine;
+         const s = spine .at (0) .getValue ();
 
          rotations [0] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
                              SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
@@ -304,7 +290,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          }
          else
          {
-            const s = lastSpine;
+            const s = spine .at (-1) .getValue ();
 
             SCPyAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ()) .normalize ();
 
@@ -365,10 +351,9 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          function INDEX (n, k) { return n * crossSectionSize + k; }
 
-         const
-            firstSpine  = spine [0] .getValue (),
-            lastSpine   = spine [numSpines - 1] .getValue (),
-            closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation () && this .getClosedScale ();
+         const closedSpine = this .getClosed (spine)
+            && this .getClosed (this ._orientation)
+            && this .getClosed (this ._scale);
 
          const
             firstCrossSection  = crossSection [0] .getValue (),
