@@ -70,6 +70,7 @@ const X_ITE_TESTS = [
    { path: "Extrusion/ExtrusionYZ.wrl" },
    { path: "Extrusion/pipe.wrl" },
    { path: "Extrusion/Rotations.x3d" },
+   { path: "Extrusion/Scales.x3d" },
    { path: "Extrusion/Star.wrl" },
    { path: "Extrusion/test-XYZextrusion.x3dv" },
    { path: "Extrusion/Triangle.wrl" },
