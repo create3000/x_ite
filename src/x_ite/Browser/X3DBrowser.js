@@ -1046,30 +1046,30 @@ Object .defineProperties (X3DBrowser .prototype,
       },
       enumerable: true,
    },
-   activeLayer:
-   {
-      get ()
-      {
-         return this ._activeLayer .valueOf ();
-      },
-      enumerable: true,
-   },
-   activeNavigationInfo:
-   {
-      get ()
-      {
-         return this ._activeNavigationInfo .valueOf ();
-      },
-      enumerable: true,
-   },
-   activeViewpoint:
-   {
-      get ()
-      {
-         return this ._activeViewpoint .valueOf ();
-      },
-      enumerable: true,
-   },
+   // activeLayer:
+   // {
+   //    get ()
+   //    {
+   //       return this ._activeLayer .valueOf ();
+   //    },
+   //    enumerable: true,
+   // },
+   // activeNavigationInfo:
+   // {
+   //    get ()
+   //    {
+   //       return this ._activeNavigationInfo .valueOf ();
+   //    },
+   //    enumerable: true,
+   // },
+   // activeViewpoint:
+   // {
+   //    get ()
+   //    {
+   //       return this ._activeViewpoint .valueOf ();
+   //    },
+   //    enumerable: true,
+   // },
 });
 
 Object .defineProperties (X3DBrowser,
