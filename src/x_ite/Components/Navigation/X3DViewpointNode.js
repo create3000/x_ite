@@ -232,13 +232,26 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
    },
+   setUserPosition (userPosition)
+   {
+      this ._positionOffset = this .userPosition .assign (userPosition) .subtract (this .getPosition ());
+   },
    getUserOrientation ()
    {
       return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
    },
+   setUserOrientation (userOrientation)
+   {
+      this ._orientationOffset = this .userOrientation .assign (this .getOrientation ()) .inverse () .multRight (userOrientation);
+   },
    getUserCenterOfRotation ()
    {
       return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
+   },
+   setUserCenterOfRotation (userCenterOfRotation)
+   {
+      this ._centerOfRotationOffset = this .userCenterOfRotation .assign (userCenterOfRotation)
+         .subtract (this .getCenterOfRotation ());
    },
    getProjectionMatrix (renderObject)
    {
