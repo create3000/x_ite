@@ -86,7 +86,7 @@ function anInputField (value, time)
 
 ### Objects and Fields
 
-For each field and outputOnly fields in the Script node containing the script there is a corresponding global variable with the same name. Field variables are persistant; they keep their last stored value across function calls. Local variables, on the other hand, are destroyed on exit from the block in which they were defined. Local variables defined in the outermost block of a function are destroyed when the function exits so they do not persist across function calls.
+For each field and outputOnly fields in the Script node containing the script there is a corresponding global variable with the same name. Field variables are persistent; they keep their last stored value across function calls. Local variables, on the other hand, are destroyed on exit from the block in which they were defined. Local variables defined in the outermost block of a function are destroyed when the function exits so they do not persist across function calls.
 
 OutputOnly fields are very similar to field variables in that their values persist across function calls. But when an assignment is made to an outputOnly fields an event is generated.
 
@@ -249,19 +249,24 @@ The MIME type for ECMAScript source code is defined as follows:
 application/javascript
 ```
 
-## InputOnly Field Handling
+## InputOnly/InputOutput Field Handling
 
-Events sent to the Script node are passed to the corresponding ECMAScript function in the script. It is necessary to specify the script in the *url* field of the Script node. The function's name is the same as the inputOnly field and is passed two arguments, the event value and its timestamp. If there isn't a corresponding ECMAScript function in the script, the browser's behavior is undefined.
+Events sent to the Script node are passed to the corresponding ECMAScript function in the script. It is necessary to specify the script in the *url* field of the Script node. The function's name is the same as the `inputOnly` field's name, and for `inputOutput` fields the name is the same as the inputOutput field's name with a `set_` prepended, and this function is passed two arguments, the event value and its timestamp. If there isn't a corresponding ECMAScript function in the script, the browser's behavior is undefined, and the event is probably ignored.
 
-For example, the following Script node has one inputOnly field whose name is
-*start*:
+For example, the following Script node has two field, an inputOnly field, and an inputOutput field, named *start* and *duration*:
 
 ```vrml
 Script {
   inputOnly SFBool start
+  inputOutput SFTime duration 10
   url "ecmascript:
 
 function start (value, time)
+{
+ ...
+}
+
+function set_duration (value, time)
 {
  ...
 }
