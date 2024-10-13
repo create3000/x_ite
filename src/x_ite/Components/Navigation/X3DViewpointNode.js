@@ -258,6 +258,30 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this ._centerOfRotationOffset = this .userCenterOfRotation .assign (userCenterOfRotation)
          .subtract (this .getCenterOfRotation ());
    },
+   getFieldOfViewScale ()
+   {
+      return this ._fieldOfViewScale .getValue ();
+   },
+   setFieldOfViewScale (value)
+   {
+      this ._fieldOfViewScale = value;
+   },
+   getNearDistance ()
+   {
+      return this .nearDistance;
+   },
+   setNearDistance (value)
+   {
+      this .nearDistance = value;
+   },
+   getFarDistance ()
+   {
+      return this .farDistance;
+   },
+   setFarDistance (value)
+   {
+      this .farDistance = value;
+   },
    getProjectionMatrix (renderObject)
    {
       const navigationInfo = renderObject .getNavigationInfo ();

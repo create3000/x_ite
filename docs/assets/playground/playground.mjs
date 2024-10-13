@@ -137,7 +137,7 @@ class Playground
       const
          browser         = this .browser,
          editor          = this .editor,
-         activeViewpoint = browser .getActiveViewpoint (),
+         activeViewpoint = browser .activeViewpoint ?.getValue (),
          text            = editor .getValue (),
          url             = encodeURI (`data:,${text}`);
 
@@ -146,26 +146,26 @@ class Playground
       if (activeViewpoint)
       {
          var
-            positionOffset         = activeViewpoint ._positionOffset .copy (),
-            orientationOffset      = activeViewpoint ._orientationOffset .copy (),
-            centerOfRotationOffset = activeViewpoint ._centerOfRotationOffset .copy (),
-            fieldOfViewScale       = activeViewpoint ._fieldOfViewScale .getValue (),
-            nearDistance           = activeViewpoint .nearDistance,
-            farDistance            = activeViewpoint .farDistance;
+            userPosition         = activeViewpoint .getUserPosition () .copy (),
+            userOrientation      = activeViewpoint .getUserOrientation () .copy (),
+            userCenterOfRotation = activeViewpoint .getUserCenterOfRotation () .copy (),
+            fieldOfViewScale     = activeViewpoint .getFieldOfViewScale (),
+            nearDistance         = activeViewpoint .getNearDistance (),
+            farDistance          = activeViewpoint .getFarDistance ();
       }
 
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
-      if (activeViewpoint && browser .getActiveViewpoint ())
+      if (activeViewpoint && browser .activeViewpoint)
       {
-         const activeViewpoint = browser .getActiveViewpoint ();
+         const activeViewpoint = browser .activeViewpoint .getValue ();
 
-         activeViewpoint ._positionOffset         = positionOffset;
-         activeViewpoint ._orientationOffset      = orientationOffset;
-         activeViewpoint ._centerOfRotationOffset = centerOfRotationOffset;
-         activeViewpoint ._fieldOfViewScale       = fieldOfViewScale;
-         activeViewpoint .nearDistance            = nearDistance,
-         activeViewpoint .farDistance             = farDistance;
+         activeViewpoint .setUserPosition (userPosition);
+         activeViewpoint .setUserOrientation (userOrientation);
+         activeViewpoint .setUserCenterOfRotation (userCenterOfRotation);
+         activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
+         activeViewpoint .setNearDistance (nearDistance);
+         activeViewpoint .setFarDistance (farDistance);
       }
 
       monaco .editor .setModelLanguage (editor .getModel (), browser .currentScene .encoding .toLowerCase ());
