@@ -45,31 +45,33 @@
  *
  ******************************************************************************/
 
-import VERSION             from "../BROWSER_VERSION.js";
-import Fields              from "../Fields.js";
-import Components          from "../Components.js";
-import X3DBrowserContext   from "./X3DBrowserContext.js";
-import DOMIntegration      from "./DOMIntegration.js";
-import Legacy              from "./Legacy.js";
-import ProfileInfo         from "../Configuration/ProfileInfo.js";
-import ComponentInfo       from "../Configuration/ComponentInfo.js";
-import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
-import SupportedProfiles   from "../Configuration/SupportedProfiles.js";
-import SupportedComponents from "../Configuration/SupportedComponents.js";
-import AbstractNodes       from "../Configuration/AbstractNodes.js";
-import ConcreteNodes       from "../Configuration/ConcreteNodes.js";
-import FieldTypes          from "../Configuration/FieldTypes.js";
-import X3DScene            from "../Execution/X3DScene.js";
-import FileLoader          from "../InputOutput/FileLoader.js";
-import XMLParser           from "../Parser/XMLParser.js";
-import JSONParser          from "../Parser/JSONParser.js";
-import X3DCast             from "../Base/X3DCast.js";
-import X3DConstants        from "../Base/X3DConstants.js";
-import Features            from "../Features.js";
-import Algorithm           from "../../standard/Math/Algorithm.js";
-import MikkTSpace          from "./Rendering/MikkTSpace.js";
-import _                   from "../../locale/gettext.js";
-import DEVELOPMENT         from "../DEVELOPMENT.js";
+import VERSION              from "../BROWSER_VERSION.js";
+import X3DFieldDefinition   from "../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../Base/FieldDefinitionArray.js";
+import Fields               from "../Fields.js";
+import Components           from "../Components.js";
+import X3DBrowserContext    from "./X3DBrowserContext.js";
+import DOMIntegration       from "./DOMIntegration.js";
+import Legacy               from "./Legacy.js";
+import ProfileInfo          from "../Configuration/ProfileInfo.js";
+import ComponentInfo        from "../Configuration/ComponentInfo.js";
+import ComponentInfoArray   from "../Configuration/ComponentInfoArray.js";
+import SupportedProfiles    from "../Configuration/SupportedProfiles.js";
+import SupportedComponents  from "../Configuration/SupportedComponents.js";
+import AbstractNodes        from "../Configuration/AbstractNodes.js";
+import ConcreteNodes        from "../Configuration/ConcreteNodes.js";
+import FieldTypes           from "../Configuration/FieldTypes.js";
+import X3DScene             from "../Execution/X3DScene.js";
+import FileLoader           from "../InputOutput/FileLoader.js";
+import XMLParser            from "../Parser/XMLParser.js";
+import JSONParser           from "../Parser/JSONParser.js";
+import X3DCast              from "../Base/X3DCast.js";
+import X3DConstants         from "../Base/X3DConstants.js";
+import Features             from "../Features.js";
+import Algorithm            from "../../standard/Math/Algorithm.js";
+import MikkTSpace           from "./Rendering/MikkTSpace.js";
+import _                    from "../../locale/gettext.js";
+import DEVELOPMENT          from "../DEVELOPMENT.js";
 
 const
    _DOMIntegration      = Symbol (),
@@ -1074,6 +1076,15 @@ Object .defineProperties (X3DBrowser .prototype,
 
 Object .defineProperties (X3DBrowser,
 {
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "activeLayer",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "activeNavigationInfo", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "activeViewpoint",      new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
    typeName:
    {
       value: "X3DBrowser",

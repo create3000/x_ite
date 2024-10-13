@@ -717,7 +717,7 @@ class SampleViewer
          this .setBackground (!$("#summer") .hasClass ("selected"));
       });
 
-      browser ._activeViewpoint .addFieldCallback ("change", () =>
+      browser .getField ("activeViewpoint") .addFieldCallback ("change", () =>
       {
          const
             description = browser .activeViewpoint .description,
