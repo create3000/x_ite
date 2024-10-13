@@ -230,23 +230,28 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    getUserPosition ()
    {
-      return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
+      return this .userPosition .assign (this .getPosition ())
+         .add (this ._positionOffset .getValue ());
    },
    setUserPosition (userPosition)
    {
-      this ._positionOffset = this .userPosition .assign (userPosition) .subtract (this .getPosition ());
+      this ._positionOffset = this .userPosition .assign (userPosition)
+         .subtract (this .getPosition ());
    },
    getUserOrientation ()
    {
-      return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
+      return this .userOrientation .assign (this .getOrientation ())
+         .multRight (this ._orientationOffset .getValue ());
    },
    setUserOrientation (userOrientation)
    {
-      this ._orientationOffset = this .userOrientation .assign (this .getOrientation ()) .inverse () .multRight (userOrientation);
+      this ._orientationOffset = this .userOrientation .assign (this .getOrientation ()) .inverse ()
+         .multRight (userOrientation);
    },
    getUserCenterOfRotation ()
    {
-      return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
+      return this .userCenterOfRotation .assign (this .getCenterOfRotation ())
+         .add (this ._centerOfRotationOffset .getValue ());
    },
    setUserCenterOfRotation (userCenterOfRotation)
    {
