@@ -227,6 +227,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_TexCoordRamp",
          "x3d_JointsTexture",
          "x3d_DisplacementsTexture",
+         "x3d_DisplacementWeightsTexture",
          "x3d_JointMatricesTexture",
          // Common
          "x3d_Id", // Pointing ID

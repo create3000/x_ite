@@ -9,6 +9,7 @@ in float x3d_CoordIndex;
 
 #if X3D_NUM_DISPLACEMENTS > 0
    uniform sampler2D x3d_DisplacementsTexture;
+   uniform sampler2D x3d_DisplacementWeightsTexture;
 #endif
 
 #if X3D_NUM_JOINT_SETS > 0 || X3D_NUM_DISPLACEMENTS > 0
@@ -86,15 +87,14 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal, const in vec3 tangent
 
    #if X3D_NUM_DISPLACEMENTS > 0
    {
-      int coordIndexD = coordIndex * X3D_NUM_DISPLACEMENTS;
-      int width       = textureSize (x3d_DisplacementsTexture, 0) .x;
-      int offset      = (width * width) / 2;
+      int coordIndexD = coordIndex * X3D_NUM_DISPLACEMENTS * 2;
 
       for (int i = 0; i < X3D_NUM_DISPLACEMENTS; ++ i)
       {
-         int   index        = coordIndexD + i;
-         vec4  displacement = texelFetch (x3d_DisplacementsTexture, index,          0);
-         float weight       = texelFetch (x3d_DisplacementsTexture, index + offset, 0) .x;
+         int   index        = coordIndexD + i * 2;
+         vec4  displacement = texelFetch (x3d_DisplacementsTexture, index, 0);
+         int   weightIndex  = int (texelFetch (x3d_DisplacementsTexture, index + 1, 0) .x);
+         float weight       = texelFetch (x3d_DisplacementWeightsTexture, weightIndex, 0) .x;
 
          skin .xyz += getDisplacementJointMatrix (int (displacement .w)) * (displacement .xyz * weight);
       }
