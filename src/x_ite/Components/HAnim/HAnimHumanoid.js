@@ -89,8 +89,6 @@ function HAnimHumanoid (executionContext)
    this .skinNode             = new Group (executionContext);
    this .transformNode        = new Transform (executionContext);
    this .motionNodes          = [ ];
-   this .segmentNodesAll      = [ ];
-   this .segmentNodes         = [ ];
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
    this .displacementWeights  = [ ];
@@ -200,7 +198,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this ._motionsEnabled             .addInterest ("set_motions__",                    this);
       this ._motions                    .addInterest ("set_motions__",                    this);
-      this ._segments                   .addInterest ("set_segments__",                   this);
       this ._jointBindingPositions      .addInterest ("set_joints__",                     this);
       this ._jointBindingRotations      .addInterest ("set_joints__",                     this);
       this ._jointBindingScales         .addInterest ("set_joints__",                     this);
@@ -211,7 +208,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._skinCoord                  .addInterest ("set_skinCoord__",                  this);
 
       this .set_motions__ ();
-      this .set_segments__ ();
       this .set_joints__ ();
       this .set_skinCoord__ ();
    },
@@ -287,62 +283,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       motionNode .disconnectJoints (this .jointNodes);
       motionNode .connectJoints (this .jointNodes);
    },
-   set_segments__ ()
-   {
-      const segmentNodes = this .segmentNodesAll;
-
-      for (const segmentNode of segmentNodes)
-         segmentNode ._displacers .removeInterest ("set_segments_with_displacers__", this);
-
-      segmentNodes .length = 0;
-
-      for (const node of this ._segments)
-      {
-         const segmentNode = X3DCast (X3DConstants .HAnimSegment, node);
-
-         if (segmentNode)
-            segmentNodes .push (segmentNode);
-      }
-
-      for (const segmentNode of segmentNodes)
-         segmentNode ._displacers .addInterest ("set_segments_with_displacers__", this);
-
-      this .set_segments_with_displacers__ ();
-   },
-   set_segments_with_displacers__ ()
-   {
-      const segmentNodes = this .segmentNodes;
-
-      for (const segmentNode of segmentNodes)
-      {
-         segmentNode .removeInterest ("enable", this .change);
-
-         segmentNode ._displacements       .removeInterest ("addEvent", this ._displacementsTexture);
-         segmentNode ._displacementWeights .removeInterest ("addEvent", this ._displacementWeightsTexture);
-      }
-
-      segmentNodes .length = 0;
-
-      for (const segmentNode of this .segmentNodesAll)
-      {
-         if (!segmentNode ._displacers .length)
-            continue;
-
-         segmentNodes .push (segmentNode);
-
-         segmentNode .addInterest ("enable", this .change);
-
-         segmentNode ._displacements       .addInterest ("addEvent", this ._displacementsTexture);
-         segmentNode ._displacementWeights .addInterest ("addEvent", this ._displacementWeightsTexture);
-      }
-
-      const size = Math .ceil (Math .sqrt ((this .segmentNodes .length + this .jointNodes .length) * 8));
-
-      this .jointMatricesArray = new Float32Array (size * size * 4);
-
-      this ._displacementsTexture       .addEvent ();
-      this ._displacementWeightsTexture .addEvent ();
-   },
    set_joints__ ()
    {
       const
@@ -400,7 +340,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       for (const motionNode of this .motionNodes)
          motionNode .connectJoints (jointNodes);
 
-      const size = Math .ceil (Math .sqrt ((this .segmentNodes .length + this .jointNodes .length) * 8));
+      const size = Math .ceil (Math .sqrt (jointNodes .length * 8));
 
       this .jointMatricesArray = new Float32Array (size * size * 4),
 
@@ -466,8 +406,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       // Create array.
 
       const
-         length           = this .skinCoordNode ?._point .length || 1,
-         displacements    = Array .from ({ length }, () => [ ]);
+         length        = this .skinCoordNode ?._point .length || 1,
+         displacements = Array .from ({ length }, () => [ ]);
 
       for (const [joint, jointNode] of this .jointNodes .entries ())
       {
@@ -477,19 +417,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
             for (const [i, index] of displacerNode ._coordIndex .entries ())
                displacements [index] ?.push (... d [i], joint);
-         }
-      }
-
-      const jointNodesLength = this .jointNodes .length;
-
-      for (const [segment, segmentNode] of this .segmentNodes .entries ())
-      {
-         for (const displacerNode of segmentNode .getDisplacers ())
-         {
-            const d = displacerNode ._displacements;
-
-            for (const [i, index] of displacerNode ._coordIndex .entries ())
-               displacements [index] ?.push (... d [i], jointNodesLength + segment);
          }
       }
 
@@ -544,17 +471,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       for (const jointNode of this .jointNodes)
       {
          for (const displacerNode of jointNode .getDisplacers ())
-         {
-            const weight = displacerNode ._weight .getValue ();
-
-            for (const index of displacerNode ._coordIndex)
-               displacementWeights [index] ?.push (weight, 0, 0, 0);
-         }
-      }
-
-      for (const segmentNode of this .segmentNodes)
-      {
-         for (const displacerNode of segmentNode .getDisplacers ())
          {
             const weight = displacerNode ._weight .getValue ();
 
@@ -639,7 +555,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             jointNodes           = this .jointNodes,
             jointNodesLength     = jointNodes .length,
             jointBindingMatrices = this .jointBindingMatrices,
-            jointMatricesArray   = this .jointMatricesArray;
+            jointMatricesArray   = this .jointMatricesArray,
+            size                 = Math .ceil (Math .sqrt (jointNodesLength * 8));
 
          for (let i = 0; i < jointNodesLength; ++ i)
          {
@@ -651,22 +568,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
             jointMatricesArray .set (jointMatrix,       i * 32 + 0);
             jointMatricesArray .set (jointNormalMatrix, i * 32 + 16);
-         }
-
-         const
-            segmentNodes       = this .segmentNodes,
-            segmentNodesLength = segmentNodes .length,
-            size               = Math .ceil (Math .sqrt ((jointNodesLength + segmentNodesLength) * 8));
-
-         for (let i = 0; i < segmentNodesLength; ++ i)
-         {
-            const
-               segmentNode         = segmentNodes [i],
-               segmentMatrix       = segmentNode .getModelViewMatrix () .multRight (invModelViewMatrix),
-               segmentNormalMatrix = segmentMatrix .submatrix .transpose () .inverse ();
-
-            jointMatricesArray .set (segmentMatrix,       (i + jointNodesLength) * 32 + 0);
-            jointMatricesArray .set (segmentNormalMatrix, (i + jointNodesLength) * 32 + 16);
          }
 
          // Upload textures.
@@ -727,12 +628,12 @@ Object .defineProperties (HAnimHumanoid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",           new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",              new Fields .SFVec3f (-1, -1, -1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",            new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "motionsEnabled",        new Fields .MFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "motions",               new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "skeleton",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "viewpoints",            new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "sites",                 new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "segments",              new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motionsEnabled",        new Fields .MFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motions",               new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "jointBindingPositions", new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "jointBindingRotations", new Fields .MFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "jointBindingScales",    new Fields .MFVec3f ()),
