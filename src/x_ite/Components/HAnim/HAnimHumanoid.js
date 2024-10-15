@@ -447,9 +447,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Weights
 
-      const weightsSize = Math .ceil (Math .sqrt (displacer * 4));
+      const weightsSize = Math .ceil (Math .sqrt (displacer));
 
-      this .displacementWeightsArray = new Float32Array (weightsSize * weightsSize);
+      this .displacementWeightsArray = new Float32Array (weightsSize * weightsSize * 4);
 
       // Trigger update.
 
@@ -475,10 +475,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       const
          browser = this .getBrowser (),
          gl      = browser .getContext (),
-         size    = displacementWeightsArray .length / 4;
+         size    = Math .sqrt (displacementWeightsArray .length / 4);
 
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, 1, 0, gl .RGBA, gl .FLOAT, displacementWeightsArray);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, displacementWeightsArray);
    },
    set_skinCoord__ ()
    {
