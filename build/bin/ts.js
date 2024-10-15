@@ -27,7 +27,7 @@ function ConcreteNodesConstants ()
 
       // Concrete Node Types
 
-${[... concreteNodes .keys ()] .map (typeName => `      static readonly ${typeName}: number;`) .join ("\n")}
+${[... concreteNodes .keys ()] .map (typeName => `      readonly ${typeName}: number;`) .join ("\n")}
 
       // CONCRETE NODE TYPES CONSTANTS END`;
 
@@ -41,7 +41,7 @@ function AbstractNodesConstants ()
 
       // Abstract Node Types
 
-${[... abstractNodes .keys ()] .map (typeName => `      static readonly ${typeName}: number;`) .join ("\n")}
+${[... abstractNodes .keys ()] .map (typeName => `      readonly ${typeName}: number;`) .join ("\n")}
 
       // ABSTRACT NODE TYPES CONSTANTS END`;
 
