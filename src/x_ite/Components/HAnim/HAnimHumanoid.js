@@ -502,6 +502,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       for (let i = 0; i < length; ++ i)
          displacementsArray .set (displacements [i], i * numElements);
 
+      // Number of displacements per coord index.
       this .numDisplacements = numDisplacements;
 
       // Upload texture.
