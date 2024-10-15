@@ -211,8 +211,8 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
 
       // Weights
 
-      this .weightsSize              = Math .ceil (Math .sqrt (displacer));
-      this .displacementWeightsArray = new Float32Array (this .weightsSize * this .weightsSize * 4);
+      this .displacementWeightsSize  = Math .ceil (Math .sqrt (displacer));
+      this .displacementWeightsArray = new Float32Array (this .displacementWeightsSize * this .displacementWeightsSize * 4);
 
       // Trigger update.
 
@@ -233,7 +233,7 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
 
       const
          gl   = this .getBrowser () .getContext (),
-         size = this .weightsSize;
+         size = this .displacementWeightsSize;
 
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, displacementWeightsArray);
