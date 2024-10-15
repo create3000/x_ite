@@ -427,7 +427,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       const
          numDisplacements   = displacements .reduce ((p, n) => Math .max (p, n .length), 0) / 8,
          numElements        = numDisplacements * 8,
-         size               = Math .ceil (Math .sqrt (displacer * 8)),
+         size               = Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1,
          displacementsArray = new Float32Array (size * size * 4);
 
       for (let i = 0; i < length; ++ i)
