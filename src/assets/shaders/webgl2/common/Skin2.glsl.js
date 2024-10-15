@@ -7,9 +7,15 @@ in float x3d_CoordIndex;
    uniform sampler2D x3d_JointsTexture;
 #endif
 
-uniform sampler2D x3d_DisplacementsTexture;
-uniform sampler2D x3d_JointMatricesTexture;
+#if X3D_NUM_DISPLACEMENTS > 0
+   uniform sampler2D x3d_DisplacementsTexture;
+#endif
 
+#if X3D_NUM_JOINT_SETS > 0 || X3D_NUM_DISPLACEMENTS > 0
+   uniform sampler2D x3d_JointMatricesTexture;
+#endif
+
+#if X3D_NUM_JOINT_SETS > 0
 mat4
 getJointMatrix (const in int joint)
 {
@@ -21,23 +27,7 @@ getJointMatrix (const in int joint)
    return mat4 (a, b, c, d);
 }
 
-mat3
-getDisplacementJointMatrix (const in int joint)
-{
-   vec4 a = texelFetch (x3d_JointMatricesTexture, joint * 8,     0);
-   vec4 b = texelFetch (x3d_JointMatricesTexture, joint * 8 + 1, 0);
-   vec4 c = texelFetch (x3d_JointMatricesTexture, joint * 8 + 2, 0);
-
-   return mat3 (a .xyz, b .xyz, c .xyz);
-}
-
 #if defined (X3D_NORMALS)
-vec3 skinNormal = vec3 (0.0);
-
-#if defined (X3D_TANGENTS)
-   vec3 skinTangent = vec3 (0.0);
-#endif
-
 mat3
 getJointNormalMatrix (const in int joint)
 {
@@ -47,6 +37,27 @@ getJointNormalMatrix (const in int joint)
 
    return mat3 (a .xyz, vec3 (a .w, b .xy), vec3 (b .zw, c .x));
 }
+#endif
+#endif
+
+#if X3D_NUM_DISPLACEMENTS > 0
+mat3
+getDisplacementJointMatrix (const in int joint)
+{
+   vec4 a = texelFetch (x3d_JointMatricesTexture, joint * 8,     0);
+   vec4 b = texelFetch (x3d_JointMatricesTexture, joint * 8 + 1, 0);
+   vec4 c = texelFetch (x3d_JointMatricesTexture, joint * 8 + 2, 0);
+
+   return mat3 (a .xyz, b .xyz, c .xyz);
+}
+#endif
+
+#if defined (X3D_NORMALS)
+vec3 skinNormal = vec3 (0.0);
+
+#if defined (X3D_TANGENTS)
+   vec3 skinTangent = vec3 (0.0);
+#endif
 
 #define getSkinNormal(normal) (skinNormal)
 
