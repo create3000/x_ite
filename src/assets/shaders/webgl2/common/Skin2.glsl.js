@@ -87,7 +87,7 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal, const in vec3 tangent
 
    #if X3D_NUM_DISPLACEMENTS > 0
    {
-      int coordIndexD = coordIndex * X3D_NUM_DISPLACEMENTS * 2;
+      int coordIndexD = coordIndex * (X3D_NUM_DISPLACEMENTS * 2);
 
       for (int i = 0; i < X3D_NUM_DISPLACEMENTS; ++ i)
       {
