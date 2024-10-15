@@ -4,4 +4,5 @@ const scene = browser .currentScene;
 const route = scene .addRoute ();
 const r = scene .rootNodes;
 const n = scene .createNode ("Appearance");
+const t = X3D .X3DConstants .AcousticProperties;
 n .blendMode .destinationAlphaFactor = 'ON'
