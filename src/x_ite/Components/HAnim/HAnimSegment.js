@@ -73,10 +73,11 @@ function HAnimSegment (executionContext)
 
    const size = Math .ceil (Math .sqrt (1 * 8));
 
-   this .numJoints          = 0;
-   this .numDisplacements   = 0;
-   this .displacerNodes     = [ ];
-   this .jointMatricesArray = new Float32Array (size * size * 4);
+   this .numJoints           = 0;
+   this .numDisplacements    = 0;
+   this .displacerNodes      = [ ];
+   this .displacementWeights = [ ];
+   this .jointMatricesArray  = new Float32Array (size * size * 4);
 }
 
 Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype),
@@ -178,9 +179,14 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
 
       let displacer = 0;
 
+      this .displacementWeights .length = 0;
+
       for (const displacerNode of this .displacerNodes)
       {
          const d = displacerNode ._displacements;
+
+         // Store reference to weight SFFloat.
+         this .displacementWeights .push (displacerNode ._weight, 0, 0, 0);
 
          for (const [i, index] of displacerNode ._coordIndex .entries ())
             displacements [index] ?.push (... d [i], 0, displacer, 0, 0, 0);
@@ -220,23 +226,17 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    },
    set_displacementWeightsTexture__ ()
    {
-      // Create array.
-
-      const displacementWeightsArray = this .displacementWeightsArray;
-
-      let displacer = 0;
-
-      for (const displacerNode of this .displacerNodes)
-         displacementWeightsArray [displacer ++ * 4] = displacerNode ._weight .getValue ();
-
       // Upload texture.
 
       const
-         gl   = this .getBrowser () .getContext (),
-         size = this .displacementWeightsSize;
+         gl    = this .getBrowser () .getContext (),
+         size  = this .displacementWeightsSize,
+         array = this .displacementWeightsArray;
+
+      array .set (this .displacementWeights);
 
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, displacementWeightsArray);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, array);
    },
    set_coord__ ()
    {

@@ -91,6 +91,7 @@ function HAnimHumanoid (executionContext)
    this .motionNodes          = [ ];
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
+   this .displacementWeights  = [ ];
    this .numJoints            = 0;
    this .numDisplacements     = 0;
    this .skinCoordNode        = null;
@@ -411,11 +412,16 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       let displacer = 0;
 
+      this .displacementWeights .length = 0;
+
       for (const [joint, jointNode] of this .jointNodes .entries ())
       {
          for (const displacerNode of jointNode .getDisplacers ())
          {
             const d = displacerNode ._displacements;
+
+            // Store reference to weight SFFloat.
+            this .displacementWeights .push (displacerNode ._weight, 0, 0, 0);
 
             for (const [i, index] of displacerNode ._coordIndex .entries ())
                displacements [index] ?.push (... d [i], joint, displacer, 0, 0, 0);
@@ -457,26 +463,17 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_displacementWeightsTexture__ ()
    {
-      // Create array.
-
-      const displacementWeightsArray = this .displacementWeightsArray;
-
-      let displacer = 0;
-
-      for (const jointNode of this .jointNodes)
-      {
-         for (const displacerNode of jointNode .getDisplacers ())
-            displacementWeightsArray [displacer ++ * 4] = displacerNode ._weight .getValue ();
-      }
-
       // Upload texture.
 
       const
-         gl   = this .getBrowser () .getContext (),
-         size = this .displacementWeightsSize;
+         gl    = this .getBrowser () .getContext (),
+         size  = this .displacementWeightsSize,
+         array = this .displacementWeightsArray;
+
+      array .set (this .displacementWeights);
 
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, displacementWeightsArray);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, array);
    },
    set_skinCoord__ ()
    {
