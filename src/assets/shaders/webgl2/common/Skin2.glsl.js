@@ -102,6 +102,7 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal, const in vec3 tangent
    #endif
 
    #if X3D_NUM_JOINT_SETS > 0
+   {
       int coordIndexJ = coordIndex * (X3D_NUM_JOINT_SETS * 2);
 
       for (int i = 0; i < X3D_NUM_JOINT_SETS; ++ i)
@@ -128,6 +129,7 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal, const in vec3 tangent
             #endif
          }
       }
+   }
    #endif
 
    return skin;
