@@ -21,9 +21,11 @@ getJointMatrix (const in int joint)
 mat3
 getDisplacementJointMatrix (const in int joint)
 {
-   mat4 m = getJointMatrix (joint);
+   vec4 a = texelFetch (x3d_JointMatricesTexture, joint * 8,     0);
+   vec4 b = texelFetch (x3d_JointMatricesTexture, joint * 8 + 1, 0);
+   vec4 c = texelFetch (x3d_JointMatricesTexture, joint * 8 + 2, 0);
 
-   return mat3 (m [0] .xyz, m [1] .xyz, m [2] .xyz);
+   return mat3 (a .xyz, b .xyz, c .xyz);
 }
 
 #if defined (X3D_NORMALS)
