@@ -119,6 +119,9 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
          displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacementWeights);
          displacerNode ._weight        .addInterest ("addEvent", this ._displacementWeights);
       }
+
+      this ._displacements       .addEvent ();
+      this ._displacementWeights .addEvent ();
    },
    traverse (type, renderObject)
    {
