@@ -1006,8 +1006,6 @@ declare namespace X3D
       readonly length: number;
    }
 
-   const X3DConstants: X3DConstants;
-
    /**
     * The X3DConstants object is used to define constants values used throughout this language binding. Each property is defined as a numeric, read-only value. The individual values are not specified; these are implementation-dependent. These constants can be used anywhere that a service request wishes to return some fixed value such as if or switch statements. The list of known values are defined in the table below.
     *
@@ -1015,6 +1013,7 @@ declare namespace X3D
     *
     * The object consists solely of read-only properties. It does not define any additional functions.
     */
+   const X3DConstants: X3DConstants;
    interface X3DConstants
    {
       // Browser Event Constants
