@@ -50,7 +50,10 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function HAnimSegment (executionContext)
 {
@@ -58,10 +61,71 @@ function HAnimSegment (executionContext)
 
    this .addType (X3DConstants .HAnimSegment);
 
+   this .addChildObjects (X3DConstants .outputOnly, "displacements",       new Fields .SFTime (),
+                          X3DConstants .outputOnly, "displacementWeights", new Fields .SFTime ());
+
    this ._mass .setUnit ("mass");
+
+   this .displacerNodes  = [ ];
+   this .modelViewMatrix = new Matrix4 ();
 }
 
-Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype);
+Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype),
+{
+   initialize ()
+   {
+      X3DGroupingNode .prototype .initialize .call (this);
+
+      this ._displacers .addInterest ("set_displacers__", this);
+
+      this .set_displacers__ ();
+   },
+   getModelViewMatrix ()
+   {
+      return this .modelViewMatrix;
+   },
+   getDisplacers ()
+   {
+      return this .displacerNodes;
+   },
+   set_displacers__ ()
+   {
+      const displacerNodes = this .displacerNodes;
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacements);
+         displacerNode ._displacements .removeInterest ("addEvent", this ._displacements);
+         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacementWeights);
+         displacerNode ._weight        .removeInterest ("addEvent", this ._displacementWeights);
+      }
+
+      displacerNodes .length = 0;
+
+      for (const node of this ._displacers)
+      {
+         const displacerNode = X3DCast (X3DConstants .HAnimDisplacer, node);
+
+         if (displacerNode)
+            displacerNodes .push (displacerNode);
+      }
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacements);
+         displacerNode ._displacements .addInterest ("addEvent", this ._displacements);
+         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacementWeights);
+         displacerNode ._weight        .addInterest ("addEvent", this ._displacementWeights);
+      }
+   },
+   traverse (type, renderObject)
+   {
+      if (type === TraverseType .DISPLAY)
+         this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
+
+      X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+   },
+});
 
 Object .defineProperties (HAnimSegment,
 {

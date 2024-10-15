@@ -85,32 +85,34 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal, const in vec3 tangent
    }
    #endif
 
-   int coordIndexJ = coordIndex * (X3D_NUM_JOINT_SETS * 2);
+   #if X3D_NUM_JOINT_SETS > 0
+      int coordIndexJ = coordIndex * (X3D_NUM_JOINT_SETS * 2);
 
-   for (int i = 0; i < X3D_NUM_JOINT_SETS; ++ i)
-   {
-      int   index   = coordIndexJ + i;
-      ivec4 joints  = ivec4 (texelFetch (x3d_JointsTexture, index, 0));
-      vec4  weights = texelFetch (x3d_JointsTexture, index + X3D_NUM_JOINT_SETS, 0);
-
-      for (int i = 0; i < 4; ++ i)
+      for (int i = 0; i < X3D_NUM_JOINT_SETS; ++ i)
       {
-         int   joint  = joints  [i];
-         float weight = weights [i];
+         int   index   = coordIndexJ + i;
+         ivec4 joints  = ivec4 (texelFetch (x3d_JointsTexture, index, 0));
+         vec4  weights = texelFetch (x3d_JointsTexture, index + X3D_NUM_JOINT_SETS, 0);
 
-         skin += (getJointMatrix (joint) * vertex - vertex) * weight;
+         for (int i = 0; i < 4; ++ i)
+         {
+            int   joint  = joints  [i];
+            float weight = weights [i];
 
-         #if defined (X3D_NORMALS)
-            mat3 jointNormalMatrix = getJointNormalMatrix (joint);
+            skin += (getJointMatrix (joint) * vertex - vertex) * weight;
 
-            skinNormal += (jointNormalMatrix * normal - normal) * weight;
+            #if defined (X3D_NORMALS)
+               mat3 jointNormalMatrix = getJointNormalMatrix (joint);
 
-            #if defined (X3D_TANGENTS)
-               skinTangent += (jointNormalMatrix * tangent - tangent) * weight;
+               skinNormal += (jointNormalMatrix * normal - normal) * weight;
+
+               #if defined (X3D_TANGENTS)
+                  skinTangent += (jointNormalMatrix * tangent - tangent) * weight;
+               #endif
             #endif
-         #endif
+         }
       }
-   }
+   #endif
 
    return skin;
 }
