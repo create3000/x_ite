@@ -82,7 +82,7 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal, const in vec3 tangent
          vec4  displacement = texelFetch (x3d_DisplacementsTexture, index,          0);
          float weight       = texelFetch (x3d_DisplacementsTexture, index + offset, 0) .x;
 
-         skin .xyz += getDisplacementJointMatrix (int (displacement .w)) * displacement .xyz * weight;
+         skin .xyz += getDisplacementJointMatrix (int (displacement .w)) * (displacement .xyz * weight);
       }
    }
    #endif
