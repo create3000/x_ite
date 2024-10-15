@@ -3,7 +3,10 @@ export default /* glsl */ `
 
 in float x3d_CoordIndex;
 
-uniform sampler2D x3d_JointsTexture;
+#if X3D_NUM_JOINT_SETS > 0
+   uniform sampler2D x3d_JointsTexture;
+#endif
+
 uniform sampler2D x3d_DisplacementsTexture;
 uniform sampler2D x3d_JointMatricesTexture;
 
