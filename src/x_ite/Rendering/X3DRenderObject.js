@@ -92,6 +92,7 @@ function X3DRenderObject (executionContext)
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
    this .humanoids                = [ null ];
+   this .invHumanoidMatrix        = new MatrixStack (Matrix4);
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
    this .collisionTime            = new StopWatch ();
@@ -352,6 +353,10 @@ Object .assign (X3DRenderObject .prototype,
    getHumanoids ()
    {
       return this .humanoids;
+   },
+   getInvHumanoidMatrix ()
+   {
+      return this .invHumanoidMatrix;
    },
    getGeneratedCubeMapTextures ()
    {

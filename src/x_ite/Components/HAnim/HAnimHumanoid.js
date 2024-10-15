@@ -510,7 +510,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          this .skinCoordNode .removeInterest ("addEvent", this ._displacementWeightsTexture);
       }
 
-      this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
+      this .skinCoordNode = X3DCast (X3DConstants .Coordinate, this ._skinCoord)
+         ?? X3DCast (X3DConstants .CoordinateDouble, this ._skinCoord);
 
       if (this .skinCoordNode)
       {
@@ -531,55 +532,54 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    traverse (type, renderObject)
    {
+      const invHumanoidMatrix = renderObject .getInvHumanoidMatrix ();
+
+      invHumanoidMatrix .push (this .transformNode .getMatrix ());
+      invHumanoidMatrix .multRight (renderObject .getModelViewMatrix () .get ());
+      invHumanoidMatrix .inverse ();
+
       this .transformNode .traverse (type, renderObject);
 
       this .skinning (type, renderObject);
+
+      invHumanoidMatrix .pop ();
    },
-   skinning: (() =>
+   skinning (type, renderObject)
    {
-      const invModelViewMatrix = new Matrix4 ();
+      if (type !== TraverseType .DISPLAY || this .change .lock ())
+         return;
 
-      return function (type, renderObject)
+      // Create joint matrices.
+
+      const
+         invModelViewMatrix   = renderObject .getInvHumanoidMatrix () .get (),
+         jointNodes           = this .jointNodes,
+         jointNodesLength     = jointNodes .length,
+         jointBindingMatrices = this .jointBindingMatrices,
+         jointMatricesArray   = this .jointMatricesArray,
+         size                 = Math .ceil (Math .sqrt (jointNodesLength * 8));
+
+      for (let i = 0; i < jointNodesLength; ++ i)
       {
-         if (type !== TraverseType .DISPLAY || this .change .lock ())
-            return;
-
-         // Determine inverse model matrix of humanoid.
-
-         invModelViewMatrix .assign (this .transformNode .getMatrix ())
-            .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
-
-         // Create joint matrices.
-
          const
-            jointNodes           = this .jointNodes,
-            jointNodesLength     = jointNodes .length,
-            jointBindingMatrices = this .jointBindingMatrices,
-            jointMatricesArray   = this .jointMatricesArray,
-            size                 = Math .ceil (Math .sqrt (jointNodesLength * 8));
+            jointNode          = jointNodes [i],
+            jointBindingMatrix = jointBindingMatrices [i],
+            jointMatrix        = jointNode .getModelViewMatrix () .multRight (invModelViewMatrix) .multLeft (jointBindingMatrix),
+            jointNormalMatrix  = jointMatrix .submatrix .transpose () .inverse ();
 
-         for (let i = 0; i < jointNodesLength; ++ i)
-         {
-            const
-               jointNode          = jointNodes [i],
-               jointBindingMatrix = jointBindingMatrices [i],
-               jointMatrix        = jointNode .getModelViewMatrix () .multRight (invModelViewMatrix) .multLeft (jointBindingMatrix),
-               jointNormalMatrix  = jointMatrix .submatrix .transpose () .inverse ();
+         jointMatricesArray .set (jointMatrix,       i * 32 + 0);
+         jointMatricesArray .set (jointNormalMatrix, i * 32 + 16);
+      }
 
-            jointMatricesArray .set (jointMatrix,       i * 32 + 0);
-            jointMatricesArray .set (jointNormalMatrix, i * 32 + 16);
-         }
+      // Upload textures.
 
-         // Upload textures.
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
-
-         gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
-      };
-   })(),
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
+   },
    setShaderUniforms (gl, shaderObject)
    {
       const

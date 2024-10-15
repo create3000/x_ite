@@ -96,6 +96,16 @@ class MatrixStack extends Array
       this [this .#top] .identity ();
    }
 
+   inverse ()
+   {
+      this [this .#top] .inverse ();
+   }
+
+   multRight (matrix)
+   {
+      this [this .#top] .multRight (matrix);
+   }
+
    multLeft (matrix)
    {
       this [this .#top] .multLeft (matrix);
