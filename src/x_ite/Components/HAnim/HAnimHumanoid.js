@@ -338,7 +338,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       const size = Math .ceil (Math .sqrt ((this .segmentNodes .length + this .jointNodes .length) * 8));
 
-      this .jointMatricesArray = new Float32Array (size * size * 4),
+      this .jointMatricesArray = new Float32Array (size * size * 4);
 
       this ._displacementsTexture       .addEvent ();
       this ._displacementWeightsTexture .addEvent ();
