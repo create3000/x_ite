@@ -57,7 +57,7 @@ import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function HAnimHumanoid (executionContext)
 {
@@ -86,7 +86,7 @@ function HAnimHumanoid (executionContext)
 
    this .skeletonNode         = new Group (executionContext);
    this .viewpointsNode       = new Group (executionContext);
-   this .skinNode             = new Group (executionContext);
+   this .skinNode             = new Skin (executionContext, this);
    this .transformNode        = new Transform (executionContext);
    this .motionNodes          = [ ];
    this .jointNodes           = [ ];
@@ -166,17 +166,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       if (gl .getVersion () === 1)
          return;
-
-      // Prepare skinNode.
-
-      this .skinNode .traverse = (type, renderObject) =>
-      {
-         renderObject .getHAnimNode () .push (this);
-
-         Group .prototype .traverse .call (this .skinNode, type, renderObject);
-
-         renderObject .getHAnimNode () .pop ();
-      };
 
       // Textures
 
@@ -626,6 +615,27 @@ Object .defineProperties (HAnimHumanoid,
       enumerable: true,
    },
 });
+
+class Skin extends Group
+{
+   #humanoidNode;
+
+   constructor (executionContext, humanoidNode)
+   {
+      super (executionContext);
+
+      this .#humanoidNode = humanoidNode;
+   }
+
+   traverse (type, renderObject)
+   {
+      renderObject .getHAnimNode () .push (this .#humanoidNode);
+
+      super .traverse (type, renderObject);
+
+      renderObject .getHAnimNode () .pop ();
+   }
+}
 
 class Lock
 {
