@@ -12,7 +12,7 @@ Embarking on your journey into [Electron](https://www.electronjs.org/docs/latest
 This example can be tested with [Electron Fiddle](https://www.electronjs.org/de/fiddle) using the following Fiddle from GitHub Gist:
 
 ```
-https://gist.github.com/create3000/622efc4dbc16a1a2c888be43c7c022df
+https://gist.github.com/create3000/88bb73719dba1f70a0422d12d61db62f
 ```
 
 ## What Files Are Needed?
