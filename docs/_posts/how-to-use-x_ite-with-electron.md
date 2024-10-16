@@ -81,13 +81,23 @@ This is the HTML page, which will be displayed in your browser window.
 The preload script runs before `index.html` is loaded in the renderer. It has access to web APIs as well as Electron's renderer process modules and some polyfilled Node.js functions.
 
 ```js
+/**
+ * The preload script runs before `index.html` is loaded
+ * in the renderer. It has access to web APIs as well as
+ * Electron's renderer process modules and some polyfilled
+ * Node.js functions.
+ *
+ * https://www.electronjs.org/docs/latest/tutorial/sandbox
+ */
 "use strict";
 
-window .addEventListener ("DOMContentLoaded", main);
+window .addEventListener ("DOMContentLoaded", preload);
 
-function main ()
+function preload ()
 {
-  const X3D = require ("x_ite");
+  const
+    X3D = require ("x_ite"),
+    $   = require ("jquery");
 
   /// Do something with window, document and X3D.
 
@@ -95,9 +105,11 @@ function main ()
     canvas  = document .createElement ("x3d-canvas"),
     browser = canvas .browser;
 
-  document .getElementsByTagName ("body") [0] .appendChild (canvas);
+  $("body") .append (canvas);
+
   browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/x_ite/info/info.x3d"));
-};
+}
+
 ```
 
 ### styles.css
