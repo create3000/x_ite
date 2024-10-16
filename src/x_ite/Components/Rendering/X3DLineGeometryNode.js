@@ -195,7 +195,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       if (this [_numLines0] !== numLines)
          return true;
 
-      if (this [_numLines2] !== numLines)
+      if (this .hasNormals && this [_numLines2] !== numLines)
          return true;
 
       // Setup vertex attributes.
@@ -277,7 +277,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       if (shapeNode [_numLines0] !== numLines)
          return true;
 
-      if (shapeNode [_numLines2] !== numLines)
+      if (this .hasNormals && shapeNode [_numLines2] !== numLines)
          return true;
 
       // Setup vertex attributes.
@@ -331,11 +331,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          return;
 
       const
-         browser            = this .getBrowser (),
-         appearanceNode     = renderContext .appearanceNode,
-         shaderNode         = appearanceNode .getShader (this, renderContext),
-         renderModeNodes    = appearanceNode .getRenderModes (),
-         primitiveMode      = browser .getPrimitiveMode (this .getPrimitiveMode ());
+         browser         = this .getBrowser (),
+         appearanceNode  = renderContext .appearanceNode,
+         shaderNode      = appearanceNode .getShader (this, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         primitiveMode   = browser .getPrimitiveMode (this .getPrimitiveMode ());
 
       for (const node of renderModeNodes)
          node .enable (gl);
