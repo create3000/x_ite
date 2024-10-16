@@ -42,19 +42,19 @@ const
 
 async function main ()
 {
-   process .env .ELECTRON_ENABLE_LOGGING = 1;
+  process .env .ELECTRON_ENABLE_LOGGING = 1;
 
-   await electron .app .whenReady ();
+  await electron .app .whenReady ();
 
-   const window = new electron .BrowserWindow ({
-      webPreferences: {
-         preload: path .join (__dirname, "preload.js"),
-         nodeIntegration: true,
-         contextIsolation: false,
-      },
-   });
+  const window = new electron .BrowserWindow ({
+    webPreferences: {
+      preload: path .join (__dirname, "preload.js"),
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
 
-   window .loadFile (path .join (__dirname, "index.html"));
+  window .loadFile (path .join (__dirname, "index.html"));
 }
 
 main ();
