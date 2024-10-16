@@ -15,6 +15,8 @@ This example can be tested with [Electron Fiddle](https://www.electronjs.org/de/
 https://gist.github.com/create3000/88bb73719dba1f70a0422d12d61db62f
 ```
 
+![Electron Fiddle](assets/img/electron/electron-fiddle.png){: .normal .w-100 }
+
 ## What Files Are Needed?
 
 To get started, there are at least 4 files needed to open an Electron window:
