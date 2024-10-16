@@ -7,15 +7,23 @@ tags: [Electron]
 ---
 Embarking on your journey into [Electron](https://www.electronjs.org/docs/latest/api/app) app development? It's a great idea to be a bit familiar with Electron before you dive in. This foundational knowledge will help you get started smoothly and make your development process more efficient. Whether you're new to Electron or simply need a refresher, exploring the Electron documentation can be a valuable first step on your path to creating amazing Electron applications.
 
+## Download Example
+
+This example can be tested with [Electron Fiddle](https://www.electronjs.org/de/fiddle) using the following Fiddle from GitHub Gist:
+
+```
+https://gist.github.com/create3000/622efc4dbc16a1a2c888be43c7c022df
+```
+
 ## What Files Are Needed?
 
 To get started, there are at least 4 files needed to open an Electron window:
 
 * app-folder
   * main.js
-  * window.html
-  * window.js
-  * application.js
+  * index.html
+  * preload.js
+  * styles.css
 
 Let us now look at the individual files.
 
@@ -38,19 +46,19 @@ async function main ()
 
    const window = new electron .BrowserWindow ({
       webPreferences: {
-         preload: path .join (__dirname, "window.js"),
+         preload: path .join (__dirname, "preload.js"),
          nodeIntegration: true,
          contextIsolation: false,
       },
    });
 
-   window .loadFile (path .join (__dirname, "window.html"));
+   window .loadFile (path .join (__dirname, "index.html"));
 }
 
 main ();
 ```
 
-### window.html
+### index.html
 
 This is the HTML page, which will be displayed in your browser window.
 
@@ -59,39 +67,55 @@ This is the HTML page, which will be displayed in your browser window.
 <html>
   <head>
     <meta charset="utf-8"/>
+    <title>X_ITE Electron Example</title>
+    <link href="./styles.css" rel="stylesheet">
   </head>
   <body></body>
 </html>
 ```
 
-### window.js
+### preload.js
 
-A small wrapper to load application.js.
+The preload script runs before `index.html` is loaded in the renderer. It has access to web APIs as well as Electron's renderer process modules and some polyfilled Node.js functions.
 
 ```js
 "use strict";
 
-window .addEventListener ("DOMContentLoaded", () =>
+window .addEventListener ("DOMContentLoaded", main);
+
+function main ()
 {
-   require ("./application");
-});
+  const X3D = require ("x_ite");
+
+  /// Do something with window, document and X3D.
+
+  const
+    canvas  = document .createElement ("x3d-canvas"),
+    browser = canvas .browser;
+
+  document .getElementsByTagName ("body") [0] .appendChild (canvas);
+  browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/x_ite/info/info.x3d"));
+};
 ```
 
-### application.js
+### styles.css
 
-Your browser window environment, where you can do the magic stuff to bring your app alive.
+Styles for index.html
 
-```js
-"use strict";
+```css
+/* styles.css */
 
-const X3D = require ("x_ite");
+/* Add styles here to customize the appearance of your app */
 
-/// Do something with window, document and X3D.
+html, body, x3d-canvas {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
 
-const
-  canvas  = document .createElement ("x3d-canvas"),
-  browser = canvas .browser;
-
-document .appendChild (canvas);
-browser .loadURL (new X3D .MFString ("path/to/world.x3d"));
+body {
+  box-sizing: border-box;
+  padding: 10px;
+}
 ```
