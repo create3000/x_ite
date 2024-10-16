@@ -310,7 +310,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (this .URL .protocol === "data:")
          console .error (`Couldn't load data URL.`, error);
       else
-         console .error (`Couldn't load URL '${decodeURI (this .URL .href)}'.`, error);
+         console .error (`Couldn't load URL '${$.try (() => decodeURI (this .URL .href)) ?? "invalid URI"}'.`, error);
    },
 });
 
