@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
       this .set_displacers__ ();
       this .set_coord__ ();
    },
-   getHumanoidKey ()
+   getHAnimKey ()
    {
       return this .humanoidKey;
    },
@@ -267,14 +267,14 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    traverse (type, renderObject)
    {
       if (this .coordNode)
-         renderObject .getHumanoids () .push (this);
+         renderObject .getHAnimNode () .push (this);
 
       X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
       this .skinning (type, renderObject);
 
       if (this .coordNode)
-         renderObject .getHumanoids () .pop ();
+         renderObject .getHAnimNode () .pop ();
    },
    skinning: (() =>
    {

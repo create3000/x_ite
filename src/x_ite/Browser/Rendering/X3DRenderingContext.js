@@ -252,14 +252,14 @@ Object .assign (X3DRenderingContext .prototype,
 
       return this [_composeShader] = this .createShader ("OITCompose", "FullScreen", "OITCompose");
    },
-   getDepthShader (numClipPlanes, shapeNode, humanoidNode)
+   getDepthShader (numClipPlanes, shapeNode, hAnimNode)
    {
       const geometryContext = shapeNode .getGeometryContext ();
 
       let key = "";
 
       key += numClipPlanes; // Could be more than 9.
-      key += humanoidNode ?.getHumanoidKey () ?? "[]";
+      key += hAnimNode ?.getHAnimKey () ?? "[]";
       key += shapeNode .getShapeKey ();
       key += geometryContext .geometryType;
 
@@ -279,9 +279,9 @@ Object .assign (X3DRenderingContext .prototype,
       }
 
       return this [_depthShaders] .get (key)
-         ?? this .createDepthShader (key, numClipPlanes, shapeNode, humanoidNode);
+         ?? this .createDepthShader (key, numClipPlanes, shapeNode, hAnimNode);
    },
-   createDepthShader (key, numClipPlanes, shapeNode, humanoidNode)
+   createDepthShader (key, numClipPlanes, shapeNode, hAnimNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),
@@ -302,11 +302,11 @@ Object .assign (X3DRenderingContext .prototype,
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
 
-      if (humanoidNode)
+      if (hAnimNode)
       {
          options .push ("X3D_SKINNING");
-         options .push (`X3D_NUM_JOINT_SETS ${humanoidNode .getNumJoints () / 4}`);
-         options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
+         options .push (`X3D_NUM_JOINT_SETS ${hAnimNode .getNumJoints () / 4}`);
+         options .push (`X3D_NUM_DISPLACEMENTS ${hAnimNode .getNumDisplacements ()}`);
       }
 
       const shaderNode = this .createShader ("Depth", "Depth", "Depth", options);

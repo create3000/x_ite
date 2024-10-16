@@ -357,14 +357,14 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       for (const sensor of this [_activeSensors])
          sensor .set_motion__ (hit);
    },
-   getPointingShader (numClipPlanes, shapeNode, humanoidNode)
+   getPointingShader (numClipPlanes, shapeNode, hAnimNode)
    {
       const { geometryType, hasNormals } = shapeNode .getGeometryContext ();
 
       let key = "";
 
       key += numClipPlanes; // Could be more than 9.
-      key += humanoidNode ?.getHumanoidKey () ?? "[]";
+      key += hAnimNode ?.getHAnimKey () ?? "[]";
       key += shapeNode .getShapeKey ();
       key += geometryType;
       key += hasNormals ? 1 : 0;
@@ -385,9 +385,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       }
 
       return this [_pointingShaders] .get (key)
-         ?? this .createPointingShader (key, numClipPlanes, shapeNode, humanoidNode);
+         ?? this .createPointingShader (key, numClipPlanes, shapeNode, hAnimNode);
    },
-   createPointingShader (key, numClipPlanes, shapeNode, humanoidNode)
+   createPointingShader (key, numClipPlanes, shapeNode, hAnimNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),
@@ -427,11 +427,11 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (+appearanceNode .getTextureBits ())
          options .push ("X3D_TEXTURE");
 
-      if (humanoidNode)
+      if (hAnimNode)
       {
          options .push ("X3D_SKINNING");
-         options .push (`X3D_NUM_JOINT_SETS ${humanoidNode .getNumJoints () / 4}`);
-         options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
+         options .push (`X3D_NUM_JOINT_SETS ${hAnimNode .getNumJoints () / 4}`);
+         options .push (`X3D_NUM_DISPLACEMENTS ${hAnimNode .getNumDisplacements ()}`);
       }
 
       const shaderNode = this .createShader ("Pointing", "Pointing", "Pointing", options);

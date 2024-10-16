@@ -91,7 +91,7 @@ function X3DRenderObject (executionContext)
    this .localShadows             = [ false ];
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
-   this .humanoids                = [ null ];
+   this .hAnimNode                = [ null ];
    this .invHumanoidMatrix        = new MatrixStack (Matrix4);
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
@@ -350,9 +350,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .layouts .at (-1);
    },
-   getHumanoids ()
+   getHAnimNode ()
    {
-      return this .humanoids;
+      return this .hAnimNode;
    },
    getInvHumanoidMatrix ()
    {
@@ -637,7 +637,7 @@ Object .assign (X3DRenderObject .prototype,
 
             pointingContext .modelViewMatrix .set (modelViewMatrix);
             pointingContext .scissor      = viewVolume .getScissor ();
-            pointingContext .humanoidNode = this .humanoids .at (-1);
+            pointingContext .hAnimNode    = this .hAnimNode .at (-1);
             pointingContext .shapeNode    = shapeNode;
 
             // Clip planes & sensors
@@ -736,7 +736,7 @@ Object .assign (X3DRenderObject .prototype,
 
             depthContext .modelViewMatrix .set (modelViewMatrix);
             depthContext .scissor      = viewVolume .getScissor ();
-            depthContext .humanoidNode = this .humanoids .at (-1);
+            depthContext .hAnimNode    = this .hAnimNode .at (-1);
             depthContext .shapeNode    = shapeNode;
 
             // Clip planes
@@ -795,7 +795,7 @@ Object .assign (X3DRenderObject .prototype,
             renderContext .scissor .assign (viewVolume .getScissor ());
             renderContext .shadows        = this .localShadows .at (-1);
             renderContext .fogNode        = this .localFogs .at (-1);
-            renderContext .humanoidNode   = this .humanoids .at (-1);
+            renderContext .hAnimNode      = this .hAnimNode .at (-1);
             renderContext .shapeNode      = shapeNode;
             renderContext .appearanceNode = shapeNode .getAppearance ();
 
@@ -855,12 +855,12 @@ Object .assign (X3DRenderObject .prototype,
          {
             const
                renderContext       = shapes [s],
-               { scissor, clipPlanes, modelViewMatrix, shapeNode, humanoidNode } = renderContext,
+               { scissor, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                depthModeNode       = appearanceNode .getDepthMode (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
-               shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, humanoidNode),
+               shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, hAnimNode),
                id                  = browser .addPointingShape (renderContext);
 
             gl .scissor (scissor .x - x,
@@ -879,7 +879,7 @@ Object .assign (X3DRenderObject .prototype,
 
             depthModeNode       ?.enable (gl);
             stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
-            humanoidNode        ?.setShaderUniforms (gl, shaderNode);
+            hAnimNode           ?.setShaderUniforms (gl, shaderNode);
 
             shapeNode .displaySimple (gl, renderContext, shaderNode);
 
@@ -1095,11 +1095,11 @@ Object .assign (X3DRenderObject .prototype,
          {
             const
                renderContext       = shapes [s],
-               { scissor, clipPlanes, modelViewMatrix, shapeNode, humanoidNode } = renderContext,
+               { scissor, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
-               shaderNode          = browser .getDepthShader (clipPlanes .length, shapeNode, humanoidNode);
+               shaderNode          = browser .getDepthShader (clipPlanes .length, shapeNode, hAnimNode);
 
             gl .scissor (... scissor);
 
@@ -1112,7 +1112,7 @@ Object .assign (X3DRenderObject .prototype,
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
             stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
-            humanoidNode        ?.setShaderUniforms (gl, shaderNode);
+            hAnimNode           ?.setShaderUniforms (gl, shaderNode);
 
             shapeNode .displaySimple (gl, renderContext, shaderNode);
             browser .resetTextureUnits ();

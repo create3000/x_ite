@@ -1042,7 +1042,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       return function (gl, renderContext, geometryContext, front = true)
       {
-         const { renderObject, fogNode, appearanceNode, humanoidNode, modelViewMatrix } = renderContext;
+         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix } = renderContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
@@ -1157,7 +1157,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Skinning
 
-         humanoidNode ?.setShaderUniforms (gl, this);
+         hAnimNode ?.setShaderUniforms (gl, this);
       };
    })(),
    enable (gl)

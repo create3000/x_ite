@@ -169,15 +169,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Prepare skinNode.
 
-      this .skinNode .traverse = function (humanoidNode, type, renderObject)
+      this .skinNode .traverse = (type, renderObject) =>
       {
-         renderObject .getHumanoids () .push (humanoidNode);
+         renderObject .getHAnimNode () .push (this);
 
-         Group .prototype .traverse .call (this, type, renderObject);
+         Group .prototype .traverse .call (this .skinNode, type, renderObject);
 
-         renderObject .getHumanoids () .pop ();
-      }
-      .bind (this .skinNode, this);
+         renderObject .getHAnimNode () .pop ();
+      };
 
       // Textures
 
@@ -224,7 +223,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       return this .transformNode .getMatrix ();
    },
-   getHumanoidKey ()
+   getHAnimKey ()
    {
       return this .humanoidKey;
    },

@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, localObjectsKeys } = renderContext;
+         const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, hAnimNode, localObjectsKeys } = renderContext;
 
          key += shapeNode .getAlphaMode ();
          key += renderObject .getRenderAndGlobalLightsKey ();
@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ?.getStyleKey () ?? 0;
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
-         key += humanoidNode ?.getHumanoidKey () ?? "[]";
+         key += hAnimNode ?.getHAnimKey () ?? "[]";
          key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? 2 : appearanceNode .getTextureBits () .toString (16);
@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, localObjectsKeys, textureNode } = renderContext;
+         const { renderObject, fogNode, shapeNode, appearanceNode, hAnimNode, localObjectsKeys, textureNode } = renderContext;
 
          const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
 
@@ -230,11 +230,11 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
                break;
          }
 
-         if (humanoidNode)
+         if (hAnimNode)
          {
             options .push ("X3D_SKINNING");
-            options .push (`X3D_NUM_JOINT_SETS ${humanoidNode .getNumJoints () / 4}`);
-            options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
+            options .push (`X3D_NUM_JOINT_SETS ${hAnimNode .getNumJoints () / 4}`);
+            options .push (`X3D_NUM_DISPLACEMENTS ${hAnimNode .getNumDisplacements ()}`);
          }
 
          const
