@@ -69,6 +69,7 @@ This is the HTML page, which will be displayed in your browser window.
 <html>
   <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*; script-src 'self' 'unsafe-eval' https://*">
     <title>X_ITE Electron Example</title>
     <link href="./styles.css" rel="stylesheet">
   </head>
