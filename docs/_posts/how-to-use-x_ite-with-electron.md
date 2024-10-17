@@ -38,7 +38,7 @@ Main entry point, in this file all begins, we will open a BrowserWindow and refe
 
 const
   electron = require ("electron"),
-  path     = require ('path');
+  path     = require ("path");
 
 async function main ()
 {
@@ -109,7 +109,6 @@ function preload ()
 
   browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/x_ite/info/info.x3d"));
 }
-
 ```
 
 ### styles.css
