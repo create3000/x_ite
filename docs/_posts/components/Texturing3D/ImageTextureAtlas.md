@@ -143,7 +143,7 @@ Any image file format supported by the web browser, but at least:
 
 An example image could look like this:
 
-![image texture atlas](/assets/img/components/scan1.png){: .normal .w-50 }
+![image texture atlas](/assets/img/components/scan1.avif){: .normal .w-50 }
 
 ## Example
 
