@@ -27,7 +27,7 @@ If the file is gzipped, then the content-encoding value is »gzip« with the app
 
 The simplest way to set your server to correctly display X3D files is to add the following to your document root's .htaccess file:
 
-```xml
+```apache
 <IfModule mod_mime.c>
   # Add X3D mime types.
   AddType model/x3d+xml .x3d
@@ -50,7 +50,7 @@ The simplest way to set your server to correctly display X3D files is to add the
 
 Because X3D files are pure text you can compress them on the fly. This can reduce the file size up to a factor of ten:
 
-```xml
+```apache
 <IfModule mod_deflate.c>
   # Compress X3D on the fly.
   AddOutputFilterByType DEFLATE model/x3d+xml
@@ -60,6 +60,8 @@ Because X3D files are pure text you can compress them on the fly. This can reduc
 </IfModule>
 
 <IfModule mod_brotli.c>
+  # Specifies the Brotli compression quality, which is '5' by default,
+  # but '4' is faster and more efficient compared to GZIP.
   BrotliCompressionQuality 4
   AddOutputFilterByType BROTLI_COMPRESS model/x3d+xml
   AddOutputFilterByType BROTLI_COMPRESS model/x3d+json
