@@ -292,12 +292,10 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
             jointMatricesArray = this .jointMatricesArray,
             size               = Math .ceil (Math .sqrt (1 * 8));
 
-         const
-            jointMatrix       = modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (invHumanoidMatrix),
-            jointNormalMatrix = jointMatrix .submatrix .transpose () .inverse ();
+         const jointMatrix = modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (invHumanoidMatrix);
 
-         jointMatricesArray .set (jointMatrix,       0);
-         jointMatricesArray .set (jointNormalMatrix, 16);
+         jointMatricesArray .set (jointMatrix, 0);
+         // No need for jointNormalMatrix.
 
          // Upload textures.
 
