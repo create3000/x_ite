@@ -15,7 +15,7 @@ This example can be tested with [Electron Fiddle](https://www.electronjs.org/de/
 https://gist.github.com/create3000/88bb73719dba1f70a0422d12d61db62f
 ```
 
-![Electron Fiddle](assets/img/electron/electron-fiddle.png){: .normal .w-100 }
+![Electron Fiddle](assets/img/electron/electron-fiddle.avif){: .normal .w-100 }
 
 ## What Files Are Needed?
 
