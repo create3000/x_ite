@@ -141,7 +141,9 @@ Any image file format supported by the web browser, but at least:
 | GIF      | .gif           | image/gif  | lossy          |
 | SVG      | .svg           | image/svg  |                |
 
-An example image can be found [here](/x_ite/assets/img/components/scan1.png).
+An example image could look like this:
+
+![image texture atlas](/assets/img/components/scan1.png){: .normal .w-50 }
 
 ## Example
 
