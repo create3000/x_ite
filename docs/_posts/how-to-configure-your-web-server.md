@@ -60,10 +60,10 @@ Because X3D files are pure text you can compress them on the fly. This can reduc
 </IfModule>
 
 <IfModule mod_brotli.c>
-    BrotliCompressionQuality 4
-    AddOutputFilterByType BROTLI_COMPRESS model/x3d+xml
-    AddOutputFilterByType BROTLI_COMPRESS model/x3d+json
-    AddOutputFilterByType BROTLI_COMPRESS model/x3d+vrml
-    AddOutputFilterByType BROTLI_COMPRESS model/vrml
+  BrotliCompressionQuality 4
+  AddOutputFilterByType BROTLI_COMPRESS model/x3d+xml
+  AddOutputFilterByType BROTLI_COMPRESS model/x3d+json
+  AddOutputFilterByType BROTLI_COMPRESS model/x3d+vrml
+  AddOutputFilterByType BROTLI_COMPRESS model/vrml
 </IfModule>
 ```
