@@ -298,24 +298,24 @@ class Playground
          })
          .appendTo (toolbar);
 
+      $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+
+      this .fullSizeButton = $("<button></button>")
+         .attr ("title", "View browser in full size.")
+         .addClass (["fa-solid", "fa-expand"])
+         .on ("click", () =>
+         {
+            this .setFullSize (!this .localStorage .fullSize);
+         })
+         .appendTo (toolbar);
+
+      this .setFullSize (this .localStorage .fullSize);
+
       // Right side
 
       const right = $("<div></div>")
          .css ("float", "right")
          .appendTo (toolbar);
-
-      this .fullSizeButton = $("<button></button>")
-         .attr ("title", "View browser in full size.")
-         .addClass ("fa-square")
-         .on ("click", () =>
-         {
-            this .setFullSize (!this .localStorage .fullSize);
-         })
-         .appendTo (right);
-
-      this .setFullSize (this .localStorage .fullSize);
-
-      $("<span></span>") .addClass ("dot") .appendTo (right);
 
       $("<button></button>")
          .attr ("title", "Convert to X3D XML Encoding.")
@@ -372,8 +372,8 @@ class Playground
       this .localStorage .fullSize = fullSize;
 
       this .fullSizeButton
-         .removeClass (["fa-solid", "selected", "fa-regular"])
-         .addClass (fullSize ? ["fa-solid", "selected"] : ["fa-regular"]);
+         .removeClass ("selected")
+         .addClass (fullSize ? "selected" : "");
 
       if (fullSize)
       {
