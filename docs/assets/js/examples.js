@@ -1,32 +1,40 @@
 $("table.examples a") .on ("click", function ()
 {
-   let
-      div     = $("div.example"),
-      header  = div .find (".header"),
-      canvas  = div .find ("x3d-canvas"),
-      zip     = div .find (".zip"),
-      source  = div .find (".source")
+   Examples .shared .load ($(this));
+   return false;
+});
 
-   if (div .length)
+class Examples
+{
+   static #instance;
+
+   static get shared ()
    {
-      canvas .prop ("browser") .beginUpdate ();
-      div .show ();
+      return this .#instance ??= new this ();
    }
-   else
+
+   #div;
+   #header;
+   #canvas;
+   #browser;
+   #zip;
+   #source;
+
+   constructor ()
    {
-      div    = $("<div></div>") .addClass ("example") .appendTo ("body");
-      header = $("<p></p>") .addClass ("header") .appendTo (div);
-      canvas = $("<x3d-canvas></x3d-canvas>") .attr ("contentScale", "auto") .appendTo (div);
+      this .#div     = $("<div></div>") .addClass ("example") .appendTo ("body");
+      this .#header  = $("<p></p>") .addClass ("header") .appendTo (this .#div);
+      this .#canvas  = $("<x3d-canvas></x3d-canvas>") .attr ("contentScale", "auto") .appendTo (this .#div);
+      this .#browser = this .#canvas .prop ("browser");
 
-      $("<i></i>") .addClass (["fas", "fa-solid", "fa-circle-xmark", "fa-fw"]) .appendTo (div) .on ("click", function ()
-      {
-         canvas .prop ("browser") .endUpdate ();
-         div .hide ();
-      });
+      $("<i></i>")
+         .addClass (["fas", "fa-solid", "fa-circle-xmark", "fa-fw"])
+         .appendTo (this .#div)
+         .on ("click", () => this .hide ());
 
-      const footer = $("<p></p>") .addClass ("footer") .appendTo (div);
+      const footer = $("<p></p>") .addClass ("footer") .appendTo (this .#div);
 
-      zip = $("<a></a>")
+      this .#zip = $("<a></a>")
          .addClass ("zip")
          .attr ("download", "")
          .text ("Download ZIP Archive")
@@ -34,33 +42,48 @@ $("table.examples a") .on ("click", function ()
 
       $("<span></span>") .addClass ("dot") .appendTo (footer);
 
-      source = $("<a></a>")
+      this .#source = $("<a></a>")
          .addClass ("source")
          .text ("View Source in Playground")
          .appendTo (footer);
    }
 
-   canvas .prop ("browser") .getBrowserOptions () .reset ();
-
-   canvas
-      .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`))
-      .addClass (`xr-button-${$(this) .attr ("xrButtonPosition")}`)
-      .attr ("xrMovementControl", $(this) .attr ("xrMovementControl"));
-
-   header .text ($(this) .attr ("title"));
-   canvas .attr ("src", $(this) .attr ("href"));
-   zip    .attr ("href", $(this) .attr ("href") .replace (/\.x3d$/, ".zip"));
-   source .attr ("href", `/x_ite/playground/?url=${$(this) .attr ("href")}`);
-
-   if ($(this) .attr ("doc") === "true")
+   show ()
    {
-      $("<a></a>")
-         .text ("#")
-         .attr ("href", `/x_ite/components/${$(this) .attr ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${$(this) .attr ("typeName") .toLowerCase ()}/`)
-         .appendTo (header);
+      this .#browser .beginUpdate ();
+      this .#div .show ();
    }
 
-   console .log (`Loading ${$(this) .attr ("title")} ...`);
+   hide ()
+   {
+      this .#browser .endUpdate ();
+      this .#div .hide ();
+   }
 
-   return false;
-});
+   load (a)
+   {
+      this .show ();
+
+      this .#browser .getBrowserOptions () .reset ();
+
+      this .#canvas
+         .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`))
+         .addClass (`xr-button-${a .attr ("xrButtonPosition")}`)
+         .attr ("xrMovementControl", a .attr ("xrMovementControl"));
+
+      this .#header .text (a .attr ("title"));
+      this .#canvas .attr ("src", a .attr ("href"));
+      this .#zip    .attr ("href", a .attr ("href") .replace (/\.x3d$/, ".zip"));
+      this .#source .attr ("href", `/x_ite/playground/?url=${a .attr ("href")}`);
+
+      if (a .attr ("doc") === "true")
+      {
+         $("<a></a>")
+            .text ("#")
+            .attr ("href", `/x_ite/components/${a .attr ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${a .attr ("typeName") .toLowerCase ()}/`)
+            .appendTo (this .#header);
+      }
+
+      console .log (`Loading ${a .attr ("title")} ...`);
+   }
+}
