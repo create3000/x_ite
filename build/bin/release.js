@@ -123,8 +123,8 @@ function other ()
 
 	const cwd = process .cwd ();
 
-	systemSync (`npm cache clean --force`);
 	systemSync (`sleep 10`);
+	systemSync (`npm cache clean --force`);
 
 	process .chdir (`${cwd}/../media`);
 	systemSync (`npm run release`);
