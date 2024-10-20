@@ -16,6 +16,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Increased speed when parsing X3D files.
 * Improved rendering of thick lines.
 * [StaticGroup](/x_ite/components/grouping/staticgroup/) is now doing extensive optimizations.
+* [HAnimSegment](/x_ite/components/hanim/hanimsegment/) now handles displacers.
 
 ## X_ITE v10.4 Series
 
