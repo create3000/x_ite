@@ -13,7 +13,7 @@ class Examples
       return this .#instance ??= new this ();
    }
 
-   #div;
+   #element;
    #header;
    #canvas;
    #browser;
@@ -22,17 +22,17 @@ class Examples
 
    constructor ()
    {
-      this .#div     = $("<div></div>") .addClass ("example") .appendTo ("body");
-      this .#header  = $("<p></p>") .addClass ("header") .appendTo (this .#div);
-      this .#canvas  = $("<x3d-canvas></x3d-canvas>") .attr ("contentScale", "auto") .appendTo (this .#div);
+      this .#element = $("<div></div>") .addClass ("example") .appendTo ("body");
+      this .#header  = $("<p></p>") .addClass ("header") .appendTo (this .#element);
+      this .#canvas  = $("<x3d-canvas></x3d-canvas>") .attr ("contentScale", "auto") .appendTo (this .#element);
       this .#browser = this .#canvas .prop ("browser");
 
       $("<i></i>")
          .addClass (["fas", "fa-solid", "fa-circle-xmark", "fa-fw"])
-         .appendTo (this .#div)
+         .appendTo (this .#element)
          .on ("click", () => this .hide ());
 
-      const footer = $("<p></p>") .addClass ("footer") .appendTo (this .#div);
+      const footer = $("<p></p>") .addClass ("footer") .appendTo (this .#element);
 
       this .#zip = $("<a></a>")
          .addClass ("zip")
@@ -51,13 +51,13 @@ class Examples
    show ()
    {
       this .#browser .beginUpdate ();
-      this .#div .show ();
+      this .#element .show ();
    }
 
    hide ()
    {
       this .#browser .endUpdate ();
-      this .#div .hide ();
+      this .#element .hide ();
    }
 
    load (a)
