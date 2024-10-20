@@ -36,16 +36,21 @@ class Playground
             bracketPairColorization: { enabled: true },
          });
 
-      this .browser = browser;
-      this .canvas  = $(browser .element);
-      this .editor  = editor;
+      this .browser      = browser;
+      this .canvas       = $(browser .element);
+      this .localStorage = this .browser .getLocalStorage () .addNameSpace ("Playground.");
+      this .editor       = editor;
+
+      this .localStorage .setDefaultValues ({
+         fullSize: false,
+      });
+
+      this .addVRMLEncoding ();
+      this .updateToolbar ();
 
       browser .getContextMenu () .setUserMenu (() => this .updateUserMenu ());
 
       await browser .loadComponents (browser .getProfile ("Full"), browser .getComponent ("X_ITE"));
-
-      this .addVRMLEncoding ();
-      this .updateToolbar ();
 
       // Handle url parameter.
 
@@ -299,32 +304,16 @@ class Playground
          .css ("float", "right")
          .appendTo (toolbar);
 
-      const fullSizeButton = $("<button></button>")
+      this .fullSizeButton = $("<button></button>")
          .attr ("title", "View browser in full size.")
          .addClass ("fa-square")
-         .addClass (this .fullSize ? ["fa-solid", "selected"] : ["fa-regular"])
          .on ("click", () =>
          {
-            this .fullSize = !this .fullSize;
-
-            fullSizeButton
-               .removeClass (["fa-solid", "selected", "fa-regular"])
-               .addClass (this .fullSize ? ["fa-solid", "selected"] : ["fa-regular"]);
-
-            if (this .fullSize)
-            {
-               $(".playground x3d-canvas") .css ("height", "100%");
-               $(".playground .console") .hide ();
-               $(".playground .viewer-column2") .hide ();
-            }
-            else
-            {
-               $(".playground x3d-canvas") .css ("height", "");
-               $(".playground .console") .show ();
-               $(".playground .viewer-column2") .show ();
-            }
+            this .setFullSize (!this .localStorage .fullSize);
          })
          .appendTo (right);
+
+      this .setFullSize (this .localStorage .fullSize);
 
       $("<span></span>") .addClass ("dot") .appendTo (right);
 
@@ -376,6 +365,28 @@ class Playground
    {
       $(".language") .removeClass ("selected");
       $(`.language.${encoding}`) .addClass ("selected");
+   }
+
+   setFullSize (fullSize)
+   {
+      this .localStorage .fullSize = fullSize;
+
+      this .fullSizeButton
+         .removeClass (["fa-solid", "selected", "fa-regular"])
+         .addClass (fullSize ? ["fa-solid", "selected"] : ["fa-regular"]);
+
+      if (fullSize)
+      {
+         $(".playground x3d-canvas") .css ("height", "100%");
+         $(".playground .console") .hide ();
+         $(".playground .viewer-column2") .hide ();
+      }
+      else
+      {
+         $(".playground x3d-canvas") .css ("height", "");
+         $(".playground .console") .show ();
+         $(".playground .viewer-column2") .show ();
+      }
    }
 
    pixelated = false;
