@@ -3,7 +3,6 @@ $("table.examples a") .on ("click", function ()
    let
       div     = $("div.example"),
       header  = div .find (".header"),
-      toolbar = div .find (".toolbar"),
       canvas  = div .find ("x3d-canvas"),
       zip     = div .find (".zip"),
       source  = div .find (".source")
@@ -17,10 +16,9 @@ $("table.examples a") .on ("click", function ()
    {
       div     = $("<div></div>") .addClass ("example") .appendTo ("body");
       header  = $("<p></p>") .addClass ("header") .appendTo (div);
-      toolbar = $("<p></p>") .addClass ("toolbar") .appendTo (div);
       canvas  = $("<x3d-canvas></x3d-canvas>") .attr ("debug", true) .attr ("contentScale", "auto") .appendTo (div);
 
-      canvas .on ("initialized", () => updateToolbar (toolbar, canvas));
+      canvas .prop ("browser") .getContextMenu () .setUserMenu (() => updateUserMenu (canvas, canvas .prop ("browser")));
 
       $("<i></i>") .addClass (["fas", "fa-solid", "fa-circle-xmark", "fa-fw"]) .appendTo (div) .on ("click", function ()
       {
@@ -69,91 +67,102 @@ $("table.examples a") .on ("click", function ()
    return false;
 });
 
-function updateToolbar (toolbar, canvas)
+let pixelated = false;
+
+function updateUserMenu (canvas, browser)
 {
-   const browser = canvas .prop ("browser");
+   return {
+      "antialiased": {
+         name: "Antialiased",
+         type: "checkbox",
+         selected: browser .getBrowserOption ("Antialiased"),
+         events: {
+            click ()
+            {
+               canvas .attr ("antialiased", !browser .getBrowserOption ("Antialiased"));
+            },
+         },
+      },
+      "pixelated": {
+         name: "Pixelated",
+         type: "checkbox",
+         selected: pixelated,
+         events: {
+            click: () =>
+            {
+               pixelated = !pixelated;
 
-   toolbar .empty ();
-
-   const antialiased = $("<span></span>")
-      .text ("antialiased")
-      .attr ("title", "Toggle antialiasing.")
-      .addClass (browser .getBrowserOption ("Antialiased") ? "selected" : "")
-      .on ("click", () =>
-      {
-         const value = !browser .getBrowserOption ("Antialiased");
-
-         browser .setBrowserOption ("Antialiased", value);
-
-         antialiased .toggleClass ("selected");
-      })
-      .appendTo (toolbar);
-
-   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
-
-   const cs = browser .getBrowserOption ("ContentScale");
-
-   const contentScale = $("<span></span>")
-      .text (`content scale ${cs === -1 ? "auto" : cs .toFixed (1)}`)
-      .attr ("index", { "0.1": 0, "1": 1, "2": 2, "-1": 3 } [cs])
-      .attr ("title", "Toggle content scale between 0.1, 1.0, 2.0, auto.")
-      .on ("click", () =>
-      {
-         const
-            index = (parseInt (contentScale .attr ("index")) + 1) % 4,
-            value = [0.1, 1, 2, -1][index];
-
-         browser .setBrowserOption ("ContentScale", value);
-
-         contentScale
-            .attr ("index", index)
-            .text (`content scale ${value === -1 ? "auto" : value .toFixed (1)}`)
-      })
-      .appendTo (toolbar);
-
-   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
-
-   const pixelated = $("<span></span>")
-      .text ("pixelated")
-      .attr ("title", "Set CSS property image-rendering to pixelated.")
-      .addClass (canvas .css ("image-rendering") === "pixelated" ? "selected" : "")
-      .on ("click", () =>
-      {
-         canvas .css ("image-rendering", pixelated .hasClass ("selected") ? "unset" : "pixelated");
-
-         pixelated .toggleClass ("selected");
-      })
-      .appendTo (toolbar);
-
-   $("<span></span>") .addClass ("separator") .appendTo (toolbar);
-
-   const oit = $("<span></span>")
-      .text ("oit")
-      .attr ("title", "Toggle order independent transparency.")
-      .addClass (browser .getBrowserOption ("OrderIndependentTransparency") ? "selected" : "")
-      .on ("click", () =>
-      {
-         const value = !browser .getBrowserOption ("OrderIndependentTransparency");
-
-         browser .setBrowserOption ("OrderIndependentTransparency", value);
-
-         oit .toggleClass ("selected");
-      })
-      .appendTo (toolbar);
-
-   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
-
-   const log = $("<span></span>")
-      .text ("log")
-      .attr ("title", "Toggle logarithmic depth buffer.")
-      .addClass (browser .getBrowserOption ("LogarithmicDepthBuffer") ? "selected" : "")
-      .on ("click", () =>
-      {
-         const value = !browser .getBrowserOption ("LogarithmicDepthBuffer");
-
-         browser .setBrowserOption ("LogarithmicDepthBuffer", value);
-
-         log .toggleClass ("selected");
-      })
-      .appendTo (toolbar);
+               canvas .css ("image-rendering", pixelated ? "pixelated" : "unset");
+            },
+         },
+      },
+      "content-scale": {
+         name: "Content Scale",
+         items: {
+            radio1: {
+               name: "0.1",
+               type: "radio",
+               radio: "content-scale",
+               selected: browser .getBrowserOption ("ContentScale") === 0.1,
+               value: "0.1",
+               events: {
+                  click () { canvas .attr ("contentScale", "0.1"); },
+               },
+            },
+            radio2: {
+               name: "1",
+               type: "radio",
+               radio: "content-scale",
+               selected: browser .getBrowserOption ("ContentScale") === 1,
+               value: "1",
+               events: {
+                  click () { canvas .attr ("contentScale", "1"); },
+               },
+            },
+            radio3: {
+               name: "2",
+               type: "radio",
+               radio: "content-scale",
+               selected: browser .getBrowserOption ("ContentScale") === 2,
+               value: "2",
+               events: {
+                  click () { canvas .attr ("contentScale", "2"); },
+               },
+            },
+            radio4: {
+               name: "Auto",
+               type: "radio",
+               radio: "content-scale",
+               selected: browser .getBrowserOption ("ContentScale") === -1,
+               value: "auto",
+               events: {
+                  click () { canvas .attr ("contentScale", "auto"); },
+               },
+            },
+         },
+      },
+      "separator0": "--------",
+      "oit": {
+         name: "Order Independent Transparency",
+         type: "checkbox",
+         selected: browser .getBrowserOption ("OrderIndependentTransparency"),
+         events: {
+            click ()
+            {
+               canvas .attr ("orderIndependentTransparency", !browser .getBrowserOption ("OrderIndependentTransparency"));
+            },
+         },
+      },
+      "log": {
+         name: "Logarithmic Depth Buffer",
+         type: "checkbox",
+         selected: browser .getBrowserOption ("LogarithmicDepthBuffer"),
+         events: {
+            click ()
+            {
+               canvas .attr ("logarithmicDepthBuffer", !browser .getBrowserOption ("LogarithmicDepthBuffer"));
+            },
+         },
+      },
+   };
 }
