@@ -1,5 +1,5 @@
-/* X_ITE v10.5.7 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.7")];
+/* X_ITE v10.5.8 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.8")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1569,6 +1569,7 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
       // Events
 
       this ._displacers .addInterest ("set_displacers__", this);
+      this ._coord      .addInterest ("set_coord__",      this);
 
       this ._displacementsTexture       .addInterest ("set_displacementsTexture__",       this);
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
