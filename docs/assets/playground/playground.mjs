@@ -299,10 +299,39 @@ class Playground
          .css ("float", "right")
          .appendTo (toolbar);
 
+      const fullSizeButton = $("<button></button>")
+         .attr ("title", "View browser in full size.")
+         .addClass ("fa-square")
+         .addClass (this .fullSize ? ["fa-solid", "selected"] : ["fa-regular"])
+         .on ("click", () =>
+         {
+            this .fullSize = !this .fullSize;
+
+            fullSizeButton
+               .removeClass (["fa-solid", "selected", "fa-regular"])
+               .addClass (this .fullSize ? ["fa-solid", "selected"] : ["fa-regular"]);
+
+            if (this .fullSize)
+            {
+               $(".playground x3d-canvas") .css ("height", "100%");
+               $(".playground .console") .hide ();
+               $(".playground .viewer-column2") .hide ();
+            }
+            else
+            {
+               $(".playground x3d-canvas") .css ("height", "");
+               $(".playground .console") .show ();
+               $(".playground .viewer-column2") .show ();
+            }
+         })
+         .appendTo (right);
+
+      $("<span></span>") .addClass ("dot") .appendTo (right);
+
       $("<button></button>")
+         .attr ("title", "Convert to X3D XML Encoding.")
          .addClass (["language", "XML"])
          .addClass (browser .currentScene .encoding === "XML" ? "selected" : "")
-         .attr ("title", "Convert to X3D XML Encoding.")
          .text ("XML")
          .on ("click", () =>
          {
@@ -315,9 +344,9 @@ class Playground
       $("<span></span>") .addClass ("dot") .appendTo (right);
 
       $("<button></button>")
+         .attr ("title", "Convert to X3D VRML Encoding.")
          .addClass (["language", "VRML"])
          .addClass (browser .currentScene .encoding === "VRML" ? "selected" : "")
-         .attr ("title", "Convert to X3D VRML Encoding.")
          .text ("VRML")
          .on ("click", () =>
          {
@@ -330,9 +359,9 @@ class Playground
       $("<span></span>") .addClass ("dot") .appendTo (right);
 
       $("<button></button>")
+         .attr ("title", "Convert to X3D JSON Encoding.")
          .addClass (["language", "JSON"])
          .addClass (browser .currentScene .encoding === "JSON" ? "selected" : "")
-         .attr ("title", "Convert to X3D JSON Encoding.")
          .text ("JSON")
          .on ("click", () =>
          {
