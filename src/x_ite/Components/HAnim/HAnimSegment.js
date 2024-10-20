@@ -113,6 +113,7 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
       // Events
 
       this ._displacers .addInterest ("set_displacers__", this);
+      this ._coord      .addInterest ("set_coord__",      this);
 
       this ._displacementsTexture       .addInterest ("set_displacementsTexture__",       this);
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
