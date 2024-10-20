@@ -592,7 +592,7 @@ const playground = new Playground ();
       return function (... args)
       {
          const
-            text     = args .join ("") + "\n",
+            text     = args .join (" ") + "\n",
             element  = $("<span></span>") .addClass (classes) .text (text),
             console  = c ??= $(".console"),
             children = console .children ();

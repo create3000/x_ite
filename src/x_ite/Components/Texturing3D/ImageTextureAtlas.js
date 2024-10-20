@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
+         console .warn (`Error loading image '${decodeURI (this .URL .href)}':`, event .type);
 
       this .loadNext ();
    },

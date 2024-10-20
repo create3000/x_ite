@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading movie '${decodeURI (this .URL .href)}'`, event .type);
+         console .warn (`Error loading movie '${decodeURI (this .URL .href)}':`, event .type);
 
       this .loadNext ();
    },
