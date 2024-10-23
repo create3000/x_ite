@@ -70,11 +70,11 @@ Object .assign (Vector3 .prototype,
       copy .z = this .z;
       return copy;
    },
-   assign (vector)
+   assign ({ x, y, z })
    {
-      this .x = vector .x;
-      this .y = vector .y;
-      this .z = vector .z;
+      this .x = x;
+      this .y = y;
+      this .z = z;
       return this;
    },
    set (x = 0, y = 0, z = 0)
@@ -84,11 +84,11 @@ Object .assign (Vector3 .prototype,
       this .z = z;
       return this;
    },
-   equals (vector)
+   equals ({ x, y, z })
    {
-      return this .x === vector .x &&
-             this .y === vector .y &&
-             this .z === vector .z;
+      return this .x === x &&
+             this .y === y &&
+             this .z === z;
    },
    negate ()
    {

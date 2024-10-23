@@ -65,16 +65,16 @@ Object .assign (Complex .prototype,
       copy .imag = this .imag;
       return copy;
    },
-   assign (complex)
+   assign ({ real, imag })
    {
-      this .real = complex .real;
-      this .imag = complex .imag;
+      this .real = real;
+      this .imag = imag;
       return this;
    },
-   equals (complex)
+   equals ({ real, imag })
    {
-      return this .real === complex .real &&
-             this .imag === complex .imag;
+      return this .real === real &&
+             this .imag === imag;
    },
    set (real = 0, imag = 0)
    {

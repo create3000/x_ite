@@ -73,12 +73,12 @@ Object .assign (Vector4 .prototype,
       copy .w = this .w;
       return copy;
    },
-   assign (vector)
+   assign ({ x, y, z, w })
    {
-      this .x = vector .x;
-      this .y = vector .y;
-      this .z = vector .z;
-      this .w = vector .w;
+      this .x = x;
+      this .y = y;
+      this .z = z;
+      this .w = w;
       return this;
    },
    set (x = 0, y = 0, z = 0, w = 0)
@@ -89,12 +89,12 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   equals (vector)
+   equals ({ x, y, z, w })
    {
-      return this .x === vector .x &&
-             this .y === vector .y &&
-             this .z === vector .z &&
-             this .w === vector .w;
+      return this .x === x &&
+             this .y === y &&
+             this .z === z &&
+             this .w === w;
    },
    getReal (vector)
    {

@@ -67,10 +67,10 @@ Object .assign (Vector2 .prototype,
       copy .y = this .y;
       return copy;
    },
-   assign (vector)
+   assign ({ x, y })
    {
-      this .x = vector .x;
-      this .y = vector .y;
+      this .x = x;
+      this .y = y;
       return this;
    },
    set (x = 0, y = 0)

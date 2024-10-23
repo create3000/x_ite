@@ -75,12 +75,12 @@ Object .assign (Quaternion .prototype,
       copy .w = this .w;
       return copy;
    },
-   assign (quat)
+   assign ({ x, y, z, w })
    {
-      this .x = quat .x;
-      this .y = quat .y;
-      this .z = quat .z;
-      this .w = quat .w;
+      this .x = x;
+      this .y = y;
+      this .z = z;
+      this .w = w;
       return this;
    },
    set (x = 0, y = 0, z = 0, w = 1)
@@ -344,12 +344,12 @@ Object .assign (Quaternion .prototype,
    {
       return !this .w;
    },
-   equals (quat)
+   equals ({ x, y, z, w })
    {
-      return this .x === quat .x &&
-             this .y === quat .y &&
-             this .z === quat .z &&
-             this .w === quat .w;
+      return this .x === x &&
+             this .y === y &&
+             this .z === z &&
+             this .w === w;
    },
    negate ()
    {
