@@ -1509,7 +1509,7 @@ function eventsProcessed ()
    matrix_changed [12] = m [6];
    matrix_changed [13] = m [7];
 }
-            `];
+`];
 
             scriptNode .setup ();
             scene .addNamedNode (scene .getUniqueName ("TextureTransformAnimationScript"), scriptNode);
