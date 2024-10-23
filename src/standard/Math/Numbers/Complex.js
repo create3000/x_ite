@@ -65,16 +65,16 @@ Object .assign (Complex .prototype,
       copy .imag = this .imag;
       return copy;
    },
-   assign ({ real, imag })
+   assign (complex)
    {
-      this .real = real;
-      this .imag = imag;
+      this .real = complex .real;
+      this .imag = complex .imag;
       return this;
    },
-   equals ({ real, imag })
+   equals (complex)
    {
-      return this .real === real &&
-             this .imag === imag;
+      return this .real === complex .real &&
+             this .imag === complex .imag;
    },
    set (real = 0, imag = 0)
    {
@@ -107,16 +107,16 @@ Object .assign (Complex .prototype,
       this .imag /= -d;
       return this;
    },
-   add ({ real, imag })
+   add (value)
    {
-      this .real += real;
-      this .imag += imag;
+      this .real += value .real;
+      this .imag += value .imag;
       return this;
    },
-   subtract ({ real, imag })
+   subtract (value)
    {
-      this .real -= real;
-      this .imag -= imag;
+      this .real -= value .real;
+      this .imag -= value .imag;
       return this;
    },
    multiply (value)
@@ -239,10 +239,6 @@ Object .assign (Complex,
    Polar (magnitude, angle)
    {
       return Object .create (Complex .prototype) .setPolar (magnitude, angle);
-   },
-   multiply (lhs, rhs)
-   {
-      return lhs .copy () .multiply (rhs);
    },
 });
 
