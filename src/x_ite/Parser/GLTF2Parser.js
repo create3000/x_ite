@@ -3259,6 +3259,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          case X3DConstants .SFColor:
          {
+            const interpolatorNodes = [ ];
+
             switch ((keyValues .array .length / times .length) % 3)
             {
                case 0: // Color3 pointer
@@ -3281,7 +3283,21 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
             scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
 
-            return interpolatorNode;
+            interpolatorNodes .push (interpolatorNode);
+
+            if (field .getName () .match (/^(?:baseColor|emissiveColor)$/) && transparencies)
+            {
+               const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`TransparencyInterpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, `set_transparency`);
+
+               interpolatorNodes .push (interpolatorNode);
+            }
+
+            return interpolatorNodes;
          }
          case X3DConstants .SFFloat:
          {
