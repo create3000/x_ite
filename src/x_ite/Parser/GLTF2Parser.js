@@ -48,7 +48,6 @@
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
-import X3DNode      from "../Components/Core/X3DNode.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import URLs         from "../Browser/Networking/URLs.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
