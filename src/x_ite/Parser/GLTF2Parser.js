@@ -3172,6 +3172,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       switch (target .path)
       {
+         case "pointer":
+         {
+            const [node, field] = this .getAnimationPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
+
+            return this .createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval);
+         }
          case "translation":
          case "rotation":
          case "scale":
@@ -3220,12 +3226,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             }
 
             return interpolatorNodes;
-         }
-         case "pointer":
-         {
-            const [node, field] = this .getAnimationPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
-
-            return this .createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval);
          }
          default:
          {
