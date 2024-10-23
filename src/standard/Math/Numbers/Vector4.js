@@ -73,12 +73,12 @@ Object .assign (Vector4 .prototype,
       copy .w = this .w;
       return copy;
    },
-   assign ({ x, y, z, w })
+   assign (vector)
    {
-      this .x = x;
-      this .y = y;
-      this .z = z;
-      this .w = w;
+      this .x = vector .x;
+      this .y = vector .y;
+      this .z = vector .z;
+      this .w = vector .w;
       return this;
    },
    set (x = 0, y = 0, z = 0, w = 0)
@@ -89,12 +89,12 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   equals ({ x, y, z, w })
+   equals (vector)
    {
-      return this .x === x &&
-             this .y === y &&
-             this .z === z &&
-             this .w === w;
+      return this .x === vector .x &&
+             this .y === vector .y &&
+             this .z === vector .z &&
+             this .w === vector .w;
    },
    negate ()
    {
@@ -112,20 +112,20 @@ Object .assign (Vector4 .prototype,
       this .w = 1 / this .w;
       return this;
    },
-   add ({ x, y, z, w })
+   add (vector)
    {
-      this .x += x;
-      this .y += y;
-      this .z += z;
-      this .w += w;
+      this .x += vector .x;
+      this .y += vector .y;
+      this .z += vector .z;
+      this .w += vector .w;
       return this;
    },
-   subtract ({ x, y, z, w })
+   subtract (vector)
    {
-      this .x -= x;
-      this .y -= y;
-      this .z -= z;
-      this .w -= w;
+      this .x -= vector .x;
+      this .y -= vector .y;
+      this .z -= vector .z;
+      this .w -= vector .w;
       return this;
    },
    multiply (value)
@@ -136,12 +136,12 @@ Object .assign (Vector4 .prototype,
       this .w *= value;
       return this;
    },
-   multVec ({ x, y, z, w })
+   multVec (vector)
    {
-      this .x *= x;
-      this .y *= y;
-      this .z *= z;
-      this .w *= w;
+      this .x *= vector .x;
+      this .y *= vector .y;
+      this .z *= vector .z;
+      this .w *= vector .w;
       return this;
    },
    divide (value)
@@ -152,12 +152,12 @@ Object .assign (Vector4 .prototype,
       this .w /= value;
       return this;
    },
-   divVec ({ x, y, z, w })
+   divVec (vector)
    {
-      this .x /= x;
-      this .y /= y;
-      this .z /= z;
-      this .w /= w;
+      this .x /= vector .x;
+      this .y /= vector .y;
+      this .z /= vector .z;
+      this .w /= vector .w;
       return this;
    },
    normalize ()
@@ -174,12 +174,12 @@ Object .assign (Vector4 .prototype,
 
       return this;
    },
-   dot ({ x, y, z, w })
+   dot (vector)
    {
-      return this .x * x +
-             this .y * y +
-             this .z * z +
-             this .w * w;
+      return this .x * vector .x +
+             this .y * vector .y +
+             this .z * vector .z +
+             this .w * vector .w;
    },
    norm ()
    {
@@ -194,43 +194,41 @@ Object .assign (Vector4 .prototype,
    {
       return Math .hypot (this .x, this .y, this .z, this .w);
    },
-   distance ({ x, y, z, w })
+   distance (vector)
    {
-      return Math .hypot (this .x - x,
-                          this .y - y,
-                          this .z - z,
-                          this .w - w);
+      return Math .hypot (this .x - vector .x,
+                          this .y - vector .y,
+                          this .z - vector .z,
+                          this .w - vector .w);
    },
-   lerp ({ x: dX, y: dY, z: dZ, w: dW }, t)
+   lerp (destination, t)
    {
       const { x, y, z, w } = this;
 
-      this .x = x + t * (dX - x);
-      this .y = y + t * (dY - y);
-      this .z = z + t * (dZ - z);
-      this .w = w + t * (dW - w);
+      this .x = x + t * (destination .x - x);
+      this .y = y + t * (destination .y - y);
+      this .z = z + t * (destination .z - z);
+      this .w = w + t * (destination .w - w);
       return this;
    },
    abs ()
    {
-      const { x, y, z, w } = this;
-
-      this .x = Math .abs (x);
-      this .y = Math .abs (y);
-      this .z = Math .abs (z);
-      this .w = Math .abs (w);
+      this .x = Math .abs (this .x);
+      this .y = Math .abs (this .y);
+      this .z = Math .abs (this .z);
+      this .w = Math .abs (this .w);
       return this;
    },
    min (vector)
    {
       let { x, y, z, w } = this;
 
-      for (const { x: minX, y: minY, z: minZ, w: minW } of arguments)
+      for (const vector of arguments)
       {
-         x = Math .min (x, minX);
-         y = Math .min (y, minY);
-         z = Math .min (z, minZ);
-         w = Math .min (w, minW);
+         x = Math .min (x, vector .x);
+         y = Math .min (y, vector .y);
+         z = Math .min (z, vector .z);
+         w = Math .min (w, vector .w);
       }
 
       this .x = x;
@@ -243,12 +241,12 @@ Object .assign (Vector4 .prototype,
    {
       let { x, y, z, w } = this;
 
-      for (const { x: maxX, y: maxY, z: maxZ, w: maxW } of arguments)
+      for (const vector of arguments)
       {
-         x = Math .max (x, maxX);
-         y = Math .max (y, maxY);
-         z = Math .max (z, maxZ);
-         w = Math .max (w, maxW);
+         x = Math .max (x, vector .x);
+         y = Math .max (y, vector .y);
+         z = Math .max (z, vector .z);
+         w = Math .max (w, vector .w);
       }
 
       this .x = x;
@@ -257,12 +255,12 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   clamp  ({ x: minX, y: minY, z: minZ, w: minW }, { x: maxX, y: maxY, z: maxZ, w: maxW })
+   clamp (min, max)
    {
-      this .x = Algorithm .clamp (this .x, minX, maxX);
-      this .y = Algorithm .clamp (this .y, minY, maxY);
-      this .z = Algorithm .clamp (this .z, minZ, maxZ);
-      this .w = Algorithm .clamp (this .w, minW, maxW);
+      this .x = Algorithm .clamp (this .x, min .x, max .x);
+      this .y = Algorithm .clamp (this .y, min .y, max .y);
+      this .z = Algorithm .clamp (this .z, min .z, max .z);
+      this .w = Algorithm .clamp (this .w, min .w, max .w);
       return this;
    },
    toString ()

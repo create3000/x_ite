@@ -79,10 +79,10 @@ Object .assign (Vector2 .prototype,
       this .y = y;
       return this;
    },
-   equals ({ x, y })
+   equals (vector)
    {
-      return this .x === x &&
-             this .y === y;
+      return this .x === vector .x &&
+             this .y === vector .y;
    },
    negate ()
    {
@@ -96,16 +96,16 @@ Object .assign (Vector2 .prototype,
       this .y = 1 / this .y;
       return this;
    },
-   add ({ x, y })
+   add (vector)
    {
-      this .x += x;
-      this .y += y;
+      this .x += vector .x;
+      this .y += vector .y;
       return this;
    },
-   subtract ({ x, y })
+   subtract (vector)
    {
-      this .x -= x;
-      this .y -= y;
+      this .x -= vector .x;
+      this .y -= vector .y;
       return this;
    },
    multiply (value)
@@ -114,10 +114,10 @@ Object .assign (Vector2 .prototype,
       this .y *= value;
       return this;
    },
-   multVec ({ x, y })
+   multVec (vector)
    {
-      this .x *= x;
-      this .y *= y;
+      this .x *= vector .x;
+      this .y *= vector .y;
       return this;
    },
    divide (value)
@@ -126,10 +126,10 @@ Object .assign (Vector2 .prototype,
       this .y /= value;
       return this;
    },
-   divVec ({ x, y })
+   divVec (vector)
    {
-      this .x /= x;
-      this .y /= y;
+      this .x /= vector .x;
+      this .y /= vector .y;
       return this;
    },
    normalize ()
@@ -144,10 +144,10 @@ Object .assign (Vector2 .prototype,
 
       return this;
    },
-   dot ({ x, y })
+   dot (vector)
    {
-      return this .x * x +
-             this .y * y;
+      return this .x * vector .x +
+             this .y * vector .y;
    },
    norm ()
    {
@@ -160,35 +160,33 @@ Object .assign (Vector2 .prototype,
    {
       return Math .hypot (this .x, this .y);
    },
-   distance ({ x, y })
+   distance (vector)
    {
-      return Math .hypot (this .x - x,
-                          this .y - y);
+      return Math .hypot (this .x - vector .x,
+                          this .y - vector .y);
    },
-   lerp ({ x: dX, y: dY }, t)
+   lerp (destination, t)
    {
       const { x, y } = this;
 
-      this .x = x + t * (dX - x);
-      this .y = y + t * (dY - y);
+      this .x = x + t * (destination .x - x);
+      this .y = y + t * (destination .y - y);
       return this;
    },
    abs ()
    {
-      const { x, y } = this;
-
-      this .x = Math .abs (x);
-      this .y = Math .abs (y);
+      this .x = Math .abs (this .x);
+      this .y = Math .abs (this .y);
       return this;
    },
    min (vector)
    {
       let { x, y } = this;
 
-      for (const { x: minX, y: minY } of arguments)
+      for (const vector of arguments)
       {
-         x = Math .min (x, minX);
-         y = Math .min (y, minY);
+         x = Math .min (x, vector .x);
+         y = Math .min (y, vector .y);
       }
 
       this .x = x;
@@ -199,20 +197,20 @@ Object .assign (Vector2 .prototype,
    {
       let { x, y } = this;
 
-      for (const { x: maxX, y: maxY } of arguments)
+      for (const vector of arguments)
       {
-         x = Math .max (x, maxX);
-         y = Math .max (y, maxY);
+         x = Math .max (x, vector .x);
+         y = Math .max (y, vector .y);
       }
 
       this .x = x;
       this .y = y;
       return this;
    },
-   clamp ({ x: minX, y: minY }, { x: maxX, y: maxY })
+   clamp (min, max)
    {
-      this .x = Algorithm .clamp (this .x, minX, maxX);
-      this .y = Algorithm .clamp (this .y, minY, maxY);
+      this .x = Algorithm .clamp (this .x, min .x, max .x);
+      this .y = Algorithm .clamp (this .y, min .y, max .y);
       return this;
    },
    toString ()
