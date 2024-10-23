@@ -490,6 +490,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
       scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
 
+      light .pointers = [lightNode];
+
       return light .node = lightNode;
    },
    lightType (light)
@@ -1197,6 +1199,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_anisotropy .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsClearcoatObject (KHR_materials_clearcoat, materialNode)
@@ -1218,6 +1222,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._clearcoatNormalTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatNormalTexture);
 
       extension .setup ();
+
+      KHR_materials_clearcoat .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -1242,6 +1248,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_diffuse_transmission .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsDispersionObject (KHR_materials_dispersion, materialNode)
@@ -1254,6 +1262,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._dispersion = this .numberValue (KHR_materials_dispersion .dispersion, 0);
 
       extension .setup ();
+
+      KHR_materials_dispersion .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -1278,6 +1288,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_ior .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsIridescenceObject (KHR_materials_iridescence, materialNode)
@@ -1294,6 +1306,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._iridescenceThicknessTextureMapping = this .textureMapping (KHR_materials_iridescence .iridescenceThicknessTexture);
 
       extension .setup ();
+
+      KHR_materials_iridescence .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -1318,6 +1332,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_sheen .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsSpecularObject (KHR_materials_specular, materialNode)
@@ -1341,6 +1357,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_specular .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsTransmission (KHR_materials_transmission, materialNode)
@@ -1355,6 +1373,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._transmissionTextureMapping = this .textureMapping (KHR_materials_transmission .transmissionTexture);
 
       extension .setup ();
+
+      KHR_materials_transmission .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -1373,6 +1393,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          extension ._attenuationColor = attenuationColor;
 
       extension .setup ();
+
+      KHR_materials_volume .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
