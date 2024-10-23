@@ -1921,6 +1921,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
 
       node .childNode = node .humanoidNode ?? node .transformNode;
+      node .pointers  = [node .childNode];
 
       return node;
    },
