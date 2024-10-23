@@ -1488,17 +1488,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "matrix_changed", new Fields .SFMatrix4f ());
 
             scriptNode ._url = [/* js */ `ecmascript:
+let init = new SFMatrix3f ();
+
+init = init .scale (new SFVec2f (1, -1));
+init = init .translate (new SFVec2f (0, -1));
+
 function eventsProcessed (value)
 {
-   let matrix = new SFMatrix4f ();
+   let m = init .copy ();
 
-   matrix = matrix .scale (new SFVec3f (1, -1, 1));
-   matrix = matrix .translate (new SFVec3f (0, -1, 0));
-   matrix = matrix .translate (new SFVec3f (... translation, 0));
-   matrix = matrix .rotate (new SFRotation (0, 0, -1, rotation));
-   matrix = matrix .scale (new SFVec3f (... scale, 1));
+   m = m .translate (translation);
+   m = m .rotate (-rotation);
+   m = m .scale (scale);
 
-   matrix_changed = matrix;
+   matrix_changed [0]  = m [0];
+   matrix_changed [1]  = m [1];
+   matrix_changed [4]  = m [3];
+   matrix_changed [5]  = m [4];
+   matrix_changed [12] = m [6];
+   matrix_changed [13] = m [7];
 }
             `];
 
