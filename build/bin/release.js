@@ -72,6 +72,9 @@ function commit (version)
 
 function tags (version)
 {
+	if (!version .match (/^\d+\.\d+\.\d+$/))
+		return;
+
 	// systemSync (`git tag --delete ${version}`);
 	// systemSync (`git push --delete origin ${version}`);
 
@@ -79,29 +82,23 @@ function tags (version)
 	systemSync (`git push origin --tags`);
 }
 
-function update (release)
+function update (version)
 {
 	const
 		cwd  = process .cwd (),
 		dist = `${cwd}/dist`,
-		code = `${cwd}/../code/docs/x_ite/${release}`;
+		code = `${cwd}/../code`,
+		docs = `${cwd}/../code/docs/x_ite/${version}`;
 
-	console .log (`Uploading ${release}`);
+	console .log (`Uploading ${version}`);
 
-	systemSync (`rm -r '${code}'`);
-	systemSync (`cp -r '${dist}' '${code}'`);
+	systemSync (`rm -r '${docs}'`);
+	systemSync (`cp -r '${dist}' '${docs}'`);
 
-	if (release === "latest")
-		systemSync (`cp -r '${dist}' '${code}/dist'`); // legacy
-}
+	if (version === "latest")
+		systemSync (`cp -r '${dist}' '${docs}/dist'`); // legacy
 
-function upload (version)
-{
-	const
-		cwd  = process .cwd (),
-		code = `${cwd}/../code`;
-
-	process .chdir (code);
+	process .chdir (`${cwd}/../code`);
 
 	systemSync (`git add -A`);
 	systemSync (`git commit -am 'Published version ${version}'`);
@@ -110,8 +107,6 @@ function upload (version)
 	tags (version);
 
 	process .chdir (cwd);
-
-	systemSync (`npm publish`);
 }
 
 function other ()
@@ -182,9 +177,7 @@ function release ()
 	// tags
 
 	commit (version);
-
-	if (!version .endsWith ("a"))
-		tags (version);
+	tags (version);
 
 	// code
 
@@ -193,7 +186,7 @@ function release ()
 	if (!version .endsWith ("a"))
 		update ("latest");
 
-	upload (version);
+	systemSync (`npm publish`);
 
 	// switch back to development branch
 
@@ -213,13 +206,13 @@ function release ()
 
 function main ()
 {
-	bump ();
-	systemSync ("npm run dist");
-	zip ();
-
 	// https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
 	// Set post buffer to 250 MiB.
 	systemSync (`git config --global http.postBuffer 262144000`);
+
+	bump ();
+	systemSync ("npm run dist");
+	zip ();
 
 	release ();
 }
