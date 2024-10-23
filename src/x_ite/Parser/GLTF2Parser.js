@@ -3754,16 +3754,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       return string ?.replace (/_+/g, " ") .trim () ?? "";
    },
-   addPointerAlias (node, alias, field)
+   addPointerAlias (node, field, alias)
    {
       if (!this .pointerAliases .has (node))
          this .pointerAliases .set (node, new Map ());
 
-      this .pointerAliases .get (node) .set (alias, field);
+      this .pointerAliases .get (node) .set (field, alias);
    },
-   getPointerAlias (node, alias)
+   getPointerAlias (node, field)
    {
-      return this .pointerAliases .get (node) ?.get (alias) ?? alias;
+      return this .pointerAliases .get (node) ?.get (field) ?? field;
    },
 });
 
