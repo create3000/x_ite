@@ -94,6 +94,7 @@ function GLTF2Parser (scene)
    this .nodes                 = [ ];
    this .skins                 = [ ];
    this .joints                = new Set ();
+   this .pointerAliases        = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -999,6 +1000,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       appearanceNode .setup ();
 
+      material .pointers = [appearanceNode, materialNode];
+
       return material .appearanceNode = appearanceNode;
    },
    getTexCoordIndices (key, object, indices = new Set ())
@@ -1057,7 +1060,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode ._metallicRoughnessTexture        = this .textureInfo (pbrMetallicRoughness .metallicRoughnessTexture);
       materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
 
-      return pbrMetallicRoughness .materialNode = materialNode;
+      pbrMetallicRoughness .pointers = [materialNode];
+
+      return materialNode;
    },
    pbrSpecularGlossinessObject (pbrSpecularGlossiness)
    {
@@ -1092,7 +1097,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode ._specularGlossinessTexture        = this .textureInfo (pbrSpecularGlossiness .specularGlossinessTexture);
       materialNode ._specularGlossinessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
 
-      return pbrSpecularGlossiness .materialNode = materialNode;
+      pbrSpecularGlossiness .pointers = [materialNode];
+
+      return materialNode;
    },
    occlusionTextureInfo (occlusionTexture, materialNode)
    {
@@ -1384,11 +1391,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       unlitMaterialNode ._normalTexture          = materialNode ._normalTexture;
       unlitMaterialNode ._transparency           = materialNode ._transparency;
 
+      unlitMaterialNode .addPointerAlias ("baseColor", "emissiveColor");
       unlitMaterialNode .setup ();
 
       materialNode .dispose ();
 
-      return KHR_materials_unlit .materialNode = unlitMaterialNode;
+      return unlitMaterialNode;
    },
    textureTransformObject (KHR_texture_transform, texCoord)
    {
@@ -3344,16 +3352,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       const
          path = pointer .split ("/") .filter (p => p),
-         name = path .pop () .replace (/(?:Factor$)/, "");
+         last = path .pop () .replace (/(?:Factor$)/, "");
 
       let glTF = this .input;
 
       for (const property of path)
          glTF = glTF ?.[property];
 
-      const node = Object .values (glTF ?? { }) .find (value => value instanceof X3DNode);
+      const
+         nodes = glTF ?.pointers,
+         node  = nodes ?.find (node => $.try (() => node .getField (this .getPointerAlias (node, last)))),
+         field = $.try (() => node .getField (this .getPointerAlias (node, last)));
 
-      return [node, $.try (() => node ?.getField (name))];
+      return [node, field];
    },
    createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
    {
@@ -3742,6 +3753,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    description (string)
    {
       return string ?.replace (/_+/g, " ") .trim () ?? "";
+   },
+   addPointerAlias (node, alias, field)
+   {
+      if (!this .pointerAliases .has (node))
+         this .pointerAliases .set (node, new Map ());
+
+      this .pointerAliases .get (node) .set (alias, field);
+   },
+   getPointerAlias (node, alias)
+   {
+      return this .pointerAliases .get (node) ?.get (alias) ?? alias;
    },
 });
 
