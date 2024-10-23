@@ -3290,7 +3290,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   var colors         = keyValues .array .filter ((_, i) => i % 4 < 3);
                   var transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
 
-                  transparencies = transparencies .every (value => value === 1)
+                  transparencies = transparencies .every (value => value >= 1)
                      ? undefined
                      : transparencies .map (value => 1 - value);
 
