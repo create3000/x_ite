@@ -1489,18 +1489,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             scriptNode ._url = [/* js */ `ecmascript:
 
-let init = new SFMatrix3f ();
+let
+   flip   = new SFMatrix3f (),
+   matrix = new SFMatrix3f ();
 
-init = init .scale (new SFVec2f (1, -1));
-init = init .translate (new SFVec2f (0, -1));
+flip = flip .scale (new SFVec2f (1, -1));
+flip = flip .translate (new SFVec2f (0, -1));
 
 function eventsProcessed ()
 {
-   let m = init .copy ();
+   matrix .setTransform (translation, -rotation, scale);
 
-   m = m .translate (translation);
-   m = m .rotate (-rotation);
-   m = m .scale (scale);
+   let m = flip .multLeft (matrix);
 
    matrix_changed [0]  = m [0];
    matrix_changed [1]  = m [1];
