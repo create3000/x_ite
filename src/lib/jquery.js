@@ -22,6 +22,10 @@ Object .assign ($,
    {
       return string [0] .toLowerCase () + string .slice (1);
    },
+   toUpperCaseFirst (string)
+   {
+      return string [0] .toUpperCase () + string .slice (1);
+   },
    try (callback, logError = false)
    {
       try

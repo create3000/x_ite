@@ -48,6 +48,8 @@
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
+import X3DNode      from "../Components/Core/X3DNode.js";
+import X3DConstants from "../Base/X3DConstants.js";
 import URLs         from "../Browser/Networking/URLs.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
@@ -1055,7 +1057,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode ._metallicRoughnessTexture        = this .textureInfo (pbrMetallicRoughness .metallicRoughnessTexture);
       materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
 
-      return materialNode;
+      return pbrMetallicRoughness .materialNode = materialNode;
    },
    pbrSpecularGlossinessObject (pbrSpecularGlossiness)
    {
@@ -3171,13 +3173,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       switch (target .path)
       {
          case "translation":
+         case "scale":
          {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
+            const interpolatorNode = this .createNamedInterpolator ("PositionInterpolator", 3, interpolation, times, keyValues .array, cycleInterval);
 
-            scene .addNamedNode (scene .getUniqueName ("TranslationInterpolator"), interpolatorNode);
+            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (target .path)}Interpolator`), interpolatorNode);
 
             scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, "set_translation");
+            scene .addRoute (interpolatorNode, "value_changed", node, `set_${target .path}`);
 
             return interpolatorNode;
          }
@@ -3189,17 +3192,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
             scene .addRoute (interpolatorNode, "value_changed", node, "set_rotation");
-
-            return interpolatorNode;
-         }
-         case "scale":
-         {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName ("ScaleInterpolator"), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, "set_scale");
 
             return interpolatorNode;
          }
@@ -3246,19 +3238,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case "pointer":
          {
-            // const
-            //    pointer = target .extensions ?.KHR_animation_pointer ?.pointer ?? "",
-            //    path    = pointer .split ("/") .filter (p => p)
-            //    name    = path .pop ();
-
-            // let glTF = this .input;
-
-            // for (const property of path)
-            //    glTF = glTF [property]
-
-            // console .log (glTF)
-
-            return [ ];
+            return this .createAnimationPointerInterpolator (timeSensorNode, target, interpolation, times, keyValues, cycleInterval);
          }
          default:
          {
@@ -3266,7 +3246,109 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   createPositionInterpolator (interpolation, times, keyValues, cycleInterval)
+   createAnimationPointerInterpolator (timeSensorNode, target, interpolation, times, keyValues, cycleInterval)
+   {
+      const [node, field] = this .getAnimationPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
+
+      if (!(node && field))
+         return [ ];
+
+      const scene = this .getScene ();
+
+      switch (field .getType ())
+      {
+         case X3DConstants .SFColor:
+         {
+            switch ((keyValues .array .length / times .length) % 3)
+            {
+               case 0: // Color3 pointer
+               {
+                  var colors = keyValues .array;
+                  break;
+               }
+               default: // Color4 pointer
+               {
+                  var colors         = keyValues .array .filter ((_, i) => i % 4 < 3);
+                  var transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
+                  break;
+               }
+            }
+
+            const interpolatorNode = this .createNamedInterpolator ("ColorInterpolator", 3, interpolation, times, colors, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+
+            return interpolatorNode;
+         }
+         case X3DConstants .SFFloat:
+         {
+            const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, keyValues .array, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+
+            return interpolatorNode;
+         }
+         case X3DConstants .SFRotation:
+         {
+            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .array, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+
+            return interpolatorNode;
+         }
+         case X3DConstants .SFVec2f:
+         {
+            const interpolatorNode = this .createNamedInterpolator ("PositionInterpolator2D", 2, interpolation, times, keyValues .array, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+
+            return interpolatorNode;
+         }
+         case X3DConstants .SFVec3f:
+         {
+            const interpolatorNode = this .createNamedInterpolator ("PositionInterpolator", 3, interpolation, times, keyValues .array, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+
+            return interpolatorNode;
+         }
+         default:
+         {
+            return [ ];
+         }
+      }
+   },
+   getAnimationPointer (pointer = "")
+   {
+      const
+         path = pointer .split ("/") .filter (p => p),
+         name = path .pop () .replace (/(?:Factor$)/, "");
+
+      let glTF = this .input;
+
+      for (const property of path)
+         glTF = glTF ?.[property];
+
+      const node = Object .values (glTF ?? { }) .find (value => value instanceof X3DNode);
+
+      return [node, $.try (() => node ?.getField (name))];
+   },
+   createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
    {
       const scene = this .getScene ();
 
@@ -3274,26 +3356,33 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
+            const
+               interpolatorNode = scene .createNode (typeName, false),
+               key              = [ ],
+               keyValue         = [ ];
 
             // Key
 
-            interpolatorNode ._key .push (times [0] / cycleInterval);
+            key .push (times [0] / cycleInterval);
 
             for (let i = 1, length = times .length; i < length; ++ i)
-               interpolatorNode ._key .push (times [i] / cycleInterval, times [i] / cycleInterval);
+               key .push (times [i] / cycleInterval, times [i] / cycleInterval);
 
             // KeyValue
 
-            interpolatorNode ._keyValue .push (new Vector3 (keyValues [0], keyValues [1], keyValues [2]));
+            for (let c = 0; c < components; ++ c)
+               keyValue .push (keyValues [c]);
 
             for (let i = 0, length = keyValues .length - 3; i < length; i += 3)
             {
-               interpolatorNode ._keyValue .push (new Vector3 (keyValues [i + 0], keyValues [i + 1], keyValues [i + 2]),
-                                                  new Vector3 (keyValues [i + 3], keyValues [i + 4], keyValues [i + 5]));
+               for (let c = 0, lc2 = components * 2; c < lc2; ++ c)
+                  keyValue .push (keyValues [i + c]);
             }
 
             // Finish
+
+            interpolatorNode ._key      = key;
+            interpolatorNode ._keyValue = keyValue;
 
             interpolatorNode .setup ();
 
@@ -3302,7 +3391,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
+            const interpolatorNode = scene .createNode (typeName, false);
 
             interpolatorNode ._key      = times .map (t => t / cycleInterval);
             interpolatorNode ._keyValue = keyValues;
@@ -3314,14 +3403,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          case "CUBICSPLINE":
          {
             const
-               interpolatorNode = scene .createNode ("PositionInterpolator", false),
-               vectors          = [ ];
+               interpolatorNode = scene .createNode (typeName, false),
+               key              = [ ],
+               keyValue         = [ ],
+               vectors          = [ ],
+               Vector           = [undefined, Vector2, Vector2, Vector3] [components];
 
             for (let i = 0, length = keyValues .length; i < length; i += 3)
             {
-               vectors .push (new Vector3 (keyValues [i + 0],
-                                           keyValues [i + 1],
-                                           keyValues [i + 2]));
+               vectors .push (new Vector (... keyValues .subarray (i, i + components)));
             }
 
             const
@@ -3330,9 +3420,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             for (const t of samples)
             {
-               interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (this .cubicSplineVector (t, times, vectors));
+               key      .push (t / cycleInterval);
+               keyValue .push (... this .cubicSplineVector (t, times, vectors));
             }
+
+            // Finish
+
+            interpolatorNode ._key      = key;
+            interpolatorNode ._keyValue = components === 1 ? keyValue .filter ((_, i) => i % 2 < 1) : keyValue;
 
             interpolatorNode .setup ();
 
