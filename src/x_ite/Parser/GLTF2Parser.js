@@ -279,8 +279,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       const
-         browser = this .getBrowser (),
-         scene   = this .getScene ();
+         browser    = this .getBrowser (),
+         scene      = this .getScene (),
+         components = [ ];
 
       for (const extension of extensions)
       {
@@ -290,11 +291,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             case "EXT_lights_image_based":
             {
-               const CubeMapTexturing = browser .getComponent ("CubeMapTexturing", 3);
-
-               if (!scene .hasComponent (CubeMapTexturing))
-                  scene .addComponent (CubeMapTexturing);
-
+               components .push (browser .getComponent ("CubeMapTexturing", 3));
                break;
             }
             // https://github.com/KhronosGroup/glTF/pull/1956
@@ -316,28 +313,22 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_transmission":
             case "KHR_materials_volume":
             {
-               const X_ITE = browser .getComponent ("X_ITE", 1);
-
-               if (!scene .hasComponent (X_ITE))
-                  scene .addComponent (X_ITE);
-
+               components .push (browser .getComponent ("X_ITE", 1));
                break;
             }
             case "KHR_texture_transform":
             {
-               const Texturing3D = browser .getComponent ("Texturing3D", 2);
-
-               if (!scene .hasComponent (Texturing3D))
-                  scene .addComponent (Texturing3D);
-
-               const Scripting = browser .getComponent ("Scripting", 2);
-
-               if (!scene .hasComponent (Scripting))
-                  scene .addComponent (Scripting);
-
+               components .push (browser .getComponent ("Texturing3D", 2));
+               components .push (browser .getComponent ("Scripting",   2));
                break;
             }
          }
+      }
+
+      for (const component of components)
+      {
+         if (!scene .hasComponent (component))
+            scene .addComponent (component);
       }
    },
    extensionsObject (extensions)
