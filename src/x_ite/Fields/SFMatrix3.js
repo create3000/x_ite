@@ -114,6 +114,10 @@ function SFMatrix3Template (TypeName, double)
             args .length = 0;
          };
       })(),
+      rotate (rotation)
+      {
+         return new (this .constructor) (this .getValue () .copy () .rotate (rotation));
+      },
    });
 }
 

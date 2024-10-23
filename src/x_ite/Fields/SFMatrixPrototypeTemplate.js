@@ -173,6 +173,18 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       {
          return new (vector .constructor) (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
       },
+      translate (translation)
+      {
+         return new (this .constructor) (this .getValue () .copy () .translate (translation .getValue ()));
+      },
+      rotate (rotation)
+      {
+         return new (this .constructor) (this .getValue () .copy () .rotate (rotation .getValue ()));
+      },
+      scale (scale)
+      {
+         return new (this .constructor) (this .getValue () .copy () .scale (scale .getValue ()));
+      },
       toStream (generator)
       {
          const

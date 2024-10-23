@@ -77,23 +77,24 @@ function GLTF2Parser (scene)
 
    // Globals
 
-   this .extensions            = new Set ();
-   this .envLights             = [ ];
-   this .lights                = [ ];
-   this .materialVariants      = [ ];
-   this .materialVariantNodes  = [ ];
-   this .buffers               = [ ];
-   this .bufferViews           = [ ];
-   this .accessors             = [ ];
-   this .samplers              = [ ];
-   this .materials             = [ ];
-   this .textureTransformNodes = [ ];
-   this .meshes                = [ ];
-   this .cameras               = [ ];
-   this .nodes                 = [ ];
-   this .skins                 = [ ];
-   this .joints                = new Set ();
-   this .pointerAliases        = new Map ();
+   this .extensions              = new Set ();
+   this .envLights               = [ ];
+   this .lights                  = [ ];
+   this .materialVariants        = [ ];
+   this .materialVariantNodes    = [ ];
+   this .buffers                 = [ ];
+   this .bufferViews             = [ ];
+   this .accessors               = [ ];
+   this .samplers                = [ ];
+   this .materials               = [ ];
+   this .textureTransformNodes   = [ ];
+   this .meshes                  = [ ];
+   this .cameras                 = [ ];
+   this .nodes                   = [ ];
+   this .skins                   = [ ];
+   this .joints                  = new Set ();
+   this .animationPointerScripts = [ ];
+   this .pointerAliases          = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -289,10 +290,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             case "EXT_lights_image_based":
             {
-               const component = browser .getComponent ("CubeMapTexturing", 3);
+               const CubeMapTexturing = browser .getComponent ("CubeMapTexturing", 3);
 
-               if (!scene .hasComponent (component))
-                  scene .addComponent (component);
+               if (!scene .hasComponent (CubeMapTexturing))
+                  scene .addComponent (CubeMapTexturing);
 
                break;
             }
@@ -315,19 +316,24 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_transmission":
             case "KHR_materials_volume":
             {
-               const component = browser .getComponent ("X_ITE", 1);
+               const X_ITE = browser .getComponent ("X_ITE", 1);
 
-               if (!scene .hasComponent (component))
-                  scene .addComponent (component);
+               if (!scene .hasComponent (X_ITE))
+                  scene .addComponent (X_ITE);
 
                break;
             }
             case "KHR_texture_transform":
             {
-               const component = browser .getComponent ("Texturing3D", 2);
+               const Texturing3D = browser .getComponent ("Texturing3D", 2);
 
-               if (!scene .hasComponent (component))
-                  scene .addComponent (component);
+               if (!scene .hasComponent (Texturing3D))
+                  scene .addComponent (Texturing3D);
+
+               const Scripting = browser .getComponent ("Scripting", 2);
+
+               if (!scene .hasComponent (Scripting))
+                  scene .addComponent (Scripting);
 
                break;
             }
@@ -1412,8 +1418,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       unlitMaterialNode ._normalTexture          = materialNode ._normalTexture;
       unlitMaterialNode ._transparency           = materialNode ._transparency;
 
-      unlitMaterialNode .addPointerAlias ("baseColor", "emissiveColor");
       unlitMaterialNode .setup ();
+      this .addPointerAlias (unlitMaterialNode, "baseColor", "emissiveColor");
 
       materialNode .dispose ();
 
@@ -1469,6 +1475,45 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .textureTransformNodes .push (textureTransformNode);
       this .texCoordMappings .set (mapping, texCoord);
       this .texCoordOfNode .set (textureTransformNode, texCoord);
+
+      Object .defineProperty (KHR_texture_transform, "pointers",
+      {
+         get: () =>
+         {
+            const scriptNode = scene .createNode ("Script", false);
+
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",    new Fields .SFVec2f ());
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",       new Fields .SFFloat ());
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",          new Fields .SFVec2f (1, 1));
+            scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "matrix_changed", new Fields .SFMatrix4f ());
+
+            scriptNode ._url = [/* js */ `ecmascript:
+function eventsProcessed (value)
+{
+   let matrix = new SFMatrix4f ();
+
+   matrix = matrix .scale (new SFVec3f (1, -1, 1));
+   matrix = matrix .translate (new SFVec3f (0, -1, 0));
+   matrix = matrix .translate (new SFVec3f (... translation, 0));
+   matrix = matrix .rotate (new SFRotation (0, 0, -1, rotation));
+   matrix = matrix .scale (new SFVec3f (... scale, 1));
+
+   matrix_changed = matrix;
+}
+            `];
+
+            scriptNode .setup ();
+            scene .addNamedNode (scene .getUniqueName ("TextureTransformAnimationScript"), scriptNode);
+            scene .addRoute (scriptNode, "matrix_changed", textureTransformNode, "set_matrix");
+            this .addPointerAlias (scriptNode, "offset", "translation");
+            this .animationPointerScripts .push (scriptNode);
+
+            Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
+
+            return [scriptNode];
+         },
+         configurable: true,
+      });
 
       return mapping;
    },
@@ -2356,10 +2401,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       timeSensorNode ._description = this .description (animation .name) || `Animation ${id + 1}`;
       groupNode ._visible = false;
-      groupNode ._children .push (timeSensorNode, ... channelNodes);
+      groupNode ._children .push (timeSensorNode, ... channelNodes, ... this .animationPointerScripts);
 
       timeSensorNode .setup ();
       groupNode .setup ();
+
+      this .animationPointerScripts .length = 0;
 
       animation .node = groupNode;
    },
