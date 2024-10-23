@@ -1092,7 +1092,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode ._specularGlossinessTexture        = this .textureInfo (pbrSpecularGlossiness .specularGlossinessTexture);
       materialNode ._specularGlossinessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
 
-      return materialNode;
+      return pbrSpecularGlossiness .materialNode = materialNode;
    },
    occlusionTextureInfo (occlusionTexture, materialNode)
    {
@@ -1388,7 +1388,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       materialNode .dispose ();
 
-      return unlitMaterialNode;
+      return KHR_materials_unlit .materialNode = unlitMaterialNode;
    },
    textureTransformObject (KHR_texture_transform, texCoord)
    {
