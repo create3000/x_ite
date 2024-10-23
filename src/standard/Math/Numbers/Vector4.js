@@ -96,13 +96,6 @@ Object .assign (Vector4 .prototype,
              this .z === z &&
              this .w === w;
    },
-   getReal (vector)
-   {
-      vector .x = this .x / this .w;
-      vector .y = this .y / this .w;
-      vector .z = this .z / this .w;
-      return vector;
-   },
    negate ()
    {
       this .x = -this .x;
@@ -119,20 +112,20 @@ Object .assign (Vector4 .prototype,
       this .w = 1 / this .w;
       return this;
    },
-   add (vector)
+   add ({ x, y, z, w })
    {
-      this .x += vector .x;
-      this .y += vector .y;
-      this .z += vector .z;
-      this .w += vector .w;
+      this .x += x;
+      this .y += y;
+      this .z += z;
+      this .w += w;
       return this;
    },
-   subtract (vector)
+   subtract ({ x, y, z, w })
    {
-      this .x -= vector .x;
-      this .y -= vector .y;
-      this .z -= vector .z;
-      this .w -= vector .w;
+      this .x -= x;
+      this .y -= y;
+      this .z -= z;
+      this .w -= w;
       return this;
    },
    multiply (value)
@@ -143,12 +136,12 @@ Object .assign (Vector4 .prototype,
       this .w *= value;
       return this;
    },
-   multVec (vector)
+   multVec ({ x, y, z, w })
    {
-      this .x *= vector .x;
-      this .y *= vector .y;
-      this .z *= vector .z;
-      this .w *= vector .w;
+      this .x *= x;
+      this .y *= y;
+      this .z *= z;
+      this .w *= w;
       return this;
    },
    divide (value)
@@ -159,12 +152,12 @@ Object .assign (Vector4 .prototype,
       this .w /= value;
       return this;
    },
-   divVec (vector)
+   divVec ({ x, y, z, w })
    {
-      this .x /= vector .x;
-      this .y /= vector .y;
-      this .z /= vector .z;
-      this .w /= vector .w;
+      this .x /= x;
+      this .y /= y;
+      this .z /= z;
+      this .w /= w;
       return this;
    },
    normalize ()
@@ -181,12 +174,12 @@ Object .assign (Vector4 .prototype,
 
       return this;
    },
-   dot (vector)
+   dot ({ x, y, z, w })
    {
-      return this .x * vector .x +
-             this .y * vector .y +
-             this .z * vector .z +
-             this .w * vector .w;
+      return this .x * x +
+             this .y * y +
+             this .z * z +
+             this .w * w;
    },
    norm ()
    {
@@ -201,12 +194,12 @@ Object .assign (Vector4 .prototype,
    {
       return Math .hypot (this .x, this .y, this .z, this .w);
    },
-   distance (vector)
+   distance ({ x, y, z, w })
    {
-      return Math .hypot (this .x - vector .x,
-                          this .y - vector .y,
-                          this .z - vector .z,
-                          this .w - vector .w);
+      return Math .hypot (this .x - x,
+                          this .y - y,
+                          this .z - z,
+                          this .w - w);
    },
    lerp (destination, t)
    {
@@ -230,12 +223,12 @@ Object .assign (Vector4 .prototype,
    {
       let { x, y, z, w } = this;
 
-      for (const vector of arguments)
+      for (const { x: minX, y: minY, z: minZ, w: minW } of arguments)
       {
-         x = Math .min (x, vector .x);
-         y = Math .min (y, vector .y);
-         z = Math .min (z, vector .z);
-         w = Math .min (w, vector .w);
+         x = Math .min (x, minX);
+         y = Math .min (y, minY);
+         z = Math .min (z, minZ);
+         w = Math .min (w, minW);
       }
 
       this .x = x;
@@ -248,12 +241,12 @@ Object .assign (Vector4 .prototype,
    {
       let { x, y, z, w } = this;
 
-      for (const vector of arguments)
+      for (const { x: maxX, y: maxY, z: maxZ, w: maxW } of arguments)
       {
-         x = Math .max (x, vector .x);
-         y = Math .max (y, vector .y);
-         z = Math .max (z, vector .z);
-         w = Math .max (w, vector .w);
+         x = Math .max (x, maxX);
+         y = Math .max (y, maxY);
+         z = Math .max (z, maxZ);
+         w = Math .max (w, maxW);
       }
 
       this .x = x;
@@ -262,12 +255,12 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   clamp (min, max)
+   clamp  ({ x: minX, y: minY, z: minZ, w: minW }, { x: maxX, y: maxY, z: maxZ, w: maxW })
    {
-      this .x = Algorithm .clamp (this .x, min .x, max .x);
-      this .y = Algorithm .clamp (this .y, min .y, max .y);
-      this .z = Algorithm .clamp (this .z, min .z, max .z);
-      this .w = Algorithm .clamp (this .w, min .w, max .w);
+      this .x = Algorithm .clamp (this .x, minX, maxX);
+      this .y = Algorithm .clamp (this .y, minY, maxY);
+      this .z = Algorithm .clamp (this .z, minZ, maxZ);
+      this .w = Algorithm .clamp (this .w, minW, maxW);
    },
    toString ()
    {

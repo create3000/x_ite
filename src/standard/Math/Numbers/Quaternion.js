@@ -366,20 +366,20 @@ Object .assign (Quaternion .prototype,
       this .z = -this .z;
       return this;
    },
-   add (quat)
+   add ({ x, y, z, w })
    {
-      this .x += quat .x;
-      this .y += quat .y;
-      this .z += quat .z;
-      this .w += quat .w;
+      this .x += x;
+      this .y += y;
+      this .z += z;
+      this .w += w;
       return this;
    },
-   subtract (quat)
+   subtract ({ x, y, z, w })
    {
-      this .x -= quat .x;
-      this .y -= quat .y;
-      this .z -= quat .z;
-      this .w -= quat .w;
+      this .x -= x;
+      this .y -= y;
+      this .z -= z;
+      this .w -= w;
       return this;
    },
    multiply (value)

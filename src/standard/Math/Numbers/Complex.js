@@ -107,16 +107,16 @@ Object .assign (Complex .prototype,
       this .imag /= -d;
       return this;
    },
-   add (value)
+   add ({ real, imag })
    {
-      this .real += value .real;
-      this .imag += value .imag;
+      this .real += real;
+      this .imag += imag;
       return this;
    },
-   subtract (value)
+   subtract ({ real, imag })
    {
-      this .real -= value .real;
-      this .imag -= value .imag;
+      this .real -= real;
+      this .imag -= imag;
       return this;
    },
    multiply (value)
