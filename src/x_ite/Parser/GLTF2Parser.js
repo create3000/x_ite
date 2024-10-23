@@ -1488,12 +1488,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "matrix_changed", new Fields .SFMatrix4f ());
 
             scriptNode ._url = [/* js */ `ecmascript:
+
 let init = new SFMatrix3f ();
 
 init = init .scale (new SFVec2f (1, -1));
 init = init .translate (new SFVec2f (0, -1));
 
-function eventsProcessed (value)
+function eventsProcessed ()
 {
    let m = init .copy ();
 
