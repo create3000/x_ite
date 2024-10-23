@@ -946,11 +946,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const texCoordIndices = this .getTexCoordIndices ("", material);
 
-      this .texCoordIndex         = Array .from (texCoordIndices) .reduce ((p, c) => Math .max (p, c), -1);
-      this .textureTransformNodes = [ ];
-      this .texCoordMappings      = new Map ();
-      this .texCoordOfNode        = new Map ();
-      material .texCoordMappings  = this .texCoordMappings;
+      this .texCoordIndex           = Array .from (texCoordIndices) .reduce ((p, c) => Math .max (p, c), -1);
+      this .textureTransformNodes   = [ ];
+      this .texCoordMappings        = new Map ();
+      this .texCoordOfNode          = new Map ();
+      this .texCoordExtensionOfNode = new Map ();
+      material .texCoordMappings    = this .texCoordMappings;
 
       const
          scene          = this .getScene (),
@@ -1458,7 +1459,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
 
       if (existing)
+      {
+         Object .defineProperty (KHR_texture_transform, "pointers",
+         {
+            get: () =>
+            {
+               return this .texCoordExtensionOfNode .get (existing);
+            },
+            configurable: true,
+         });
+
          return existing ._mapping .getValue ();
+      }
 
       // Create new TextureTransformMatrix3D.
 
@@ -1475,6 +1487,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .textureTransformNodes .push (textureTransformNode);
       this .texCoordMappings .set (mapping, texCoord);
       this .texCoordOfNode .set (textureTransformNode, texCoord);
+      this .texCoordExtensionOfNode .set (textureTransformNode, KHR_texture_transform);
 
       Object .defineProperty (KHR_texture_transform, "pointers",
       {
