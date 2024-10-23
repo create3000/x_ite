@@ -3243,7 +3243,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   interpolatorNodes .push (coordinateInterpolatorNode);
 
                   scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
-                  scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
+                  scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
                }
 
                const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
@@ -3253,7 +3253,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   interpolatorNodes .push (normalInterpolatorNode);
 
                   scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
-                  scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "set_vector");
+                  scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "vector");
                }
             }
 
@@ -3303,7 +3303,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
 
             scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
 
             interpolatorNodes .push (interpolatorNode);
 
@@ -3314,7 +3314,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                scene .addNamedNode (scene .getUniqueName (`TransparencyInterpolator`), interpolatorNode);
 
                scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-               scene .addRoute (interpolatorNode, "value_changed", node, `set_transparency`);
+               scene .addRoute (interpolatorNode, "value_changed", node, `transparency`);
 
                interpolatorNodes .push (interpolatorNode);
             }
@@ -3328,7 +3328,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
 
             scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
 
             return interpolatorNode;
          }
@@ -3339,7 +3339,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
 
             scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
 
             return interpolatorNode;
          }
@@ -3350,7 +3350,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
 
             scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
 
             return interpolatorNode;
          }
@@ -3361,7 +3361,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
 
             scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, `set_${field .getName ()}`);
+            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
 
             return interpolatorNode;
          }
