@@ -90,6 +90,10 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       {
          return new (this .constructor) (this .getValue () .copy () .add (vector .getValue ()));
       },
+      clamp (low, high)
+      {
+         return new (this .constructor) (this .getValue () .copy () .clamp (low .getValue (), high .getValue ()));
+      },
       distance (vector)
       {
          return this .getValue () .distance (vector .getValue ());

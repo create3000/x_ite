@@ -165,18 +165,20 @@ Object .assign (Vector2 .prototype,
       return Math .hypot (this .x - x,
                           this .y - y);
    },
-   lerp (destination, t)
+   lerp ({ x: dX, y: dY }, t)
    {
       const { x, y } = this;
 
-      this .x = x + t * (destination .x - x);
-      this .y = y + t * (destination .y - y);
+      this .x = x + t * (dX - x);
+      this .y = y + t * (dY - y);
       return this;
    },
    abs ()
    {
-      this .x = Math .abs (this .x);
-      this .y = Math .abs (this .y);
+      const { x, y } = this;
+
+      this .x = Math .abs (x);
+      this .y = Math .abs (y);
       return this;
    },
    min (vector)
@@ -207,10 +209,11 @@ Object .assign (Vector2 .prototype,
       this .y = y;
       return this;
    },
-   clamp ({ minX, minY }, { maxX, maxY })
+   clamp ({ x: minX, y: minY }, { x: maxX, y: maxY })
    {
       this .x = Algorithm .clamp (this .x, minX, maxX);
       this .y = Algorithm .clamp (this .y, minY, maxY);
+      return this;
    },
    toString ()
    {

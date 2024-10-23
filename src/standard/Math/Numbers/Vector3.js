@@ -193,13 +193,13 @@ Object .assign (Vector3 .prototype,
                           this .y - y,
                           this .z - z);
    },
-   lerp (destination, t)
+   lerp ({ x: dX, y: dY, z: dZ }, t)
    {
       const { x, y, z } = this;
 
-      this .x = x + t * (destination .x - x);
-      this .y = y + t * (destination .y - y);
-      this .z = z + t * (destination .z - z);
+      this .x = x + t * (dX - x);
+      this .y = y + t * (dY - y);
+      this .z = z + t * (dZ - z);
       return this;
    },
    slerp: (() =>
@@ -213,9 +213,11 @@ Object .assign (Vector3 .prototype,
    })(),
    abs ()
    {
-      this .x = Math .abs (this .x);
-      this .y = Math .abs (this .y);
-      this .z = Math .abs (this .z);
+      const { x, y, z } = this;
+
+      this .x = Math .abs (x);
+      this .y = Math .abs (y);
+      this .z = Math .abs (z);
       return this;
    },
    min (vector)
@@ -250,11 +252,12 @@ Object .assign (Vector3 .prototype,
       this .z = z;
       return this;
    },
-   clamp ({ minX, minY, minZ }, { maxX, maxY, maxZ })
+   clamp ({ x: minX, y: minY, z: minZ }, { x: maxX, y: maxY, z: maxZ })
    {
       this .x = Algorithm .clamp (this .x, minX, maxX);
       this .y = Algorithm .clamp (this .y, minY, maxY);
       this .z = Algorithm .clamp (this .z, minZ, maxZ);
+      return this;
    },
    toString ()
    {

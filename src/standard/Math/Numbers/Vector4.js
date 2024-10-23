@@ -201,22 +201,24 @@ Object .assign (Vector4 .prototype,
                           this .z - z,
                           this .w - w);
    },
-   lerp (destination, t)
+   lerp ({ x: dX, y: dY, z: dZ, w: dW }, t)
    {
       const { x, y, z, w } = this;
 
-      this .x = x + t * (destination .x - x);
-      this .y = y + t * (destination .y - y);
-      this .z = z + t * (destination .z - z);
-      this .w = w + t * (destination .w - w);
+      this .x = x + t * (dX - x);
+      this .y = y + t * (dY - y);
+      this .z = z + t * (dZ - z);
+      this .w = w + t * (dW - w);
       return this;
    },
    abs ()
    {
-      this .x = Math .abs (this .x);
-      this .y = Math .abs (this .y);
-      this .z = Math .abs (this .z);
-      this .w = Math .abs (this .w);
+      const { x, y, z, w } = this;
+
+      this .x = Math .abs (x);
+      this .y = Math .abs (y);
+      this .z = Math .abs (z);
+      this .w = Math .abs (w);
       return this;
    },
    min (vector)
@@ -261,6 +263,7 @@ Object .assign (Vector4 .prototype,
       this .y = Algorithm .clamp (this .y, minY, maxY);
       this .z = Algorithm .clamp (this .z, minZ, maxZ);
       this .w = Algorithm .clamp (this .w, minW, maxW);
+      return this;
    },
    toString ()
    {
