@@ -194,7 +194,7 @@ function release ()
 	systemSync (`git merge main`);
 	systemSync (`git push origin`);
 
-	// purge camo image cache from banners.
+	// Purge camo image cache for SVG banners.
 
 	systemSync (`npm run purge-camo`);
 
