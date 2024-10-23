@@ -1809,6 +1809,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
       viewpointNode ._position    = Vector3 .Zero;
 
+      camera .pointers = [viewpointNode];
+
       return camera .node = viewpointNode;
    },
    cameraType (camera)
