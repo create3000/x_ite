@@ -3382,12 +3382,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       for (const property of path)
          glTF = glTF ?.[property];
 
-      const
-         nodes = glTF ?.pointers,
-         node  = nodes ?.find (node => $.try (() => node .getField (this .getPointerAlias (node, last)))),
-         field = $.try (() => node .getField (this .getPointerAlias (node, last)));
-
-      return [node, field];
+      return glTF ?.pointers
+         ?.map (node => [node, $.try (() => node ?.getField (this .getPointerAlias (node, last)))])
+         ?.find (([node, field]) => field)
+         ?? [ ];
    },
    createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
    {
