@@ -57,8 +57,8 @@ x3d-canvas {
 }
 
 #options {
-   -webkit-user-select: none; /* Safari */
    -ms-user-select: none; /* IE 10 and IE 11 */
+   -webkit-user-select: none; /* Safari */
    user-select: none;
    position: absolute;
    right: 5px;
@@ -72,6 +72,9 @@ x3d-canvas {
 
 #options b {
    display: block;
+   -ms-user-select: auto; /* IE 10 and IE 11 */
+   -webkit-user-select: auto; /* Safari */
+   user-select: auto;
 }
 
 #options button {
