@@ -73,7 +73,7 @@ Object .assign (Vector2 .prototype,
       this .y = vector .y;
       return this;
    },
-   set (x, y)
+   set (x = 0, y = 0)
    {
       this .x = x;
       this .y = y;

@@ -83,7 +83,7 @@ Object .assign (Quaternion .prototype,
       this .w = quat .w;
       return this;
    },
-   set (x, y, z, w)
+   set (x = 0, y = 0, z = 0, w = 1)
    {
       this .x = x;
       this .y = y;

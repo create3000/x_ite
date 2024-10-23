@@ -84,7 +84,7 @@ Object .assign (Color3 .prototype,
       this [_b] = color [_b];
       return this;
    },
-   set (r, g, b)
+   set (r = 0, g = 0, b = 0)
    {
       this [_r] = Math .max (r, 0);
       this [_g] = Math .max (g, 0);

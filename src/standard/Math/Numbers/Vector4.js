@@ -81,7 +81,7 @@ Object .assign (Vector4 .prototype,
       this .w = vector .w;
       return this;
    },
-   set (x, y, z, w)
+   set (x = 0, y = 0, z = 0, w = 0)
    {
       this .x = x;
       this .y = y;

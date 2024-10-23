@@ -77,7 +77,7 @@ Object .assign (Vector3 .prototype,
       this .z = vector .z;
       return this;
    },
-   set (x, y, z)
+   set (x = 0, y = 0, z = 0)
    {
       this .x = x;
       this .y = y;

@@ -76,7 +76,7 @@ Object .assign (Complex .prototype,
       return this .real === complex .real &&
              this .imag === complex .imag;
    },
-   set (real, imag)
+   set (real = 0, imag = 0)
    {
       this .real = real;
       this .imag = imag;
