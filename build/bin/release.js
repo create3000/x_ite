@@ -88,7 +88,7 @@ function update (version)
 		cwd  = process .cwd (),
 		dist = `${cwd}/dist`,
 		code = `${cwd}/../code`,
-		docs = `${cwd}/../code/docs/x_ite/${version}`;
+		docs = `${code}/docs/x_ite/${version}`;
 
 	console .log (`Uploading ${version}`);
 
@@ -98,7 +98,7 @@ function update (version)
 	if (version === "latest")
 		systemSync (`cp -r '${dist}' '${docs}/dist'`); // legacy
 
-	process .chdir (`${cwd}/../code`);
+	process .chdir (code);
 
 	systemSync (`git add -A`);
 	systemSync (`git commit -am 'Published version ${version}'`);
@@ -174,10 +174,11 @@ function release ()
 		docs (version);
 	}
 
-	// tags
+	// publish
 
 	commit (version);
 	tags (version);
+	systemSync (`npm publish`);
 
 	// code
 
@@ -185,8 +186,6 @@ function release ()
 
 	if (!version .endsWith ("a"))
 		update ("latest");
-
-	systemSync (`npm publish`);
 
 	// switch back to development branch
 
