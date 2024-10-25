@@ -107,7 +107,7 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
    // Direction of refracted light.
    vec3 refractionVector = refract (-v, normalize (n), 1.0 / ior);
 
-   // Compute rotation-independant scaling of the model matrix.
+   // Compute rotation-independent scaling of the model matrix.
    vec3 modelScale;
 
    modelScale .x = length (modelMatrix [0] .xyz);
