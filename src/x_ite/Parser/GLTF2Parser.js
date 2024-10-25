@@ -3852,14 +3852,15 @@ function eventsProcessed ()
    },
    addPointerAlias (node, field, alias)
    {
-      if (!this .pointerAliases .has (node))
-         this .pointerAliases .set (node, new Map ());
+      const key = `${node .getTypeName ()}.${field}`;
 
-      this .pointerAliases .get (node) .set (field, alias);
+      this .pointerAliases .set (key, alias);
    },
    getPointerAlias (node, field)
    {
-      return this .pointerAliases .get (node) ?.get (field) ?? field;
+      const key = `${node .getTypeName ()}.${field}`;
+
+      return this .pointerAliases .get (key) ?? field;
    },
 });
 
