@@ -1521,8 +1521,10 @@ function eventsProcessed ()
 `];
 
             scriptNode .setup ();
+
             scene .addNamedNode (scene .getUniqueName ("TextureTransformAnimationScript"), scriptNode);
             scene .addRoute (scriptNode, "matrix_changed", textureTransformNode, "set_matrix");
+
             this .addPointerAlias (scriptNode, "offset", "translation");
             this .animationPointerScripts .push (scriptNode);
 
