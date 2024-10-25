@@ -440,6 +440,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       lightNode .setup ();
 
+      light .pointers = [lightNode];
+
       return light .node = lightNode;
    },
    khrLightsPunctualObject (KHR_lights_punctual)
@@ -521,6 +523,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
       lightNode ._attenuation = new Vector3 (0, 0, 1);
 
+      this .addPointerAlias (lightNode, "range",          "radius");
+      this .addPointerAlias (lightNode, "outerConeAngle", "cutOffAngle");
+      this .addPointerAlias (lightNode, "innerConeAngle", "beamWidth");
+
       return lightNode;
    },
    pointLight (light)
@@ -531,6 +537,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       lightNode ._radius      = this .numberValue (light .range, 0) || -1;
       lightNode ._attenuation = new Vector3 (0, 0, 1);
+
+      this .addPointerAlias (lightNode, "range", "radius");
 
       return lightNode;
    },
@@ -1933,6 +1941,9 @@ function eventsProcessed ()
 
       viewpointNode .setup ();
 
+      this .addPointerAlias (viewpointNode, "znear", "nearDistance");
+      this .addPointerAlias (viewpointNode, "zfar",  "farDistance");
+
       return viewpointNode;
    },
    perspectiveCamera (camera)
@@ -1945,7 +1956,7 @@ function eventsProcessed ()
          viewpointNode = scene .createNode ("Viewpoint", false);
 
       if (typeof camera .yfov === "number")
-         viewpointNode ._fieldOfView = camera .yfov
+         viewpointNode ._fieldOfView = camera .yfov;
 
       if (typeof camera .znear === "number")
          viewpointNode ._nearDistance = camera .znear;
@@ -1954,6 +1965,10 @@ function eventsProcessed ()
          viewpointNode ._farDistance = camera .zfar;
 
       viewpointNode .setup ();
+
+      this .addPointerAlias (viewpointNode, "yfov",  "fieldOfView");
+      this .addPointerAlias (viewpointNode, "znear", "nearDistance");
+      this .addPointerAlias (viewpointNode, "zfar",  "farDistance");
 
       return viewpointNode;
    },
