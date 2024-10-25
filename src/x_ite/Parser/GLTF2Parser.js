@@ -1509,7 +1509,7 @@ function eventsProcessed ()
 {
    matrix .setTransform (translation, -rotation, scale);
 
-   let m = flip .multLeft (matrix);
+   const m = flip .multLeft (matrix);
 
    matrix_changed [0]  = m [0];
    matrix_changed [1]  = m [1];
