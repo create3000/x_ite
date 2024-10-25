@@ -1501,12 +1501,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             scriptNode ._url = [/* js */ `ecmascript:
 
-let
-   flip   = new SFMatrix3f (),
+const
+   flip   = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
    matrix = new SFMatrix3f ();
-
-flip = flip .scale (new SFVec2f (1, -1));
-flip = flip .translate (new SFVec2f (0, -1));
 
 function eventsProcessed ()
 {
