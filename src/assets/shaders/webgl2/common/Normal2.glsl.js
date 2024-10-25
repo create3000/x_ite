@@ -72,24 +72,26 @@ getNormalInfo (const in float normalScale)
    #if defined (X3D_NORMAL_TEXTURE)
       #if __VERSION__ == 100
          #if defined (X3D_NORMAL_TEXTURE_2D)
-            info .ntex = texture2D (x3d_NormalTexture .texture2D, UV .st) .rgb;
+            vec3 ntex = texture2D (x3d_NormalTexture .texture2D, UV .st) .rgb;
          #elif defined (X3D_NORMAL_TEXTURE_CUBE)
-            info .ntex = textureCube (x3d_NormalTexture .textureCube, UV) .rgb;
+            vec3 ntex = textureCube (x3d_NormalTexture .textureCube, UV) .rgb;
          #endif
       #else
          #if defined (X3D_NORMAL_TEXTURE_2D)
-            info .ntex = texture (x3d_NormalTexture .texture2D, UV .st) .rgb;
+            vec3 ntex = texture (x3d_NormalTexture .texture2D, UV .st) .rgb;
          #elif defined (X3D_NORMAL_TEXTURE_3D)
-            info .ntex = texture (x3d_NormalTexture .texture3D, UV) .rgb;
+            vec3 ntex = texture (x3d_NormalTexture .texture3D, UV) .rgb;
          #elif defined (X3D_NORMAL_TEXTURE_CUBE)
-            info .ntex = texture (x3d_NormalTexture .textureCube, UV) .rgb;
+            vec3 ntex = texture (x3d_NormalTexture .textureCube, UV) .rgb;
          #endif
       #endif
 
-      info .ntex  = info .ntex * 2.0 - vec3 (1.0);
-      info .ntex *= vec3 (vec2 (normalScale), 1.0);
-      info .ntex  = normalize (info .ntex);
-      info .n     = normalize (mat3 (t, b, ng) * info .ntex);
+      ntex  = ntex * 2.0 - vec3 (1.0);
+      ntex *= vec3 (vec2 (normalScale), 1.0);
+      ntex  = normalize (ntex);
+
+      info .ntex = ntex;
+      info .n    = normalize (mat3 (t, b, ng) * ntex);
    #else
       info .n = ng;
    #endif
