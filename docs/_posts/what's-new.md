@@ -17,7 +17,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Improved rendering of thick lines.
 * [StaticGroup](/x_ite/components/grouping/staticgroup/) is now doing extensive optimizations.
 * [HAnimSegment](/x_ite/components/hanim/hanimsegment/) now handles displacers.
-* Implemented glTF extension [KHR_animation_pointer](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_animation_pointer/README.md).
+* glTF Parser: Implemented glTF extension [KHR_animation_pointer](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_animation_pointer/README.md).
 
 ## X_ITE v10.4 Series
 
