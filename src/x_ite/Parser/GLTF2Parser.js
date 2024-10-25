@@ -3448,8 +3448,8 @@ function eventsProcessed ()
    getAnimationPointer (pointer = "")
    {
       const
-         path = pointer .split ("/") .filter (p => p),
-         last = path .pop () .replace (/(?:Factor$)/, "");
+         path  = pointer .split ("/") .filter (p => p),
+         field = path .pop () .replace (/(?:Factor$)/, "");
 
       let glTF = this .input;
 
@@ -3457,7 +3457,7 @@ function eventsProcessed ()
          glTF = glTF ?.[property];
 
       return glTF ?.pointers
-         ?.map (node => [node, $.try (() => node ?.getField (this .getPointerAlias (node, last) ?? last))])
+         ?.map (node => [node, $.try (() => node ?.getField (this .getPointerAlias (node, field) ?? field))])
          ?.find (([node, field]) => field)
          ?? [ ];
    },
