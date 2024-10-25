@@ -3457,7 +3457,7 @@ function eventsProcessed ()
          glTF = glTF ?.[property];
 
       return glTF ?.pointers
-         ?.map (node => [node, $.try (() => node ?.getField (this .getPointerAlias (node, last)))])
+         ?.map (node => [node, $.try (() => node ?.getField (this .getPointerAlias (node, last) ?? last))])
          ?.find (([node, field]) => field)
          ?? [ ];
    },
@@ -3859,7 +3859,7 @@ function eventsProcessed ()
    {
       const key = `${node .getTypeName ()}.${field}`;
 
-      return this .pointerAliases .get (key) ?? field;
+      return this .pointerAliases .get (key);
    },
 });
 
