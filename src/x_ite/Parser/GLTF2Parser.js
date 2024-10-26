@@ -2467,7 +2467,7 @@ function eventsProcessed ()
       for (const scriptNode of this .animationPointerScripts)
       {
          const index = channels .findLastIndex (node => node .getFields ()
-            .some (field => [... field .getOutputRoutes ()]
+            .some (field => Array .from (field .getOutputRoutes ())
             .some (route => route .getDestinationNode () === scriptNode)));
 
          channels .splice (index + 1, 0, scriptNode);
