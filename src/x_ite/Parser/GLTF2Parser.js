@@ -1902,8 +1902,6 @@ function eventsProcessed ()
       viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
       viewpointNode ._position    = Vector3 .Zero;
 
-      camera .pointers = [viewpointNode];
-
       return camera .node = viewpointNode;
    },
    cameraType (camera)
@@ -1950,6 +1948,38 @@ function eventsProcessed ()
       this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
       this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
 
+      Object .defineProperty (camera, "pointers",
+      {
+         get: () =>
+         {
+            const scriptNode = scene .createNode ("Script", false);
+
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "xmag",          new Fields .SFFloat (1));
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "ymag",          new Fields .SFFloat (1));
+            scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .MFFloat ());
+
+            scriptNode ._url = [/* js */ `ecmascript:
+
+function eventsProcessed ()
+{
+   value_changed = new MFFloat (-xmag, -ymag, xmag, ymag);
+}
+`];
+
+            scriptNode .setup ();
+
+            scene .addNamedNode (scene .getUniqueName ("CombineFieldOfViewScript"), scriptNode);
+            scene .addRoute (scriptNode, "value_changed", viewpointNode, "set_fieldOfView");
+
+            this .animationScripts .push (scriptNode);
+
+            Object .defineProperty (camera, "pointers", { value: [viewpointNode, scriptNode] });
+
+            return [viewpointNode, scriptNode];
+         },
+         configurable: true,
+      });
+
       return viewpointNode;
    },
    perspectiveCamera (camera)
@@ -1975,6 +2005,8 @@ function eventsProcessed ()
       this .addAnimationPointerAlias (viewpointNode, "yfov",  "fieldOfView");
       this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
       this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
+
+      camera .pointers = [viewpointNode];
 
       return viewpointNode;
    },
