@@ -3619,7 +3619,7 @@ function eventsProcessed ()
                key      = [ ],
                keyValue = [ ],
                vectors  = [ ],
-               Vector   = [undefined, Vector2, Vector2, Vector3] [components];
+               Vector   = [Vector2, Vector2, Vector3] [components - 1];
 
             for (let i = 0, length = keyValues .length; i < length; i += components)
             {
