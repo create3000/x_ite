@@ -319,7 +319,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_texture_transform":
             {
                components .push (browser .getComponent ("Texturing3D", 2));
-               components .push (browser .getComponent ("Scripting",   2));
+               components .push (browser .getComponent ("Scripting",   2)); // KHR_animation_pointer
                break;
             }
          }
