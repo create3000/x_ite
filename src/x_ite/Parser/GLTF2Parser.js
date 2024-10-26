@@ -3405,7 +3405,7 @@ function eventsProcessed ()
                {
                   const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
 
-                  scene .addNamedNode (scene .getUniqueName (`TransparencyInterpolator`), interpolatorNode);
+                  scene .addNamedNode (scene .getUniqueName ("TransparencyInterpolator"), interpolatorNode);
 
                   scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
                   scene .addRoute (interpolatorNode, "value_changed", node, "transparency");
@@ -3465,7 +3465,7 @@ function eventsProcessed ()
                {
                   const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
 
-                  scene .addNamedNode (scene .getUniqueName (`TransparencyInterpolator`), interpolatorNode);
+                  scene .addNamedNode (scene .getUniqueName ("AlphaInterpolator"), interpolatorNode);
 
                   scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
                   scene .addRoute (interpolatorNode, "value_changed", scriptNode, "alpha");
