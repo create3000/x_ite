@@ -3401,6 +3401,7 @@ function eventsProcessed ()
 
                interpolatorNodes .push (interpolatorNode);
 
+               // These are currently the only two affected fields, which are SFColor but pointer is Color4.
                if (field .getName () .match (/^(?:baseColor|emissiveColor)$/) && transparencies)
                {
                   const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
