@@ -3583,12 +3583,14 @@ function eventsProcessed ()
 
             // KeyValue
 
+            const components2 = components * 2;
+
             for (let c = 0; c < components; ++ c)
                keyValue .push (keyValues [c]);
 
-            for (let i = 0, length = keyValues .length - 3; i < length; i += 3)
+            for (let i = 0, length = keyValues .length - components; i < length; i += components)
             {
-               for (let c = 0, lc2 = components * 2; c < lc2; ++ c)
+               for (let c = 0; c < components2; ++ c)
                   keyValue .push (keyValues [i + c]);
             }
 
@@ -3619,7 +3621,7 @@ function eventsProcessed ()
                vectors  = [ ],
                Vector   = [undefined, Vector2, Vector2, Vector3] [components];
 
-            for (let i = 0, length = keyValues .length; i < length; i += 3)
+            for (let i = 0, length = keyValues .length; i < length; i += components)
             {
                vectors .push (new Vector (... keyValues .subarray (i, i + components)));
             }
