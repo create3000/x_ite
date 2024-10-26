@@ -3506,29 +3506,21 @@ function eventsProcessed ()
    },
    createNamedSequencer (typeName, times, keyValues, cycleInterval)
    {
-      const
-         scene            = this .getScene (),
-         interpolatorNode = scene .createNode (typeName, false);
-
-      interpolatorNode ._key      = times .map (t => t / cycleInterval);
-      interpolatorNode ._keyValue = keyValues;
-
-      interpolatorNode .setup ();
-
-      return interpolatorNode;
+      return this .createNamedInterpolator (typeName, 1, "LINEAR", times, keyValues, cycleInterval);
    },
    createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
    {
-      const scene = this .getScene ();
+      const
+         scene            = this .getScene (),
+         interpolatorNode = scene .createNode (typeName, false);
 
       switch (interpolation)
       {
          case "STEP":
          {
             const
-               interpolatorNode = scene .createNode (typeName, false),
-               key              = [ ],
-               keyValue         = [ ];
+               key      = [ ],
+               keyValue = [ ];
 
             // Key
 
@@ -3560,8 +3552,6 @@ function eventsProcessed ()
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             interpolatorNode ._key      = times .map (t => t / cycleInterval);
             interpolatorNode ._keyValue = keyValues;
 
@@ -3572,11 +3562,10 @@ function eventsProcessed ()
          case "CUBICSPLINE":
          {
             const
-               interpolatorNode = scene .createNode (typeName, false),
-               key              = [ ],
-               keyValue         = [ ],
-               vectors          = [ ],
-               Vector           = [undefined, Vector2, Vector2, Vector3] [components];
+               key      = [ ],
+               keyValue = [ ],
+               vectors  = [ ],
+               Vector   = [undefined, Vector2, Vector2, Vector3] [components];
 
             for (let i = 0, length = keyValues .length; i < length; i += 3)
             {
@@ -3606,14 +3595,14 @@ function eventsProcessed ()
    },
    createOrientationInterpolator (interpolation, times, keyValues, cycleInterval)
    {
-      const scene = this .getScene ();
+      const
+         scene            = this .getScene (),
+         interpolatorNode = scene .createNode ("OrientationInterpolator", false);
 
       switch (interpolation)
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
-
             // Key
 
             interpolatorNode ._key .push (times [0] / cycleInterval);
@@ -3649,8 +3638,6 @@ function eventsProcessed ()
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
-
             interpolatorNode ._key = times .map (t => t / cycleInterval);
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
@@ -3667,9 +3654,7 @@ function eventsProcessed ()
          }
          case "CUBICSPLINE":
          {
-            const
-               interpolatorNode = scene .createNode ("OrientationInterpolator", false),
-               quaternions      = [ ];
+            const quaternions = [ ];
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
             {
@@ -3699,19 +3684,19 @@ function eventsProcessed ()
    },
    createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key)
    {
-      const
-         scene    = this .getScene (),
-         accessor = accessors [key];
+      const accessor = accessors [key];
 
       if (!accessor)
          return null;
+
+      const
+         scene            = this .getScene (),
+         interpolatorNode = scene .createNode (typeName, false);
 
       switch (interpolation)
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             // Key
 
             interpolatorNode ._key .push (times [0] / cycleInterval);
@@ -3748,8 +3733,6 @@ function eventsProcessed ()
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             // Key
 
             interpolatorNode ._key = times .map (t => t / cycleInterval);
@@ -3772,8 +3755,6 @@ function eventsProcessed ()
          }
          case "CUBICSPLINE":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             // Key
 
             const
