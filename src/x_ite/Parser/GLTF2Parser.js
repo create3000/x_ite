@@ -1501,10 +1501,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             const scriptNode = scene .createNode ("Script", false);
 
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",    new Fields .SFVec2f ());
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",       new Fields .SFFloat ());
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",          new Fields .SFVec2f (1, 1));
-            scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "matrix_changed", new Fields .SFMatrix4f ());
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f ());
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat ());
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (1, 1));
+            scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFMatrix4f ());
 
             scriptNode ._url = [/* js */ `ecmascript:
 
@@ -1518,19 +1518,19 @@ function eventsProcessed ()
 
    const m = flip .multLeft (matrix);
 
-   matrix_changed [0]  = m [0];
-   matrix_changed [1]  = m [1];
-   matrix_changed [4]  = m [3];
-   matrix_changed [5]  = m [4];
-   matrix_changed [12] = m [6];
-   matrix_changed [13] = m [7];
+   value_changed [0]  = m [0];
+   value_changed [1]  = m [1];
+   value_changed [4]  = m [3];
+   value_changed [5]  = m [4];
+   value_changed [12] = m [6];
+   value_changed [13] = m [7];
 }
 `];
 
             scriptNode .setup ();
 
             scene .addNamedNode (scene .getUniqueName ("CombineTextureMatrixScript"), scriptNode);
-            scene .addRoute (scriptNode, "matrix_changed", textureTransformNode, "set_matrix");
+            scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
 
             this .addAnimationPointerAlias (scriptNode, "offset", "translation");
             this .animationPointerScripts .push (scriptNode);
