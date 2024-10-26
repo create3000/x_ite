@@ -93,7 +93,7 @@ function GLTF2Parser (scene)
    this .nodes                   = [ ];
    this .skins                   = [ ];
    this .joints                  = new Set ();
-   this .animationPointerScripts = [ ];
+   this .animationScripts = [ ];
    this .pointerAliases          = new Map ();
 }
 
@@ -1533,7 +1533,7 @@ function eventsProcessed ()
             scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
 
             this .addAnimationPointerAlias (scriptNode, "offset", "translation");
-            this .animationPointerScripts .push (scriptNode);
+            this .animationScripts .push (scriptNode);
 
             Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
 
@@ -2468,7 +2468,7 @@ function eventsProcessed ()
 
       // Insert Script nodes after last interpolator.
 
-      for (const scriptNode of this .animationPointerScripts)
+      for (const scriptNode of this .animationScripts)
       {
          const index = channels .findLastIndex (node => node .getFields ()
             .some (field => Array .from (field .getOutputRoutes ())
@@ -2477,7 +2477,7 @@ function eventsProcessed ()
          channels .splice (index + 1, 0, scriptNode);
       }
 
-      this .animationPointerScripts .length = 0;
+      this .animationScripts .length = 0;
 
       return channels;
    },
