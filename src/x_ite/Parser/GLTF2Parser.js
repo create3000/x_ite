@@ -3432,8 +3432,8 @@ function eventsProcessed ()
 
                const scriptNode = scene .createNode ("Script", false);
 
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "color",         new Fields .SFColor ());
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "alpha" ,        new Fields .SFFloat ());
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "color",         new Fields .SFColor (1, 1, 1));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "alpha" ,        new Fields .SFFloat (1));
                scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFColorRGBA ());
 
                scriptNode ._url = [/* js */ `ecmascript:
