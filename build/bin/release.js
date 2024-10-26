@@ -47,9 +47,9 @@ function docs (version)
 {
 	const size = Math .floor (parseInt (sh (`brotli -6 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000);
 
-	if (size < 270)
+	if (size < 280)
 		var color = "green";
-	else if (size < 290)
+	else if (size < 300)
 		var color = "cyan";
 	else
 		var color = "blue";
