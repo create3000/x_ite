@@ -3460,7 +3460,7 @@ function eventsProcessed ()
 
                interpolatorNodes .push (interpolatorNode);
 
-               // TransparencyInterpolator
+               // AlphaInterpolator
 
                if (transparencies)
                {
