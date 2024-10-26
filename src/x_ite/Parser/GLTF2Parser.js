@@ -523,9 +523,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
       lightNode ._attenuation = new Vector3 (0, 0, 1);
 
-      this .addPointerAlias (lightNode, "range",          "radius");
-      this .addPointerAlias (lightNode, "outerConeAngle", "cutOffAngle");
-      this .addPointerAlias (lightNode, "innerConeAngle", "beamWidth");
+      this .addAnimationPointerAlias (lightNode, "range",          "radius");
+      this .addAnimationPointerAlias (lightNode, "outerConeAngle", "cutOffAngle");
+      this .addAnimationPointerAlias (lightNode, "innerConeAngle", "beamWidth");
 
       return lightNode;
    },
@@ -538,7 +538,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._radius      = this .numberValue (light .range, 0) || -1;
       lightNode ._attenuation = new Vector3 (0, 0, 1);
 
-      this .addPointerAlias (lightNode, "range", "radius");
+      this .addAnimationPointerAlias (lightNode, "range", "radius");
 
       return lightNode;
    },
@@ -1419,7 +1419,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       unlitMaterialNode ._transparency           = materialNode ._transparency;
 
       unlitMaterialNode .setup ();
-      this .addPointerAlias (unlitMaterialNode, "baseColor", "emissiveColor");
+      this .addAnimationPointerAlias (unlitMaterialNode, "baseColor", "emissiveColor");
 
       materialNode .dispose ();
 
@@ -1525,7 +1525,7 @@ function eventsProcessed ()
             scene .addNamedNode (scene .getUniqueName ("TextureTransformAnimationScript"), scriptNode);
             scene .addRoute (scriptNode, "matrix_changed", textureTransformNode, "set_matrix");
 
-            this .addPointerAlias (scriptNode, "offset", "translation");
+            this .addAnimationPointerAlias (scriptNode, "offset", "translation");
             this .animationPointerScripts .push (scriptNode);
 
             Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
@@ -1940,8 +1940,8 @@ function eventsProcessed ()
 
       viewpointNode .setup ();
 
-      this .addPointerAlias (viewpointNode, "znear", "nearDistance");
-      this .addPointerAlias (viewpointNode, "zfar",  "farDistance");
+      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
+      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
 
       return viewpointNode;
    },
@@ -1965,9 +1965,9 @@ function eventsProcessed ()
 
       viewpointNode .setup ();
 
-      this .addPointerAlias (viewpointNode, "yfov",  "fieldOfView");
-      this .addPointerAlias (viewpointNode, "znear", "nearDistance");
-      this .addPointerAlias (viewpointNode, "zfar",  "farDistance");
+      this .addAnimationPointerAlias (viewpointNode, "yfov",  "fieldOfView");
+      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
+      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
 
       return viewpointNode;
    },
@@ -3457,9 +3457,21 @@ function eventsProcessed ()
          glTF = glTF ?.[property];
 
       return glTF ?.pointers
-         ?.map (node => [node, $.try (() => node ?.getField (this .getPointerAlias (node, field) ?? field))])
+         ?.map (node => [node, $.try (() => node ?.getField (this .getAnimationPointerAlias (node, field) ?? field))])
          ?.find (([node, field]) => field)
          ?? [ ];
+   },
+   addAnimationPointerAlias (node, field, alias)
+   {
+      const key = `${node .getTypeName ()}.${field}`;
+
+      this .pointerAliases .set (key, alias);
+   },
+   getAnimationPointerAlias (node, field)
+   {
+      const key = `${node .getTypeName ()}.${field}`;
+
+      return this .pointerAliases .get (key);
    },
    createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
    {
@@ -3848,18 +3860,6 @@ function eventsProcessed ()
    description (string)
    {
       return string ?.replace (/_+/g, " ") .trim () ?? "";
-   },
-   addPointerAlias (node, field, alias)
-   {
-      const key = `${node .getTypeName ()}.${field}`;
-
-      this .pointerAliases .set (key, alias);
-   },
-   getPointerAlias (node, field)
-   {
-      const key = `${node .getTypeName ()}.${field}`;
-
-      return this .pointerAliases .get (key);
    },
 });
 
