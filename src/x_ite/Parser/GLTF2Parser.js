@@ -77,24 +77,24 @@ function GLTF2Parser (scene)
 
    // Globals
 
-   this .extensions              = new Set ();
-   this .envLights               = [ ];
-   this .lights                  = [ ];
-   this .materialVariants        = [ ];
-   this .materialVariantNodes    = [ ];
-   this .buffers                 = [ ];
-   this .bufferViews             = [ ];
-   this .accessors               = [ ];
-   this .samplers                = [ ];
-   this .materials               = [ ];
-   this .textureTransformNodes   = [ ];
-   this .meshes                  = [ ];
-   this .cameras                 = [ ];
-   this .nodes                   = [ ];
-   this .skins                   = [ ];
-   this .joints                  = new Set ();
-   this .animationScripts = [ ];
-   this .pointerAliases          = new Map ();
+   this .extensions            = new Set ();
+   this .envLights             = [ ];
+   this .lights                = [ ];
+   this .materialVariants      = [ ];
+   this .materialVariantNodes  = [ ];
+   this .buffers               = [ ];
+   this .bufferViews           = [ ];
+   this .accessors             = [ ];
+   this .samplers              = [ ];
+   this .materials             = [ ];
+   this .textureTransformNodes = [ ];
+   this .meshes                = [ ];
+   this .cameras               = [ ];
+   this .nodes                 = [ ];
+   this .skins                 = [ ];
+   this .joints                = new Set ();
+   this .animationScripts      = [ ];
+   this .pointerAliases        = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
