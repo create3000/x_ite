@@ -3348,134 +3348,117 @@ function eventsProcessed ()
          }
       }
    },
-   createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval)
+   createAnimationPointerInterpolator: (function ()
    {
-      if (!(node && field))
-         return [ ];
+      const interpolators = new Map ([
+         [X3DConstants .SFBool,  { typeName: "BooleanSequencer" }],
+         [X3DConstants .SFInt32, { typeName: "IntegerSequencer" }],
+         [X3DConstants .SFFloat, { typeName: "ScalarInterpolator",     components: 1 }],
+         [X3DConstants .SFVec2f, { typeName: "PositionInterpolator2D", components: 2 }],
+         [X3DConstants .SFVec3f, { typeName: "PositionInterpolator",   components: 3 }],
+      ]);
 
-      const scene = this .getScene ();
-
-      switch (field .getType ())
+      return function (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval)
       {
-         case X3DConstants .SFBool:
+         if (!(node && field))
+            return [ ];
+
+         const
+            scene        = this .getScene (),
+            interpolator = interpolators .get (field .getType ());
+
+         switch (field .getType ())
          {
-            const interpolatorNode = this .createNamedSequencer ("BooleanSequencer", times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Sequencer`), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
-
-            return interpolatorNode;
-         }
-         case X3DConstants .SFColor:
-         {
-            const interpolatorNodes = [ ];
-
-            switch ((keyValues .array .length / times .length) % 3)
+            case X3DConstants .SFBool:
+            case X3DConstants .SFInt32:
             {
-               case 0: // Color3 pointer
-               {
-                  var colors = keyValues .array;
-                  break;
-               }
-               default: // Color4 pointer
-               {
-                  var colors         = keyValues .array .filter ((_, i) => i % 4 < 3);
-                  var transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
+               const interpolatorNode = this .createNamedSequencer (interpolator .typeName, times, keyValues .array, cycleInterval);
 
-                  transparencies = transparencies .every (value => value >= 1)
-                     ? undefined
-                     : transparencies .map (value => 1 - value);
-
-                  break;
-               }
-            }
-
-            const interpolatorNode = this .createNamedInterpolator ("ColorInterpolator", 3, interpolation, times, colors, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
-
-            interpolatorNodes .push (interpolatorNode);
-
-            if (field .getName () .match (/^(?:baseColor|emissiveColor)$/) && transparencies)
-            {
-               const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
-
-               scene .addNamedNode (scene .getUniqueName (`TransparencyInterpolator`), interpolatorNode);
+               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Sequencer`), interpolatorNode);
 
                scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-               scene .addRoute (interpolatorNode, "value_changed", node, `transparency`);
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               return interpolatorNode;
+            }
+            case X3DConstants .SFColor:
+            {
+               const interpolatorNodes = [ ];
+
+               switch ((keyValues .array .length / times .length) % 3)
+               {
+                  case 0: // Color3 pointer
+                  {
+                     var colors = keyValues .array;
+                     break;
+                  }
+                  default: // Color4 pointer
+                  {
+                     var colors         = keyValues .array .filter ((_, i) => i % 4 < 3);
+                     var transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
+
+                     transparencies = transparencies .every (value => value >= 1)
+                        ? undefined
+                        : transparencies .map (value => 1 - value);
+
+                     break;
+                  }
+               }
+
+               const interpolatorNode = this .createNamedInterpolator ("ColorInterpolator", 3, interpolation, times, colors, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
 
                interpolatorNodes .push (interpolatorNode);
+
+               if (field .getName () .match (/^(?:baseColor|emissiveColor)$/) && transparencies)
+               {
+                  const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
+
+                  scene .addNamedNode (scene .getUniqueName (`TransparencyInterpolator`), interpolatorNode);
+
+                  scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+                  scene .addRoute (interpolatorNode, "value_changed", node, `transparency`);
+
+                  interpolatorNodes .push (interpolatorNode);
+               }
+
+               return interpolatorNodes;
             }
+            case X3DConstants .SFRotation:
+            {
+               const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .array, cycleInterval);
 
-            return interpolatorNodes;
+               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               return interpolatorNode;
+            }
+            case X3DConstants .SFFloat:
+            case X3DConstants .SFVec2f:
+            case X3DConstants .SFVec3f:
+            {
+               const interpolatorNode = this .createNamedInterpolator (interpolator .typeName, interpolator .components, interpolation, times, keyValues .array, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               return interpolatorNode;
+            }
+            default:
+            {
+               return [ ];
+            }
          }
-         case X3DConstants .SFFloat:
-         {
-            const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
-
-            return interpolatorNode;
-         }
-         case X3DConstants .SFInt32:
-         {
-            const interpolatorNode = this .createNamedSequencer ("IntegerSequencer", times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Sequencer`), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
-
-            return interpolatorNode;
-         }
-         case X3DConstants .SFRotation:
-         {
-            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
-
-            return interpolatorNode;
-         }
-         case X3DConstants .SFVec2f:
-         {
-            const interpolatorNode = this .createNamedInterpolator ("PositionInterpolator2D", 2, interpolation, times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
-
-            return interpolatorNode;
-         }
-         case X3DConstants .SFVec3f:
-         {
-            const interpolatorNode = this .createNamedInterpolator ("PositionInterpolator", 3, interpolation, times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
-
-            return interpolatorNode;
-         }
-         default:
-         {
-            return [ ];
-         }
-      }
-   },
+      };
+   })(),
    getAnimationPointer (pointer = "")
    {
       const
