@@ -3419,7 +3419,7 @@ function eventsProcessed ()
             {
                const interpolatorNodes = [ ];
 
-               const
+               var
                   colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
                   transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
 
