@@ -3437,7 +3437,7 @@ function eventsProcessed ()
 
                const interpolatorNode = this .createNamedInterpolator (typeName, components, components ? interpolation : "LINEAR", times, keyValues .array, cycleInterval);
 
-               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}${suffix}`), interpolatorNode);
+               scene .addNamedNode (scene .getUniqueName ($.toUpperCaseFirst (field .getName ()) + suffix), interpolatorNode);
 
                scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
                scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
