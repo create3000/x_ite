@@ -3433,7 +3433,7 @@ function eventsProcessed ()
             {
                const
                   { typeName, components} = interpolators .get (field .getType ()),
-                  suffix                  = typeName .replace (/^.*?(Sequencer|Interpolator)(?:2D)?$/, "$1");
+                  suffix                  = typeName .replace (/^.*?(Sequencer|Interpolator).*?$/, "$1");
 
                const interpolatorNode = this .createNamedInterpolator (typeName, components, components ? interpolation : "LINEAR", times, keyValues .array, cycleInterval);
 
