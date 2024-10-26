@@ -2452,12 +2452,16 @@ function eventsProcessed ()
       if (!(samplers instanceof Array))
          return [ ];
 
+      // Determine cycleInterval.
+
       const cycleInterval = samplers
          .map (sampler => this .accessors [sampler .input])
          .filter (input => input ?.array .length)
          .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
 
       timeSensorNode ._cycleInterval = cycleInterval;
+
+      // Get interpolators.
 
       channels = channels
          .flatMap (channel => this .animationChannelObject (channel, samplers, timeSensorNode));
