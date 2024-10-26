@@ -2437,12 +2437,10 @@ function eventsProcessed ()
 
       timeSensorNode ._description = this .description (animation .name) || `Animation ${id + 1}`;
       groupNode ._visible = false;
-      groupNode ._children .push (timeSensorNode, ... channelNodes, ... this .animationPointerScripts);
+      groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
       groupNode .setup ();
-
-      this .animationPointerScripts .length = 0;
 
       animation .node = groupNode;
    },
@@ -2461,8 +2459,23 @@ function eventsProcessed ()
 
       timeSensorNode ._cycleInterval = cycleInterval;
 
-      return channels
+      channels = channels
          .flatMap (channel => this .animationChannelObject (channel, samplers, timeSensorNode));
+
+      // Insert Script nodes after last interpolator.
+
+      for (const scriptNode of this .animationPointerScripts)
+      {
+         const index = channels .findLastIndex (node => node .getFields ()
+            .some (field => [... field .getOutputRoutes ()]
+            .some (route => route .getDestinationNode () === scriptNode)));
+
+         channels .splice (index + 1, 0, scriptNode);
+      }
+
+      this .animationPointerScripts .length = 0;
+
+      return channels;
    },
    animationChannelObject (channel, samplers, timeSensorNode)
    {
