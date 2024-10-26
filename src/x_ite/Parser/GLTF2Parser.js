@@ -210,7 +210,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .camerasArray    (glTF .cameras);
       this .skinsArray      (glTF .skins);
       this .nodesArray      (glTF .nodes);
-      this .scenesArray     (glTF .scenes, glTF .scene);
+      this .scenesArray     (glTF, glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
       this .viewpointsCenterOfRotation (this .getScene ());
@@ -1288,6 +1288,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_emissive_strength .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsIorStrengthObject (KHR_materials_ior, materialNode)
@@ -2014,10 +2016,8 @@ function eventsProcessed ()
       {
          // Skins can be cloned.
 
-         if (!skin .humanoidNode)
-            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
-
-         node .humanoidNode = skin .humanoidNode;
+         skin .humanoidNode ??= scene .createNode ("HAnimHumanoid", false);
+         node .humanoidNode   = skin .humanoidNode;
       }
 
       node .childNode = node .humanoidNode ?? node .transformNode;
@@ -2262,7 +2262,7 @@ function eventsProcessed ()
 
       return matrices;
    },
-   scenesArray (scenes, sceneNumber = 0)
+   scenesArray (glTF, scenes, sceneNumber = 0)
    {
       if (!(scenes instanceof Array))
          return;
@@ -2302,6 +2302,10 @@ function eventsProcessed ()
             switchNode ._children    = children;
 
             switchNode .setup ();
+
+            this .addAnimationPointerAlias (switchNode, "scene", "whichChoice");
+
+            glTF .pointers = [switchNode];
 
             scene .getRootNodes () .push (switchNode);
             return;
