@@ -3363,24 +3363,10 @@ function eventsProcessed ()
          if (!(node && field))
             return [ ];
 
-         const
-            scene        = this .getScene (),
-            interpolator = interpolators .get (field .getType ());
+         const scene = this .getScene ();
 
          switch (field .getType ())
          {
-            case X3DConstants .SFBool:
-            case X3DConstants .SFInt32:
-            {
-               const interpolatorNode = this .createNamedSequencer (interpolator .typeName, times, keyValues .array, cycleInterval);
-
-               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Sequencer`), interpolatorNode);
-
-               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
-
-               return interpolatorNode;
-            }
             case X3DConstants .SFColor:
             {
                const interpolatorNodes = [ ];
@@ -3439,13 +3425,19 @@ function eventsProcessed ()
 
                return interpolatorNode;
             }
+            case X3DConstants .SFBool:
+            case X3DConstants .SFInt32:
             case X3DConstants .SFFloat:
             case X3DConstants .SFVec2f:
             case X3DConstants .SFVec3f:
             {
-               const interpolatorNode = this .createNamedInterpolator (interpolator .typeName, interpolator .components, interpolation, times, keyValues .array, cycleInterval);
+               const
+                  { typeName, components} = interpolators .get (field .getType ()),
+                  suffix                  = typeName .replace (/^.*?(Sequencer|Interpolator)(?:2D)?$/, "$1");
 
-               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+               const interpolatorNode = this .createNamedInterpolator (typeName, components, components ? interpolation : "LINEAR", times, keyValues .array, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}${suffix}`), interpolatorNode);
 
                scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
                scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
@@ -3486,10 +3478,6 @@ function eventsProcessed ()
       const key = `${node .getTypeName ()}.${field}`;
 
       return this .pointerAliases .get (key);
-   },
-   createNamedSequencer (typeName, times, keyValues, cycleInterval)
-   {
-      return this .createNamedInterpolator (typeName, 1, "LINEAR", times, keyValues, cycleInterval);
    },
    createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
    {
