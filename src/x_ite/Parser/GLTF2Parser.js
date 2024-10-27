@@ -2558,18 +2558,18 @@ function eventsProcessed ()
 
       const
          scene       = this .getScene (),
-         scriptNodes = Array .from (scene .getNamedNodes ())
-            .filter (node => node .getNodeType () .includes (X3DConstants .Script));
+         scriptNodes = Array .from (scene .getNamedNodes (), node => node .getValue ())
+            .filter (node => node .getType () .at (-1) === X3DConstants .Script);
 
       for (const scriptNode of scriptNodes)
       {
-         if (scriptNode .getValue () .getFields () .every (field => !field .getInputRoutes () .size))
+         if (scriptNode.getFields () .every (field => !field .getInputRoutes () .size))
          {
             scriptNode .dispose ();
             continue;
          }
 
-         if (scriptNode .getValue () .getFields () .every (field => !field .getOutputRoutes () .size))
+         if (scriptNode .getFields () .every (field => !field .getOutputRoutes () .size))
          {
             scriptNode .dispose ();
             continue;

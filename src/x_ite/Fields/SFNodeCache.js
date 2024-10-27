@@ -93,13 +93,9 @@ const SFNodeCache =
 
 function dispose ()
 {
-   const value = this .getValue ();
-
-   value ?.dispose ();
+   this .getValue () ?.dispose ();
 
    SFNode .prototype .dispose .call (this);
-
-   SFNodeCache .delete (value);
 }
 
 export default SFNodeCache;

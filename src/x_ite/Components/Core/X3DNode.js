@@ -49,6 +49,7 @@ import Fields       from "../../Fields.js";
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import X3DField     from "../../Base/X3DField.js";
+import SFNodeCache  from "../../Fields/SFNodeCache.js";
 
 const _metaDataCallbacks = Symbol ();
 
@@ -1765,6 +1766,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          firstParent .setValue (null);
       }
+
+      SFNodeCache .delete (this);
 
       // Call super.dispose, where fields get disposed.
 
