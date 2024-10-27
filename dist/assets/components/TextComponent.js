@@ -1,9 +1,9 @@
-/* X_ITE v10.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.8")];
+/* X_ITE v10.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 20:
+/***/ 442:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16081,7 +16081,7 @@ const FontStyle_default_ = FontStyle;
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
 ;// ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(20);
+/* provided dependency */ var opentype = __webpack_require__(442);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

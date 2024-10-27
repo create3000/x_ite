@@ -1,9 +1,9 @@
-/* X_ITE v10.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.8")];
+/* X_ITE v10.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 440:
+/***/ 390:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 138:
+/***/ 576:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -74,7 +74,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 378:
+/***/ 852:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4030,7 +4030,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 834:
+/***/ 792:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7314,10 +7314,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(378);
-/* provided dependency */ var JpegImage = __webpack_require__(834);
-/* provided dependency */ var CharLS = __webpack_require__(440);
-/* provided dependency */ var OpenJPEG = __webpack_require__(138);
+/* provided dependency */ var dicomParser = __webpack_require__(852);
+/* provided dependency */ var JpegImage = __webpack_require__(792);
+/* provided dependency */ var CharLS = __webpack_require__(390);
+/* provided dependency */ var OpenJPEG = __webpack_require__(576);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8750,7 +8750,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
+         console .warn (`Error loading image '${decodeURI (this .URL .href)}':`, event .type);
 
       this .loadNext ();
    },

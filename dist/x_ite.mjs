@@ -1,10 +1,10 @@
-/* X_ITE v10.5.8 */
+/* X_ITE v10.5.9 */
 var __webpack_modules__ = ({
 
-/***/ 949:
+/***/ 191:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(445);
+/* provided dependency */ var jQuery = __webpack_require__(467);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -200,7 +200,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 485:
+/***/ 675:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -214,7 +214,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(445)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(467)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -425,7 +425,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 445:
+/***/ 467:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11149,7 +11149,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 294:
+/***/ 904:
 /***/ ((module) => {
 
 /**
@@ -15928,7 +15928,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 729:
+/***/ 251:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19173,7 +19173,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 782:
+/***/ 812:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -20297,7 +20297,7 @@ Object .defineProperty (Namespace, "add",
          return module;
       }
 
-      const X3D = window [Symbol .for ("X_ITE.X3D-10.5.8")];
+      const X3D = window [Symbol .for ("X_ITE.X3D-10.5.9")];
 
       if (X3D)
          X3D [name] = module;
@@ -23435,7 +23435,7 @@ Object .assign (Color3 .prototype,
       this [_b] = color [_b];
       return this;
    },
-   set (r, g, b)
+   set (r = 0, g = 0, b = 0)
    {
       this [_r] = Math .max (r, 0);
       this [_g] = Math .max (g, 0);
@@ -23972,7 +23972,7 @@ Object .assign (Color4 .prototype,
       this [_a] = color [_a];
       return this;
    },
-   set (r, g, b, a)
+   set (r = 0, g = 0, b = 0, a = 0)
    {
       this [Color4_r] = Math .max (r, 0);
       this [Color4_g] = Math .max (g, 0);
@@ -24808,6 +24808,18 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       {
          return new (vector .constructor) (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
       },
+      translate (translation)
+      {
+         return new (this .constructor) (this .getValue () .copy () .translate (translation .getValue ()));
+      },
+      rotate (rotation)
+      {
+         return new (this .constructor) (this .getValue () .copy () .rotate (rotation .getValue ()));
+      },
+      scale (scale)
+      {
+         return new (this .constructor) (this .getValue () .copy () .scale (scale .getValue ()));
+      },
       toStream (generator)
       {
          const
@@ -24958,22 +24970,22 @@ Object .assign (Vector2 .prototype,
       copy .y = this .y;
       return copy;
    },
-   assign (vector)
-   {
-      this .x = vector .x;
-      this .y = vector .y;
-      return this;
-   },
-   set (x, y)
+   assign ({ x, y })
    {
       this .x = x;
       this .y = y;
       return this;
    },
-   equals (vector)
+   set (x = 0, y = 0)
    {
-      return this .x === vector .x &&
-             this .y === vector .y;
+      this .x = x;
+      this .y = y;
+      return this;
+   },
+   equals ({ x, y })
+   {
+      return this .x === x &&
+             this .y === y;
    },
    negate ()
    {
@@ -24987,16 +24999,16 @@ Object .assign (Vector2 .prototype,
       this .y = 1 / this .y;
       return this;
    },
-   add (vector)
+   add ({ x, y })
    {
-      this .x += vector .x;
-      this .y += vector .y;
+      this .x += x;
+      this .y += y;
       return this;
    },
-   subtract (vector)
+   subtract ({ x, y })
    {
-      this .x -= vector .x;
-      this .y -= vector .y;
+      this .x -= x;
+      this .y -= y;
       return this;
    },
    multiply (value)
@@ -25005,10 +25017,10 @@ Object .assign (Vector2 .prototype,
       this .y *= value;
       return this;
    },
-   multVec (vector)
+   multVec ({ x, y })
    {
-      this .x *= vector .x;
-      this .y *= vector .y;
+      this .x *= x;
+      this .y *= y;
       return this;
    },
    divide (value)
@@ -25017,10 +25029,10 @@ Object .assign (Vector2 .prototype,
       this .y /= value;
       return this;
    },
-   divVec (vector)
+   divVec ({ x, y })
    {
-      this .x /= vector .x;
-      this .y /= vector .y;
+      this .x /= x;
+      this .y /= y;
       return this;
    },
    normalize ()
@@ -25035,10 +25047,10 @@ Object .assign (Vector2 .prototype,
 
       return this;
    },
-   dot (vector)
+   dot ({ x, y })
    {
-      return this .x * vector .x +
-             this .y * vector .y;
+      return this .x * x +
+             this .y * y;
    },
    norm ()
    {
@@ -25051,33 +25063,35 @@ Object .assign (Vector2 .prototype,
    {
       return Math .hypot (this .x, this .y);
    },
-   distance (vector)
+   distance ({ x, y })
    {
-      return Math .hypot (this .x - vector .x,
-                          this .y - vector .y);
+      return Math .hypot (this .x - x,
+                          this .y - y);
    },
-   lerp (destination, t)
+   lerp ({ x: dX, y: dY }, t)
    {
       const { x, y } = this;
 
-      this .x = x + t * (destination .x - x);
-      this .y = y + t * (destination .y - y);
+      this .x = x + t * (dX - x);
+      this .y = y + t * (dY - y);
       return this;
    },
    abs ()
    {
-      this .x = Math .abs (this .x);
-      this .y = Math .abs (this .y);
+      const { x, y } = this;
+
+      this .x = Math .abs (x);
+      this .y = Math .abs (y);
       return this;
    },
    min (vector)
    {
       let { x, y } = this;
 
-      for (const vector of arguments)
+      for (const { x: minX, y: minY } of arguments)
       {
-         x = Math .min (x, vector .x);
-         y = Math .min (y, vector .y);
+         x = Math .min (x, minX);
+         y = Math .min (y, minY);
       }
 
       this .x = x;
@@ -25088,20 +25102,21 @@ Object .assign (Vector2 .prototype,
    {
       let { x, y } = this;
 
-      for (const vector of arguments)
+      for (const { x: maxX, y: maxY } of arguments)
       {
-         x = Math .max (x, vector .x);
-         y = Math .max (y, vector .y);
+         x = Math .max (x, maxX);
+         y = Math .max (y, maxY);
       }
 
       this .x = x;
       this .y = y;
       return this;
    },
-   clamp (min, max)
+   clamp ({ x: minX, y: minY }, { x: maxX, y: maxY })
    {
-      this .x = Math_Algorithm .clamp (this .x, min .x, max .x);
-      this .y = Math_Algorithm .clamp (this .y, min .y, max .y);
+      this .x = Math_Algorithm .clamp (this .x, minX, maxX);
+      this .y = Math_Algorithm .clamp (this .y, minY, maxY);
+      return this;
    },
    toString ()
    {
@@ -25213,25 +25228,25 @@ Object .assign (Vector3 .prototype,
       copy .z = this .z;
       return copy;
    },
-   assign (vector)
-   {
-      this .x = vector .x;
-      this .y = vector .y;
-      this .z = vector .z;
-      return this;
-   },
-   set (x, y, z)
+   assign ({ x, y, z })
    {
       this .x = x;
       this .y = y;
       this .z = z;
       return this;
    },
-   equals (vector)
+   set (x = 0, y = 0, z = 0)
    {
-      return this .x === vector .x &&
-             this .y === vector .y &&
-             this .z === vector .z;
+      this .x = x;
+      this .y = y;
+      this .z = z;
+      return this;
+   },
+   equals ({ x, y, z })
+   {
+      return this .x === x &&
+             this .y === y &&
+             this .z === z;
    },
    negate ()
    {
@@ -25247,18 +25262,18 @@ Object .assign (Vector3 .prototype,
       this .z = 1 / this .z;
       return this;
    },
-   add (vector)
+   add ({ x, y, z })
    {
-      this .x += vector .x;
-      this .y += vector .y;
-      this .z += vector .z;
+      this .x += x;
+      this .y += y;
+      this .z += z;
       return this;
    },
-   subtract (vector)
+   subtract ({ x, y, z })
    {
-      this .x -= vector .x;
-      this .y -= vector .y;
-      this .z -= vector .z;
+      this .x -= x;
+      this .y -= y;
+      this .z -= z;
       return this;
    },
    multiply (value)
@@ -25268,11 +25283,11 @@ Object .assign (Vector3 .prototype,
       this .z *= value;
       return this;
    },
-   multVec (vector)
+   multVec ({ x, y, z })
    {
-      this .x *= vector .x;
-      this .y *= vector .y;
-      this .z *= vector .z;
+      this .x *= x;
+      this .y *= y;
+      this .z *= z;
       return this;
    },
    divide (value)
@@ -25282,18 +25297,16 @@ Object .assign (Vector3 .prototype,
       this .z /= value;
       return this;
    },
-   divVec (vector)
+   divVec ({ x, y, z })
    {
-      this .x /= vector .x;
-      this .y /= vector .y;
-      this .z /= vector .z;
+      this .x /= x;
+      this .y /= y;
+      this .z /= z;
       return this;
    },
-   cross (vector)
+   cross ({ x: bx, y: by, z: bz })
    {
-      const
-         { x: ax, y: ay, z: az } = this,
-         { x: bx, y: by, z: bz } = vector;
+      const { x: ax, y: ay, z: az } = this;
 
       this .x = ay * bz - az * by;
       this .y = az * bx - ax * bz;
@@ -25314,11 +25327,11 @@ Object .assign (Vector3 .prototype,
 
       return this;
    },
-   dot (vector)
+   dot ({ x, y, z })
    {
-      return this .x * vector .x +
-             this .y * vector .y +
-             this .z * vector .z;
+      return this .x * x +
+             this .y * y +
+             this .z * z;
    },
    norm ()
    {
@@ -25332,19 +25345,19 @@ Object .assign (Vector3 .prototype,
    {
       return Math .hypot (this .x, this .y, this .z);
    },
-   distance (vector)
+   distance ({ x, y, z })
    {
-      return Math .hypot (this .x - vector .x,
-                          this .y - vector .y,
-                          this .z - vector .z);
+      return Math .hypot (this .x - x,
+                          this .y - y,
+                          this .z - z);
    },
-   lerp (destination, t)
+   lerp ({ x: dX, y: dY, z: dZ }, t)
    {
       const { x, y, z } = this;
 
-      this .x = x + t * (destination .x - x);
-      this .y = y + t * (destination .y - y);
-      this .z = z + t * (destination .z - z);
+      this .x = x + t * (dX - x);
+      this .y = y + t * (dY - y);
+      this .z = z + t * (dZ - z);
       return this;
    },
    slerp: (() =>
@@ -25358,20 +25371,22 @@ Object .assign (Vector3 .prototype,
    })(),
    abs ()
    {
-      this .x = Math .abs (this .x);
-      this .y = Math .abs (this .y);
-      this .z = Math .abs (this .z);
+      const { x, y, z } = this;
+
+      this .x = Math .abs (x);
+      this .y = Math .abs (y);
+      this .z = Math .abs (z);
       return this;
    },
    min (vector)
    {
       let { x, y, z } = this;
 
-      for (const vector of arguments)
+      for (const { x: minX, y: minY, z: minZ } of arguments)
       {
-         x = Math .min (x, vector .x);
-         y = Math .min (y, vector .y);
-         z = Math .min (z, vector .z);
+         x = Math .min (x, minX);
+         y = Math .min (y, minY);
+         z = Math .min (z, minZ);
       }
 
       this .x = x;
@@ -25383,11 +25398,11 @@ Object .assign (Vector3 .prototype,
    {
       let { x, y, z } = this;
 
-      for (const vector of arguments)
+      for (const { x: maxX, y: maxY, z: maxZ } of arguments)
       {
-         x = Math .max (x, vector .x);
-         y = Math .max (y, vector .y);
-         z = Math .max (z, vector .z);
+         x = Math .max (x, maxX);
+         y = Math .max (y, maxY);
+         z = Math .max (z, maxZ);
       }
 
       this .x = x;
@@ -25395,11 +25410,12 @@ Object .assign (Vector3 .prototype,
       this .z = z;
       return this;
    },
-   clamp (min, max)
+   clamp ({ x: minX, y: minY, z: minZ }, { x: maxX, y: maxY, z: maxZ })
    {
-      this .x = Math_Algorithm .clamp (this .x, min .x, max .x);
-      this .y = Math_Algorithm .clamp (this .y, min .y, max .y);
-      this .z = Math_Algorithm .clamp (this .z, min .z, max .z);
+      this .x = Math_Algorithm .clamp (this .x, minX, maxX);
+      this .y = Math_Algorithm .clamp (this .y, minY, maxY);
+      this .z = Math_Algorithm .clamp (this .z, minZ, maxZ);
+      return this;
    },
    toString ()
    {
@@ -26686,6 +26702,10 @@ function SFMatrix3Template (TypeName, double)
             args .length = 0;
          };
       })(),
+      rotate (rotation)
+      {
+         return new (this .constructor) (this .getValue () .copy () .rotate (rotation));
+      },
    });
 }
 
@@ -26774,15 +26794,7 @@ Object .assign (Vector4 .prototype,
       copy .w = this .w;
       return copy;
    },
-   assign (vector)
-   {
-      this .x = vector .x;
-      this .y = vector .y;
-      this .z = vector .z;
-      this .w = vector .w;
-      return this;
-   },
-   set (x, y, z, w)
+   assign ({ x, y, z, w })
    {
       this .x = x;
       this .y = y;
@@ -26790,19 +26802,20 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   equals (vector)
+   set (x = 0, y = 0, z = 0, w = 0)
    {
-      return this .x === vector .x &&
-             this .y === vector .y &&
-             this .z === vector .z &&
-             this .w === vector .w;
+      this .x = x;
+      this .y = y;
+      this .z = z;
+      this .w = w;
+      return this;
    },
-   getReal (vector)
+   equals ({ x, y, z, w })
    {
-      vector .x = this .x / this .w;
-      vector .y = this .y / this .w;
-      vector .z = this .z / this .w;
-      return vector;
+      return this .x === x &&
+             this .y === y &&
+             this .z === z &&
+             this .w === w;
    },
    negate ()
    {
@@ -26820,20 +26833,20 @@ Object .assign (Vector4 .prototype,
       this .w = 1 / this .w;
       return this;
    },
-   add (vector)
+   add ({ x, y, z, w })
    {
-      this .x += vector .x;
-      this .y += vector .y;
-      this .z += vector .z;
-      this .w += vector .w;
+      this .x += x;
+      this .y += y;
+      this .z += z;
+      this .w += w;
       return this;
    },
-   subtract (vector)
+   subtract ({ x, y, z, w })
    {
-      this .x -= vector .x;
-      this .y -= vector .y;
-      this .z -= vector .z;
-      this .w -= vector .w;
+      this .x -= x;
+      this .y -= y;
+      this .z -= z;
+      this .w -= w;
       return this;
    },
    multiply (value)
@@ -26844,12 +26857,12 @@ Object .assign (Vector4 .prototype,
       this .w *= value;
       return this;
    },
-   multVec (vector)
+   multVec ({ x, y, z, w })
    {
-      this .x *= vector .x;
-      this .y *= vector .y;
-      this .z *= vector .z;
-      this .w *= vector .w;
+      this .x *= x;
+      this .y *= y;
+      this .z *= z;
+      this .w *= w;
       return this;
    },
    divide (value)
@@ -26860,12 +26873,12 @@ Object .assign (Vector4 .prototype,
       this .w /= value;
       return this;
    },
-   divVec (vector)
+   divVec ({ x, y, z, w })
    {
-      this .x /= vector .x;
-      this .y /= vector .y;
-      this .z /= vector .z;
-      this .w /= vector .w;
+      this .x /= x;
+      this .y /= y;
+      this .z /= z;
+      this .w /= w;
       return this;
    },
    normalize ()
@@ -26882,12 +26895,12 @@ Object .assign (Vector4 .prototype,
 
       return this;
    },
-   dot (vector)
+   dot ({ x, y, z, w })
    {
-      return this .x * vector .x +
-             this .y * vector .y +
-             this .z * vector .z +
-             this .w * vector .w;
+      return this .x * x +
+             this .y * y +
+             this .z * z +
+             this .w * w;
    },
    norm ()
    {
@@ -26902,41 +26915,43 @@ Object .assign (Vector4 .prototype,
    {
       return Math .hypot (this .x, this .y, this .z, this .w);
    },
-   distance (vector)
+   distance ({ x, y, z, w })
    {
-      return Math .hypot (this .x - vector .x,
-                          this .y - vector .y,
-                          this .z - vector .z,
-                          this .w - vector .w);
+      return Math .hypot (this .x - x,
+                          this .y - y,
+                          this .z - z,
+                          this .w - w);
    },
-   lerp (destination, t)
+   lerp ({ x: dX, y: dY, z: dZ, w: dW }, t)
    {
       const { x, y, z, w } = this;
 
-      this .x = x + t * (destination .x - x);
-      this .y = y + t * (destination .y - y);
-      this .z = z + t * (destination .z - z);
-      this .w = w + t * (destination .w - w);
+      this .x = x + t * (dX - x);
+      this .y = y + t * (dY - y);
+      this .z = z + t * (dZ - z);
+      this .w = w + t * (dW - w);
       return this;
    },
    abs ()
    {
-      this .x = Math .abs (this .x);
-      this .y = Math .abs (this .y);
-      this .z = Math .abs (this .z);
-      this .w = Math .abs (this .w);
+      const { x, y, z, w } = this;
+
+      this .x = Math .abs (x);
+      this .y = Math .abs (y);
+      this .z = Math .abs (z);
+      this .w = Math .abs (w);
       return this;
    },
    min (vector)
    {
       let { x, y, z, w } = this;
 
-      for (const vector of arguments)
+      for (const { x: minX, y: minY, z: minZ, w: minW } of arguments)
       {
-         x = Math .min (x, vector .x);
-         y = Math .min (y, vector .y);
-         z = Math .min (z, vector .z);
-         w = Math .min (w, vector .w);
+         x = Math .min (x, minX);
+         y = Math .min (y, minY);
+         z = Math .min (z, minZ);
+         w = Math .min (w, minW);
       }
 
       this .x = x;
@@ -26949,12 +26964,12 @@ Object .assign (Vector4 .prototype,
    {
       let { x, y, z, w } = this;
 
-      for (const vector of arguments)
+      for (const { x: maxX, y: maxY, z: maxZ, w: maxW } of arguments)
       {
-         x = Math .max (x, vector .x);
-         y = Math .max (y, vector .y);
-         z = Math .max (z, vector .z);
-         w = Math .max (w, vector .w);
+         x = Math .max (x, maxX);
+         y = Math .max (y, maxY);
+         z = Math .max (z, maxZ);
+         w = Math .max (w, maxW);
       }
 
       this .x = x;
@@ -26963,12 +26978,13 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   clamp (min, max)
+   clamp  ({ x: minX, y: minY, z: minZ, w: minW }, { x: maxX, y: maxY, z: maxZ, w: maxW })
    {
-      this .x = Math_Algorithm .clamp (this .x, min .x, max .x);
-      this .y = Math_Algorithm .clamp (this .y, min .y, max .y);
-      this .z = Math_Algorithm .clamp (this .z, min .z, max .z);
-      this .w = Math_Algorithm .clamp (this .w, min .w, max .w);
+      this .x = Math_Algorithm .clamp (this .x, minX, maxX);
+      this .y = Math_Algorithm .clamp (this .y, minY, maxY);
+      this .z = Math_Algorithm .clamp (this .z, minZ, maxZ);
+      this .w = Math_Algorithm .clamp (this .w, minW, maxW);
+      return this;
    },
    toString ()
    {
@@ -27099,15 +27115,15 @@ Object .assign (Quaternion .prototype,
       copy .w = this .w;
       return copy;
    },
-   assign (quat)
+   assign ({ x, y, z, w })
    {
-      this .x = quat .x;
-      this .y = quat .y;
-      this .z = quat .z;
-      this .w = quat .w;
+      this .x = x;
+      this .y = y;
+      this .z = z;
+      this .w = w;
       return this;
    },
-   set (x, y, z, w)
+   set (x = 0, y = 0, z = 0, w = 1)
    {
       this .x = x;
       this .y = y;
@@ -27368,12 +27384,12 @@ Object .assign (Quaternion .prototype,
    {
       return !this .w;
    },
-   equals (quat)
+   equals ({ x, y, z, w })
    {
-      return this .x === quat .x &&
-             this .y === quat .y &&
-             this .z === quat .z &&
-             this .w === quat .w;
+      return this .x === x &&
+             this .y === y &&
+             this .z === z &&
+             this .w === w;
    },
    negate ()
    {
@@ -27390,20 +27406,20 @@ Object .assign (Quaternion .prototype,
       this .z = -this .z;
       return this;
    },
-   add (quat)
+   add ({ x, y, z, w })
    {
-      this .x += quat .x;
-      this .y += quat .y;
-      this .z += quat .z;
-      this .w += quat .w;
+      this .x += x;
+      this .y += y;
+      this .z += z;
+      this .w += w;
       return this;
    },
-   subtract (quat)
+   subtract ({ x, y, z, w })
    {
-      this .x -= quat .x;
-      this .y -= quat .y;
-      this .z -= quat .z;
-      this .w -= quat .w;
+      this .x -= x;
+      this .y -= y;
+      this .z -= z;
+      this .w -= w;
       return this;
    },
    multiply (value)
@@ -29761,6 +29777,10 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       add (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .add (vector .getValue ()));
+      },
+      clamp (low, high)
+      {
+         return new (this .constructor) (this .getValue () .copy () .clamp (low .getValue (), high .getValue ()));
       },
       distance (vector)
       {
@@ -34159,7 +34179,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (x_ite_Namespace .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(445);
+/* provided dependency */ var $ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34295,7 +34315,7 @@ const Legacy_default_ = Legacy;
  *
  ******************************************************************************/
 
-const BROWSER_VERSION_default_ = "10.5.8";
+const BROWSER_VERSION_default_ = "10.5.9";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -37320,7 +37340,7 @@ const X3DBindableNode_default_ = X3DBindableNode;
 
 /* harmony default export */ const Core_X3DBindableNode = (x_ite_Namespace .add ("X3DBindableNode", X3DBindableNode_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(294);
+/* provided dependency */ var libtess = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39886,7 +39906,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (x_ite_Namespace .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(445);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -40141,7 +40161,7 @@ const Expressions_default_ = Expressions;
 
 /* harmony default export */ const Parser_Expressions = (x_ite_Namespace .add ("Expressions", Expressions_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(445);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42781,7 +42801,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (x_ite_Namespace .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(445);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44959,7 +44979,7 @@ const URLs_default_ = URLs;
 
 /* harmony default export */ const Networking_URLs = (x_ite_Namespace .add ("URLs", URLs_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(445);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45020,6 +45040,7 @@ const URLs_default_ = URLs;
 
 
 
+
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
 
@@ -45054,6 +45075,8 @@ function GLTF2Parser (scene)
    this .nodes                 = [ ];
    this .skins                 = [ ];
    this .joints                = new Set ();
+   this .pointerAliases        = new Map ();
+   this .animationScripts      = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser .prototype),
@@ -45169,7 +45192,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       this .camerasArray    (glTF .cameras);
       this .skinsArray      (glTF .skins);
       this .nodesArray      (glTF .nodes);
-      this .scenesArray     (glTF .scenes, glTF .scene);
+      this .scenesArray     (glTF, glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
       this .viewpointsCenterOfRotation (this .getScene ());
@@ -45238,8 +45261,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          return;
 
       const
-         browser = this .getBrowser (),
-         scene   = this .getScene ();
+         browser    = this .getBrowser (),
+         scene      = this .getScene (),
+         components = [ ];
 
       for (const extension of extensions)
       {
@@ -45249,11 +45273,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          {
             case "EXT_lights_image_based":
             {
-               const component = browser .getComponent ("CubeMapTexturing", 3);
-
-               if (!scene .hasComponent (component))
-                  scene .addComponent (component);
-
+               components .push (browser .getComponent ("CubeMapTexturing", 3));
                break;
             }
             // https://github.com/KhronosGroup/glTF/pull/1956
@@ -45275,23 +45295,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_transmission":
             case "KHR_materials_volume":
             {
-               const component = browser .getComponent ("X_ITE", 1);
-
-               if (!scene .hasComponent (component))
-                  scene .addComponent (component);
-
+               components .push (browser .getComponent ("X_ITE", 1));
                break;
             }
             case "KHR_texture_transform":
             {
-               const component = browser .getComponent ("Texturing3D", 2);
-
-               if (!scene .hasComponent (component))
-                  scene .addComponent (component);
-
+               components .push (browser .getComponent ("Texturing3D", 2));
+               break;
+            }
+            case "KHR_animation_pointer":
+            {
+               components .push (browser .getComponent ("EventUtilities", 1));
+               components .push (browser .getComponent ("Scripting",      1));
                break;
             }
          }
+      }
+
+      for (const component of components)
+      {
+         if (!scene .hasComponent (component))
+            scene .addComponent (component);
       }
    },
    extensionsObject (extensions)
@@ -45403,6 +45427,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       lightNode .setup ();
 
+      light .pointers = [lightNode];
+
       return light .node = lightNode;
    },
    khrLightsPunctualObject (KHR_lights_punctual)
@@ -45449,6 +45475,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
       scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
 
+      light .pointers = [lightNode];
+
       return light .node = lightNode;
    },
    lightType (light)
@@ -45482,6 +45510,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
       lightNode ._attenuation = new Numbers_Vector3 (0, 0, 1);
 
+      this .addAnimationPointerAlias (lightNode, "range",          "radius");
+      this .addAnimationPointerAlias (lightNode, "outerConeAngle", "cutOffAngle");
+      this .addAnimationPointerAlias (lightNode, "innerConeAngle", "beamWidth");
+
       return lightNode;
    },
    pointLight (light)
@@ -45492,6 +45524,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       lightNode ._radius      = this .numberValue (light .range, 0) || -1;
       lightNode ._attenuation = new Numbers_Vector3 (0, 0, 1);
+
+      this .addAnimationPointerAlias (lightNode, "range", "radius");
 
       return lightNode;
    },
@@ -45898,11 +45932,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       const texCoordIndices = this .getTexCoordIndices ("", material);
 
-      this .texCoordIndex         = Array .from (texCoordIndices) .reduce ((p, c) => Math .max (p, c), -1);
-      this .textureTransformNodes = [ ];
-      this .texCoordMappings      = new Map ();
-      this .texCoordOfNode        = new Map ();
-      material .texCoordMappings  = this .texCoordMappings;
+      this .texCoordIndex           = Array .from (texCoordIndices) .reduce ((p, c) => Math .max (p, c), -1);
+      this .textureTransformNodes   = [ ];
+      this .texCoordMappings        = new Map ();
+      this .texCoordOfNode          = new Map ();
+      this .texCoordExtensionOfNode = new Map ();
+      material .texCoordMappings    = this .texCoordMappings;
 
       const
          scene          = this .getScene (),
@@ -45958,6 +45993,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       appearanceNode ._textureTransform = this .createMultiTextureTransform (appearanceNode ._material .getValue ());
 
       appearanceNode .setup ();
+
+      material .pointers = [appearanceNode, materialNode];
 
       return material .appearanceNode = appearanceNode;
    },
@@ -46017,6 +46054,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       materialNode ._metallicRoughnessTexture        = this .textureInfo (pbrMetallicRoughness .metallicRoughnessTexture);
       materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
 
+      pbrMetallicRoughness .pointers = [materialNode];
+
       return materialNode;
    },
    pbrSpecularGlossinessObject (pbrSpecularGlossiness)
@@ -46051,6 +46090,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       materialNode ._specularGlossinessTexture        = this .textureInfo (pbrSpecularGlossiness .specularGlossinessTexture);
       materialNode ._specularGlossinessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
+
+      pbrSpecularGlossiness .pointers = [materialNode];
 
       return materialNode;
    },
@@ -46150,6 +46191,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       extension .setup ();
 
+      KHR_materials_anisotropy .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsClearcoatObject (KHR_materials_clearcoat, materialNode)
@@ -46171,6 +46214,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       extension ._clearcoatNormalTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatNormalTexture);
 
       extension .setup ();
+
+      KHR_materials_clearcoat .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -46195,6 +46240,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       extension .setup ();
 
+      KHR_materials_diffuse_transmission .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsDispersionObject (KHR_materials_dispersion, materialNode)
@@ -46207,6 +46254,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       extension ._dispersion = this .numberValue (KHR_materials_dispersion .dispersion, 0);
 
       extension .setup ();
+
+      KHR_materials_dispersion .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -46221,6 +46270,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       extension .setup ();
 
+      KHR_materials_emissive_strength .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsIorStrengthObject (KHR_materials_ior, materialNode)
@@ -46230,6 +46281,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       extension ._indexOfRefraction = this .numberValue (KHR_materials_ior .ior, 1.5);
 
       extension .setup ();
+
+      KHR_materials_ior .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -46247,6 +46300,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       extension ._iridescenceThicknessTextureMapping = this .textureMapping (KHR_materials_iridescence .iridescenceThicknessTexture);
 
       extension .setup ();
+
+      KHR_materials_iridescence .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -46271,6 +46326,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       extension .setup ();
 
+      KHR_materials_sheen .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsSpecularObject (KHR_materials_specular, materialNode)
@@ -46294,6 +46351,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       extension .setup ();
 
+      KHR_materials_specular .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsTransmission (KHR_materials_transmission, materialNode)
@@ -46308,6 +46367,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       extension ._transmissionTextureMapping = this .textureMapping (KHR_materials_transmission .transmissionTexture);
 
       extension .setup ();
+
+      KHR_materials_transmission .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -46327,6 +46388,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       extension .setup ();
 
+      KHR_materials_volume .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsUnlitObject (KHR_materials_unlit, materialNode)
@@ -46345,6 +46408,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       unlitMaterialNode ._transparency           = materialNode ._transparency;
 
       unlitMaterialNode .setup ();
+      this .addAnimationPointerAlias (unlitMaterialNode, "baseColor", "emissiveColor");
 
       materialNode .dispose ();
 
@@ -46383,7 +46447,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
 
       if (existing)
+      {
+         Object .defineProperty (KHR_texture_transform, "pointers",
+         {
+            get: () =>
+            {
+               return this .texCoordExtensionOfNode .get (existing);
+            },
+            configurable: true,
+         });
+
          return existing ._mapping .getValue ();
+      }
 
       // Create new TextureTransformMatrix3D.
 
@@ -46400,6 +46475,54 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       this .textureTransformNodes .push (textureTransformNode);
       this .texCoordMappings .set (mapping, texCoord);
       this .texCoordOfNode .set (textureTransformNode, texCoord);
+      this .texCoordExtensionOfNode .set (textureTransformNode, KHR_texture_transform);
+
+      Object .defineProperty (KHR_texture_transform, "pointers",
+      {
+         get: () =>
+         {
+            const scriptNode = scene .createNode ("Script", false);
+
+            scriptNode .addUserDefinedField (Base_X3DConstants .inputOutput, "translation",   new x_ite_Fields .SFVec2f ());
+            scriptNode .addUserDefinedField (Base_X3DConstants .inputOutput, "rotation",      new x_ite_Fields .SFFloat ());
+            scriptNode .addUserDefinedField (Base_X3DConstants .inputOutput, "scale",         new x_ite_Fields .SFVec2f (1, 1));
+            scriptNode .addUserDefinedField (Base_X3DConstants .outputOnly,  "value_changed", new x_ite_Fields .SFMatrix4f ());
+
+            scriptNode ._url = [/* js */ `ecmascript:
+
+const
+   flip   = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
+   matrix = new SFMatrix3f ();
+
+function eventsProcessed ()
+{
+   matrix .setTransform (translation, -rotation, scale);
+
+   const m = flip .multLeft (matrix);
+
+   value_changed [0]  = m [0];
+   value_changed [1]  = m [1];
+   value_changed [4]  = m [3];
+   value_changed [5]  = m [4];
+   value_changed [12] = m [6];
+   value_changed [13] = m [7];
+}
+`];
+
+            scriptNode .setup ();
+
+            scene .addNamedNode (scene .getUniqueName ("CombineTextureMatrixScript"), scriptNode);
+            scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
+
+            this .addAnimationPointerAlias (scriptNode, "offset", "translation");
+            this .animationScripts .push (scriptNode);
+
+            Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
+
+            return [scriptNode];
+         },
+         configurable: true,
+      });
 
       return mapping;
    },
@@ -46804,6 +46927,41 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       viewpointNode .setup ();
 
+      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
+      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
+
+      Object .defineProperty (camera, "pointers",
+      {
+         get: () =>
+         {
+            const scriptNode = scene .createNode ("Script", false);
+
+            scriptNode .addUserDefinedField (Base_X3DConstants .inputOutput, "xmag",          new x_ite_Fields .SFFloat (1));
+            scriptNode .addUserDefinedField (Base_X3DConstants .inputOutput, "ymag",          new x_ite_Fields .SFFloat (1));
+            scriptNode .addUserDefinedField (Base_X3DConstants .outputOnly,  "value_changed", new x_ite_Fields .MFFloat ());
+
+            scriptNode ._url = [/* js */ `ecmascript:
+
+function eventsProcessed ()
+{
+   value_changed = new MFFloat (-xmag, -ymag, xmag, ymag);
+}
+`];
+
+            scriptNode .setup ();
+
+            scene .addNamedNode (scene .getUniqueName ("CombineFieldOfViewScript"), scriptNode);
+            scene .addRoute (scriptNode, "value_changed", viewpointNode, "set_fieldOfView");
+
+            this .animationScripts .push (scriptNode);
+
+            Object .defineProperty (camera, "pointers", { value: [viewpointNode, scriptNode] });
+
+            return [viewpointNode, scriptNode];
+         },
+         configurable: true,
+      });
+
       return viewpointNode;
    },
    perspectiveCamera (camera)
@@ -46816,7 +46974,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          viewpointNode = scene .createNode ("Viewpoint", false);
 
       if (typeof camera .yfov === "number")
-         viewpointNode ._fieldOfView = camera .yfov
+         viewpointNode ._fieldOfView = camera .yfov;
 
       if (typeof camera .znear === "number")
          viewpointNode ._nearDistance = camera .znear;
@@ -46825,6 +46983,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          viewpointNode ._farDistance = camera .zfar;
 
       viewpointNode .setup ();
+
+      this .addAnimationPointerAlias (viewpointNode, "yfov",  "fieldOfView");
+      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
+      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
+
+      camera .pointers = [viewpointNode];
 
       return viewpointNode;
    },
@@ -46866,13 +47030,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       {
          // Skins can be cloned.
 
-         if (!skin .humanoidNode)
-            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
-
-         node .humanoidNode = skin .humanoidNode;
+         skin .humanoidNode ??= scene .createNode ("HAnimHumanoid", false);
+         node .humanoidNode   = skin .humanoidNode;
       }
 
       node .childNode = node .humanoidNode ?? node .transformNode;
+      node .pointers  = [node .childNode];
 
       return node;
    },
@@ -47113,7 +47276,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       return matrices;
    },
-   scenesArray (scenes, sceneNumber = 0)
+   scenesArray (glTF, scenes, sceneNumber = 0)
    {
       if (!(scenes instanceof Array))
          return;
@@ -47153,6 +47316,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             switchNode ._children    = children;
 
             switchNode .setup ();
+
+            this .addAnimationPointerAlias (switchNode, "scene", "whichChoice");
+
+            glTF .pointers = [switchNode];
 
             scene .getRootNodes () .push (switchNode);
             return;
@@ -47299,6 +47466,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!(samplers instanceof Array))
          return [ ];
 
+      // Determine cycleInterval.
+
       const cycleInterval = samplers
          .map (sampler => this .accessors [sampler .input])
          .filter (input => input ?.array .length)
@@ -47306,8 +47475,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       timeSensorNode ._cycleInterval = cycleInterval;
 
-      return channels
+      // Get interpolators.
+
+      channels = channels
          .flatMap (channel => this .animationChannelObject (channel, samplers, timeSensorNode));
+
+      // Insert Script nodes after last interpolator.
+
+      for (const scriptNode of this .animationScripts)
+      {
+         const index = channels .findLastIndex (node => node .getFields ()
+            .some (field => Array .from (field .getOutputRoutes ())
+            .some (route => route .getDestinationNode () === scriptNode)));
+
+         channels .splice (index + 1, 0, scriptNode);
+      }
+
+      this .animationScripts .length = 0;
+
+      return channels;
    },
    animationChannelObject (channel, samplers, timeSensorNode)
    {
@@ -48132,38 +48318,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       switch (target .path)
       {
+         case "pointer":
+         {
+            const [node, field] = this .getAnimationPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
+
+            return this .createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval);
+         }
          case "translation":
-         {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName ("TranslationInterpolator"), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, "set_translation");
-
-            return interpolatorNode;
-         }
          case "rotation":
-         {
-            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, "set_rotation");
-
-            return interpolatorNode;
-         }
          case "scale":
          {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
+            const field = node .getField (target .path);
 
-            scene .addNamedNode (scene .getUniqueName ("ScaleInterpolator"), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, "set_scale");
-
-            return interpolatorNode;
+            return this .createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval);
          }
          case "weights":
          {
@@ -48190,7 +48357,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                   interpolatorNodes .push (coordinateInterpolatorNode);
 
                   scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
-                  scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
+                  scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
                }
 
                const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
@@ -48200,27 +48367,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                   interpolatorNodes .push (normalInterpolatorNode);
 
                   scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
-                  scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "set_vector");
+                  scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "vector");
                }
             }
 
             return interpolatorNodes;
-         }
-         case "pointer":
-         {
-            // const
-            //    pointer = target .extensions ?.KHR_animation_pointer ?.pointer ?? "",
-            //    path    = pointer .split ("/") .filter (p => p)
-            //    name    = path .pop ();
-
-            // let glTF = this .input;
-
-            // for (const property of path)
-            //    glTF = glTF [property]
-
-            // console .log (glTF)
-
-            return [ ];
          }
          default:
          {
@@ -48228,34 +48379,239 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
       }
    },
-   createPositionInterpolator (interpolation, times, keyValues, cycleInterval)
+   createAnimationPointerInterpolator: (function ()
    {
-      const scene = this .getScene ();
+      const interpolators = new Map ([
+         [Base_X3DConstants .SFBool,  { typeName: "BooleanSequencer" }],
+         [Base_X3DConstants .SFInt32, { typeName: "IntegerSequencer" }],
+         [Base_X3DConstants .SFFloat, { typeName: "ScalarInterpolator",     components: 1 }],
+         [Base_X3DConstants .SFVec2f, { typeName: "PositionInterpolator2D", components: 2 }],
+         [Base_X3DConstants .SFVec3f, { typeName: "PositionInterpolator",   components: 3 }],
+      ]);
+
+      return function (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval)
+      {
+         if (!(node && field))
+            return [ ];
+
+         const scene = this .getScene ();
+
+         switch (field .getType ())
+         {
+            case Base_X3DConstants .SFColor:
+            {
+               const interpolatorNodes = [ ];
+
+               switch ((keyValues .array .length / times .length) % 3)
+               {
+                  case 0: // Color3 pointer
+                  {
+                     var colors = keyValues .array;
+                     break;
+                  }
+                  default: // Color4 pointer
+                  {
+                     var
+                        colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
+                        transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
+
+                     transparencies = transparencies .every (value => value >= 1)
+                        ? undefined
+                        : transparencies .map (value => 1 - value);
+
+                     break;
+                  }
+               }
+
+               const interpolatorNode = this .createNamedInterpolator ("ColorInterpolator", 3, interpolation, times, colors, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${GLTF2Parser_$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               interpolatorNodes .push (interpolatorNode);
+
+               // These are currently the only two affected fields, which are SFColor but pointer is Color4.
+               if (field .getName () .match (/^(?:baseColor|emissiveColor)$/) && transparencies)
+               {
+                  const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
+
+                  scene .addNamedNode (scene .getUniqueName ("TransparencyInterpolator"), interpolatorNode);
+
+                  scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+                  scene .addRoute (interpolatorNode, "value_changed", node, "transparency");
+
+                  interpolatorNodes .push (interpolatorNode);
+               }
+
+               return interpolatorNodes;
+            }
+            case Base_X3DConstants .SFColorRGBA:
+            {
+               const interpolatorNodes = [ ];
+
+               var
+                  colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
+                  transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
+
+               transparencies = transparencies .every (value => value >= 1)
+                  ? undefined
+                  : transparencies .map (value => 1 - value);
+
+               // Script
+
+               const scriptNode = scene .createNode ("Script", false);
+
+               scriptNode .addUserDefinedField (Base_X3DConstants .inputOutput, "color",         new x_ite_Fields .SFColor (1, 1, 1));
+               scriptNode .addUserDefinedField (Base_X3DConstants .inputOutput, "alpha" ,        new x_ite_Fields .SFFloat (1));
+               scriptNode .addUserDefinedField (Base_X3DConstants .outputOnly,  "value_changed", new x_ite_Fields .SFColorRGBA ());
+
+               scriptNode ._url = [/* js */ `ecmascript:
+
+function eventsProcessed ()
+{
+   value_changed = new SFColorRGBA (... color, alpha);
+}
+   `];
+
+               scriptNode .setup ();
+
+               scene .addNamedNode (scene .getUniqueName ("CombineColorRGBAScript"), scriptNode);
+               scene .addRoute (scriptNode, "value_changed", node, field .getName ());
+
+               // ColorInterpolator
+
+               const interpolatorNode = this .createNamedInterpolator ("ColorInterpolator", 3, interpolation, times, colors, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${GLTF2Parser_$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", scriptNode, "color");
+
+               interpolatorNodes .push (interpolatorNode);
+
+               // AlphaInterpolator
+
+               if (transparencies)
+               {
+                  const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
+
+                  scene .addNamedNode (scene .getUniqueName ("AlphaInterpolator"), interpolatorNode);
+
+                  scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+                  scene .addRoute (interpolatorNode, "value_changed", scriptNode, "alpha");
+
+                  interpolatorNodes .push (interpolatorNode);
+               }
+
+               interpolatorNodes .push (scriptNode);
+
+               return interpolatorNodes;
+            }
+            case Base_X3DConstants .SFRotation:
+            {
+               const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .array, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${GLTF2Parser_$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               return interpolatorNode;
+            }
+            case Base_X3DConstants .SFBool:
+            case Base_X3DConstants .SFInt32:
+            case Base_X3DConstants .SFFloat:
+            case Base_X3DConstants .SFVec2f:
+            case Base_X3DConstants .SFVec3f:
+            {
+               const
+                  { typeName, components} = interpolators .get (field .getType ()),
+                  suffix                  = typeName .replace (/^.*?(Sequencer|Interpolator).*?$/, "$1");
+
+               const interpolatorNode = this .createNamedInterpolator (typeName, components, components ? interpolation : "LINEAR", times, keyValues .array, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (GLTF2Parser_$.toUpperCaseFirst (field .getName ()) + suffix), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               return interpolatorNode;
+            }
+            default:
+            {
+               return [ ];
+            }
+         }
+      };
+   })(),
+   getAnimationPointer (pointer = "")
+   {
+      const
+         path  = pointer .split ("/") .filter (p => p),
+         field = path .pop () .replace (/(?:Factor$)/, "");
+
+      let glTF = this .input;
+
+      for (const property of path)
+         glTF = glTF ?.[property];
+
+      return glTF ?.pointers
+         ?.map (node => [node, GLTF2Parser_$.try (() => node ?.getField (this .getAnimationPointerAlias (node, field) ?? field))])
+         ?.find (([node, field]) => field)
+         ?? [ ];
+   },
+   addAnimationPointerAlias (node, field, alias)
+   {
+      const key = `${node .getTypeName ()}.${field}`;
+
+      this .pointerAliases .set (key, alias);
+   },
+   getAnimationPointerAlias (node, field)
+   {
+      const key = `${node .getTypeName ()}.${field}`;
+
+      return this .pointerAliases .get (key);
+   },
+   createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
+   {
+      const
+         scene            = this .getScene (),
+         interpolatorNode = scene .createNode (typeName, false);
 
       switch (interpolation)
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
+            const
+               key      = [ ],
+               keyValue = [ ];
 
             // Key
 
-            interpolatorNode ._key .push (times [0] / cycleInterval);
+            key .push (times [0] / cycleInterval);
 
             for (let i = 1, length = times .length; i < length; ++ i)
-               interpolatorNode ._key .push (times [i] / cycleInterval, times [i] / cycleInterval);
+               key .push (times [i] / cycleInterval, times [i] / cycleInterval);
 
             // KeyValue
 
-            interpolatorNode ._keyValue .push (new Numbers_Vector3 (keyValues [0], keyValues [1], keyValues [2]));
+            const components2 = components * 2;
 
-            for (let i = 0, length = keyValues .length - 3; i < length; i += 3)
+            for (let c = 0; c < components; ++ c)
+               keyValue .push (keyValues [c]);
+
+            for (let i = 0, length = keyValues .length - components; i < length; i += components)
             {
-               interpolatorNode ._keyValue .push (new Numbers_Vector3 (keyValues [i + 0], keyValues [i + 1], keyValues [i + 2]),
-                                                  new Numbers_Vector3 (keyValues [i + 3], keyValues [i + 4], keyValues [i + 5]));
+               for (let c = 0; c < components2; ++ c)
+                  keyValue .push (keyValues [i + c]);
             }
 
             // Finish
+
+            interpolatorNode ._key      = key;
+            interpolatorNode ._keyValue = keyValue;
 
             interpolatorNode .setup ();
 
@@ -48264,8 +48620,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
-
             interpolatorNode ._key      = times .map (t => t / cycleInterval);
             interpolatorNode ._keyValue = keyValues;
 
@@ -48276,14 +48630,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          case "CUBICSPLINE":
          {
             const
-               interpolatorNode = scene .createNode ("PositionInterpolator", false),
-               vectors          = [ ];
+               key      = [ ],
+               keyValue = [ ],
+               vectors  = [ ],
+               Vector   = [Numbers_Vector2, Numbers_Vector2, Numbers_Vector3] [components - 1];
 
-            for (let i = 0, length = keyValues .length; i < length; i += 3)
+            for (let i = 0, length = keyValues .length; i < length; i += components)
             {
-               vectors .push (new Numbers_Vector3 (keyValues [i + 0],
-                                           keyValues [i + 1],
-                                           keyValues [i + 2]));
+               vectors .push (new Vector (... keyValues .subarray (i, i + components)));
             }
 
             const
@@ -48292,9 +48646,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
             for (const t of samples)
             {
-               interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (this .cubicSplineVector (t, times, vectors));
+               key      .push (t / cycleInterval);
+               keyValue .push (... this .cubicSplineVector (t, times, vectors));
             }
+
+            // Finish
+
+            interpolatorNode ._key      = key;
+            interpolatorNode ._keyValue = components === 1 ? keyValue .filter ((_, i) => i % 2 < 1) : keyValue;
 
             interpolatorNode .setup ();
 
@@ -48304,14 +48663,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    createOrientationInterpolator (interpolation, times, keyValues, cycleInterval)
    {
-      const scene = this .getScene ();
+      const
+         scene            = this .getScene (),
+         interpolatorNode = scene .createNode ("OrientationInterpolator", false);
 
       switch (interpolation)
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
-
             // Key
 
             interpolatorNode ._key .push (times [0] / cycleInterval);
@@ -48347,8 +48706,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
-
             interpolatorNode ._key = times .map (t => t / cycleInterval);
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
@@ -48365,9 +48722,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
          case "CUBICSPLINE":
          {
-            const
-               interpolatorNode = scene .createNode ("OrientationInterpolator", false),
-               quaternions      = [ ];
+            const quaternions = [ ];
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
             {
@@ -48397,19 +48752,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key)
    {
-      const
-         scene    = this .getScene (),
-         accessor = accessors [key];
+      const accessor = accessors [key];
 
       if (!accessor)
          return null;
+
+      const
+         scene            = this .getScene (),
+         interpolatorNode = scene .createNode (typeName, false);
 
       switch (interpolation)
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             // Key
 
             interpolatorNode ._key .push (times [0] / cycleInterval);
@@ -48446,8 +48801,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             // Key
 
             interpolatorNode ._key = times .map (t => t / cycleInterval);
@@ -48470,8 +48823,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
          case "CUBICSPLINE":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             // Key
 
             const
@@ -48610,7 +48961,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (x_ite_Namespace .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(445);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48761,7 +49112,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (x_ite_Namespace .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(445);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51326,7 +51677,7 @@ Object .assign (Complex .prototype,
       return this .real === complex .real &&
              this .imag === complex .imag;
    },
-   set (real, imag)
+   set (real = 0, imag = 0)
    {
       this .real = real;
       this .imag = imag;
@@ -51489,10 +51840,6 @@ Object .assign (Complex,
    Polar (magnitude, angle)
    {
       return Object .create (Complex .prototype) .setPolar (magnitude, angle);
-   },
-   multiply (lhs, rhs)
-   {
-      return lhs .copy () .multiply (rhs);
    },
 });
 
@@ -52132,8 +52479,8 @@ const MatrixStack_default_ = MatrixStack;
 
 /* harmony default export */ const Utility_MatrixStack = (x_ite_Namespace .add ("MatrixStack", MatrixStack_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(445);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(294);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(467);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54912,7 +55259,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (x_ite_Namespace .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(445);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62931,7 +63278,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (x_ite_Namespace .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(445);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63071,7 +63418,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
+         console .warn (`Error loading image '${decodeURI (this .URL .href)}:'`, event .type);
 
       this .loadNext ();
    },
@@ -66357,7 +66704,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (x_ite_Namespace .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(445);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67321,7 +67668,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (x_ite_Namespace .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(445);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90997,7 +91344,7 @@ mediump samplerCube textureCube;
 
 /* harmony default export */ const MaterialTextures = (x_ite_Namespace .add ("MaterialTextures", MaterialTextures_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(445);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -94375,20 +94722,20 @@ NormalInfo info;info.ng=ng;
 #if defined(X3D_NORMAL_TEXTURE)
 #if __VERSION__==100
 #if defined(X3D_NORMAL_TEXTURE_2D)
-info.ntex=texture2D(x3d_NormalTexture.texture2D,UV.st).rgb;
+vec3 ntex=texture2D(x3d_NormalTexture.texture2D,UV.st).rgb;
 #elif defined(X3D_NORMAL_TEXTURE_CUBE)
-info.ntex=textureCube(x3d_NormalTexture.textureCube,UV).rgb;
+vec3 ntex=textureCube(x3d_NormalTexture.textureCube,UV).rgb;
 #endif
 #else
 #if defined(X3D_NORMAL_TEXTURE_2D)
-info.ntex=texture(x3d_NormalTexture.texture2D,UV.st).rgb;
+vec3 ntex=texture(x3d_NormalTexture.texture2D,UV.st).rgb;
 #elif defined(X3D_NORMAL_TEXTURE_3D)
-info.ntex=texture(x3d_NormalTexture.texture3D,UV).rgb;
+vec3 ntex=texture(x3d_NormalTexture.texture3D,UV).rgb;
 #elif defined(X3D_NORMAL_TEXTURE_CUBE)
-info.ntex=texture(x3d_NormalTexture.textureCube,UV).rgb;
+vec3 ntex=texture(x3d_NormalTexture.textureCube,UV).rgb;
 #endif
 #endif
-info.ntex=info.ntex*2.0-vec3(1.0);info.ntex*=vec3(vec2(normalScale),1.0);info.ntex=normalize(info.ntex);info.n=normalize(mat3(t,b,ng)*info.ntex);
+ntex=ntex*2.0-vec3(1.0);ntex*=vec3(vec2(normalScale),1.0);ntex=normalize(ntex);info.ntex=ntex;info.n=normalize(mat3(t,b,ng)*ntex);
 #else
 info.n=ng;
 #endif
@@ -95940,7 +96287,7 @@ vec3 getPunctualRadianceClearCoat(const in vec3 clearcoatNormal,const in vec3 v,
 #endif
 #endif
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)
-vec3 getPunctualRadianceTransmission(const in vec3 n,const in vec3 v,const in vec3 l,const in float alphaRoughness,const in vec3 f0,const in vec3 f90,const in vec3 baseColor,const in float ior){float transmissionRoughness=applyIorToRoughness(alphaRoughness,ior);vec3 l_mirror=normalize(l+2.0*n*dot(-l,n));vec3 h=normalize(l_mirror+v);float D=D_GGX(clamp(dot(n,h),0.0,1.0),transmissionRoughness);vec3 F=F_Schlick(f0,f90,clamp(dot(v,h),0.0,1.0));float Vis=V_GGX(clamp(dot(n,l_mirror),0.0,1.0),clamp(dot(n,v),0.0,1.0),transmissionRoughness);return(1.0-F)*baseColor*D*Vis;}vec3 applyVolumeAttenuation(const in vec3 radiance,const in float transmissionDistance,const in vec3 attenuationColor,const in float attenuationDistance){if(attenuationDistance==0.0){return radiance;}else{vec3 attenuationCoefficient=log(attenuationColor)/attenuationDistance;vec3 transmittance=exp(attenuationCoefficient*transmissionDistance);return transmittance*radiance;}}vec3 getVolumeTransmissionRay(const in vec3 n,const in vec3 v,const in float thickness,const in float ior,const in mat4 modelMatrix){vec3 refractionVector=refract(-v,normalize(n),1.0/ior);vec3 modelScale;modelScale.x=length(vec3(modelMatrix[0].xyz));modelScale.y=length(vec3(modelMatrix[1].xyz));modelScale.z=length(vec3(modelMatrix[2].xyz));return normalize(refractionVector)*thickness*modelScale;}
+vec3 getPunctualRadianceTransmission(const in vec3 n,const in vec3 v,const in vec3 l,const in float alphaRoughness,const in vec3 f0,const in vec3 f90,const in vec3 baseColor,const in float ior){float transmissionRoughness=applyIorToRoughness(alphaRoughness,ior);vec3 l_mirror=normalize(l+2.0*n*dot(-l,n));vec3 h=normalize(l_mirror+v);float D=D_GGX(clamp(dot(n,h),0.0,1.0),transmissionRoughness);vec3 F=F_Schlick(f0,f90,clamp(dot(v,h),0.0,1.0));float Vis=V_GGX(clamp(dot(n,l_mirror),0.0,1.0),clamp(dot(n,v),0.0,1.0),transmissionRoughness);return(1.0-F)*baseColor*D*Vis;}vec3 applyVolumeAttenuation(const in vec3 radiance,const in float transmissionDistance,const in vec3 attenuationColor,const in float attenuationDistance){if(attenuationDistance==0.0){return radiance;}else{vec3 attenuationCoefficient=log(attenuationColor)/attenuationDistance;vec3 transmittance=exp(attenuationCoefficient*transmissionDistance);return transmittance*radiance;}}vec3 getVolumeTransmissionRay(const in vec3 n,const in vec3 v,const in float thickness,const in float ior,in mat4 modelMatrix){vec3 refractionVector=refract(-v,normalize(n),1.0/ior);vec3 modelScale;modelScale.x=length(modelMatrix[0].xyz);modelScale.y=length(modelMatrix[1].xyz);modelScale.z=length(modelMatrix[2].xyz);return normalize(refractionVector)*thickness*modelScale;}
 #endif
 `
 ;
@@ -96294,7 +96641,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (x_ite_Namespace .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(445);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96892,7 +97239,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 
 /* harmony default export */ const Shape_X3DAppearanceNode = (x_ite_Namespace .add ("X3DAppearanceNode", X3DAppearanceNode_default_));
 ;// ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(445);
+/* provided dependency */ var Appearance_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105115,8 +105462,8 @@ const GifMedia_default_ = GifMedia;
 
 /* harmony default export */ const Texturing_GifMedia = (x_ite_Namespace .add ("GifMedia", GifMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(445);
-/* provided dependency */ var SuperGif = __webpack_require__(782);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(467);
+/* provided dependency */ var SuperGif = __webpack_require__(812);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105286,7 +105633,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading movie '${decodeURI (this .URL .href)}'`, event .type);
+         console .warn (`Error loading movie '${decodeURI (this .URL .href)}':`, event .type);
 
       this .loadNext ();
    },
@@ -107584,7 +107931,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (x_ite_Namespace .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(445);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108214,7 +108561,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (x_ite_Namespace .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(445);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108861,7 +109208,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (x_ite_Namespace .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(445);
+/* provided dependency */ var Notification_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108983,8 +109330,8 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (x_ite_Namespace .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(949);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(445);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(191);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111706,7 +112053,7 @@ const DataStorage_default_ = DataStorage;
 
 /* harmony default export */ const Utility_DataStorage = (x_ite_Namespace .add ("DataStorage", DataStorage_default_));
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(445);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114317,8 +114664,8 @@ const X3DViewer_default_ = X3DViewer;
 
 /* harmony default export */ const Navigation_X3DViewer = (x_ite_Namespace .add ("X3DViewer", X3DViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(485);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(445);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(675);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115233,8 +115580,8 @@ const ExamineViewer_default_ = ExamineViewer;
 
 /* harmony default export */ const Navigation_ExamineViewer = (x_ite_Namespace .add ("ExamineViewer", ExamineViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(485);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(445);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(675);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116249,8 +116596,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (x_ite_Namespace .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(485);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(445);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(675);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116579,8 +116926,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (x_ite_Namespace .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(485);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(445);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(675);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117722,8 +118069,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (x_ite_Namespace .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(485);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(445);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(675);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119170,7 +119517,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (x_ite_Namespace .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(445);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120484,7 +120831,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 
 /* harmony default export */ const Sound_X3DSoundContext = (x_ite_Namespace .add ("X3DSoundContext", X3DSoundContext_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(445);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(467);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -122063,7 +122410,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (x_ite_Namespace .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(445);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(467);
 /*******************************************************************************
  * MIT License
  *
@@ -123329,7 +123676,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 
 /* harmony default export */ const FieldTypes = (x_ite_Namespace .add ("FieldTypes", FieldTypes_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(445);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124431,7 +124778,7 @@ const X3DBrowser_default_ = X3DBrowser;
 
 /* harmony default export */ const Browser_X3DBrowser = (x_ite_Namespace .add ("X3DBrowser", X3DBrowser_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(445);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124698,8 +125045,8 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(445);
-/* provided dependency */ var pako = __webpack_require__(729);
+/* provided dependency */ var jquery_$ = __webpack_require__(467);
+/* provided dependency */ var pako = __webpack_require__(251);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -124723,6 +125070,10 @@ Object .assign (jquery_$,
    toLowerCaseFirst (string)
    {
       return string [0] .toLowerCase () + string .slice (1);
+   },
+   toUpperCaseFirst (string)
+   {
+      return string [0] .toUpperCase () + string .slice (1);
    },
    try (callback, logError = false)
    {
@@ -124776,13 +125127,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (x_ite_Namespace .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(294);
+/* provided dependency */ var libtess_libtess = __webpack_require__(904);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (x_ite_Namespace .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(445);
+/* provided dependency */ var X3D_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125086,7 +125437,7 @@ x_ite_Namespace, x_ite_Namespace .Fields,
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-10.5.8")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-10.5.9")] = x_ite_X3D;
 
 customElements .define ("x3d-canvas", x_ite_X3DCanvasElement);
 
