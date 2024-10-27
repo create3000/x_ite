@@ -64,10 +64,10 @@ sub glTF {
    return $string;
 }
 
-chdir "$samples/glTF-Sample-Models";
-system "git pull origin";
-chdir "$samples/glTF-Sample-Assets";
-system "git pull origin";
+# chdir "$samples/glTF-Sample-Models";
+# system "git pull origin";
+# chdir "$samples/glTF-Sample-Assets";
+# system "git pull origin";
 
 $string = "";
 $string .= "// SAMPLES_BEGIN\n\n";
