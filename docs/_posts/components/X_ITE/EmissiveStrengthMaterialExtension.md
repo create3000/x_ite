@@ -49,4 +49,4 @@ The strength adjustment to be multiplied with the material's emissive value.
 
 ## See Also
 
-- [Khronos glTF Specification of KHR_materials_emissive_strength Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_emissive_strength)
+- [Khronos glTF Specification of the KHR_materials_emissive_strength Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_emissive_strength)

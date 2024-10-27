@@ -48,4 +48,4 @@ The index of refraction.
 
 ## See Also
 
-- [Khronos glTF Specification of KHR_materials_ior Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_ior)
+- [Khronos glTF Specification of the KHR_materials_ior Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_ior)
