@@ -186,4 +186,4 @@ Input/Output field *extensions*.
 
 ## See Also
 
-- [Khronos Specification of KHR_materials_pbrSpecularGlossiness Material](https://kcoley.github.io/glTF/extensions/2.0/Khronos/KHR_materials_pbrSpecularGlossiness/#:~:text=The%20PBR%20specular%2Dglossiness%20extension,materials%20compared%20to%20metallic%2Droughness.)
+- [Khronos glTF Specification of KHR_materials_pbrSpecularGlossiness Material](https://kcoley.github.io/glTF/extensions/2.0/Khronos/KHR_materials_pbrSpecularGlossiness/#:~:text=The%20PBR%20specular%2Dglossiness%20extension,materials%20compared%20to%20metallic%2Droughness.)

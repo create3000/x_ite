@@ -48,4 +48,4 @@ The strength of the dispersion effect, specified as 20/Abbe number.
 
 ## See Also
 
-- [Khronos Specification of KHR_materials_dispersion Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_dispersion)
+- [Khronos glTF Specification of KHR_materials_dispersion Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_dispersion)

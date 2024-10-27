@@ -76,4 +76,4 @@ The thickness texture of the thin-film layer.
 
 ## See Also
 
-- [Khronos Specification of KHR_materials_iridescence Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_iridescence)
+- [Khronos glTF Specification of KHR_materials_iridescence Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_iridescence)

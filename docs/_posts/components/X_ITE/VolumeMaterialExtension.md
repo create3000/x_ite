@@ -64,4 +64,4 @@ The color that white light turns into due to absorption when reaching the attenu
 
 ## See Also
 
-- [Khronos Specification of KHR_materials_volume Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_volume)
+- [Khronos glTF Specification of KHR_materials_volume Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_volume)

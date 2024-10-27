@@ -68,4 +68,4 @@ A texture that defines the F0 color of the specular reflection, stored in the RG
 
 ## See Also
 
-- [Khronos Specification of KHR_materials_specular Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_specular)
+- [Khronos glTF Specification of KHR_materials_specular Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_specular)

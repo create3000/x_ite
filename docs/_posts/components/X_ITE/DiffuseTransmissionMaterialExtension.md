@@ -68,4 +68,4 @@ A texture that defines the color of the transmitted light, stored in the RGB cha
 
 ## See Also
 
-- [Khronos Specification of KHR_materials_diffuse_transmission Extension](https://github.com/DassaultSystemes-Technology/glTF/blob/KHR_materials_translucency/extensions/2.0/Khronos/KHR_materials_diffuse_transmission/README.md)
+- [Khronos glTF Specification of KHR_materials_diffuse_transmission Extension](https://github.com/DassaultSystemes-Technology/glTF/blob/KHR_materials_translucency/extensions/2.0/Khronos/KHR_materials_diffuse_transmission/README.md)
