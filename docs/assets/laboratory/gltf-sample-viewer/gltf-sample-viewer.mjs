@@ -15,6 +15,7 @@ const ibl_files = [
    "Box With Spaces",
    "BrainStem",
    "CarbonFibre",
+   "Cesium",
    "ChairDamaskPurplegold",
    "Clearcoat",
    "ClearCoat",
