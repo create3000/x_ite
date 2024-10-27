@@ -664,6 +664,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          }
       }
 
+      generator .AddRouteNode (this);
+
       if (name .length)
       {
          generator .AddNode (this);
@@ -928,6 +930,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             return;
          }
       }
+
+      generator .AddRouteNode (this);
 
       generator .string += generator .Indent ();
       generator .string += "<";
@@ -1273,6 +1277,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             return;
          }
       }
+
+      generator .AddRouteNode (this);
 
       // Type name
 

@@ -338,11 +338,9 @@ Object .assign (Generator .prototype,
    },
    ExistsRouteNode (routeNode)
    {
-      const
-         namesByNode = this .namesByNode .get (this .ExecutionContext ()),
-         routeNodes  = this .routeNodes .get (this .ExecutionContext ());
+      const routeNodes = this .routeNodes .get (this .ExecutionContext ());
 
-      return namesByNode .has (routeNode) || routeNodes .has (routeNode);
+      return routeNodes .has (routeNode);
    },
    IsSharedNode (baseNode)
    {
