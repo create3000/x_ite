@@ -213,17 +213,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .scenesArray     (glTF, glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
-      this .viewpointsCenterOfRotation (this .getScene ());
-      this .optimizeSceneGraph (this .getScene () .getRootNodes ());
+      this .viewpointsCenterOfRotation (scene);
+      this .optimizeSceneGraph (scene .getRootNodes ());
 
       this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("EnvironmentLights", this .envLights);
       this .exportGroup ("Lights",            this .lights);
       this .exportGroup ("Animations",        glTF .animations);
 
+      this .cleanupAnimationScripts ();
       this .materialVariantsSwitch ();
 
-      return this .getScene ();
+      return scene;
    },
    assetObject (asset)
    {
@@ -2550,6 +2551,30 @@ function eventsProcessed ()
          return [ ];
 
       return this .createInterpolator (timeSensorNode, node, target, sampler .interpolation, input .array, output, timeSensorNode ._cycleInterval .getValue ());
+   },
+   cleanupAnimationScripts ()
+   {
+      // It can happen, that some scripts are not used, so let us remove them.
+
+      const
+         scene       = this .getScene (),
+         scriptNodes = Array .from (scene .getNamedNodes ())
+            .filter (node => node .getNodeType () .includes (X3DConstants .Script));
+
+      for (const scriptNode of scriptNodes)
+      {
+         if (scriptNode .getValue () .getFields () .every (field => !field .getInputRoutes () .size))
+         {
+            scriptNode .dispose ();
+            continue;
+         }
+
+         if (scriptNode .getValue () .getFields () .every (field => !field .getOutputRoutes () .size))
+         {
+            scriptNode .dispose ();
+            continue;
+         }
+      }
    },
    createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
