@@ -2563,7 +2563,7 @@ function eventsProcessed ()
 
       for (const scriptNode of scriptNodes)
       {
-         if (scriptNode.getFields () .every (field => !field .getInputRoutes () .size))
+         if (scriptNode .getFields () .every (field => !field .getInputRoutes () .size))
          {
             scriptNode .dispose ();
             continue;
