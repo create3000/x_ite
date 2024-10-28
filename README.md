@@ -8,7 +8,7 @@
 
 ## Introduction
 
-X_ITE is a robust X3D JavaScript WebGL browser that is compatible with all major web browsers and can be used as a [full standard](https://www.web3d.org/standards) X3D browser as well as a glTF and VRML viewer and for [other 3D file formats](https://create3000.github.io/x_ite/#supported-file-formats).
+X_ITE is a comprehensive 3D library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish glTF, X3D, VRML and [other 3D file formats](https://create3000.github.io/x_ite/#supported-file-formats) online within an HTML5 page with X_ITE that works with web browsers **without** prior plug-in installation.
 
 🚀 For more information and a live preview, please visit our [home page](https://create3000.github.io/x_ite/).
 
