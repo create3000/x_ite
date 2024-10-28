@@ -72,12 +72,21 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
 
+      this ._pitch .addInterest ("set_pitch__", this);
+
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_live__ ()
    {
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
+   },
+   set_pitch__ ()
+   {
+      const media = this .getMediaElement ();
+
+      if (media)
+         media .playbackRate = Math .max (this ._pitch .getValue (), 0);
    },
    unloadData ()
    {
@@ -118,6 +127,8 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
       this ._duration_changed = media .duration;
 
       this .setMediaElement (media);
+
+      this .set_pitch__ ();
    },
    dispose ()
    {

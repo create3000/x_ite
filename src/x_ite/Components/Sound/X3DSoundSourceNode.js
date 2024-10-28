@@ -123,8 +123,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
    {
       this .audioSource .gain .value = this ._gain .getValue ();
    },
-   set_pitch ()
-   { },
    set_loop ()
    {
       if (!this .mediaElement)
