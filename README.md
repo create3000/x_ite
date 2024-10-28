@@ -170,6 +170,10 @@ scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_ro
 <x3d-canvas></x3d-canvas>
 ```
 
+## Contributing
+
+Contributions are always welcome. There is no special form to do this. A good idea is to fork the X_ITE repository and create a separate branch from the `development` branch, make your changes and then make a pull request.
+
 ## License
 
 X_ITE is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.
