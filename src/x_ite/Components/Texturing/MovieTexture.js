@@ -88,6 +88,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       X3DUrlObject       .prototype .initialize .call (this);
 
       this ._speed .addInterest ("set_speed__", this);
+      this ._pitch .addInterest ("set_speed__", this);
 
       this .video
          .on ("abort error", this .setError .bind (this))
@@ -231,7 +232,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       const media = this .getMediaElement ();
 
       if (media)
-         media .playbackRate = this ._speed .getValue ();
+         media .playbackRate = this ._speed .getValue () * Math .max (this ._pitch .getValue (), 0);
    },
    set_time ()
    {
