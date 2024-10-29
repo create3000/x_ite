@@ -142,8 +142,8 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
          {
             array .length = 0;
 
-            for (let i = 0; i < numPoints; i += 2)
-               array .push (points [i], points [i + 1]);
+            for (const p of points)
+               array .push (p);
 
             break;
          }
