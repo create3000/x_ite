@@ -83,13 +83,11 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
    },
    set_controlPoint__ ()
    {
-      if (this .controlPointNode)
-         this .controlPointNode .removeInterest ("requestRebuild", this);
+      this .controlPointNode ?.removeInterest ("requestRebuild", this);
 
       this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
 
-      if (this .controlPointNode)
-         this .controlPointNode .addInterest ("requestRebuild", this);
+      this .controlPointNode ?.addInterest ("requestRebuild", this);
    },
    getTessellation (dimension)
    {
