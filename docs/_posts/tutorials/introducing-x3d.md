@@ -28,6 +28,11 @@ You can view X3D files using an X3D browser:
 
 You can view X3D files from your local hard disk, or from the Internet.
 
+## Can a X3D Browser be used as VRML Viewer?
+
+- Yes a X3D browser can be uses as VRML viewer
+- Since X3D is the successor of VRML, an X3D browser is also a VRML viewer
+
 ## How can X3D be used on a Web page?
 
 - Fill Web page
