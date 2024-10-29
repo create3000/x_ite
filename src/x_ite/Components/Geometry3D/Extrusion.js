@@ -97,32 +97,36 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
       return function ()
       {
          const
-            crossSection = this ._crossSection,
-            orientation  = this ._orientation,
-            scale        = this ._scale,
-            spine        = this ._spine,
-            points       = [ ];
+            crossSection    = this ._crossSection,
+            orientation     = this ._orientation,
+            scale           = this ._scale,
+            spine           = this ._spine,
+            numCrossSection = crossSection .length,
+            numOrientations = orientation .length,
+            numScales       = scale .length,
+            numSpines       = spine .length,
+            points          = [ ];
 
-         // calculate SCP rotations
+         // Calculate SCP rotations.
 
          const rotations = this .createRotations ();
 
-         // calculate vertices.
+         // Calculate vertices.
 
-         for (let i = 0, length = spine .length; i < length; ++ i)
+         for (let i = 0; i < numSpines; ++ i)
          {
             const matrix = rotations [i];
 
-            if (orientation .length)
-               matrix .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
+            if (numOrientations)
+               matrix .rotate (orientation [Math .min (i, numOrientations - 1)] .getValue ());
 
-            if (scale .length)
+            if (numScales)
             {
-               const s = scale [Math .min (i, scale .length - 1)] .getValue ();
+               const s = scale [Math .min (i, numScales - 1)] .getValue ();
                matrix .scale (scale3 .set (s .x, 1, s .y));
             }
 
-            for (let cs = 0, csLength = crossSection .length; cs < csLength; ++ cs)
+            for (let cs = 0; cs < numCrossSection; ++ cs)
             {
                const vector = crossSection [cs] .getValue ();
                points .push (matrix .multVecMatrix (new Vector3 (vector .x, 0, vector .y)));
