@@ -89,6 +89,10 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, X3DParamet
       this .set_profileCurve__ ();
       this .set_trajectoryCurve__ ();
    },
+   getTrajectoryCurve ()
+   {
+      return this .trajectoryCurveNode;
+   },
    set_profileCurve__ ()
    {
       this .profileCurveNode ?.removeInterest ("requestRebuild", this);

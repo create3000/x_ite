@@ -89,6 +89,10 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, X3DParamet
       this .set_crossSectionCurve__ ();
       this .set_trajectoryCurve__ ();
    },
+   getTrajectoryCurve ()
+   {
+      return this .trajectoryCurveNode;
+   },
    set_crossSectionCurve__ ()
    {
       this .crossSectionCurveNode ?.removeInterest ("requestRebuild", this);
