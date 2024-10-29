@@ -52,7 +52,7 @@ If the same object is used more than once in the scene, it's most efficient to g
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Tree1 Transform {
@@ -138,7 +138,7 @@ function set_whichChoice (value)
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8

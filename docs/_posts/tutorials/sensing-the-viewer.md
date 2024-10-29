@@ -54,7 +54,7 @@ A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) no
 <ROUTE fromNode='Sensor' fromField='enterTime' toNode='Clock' toField='set_startTime'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Sensor VisibilitySensor {
@@ -83,7 +83,7 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 <ROUTE fromNode='Sensor' fromField='enterTime' toNode='Clock' toField='set_startTime'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Sensor ProximitySensor {
@@ -106,7 +106,7 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 <ROUTE fromNode='Sensor' fromField='position_changed' toNode='PetRobotFollower' toField='set_translation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Sensor ProximitySensor { ... }
@@ -160,7 +160,7 @@ A [Collision](/x_ite/components/navigation/collision/) grouping node senses if t
 <ROUTE fromNode='Collide' fromField='collideTime' toNode='OuchSound' toField='set_startTime'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Collide Collision {

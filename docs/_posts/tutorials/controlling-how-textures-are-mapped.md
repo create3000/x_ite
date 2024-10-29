@@ -83,7 +83,7 @@ A [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) node conta
     point='0.2 0.2, 0.8 0.2, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 TextureCoordinate {
@@ -113,7 +113,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -146,7 +146,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -177,7 +177,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -214,7 +214,7 @@ A [TextureTransform](/x_ite/components/texturing/texturetransform/) node transfo
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -251,7 +251,7 @@ Scale, Rotate, and Translate a texture cookie cutter one after the other:
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {

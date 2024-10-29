@@ -40,7 +40,7 @@ A PROTO statement declares a new node type (a prototype):
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
@@ -73,7 +73,7 @@ PROTO BouncingBall [
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
@@ -118,7 +118,7 @@ Interface items connected by IS need not have the same name as an item in the bo
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
@@ -164,7 +164,7 @@ The new node type can be used like any other type.
     bounceHeight='3'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 BouncingBall {
@@ -236,7 +236,7 @@ Fields needed:
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
@@ -277,7 +277,7 @@ Body needed:
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
@@ -321,7 +321,7 @@ Prototypes are typically in a separate external file, referenced by an **EXTERNP
 </ExternProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 EXTERNPROTO BouncingBall [

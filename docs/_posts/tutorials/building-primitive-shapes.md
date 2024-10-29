@@ -31,7 +31,7 @@ Shapes are the building blocks of an X3D world. Primitive Shapes are standard bu
 <Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -56,7 +56,7 @@ Shape {
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -81,7 +81,7 @@ Shape {
 <Text ... />
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Box { ... }
@@ -113,7 +113,7 @@ Text { ... }
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -172,7 +172,7 @@ Shape {
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8

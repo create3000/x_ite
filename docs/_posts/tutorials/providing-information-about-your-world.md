@@ -25,7 +25,7 @@ A [WorldInfo](/x_ite/components/core/worldinfo/) node provides title and descrip
     info='"License GPLv3, https://www.gnu.org/licenses/gpl-3.0.en.html"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 WorldInfo {

@@ -54,7 +54,7 @@ A [PointLight](/x_ite/components/lighting/pointlight/) node illuminates radially
     color='1.0 1.0 1.0'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PointLight {
@@ -77,7 +77,7 @@ A [DirectionalLight](/x_ite/components/lighting/directionallight/) node illumina
     color='1.0 1.0 1.0'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DirectionalLight {
@@ -102,7 +102,7 @@ A [SpotLight](/x_ite/components/lighting/spotlight/) node illuminates from a poi
     cutOffAngle='0.785'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 SpotLight {
@@ -126,7 +126,7 @@ SpotLight {
     beamWidth='0.52'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 SpotLight {

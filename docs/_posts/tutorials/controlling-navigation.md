@@ -55,7 +55,7 @@ A [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node selects th
   headlight='true'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 NavigationInfo {

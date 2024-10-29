@@ -241,7 +241,7 @@ select.select {
 
 <ul data-encoding-tabs>
 	<li><a data-tabby-default href="#xml-encoding">XML Encoding</a></li>
-	<li><a href="#vrml-encoding">Classic Encoding</a></li>
+	<li><a href="#vrml-encoding">Classic VRML Encoding</a></li>
 </ul>
 
 <div id="xml-encoding"><div id="XML">XML</div></div>

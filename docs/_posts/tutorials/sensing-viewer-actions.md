@@ -52,7 +52,7 @@ A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) node senses
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -84,7 +84,7 @@ Transform {
 <ROUTE fromNode='Rot1' fromField='value_changed' toNode='Frame1' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Touch TouchSensor { }
@@ -121,7 +121,7 @@ A [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/) node sens
 <ROUTE fromNode='Rotator' fromField='rotation_changed' toNode='RotateMe' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -150,7 +150,7 @@ A [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) node 
 <ROUTE fromNode='Rotator' fromField='rotation_changed' toNode='RotateMe' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -179,7 +179,7 @@ A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses
 <ROUTE fromNode='Mover' fromField='translation_changed' toNode='MoveMe' toField='set_translation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {

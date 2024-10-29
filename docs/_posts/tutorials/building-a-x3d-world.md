@@ -38,7 +38,7 @@ X3D files contain:
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -96,7 +96,7 @@ Shape {
 <Cylinder/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Cylinder {
@@ -130,7 +130,7 @@ Some examples:
     radius='1.5'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Cylinder {

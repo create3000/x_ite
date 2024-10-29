@@ -68,7 +68,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -99,7 +99,7 @@ An [ImageTexture](/x_ite/components/texturing/imagetexture/) node selects a text
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -134,7 +134,7 @@ A [PixelTexture](/x_ite/components/texturing/pixeltexture/) node specifies textu
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -173,7 +173,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node selects a textu
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {

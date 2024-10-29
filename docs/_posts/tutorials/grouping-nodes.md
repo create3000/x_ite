@@ -23,7 +23,7 @@ X3D has several grouping nodes, including:
 <!-- and more -->
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Group       { ... }
@@ -49,7 +49,7 @@ The [Group](/x_ite/components/grouping/group/) node creates a basic grouping.
 </Group>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Group {
@@ -75,7 +75,7 @@ The [Switch](/x_ite/components/grouping/switch/) group node creates a switched g
 </Switch>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Switch {
@@ -101,7 +101,7 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -128,7 +128,7 @@ The [Billboard](/x_ite/components/navigation/billboard/) group node creates a gr
 </Billboard>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Billboard {
@@ -166,7 +166,7 @@ Billboard {
 </Billboard>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Billboard {
@@ -199,7 +199,7 @@ An [Anchor](/x_ite/components/networking/anchor/) node creates a group that acts
 </Anchor>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Anchor {
@@ -223,7 +223,7 @@ An [Inline](/x_ite/components/networking/inline/) node creates a special group f
   url='"table.wrl"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Inline {

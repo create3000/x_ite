@@ -34,7 +34,7 @@ For a JavaScript program script, typically give the script in the Script node's 
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -151,7 +151,7 @@ Nodes needed:
 <Script DEF='Bouncer ... />
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Ball Transform {
@@ -180,7 +180,7 @@ Script fields needed:
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -207,7 +207,7 @@ Inputs and outputs needed:
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -242,7 +242,7 @@ function set_fraction (fraction, time)
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -289,7 +289,7 @@ function set_fraction (fraction, time)
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -326,7 +326,7 @@ Routes needed:
 <ROUTE fromNode='Bouncer' fromField='value_changed' toNode='Ball' toField='set_translation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 ROUTE Clock.fraction_changed TO Bouncer.set_fraction
@@ -387,7 +387,7 @@ function set_fraction (fraction, time)
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -497,7 +497,7 @@ function set_active (value, time)
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Toggle Script {
@@ -538,7 +538,7 @@ Use the toggle switch to make a lamp turn on and off
 <ROUTE fromNode='Toggle' fromField='on_changed' toNode='LampLight' toField='set_on'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF LightSwitch TouchSensor { }
@@ -574,7 +574,7 @@ function set_selection (value, time)
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF ColorSelector Script {
@@ -613,7 +613,7 @@ function set_selection (value, time)
 <ROUTE fromNode='ColorSelector' fromField='color_changed' toNode='BulbMaterial' toField='set_emissiveColor'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF LightSwitch TouchSensor { }

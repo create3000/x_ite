@@ -12,10 +12,10 @@ redirect_from:
 In this tutorial, you will learn how to create a simple hello world scene with X3D. Firstly, let explains some of the X3D basics.
 
 1. X3D is stands for **E**xtensible **T**hree-**D**imensional.
-2. X3D is a text file if when saved as Classic Encoding consists of a set of nodes like (Transform { … }).
+2. X3D is a text file if when saved as Classic VRML Encoding consists of a set of nodes like (Transform { … }).
 3. All of the nodes start with the node type name like Transform follow by a open curly brace »{«. They end with a close curly brace »}«
 4. The syntax is just like a command to tell X3D browser (like X\_ITE) what should do.
-5. A X3D XML Encoding file must have the extension .x3d or .x3dz. A X3D Classic Encoding file must have .x3dv or .x3dvz as file extension.
+5. A X3D XML Encoding file must have the extension .x3d or .x3dz. A X3D Classic VRML Encoding file must have .x3dv or .x3dvz as file extension.
 6. X3D file is case sensitive. *Transform, transform* or *tRansForm* are not the same.
 7. X3D file can be edit with any text editor like GEdit or Emacs for Linux or Unix, Notepad++ or Wordpad for Windows, and Coda or Simple Text for Mac.
 
@@ -46,7 +46,7 @@ As first a very easy example, we will create a sphere with a texture and a text 
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -81,7 +81,7 @@ Now we have a sphere, but we don't see if it is rotating, let's assign a texture
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -106,7 +106,7 @@ We take a Appearance node and assign it to the *appearance* field of the Shape n
 url='"earth.png", "https://example.com/earth.png"'
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 url [
@@ -156,7 +156,7 @@ Now the sphere looks like an earth and you are very curious how the text will be
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8

@@ -43,7 +43,7 @@ Here is a typical X3D Classic Encoded file with a single node:
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -82,7 +82,7 @@ Now we can start to add information to the file. The first node to deal with is 
     info='"Basic Nodes", "https://create3000.github.io/x_ite/"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 WorldInfo {
@@ -111,7 +111,7 @@ A [Shape](/x_ite/components/shape/shape/) node is the node to specify material a
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -152,7 +152,7 @@ In order to make our world any use at all, we need to be able to transform objec
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -181,7 +181,7 @@ In X3D, you navigate between pages the same way as in HTML. You have an object t
 </Anchor>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Anchor {
@@ -203,7 +203,7 @@ There are a couple of extra fields not shown above. One of these is *parameter* 
 parameter='"target=_blank"'
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 parameter [ "target=_blank" ]
@@ -220,7 +220,7 @@ There are two ways we can change the background of our scene. One is to specify 
     skyColor='0.5 0.5 0.5'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Background {
@@ -242,7 +242,7 @@ To give the world camera another position or orientation there is a [Viewpoint](
     orientation='0 1 0 3.14'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF LookAtHouse Viewpoint {
@@ -262,7 +262,7 @@ If you define more than once viewpoint in an X3D file, the first viewpoint defin
     url='"#LookAtHouse"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Anchor {
@@ -283,7 +283,7 @@ When using Gouraud shading browsers calculate lighting by working it out for eac
     headlight='false'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 NavigationInfo {

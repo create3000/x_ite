@@ -38,7 +38,7 @@ A [Coordinate](/x_ite/components/rendering/coordinate/) node contains a list of 
     point='2.0 1.0 3.0, 4.0 2.5 5.3, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Coordinate {
@@ -79,7 +79,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -111,7 +111,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -168,7 +168,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -225,7 +225,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -270,7 +270,7 @@ A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolato
     keyValue='0.0 1.0 0.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 CoordinateInterpolator {

@@ -16,7 +16,7 @@ X3D is:
   - .x3dj (JSON) - good for scripting
   - .x3db (Binary) - good for large models
 
->**Note:** All examples are in X3D XML and X3D Classic Encoded file format (.x3d and .x3dv).
+>**Note:** All examples are in X3D XML and X3D VRML Classic Encoded file format (.x3d and .x3dv).
 {: .prompt-info }
 
 ## What do I need to use X3D?

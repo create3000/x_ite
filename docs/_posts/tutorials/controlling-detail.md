@@ -52,7 +52,7 @@ An [LOD](/x_ite/components/navigation/lod/) grouping node creates a group of sha
 </LOD>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 LOD {
@@ -102,7 +102,7 @@ Lower detail levels should use simpler geometry, fewer textures, and no text.
 </LOD>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 LOD {

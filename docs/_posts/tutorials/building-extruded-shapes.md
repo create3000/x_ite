@@ -51,7 +51,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ex
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -85,7 +85,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ex
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -129,7 +129,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ge
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {

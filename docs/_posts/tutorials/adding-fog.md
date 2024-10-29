@@ -51,7 +51,7 @@ A [Fog](/x_ite/components/environmentaleffects/fog/) node creates colored fog
     visibilityRange='10.0'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Fog {

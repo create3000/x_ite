@@ -21,7 +21,7 @@ A [Color](/x_ite/components/rendering/color/) node contains a list of RGB values
     color='1.0 0.0 0.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Color {
@@ -57,7 +57,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -92,7 +92,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -137,7 +137,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -181,7 +181,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {

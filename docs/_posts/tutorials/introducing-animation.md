@@ -95,7 +95,7 @@ A **ROUTE** statement connects two nodes together using
 <ROUTE fromNode='MySender' fromField='rotation_changed' toNode='MyReceiver' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 ROUTE MySender.rotation_changed TO MyReceiver.set_rotation
@@ -177,7 +177,7 @@ The [Transform](/x_ite/components/grouping/transform/) node has:
 <ROUTE fromNode='Rot1' fromField='value_changed' toNode='Frame1' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Touch TouchSensor { }

@@ -57,7 +57,7 @@ Animation requires control over time:
     stopTime='0.0'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 TimeSensor {
@@ -133,7 +133,7 @@ The fraction\_changed output event:
 <ROUTE fromNode='Monolith1Timer' fromField='fraction_changed' toNode='Monolith1Facade' toField='set_transparency'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -199,7 +199,7 @@ A [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator/) 
     keyValue='0.0 0.0 0.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PositionInterpolator {
@@ -243,7 +243,7 @@ The *value\_changed* output:
 <ROUTE fromNode='Position1' fromField='value_changed' toNode='Particle1' toField='set_translation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Particle1 Transform {
@@ -298,7 +298,7 @@ A [OrientationInterpolator](/x_ite/components/interpolation/orientationinterpola
     keyValue='0.0 1.0 0.0 0.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 OrientationInterpolator {
@@ -324,7 +324,7 @@ Typically route into a [Transform](/x_ite/components/grouping/transform/) node's
     keyValue='1.0 1.0 0.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 ColorInterpolator {
@@ -350,7 +350,7 @@ Typically route into a [Material](/x_ite/components/shape/material/) node's *set
     keyValue='4.5, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 ScalarInterpolator {

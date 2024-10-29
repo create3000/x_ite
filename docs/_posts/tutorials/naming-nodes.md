@@ -27,7 +27,7 @@ The **DEF** syntax gives a name to a node.
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -62,7 +62,7 @@ The **USE** syntax uses a previously named node
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -121,7 +121,7 @@ Names are also necessary for animation ...
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Inline {

@@ -51,7 +51,7 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -78,7 +78,7 @@ The *children* field includes a list of one or more nodes
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -107,7 +107,7 @@ Translation positions a coordinate system in X, Y, and Z.
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -134,7 +134,7 @@ Rotation orients a coordinate system about a rotation axis by a rotation angle
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -183,7 +183,7 @@ Scale grows or shrinks a coordinate system by a scaling factor in X, Y, and Z.
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -208,7 +208,7 @@ Scale, Rotate, and Translate a coordinate system, one after the other.
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -244,7 +244,7 @@ Read operations bottom-up:
 <!-- ... -->
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {

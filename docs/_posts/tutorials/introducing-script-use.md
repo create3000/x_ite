@@ -39,7 +39,7 @@ A [Script](/x_ite/components/scripting/script/) node selects a program script to
     url='"bouncer.js"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -68,7 +68,7 @@ A Script node also declares the program script interface:
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -102,7 +102,7 @@ DEF Bouncer Script {
 <ROUTE fromNode='Bouncer' fromField='value_changed' toNode='Ball' toField='set_translation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Clock TimeSensor { ... }

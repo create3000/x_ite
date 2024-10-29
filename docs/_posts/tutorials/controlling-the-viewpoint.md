@@ -37,7 +37,7 @@ A [Viewpoint](/x_ite/components/navigation/viewpoint/) node specifies a named vi
     description='Entry View'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Viewpoint {

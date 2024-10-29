@@ -51,7 +51,7 @@ A Normal node contains a list of normal vectors that override use of a crease an
     vector='0.0 1.0 0.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Normal {
@@ -84,7 +84,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -127,7 +127,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -163,7 +163,7 @@ A [NormalInterpolator](/x_ite/components/interpolation/normalinterpolator/) node
     keyValue='0.0 1.0 1.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 NormalInterpolator {

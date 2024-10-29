@@ -51,7 +51,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
     groundAngle='1.309, 1.571, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Background {
@@ -102,7 +102,7 @@ Background {
                  0.39471 0.522059 0.669'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Summer Background {
@@ -164,7 +164,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
     bottomUrl='"ground.png"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Background {
@@ -219,7 +219,7 @@ Background {
                  0.39471 0.522059 0.669'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Summer Background {

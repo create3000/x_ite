@@ -43,7 +43,7 @@ An [AudioClip](/x_ite/components/sound/audioclip/) node creates a digital sound 
 </Sound>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {
@@ -78,7 +78,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node creates a movie
 </Sound>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {
@@ -121,7 +121,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 </Sound>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {
@@ -148,7 +148,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 </Sound>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {
@@ -210,7 +210,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 <ROUTE fromNode='C4' fromField='touchTime' toNode='PitchC4' toField='set_startTime'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Group {
@@ -283,7 +283,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {
