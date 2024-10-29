@@ -24,7 +24,7 @@ X3D is:
 You can view X3D files using an X3D browser:
 
 - A X3D standalone application
-- A X3D JavaScript plug-in like to an HTML browser
+- A X3D JavaScript library like X_ITE to display X3D and VRML in a Web browser.
 
 You can view X3D files from your local hard disk, or from the Internet.
 
