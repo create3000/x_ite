@@ -231,8 +231,11 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       const media = this .getMediaElement ();
 
-      if (media)
-         media .playbackRate = this ._speed .getValue () * Math .max (this ._pitch .getValue (), 0);
+      if (!media)
+         return;
+
+      media .playbackRate   = this ._speed .getValue () * Math .max (this ._pitch .getValue (), 0);
+      media .preservesPitch = this ._pitch .getValue () === 1;
    },
    set_time ()
    {
