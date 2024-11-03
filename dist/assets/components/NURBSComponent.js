@@ -1,5 +1,5 @@
-/* X_ITE v10.5.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.9")];
+/* X_ITE v10.5.10 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.10")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2628,13 +2628,11 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametr
    },
    set_controlPoint__ ()
    {
-      if (this .controlPointNode)
-         this .controlPointNode .removeInterest ("requestRebuild", this);
+      this .controlPointNode ?.removeInterest ("requestRebuild", this);
 
       this .controlPointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DCoordinateNode, this ._controlPoint);
 
-      if (this .controlPointNode)
-         this .controlPointNode .addInterest ("requestRebuild", this);
+      this .controlPointNode ?.addInterest ("requestRebuild", this);
    },
    getTessellation (dimension)
    {
@@ -2910,8 +2908,8 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, NURBS_X3DNurbsC
          {
             array .length = 0;
 
-            for (let i = 0; i < numPoints; i += 2)
-               array .push (points [i], points [i + 1]);
+            for (const p of points)
+               array .push (p);
 
             break;
          }
@@ -4212,6 +4210,10 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DP
       this .set_crossSectionCurve__ ();
       this .set_trajectoryCurve__ ();
    },
+   getTrajectoryCurve ()
+   {
+      return this .trajectoryCurveNode;
+   },
    set_crossSectionCurve__ ()
    {
       this .crossSectionCurveNode ?.removeInterest ("requestRebuild", this);
@@ -4377,6 +4379,10 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, NURBS_X3DP
 
       this .set_profileCurve__ ();
       this .set_trajectoryCurve__ ();
+   },
+   getTrajectoryCurve ()
+   {
+      return this .trajectoryCurveNode;
    },
    set_profileCurve__ ()
    {

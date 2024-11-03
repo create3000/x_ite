@@ -1,4 +1,4 @@
-/* X_ITE v10.5.9 */
+/* X_ITE v10.5.10 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,10 +12,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 58:
+/***/ 924:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(394);
+/* provided dependency */ var jQuery = __webpack_require__(248);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -211,7 +211,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 576:
+/***/ 382:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -225,7 +225,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(394)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(248)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -436,7 +436,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 394:
+/***/ 248:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11160,7 +11160,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 787:
+/***/ 533:
 /***/ ((module) => {
 
 /**
@@ -15939,7 +15939,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 514:
+/***/ 900:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19184,7 +19184,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 485:
+/***/ 451:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -20242,7 +20242,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
 
@@ -20311,7 +20311,7 @@ Object .defineProperty (Namespace, "add",
          return module;
       }
 
-      const X3D = window [Symbol .for ("X_ITE.X3D-10.5.9")];
+      const X3D = window [Symbol .for ("X_ITE.X3D-10.5.10")];
 
       if (X3D)
          X3D [name] = module;
@@ -21154,11 +21154,9 @@ Object .assign (Generator .prototype,
    },
    ExistsRouteNode (routeNode)
    {
-      const
-         namesByNode = this .namesByNode .get (this .ExecutionContext ()),
-         routeNodes  = this .routeNodes .get (this .ExecutionContext ());
+      const routeNodes = this .routeNodes .get (this .ExecutionContext ());
 
-      return namesByNode .has (routeNode) || routeNodes .has (routeNode);
+      return routeNodes .has (routeNode);
    },
    IsSharedNode (baseNode)
    {
@@ -29223,13 +29221,9 @@ const SFNodeCache =
 
 function dispose ()
 {
-   const value = this .getValue ();
-
-   value ?.dispose ();
+   this .getValue () ?.dispose ();
 
    Fields_SFNode .prototype .dispose .call (this);
-
-   SFNodeCache .delete (value);
 }
 
 const SFNodeCache_default_ = SFNodeCache;
@@ -34193,7 +34187,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (x_ite_Namespace .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(394);
+/* provided dependency */ var $ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34329,7 +34323,7 @@ const Legacy_default_ = Legacy;
  *
  ******************************************************************************/
 
-const BROWSER_VERSION_default_ = "10.5.9";
+const BROWSER_VERSION_default_ = "10.5.10";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -34380,6 +34374,7 @@ const BROWSER_VERSION_default_ = "10.5.9";
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -35610,6 +35605,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
          }
       }
 
+
       // Type name
 
       generator .string += '{';
@@ -36100,6 +36096,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
 
          firstParent .setValue (null);
       }
+
+      Fields_SFNodeCache .delete (this);
 
       // Call super.dispose, where fields get disposed.
 
@@ -37354,7 +37352,7 @@ const X3DBindableNode_default_ = X3DBindableNode;
 
 /* harmony default export */ const Core_X3DBindableNode = (x_ite_Namespace .add ("X3DBindableNode", X3DBindableNode_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(787);
+/* provided dependency */ var libtess = __webpack_require__(533);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39920,7 +39918,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (x_ite_Namespace .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(394);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -40175,7 +40173,7 @@ const Expressions_default_ = Expressions;
 
 /* harmony default export */ const Parser_Expressions = (x_ite_Namespace .add ("Expressions", Expressions_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(394);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42815,7 +42813,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (x_ite_Namespace .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(394);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44993,7 +44991,7 @@ const URLs_default_ = URLs;
 
 /* harmony default export */ const Networking_URLs = (x_ite_Namespace .add ("URLs", URLs_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(394);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45209,17 +45207,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       this .scenesArray     (glTF, glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
-      this .viewpointsCenterOfRotation (this .getScene ());
-      this .optimizeSceneGraph (this .getScene () .getRootNodes ());
+      this .viewpointsCenterOfRotation (scene);
+      this .optimizeSceneGraph (scene .getRootNodes ());
 
       this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("EnvironmentLights", this .envLights);
       this .exportGroup ("Lights",            this .lights);
       this .exportGroup ("Animations",        glTF .animations);
 
+      this .cleanupAnimationScripts ();
       this .materialVariantsSwitch ();
 
-      return this .getScene ();
+      return scene;
    },
    assetObject (asset)
    {
@@ -47547,6 +47546,30 @@ function eventsProcessed ()
 
       return this .createInterpolator (timeSensorNode, node, target, sampler .interpolation, input .array, output, timeSensorNode ._cycleInterval .getValue ());
    },
+   cleanupAnimationScripts ()
+   {
+      // It can happen, that some scripts are not used, so let us remove them.
+
+      const
+         scene       = this .getScene (),
+         scriptNodes = Array .from (scene .getNamedNodes (), node => node .getValue ())
+            .filter (node => node .getType () .at (-1) === Base_X3DConstants .Script);
+
+      for (const scriptNode of scriptNodes)
+      {
+         if (scriptNode .getFields () .every (field => !field .getInputRoutes () .size))
+         {
+            scriptNode .dispose ();
+            continue;
+         }
+
+         if (scriptNode .getFields () .every (field => !field .getOutputRoutes () .size))
+         {
+            scriptNode .dispose ();
+            continue;
+         }
+      }
+   },
    createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
       const
@@ -48975,7 +48998,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (x_ite_Namespace .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(394);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49126,7 +49149,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (x_ite_Namespace .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(394);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52493,8 +52516,8 @@ const MatrixStack_default_ = MatrixStack;
 
 /* harmony default export */ const Utility_MatrixStack = (x_ite_Namespace .add ("MatrixStack", MatrixStack_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(394);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(787);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(248);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(533);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55273,7 +55296,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (x_ite_Namespace .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(394);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63292,7 +63315,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (x_ite_Namespace .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(394);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66718,7 +66741,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (x_ite_Namespace .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(394);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67682,7 +67705,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (x_ite_Namespace .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(394);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -75338,32 +75361,36 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
       return function ()
       {
          const
-            crossSection = this ._crossSection,
-            orientation  = this ._orientation,
-            scale        = this ._scale,
-            spine        = this ._spine,
-            points       = [ ];
+            crossSection    = this ._crossSection,
+            orientation     = this ._orientation,
+            scale           = this ._scale,
+            spine           = this ._spine,
+            numCrossSection = crossSection .length,
+            numOrientations = orientation .length,
+            numScales       = scale .length,
+            numSpines       = spine .length,
+            points          = [ ];
 
-         // calculate SCP rotations
+         // Calculate SCP rotations.
 
          const rotations = this .createRotations ();
 
-         // calculate vertices.
+         // Calculate vertices.
 
-         for (let i = 0, length = spine .length; i < length; ++ i)
+         for (let i = 0; i < numSpines; ++ i)
          {
             const matrix = rotations [i];
 
-            if (orientation .length)
-               matrix .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
+            if (numOrientations)
+               matrix .rotate (orientation [Math .min (i, numOrientations - 1)] .getValue ());
 
-            if (scale .length)
+            if (numScales)
             {
-               const s = scale [Math .min (i, scale .length - 1)] .getValue ();
+               const s = scale [Math .min (i, numScales - 1)] .getValue ();
                matrix .scale (scale3 .set (s .x, 1, s .y));
             }
 
-            for (let cs = 0, csLength = crossSection .length; cs < csLength; ++ cs)
+            for (let cs = 0; cs < numCrossSection; ++ cs)
             {
                const vector = crossSection [cs] .getValue ();
                points .push (matrix .multVecMatrix (new Numbers_Vector3 (vector .x, 0, vector .y)));
@@ -91358,7 +91385,7 @@ mediump samplerCube textureCube;
 
 /* harmony default export */ const MaterialTextures = (x_ite_Namespace .add ("MaterialTextures", MaterialTextures_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(394);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96655,7 +96682,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (x_ite_Namespace .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(394);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97253,7 +97280,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 
 /* harmony default export */ const Shape_X3DAppearanceNode = (x_ite_Namespace .add ("X3DAppearanceNode", X3DAppearanceNode_default_));
 ;// ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(394);
+/* provided dependency */ var Appearance_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101024,8 +101051,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, Sound_X3D
    {
       this .audioSource .gain .value = this ._gain .getValue ();
    },
-   set_pitch ()
-   { },
    set_loop ()
    {
       if (!this .mediaElement)
@@ -101376,12 +101401,21 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, Sound_X3DSoundSour
       Sound_X3DSoundSourceNode .prototype .initialize .call (this);
       Networking_X3DUrlObject       .prototype .initialize .call (this);
 
+      this ._pitch .addInterest ("set_pitch__", this);
+
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_live__ ()
    {
       Sound_X3DSoundSourceNode .prototype .set_live__ .call (this);
       Networking_X3DUrlObject       .prototype .set_live__ .call (this);
+   },
+   set_pitch__ ()
+   {
+      const media = this .getMediaElement ();
+
+      if (media)
+         media .playbackRate = Math .max (this ._pitch .getValue (), 0);
    },
    unloadData ()
    {
@@ -101422,6 +101456,8 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, Sound_X3DSoundSour
       this ._duration_changed = media .duration;
 
       this .setMediaElement (media);
+
+      this .set_pitch__ ();
    },
    dispose ()
    {
@@ -105476,8 +105512,8 @@ const GifMedia_default_ = GifMedia;
 
 /* harmony default export */ const Texturing_GifMedia = (x_ite_Namespace .add ("GifMedia", GifMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(394);
-/* provided dependency */ var SuperGif = __webpack_require__(485);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(248);
+/* provided dependency */ var SuperGif = __webpack_require__(451);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105568,6 +105604,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       Networking_X3DUrlObject       .prototype .initialize .call (this);
 
       this ._speed .addInterest ("set_speed__", this);
+      this ._pitch .addInterest ("set_speed__", this);
 
       this .video
          .on ("abort error", this .setError .bind (this))
@@ -105711,7 +105748,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       const media = this .getMediaElement ();
 
       if (media)
-         media .playbackRate = this ._speed .getValue ();
+         media .playbackRate = this ._speed .getValue () * Math .max (this ._pitch .getValue (), 0);
    },
    set_time ()
    {
@@ -107945,7 +107982,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (x_ite_Namespace .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(394);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108575,7 +108612,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (x_ite_Namespace .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(394);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109222,7 +109259,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (x_ite_Namespace .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(394);
+/* provided dependency */ var Notification_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109344,8 +109381,8 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (x_ite_Namespace .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(58);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(394);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(924);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112067,7 +112104,7 @@ const DataStorage_default_ = DataStorage;
 
 /* harmony default export */ const Utility_DataStorage = (x_ite_Namespace .add ("DataStorage", DataStorage_default_));
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(394);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114678,8 +114715,8 @@ const X3DViewer_default_ = X3DViewer;
 
 /* harmony default export */ const Navigation_X3DViewer = (x_ite_Namespace .add ("X3DViewer", X3DViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(576);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(394);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(382);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115594,8 +115631,8 @@ const ExamineViewer_default_ = ExamineViewer;
 
 /* harmony default export */ const Navigation_ExamineViewer = (x_ite_Namespace .add ("ExamineViewer", ExamineViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(576);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(394);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(382);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116610,8 +116647,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (x_ite_Namespace .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(576);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(394);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(382);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116940,8 +116977,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (x_ite_Namespace .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(576);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(394);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(382);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118083,8 +118120,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (x_ite_Namespace .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(576);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(394);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(382);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119531,7 +119568,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (x_ite_Namespace .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(394);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120845,7 +120882,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 
 /* harmony default export */ const Sound_X3DSoundContext = (x_ite_Namespace .add ("X3DSoundContext", X3DSoundContext_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(394);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(248);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -122424,7 +122461,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (x_ite_Namespace .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(394);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(248);
 /*******************************************************************************
  * MIT License
  *
@@ -123690,7 +123727,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 
 /* harmony default export */ const FieldTypes = (x_ite_Namespace .add ("FieldTypes", FieldTypes_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(394);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124792,7 +124829,7 @@ const X3DBrowser_default_ = X3DBrowser;
 
 /* harmony default export */ const Browser_X3DBrowser = (x_ite_Namespace .add ("X3DBrowser", X3DBrowser_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(394);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125059,8 +125096,8 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(394);
-/* provided dependency */ var pako = __webpack_require__(514);
+/* provided dependency */ var jquery_$ = __webpack_require__(248);
+/* provided dependency */ var pako = __webpack_require__(900);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -125141,13 +125178,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (x_ite_Namespace .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(787);
+/* provided dependency */ var libtess_libtess = __webpack_require__(533);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (x_ite_Namespace .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(394);
+/* provided dependency */ var X3D_$ = __webpack_require__(248);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125451,7 +125488,7 @@ x_ite_Namespace, x_ite_Namespace .Fields,
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-10.5.9")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-10.5.10")] = x_ite_X3D;
 
 customElements .define ("x3d-canvas", x_ite_X3DCanvasElement);
 

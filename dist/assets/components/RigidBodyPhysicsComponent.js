@@ -1,5 +1,5 @@
-/* X_ITE v10.5.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.9")];
+/* X_ITE v10.5.10 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.10")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -74,7 +74,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.9")];
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
 

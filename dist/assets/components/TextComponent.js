@@ -1,9 +1,9 @@
-/* X_ITE v10.5.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.9")];
+/* X_ITE v10.5.10 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.10")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 189:
+/***/ 499:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14559,7 +14559,7 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
 
@@ -16081,7 +16081,7 @@ const FontStyle_default_ = FontStyle;
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
 ;// ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(189);
+/* provided dependency */ var opentype = __webpack_require__(499);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
