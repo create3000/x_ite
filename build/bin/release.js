@@ -206,7 +206,7 @@ function release ()
 function main ()
 {
 	// https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
-	// Set post buffer to 250 MiB.
+	// Set post buffer to 1 GB.
 	systemSync (`git config --global http.postBuffer 1000000000`);
 	systemSync (`git config --global https.postBuffer 1000000000`);
 
