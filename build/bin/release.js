@@ -207,8 +207,8 @@ function main ()
 {
 	// https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
 	// Set post buffer to 250 MiB.
-	systemSync (`git config --global https.postBuffer 1000000000`);
 	systemSync (`git config --global http.postBuffer 1000000000`);
+	systemSync (`git config --global https.postBuffer 1000000000`);
 
 	bump ();
 	systemSync ("npm run dist");
