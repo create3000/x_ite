@@ -54,7 +54,7 @@ export default new class MikkTSpace
          {
             if (response .headers .get ("Content-Type") !== "application/wasm")
             {
-               console .warn ("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
+               // console .warn ("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
             }
             else
             {
