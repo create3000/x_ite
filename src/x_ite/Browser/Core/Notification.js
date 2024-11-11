@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
          .hide ()
          .addClass ("x_ite-private-notification")
          .appendTo (this .getBrowser () .getSurface ())
-         .animate ({ width: 0 });
+         .css ("width", 0);
 
       $("<span></span>") .appendTo (this .element);
 
