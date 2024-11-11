@@ -787,8 +787,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    scriptElement (element)
    {
       const
-         domParser      = new DOMParser (),
-         scriptDocument = domParser .parseFromString (element .outerHTML, "application/xml"),
+         scriptDocument = $.parseXML (element .outerHTML, "application/xml"),
          childNodes     = scriptDocument .children [0] .childNodes;
 
       element .textContent = "// Content moved into childNodes.";
