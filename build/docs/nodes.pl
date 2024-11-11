@@ -330,6 +330,10 @@ sub reorder_fields {
 
 $json   = `cat ../media/docs/examples/config.json`;
 $config = parse_json ($json);
+$tree   = { };
+
+$tree -> {$_ -> {component}} = { } foreach @$config;
+$tree -> {$_ -> {component}} -> {$_ -> {name}} = $_ foreach @$config;
 
 use Data::Dumper;
 
@@ -340,8 +344,8 @@ sub update_example {
 
    return $file unless -d "../media/docs/examples/$componentName/$typeName";
 
-   $xrButtonPosition  = "xr-button-" . ($config -> {$typeName} -> {"xrButtonPosition"} // "br");
-   $xrMovementControl = $config -> {$typeName} -> {"xrMovementControl"} // "VIEWER_POSE";
+   $xrButtonPosition  = "xr-button-" . ($tree -> {$componentName} -> {$typeName} -> {"xrButtonPosition"} // "br");
+   $xrMovementControl = $tree -> {$componentName} -> {$typeName} -> {"xrMovementControl"} // "VIEWER_POSE";
 
    $string = "## Example\n";
    $string .= "\n";

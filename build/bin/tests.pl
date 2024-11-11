@@ -10,6 +10,10 @@ use JSON::Parse qw(parse_json);
 
 my $json   = `cat ../media/docs/examples/config.json`;
 my $config = parse_json ($json);
+my $tree   = { };
+
+$tree -> {$_ -> {component}} = { } foreach @$config;
+$tree -> {$_ -> {component}} -> {$_ -> {name}} = $_ foreach @$config;
 
 sub examples
 {
@@ -33,11 +37,11 @@ sub examples
       my $typeName  = $2;
       my $extra     = "";
 
-      $extra .= ", xrButtonPosition: \"$config->{$typeName}->{xrButtonPosition}\""
-         if $config -> {$typeName} -> {"xrButtonPosition"};
+      $extra .= ", xrButtonPosition: \"$tree->{$component}->{$typeName}->{xrButtonPosition}\""
+         if $tree -> {$component} -> {$typeName} -> {"xrButtonPosition"};
 
-      $extra .= ", xrMovementControl: \"$config->{$typeName}->{xrMovementControl}\""
-         if $config -> {$typeName} -> {"xrMovementControl"};
+      $extra .= ", xrMovementControl: \"$tree->{$component}->{$typeName}->{xrMovementControl}\""
+         if $tree -> {$component} -> {$typeName} -> {"xrMovementControl"};
 
       say FILE "   { component: \"$component\", test: \"$typeName\"$extra },",
    }

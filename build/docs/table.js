@@ -18,7 +18,8 @@ const
 	other  = sh (`find '${examples}' -type f -name 'example.html' -not -path '*/X3D/*'`) .trim () .split ("\n") .sort (),
 	html   = [... X3D, ... other],
 	table  = Array .from ({ length: Math .floor ((html .length - 1) / COLUMNS) + 1 }, () => [ ]),
-	config = require (`${examples}/config.json`);
+	config = require (`${examples}/config.json`),
+	tree   = config .reduce ((p, c) => [p, Object .assign (p [c .component] ??= { }, { [c .name]: c })] [0], { });
 
 for (const [i, example] of html .entries ())
 	table [Math .floor (i / COLUMNS)] .push (example);
@@ -41,8 +42,8 @@ for (const row of table)
 			size      = sh (`identify -format "%w %h" "${examples}/${component}/${basename}/screenshot-small.png"`) .trim () .split (" ");
 
 		const
-			xrButtonPosition  = config [basename] ?.["xrButtonPosition"] ?? "br",
-			xrMovementControl = config [basename] ?.["xrMovementControl"] ?? "VIEWER_POSE";
+			xrButtonPosition  = tree [component] [basename] ?.["xrButtonPosition"] ?? "br",
+			xrMovementControl = tree [component] [basename] ?.["xrMovementControl"] ?? "VIEWER_POSE";
 
 		folder = folder .replace (/^.*\/media\/docs\//, "");
 
