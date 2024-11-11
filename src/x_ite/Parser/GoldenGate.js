@@ -100,11 +100,12 @@ class GoldenGate extends X3DParser
    {
       for (const Parser of GoldenGate .#parsers)
       {
+         let parser, input;
+
          try
          {
-            var
-               parser = new Parser (this .getScene ()),
-               input  = this .getInput (parser .getEncoding (), x3dSyntax);
+            parser = new Parser (this .getScene ());
+            input  = this .getInput (parser .getEncoding (), x3dSyntax);
 
             if (Array .isArray (input) ? input .some (i => i === undefined) : input === undefined)
                continue;
