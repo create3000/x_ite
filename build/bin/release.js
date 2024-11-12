@@ -124,6 +124,9 @@ function other ()
 	process .chdir (`${cwd}/../media`);
 	systemSync (`npm run release`);
 
+	process .chdir (`${cwd}/../x_ite-node`);
+	systemSync (`npm run release`);
+
 	process .chdir (`${cwd}/../x3d-tidy`);
 	systemSync (`npm run release`);
 
