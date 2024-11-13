@@ -133,8 +133,7 @@ function SVGParser (scene)
    this .strokeGeometries = new Map ();
    this .lineProperties   = new Map ();
    this .tessy            = this .createTesselator ();
-   this .canvas           = document .createElement ("canvas");
-   this .context          = this .canvas .getContext ("2d");
+   this .context          = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
    this .numSwitchNodes   = 0;
 
    this .styles = [{
