@@ -218,8 +218,8 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
                cx2       = canvas2 .getContext ("2d", { willReadFrequently: true }),
                imageData = cx1 .createImageData (width, height);
 
-            canvas1 .width  = width;
-            canvas1 .height = height;
+            cx1 .canvas .width  = width;
+            cx1 .canvas .height = height;
 
             this .convert (imageData .data, comp, array .getValue (), array .length);
             cx1 .putImageData (imageData, 0, 0);
@@ -227,8 +227,8 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
             width  = Algorithm .nextPowerOfTwo (width);
             height = Algorithm .nextPowerOfTwo (height);
 
-            canvas2 .width  = width;
-            canvas2 .height = height;
+            cx2 .canvas .width  = width;
+            cx2 .canvas .height = height;
 
             cx2 .clearRect (0, 0, width, height);
             cx2 .drawImage (canvas1, 0, 0, canvas1 .width, canvas1 .height, 0, 0, width, height);

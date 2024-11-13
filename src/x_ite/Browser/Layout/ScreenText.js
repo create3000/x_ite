@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
-            canvas         = this .canvas [0],
+            canvas         = this .context .canvas,
             cx             = this .context;
 
          // Set texCoord.

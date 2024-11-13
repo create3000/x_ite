@@ -200,8 +200,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
                height = Algorithm .nextPowerOfTwo (height);
             }
 
-            canvas .width  = width;
-            canvas .height = height;
+            cx .canvas .width  = width;
+            cx .canvas .height = height;
 
             cx .clearRect (0, 0, width, height);
             cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
