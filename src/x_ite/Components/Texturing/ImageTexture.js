@@ -200,6 +200,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
                height = Algorithm .nextPowerOfTwo (height);
             }
 
+            // Use .canvas to support foreign 2d libs.
             cx .canvas .width  = width;
             cx .canvas .height = height;
 

@@ -218,6 +218,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
                cx2       = canvas2 .getContext ("2d", { willReadFrequently: true }),
                imageData = cx1 .createImageData (width, height);
 
+            // Use .canvas to support foreign 2d libs.
             cx1 .canvas .width  = width;
             cx1 .canvas .height = height;
 
@@ -227,6 +228,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
             width  = Algorithm .nextPowerOfTwo (width);
             height = Algorithm .nextPowerOfTwo (height);
 
+            // Use .canvas to support foreign 2d libs.
             cx2 .canvas .width  = width;
             cx2 .canvas .height = height;
 

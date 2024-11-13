@@ -187,6 +187,7 @@ function SVGParser (scene)
          break;
    }
 
+   // Use .canvas to support foreign 2d libs.
    this .context .canvas .width  = this .GRADIENT_SIZE;
    this .context .canvas .height = this .GRADIENT_SIZE;
 }
