@@ -209,8 +209,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
          }
          else
          {
-            if (!this .canvas)
-               this .canvas = [document .createElement ("canvas"), document .createElement ("canvas")];
+            this .canvas ??= [document .createElement ("canvas"), document .createElement ("canvas")];
 
             const
                canvas1   = this .canvas [0],

@@ -188,8 +188,8 @@ function SVGParser (scene)
          break;
    }
 
-   this .canvas .width  = this .GRADIENT_SIZE;
-   this .canvas .height = this .GRADIENT_SIZE;
+   this .context .canvas .width  = this .GRADIENT_SIZE;
+   this .context .canvas .height = this .GRADIENT_SIZE;
 }
 
 Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototype),
@@ -1206,7 +1206,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       cx .restore ();
 
       // Use PNG because image can have alpha channel.
-      return this .canvas .toDataURL ("image/png");
+      return this .context .canvas .toDataURL ("image/png");
    },
    patternUrl (xmlElement)
    {
