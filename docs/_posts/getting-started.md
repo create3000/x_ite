@@ -43,6 +43,8 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
 
+Or simply subscribe to receive the latest news.
+
 ## X3D Examples
 
 <script type="module" src="assets/js/examples.js"></script>
