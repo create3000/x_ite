@@ -1,41 +1,9 @@
-/* X_ITE v10.5.10 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.10")];
+/* X_ITE v10.5.11 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.11")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 254:
-/***/ ((module) => {
-
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
@@ -1265,7 +1233,6 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// ./src/x_ite/Browser/Layout/ScreenText.js
-/* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1327,10 +1294,9 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .textureNode   = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
-   this .canvas        = $("<canvas></canvas>");
-   this .context       = this .canvas [0] .getContext ("2d", { willReadFrequently: true });
-   this .matrix        = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .textureNode = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
+   this .context     = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
+   this .matrix      = new (external_X_ITE_X3D_Matrix4_default()) ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
@@ -1433,7 +1399,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
             texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
-            canvas         = this .canvas [0],
+            canvas         = this .context .canvas,
             cx             = this .context;
 
          // Set texCoord.
