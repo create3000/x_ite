@@ -39,11 +39,9 @@ glTF (GL Transmission Format) is an open standard file format designed for effic
 
 Yeah, tell me!
 
-X_ITE needs your support, with a small contribution you can make a big difference.
+X_ITE needs your support, with a small contribution you can make a big difference, or simply subscribe to receive the latest news.
 
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
-
-Or simply subscribe to receive the latest news.
 
 ## X3D Examples
 
