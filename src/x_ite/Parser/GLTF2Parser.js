@@ -3395,7 +3395,7 @@ function eventsProcessed ()
 
                const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
 
-               if (coordinateInterpolatorNode)
+               if (coordinateInterpolatorNode ?._key .length > 1)
                {
                   if (coordinateInterpolatorNode ._keyValue .length / coordinateInterpolatorNode ._key .length === geometryNode ._coord .point .length)
                   {
@@ -3408,7 +3408,7 @@ function eventsProcessed ()
 
                const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
 
-               if (normalInterpolatorNode)
+               if (normalInterpolatorNode ?._key .length > 1)
                {
                   if (normalInterpolatorNode ._keyValue .length / normalInterpolatorNode ._key .length === geometryNode ._normal .vector .length)
                   {
