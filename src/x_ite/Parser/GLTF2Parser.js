@@ -3393,37 +3393,51 @@ function eventsProcessed ()
                if (!geometryNode)
                   continue;
 
-               if (attributes ["POSITION"] .field .length === geometryNode ._coord .point .length)
-               {
-                  const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
+               if (attributes ["POSITION"] .field .length !== geometryNode ._coord .point .length)
+                  continue;
 
-                  if (coordinateInterpolatorNode ?._key .length > 1)
-                  {
-                     if (coordinateInterpolatorNode ._keyValue .length / coordinateInterpolatorNode ._key .length === geometryNode ._coord .point .length)
-                     {
-                        interpolatorNodes .push (coordinateInterpolatorNode);
+               const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
 
-                        scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
-                        scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
-                     }
-                  }
-               }
+               if (!coordinateInterpolatorNode)
+                  continue;
 
-               if (attributes ["NORMAL"] .field .length === geometryNode ._normal .vector .length)
-               {
-                  const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
+               if (coordinateInterpolatorNode ._key .length < 2)
+                  continue;
 
-                  if (normalInterpolatorNode ?._key .length > 1)
-                  {
-                     if (normalInterpolatorNode ._keyValue .length / normalInterpolatorNode ._key .length === geometryNode ._normal .vector .length)
-                     {
-                        interpolatorNodes .push (normalInterpolatorNode);
+               if (coordinateInterpolatorNode ._keyValue .length / coordinateInterpolatorNode ._key .length !== geometryNode ._coord .point .length)
+                  continue;
 
-                        scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
-                        scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "vector");
-                     }
-                  }
-               }
+               interpolatorNodes .push (coordinateInterpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
+               scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
+            }
+
+            for (const { shapeNode, targets, attributes } of primitives)
+            {
+               const geometryNode = shapeNode ._geometry .getValue ();
+
+               if (!geometryNode)
+                  continue;
+
+               if (attributes ["NORMAL"] .field .length !== geometryNode ._normal .vector .length)
+                  continue;
+
+               const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
+
+               if (!normalInterpolatorNode)
+                  continue;
+
+               if (normalInterpolatorNode ._key .length < 2)
+                  continue;
+
+               if (normalInterpolatorNode ._keyValue .length / normalInterpolatorNode ._key .length !== geometryNode ._normal .vector .length)
+                  continue;
+
+               interpolatorNodes .push (normalInterpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
+               scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "vector");
             }
 
             return interpolatorNodes;
