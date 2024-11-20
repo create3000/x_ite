@@ -82,29 +82,35 @@ function tags (version)
 	systemSync (`git push origin --tags`);
 }
 
-function update (version)
+function update (... versions)
 {
 	const
 		cwd  = process .cwd (),
 		dist = `${cwd}/dist`,
-		code = `${cwd}/../code`,
-		docs = `${code}/docs/x_ite/${version}`;
+		code = `${cwd}/../code`;
 
-	console .log (`Uploading ${version}`);
+	for (const version of versions)
+	{
+		const docs = `${code}/docs/x_ite/${version}`;
 
-	systemSync (`rm -r '${docs}'`);
-	systemSync (`cp -r '${dist}' '${docs}'`);
+		console .log (`Copying version ${version}...`);
 
-	if (version === "latest")
-		systemSync (`cp -r '${dist}' '${docs}/dist'`); // legacy
+		process .chdir (cwd);
 
-	process .chdir (code);
+		systemSync (`rsync -a --delete --exclude=".*" ${dist}/ ${docs}/`);
 
-	systemSync (`git add -A`);
-	systemSync (`git commit -am 'Published version ${version}'`);
+		if (version === "latest")
+			systemSync (`cp -r '${dist}' '${docs}/dist'`); // legacy
+
+		process .chdir (code);
+
+		systemSync (`git add -A`);
+		systemSync (`git commit -am 'Published version ${version}'`);
+
+		tags (version);
+	}
+
 	systemSync (`git push origin`);
-
-	tags (version);
 
 	process .chdir (cwd);
 }
@@ -185,10 +191,7 @@ function release ()
 
 	// code
 
-	update ("alpha");
-
-	if (!version .endsWith ("a"))
-		update ("latest");
+	update ("alpha", ... version .endsWith ("a") ? [ ] : ["latest"]);
 
 	// switch back to development branch
 
