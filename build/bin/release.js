@@ -100,7 +100,7 @@ function update (... versions)
 		systemSync (`rsync -a --delete --exclude=".*" ${dist}/ ${docs}/`);
 
 		if (version === "latest")
-			systemSync (`cp -r '${dist}' '${docs}/dist'`); // legacy
+			systemSync (`cp -r '${dist}' '${docs}'`); // legacy
 
 		process .chdir (code);
 
