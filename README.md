@@ -14,7 +14,7 @@ X_ITE is a comprehensive 3D library entirely written in JavaScript and uses WebG
 
 ## Funding
 
-X_ITE needs your support. If you become a [Patreon](https://patreon.com/X_ITE), we can improve X_ITE even better.
+X_ITE needs your support. If you become a [Patreon](https://patreon.com/X_ITE), we can improve X_ITE even better, or simply subscribe to receive the latest news.
 
 ## Quick Links
 
