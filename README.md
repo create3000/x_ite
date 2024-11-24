@@ -180,6 +180,7 @@ X_ITE is free software: you can redistribute it and/or modify it under the terms
 
 ## See Also
 
+* [x_ite-node](https://www.npmjs.com/package/x_ite-node) — Pure Node.js version of X_ITE
 * [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) — X3D converter, beautifier and minimizer
 * [x3d-image](https://www.npmjs.com/package/x3d-image) — render image files from X3D
 * [sunrize](https://www.npmjs.com/package/sunrize) — a multi-platform X3D editor
