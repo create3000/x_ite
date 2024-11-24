@@ -1,5 +1,5 @@
-/* X_ITE v10.5.12 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.12")];
+/* X_ITE v10.5.13 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.13")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({

@@ -1,9 +1,9 @@
-/* X_ITE v10.5.12 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.12")];
+/* X_ITE v10.5.13 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.13")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 38:
+/***/ 326:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 376:
+/***/ 304:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -4030,7 +4030,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 544:
+/***/ 392:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7315,9 +7315,9 @@ var Decoder = class _Decoder {
 //# 
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
 /* provided dependency */ var dicomParser = __webpack_require__(108);
-/* provided dependency */ var JpegImage = __webpack_require__(544);
-/* provided dependency */ var CharLS = __webpack_require__(38);
-/* provided dependency */ var OpenJPEG = __webpack_require__(376);
+/* provided dependency */ var JpegImage = __webpack_require__(392);
+/* provided dependency */ var CharLS = __webpack_require__(326);
+/* provided dependency */ var OpenJPEG = __webpack_require__(304);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
