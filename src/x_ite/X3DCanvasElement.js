@@ -61,6 +61,7 @@ class X3DCanvasElement extends HTMLElement
          {
             value: new X3DBrowser (this),
             enumerable: true,
+            writable: true,
          });
       }
       catch (error)
