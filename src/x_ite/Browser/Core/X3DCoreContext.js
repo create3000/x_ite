@@ -170,6 +170,7 @@ Object .assign (X3DCoreContext .prototype,
          {
             value: this,
             enumerable: true,
+            writable: true,
          },
          src:
          {
@@ -829,7 +830,7 @@ Object .assign (X3DCoreContext .prototype,
          .prop ("browser", null)
          .off (".X3DCoreContext .ContextMenu");
 
-      this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ();
+      this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ?.();
       this [_shadow] .find ("*") .remove ();
    },
 });
