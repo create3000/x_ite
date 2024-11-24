@@ -57,12 +57,7 @@ class X3DCanvasElement extends HTMLElement
       {
          super ();
 
-         Object .defineProperty (this, "browser",
-         {
-            value: new X3DBrowser (this),
-            enumerable: true,
-            writable: true,
-         });
+         new X3DBrowser (this);
       }
       catch (error)
       {

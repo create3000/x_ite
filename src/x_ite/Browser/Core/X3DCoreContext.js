@@ -169,6 +169,7 @@ Object .assign (X3DCoreContext .prototype,
          browser:
          {
             value: this,
+            configurable: true,
             enumerable: true,
             writable: true,
          },
