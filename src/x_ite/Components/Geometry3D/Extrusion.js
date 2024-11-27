@@ -296,12 +296,12 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          {
             const s = spine .at (-1) .getValue ();
 
-            SCPyAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ()) .normalize ();
+            SCPyAxis .assign (s) .subtract (spine .at (-2) .getValue ()) .normalize ();
 
             if (numSpines > 2)
             {
-               SCPzAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ())
-                  .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
+               SCPzAxis .assign (s) .subtract (spine .at (-2) .getValue ())
+                  .cross (vector3 .assign (spine .at (-3) .getValue ()) .subtract (spine .at (-2) .getValue ()))
                   .normalize ();
             }
 
