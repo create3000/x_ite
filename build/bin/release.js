@@ -132,6 +132,7 @@ function other ()
 
 	process .chdir (`${cwd}/../x_ite-node`);
 	systemSync (`npm run release`);
+	systemSync (`sleep 10`);
 
 	process .chdir (`${cwd}/../x3d-tidy`);
 	systemSync (`npm run release`);
