@@ -262,6 +262,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                .normalize ();
 
             // Fix edge case.
+            // https://www.web3d.org/x3d/content/examples/X3dForAdvancedModeling/GeometricShapes/ExtrusionEdgeCasesIndex.html
             if (SCPyAxisPrevious .dot (SCPyAxis) < 0)
                SCPyAxis .negate ();
 
@@ -310,6 +311,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             }
 
             // Fix edge case.
+            // https://www.web3d.org/x3d/content/examples/X3dForAdvancedModeling/GeometricShapes/ExtrusionEdgeCasesIndex.html
             if (SCPyAxisPrevious .dot (SCPyAxis) < 0)
                SCPyAxis .negate ();
 
