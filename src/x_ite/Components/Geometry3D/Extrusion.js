@@ -359,10 +359,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             && this .getClosed (this ._orientation)
             && this .getClosed (this ._scale);
 
-         const
-            firstCrossSection  = crossSection [0] .getValue (),
-            lastCrossSection   = crossSection [crossSection .length - 1] .getValue (),
-            closedCrossSection = firstCrossSection .equals (lastCrossSection);
+         const closedCrossSection = this .getClosed (crossSection);
 
          // For caps calculation
 
