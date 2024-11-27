@@ -55,6 +55,12 @@ $ npm install x_ite
 
 Maybe you are curious now [how to use X_ITE with Electron](https://create3000.github.io/x_ite/how-to-use-x-ite-with-electron)?
 
+Also try [x_ite-node](https://www.npmjs.com/package/x_ite-node), a pure Node.js version, without any dependencies on Electron or any browser. Suitable for just reading 3D files, analyzing, processing and generating X3D.
+
+```console
+$ npm install x_ite-node
+```
+
 ## Usage
 
 This script initializes an X3D canvas within an HTML page, configuring it to contain a scene, a camera and a geometric cube with default material properties. It then animates the rotation of the cube within the scene, ensuring that the camera captures the dynamic action.
