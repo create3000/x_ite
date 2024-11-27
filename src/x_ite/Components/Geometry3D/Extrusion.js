@@ -261,6 +261,10 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
                .normalize ();
 
+            // Fix edge case.
+            if (SCPyAxisPrevious .dot (SCPyAxis) < 0)
+               SCPyAxis .negate ();
+
             // g.
             if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
                SCPzAxis .negate ();
@@ -304,6 +308,10 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                   .cross (vector3 .assign (spine .at (-3) .getValue ()) .subtract (spine .at (-2) .getValue ()))
                   .normalize ();
             }
+
+            // Fix edge case.
+            if (SCPyAxisPrevious .dot (SCPyAxis) < 0)
+               SCPyAxis .negate ();
 
             // g.
             if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
