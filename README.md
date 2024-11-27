@@ -49,16 +49,16 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@10.5.13/dist/x_ite.min.mjs";
 
 To install, use the following command:
 
-```console
-$ npm install x_ite
+```sh
+npm install x_ite
 ```
 
 Maybe you are curious now [how to use X_ITE with Electron](https://create3000.github.io/x_ite/how-to-use-x-ite-with-electron)?
 
 Also try [x_ite-node](https://www.npmjs.com/package/x_ite-node), a pure Node.js version, without any dependencies on Electron or any browser. Suitable for just reading 3D files, analyzing, processing and generating X3D.
 
-```console
-$ npm install x_ite-node
+```sh
+npm install x_ite-node
 ```
 
 ## Usage
