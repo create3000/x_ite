@@ -36,7 +36,7 @@ If you are going to use X_ITE in a production environment, you should use a fixe
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@10.5.13/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@10.5.13/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@10.5.13/dist/x_ite.min.mjs";
@@ -68,7 +68,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ### Declarative Syntax
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@10.5.13/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@10.5.13/dist/x_ite.min.js"></script>
 <x3d-canvas>
   <X3D profile='Interchange' version='4.0'>
     <head>
