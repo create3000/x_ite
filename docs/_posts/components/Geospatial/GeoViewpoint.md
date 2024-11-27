@@ -90,11 +90,11 @@ Rotation of [Viewpoint](/x_ite/components/navigation/viewpoint/), relative to de
 
 #### Hint
 
-- This is *orientation* _change_ from default direction (0 0 -1) +Y axis is the up vector for the local area (the normal to the tangent plane on the ellipsoid), -Z points towards the north pole, and +X is east 1 0 0 -1.570796 always looks down.
+- This is *orientation* _change_ from default direction along the (minus) -Z axis. +Y axis is the up vector for the local area (the normal to the tangent plane on the ellipsoid), -Z points towards the north pole, and +X is east 1 0 0 -1.570796 always looks down.
 
 #### Warning
 
-- For VR/AR/MAR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
 
 ### SFVec3d [in, out] **centerOfRotation** 0 0 0 <small>(-∞,∞)</small>
 

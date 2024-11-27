@@ -13,7 +13,7 @@ tags: [Viewpoint, Navigation]
 
 ## Overview
 
-Viewpoint provides a specific location and direction where the user may view the scene. Viewpoints are the primary way for a user to navigate within a scene, and for an author to show critical aspects of a model.
+Viewpoint provides a specific location and direction where the user may view the scene. Viewpoints are the primary way for a user to navigate within a scene, and for an author to show critical aspects of a model. Unless modified by the orientation field, the default direction for a Viewpoint to look is along the -Z axis.
 
 The Viewpoint node belongs to the **Navigation** component and requires at least level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
@@ -80,7 +80,7 @@ Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis dire
 
 #### Warning
 
-- For VR/AR/MAR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
 
 ### SFVec3f [in, out] **centerOfRotation** 0 0 0 <small>(-∞,∞)</small>
 
@@ -98,7 +98,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 #### Warnings
 
 - *fieldOfView* may not be correct for different window sizes and aspect ratios.
-- For VR/AR/MAR users wearing a head-mounted display (HMD), animating this field may induce motion sickness. Interchange profile
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness. Interchange profile
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 
@@ -152,7 +152,7 @@ Transition instantly by jumping, otherwise smoothly adjust offsets in place when
 
 #### Warning
 
-- For VR/AR/MAR users wearing head-mounted displays, animating transitions between viewpoints may induce motion sickness.
+- For VR/AR/MR/XR users wearing head-mounted displays, animating transitions between viewpoints may induce motion sickness.
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
 

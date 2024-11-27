@@ -68,7 +68,7 @@ Rotation (axis, angle in radians) of listening point direction relative to defau
 
 #### Warning
 
-- For VR/AR/MAR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
 
 ### SFFloat [in, out] **interauralDistance** 0 <small>[0,∞)</small> <small class="red">not supported</small>
 

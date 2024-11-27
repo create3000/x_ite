@@ -80,7 +80,7 @@ Rotation (axis, angle in radians) of [Viewpoint](/x_ite/components/navigation/vi
 
 #### Warning
 
-- For VR/AR/MAR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
 
 ### SFVec3f [in, out] **centerOfRotation** 0 0 0 <small>(-∞,∞)</small>
 
@@ -152,7 +152,7 @@ Transition instantly by jumping, otherwise smoothly adjust offsets in place when
 
 #### Warning
 
-- For VR/AR/MAR users wearing head-mounted displays, animating transitions between viewpoints may induce motion sickness.
+- For VR/AR/MR/XR users wearing head-mounted displays, animating transitions between viewpoints may induce motion sickness.
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
 
