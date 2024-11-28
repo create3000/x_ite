@@ -1,7 +1,7 @@
 ---
 ---
 
-@import 'main
+@use 'main
 {%- if jekyll.environment == 'production' -%}
   .bundle
 {%- endif -%}
@@ -142,8 +142,8 @@ html {
 }
 
 .nav-wrapper {
+  margin-top: 4rem;
   border-left: 1px solid var(--nav-border-color);
-  margin-bottom: 4rem;
   transition: top 0.2s ease-in-out;
   -webkit-animation: fade-up 0.8s;
   animation: fade-up 0.8s;
@@ -190,7 +190,13 @@ html {
   color: var(--h3-color);
 }
 
+.post-tail-wrapper .nav-wrapper {
+  border: 1px solid var(--nav-border-color);
+  border-radius: 10px;
+}
+
 .post-tail-wrapper .nav-wrapper h2 {
+  margin-top: 0.5rem;
   font-size: 1rem;
 }
 
