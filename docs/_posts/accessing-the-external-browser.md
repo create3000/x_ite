@@ -168,7 +168,7 @@ And here you can see the result:
 
 ### Functions
 
-#### X3D **noConflict** ()
+#### **noConflict** (): X3D
 
 In X_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
 
@@ -185,7 +185,7 @@ const X_ITE_X3D = X3D .noConflict ();
 
 The following services can be used to establish a session and obtain the X3DBrowser object.
 
-#### X3DBrowser **getBrowser** (*[selector : String]*)
+#### **getBrowser** (*selector: string*): X3DBrowser
 
 The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
 
@@ -194,7 +194,7 @@ The *selector* argument must be a string containing a valid CSS selector express
 const Browser = X3D .getBrowser ();
 ```
 
-#### X3DBrowser **getBrowser** (*element : Object*)
+#### **getBrowser** (*element: HTMLElement*): X3DBrowser
 
 Given a DOM element that represents a x3d-canvas element, the getBrowser function returns the appropriate X3DBrowser object.
 
@@ -210,7 +210,7 @@ for (const canvas of canvases)
 }
 ```
 
-#### Object **createBrowser** ()
+#### **createBrowser** (): X3DCanvasElement
 
 Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
 
