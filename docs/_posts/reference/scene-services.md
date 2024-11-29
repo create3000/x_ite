@@ -23,7 +23,7 @@ The string represent the basic specification version used by the parsed file in 
 
 The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
 
-#### **profile**: ProfileInfo
+#### **profile**: ProfileInfo | null
 
 A reference to the ProfileInfo object used by this execution context. This property is read only.
 
