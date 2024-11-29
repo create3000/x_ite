@@ -493,7 +493,7 @@ The SFNode object corresponds to an X3D SFNode field.
 
 *vrmlSyntax* is a UTF-8 string containing the definition of an X3D node.
 
-This constructor is only available inside Script nodes. If the specification version is greater than 2.0, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](/x_ite/reference/scene-services/#sfnode-createnode-string-typename) or [X3DExecutionContext.createProto](/x_ite/reference/scene-services/#sfnode-createproto-string-protoname) instead.
+This constructor is only available inside Script nodes. If the specification version is greater than 2.0, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](/x_ite/reference/scene-services/#createnode-typename-string-sfnode) or [X3DExecutionContext.createProto](/x_ite/reference/scene-services/#createproto-protoname-string-sfnode) instead.
 
 ### Properties
 
@@ -531,19 +531,19 @@ Returns the node type name.
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, produce this node.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
 #### **toXMLString** (options: Options): string
 
 Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, produce this node.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
 #### **toJSONString** (options: Options): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
 ## SFRotation Object
 
@@ -1151,19 +1151,19 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an MFNode field, produce this node.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
 #### **toXMLString** (\[options\]): string
 
 Returns the X3D XML-encoded string that, if parsed as the value of an MFNode field, produce this node.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
 #### **toJSONString** (\[options\]): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of an MFNode field, produce this node.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
 ## MFRotation Object
 
