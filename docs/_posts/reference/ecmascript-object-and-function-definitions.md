@@ -53,6 +53,6 @@ See [HTMLCanvasElement.captureStream()](https://developer.mozilla.org/en-US/docs
 
 See [HTMLCanvasElement.toBlob()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob).
 
-#### **toDataURL** (*type?: string, encoderOptions?: number*): String
+#### **toDataURL** (*type?: string, encoderOptions?: number*): string
 
 See [HTMLCanvasElement.toDataURL()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL).
