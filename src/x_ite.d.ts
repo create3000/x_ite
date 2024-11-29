@@ -64,23 +64,23 @@ declare namespace X3D
    class X3DBrowser
    {
       /**
-       * A browser-implementation specific string describing the browser.
+       * A browser-implementation specific string describing the browser. This property is read only.
        */
       readonly name: string;
       /**
-       * A browser-implementation specific string describing the browser version.
+       * A browser-implementation specific string describing the browser version. This property is read only.
        */
       readonly version: string;
       /**
-       * If provided, the URL to the entity that wrote this browser.
+       * If provided, the URL to the entity that wrote this browser. This property is read only.
        */
       readonly providerURL: string;
       /**
-       * The current speed of the avatar in m/s.
+       * The current speed of the avatar in m/s. This property is read only.
        */
       readonly currentSpeed: number;
       /**
-       * The current frame rate in frames per second.
+       * The current frame rate in frames per second. This property is read only.
        */
       readonly currentFrameRate: number;
       /**
@@ -88,47 +88,47 @@ declare namespace X3D
        */
       description: string;
       /**
-       * Returns the list of all profiles that are supported by this browser.
+       * Returns the list of all profiles that are supported by this browser. This property is read only.
        */
       readonly supportedProfiles: ProfileInfoArray;
       /**
-       * Returns a list of all components that are supported by this browser.
+       * Returns a list of all components that are supported by this browser. This property is read only.
        */
       readonly supportedComponents: ComponentInfoArray;
       /**
-       * Returns a list of all concrete node classes that are supported by this browser.
+       * Returns a list of all concrete node classes that are supported by this browser. This property is read only.
        */
       readonly concreteNodes: ConcreteNodesArray;
       /**
-       * Returns a list of all abstract node classes that are supported by this browser.
+       * Returns a list of all abstract node classes that are supported by this browser. This property is read only.
        */
       readonly abstractNodes: AbstractNodesArray;
       /**
-       * Returns a list of all field type classes that are supported by this browser.
+       * Returns a list of all field type classes that are supported by this browser. This property is read only.
        */
       readonly fieldTypes: FieldTypesArray;
       /**
-       * A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
+       * A String value which can be read and written, containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
        */
       baseURL: string;
       /**
-       * The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene.
+       * The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
        */
       readonly currentScene: X3DScene;
       /**
-       * Returns a reference to the corresponding X3DCanvasElement.
+       * Returns a reference to the corresponding X3DCanvasElement. This property is read only.
        */
       readonly element: X3DCanvasElement;
       /*
-       * Returns the active layer.
+       * Returns the active layer. This property is read only.
        */
       readonly activeLayer: X3DLayerNodeProxy | null;
       /*
-       * Returns the active navigation info in the active layer.
+       * Returns the active navigation info in the active layer. This property is read only.
        */
       readonly activeNavigationInfo: NavigationInfoProxy | null;
       /*
-       * Returns the active viewpoint in the active layer.
+       * Returns the active viewpoint in the active layer. This property is read only.
        */
       readonly activeViewpoint: X3DViewpointNodeProxy | null;
       /**
@@ -577,7 +577,7 @@ declare namespace X3D
        */
       readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE" | "GLTF" | "OBJ" | "STL" | "PLY" | "SVG";
       /**
-       * A reference to the ProfileInfo object used by this execution context. This property is read only.
+       * A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read only.
        */
       readonly profile: ProfileInfo | null;
       /**
