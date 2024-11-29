@@ -45,14 +45,14 @@ A reference to the X3DBrowser object that is associated with this element.
 
 ### Methods
 
-#### MediaStream **captureStream** (*[Number frameRate]*)
+#### **captureStream** (*frameRate?: number*): MediaStream
 
 See [HTMLCanvasElement.captureStream()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/captureStream).
 
-#### void **toBlob** (*Function callback, [String type, Number quality]*)
+#### **toBlob** (*callback: (blob: Blob) => void, type?: string, quality?: number*): void
 
 See [HTMLCanvasElement.toBlob()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob).
 
-#### String **toDataURL** (*[String type, Number encoderOptions]*)
+#### **toDataURL** (*type?: string, encoderOptions?: number*): String
 
 See [HTMLCanvasElement.toDataURL()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL).
