@@ -69,55 +69,55 @@ A reference to the RouteArray object used by this execution context. This proper
 
 ### Methods
 
-#### SFNode **createNode** (*String typeName*)
+#### **createNode** (*typeName: string*): SFNode
 
 Creates a new default instance of the node given by the *typeName* string containing the name of an X3D node type.
 
-#### SFNode **createProto** (*String protoName*)
+#### **createProto** (*protoName: string*): SFNode
 
 Creates a new default instance of the prototype given by the *protoName* string containing the name of an prototype or extern prototype of this execution context.
 
-#### SFNode **getNamedNode** (*String name*)
+#### **getNamedNode** (*name: string*): SFNode
 
 Returns a reference to the named node named by the string *name.* If no named node with the name *name* exists an exception is throw.
 
-#### void **addNamedNode** (*String name, SFNode node*)
+#### **addNamedNode** (*name: string, node: SFNode*): void
 
 Creates the named node referenced by *name.* This will give *node* a new name.
 
-#### void **updateNamedNode** (*String name, SFNode node*)
+#### **updateNamedNode** (*name: string, node: SFNode*): void
 
 Creates or updates the named node referenced by *name.* This will give *node* a new name.
 
-#### void **removeNamedNode** (*String name*)
+#### **removeNamedNode** (*name: string*): void
 
 Removes the named node *name.*
 
-#### SFNode **getImportedNode** (*String importedName*)
+#### **getImportedNode** (*importedName: string*): SFNode
 
 Returns a reference to the imported node named by the string *importedName.* If no imported node with the imported name *importedName* exists an exception is throw.
 
-#### void **addImportedNode** (*SFNode inlineNode, String exportedName, String importedName*)
+#### **addImportedNode** (*inlineNode: SFNode, exportedName: string, importedName: string*): void
 
 Creates the imported node *importedName.* If not *importedName* is given *exportedName* is used as imported name. The node to import must be an exported node named by *exportedName* in *inlineNode.*
 
-#### void **updateImportedNode** (*SFNode inlineNode, String exportedName, String importedName*)
+#### **updateImportedNode**  (*inlineNode: SFNode, exportedName: string, importedName: string*): void
 
 Creates or updates the imported node *importedName.* If not *importedName* is given *exportedName* is used as imported name. The node to import must be an exported node named by *exportedName* in *inlineNode.*
 
-#### void **removeImportedNode** (*String importedName*)
+#### **removeImportedNode** (*importedName: string*): void
 
 Removes the imported node *importedName.*
 
-#### X3DRoute **addRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
+#### **addRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): X3DRoute
 
 Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
 
-#### void **deleteRoute** (*X3DRoute route*)
+#### **deleteRoute** (*route: X3DRoute*): void
 
 Remove the route if it is connected.
 
-#### void **deleteRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
+#### **deleteRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): void
 
 Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
 
@@ -137,75 +137,75 @@ A reference to the ExportedNodesArray object used by this execution context. Thi
 
 ### Methods
 
-#### void **setProfile** (*ProfileInfo profile*)
+#### **setProfile** (*profile: ProfileInfo*): void
 
 Replaces the profile of this scene by the given *profile*. A profile of `null` is equivalent to a 'Full' profile.
 
-#### void **addComponent** (*ComponentInfo component*)
+#### **addComponent** (*component: ComponentInfo*): void
 
 Adds the *component* to the list of components.
 
-#### void **updateComponent** (*ComponentInfo component*)
+#### **updateComponent** (*component: ComponentInfo*): void
 
 Updates the *component*.
 
-#### void **removeComponent** (*String name*)
+#### **removeComponent** (*name: string*): void
 
 Removes the component with the given *name*.
 
-#### void **updateUnit** (*String category, String name, Number conversionFactor*)
+#### **updateUnit** (*category: string, name: string, conversionFactor: number*): void
 
 Updates the *name* and the *conversion factor* of the unit specified by *category*.
 
-#### UnitInfo **getUnit** (*String category*)
+#### **getUnit** (*category: string*): UnitInfo
 
 Returns the UnitInfo object with the given *category*.
 
-#### Array\<string\> **getMetaData** (*String name*)
+#### **getMetaData** (*name: string*): string []
 
 Returns the metadata values array associated with *name*.
 
-#### void **setMetaData** (*String name, String value*)
+#### **setMetaData** (*name: string, value: string*): void
 
 Creates or updates the metadata with *name* and *value.*
 
-#### void **setMetaData** (*String name, Array\<string\> values*)
+#### **setMetaData** (*name: string, values: string []*): void
 
 Creates or updates the metadata with *name* and *values.* There must be at least one value in *values.*
 
-#### void **addMetaData** (*String name, String value*)
+#### **addMetaData** (*name: string, value: string*): void
 
 Adds the metadata with *name* and *value.*
 
-#### void **removeMetaData** (*String name*)
+#### **removeMetaData** (*name: string*): void
 
 Removes the metadata *name.*
 
-#### void **addRootNode** (*SFNode node*)
+#### **addRootNode** (*node: SFNode*): void
 
 Adds *node* to the list of root nodes. If the node already exists, the function silently returns.
 
-#### void **removeRootNode** (*SFNode node*)
+#### **removeRootNode** (*node: SFNode*): void
 
 Removes *node* from the list of root nodes.
 
-#### SFNode **getExportedNode** (*String exportedName*)
+#### **getExportedNode** (*exportedName: string*): SFNode
 
 Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
 
-#### void **addExportedNode** (*String exportedName, SFNode node*)
+#### **addExportedNode** (*exportedName: string, node: SFNode*): void
 
 Creates the exported node *exportedName.*
 
-#### void **updateExportedNode** (*String exportedName, SFNode node*)
+#### **updateExportedNode** (*exportedName: string, node: SFNode*): void
 
 Creates or updates the exported node *exportedName.*
 
-#### void **removeExportedNode** (*String exportedName*)
+#### **removeExportedNode** (*exportedName: string*): void
 
 Removes the exported node *exportedName.*
 
-#### String **toVRMLString** (\[options\])
+#### **toVRMLString** (options?: Options): string
 
 Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
 
@@ -213,20 +213,20 @@ Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFr
 
 An object with one or more of these properties:
 
-* **style:** String, output style, one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN"
-* **indent:** String, initial indent, default: ""
-* **precision:** Integer, float precision, default: 7
-* **doublePrecision:** Integer, double precision, default: 15
-* **html:** Boolean, HTML style, default: false
-* **closingTags:** Boolean, use closing tags, default: false
+* **style:** string, output style, one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN"
+* **indent:** string, initial indent, default: ""
+* **precision:** integer, float precision, default: 7
+* **doublePrecision:** integer, double precision, default: 15
+* **html:** boolean, HTML style, default: false
+* **closingTags:** boolean, use closing tags, default: false
 
-#### String **toXMLString** (\[options\])
+#### **toXMLString** (options?: Options): string
 
 Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
 
-#### String **toJSONString** (\[options\])
+#### **toJSONString** (options?: Options): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
 
