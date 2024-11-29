@@ -115,10 +115,6 @@ declare namespace X3D
        * The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
        */
       readonly currentScene: X3DScene;
-      /**
-       * Returns a reference to the corresponding X3DCanvasElement. This property is read only.
-       */
-      readonly element: X3DCanvasElement;
       /*
        * Returns the active layer. This property is read only.
        */
@@ -131,6 +127,10 @@ declare namespace X3D
        * Returns the active viewpoint in the active layer. This property is read only.
        */
       readonly activeViewpoint: X3DViewpointNodeProxy | null;
+      /**
+       * Returns a reference to the corresponding X3DCanvasElement. This property is read only.
+       */
+      readonly element: X3DCanvasElement;
       /**
        * The `getSupportedProfile` service returns a ProfileInfo object of the named profile from the `supportedProfiles` array. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
        */
