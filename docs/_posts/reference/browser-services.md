@@ -17,23 +17,23 @@ None. This object cannot be instantiated by the user. One global instance of the
 
 #### **name**: string
 
-A browser-implementation specific string describing the browser.
+A browser-implementation specific string describing the browser. This property is read only.
 
 #### **version**: string
 
-A browser-implementation specific string describing the browser version.
+A browser-implementation specific string describing the browser version. This property is read only.
 
 #### **providerURL**: string
 
-If provided, the URL to the entity that wrote this browser.
+If provided, the URL to the entity that wrote this browser. This property is read only.
 
 #### **currentSpeed**: number
 
-The current speed of the avatar in m/s.
+The current speed of the avatar in m/s. This property is read only.
 
 #### **currentFrameRate**: number
 
-The current frame rate in frames per second.
+The current frame rate in frames per second. This property is read only.
 
 #### **description**: string
 
@@ -41,31 +41,31 @@ A user-defined String which can be read and written.
 
 #### **supportedProfiles**: ProfileInfoArray
 
-Returns the list of all profiles that are supported by this browser.
+Returns the list of all profiles that are supported by this browser. This property is read only.
 
 #### **supportedComponents**: ComponentInfoArray
 
-Returns a list of all components that are supported by this browser.
+Returns a list of all components that are supported by this browser. This property is read only.
 
 #### **concreteNodes**: ConcreteNodesArray
 
-Returns a list of all concrete node classes that are supported by this browser.
+Returns a list of all concrete node classes that are supported by this browser. This property is read only.
 
 #### **abstractNodes**: AbstractNodesArray
 
-Returns a list of all abstract node classes that are supported by this browser.
+Returns a list of all abstract node classes that are supported by this browser. This property is read only.
 
 #### **baseURL**: string
 
-A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
+A String value which can be read and written, containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
 
 #### **currentScene**: X3DScene | X3DExecutionContext
 
-The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene.
+The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
 
 #### **element**: X3DCanvasElement
 
-Returns a reference to the corresponding X3DCanvasElement.
+Returns a reference to the corresponding X3DCanvasElement. This property is read only.
 
 ### Methods
 
