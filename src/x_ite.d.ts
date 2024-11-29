@@ -116,15 +116,15 @@ declare namespace X3D
        */
       readonly currentScene: X3DScene;
       /*
-       * Returns the active layer. This property is read only.
+       * Returns the active layer, if any. This property is read only.
        */
       readonly activeLayer: X3DLayerNodeProxy | null;
       /*
-       * Returns the active navigation info in the active layer. This property is read only.
+       * Returns the active navigation info in the active layer, if any. This property is read only.
        */
       readonly activeNavigationInfo: NavigationInfoProxy | null;
       /*
-       * Returns the active viewpoint in the active layer. This property is read only.
+       * Returns the active viewpoint in the active layer, if any. This property is read only.
        */
       readonly activeViewpoint: X3DViewpointNodeProxy | null;
       /**

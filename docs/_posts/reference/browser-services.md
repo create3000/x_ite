@@ -63,6 +63,18 @@ A String value which can be read and written, containing the URL against which r
 
 The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
 
+#### **activeLayer**: SFNode | null
+
+Returns the active layer, if any. This property is read only.
+
+#### **activeNavigationInfo**: SFNode | null
+
+Returns the active navigation info in the active layer, if any. This property is read only.
+
+#### **activeViewpoint**: SFNode | null
+
+Returns the active viewpoint in the active layer, if any. This property is read only.
+
 #### **element**: X3DCanvasElement
 
 Returns a reference to the corresponding X3DCanvasElement. This property is read only.
