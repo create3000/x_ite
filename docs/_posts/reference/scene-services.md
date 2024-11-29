@@ -25,7 +25,7 @@ The encoding is represented as a string that describes the data encoding used. V
 
 #### **profile**: ProfileInfo | null
 
-A reference to the ProfileInfo object used by this execution context. This property is read only.
+A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read only.
 
 #### **components**: ComponentInfoArray
 
