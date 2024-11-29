@@ -1044,7 +1044,7 @@ Object .defineProperties (X3DBrowser .prototype,
    {
       get ()
       {
-         if (this ._activeLayer .getValue () === this .getWorld () .getLayer0 ())
+         if (this .getActiveLayer () === this .getWorld () .getLayer0 ())
             return null;
 
          return this ._activeLayer .valueOf ();
@@ -1055,7 +1055,7 @@ Object .defineProperties (X3DBrowser .prototype,
    {
       get ()
       {
-         if (this ._activeNavigationInfo .getValue () === this ._activeLayer .getValue () ?.getNavigationInfoStack () .get () [0])
+         if (this .getActiveNavigationInfo () === this .getActiveLayer () ?.getNavigationInfoStack () .get () [0])
             return null;
 
          return this ._activeNavigationInfo .valueOf ();
@@ -1066,7 +1066,7 @@ Object .defineProperties (X3DBrowser .prototype,
    {
       get ()
       {
-         if (this ._activeViewpoint .getValue () === this ._activeLayer .getValue () ?.getViewpointStack () .get () [0])
+         if (this .getActiveViewpoint () === this .getActiveLayer () ?.getViewpointStack () .get () [0])
             return null;
 
          return this ._activeViewpoint .valueOf ();
