@@ -98,6 +98,10 @@ Object .assign (Object .setPrototypeOf (X3DWorld .prototype, X3DBaseNode .protot
    {
       return this ._activeLayer .getValue ();
    },
+   getLayer0 ()
+   {
+      return this .layer0;
+   },
    set_rootNodes__ ()
    {
       const

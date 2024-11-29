@@ -1007,14 +1007,6 @@ Object .defineProperties (X3DBrowser .prototype,
       set: X3DBrowser .prototype .setBaseURL,
       enumerable: true,
    },
-   currentScene:
-   {
-      get ()
-      {
-         return this .getScriptNode () ?.getExecutionContext () ?? this .getExecutionContext ();
-      },
-      enumerable: true,
-   },
    supportedProfiles:
    {
       get: X3DBrowser .prototype .getSupportedProfiles,
@@ -1040,11 +1032,11 @@ Object .defineProperties (X3DBrowser .prototype,
       get: X3DBrowser .prototype .getFieldTypes,
       enumerable: true,
    },
-   element:
+   currentScene:
    {
       get ()
       {
-         return this .getElement () .get (0);
+         return this .getScriptNode () ?.getExecutionContext () ?? this .getExecutionContext ();
       },
       enumerable: true,
    },
@@ -1052,6 +1044,9 @@ Object .defineProperties (X3DBrowser .prototype,
    {
       get ()
       {
+         if (this ._activeLayer .getValue () === this .getWorld () .getLayer0 ())
+            return null;
+
          return this ._activeLayer .valueOf ();
       },
       enumerable: true,
@@ -1060,6 +1055,9 @@ Object .defineProperties (X3DBrowser .prototype,
    {
       get ()
       {
+         if (this ._activeNavigationInfo .getValue () === this ._activeLayer .getValue () ?.getNavigationInfoStack () .get () [0])
+            return null;
+
          return this ._activeNavigationInfo .valueOf ();
       },
       enumerable: true,
@@ -1068,7 +1066,18 @@ Object .defineProperties (X3DBrowser .prototype,
    {
       get ()
       {
+         if (this ._activeViewpoint .getValue () === this ._activeLayer .getValue () ?.getViewpointStack () .get () [0])
+            return null;
+
          return this ._activeViewpoint .valueOf ();
+      },
+      enumerable: true,
+   },
+   element:
+   {
+      get ()
+      {
+         return this .getElement () .get (0);
       },
       enumerable: true,
    },
