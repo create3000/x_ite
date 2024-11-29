@@ -19,7 +19,7 @@ None. This object cannot be instantiated by the user. One global instance of the
 
 A browser-implementation specific string describing the browser.
 
-#### **version**: number
+#### **version**: string
 
 A browser-implementation specific string describing the browser version.
 
