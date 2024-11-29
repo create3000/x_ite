@@ -182,7 +182,7 @@ declare namespace X3D
       /**
        * Imports an X3D JSON document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
        */
-      importJS (json: string | JSONObject): Promise <X3DScene>;
+      importJS (json: JSONObject | string): Promise <X3DScene>;
       /**
        * Returns a browser property with the corresponding *name*.
        */
@@ -209,8 +209,8 @@ declare namespace X3D
        * - X3DConstants .SHUTDOWN_EVENT
        * - X3DConstants .INITIALIZED_ERROR
        */
-      addBrowserCallback (key: any, callback?: (event: number) => void): void;
-      addBrowserCallback (key: any, event: number, callback?: (event: number) => void): void;
+      addBrowserCallback (key: any, callback: (event: number) => void): void;
+      addBrowserCallback (key: any, event: number, callback: (event: number) => void): void;
       /**
        * Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callback associated whit key are removed.
        */

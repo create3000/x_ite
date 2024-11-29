@@ -69,59 +69,59 @@ Returns a reference to the corresponding X3DCanvasElement.
 
 ### Methods
 
-#### ProfileInfo **getSupportedProfile** (*String name*)
+#### **getSupportedProfile** (*name: string*): ProfileInfo
 
 The `getSupportedProfile` service returns a ProfileInfo object of the named profile from the `supportedProfiles` array. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
 
-#### ComponentInfo **getSupportedComponent** (*String name*)
+#### **getSupportedComponent** (*name: string*): ComponentInfo
 
 The `getSupportedComponent` service returns a ComponentInfo object of the named component from the `supportedComponents` array. The parameter is the name of a component from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component. If it does not support the component, an error is thrown.
 
-#### ProfileInfo **getProfile** (*String name*)
+#### **getProfile** (*name: string*): ProfileInfo
 
 The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
 
-#### ComponentInfo **getComponent** (*String name, Number? level*)
+#### **getComponent** (*name: string, level?: number*): ComponentInfo
 
 The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only return a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
 
-#### X3DScene **createScene** (*ProfileInfo profile, ComponentInfo [] ... components*)
+#### **createScene** (*profile: ProfileInfo, ... components: ComponentInfo []*): X3DScene
 
 The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
 
-#### Promise\<void\> **loadComponents** (*Array <X3DScene \| ProfileInfo \| ComponentInfoArray \| ComponentInfo \| string> ... args*) <small class="blue">non standard</small>
+#### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non standard</small>
 
-Loads all components, external and internal, specified by `args`. If the argument is a `String`, the name of a component must be given.
+Loads all components, external and internal, specified by `args`. If the argument is a `string`, the name of a component must be given.
 
-#### Promise\<void\> **replaceWorld** (*X3DScene scene*)
+#### **replaceWorld** (*scene: X3DScene*): Promise\<void\>
 
 Replace the current world with this new scene that has been loaded or constructed from somewhere. A Promise is returned that will be resolved when the scene is completely loaded.
 
-#### Promise\<X3DScene\> **createX3DFromString** (*String x3dSyntax*)
+#### **createX3DFromString** (*x3dSyntax: string*): Promise\<X3DScene\>
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-#### void **createX3DFromURL** (*MFString url, Node node, String event*)
+#### **createX3DFromURL** (*url: MFString, node: SFNode, event: string*): void
 
 Parse the passed URL into an X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
-#### Promise\<X3DScene\> **createX3DFromURL** (*MFString url*)
+#### **createX3DFromURL** (*url: MFString*): Promise\<X3DScene\>
 
 Parse the passed URL into an X3D scene and return a Promise that resolves to an X3DScene object.
 
-#### Promise\<void\> **loadURL** (*MFString url [, MFString parameter]*)
+#### **loadURL** (*url: MFString, parameter?: MFString*): Promise\<void\>
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return. The return value is a Promise object, that is resolved when the new scene is loaded.
 
-#### Promise\<X3DScene\> **importDocument** (*DOMObject|String dom*)
+#### **importDocument** (*dom: HTMLElement | string*): Promise\<X3DScene\>
 
 Imports an X3D XML DOM document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
 
-#### Promise\<X3DScene\> **importJS** (*Object|String json*)
+#### **importJS** (*json: JSONObject | string*): Promise\<X3DScene\>
 
 Imports an X3D JSON document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
 
-#### Boolean **getBrowserProperty** (*String name*)
+#### **getBrowserProperty** (*name: string*): boolean
 
 Returns a browser property with the corresponding *name*.
 
@@ -179,7 +179,7 @@ Returns a browser property with the corresponding *name*.
    </tbody>
 </table>
 
-#### Any **getBrowserOption** (*String name*)
+#### **getBrowserOption** (*name: string*): any
 
 Returns a browser option with the corresponding *name*.
 
@@ -378,11 +378,11 @@ Returns a browser option with the corresponding *name*.
    </tbody>
 </table>
 
-#### void **setBrowserOption** (*String name, Any value*)
+#### **setBrowserOption** (*name: string, value: any*): void
 
 Sets a browser option with the corresponding *name* to the given value.
 
-#### Any **getRenderingProperty** (*String name*)
+#### **getRenderingProperty** (*name: string*): any
 
 Returns a rendering property with the corresponding *name*.
 
@@ -460,7 +460,7 @@ Returns a rendering property with the corresponding *name*.
    </tbody>
 </table>
 
-#### void **addBrowserCallback** (*Any key [, event], Function callback*)
+#### **addBrowserCallback** (*key: any, [event?: number,] callback: (event: number) => void*): void
 
 Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event is one of the **Browser Event Constants** defined in the [X3DConstants](/x_ite/reference/constants-services/#browser-event-constants) object:
 
@@ -472,39 +472,39 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 | X3DConstants .SHUTDOWN_EVENT    | Fired before scene is unloaded.       |
 | X3DConstants .INITIALIZED_ERROR | not used                              |
 
-#### void **removeBrowserCallback** (*Any key [, event]*)
+#### **removeBrowserCallback** (*key: any, event?: number*): void
 
 Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callbacks associated with key will be removed.
 
-#### void **viewAll** (*[SFNode layerNode], [Number transitionTime = 1]*) <small><span class="blue">non standard</span></small>
+#### **viewAll** (*[layer?: SFNode,] transitionTime?: number = 1*): void <small><span class="blue">non standard</span></small>
 
 Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layerNode* is omitted, the active layer is used.
 
-#### void **nextViewpoint** (*[SFNode layerNode]*)
+#### **nextViewpoint** (*layerNode?: SFNode*): void
 
 Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-#### void **previousViewpoint** (*[SFNode layerNode]*)
+#### **previousViewpoint** (*layerNode?: SFNode*): void
 
 Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-#### void **firstViewpoint** (*[SFNode layerNode]*)
+#### **firstViewpoint** (*layerNode?: SFNode*): void
 
 Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-#### void **lastViewpoint** (*[SFNode layerNode]*)
+#### **lastViewpoint**(*layerNode?: SFNode*): void
 
 Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-#### void **changeViewpoint** (*[SFNode layerNode,] name String*)
+#### **changeViewpoint** (*[layerNode: SFNode,] name: string*): void
 
 Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-#### void **print** (*Object object, ...*)
+#### **print** (*... args: any []*): void
 
 Prints *objects* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
 
-#### void **println** (*Object object, ...*)
+#### **println** (*... args: any []*): void
 
 Prints *objects* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
@@ -512,51 +512,51 @@ Prints *objects* to the browser's console, inserting a newline character after t
 
 To be downward compatible with VRML, the following additional functions are available:
 
-#### String **getName** ()
+#### **getName** (): string
 
 A browser-implementation specific string describing the browser.
 
-#### String **getVersion** ()
+#### **getVersion** (): string
 
 A browser-implementation specific string describing the browser version.
 
-#### Number **getCurrentSpeed** ()
+#### **getCurrentSpeed** (): number
 
 The current speed of the avatar in m/s.
 
-#### Number **getCurrentFrameRate** ()
+#### **getCurrentFrameRate** (): number
 
 The current frame rate in frames per second.
 
-#### String **getWorldURL** ()
+#### **getWorldURL** (): string
 
 A string containing the URL of this execution context.
 
-#### void **replaceWorld** (*MFNode nodes*)
+#### **replaceWorld** (*nodes: MFNode*): void
 
 Replace the current world with this new nodes that has been loaded or constructed from somewhere.
 
-#### MFNode **createVrmlFromString** (*String vrmlSyntax*)
+#### **createVrmlFromString** (*vrmlSyntax: string*): MFNode
 
 The string may be any valid VRML content.
 
-#### void **createVrmlFromURL** (*MFString url, SFNode node, String event*)
+#### **createVrmlFromURL** (*url: MFString, node: SFNode, event: string*): void
 
 Parse the passed URL into an VRML scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
-#### void **addRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
+#### **addRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): void
 
 Add a route from the passed *sourceField* to the passed *destinationField*.
 
-#### void **deleteRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
+#### **deleteRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): void
 
 Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
 
-#### void **loadURL** (*MFString url [, MFString parameter]*)
+#### **loadURL** (*url: MFString, parameter?: MFString*): void
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return.
 
-#### void **setDescription** (*String description*)
+#### **setDescription** (*description: string*): void
 
 A user-defined String.
 
