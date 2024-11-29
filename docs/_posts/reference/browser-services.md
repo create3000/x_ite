@@ -15,55 +15,55 @@ None. This object cannot be instantiated by the user. One global instance of the
 
 ### Properties
 
-#### **name**
+#### **name**: string
 
 A browser-implementation specific string describing the browser.
 
-#### **version**
+#### **version**: number
 
 A browser-implementation specific string describing the browser version.
 
-#### **providerURL**
+#### **providerURL**: string
 
 If provided, the URL to the entity that wrote this browser.
 
-#### **currentSpeed**
+#### **currentSpeed**: number
 
 The current speed of the avatar in m/s.
 
-#### **currentFrameRate**
+#### **currentFrameRate**: number
 
 The current frame rate in frames per second.
 
-#### **description**
+#### **description**: string
 
 A user-defined String which can be read and written.
 
-#### **supportedProfiles**
+#### **supportedProfiles**: ProfileInfoArray
 
 Returns the list of all profiles that are supported by this browser.
 
-#### **supportedComponents**
+#### **supportedComponents**: ComponentInfoArray
 
 Returns a list of all components that are supported by this browser.
 
-#### **concreteNodes**
+#### **concreteNodes**: ConcreteNodesArray
 
 Returns a list of all concrete node classes that are supported by this browser.
 
-#### **abstractNodes**
+#### **abstractNodes**: AbstractNodesArray
 
 Returns a list of all abstract node classes that are supported by this browser.
 
-#### **baseURL**
+#### **baseURL**: string
 
 A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
 
-#### **currentScene**
+#### **currentScene**: X3DScene | X3DExecutionContext
 
 The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene.
 
-#### **element**
+#### **element**: X3DCanvasElement
 
 Returns a reference to the corresponding X3DCanvasElement.
 
@@ -570,15 +570,15 @@ None. This object cannot be instantiated by the user.
 
 ### Static Properties
 
-#### **containerField**
+#### **containerField**: string
 
 The default container field name for this node. This property is read only.
 
-#### **specificationRange**
+#### **specificationRange**: { from: string, to: string }
 
-Returns an array with two strings defining the first version and last version where this node is specified. This property is read only.
+Returns an object with two strings defining the first version and last version where this node is specified. This property is read only.
 
-#### **fieldDefinitions**
+#### **fieldDefinitions**: FieldDefinitionArray
 
 Returns a list of fields defined for the SFNode object.
 
@@ -592,11 +592,11 @@ None. This object cannot be instantiated by the user.
 
 ### Static Properties
 
-#### **typeName**
+#### **typeName**: string
 
 The node type name for this class. This property is read only.
 
-#### **componentInfo**
+#### **componentInfo**: { name: string, level: number }
 
 Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
 
@@ -610,7 +610,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 
@@ -628,7 +628,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 

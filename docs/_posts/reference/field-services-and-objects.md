@@ -15,15 +15,15 @@ None.
 
 ### Properties
 
-#### **accessType**
+#### **accessType**: number
 
 Value from the [X3DConstants](/x_ite/reference/constants-services/#access-type-constants) object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
 
-#### **dataType**
+#### **dataType**: number
 
 Value from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read only.
 
-#### **name**
+#### **name**: string
 
 A string of the field name (e.g., "children"). This property is read only.
 
@@ -41,7 +41,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 
@@ -156,15 +156,15 @@ const copy = new SFColor (... color); // Copy using spread syntax.
 
 ### Properties
 
-#### **r**
+#### **r**: number
 
 Red component of the color.
 
-#### **g**
+#### **g**: number
 
 Green component of the color.
 
-#### **b**
+#### **b**: number
 
 Blue component of the color.
 
@@ -216,19 +216,19 @@ const copy = new SFColorRGBA (... color); // Copy using spread syntax.
 
 ### Properties
 
-#### **r**
+#### **r**: number
 
 Red component of the color.
 
-#### **g**
+#### **g**: number
 
 Green component of the color.
 
-#### **b**
+#### **b**: number
 
 Blue component of the color.
 
-#### **a**
+#### **a**: number
 
 Alpha component of the color.
 
@@ -283,19 +283,19 @@ const copy = new SFImage (... image); // Copy using spread syntax.
 
 ### Properties
 
-#### **width**
+#### **width**: number
 
 Width of the image in pixels.
 
-#### **height**
+#### **height**: number
 
 Height of the image in pixels.
 
-#### **comp**
+#### **comp**: number
 
 Number of components.
 
-#### **array**
+#### **array**: MFInt32
 
 A MFInt32 array corresponding to the pixels of the image.
 
@@ -583,19 +583,19 @@ const copy = new SFRotation (... rotation); // Copy using spread syntax.
 
 ### Properties
 
-#### **x**
+#### **x**: number
 
 Returns the first value of the axis vector.
 
-#### **y**
+#### **y**: number
 
 Returns the second value of the axis vector.
 
-#### **z**
+#### **z**: number
 
 Returns the third value of the axis vector
 
-#### **angle**
+#### **angle**: number
 
 A number corresponding to the angle of the rotation (in radians).
 
@@ -669,11 +669,11 @@ const copy = new SFVec2d (... vector); // Copy using spread syntax.
 
 ### Properties
 
-#### **x**
+#### **x**: number
 
 Returns the first value of the vector.
 
-#### **y**
+#### **y**: number
 
 Returns the second value of the vector.
 
@@ -767,15 +767,15 @@ const copy = new SFVec3d (... vector); // Copy using spread syntax.
 
 ### Properties
 
-#### **x**
+#### **x**: number
 
 Returns the first value of the vector.
 
-#### **y**
+#### **y**: number
 
 Returns the second value of the vector.
 
-#### **z**
+#### **z**: number
 
 Returns the third value of the vector.
 
@@ -873,19 +873,19 @@ const copy = new SFVec4d (... vector); // Copy using spread syntax.
 
 ### Properties
 
-#### **x**
+#### **x**: number
 
 Returns the first value of the vector.
 
-#### **y**
+#### **y**: number
 
 Returns the second value of the vector.
 
-#### **z**
+#### **z**: number
 
 Returns the third value of the vector.
 
-#### **w**
+#### **w**: number
 
 Returns the fourth value of the vector.
 
@@ -973,7 +973,7 @@ const copy = new MFBool (... array); // Copy using spread syntax.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -999,7 +999,7 @@ The creation method can be passed 0 or more numeric-valued expressions to initia
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1019,7 +1019,7 @@ The creation method can be passed 0 or more SFColor/SFColorRGBA-valued expressio
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1041,7 +1041,7 @@ The creation method can be passed 0 or more numeric-valued expressions to initia
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1061,7 +1061,7 @@ The creation method can be passed 0 or more SFImage-valued expressions to initia
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1081,7 +1081,7 @@ The creation method can be passed 0 or more integer-valued expressions to initia
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1101,7 +1101,7 @@ The creation method can be passed 0 or more SFMatrix3d/f-valued expressions to i
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1121,7 +1121,7 @@ The creation method can be passed 0 or more SFMatrix4d/f-valued expressions to i
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1141,7 +1141,7 @@ The creation method can be passed 0 or more SFNode-valued expressions to initial
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1177,7 +1177,7 @@ The creation method can be passed 0 or more SFRotation-valued expressions to ini
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1197,7 +1197,7 @@ The creation method can be passed 0 or more string-valued expressions to initial
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1217,7 +1217,7 @@ The creation method can be passed 0 or more string-valued expressions to initial
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1237,7 +1237,7 @@ The creation method can be passed 0 or more SFVec2d/f-valued expressions to init
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1257,7 +1257,7 @@ The creation method can be passed 0 or more SFVec3d/f-valued expressions to init
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1277,7 +1277,7 @@ The creation method can be passed 0 or more SFVec4d/f-valued expressions to init
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 

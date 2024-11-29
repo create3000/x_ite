@@ -15,19 +15,19 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **sourceNode**
+#### **sourceNode**: SFNode
 
 A reference to the node that is the source of this route.
 
-#### **sourceField**
+#### **sourceField**: string
 
 A string of the name of the field in the source node.
 
-#### **destinationNode**
+#### **destinationNode**: SFNode
 
 A reference to the node that is the destination of this route.
 
-#### **destinationField**
+#### **destinationField**: string
 
 A string of the name of the field in the destination node.
 
@@ -45,7 +45,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 

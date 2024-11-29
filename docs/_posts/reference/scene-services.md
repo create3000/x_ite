@@ -15,55 +15,55 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **specificationVersion**
+#### **specificationVersion**: string
 
 The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read only.
 
-#### **encoding**
+#### **encoding**: string
 
 The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
 
-#### **profile**
+#### **profile**: ProfileInfo
 
 A reference to the ProfileInfo object used by this execution context. This property is read only.
 
-#### **components**
+#### **components**: ComponentInfoArray
 
 A reference to the ComponentInfoArray object used by this execution context. This property is read only.
 
-#### **worldURL**
+#### **worldURL**: string
 
 A string containing the URL of this execution context. This property is read only.
 
-#### **baseURL**
+#### **baseURL**: string
 
 A string containing the URL against which relative URLs are resolved. This property is read only.
 
-#### **units**
+#### **units**: UnitInfoArray
 
 A reference to the UnitInfoArray object used by this execution context. This property is read only.
 
-#### **namedNodes**
+#### **namedNodes**: NamedNodesArray
 
 A reference to the NamedNodesArray object used by this execution context. This property is read only.
 
-#### **importedNodes**
+#### **importedNodes**: ImportedNodesArray
 
 A reference to the ImportedNodesArray object used by this execution context. This property is read only.
 
-#### **rootNodes**
+#### **rootNodes**: MFNode
 
 When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
 
-#### **protos**
+#### **protos**: ProtoDeclarationArray
 
 A reference to the ProtoDeclarationArray object used by this execution context. This property is read only.
 
-#### **externprotos**
+#### **externprotos**: ExternProtoDeclarationArray
 
 A reference to the ExternProtoDeclarationArray object used by this execution context. This property is read only.
 
-#### **routes**
+#### **routes**: RouteArray
 
 A reference to the RouteArray object used by this execution context. This property is read only.
 
@@ -131,7 +131,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **exportedNodes**
+#### **exportedNodes**: ExportedNodesArray
 
 A reference to the ExportedNodesArray object used by this execution context. This property is read only.
 
@@ -242,19 +242,19 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **name**
+#### **name**: string
 
 A string of the formal name of this profile. This property is read only.
 
-#### **title**
+#### **title**: string
 
 A generic, freeform title string provided by the browser manufacturer. This property is read only.
 
-#### **providerURL**
+#### **providerURL**: string
 
 If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
 
-#### **components**
+#### **components**: ComponentInfoArray
 
 An ComponentInfoArray object of the ComponentInfo object instances that make up this profile. This property is read only.
 
@@ -272,19 +272,19 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **name**
+#### **name**: string
 
 A string of the formal name of this profile. This property is read only.
 
-#### **level**
+#### **level**: number
 
 A number of the level of support of this instance. This property is read only.
 
-#### **title**
+#### **title**: string
 
 A generic, freeform title string provided by the browser manufacturer. This property is read only.
 
-#### **providerURL**
+#### **providerURL**: string
 
 If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
 
@@ -302,38 +302,18 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **category**
+#### **category**: string
 
 The category of default unit being modified as defined in the table. This property is read only.
 
 #### Standard units
 
-<table style="height: 210px;" width="466">
-   <thead>
-      <tr>
-         <th style="width: 229.833px;">Category</th>
-         <th style="width: 384.167px;">Initial base unit</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td style="width: 229.833px;">angle</td>
-         <td style="width: 384.167px;">radian</td>
-      </tr>
-      <tr>
-         <td style="width: 229.833px;">force</td>
-         <td style="width: 384.167px;">newton</td>
-      </tr>
-      <tr>
-         <td style="width: 229.833px;">length</td>
-         <td style="width: 384.167px;">metre</td>
-      </tr>
-      <tr>
-         <td style="width: 229.833px;">mass</td>
-         <td style="width: 384.167px;">kilogram</td>
-      </tr>
-   </tbody>
-</table>
+| Category | Initial base unit |
+|----------|-------------------|
+| angle    | radian            |
+| force    | newton            |
+| length   | metre             |
+| mass     | kilogram          |
 
 The base unit of time is seconds and cannot be changed.
 
@@ -341,44 +321,20 @@ Additional units, called *derived units* are used in this International Standard
 
 #### Derived Units
 
-<table>
-   <thead>
-      <tr>
-         <th>Category</th>
-         <th>Initial base unit</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>acceleration</td>
-         <td>length/second<sup>2</sup></td>
-      </tr>
-      <tr>
-         <td>angular_rate</td>
-         <td>angle/second</td>
-      </tr>
-      <tr>
-         <td>area</td>
-         <td>length<sup>2</sup></td>
-      </tr>
-      <tr>
-         <td>speed</td>
-         <td>length/second</td>
-      </tr>
-      <tr>
-         <td>volume</td>
-         <td>length<sup>3</sup></td>
-      </tr>
-   </tbody>
-</table>
+| Category     | Initial base unit         |
+|--------------|---------------------------|
+| acceleration | length/second<sup>2</sup> |
+| angular_rate | angle/second              |
+| area         | length<sup>2</sup>        |
+| volume       | length<sup>3</sup>        |
 
 The standard color space used by this International Standard is RGB where each color component has the range [0.,1.].
 
-#### **name**
+#### **name**: string
 
 A string of the name assigned to the new default unit. This property is read only.
 
-#### **conversionFactor**
+#### **conversionFactor**: number
 
 The double-precision number needed to convert from the new default unit to the initial default unit. This property is read only.
 
@@ -396,19 +352,19 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **inlineNode**
+#### **inlineNode**: SFNode
 
 The SFNode object of the Inline node. This property is read only.
 
-#### **exportedName**
+#### **exportedName**: string
 
 A string of the exported name. This property is read only.
 
-#### **exportedNode**
+#### **exportedNode**: SFNode
 
 The SFNode object of the exported node. This property is read only.
 
-#### **importedName**
+#### **importedName**: string
 
 A string of the imported name. This property is read only.
 
@@ -422,11 +378,11 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **exportedName**
+#### **exportedName**: string
 
 A string of the exported name. This property is read only.
 
-#### **localNode**
+#### **localNode**: SFNode
 
 The SFNode object of the corresponding node. This property is read only.
 
@@ -440,7 +396,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 
@@ -458,7 +414,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 
@@ -476,7 +432,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 
@@ -494,7 +450,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 
@@ -512,7 +468,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 

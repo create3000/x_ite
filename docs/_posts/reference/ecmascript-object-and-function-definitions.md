@@ -39,7 +39,7 @@ The X3DCanvasElement defines several attributes [that are documented here](/x_it
 
 ### Properties
 
-#### **browser**
+#### **browser**: X3DBrowser
 
 A reference to the X3DBrowser object that is associated with this element.
 

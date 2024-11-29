@@ -15,15 +15,15 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **name**
+#### **name**: string
 
 A string of the declared name of this prototype. This property is read only.
 
-#### **fields**
+#### **fields**: FieldDefinitionArray
 
 A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read only.
 
-#### **isExternProto**
+#### **isExternProto**: boolean
 
 Always has the value of false. This property is read only.
 
@@ -61,23 +61,23 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **name**
+#### **name**: string
 
 A string of the declared name of this extern prototype. This property is read only.
 
-#### **fields**
+#### **fields**: FieldDefinitionArray
 
 A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read only.
 
-#### **urls**
+#### **urls**: MFString
 
 A MFString array of all the URI's defined for this extern prototype. This property is read only.
 
-#### **isExternProto**
+#### **isExternProto**: boolean
 
 Always has the value of true. This property is read only.
 
-#### **loadState**
+#### **loadState**: number
 
 The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite/reference/constants-services/#load-state-constants) object. This property is read only.
 
@@ -119,7 +119,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 
@@ -137,7 +137,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 

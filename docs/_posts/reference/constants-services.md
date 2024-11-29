@@ -13,7 +13,7 @@ The X3DConstants object is unique in ECMAScript in that there is exactly one glo
 
 The object consists solely of read-only properties. It does not define any additional functions.
 
-### X3DConstant values
+### X3DConstants values
 
 #### Browser Event Constants
 
