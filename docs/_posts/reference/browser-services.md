@@ -16,7 +16,6 @@ None. This object cannot be instantiated by the user. One global instance of the
 ### Properties
 
 #### **name**: string
-{: .read-only }
 
 A browser-implementation specific string describing the browser. This property is read only.
 
