@@ -2193,6 +2193,10 @@ declare namespace X3D
        */
       add (other: this): this;
       /**
+       * Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
+       */
+      clamp (low: this, high: this): this;
+      /**
        * Returns the distance of this vector to SFVec2d/f *other*.
        */
       distance (other: this): number;
@@ -2304,6 +2308,10 @@ declare namespace X3D
        * Returns an SFVec3d/f whose value is the passed SFVec3d/f added, componentwise, to the object.
        */
       add (other: this): this;
+      /**
+       * Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
+       */
+      clamp (low: this, high: this): this;
       /**
        * Returns the cross product of the object and the passed SFVec3d/f *other*.
        */
@@ -2424,6 +2432,10 @@ declare namespace X3D
        * Returns an SFVec4d/f whose value is the passed SFVec4d/f added, componentwise, to the object.
        */
       add (other: this): this;
+      /**
+       * Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
+       */
+      clamp (low: this, high: this): this;
       /**
        * Returns the distance of this vector to SFVec4d/f *other*.
        */

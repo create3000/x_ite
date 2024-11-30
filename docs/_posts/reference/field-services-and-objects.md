@@ -813,13 +813,13 @@ Returns an SFVec3d/f whose value is the componentwise absolute value of the obje
 
 Returns an SFVec3d/f whose value is the passed SFVec3d/f added, componentwise, to the object.
 
-#### **cross** (*other: SFVec3d/f*): SFVec3d/f
-
-Returns the cross product of the object and the passed SFVec3d/f *other*.
-
 #### **clamp** (*low: SFVec3d/f, high: SFVec3d/f*): SFVec3d/f
 
 Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
+
+#### **cross** (*other: SFVec3d/f*): SFVec3d/f
+
+Returns the cross product of the object and the passed SFVec3d/f *other*.
 
 #### **distance** (*other: SFVec3d/f*): number
 
