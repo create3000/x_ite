@@ -131,6 +131,11 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
+#### **rootNodes**: MFNode
+{: .writable }
+
+When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
+
 #### **exportedNodes**: ExportedNodesArray
 
 A reference to the ExportedNodesArray object used by this execution context. This property is read only.

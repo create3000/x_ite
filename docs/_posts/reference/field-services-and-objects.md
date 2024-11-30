@@ -157,14 +157,17 @@ const copy = new SFColor (... color); // Copy using spread syntax.
 ### Properties
 
 #### **r**: number
+{: .writable }
 
 Red component of the color.
 
 #### **g**: number
+{: .writable }
 
 Green component of the color.
 
 #### **b**: number
+{: .writable }
 
 Blue component of the color.
 
@@ -217,18 +220,22 @@ const copy = new SFColorRGBA (... color); // Copy using spread syntax.
 ### Properties
 
 #### **r**: number
+{: .writable }
 
 Red component of the color.
 
 #### **g**: number
+{: .writable }
 
 Green component of the color.
 
 #### **b**: number
+{: .writable }
 
 Blue component of the color.
 
 #### **a**: number
+{: .writable }
 
 Alpha component of the color.
 
@@ -284,18 +291,22 @@ const copy = new SFImage (... image); // Copy using spread syntax.
 ### Properties
 
 #### **width**: number
+{: .writable }
 
 Width of the image in pixels.
 
 #### **height**: number
+{: .writable }
 
 Height of the image in pixels.
 
 #### **comp**: number
+{: .writable }
 
 Number of components.
 
 #### **array**: MFInt32
+{: .writable }
 
 A MFInt32 array corresponding to the pixels of the image.
 
@@ -584,18 +595,22 @@ const copy = new SFRotation (... rotation); // Copy using spread syntax.
 ### Properties
 
 #### **x**: number
+{: .writable }
 
 Returns the first value of the axis vector.
 
 #### **y**: number
+{: .writable }
 
 Returns the second value of the axis vector.
 
 #### **z**: number
+{: .writable }
 
 Returns the third value of the axis vector
 
 #### **angle**: number
+{: .writable }
 
 A number corresponding to the angle of the rotation (in radians).
 
@@ -670,10 +685,12 @@ const copy = new SFVec2d (... vector); // Copy using spread syntax.
 ### Properties
 
 #### **x**: number
+{: .writable }
 
 Returns the first value of the vector.
 
 #### **y**: number
+{: .writable }
 
 Returns the second value of the vector.
 
@@ -768,14 +785,17 @@ const copy = new SFVec3d (... vector); // Copy using spread syntax.
 ### Properties
 
 #### **x**: number
+{: .writable }
 
 Returns the first value of the vector.
 
 #### **y**: number
+{: .writable }
 
 Returns the second value of the vector.
 
 #### **z**: number
+{: .writable }
 
 Returns the third value of the vector.
 
@@ -874,18 +894,22 @@ const copy = new SFVec4d (... vector); // Copy using spread syntax.
 ### Properties
 
 #### **x**: number
+{: .writable }
 
 Returns the first value of the vector.
 
 #### **y**: number
+{: .writable }
 
 Returns the second value of the vector.
 
 #### **z**: number
+{: .writable }
 
 Returns the third value of the vector.
 
 #### **w**: number
+{: .writable }
 
 Returns the fourth value of the vector.
 

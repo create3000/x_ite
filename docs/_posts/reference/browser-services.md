@@ -36,6 +36,7 @@ The current speed of the avatar in m/s. This property is read only.
 The current frame rate in frames per second. This property is read only.
 
 #### **description**: string
+{: .writable }
 
 A user-defined String which can be read and written.
 
@@ -56,6 +57,7 @@ Returns a list of all concrete node classes that are supported by this browser. 
 Returns a list of all abstract node classes that are supported by this browser. This property is read only.
 
 #### **baseURL**: string
+{: .writable }
 
 A String value which can be read and written, containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
 

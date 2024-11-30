@@ -41,7 +41,8 @@
   --h3-color: rgb(185, 137, 79);
   --h3-color-strong: rgb(232, 201, 133);
   --h4-color: rgb(60, 107, 184);
-  --h4-color-strong: rgb(175, 206, 255);
+  --h4-color-strong: rgb(130, 173, 241);
+  --h4-color-strong-writable: rgb(175, 206, 255);
 
   --example-background-color: rgba(0, 0, 0, 0.471);
   --playground-console-background: rgba(0, 0, 0, 0.2);
@@ -79,6 +80,7 @@
   --h3-color-strong: rgb(173, 81, 0);
   --h4-color: rgb(29, 80, 163);
   --h4-color-strong: rgb(10, 80, 144);
+  --h4-color-strong-writable: rgb(97, 29, 163);
 
   --example-background-color: rgba(235, 235, 255, 0.644);
   --playground-console-background: rgb(0, 0, 0, 0.02);
@@ -176,6 +178,10 @@ html {
 
 .content h4 strong {
   color: var(--h4-color-strong);
+}
+
+.content h4.writable strong {
+  color: var(--h4-color-strong-writable);
 }
 
 .content h5 {
