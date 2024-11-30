@@ -404,6 +404,18 @@ Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the
 
 Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
 
+#### **translate** (*translation: SFVec2d/f*): void
+
+Returns a SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
+
+#### **rotate** (*rotation: number*): void
+
+Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* on the left.
+
+#### **scale** (*scale: SFVec2d/f*): void
+
+Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
+
 ## SFMatrix4d/SFMatrix4f Object
 
 The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
@@ -493,6 +505,18 @@ Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the
 #### **multMatrixDir** (*vec: SFVec3d/f*): SFVec3d/f
 
 Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
+
+#### **translate** (*translation: SFVec3d/f*): void
+
+Returns a SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
+
+#### **rotate** (*rotation: number*): void
+
+Returns a SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
+
+#### **scale** (*scale: SFVec3d/f*): void
+
+Returns a SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
 
 ## SFNode Object
 
