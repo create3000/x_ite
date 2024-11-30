@@ -488,12 +488,15 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
          // Rotate and scale background.
 
+         const f = renderObject .getViewpoint () .getFarDistance ()
+            ?? renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ());
+
          modelViewMatrix .assign (this .modelMatrix);
          modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
          modelViewMatrix .get (null, rotation);
          modelViewMatrix .identity ();
          modelViewMatrix .rotate (rotation);
-         modelViewMatrix .scale (scale .set (100_000, 100_000, 100_000)); // TODO: use max(farPlane, 100_000)
+         modelViewMatrix .scale (scale .set (f, f, f));
 
          modelViewMatrixArray .set (modelViewMatrix);
 
