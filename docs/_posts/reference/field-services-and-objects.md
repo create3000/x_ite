@@ -510,7 +510,7 @@ Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the
 
 Returns a SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
 
-#### **rotate** (*rotation: number*): void
+#### **rotate** (*rotation: SFRotation*): void
 
 Returns a SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
 
