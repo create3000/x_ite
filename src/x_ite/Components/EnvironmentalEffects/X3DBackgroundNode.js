@@ -488,7 +488,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
          // Rotate and scale background.
 
-         const f = renderObject .getViewpoint () .getFarDistance ()
+         const far = renderObject .getViewpoint () .getFarDistance ()
             ?? renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ());
 
          modelViewMatrix .assign (this .modelMatrix);
@@ -496,7 +496,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          modelViewMatrix .get (null, rotation);
          modelViewMatrix .identity ();
          modelViewMatrix .rotate (rotation);
-         modelViewMatrix .scale (scale .set (f, f, f));
+         modelViewMatrix .scale (scale .set (far, far, far));
 
          modelViewMatrixArray .set (modelViewMatrix);
 
