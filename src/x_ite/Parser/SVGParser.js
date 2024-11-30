@@ -339,12 +339,9 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       // Create view matrix.
 
-      const
-         scale       = new Vector3 (width * PIXEL / viewBox [2], -height * PIXEL / viewBox [3], 1),
-         translation = new Vector3 (-viewBox .x, viewBox .y, 0) .multVec (scale);
+      const scale = new Vector3 (width * PIXEL / viewBox [2], -height * PIXEL / viewBox [3], 1);
 
-      this .rootTransform .translation = translation;
-      this .rootTransform .scale       = scale;
+      this .rootTransform .scale = scale;
 
       // Parse elements.
 
