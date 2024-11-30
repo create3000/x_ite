@@ -16,6 +16,7 @@ None. This object cannot be instantiated by the user. One global instance of the
 ### Properties
 
 #### **name**: string
+{: .read-only }
 
 A browser-implementation specific string describing the browser. This property is read only.
 
@@ -69,11 +70,11 @@ Returns the active layer, if any. This property is read only.
 
 #### **activeNavigationInfo**: SFNode | null
 
-Returns the active navigation info in the active layer, if any. This property is read only.
+Returns the bound NavigationInfo node in the active layer, if any. This property is read only.
 
 #### **activeViewpoint**: SFNode | null
 
-Returns the active viewpoint in the active layer, if any. This property is read only.
+Returns the bound X3DViewpointNode node in the active layer, if any. This property is read only.
 
 #### **element**: X3DCanvasElement
 
