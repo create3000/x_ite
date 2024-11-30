@@ -416,6 +416,14 @@ Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation
 
 Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
 
+#### **skewX** (*angle: number*): SFMatrix3d/f
+
+Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* on the left.
+
+#### **skewY** (*angle: number*): SFMatrix3d/f
+
+Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* on the left.
+
 ## SFMatrix4d/SFMatrix4f Object
 
 The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).

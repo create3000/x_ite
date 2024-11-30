@@ -1842,6 +1842,14 @@ declare namespace X3D
        * Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
        */
       scale <T extends SFVec2d | SFVec2f> (scale: T): this;
+      /**
+       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* on the left.
+       */
+      skewX (angle: number): this;
+      /**
+       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* on the left.
+       */
+      skewY (angle: number): this;
    }
 
    /**

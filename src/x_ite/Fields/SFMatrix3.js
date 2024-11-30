@@ -118,6 +118,14 @@ function SFMatrix3Template (TypeName, double)
       {
          return new (this .constructor) (this .getValue () .copy () .rotate (rotation));
       },
+      skewX (angle)
+      {
+         return new (this .constructor) (this .getValue () .copy () .skewX (angle));
+      },
+      skewY (angle)
+      {
+         return new (this .constructor) (this .getValue () .copy () .skewY (angle));
+      },
    });
 }
 
