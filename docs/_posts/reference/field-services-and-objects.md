@@ -704,6 +704,10 @@ Returns an SFVec2d/f whose value is the componentwise absolute value of the obje
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f added, componentwise, to the object.
 
+#### **clamp** (*low: SFVec2d/f, high: SFVec2d/f*): SFVec2d/f
+
+Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
+
 #### **distance** (*other: SFVec2d/f*): number
 
 Returns the distance of this vector to SFVec2d/f *other*.
@@ -812,6 +816,10 @@ Returns an SFVec3d/f whose value is the passed SFVec3d/f added, componentwise, t
 #### **cross** (*other: SFVec3d/f*): SFVec3d/f
 
 Returns the cross product of the object and the passed SFVec3d/f *other*.
+
+#### **clamp** (*low: SFVec3d/f, high: SFVec3d/f*): SFVec3d/f
+
+Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
 
 #### **distance** (*other: SFVec3d/f*): number
 
@@ -922,6 +930,10 @@ Returns an SFVec4d/f whose value is the componentwise absolute value of the obje
 #### **add** (*other: SFVec4d/f*): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the passed SFVec4d/f added, componentwise, to the object.
+
+#### **clamp** (*low: SFVec4d/f, high: SFVec4d/f*): SFVec4d/f
+
+Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
 
 #### **distance** (*other: SFVec4d/f*): number
 
