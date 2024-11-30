@@ -1830,6 +1830,18 @@ declare namespace X3D
        * Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
        */
       multMatrixDir <T extends SFVec2d | SFVec2f> (col: T): T;
+      /**
+       * Returns a SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
+       */
+      translate <T extends SFVec2d | SFVec2f> (translation: T): this;
+      /**
+       * Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* on the left.
+       */
+      rotate (rotation: number): this;
+      /**
+       * Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
+       */
+      scale <T extends SFVec2d | SFVec2f> (scale: T): this;
    }
 
    /**
@@ -1930,6 +1942,18 @@ declare namespace X3D
        * Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
        */
       multMatrixDir <T extends SFVec3d | SFVec3f> (col: T): T;
+      /**
+       * Returns a SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
+       */
+      translate <T extends SFVec3d | SFVec3f> (translation: T): this;
+      /**
+       * Returns a SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
+       */
+      rotate (rotation: SFRotation): this;
+      /**
+       * Returns a SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
+       */
+      scale <T extends SFVec3d | SFVec3f> (scale: T): this;
    }
 
    /**

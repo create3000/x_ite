@@ -404,15 +404,15 @@ Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the
 
 Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
 
-#### **translate** (*translation: SFVec2d/f*): void
+#### **translate** (*translation: SFVec2d/f*): SFMatrix3d/f
 
 Returns a SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
 
-#### **rotate** (*rotation: number*): void
+#### **rotate** (*rotation: number*): SFMatrix3d/f
 
 Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* on the left.
 
-#### **scale** (*scale: SFVec2d/f*): void
+#### **scale** (*scale: SFVec2d/f*): SFMatrix3d/f
 
 Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
 
@@ -506,15 +506,15 @@ Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the
 
 Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
 
-#### **translate** (*translation: SFVec3d/f*): void
+#### **translate** (*translation: SFVec3d/f*):  SFMatrix4d/f
 
 Returns a SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
 
-#### **rotate** (*rotation: SFRotation*): void
+#### **rotate** (*rotation: SFRotation*):  SFMatrix4d/f
 
 Returns a SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
 
-#### **scale** (*scale: SFVec3d/f*): void
+#### **scale** (*scale: SFVec3d/f*):  SFMatrix4d/f
 
 Returns a SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
 
