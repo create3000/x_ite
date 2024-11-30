@@ -292,8 +292,6 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       navigationInfo .type = ["PLANE_create3000.github.io", "PLANE", "EXAMINE", "ANY"];
 
-      scene .getRootNodes () .push (navigationInfo);
-
       // Get attributes of svg element.
 
       const
@@ -325,6 +323,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          x         =  (viewBox .x + width  / 2) * PIXEL,
          y         = -(viewBox .y + height / 2) * PIXEL;
 
+      viewpoint .navigationInfo   = navigationInfo;
       viewpoint .position         = new Vector3 (x, y, 10);
       viewpoint .centerOfRotation = new Vector3 (x, y, 0);
 
