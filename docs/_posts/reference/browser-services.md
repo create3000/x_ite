@@ -74,7 +74,7 @@ Returns the bound NavigationInfo node in the active layer, if any. This property
 
 #### **activeViewpoint**: SFNode | null
 
-Returns the bound X3DViewpointNode node in the active layer, if any. This property is read only.
+Returns the bound X3DViewpointNode in the active layer, if any. This property is read only.
 
 #### **element**: X3DCanvasElement
 

@@ -124,7 +124,7 @@ declare namespace X3D
        */
       readonly activeNavigationInfo: NavigationInfoProxy | null;
       /*
-       * Returns the bound X3DViewpointNode node in the active layer, if any. This property is read only.
+       * Returns the bound X3DViewpointNode in the active layer, if any. This property is read only.
        */
       readonly activeViewpoint: X3DViewpointNodeProxy | null;
       /**
