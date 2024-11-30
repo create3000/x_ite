@@ -66,7 +66,7 @@ The real type of this class is dependent on whether the user code is inside a pr
 
 #### **activeLayer**: SFNode | null
 
-Returns the active layer, if any. This property is read only.
+Returns the active layer, if any. The active layer is the layer on which navigation takes place. This property is read only.
 
 #### **activeNavigationInfo**: SFNode | null
 
