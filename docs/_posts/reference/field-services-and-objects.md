@@ -410,7 +410,7 @@ Returns a SFMatrix3d/f whose value is the object translated by the passed *trans
 
 #### **rotate** (*rotation: number*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* on the left.
+Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* (in radians) on the left.
 
 #### **scale** (*scale: SFVec2d/f*): SFMatrix3d/f
 
@@ -418,11 +418,11 @@ Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on
 
 #### **skewX** (*angle: number*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* on the left.
+Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
 
 #### **skewY** (*angle: number*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* on the left.
+Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
 
 ## SFMatrix4d/SFMatrix4f Object
 

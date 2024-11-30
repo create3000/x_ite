@@ -1835,7 +1835,7 @@ declare namespace X3D
        */
       translate <T extends SFVec2d | SFVec2f> (translation: T): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* on the left.
+       * Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* (in radians) on the left.
        */
       rotate (rotation: number): this;
       /**
@@ -1843,11 +1843,11 @@ declare namespace X3D
        */
       scale <T extends SFVec2d | SFVec2f> (scale: T): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* on the left.
+       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
        */
       skewX (angle: number): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* on the left.
+       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
        */
       skewY (angle: number): this;
    }
