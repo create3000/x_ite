@@ -26,7 +26,7 @@ There are a fixed set of objects in ECMAScript, each of which have a fixed set o
 
 The X3DCanvasElement, \<x3d-canvas\>, is the main element that displays the X3D content. It defines some functions to be used with this object.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 An \<x3d-canvas\> can be created with the `document.createElement` function to get a reference to an X3DCanvasElement.
 

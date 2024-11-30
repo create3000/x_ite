@@ -9,7 +9,7 @@ tags: [Browser, Services, Authoring, Interface]
 
 This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user. One global instance of the object is available. The name of the instance is Browser.
 
@@ -576,7 +576,7 @@ A user-defined String.
 
 The X3DConcreteNode interface defines an interface for concrete node types, it extends the X3DAbstractNode interface. The object consists solely of read-only properties. It does not define any additional functions.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -598,7 +598,7 @@ Returns a list of fields defined for the SFNode object.
 
 The X3DAbstractNode interface defines an interface for concrete node types. The object consists solely of read-only properties. It does not define any additional functions.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 

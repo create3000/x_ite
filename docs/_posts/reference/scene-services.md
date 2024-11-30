@@ -9,7 +9,7 @@ tags: [Scene, Services, Authoring, Interface]
 
 This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -125,7 +125,7 @@ Remove the route between the passed *sourceField* and passed *destinationField*,
 
 A scene is an extension of the execution context services with additional services provided.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -236,7 +236,7 @@ For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmls
 
 This object stores information about a particular X3D profile.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -266,7 +266,7 @@ None.
 
 The ComponentInfo object stores information about a particular X3D component. The object consists solely of read-only properties. It does not define any additional functions.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -296,7 +296,7 @@ None.
 
 The UnitInfo object stores information about a particular unit declaration. The object consists solely of read-only properties. It does not define any additional functions.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -346,7 +346,7 @@ None.
 
 The X3DImportedNode object stores information about a particular import declaration. The object consists solely of read-only properties. It does not define any additional functions.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -372,7 +372,7 @@ A string of the imported name. This property is read only.
 
 The X3DExportedNode object stores information about a particular export declaration. The object consists solely of read-only properties. It does not define any additional functions.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -390,7 +390,7 @@ The SFNode object of the corresponding node. This property is read only.
 
 ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -408,7 +408,7 @@ None
 
 ComponentInfoArray is an object that represents an array of ComponentInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *componentInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -426,7 +426,7 @@ None
 
 UnitInfoArray is an object that represents an array of UnitInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *unitInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -444,7 +444,7 @@ None
 
 ImportedNodesArray is an object that represents an array of X3DImportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *importedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
@@ -462,7 +462,7 @@ None
 
 ExportedNodesArray is an object that represents an array of X3DExportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *exportedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
