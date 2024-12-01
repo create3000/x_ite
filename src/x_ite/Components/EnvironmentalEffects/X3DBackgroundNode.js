@@ -488,8 +488,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
          // Rotate and scale background.
 
-         const far = renderObject .getViewpoint () .getFarDistance ()
-            ?? renderObject .getNavigationInfo () .getFarValue (renderObject .getViewpoint ());
+         const far = renderObject .getViewpoint () .getMaxFarValue ();
 
          modelViewMatrix .assign (this .modelMatrix);
          modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
