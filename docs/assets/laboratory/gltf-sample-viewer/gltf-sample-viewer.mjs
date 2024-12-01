@@ -723,7 +723,7 @@ class SampleViewer
       browser .getField ("activeViewpoint") .addFieldCallback ("change", () =>
       {
          const
-            description = browser .activeViewpoint .description,
+            description = browser .activeViewpoint ?.description ?? "",
             index       = [... $("#viewpoints option")] .findIndex (o => $(o) .text () === description);
 
          $("#viewpoints select") .val (index);
@@ -798,7 +798,7 @@ class SampleViewer
       await this .browser .loadURL (new X3D .MFString (filename));
       await this .browser .nextFrame ();
 
-      if (!this .browser .activeViewpoint .description)
+      if (!this .browser .activeViewpoint ?.description)
          this .browser .viewAll (0);
 
       this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
