@@ -1489,6 +1489,10 @@ declare namespace X3D
    class X3DField
    {
       /**
+      * Returns the type name of this object.
+      */
+      getTypeName (): string;
+      /**
        * Returns a copy of this X3DField.
        */
       copy (): this;
