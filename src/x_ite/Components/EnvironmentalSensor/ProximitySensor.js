@@ -223,18 +223,18 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
          }
       };
    })(),
-   containsPoint (point)
+   containsPoint ({ x: px, y: py, z: pz })
    {
       const
          min = this .min,
          max = this .max;
 
-      return min .x <= point .x &&
-             max .x >= point .x &&
-             min .y <= point .y &&
-             max .y >= point .y &&
-             min .z <= point .z &&
-             max .z >= point .z;
+      return min .x <= px &&
+             max .x >= px &&
+             min .y <= py &&
+             max .y >= py &&
+             min .z <= pz &&
+             max .z >= pz;
    },
 });
 
