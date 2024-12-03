@@ -61,7 +61,7 @@ declare namespace X3D
    /**
     * This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.
     */
-   class X3DBrowser
+   class X3DBrowser extends X3DObject
    {
       /**
        * A browser-implementation specific string describing the browser. This property is read only.
@@ -264,10 +264,6 @@ declare namespace X3D
        * For *options* see `X3DScene.toVRMLString`.
        */
       toJSONString (options?: ToStringOptions): string;
-      /**
-       * Disposes this object.
-       */
-      dispose (): void;
 
       // VRML methods
 
@@ -557,16 +553,12 @@ declare namespace X3D
        * For *options* see `X3DScene.toVRMLString`.
        */
       toJSONString (options?: ToStringOptions): string;
-      /**
-       * Disposes this object.
-       */
-      dispose (): void;
    }
 
    /**
     * This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
     */
-   class X3DExecutionContext
+   class X3DExecutionContext extends X3DObject
    {
       /**
        * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read only.
@@ -740,7 +732,7 @@ declare namespace X3D
    /**
     * This object stores information about a particular X3D profile.
     */
-   class ProfileInfo
+   class ProfileInfo extends X3DObject
    {
       /**
        * A string of the formal name of this profile. This property is read only.
@@ -768,7 +760,7 @@ declare namespace X3D
    /**
     * The ComponentInfo object stores information about a particular X3D component. The object consists solely of read-only properties. It does not define any additional functions.
     */
-   class ComponentInfo
+   class ComponentInfo extends X3DObject
    {
       /**
        * A string of the formal name of this profile. This property is read only.
@@ -796,7 +788,7 @@ declare namespace X3D
    /**
     * The UnitInfo object stores information about a particular unit declaration. The object consists solely of read-only properties. It does not define any additional functions.
     */
-   class UnitInfo
+   class UnitInfo extends X3DObject
    {
       /**
        * The category of default unit being modified as defined in the table. This property is read only.
@@ -825,7 +817,7 @@ declare namespace X3D
    /**
     * The X3DImportedNode object stores information about a particular import declaration. The object consists solely of read-only properties. It does not define any additional functions.
     */
-   class X3DImportedNode
+   class X3DImportedNode extends X3DObject
    {
       /**
        * The SFNode object of the Inline node. This property is read only.
@@ -853,7 +845,7 @@ declare namespace X3D
    /**
     * The X3DExportedNode object stores information about a particular export declaration. The object consists solely of read-only properties. It does not define any additional functions.
     */
-   class X3DExportedNode
+   class X3DExportedNode extends X3DObject
    {
       /**
        * A string of the exported name. This property is read only.
@@ -873,7 +865,7 @@ declare namespace X3D
    /**
     * A PROTO declaration is represented by the X3DProtoDeclaration object. This object can only be fetched using the X3DExecutionContext object.
     */
-   class X3DProtoDeclaration
+   class X3DProtoDeclaration extends X3DObject
    {
       /**
        * A string of the declared name of this prototype. This property is read only.
@@ -920,7 +912,7 @@ declare namespace X3D
    /**
     * An EXTERNPROTO declaration is represented by the X3DExternProtoDeclaration object. EXTERNPROTO declarations can only be fetched using the X3DExecutionContext object.
     */
-   class X3DExternProtoDeclaration
+   class X3DExternProtoDeclaration extends X3DObject
    {
       /**
        * A string of the declared name of this extern prototype. This property is read only.
@@ -979,7 +971,7 @@ declare namespace X3D
    /**
     * Routes are represented by the X3DRoute object. Routes can only be created through calls to the addRoute () function of X3DExecutionContext.
     */
-   class X3DRoute
+   class X3DRoute extends X3DObject
    {
       /**
        * A reference to the node that is the source of this route.
@@ -999,7 +991,7 @@ declare namespace X3D
       readonly destinationField: string;
    }
 
-   class X3DInfoArray <T>
+   class X3DInfoArray <T> extends X3DObject
    {
       [Symbol .iterator](): IterableIterator <T>;
       readonly [index: number]: T;
@@ -1463,7 +1455,7 @@ declare namespace X3D
    /**
     * The X3DFieldDefinition object represents all of the descriptive properties of a single field of a node.
     */
-   class X3DFieldDefinition
+   class X3DFieldDefinition extends X3DObject
    {
       /**
        * Value from the X3DConstants object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
@@ -1486,12 +1478,8 @@ declare namespace X3D
    /**
     * The X3DField object is the base object of all SF* field and X3DArrayField.
     */
-   class X3DField
+   class X3DField extends X3DObject
    {
-      /**
-      * Returns the type name of this object.
-      */
-      getTypeName (): string;
       /**
        * Returns a copy of this X3DField.
        */
@@ -1532,10 +1520,6 @@ declare namespace X3D
       addRouteCallback (key: any, callback: () => void): void;
       removeRouteCallback (key: any): void;
       getRouteCallbacks (): Map <any, () => void>;
-      /**
-       * Disposes this object.
-       */
-      dispose (): void;
    }
 
    /**
@@ -2546,6 +2530,9 @@ declare namespace X3D
       static readonly typeName: "SFVec4f";
    }
 
+   /**
+    * The X3DArrayField object is the base object of all MF* objects. It is used to store a one-dimensional array of the corresponding SF* objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. X3D*ArrayFieldObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
+    */
    class X3DArrayField <T> extends X3DField
    {
       /**
@@ -2598,109 +2585,187 @@ declare namespace X3D
    type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void
    type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U
 
+   /**
+    * The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfBoolObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `false`.
+    */
    class MFBool extends X3DArrayField <boolean>
    {
       static readonly typeName: "MFBool";
    }
 
+   /**
+    * The MFColor/MFColorRGBA object corresponds to an X3D MFColor/MFColorRGBA field. It is used to store a one-dimensional array of SFColor/SFColorRGBA objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfColorObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index* length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFColor (0, 0, 0)` or `SFColorRGBA (0, 0, 0, 0)`.
+    */
    class MFColor extends X3DArrayField <SFColor>
    {
       static readonly typeName: "MFColor";
    }
 
+   /**
+    * The MFColor/MFColorRGBA object corresponds to an X3D MFColor/MFColorRGBA field. It is used to store a one-dimensional array of SFColor/SFColorRGBA objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfColorObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index* length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFColor (0, 0, 0)` or `SFColorRGBA (0, 0, 0, 0)`.
+    */
    class MFColorRGBA extends X3DArrayField <SFColorRGBA>
    {
       static readonly typeName: "MFColorRGBA";
    }
 
+   /**
+    * The MFDouble/MFFloat object corresponds to an X3D MFDouble/MFFloat field. It is used to store a one-dimensional array of SFFloat objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfFloatObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0.0`.
+    */
    class MFDouble extends X3DArrayField <number>
    {
       static readonly typeName: "MFDouble";
    }
 
+   /**
+    * The MFDouble/MFFloat object corresponds to an X3D MFDouble/MFFloat field. It is used to store a one-dimensional array of SFFloat objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfFloatObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0.0`.
+    */
    class MFFloat extends X3DArrayField <number>
    {
       static readonly typeName: "MFFloat";
    }
 
+   /**
+    * The MFImage object corresponds to an X3D MFImage field. It is used to store a one-dimensional array of SFImage objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfImageObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFImage (0, 0, 0)`.
+    */
    class MFImage extends X3DArrayField <SFImage>
    {
       static readonly typeName: "MFImage";
    }
 
+   /**
+    * The MFInt32 object corresponds to an X3D MFInt32 field. It is used to store a one-dimensional array of SFInt32 objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfInt32ObjectName*[*index]*, where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0`.
+    */
    class MFInt32 extends X3DArrayField <number>
    {
       static readonly typeName: "MFInt32";
    }
 
+   /**
+    * The MFMatrix3d/f object corresponds to an X3D MFMatrix3d/f field. It is used to store a one-dimensional array of SFMatrix3d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix3d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the identity matrix.
+    */
    class MFMatrix3d extends X3DArrayField <SFMatrix3d>
    {
       static readonly typeName: "MFMatrix3d";
    }
 
+   /**
+    * The MFMatrix3d/f object corresponds to an X3D MFMatrix3d/f field. It is used to store a one-dimensional array of SFMatrix3d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix3d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the identity matrix.
+    */
    class MFMatrix3f extends X3DArrayField <SFMatrix3f>
    {
       static readonly typeName: "MFMatrix3f";
    }
 
+   /**
+    * The MFMatrix4d/f object corresponds to an X3D MFMatrix4d/f field. It is used to store a one-dimensional array of SFMatrix4d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix4d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the identity matrix.
+    */
    class MFMatrix4d extends X3DArrayField <SFMatrix4d>
    {
       static readonly typeName: "MFMatrix4d";
    }
 
+   /**
+    * The MFMatrix4d/f object corresponds to an X3D MFMatrix4d/f field. It is used to store a one-dimensional array of SFMatrix4d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix4d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the identity matrix.
+    */
    class MFMatrix4f extends X3DArrayField <SFMatrix4f>
    {
       static readonly typeName: "MFMatrix4f";
    }
 
+   /**
+    * The MFNode object corresponds to an X3D MFNode field. It is used to store a one-dimensional array of SFNode objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfNodeObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `null`.
+    */
    class MFNode <T extends SFNode | null = SFNode | null> extends X3DArrayField <T>
    {
       static readonly typeName: "MFNode";
    }
 
+   /**
+    * The MFRotation object corresponds to an X3D MFRotation field. It is used to store a one-dimensional array of SFRotation objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfRotationObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFRotation (0, 0, 1, 0)`.
+    */
    class MFRotation extends X3DArrayField <SFRotation>
    {
       static readonly typeName: "MFRotation";
    }
 
+   /**
+    * The MFString object corresponds to an X3D MFString field. It is used to store a one-dimensional array of String objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfStringObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the empty string.
+    */
    class MFString <T extends string = string> extends X3DArrayField <T>
    {
       static readonly typeName: "MFString";
    }
 
+   /**
+    * The MFTime object corresponds to an X3D MFTime field. It is used to store a one-dimensional array of SFTime objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfTimeObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0.0`.
+    */
    class MFTime extends X3DArrayField <number>
    {
       static readonly typeName: "MFTime";
    }
 
+   /**
+    * The MFVec2d/f object corresponds to an X3D MFVec2d/f field. It is used to store a one-dimensional array of SFVec2d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec2d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec2d/f (0, 0)`.
+    */
    class MFVec2d extends X3DArrayField <SFVec2d>
    {
       static readonly typeName: "MFVec2d";
    }
 
+   /**
+    * The MFVec2d/f object corresponds to an X3D MFVec2d/f field. It is used to store a one-dimensional array of SFVec2d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec2d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec2d/f (0, 0)`.
+    */
    class MFVec2f extends X3DArrayField <SFVec2f>
    {
       static readonly typeName: "MFVec2f";
    }
 
+   /**
+    * The MFVec3d/f object corresponds to an X3D MFVec3d/f field. It is used to store a one-dimensional array of SFVec3d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec3d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec3d/f (0, 0, 0)`.
+    */
    class MFVec3d extends X3DArrayField <SFVec3d>
    {
       static readonly typeName: "MFVec3d";
    }
 
+   /**
+    * The MFVec3d/f object corresponds to an X3D MFVec3d/f field. It is used to store a one-dimensional array of SFVec3d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec3d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec3d/f (0, 0, 0)`.
+    */
    class MFVec3f extends X3DArrayField <SFVec3f>
    {
       static readonly typeName: "MFVec3f";
    }
 
+   /**
+    * The MFVec4d/f object corresponds to an X3D MFVec4d/f field. It is used to store a one-dimensional array of SFVec4d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec4d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec4d/f (0, 0, 0, 0)`.
+    */
    class MFVec4d extends X3DArrayField <SFVec4d>
    {
       static readonly typeName: "MFVec4d";
    }
 
+   /**
+    * The MFVec4d/f object corresponds to an X3D MFVec4d/f field. It is used to store a one-dimensional array of SFVec4d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec4d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec4d/f (0, 0, 0, 0)`.
+    */
    class MFVec4f extends X3DArrayField <SFVec4f>
    {
       static readonly typeName: "MFVec4f";
+   }
+
+   /**
+    * Base class for all X3D classes.
+    */
+   class X3DObject
+   {
+      /**
+      * Returns the type name of this object.
+      */
+      getTypeName (): string;
+      /**
+      * Disposes this object.
+      */
+      dispose (): void;
    }
 
    // NODES START
