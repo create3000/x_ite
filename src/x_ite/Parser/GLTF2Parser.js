@@ -2249,6 +2249,9 @@ function eventsProcessed ()
       skin .skeleton            = skin .skeleton ?? this .skeleton (skin .joints);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
+      if (skin .skeleton !== undefined)
+         this .joints .add (skin .skeleton);
+
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
       skin .normalNode                 = scene .createNode ("Normal",                 false);
