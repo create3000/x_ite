@@ -53,6 +53,10 @@ const
    _b = Symbol .for ("X_ITE.Color3.b"),
    _a = Symbol ();
 
+// glTF sometimes allows color values greater than 1.
+// See: https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_materials_specular/README.md
+// See: https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SpecularTest/glTF/SpecularTest.gltf
+
 function Color4 (r = 0, g = 0, b = 0, a = 0)
 {
    this [_r] = Math .max (r, 0);
