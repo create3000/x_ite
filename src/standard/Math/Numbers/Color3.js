@@ -47,7 +47,7 @@
 
 import Algorithm from "../Algorithm.js";
 
-const { clamp, interval, degrees } = Algorithm;
+const { interval, degrees } = Algorithm;
 
 const
    _r = Symbol .for ("X_ITE.Color3.r"),
@@ -56,9 +56,9 @@ const
 
 function Color3 (r = 0, g = 0, b = 0)
 {
-   this [_r] = clamp (r, 0, 1);
-   this [_g] = clamp (g, 0, 1);
-   this [_b] = clamp (b, 0, 1);
+   this [_r] = Math .max (r, 0);
+   this [_g] = Math .max (g, 0);
+   this [_b] = Math .max (b, 0);
 }
 
 Object .assign (Color3 .prototype,
@@ -86,9 +86,9 @@ Object .assign (Color3 .prototype,
    },
    set (r = 0, g = 0, b = 0)
    {
-      this [_r] = clamp (r, 0, 1);
-      this [_g] = clamp (g, 0, 1);
-      this [_b] = clamp (b, 0, 1);
+      this [_r] = Math .max (r, 0);
+      this [_g] = Math .max (g, 0);
+      this [_b] = Math .max (b, 0);
       return this;
    },
    equals (color)
@@ -206,17 +206,17 @@ for (const key of Object .keys (Color3 .prototype))
 
 const r = {
    get () { return this [_r]; },
-   set (value) { this [_r] = clamp (value, 0, 1); },
+   set (value) { this [_r] = Math .max (value, 0); },
 };
 
 const g = {
    get () { return this [_g]; },
-   set (value) { this [_g] = clamp (value, 0, 1); },
+   set (value) { this [_g] = Math .max (value, 0); },
 };
 
 const b = {
    get () { return this [_b]; },
-   set (value) { this [_b] = clamp (value, 0, 1); },
+   set (value) { this [_b] = Math .max (value, 0); },
 };
 
 Object .defineProperties (Color3 .prototype,
