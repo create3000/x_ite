@@ -508,7 +508,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          generator .string += generator .Indent ();
          generator .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
          generator .string += LATEST_VERSION;
-         generator .string += "//EN\" \"http://www.web3d.org/specifications/x3d-";
+         generator .string += "//EN\" \"https://www.web3d.org/specifications/x3d-";
          generator .string += LATEST_VERSION;
          generator .string += ".dtd\">";
          generator .string += generator .TidyBreak ();
@@ -527,7 +527,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += generator .Space ();
       generator .string += "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'";
       generator .string += generator .Space ();
-      generator .string += "xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-";
+      generator .string += "xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-";
       generator .string += LATEST_VERSION;
       generator .string += ".xsd'>";
       generator .string += generator .TidyBreak ();
@@ -704,7 +704,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += "http://www.web3d.org/specifications/x3d-";
+      generator .string += "https://www.web3d.org/specifications/x3d-";
       generator .string += LATEST_VERSION;
       generator .string += ".xsd";
       generator .string += '"';
@@ -721,7 +721,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += "http://www.web3d.org/specifications/x3d-";
+      generator .string += "https://www.web3d.org/specifications/x3d-";
       generator .string += LATEST_VERSION;
       generator .string += "-JSONSchema.json";
       generator .string += '"';
