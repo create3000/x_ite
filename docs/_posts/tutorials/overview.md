@@ -65,7 +65,7 @@ Scripts and Prototypes
 
 Some words about optimizing a scene
 
-- [Improve Performance](/x_ite/tutorials/improving-performance/)
+- [Improving Performance](/x_ite/tutorials/improving-performance/)
   - To optimize a scene is an important task when creating an X3D scene. There are several ways to improve performance.
 - [Increasing Rendering Speed](/x_ite/tutorials/increasing-rendering-speed/)
   - Using WebGL and JavaScript needs to look at speed all the time. Learn ways to increase rendering speed.
