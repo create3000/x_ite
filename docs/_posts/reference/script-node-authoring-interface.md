@@ -68,7 +68,7 @@ function anInputField (value, time)
 
   if (a)
   {
-    value = 5;  // ERROR, can't assign to function parameter!
+    value = 5;  // ATTENTION, 'value' now contains a number!
   }
 
   aField = anOutputField;  // SFInt32 converted to SFFloat
