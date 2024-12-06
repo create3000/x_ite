@@ -80,6 +80,8 @@ function anInputField (value, time)
   aField = aVector;        // ERROR, can't assign SFVec3f to SFFloat!
 
   const scene = Browser .currentScene; // Get current scene from browser.
+
+  print (scene .rootNodes .length); // Print number of root nodes.
 }"
 }
 ```
