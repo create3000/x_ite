@@ -33,7 +33,7 @@ Local variables can be created simply by assigning to a name that does not yet e
 
 Variable names must start with the a lowercase character ('a' through 'z'), an uppercase character ('A' through 'Z'), or an underscore ('_'). Subsequent characters can be any of these or a digit ('0' through '9'). Variable names are case sensitive.
 
-Numeric, boolean, and string literals are allowed. Numeric literals can be integers in decimal (417), hex (0x5C), or octal (0177) notation. They can also be floating point numbers in fixed (1.76) or exponential (2.7e-12) notation. All numeric literals are of the number type. Boolean literals can be 'true' or 'false' and have the boolean type. String literals can be any sequence of UTF8 characters enclosed in single quotes (') or double quotes ("), and have the type String. Special (non-printable) characters can be included in a string using the following escape sequences:
+Numeric, boolean, and string literals are allowed. Numeric literals can be integers in decimal (417), hex (0x5C), or octal (0177) notation. They can also be floating point numbers in fixed (1.76) or exponential (2.7e-12) notation. All numeric literals are of the number type. Boolean literals can be 'true' or 'false' and have the boolean type. String literals can be any sequence of UTF8 characters enclosed in single quotes (') or double quotes ("), and have the type string. Special (non-printable) characters can be included in a string using the following escape sequences:
 
 | Sequence | Meaning                   |
 |----------|---------------------------|
