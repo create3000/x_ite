@@ -81,7 +81,7 @@ function anInputField (value, time)
 
   const scene = Browser .currentScene; // Get current scene from browser.
 
-  print (scene .rootNodes .length); // Print number of root nodes.
+  print (scene .rootNodes .length);    // Print number of root nodes.
 }"
 }
 ```
