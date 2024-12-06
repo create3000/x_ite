@@ -145,6 +145,8 @@ Once the X3D is defined we can now write the vertex and the fragment shader sour
 
 precision mediump float;
 
+// Specify build-in uniforms and ins:
+
 uniform mat4 x3d_TextureMatrix [1];
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat4 x3d_ProjectionMatrix;
@@ -152,14 +154,23 @@ uniform mat4 x3d_ProjectionMatrix;
 in vec4 x3d_TexCoord0;
 in vec4 x3d_Vertex;
 
+// Out for fragment shader:
+
 out vec4 texCoord;
+
+// Uniforms from user-defined fields:
+
+uniform float set_time; // value from set_time field
+
+// main:
 
 void
 main ()
 {
-  texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
+   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
 
-  gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
+   // Animate vertex along x-axis.
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * (x3d_Vertex + vec3 (set_time % 1.0, 0, 0, 0));
 }
 ```
 
@@ -170,16 +181,23 @@ main ()
 
 precision mediump float;
 
+// Specify build-in uniforms and ins:
+
 uniform sampler2D x3d_Texture2D [1];
 
 in vec4 texCoord;
 
+// Specify build-in out:
+
 out vec4 x3d_FragColor;
+
+// main:
 
 void
 main ()
 {
-  x3d_FragColor = texture (x3d_Texture2D [0], vec2 (texCoord .s, 1.0 - texCoord .t));
+   // Use color from texture.
+   x3d_FragColor = texture (x3d_Texture2D [0], vec2 (texCoord .s, 1.0 - texCoord .t));
 }
 ```
 
