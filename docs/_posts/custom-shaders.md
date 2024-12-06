@@ -23,7 +23,7 @@ However, you will often want to perform special effects or special cases for you
 
 WebGL uses the GLSL language to write shaders that can be run across all browsers. With X_ITE you create your own shader using [ComposedShader](/x_ite/components/shaders/composedshader/) and [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes and than attach the ComposedShader to the *shader* field of an [Appearance](/x_ite/components/shape/appearance/) node and that is a child's play with [Sunrize](/sunrize/).
 
-### X3D
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -74,6 +74,66 @@ uniform sampler2D x3d_Texture2D [1]; // image from ImageTexture node
     <ROUTE fromNode='Timer' fromField='elapsedTime' toNode='Shader' toField='set_time'/>
   </Scene>
 </X3D>
+```
+
+### Classic VRML Encoding
+
+```vrml
+#X3D V{{ site.x3d_latest_version }} utf8
+
+PROFILE Interchange
+
+COMPONENT Shaders : 1
+
+Viewpoint {
+  position 9.279771 8.706816 16.22163
+  orientation -0.83432609774564 0.526445494105168 0.163569876068002 0.712985187365762
+  centerOfRotation 4.5 0 4.5
+}
+
+DEF Timer TimeSensor {
+  loop TRUE
+}
+
+Transform {
+  children Shape {
+    appearance Appearance {
+      texture ImageTexture {
+        url "image.png"
+      }
+      shaders DEF Shader ComposedShader {
+        inputOnly SFTime set_time
+
+        language "GLSL"
+        parts [
+          ShaderPart {
+            url "data:x-shader/x-vertex,#version 300 es
+// Vertex Shader
+...
+uniform float set_time; // value from set_time field
+...
+"
+          }
+          ShaderPart {
+            type "FRAGMENT"
+            url "data:x-shader/x-fragment,#version 300 es
+// Fragment Shader
+...
+uniform sampler2D x3d_Texture2D [1]; // image from ImageTexture node
+...
+"
+          }
+        ]
+      }
+    }
+    geometry ElevationGrid {
+      xDimension 10
+      zDimension 10
+    }
+  }
+}
+
+ROUTE Timer.elapsedTime TO Shader.set_time
 ```
 
 Once the X3D is defined we can now write the vertex and the fragment shader source. This is a simple example where a texture is applied to the geometry.
