@@ -269,6 +269,7 @@ x3d-canvas.xr-button-tl::part(xr-button) {
   cursor: default !important;
 }
 
+span[data-label-text="X3D" i],
 span[data-label-text="VRML" i] {
   text-transform: uppercase;
 }
