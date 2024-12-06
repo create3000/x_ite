@@ -61,7 +61,7 @@ function anInputField (value, time)
 {
   let a = false;
 
-  if (aField == 1.5)
+  if (aField === 1.5)
   {
     a = true;   // 'a' contains a boolean
   }
