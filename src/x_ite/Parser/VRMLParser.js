@@ -1590,12 +1590,14 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          {
             value += this .result [0];
 
-            if (value .at (-1) !== "\\")
+            const m = value .match (/\\+$/);
+
+            if (!m || m [0] .length % 2 === 0)
                break;
 
             Grammar .doubleQuotes .parse (this);
 
-            value += "\"";
+            value += '"';
          }
 
          if (Grammar .doubleQuotes .parse (this))

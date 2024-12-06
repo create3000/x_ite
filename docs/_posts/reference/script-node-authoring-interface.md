@@ -37,14 +37,17 @@ Numeric, boolean, and string literals are allowed. Numeric literals can be integ
 
 | Sequence | Meaning                   |
 |----------|---------------------------|
+| \\"      | double quote              |
+| \\\\     | backslash                 |
+
+<!-- Removed these escape sequences:
 | \\b      | backspace                 |
 | \\f      | form feed                 |
 | \\n      | new line                  |
 | \\r      | carriage return           |
 | \\t      | tab                       |
 | \\'      | single quote (apostrophe) |
-| \\"      | double quote              |
-| \\\\     | backslash                 |
+-->
 
 Here are some examples:
 
@@ -73,7 +76,7 @@ function anInputField (value, time)
 
   aField = anOutputField;  // SFInt32 converted to SFFloat
 
-  let s = 'Two\nLines';    // 's' contains a String
+  let s = 'Two\\nLines';   // 's' contains a String
   let b = aField;          // 'b' contains a number
 
   b      = anOutputField;  // 'b' now contains a different number
