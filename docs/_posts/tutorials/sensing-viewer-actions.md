@@ -44,7 +44,7 @@ A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) node senses
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform>
   <TouchSensor DEF='Touched'/>
   <Shape><!-- ... --></Shape>
@@ -68,7 +68,7 @@ Transform {
 
 ### XML Encoding
 
-```xml
+```x3d
 <TouchSensor DEF='Touch'/>
 
 <TimeSensor DEF='Timer1' ... />
@@ -113,7 +113,7 @@ A [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/) node sens
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform>
   <SphereSensor DEF='Rotator'/>
   <Transform DEF='RotateMe'><!-- ... --></Transform>
@@ -142,7 +142,7 @@ A [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform>
   <CylinderSensor DEF='Rotator'/>
   <Transform DEF='RotateMe'><!-- ... --></Transform>
@@ -171,7 +171,7 @@ A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform>
   <PlaneSensor DEF='Mover'/>
   <Transform DEF='MoveMe'><!-- ... --></Transform>

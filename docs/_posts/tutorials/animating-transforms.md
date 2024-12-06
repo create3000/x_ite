@@ -49,7 +49,7 @@ Animation requires control over time:
 
 ### XML Encoding
 
-```xml
+```x3d
 <TimeSensor
     cycleInterval='1.0'
     loop='false'
@@ -115,7 +115,7 @@ The fraction\_changed output event:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material DEF='Monolith1Facade'
@@ -193,7 +193,7 @@ A [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator/) 
 
 ### XML Encoding
 
-```xml
+```x3d
 <PositionInterpolator
     key='0.0, ...'
     keyValue='0.0 0.0 0.0, ...'/>
@@ -224,7 +224,7 @@ The *value\_changed* output:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform DEF='Particle1'
   <Shape><!-- ... --></Shape>
 </Transform>
@@ -292,7 +292,7 @@ A [OrientationInterpolator](/x_ite/components/interpolation/orientationinterpola
 
 ### XML Encoding
 
-```xml
+```x3d
 <OrientationInterpolator
     key='0.0, ...'
     keyValue='0.0 1.0 0.0 0.0, ...'/>
@@ -318,7 +318,7 @@ Typically route into a [Transform](/x_ite/components/grouping/transform/) node's
 
 ### XML Encoding
 
-```xml
+```x3d
 <ColorInterpolator
     key='0.0, ...'
     keyValue='1.0 1.0 0.0, ...'/>
@@ -344,7 +344,7 @@ Typically route into a [Material](/x_ite/components/shape/material/) node's *set
 
 ### XML Encoding
 
-```xml
+```x3d
 <ScalarInterpolator
     key='0.0, ...'
     keyValue='4.5, ...'/>

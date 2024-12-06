@@ -17,7 +17,7 @@ The **DEF** syntax gives a name to a node.
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material DEF='RedColor'
@@ -53,7 +53,7 @@ The **USE** syntax uses a previously named node
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material USE='RedColor'/>
@@ -96,7 +96,7 @@ Names are also necessary for animation ...
 
 ### XML Encoding
 
-```xml
+```x3d
 <Inline
     url='"table.x3dv"'/>
 <Transform

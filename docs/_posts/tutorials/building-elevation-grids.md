@@ -22,7 +22,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <ElevationGrid
@@ -55,7 +55,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <ElevationGrid
@@ -87,7 +87,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <ElevationGrid
@@ -114,7 +114,7 @@ Shape {
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <ElevationGrid

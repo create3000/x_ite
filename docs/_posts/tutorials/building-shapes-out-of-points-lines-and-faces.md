@@ -32,7 +32,7 @@ A [Coordinate](/x_ite/components/rendering/coordinate/) node contains a list of 
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- X Y Z -->
 <Coordinate
     point='2.0 1.0 3.0, 4.0 2.5 5.3, ...'/>
@@ -69,7 +69,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <PointSet>
@@ -100,7 +100,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedLineSet
@@ -157,7 +157,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedFaceSet
@@ -212,7 +212,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedFaceSet
@@ -264,7 +264,7 @@ A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolato
 
 ### XML Encoding
 
-```xml
+```x3d
 <CoordinateInterpolator
     key='0.0, ...'
     keyValue='0.0 1.0 0.0, ...'/>

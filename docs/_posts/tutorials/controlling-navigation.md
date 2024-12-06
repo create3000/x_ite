@@ -47,7 +47,7 @@ A [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node selects th
 
 ### XML Encoding
 
-```xml
+```x3d
 <NavigationInfo
   type='"WALK", "ANY"'
   avatarSize='0.25, 1.6, 0.75'

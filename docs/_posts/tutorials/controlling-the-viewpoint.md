@@ -29,7 +29,7 @@ A [Viewpoint](/x_ite/components/navigation/viewpoint/) node specifies a named vi
 
 ### XML Encoding
 
-```xml
+```x3d
 <Viewpoint
     position='0.0 0.0 10.0'
     orientation='0.0 0.0 1.0 0.0'

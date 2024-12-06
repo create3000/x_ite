@@ -78,7 +78,7 @@ A [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) node conta
 
 ### XML Encoding
 
-```xml
+```x3d
 <TextureCoordinate
     point='0.2 0.2, 0.8 0.2, ...'/>
 ```
@@ -101,7 +101,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedFaceSet
@@ -136,7 +136,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <ElevationGrid
@@ -166,7 +166,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material ... />
@@ -200,7 +200,7 @@ A [TextureTransform](/x_ite/components/texturing/texturetransform/) node transfo
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material ... />
@@ -237,7 +237,7 @@ Scale, Rotate, and Translate a texture cookie cutter one after the other:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material ... />

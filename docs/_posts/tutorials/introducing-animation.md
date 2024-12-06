@@ -91,7 +91,7 @@ A **ROUTE** statement connects two nodes together using
 
 ### XML Encoding
 
-```xml
+```x3d
 <ROUTE fromNode='MySender' fromField='rotation_changed' toNode='MyReceiver' toField='set_rotation'/>
 ```
 
@@ -161,7 +161,7 @@ The [Transform](/x_ite/components/grouping/transform/) node has:
 
 ### XML Encoding
 
-```xml
+```x3d
 <TouchSensor DEF='Touch'/>
 
 <TimeSensor DEF='Timer1' ... />

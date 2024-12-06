@@ -47,7 +47,7 @@ A [PointLight](/x_ite/components/lighting/pointlight/) node illuminates radially
 
 ### XML Encoding
 
-```xml
+```x3d
 <PointLight
     location='0.0 0.0 0.0'
     intensity='1.0'
@@ -70,7 +70,7 @@ A [DirectionalLight](/x_ite/components/lighting/directionallight/) node illumina
 
 ### XML Encoding
 
-```xml
+```x3d
 <DirectionalLight
     direction='1.0 0.0 0.0'
     intensity='1.0'
@@ -93,7 +93,7 @@ A [SpotLight](/x_ite/components/lighting/spotlight/) node illuminates from a poi
 
 ### XML Encoding
 
-```xml
+```x3d
 <SpotLight
     location='0.0 0.0 0.0'
     direction='1.0 0.0 0.0'
@@ -119,7 +119,7 @@ SpotLight {
 
 ### XML Encoding
 
-```xml
+```x3d
 <SpotLight
     ...
     cutOffAngle='0.785'

@@ -28,7 +28,7 @@ A PROTO statement declares a new node type (a prototype):
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <field accessType='inputOutput' type='SFTime' name='cycleInterval' value='1'/>
@@ -60,7 +60,7 @@ PROTO BouncingBall [
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <!-- ... -->
@@ -99,7 +99,7 @@ Interface items connected by IS need not have the same name as an item in the bo
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <field accessType='inputOutput' type='SFTime' name='cycleInterval' value='1'/>
@@ -152,7 +152,7 @@ The new node type can be used like any other type.
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- Official Syntax -->
 <ProtoInstance name='BouncingBall'>
   <fieldValue name='cycleInterval' value='2'/>
@@ -193,7 +193,7 @@ The new node type can be used wherever the first node of the prototype body can 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <!-- Official Syntax -->
   <ProtoInstance name='Torus' containerField='geometry'>
@@ -224,7 +224,7 @@ Fields needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <field accessType='inputOutput' type='SFTime' name='cycleInterval' value='1'/>
@@ -261,7 +261,7 @@ Body needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <!-- ... -->
@@ -314,7 +314,7 @@ Prototypes are typically in a separate external file, referenced by an **EXTERNP
 
 ### XML Encoding
 
-```xml
+```x3d
 <ExternProtoDeclare name='BouncingBall' url='"bounce.x3dv#BouncingBall", "bounce.x3d#BouncingBall"'>
   <field accessType='inputOutput' type='SFTime' name='cycleInterval'/>
   <field accessType='inputOutput' type='SFFloat' name='bounceHeight'/>

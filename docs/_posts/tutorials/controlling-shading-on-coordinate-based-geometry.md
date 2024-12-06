@@ -46,7 +46,7 @@ A Normal node contains a list of normal vectors that override use of a crease an
 
 ### XML Encoding
 
-```xml
+```x3d
 <Normal
     vector='0.0 1.0 0.0, ...'/>
 ```
@@ -71,7 +71,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --><Appearance>
   <IndexedFaceSet
@@ -116,7 +116,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --><Appearance>
   <ElevationGrid
@@ -157,7 +157,7 @@ A [NormalInterpolator](/x_ite/components/interpolation/normalinterpolator/) node
 
 ### XML Encoding
 
-```xml
+```x3d
 <NormalInterpolator
     key='0.0, ...'
     keyValue='0.0 1.0 1.0, ...'/>

@@ -41,7 +41,7 @@ If the same object is used more than once in the scene, it's most efficient to g
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform DEF='Tree1'>
   <Inline DEF='Tree'
       url='"tree.x3d"'/>
@@ -74,7 +74,7 @@ Prototyping objects that are used frequently with a few modifications is another
 
 ### XML Encoding
 
-```xml
+```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
 <X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>

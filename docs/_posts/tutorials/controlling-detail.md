@@ -44,7 +44,7 @@ An [LOD](/x_ite/components/navigation/lod/) grouping node creates a group of sha
 
 ### XML Encoding
 
-```xml
+```x3d
 <LOD
     center='0.0 0.0 0.0'
     range='...'>
@@ -89,7 +89,7 @@ Lower detail levels should use simpler geometry, fewer textures, and no text.
 
 ### XML Encoding
 
-```xml
+```x3d
 <LOD
     center='0.0 0.0 0.0'
     range='7.0, 10.0'>

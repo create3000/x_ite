@@ -26,7 +26,7 @@ Recall that [Shape](/x_ite/components/shape/shape/) nodes describe:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <!-- appearance ... -->
   <!-- geometry ... -->
@@ -50,7 +50,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <!-- material ... -->
@@ -80,7 +80,7 @@ A [Material](/x_ite/components/shape/material/) node controls shape material att
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material
@@ -140,7 +140,7 @@ A [Material](/x_ite/components/shape/material/) node also controls shape shinine
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material

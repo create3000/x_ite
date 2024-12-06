@@ -21,7 +21,7 @@ X3D files contain:
 
 ### XML Encoding
 
-```xml
+```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
 <X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
@@ -93,7 +93,7 @@ Shape {
 
 ### XML Encoding
 
-```xml
+```x3d
 <Cylinder/>
 ```
 
@@ -125,7 +125,7 @@ Some examples:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Cylinder
     height='2.0'
     radius='1.5'/>
@@ -157,7 +157,7 @@ Every field has:
 
 Every node has a »containerField« attribute with a default value, which is different for each node type. You can change the value if needed.
 
-```xml
+```x3d
 <Collision>
   <Shape containerField='proxy'>
     <Box/>

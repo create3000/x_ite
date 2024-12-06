@@ -16,7 +16,7 @@ A [Color](/x_ite/components/rendering/color/) node contains a list of RGB values
 
 ### XML Encoding
 
-```xml
+```x3d
 <Color
     color='1.0 0.0 0.0, ...'/>
 ```
@@ -47,7 +47,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <PointSet>
@@ -79,7 +79,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedLineSet
@@ -124,7 +124,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedFaceSet
@@ -169,7 +169,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <ElevationGrid

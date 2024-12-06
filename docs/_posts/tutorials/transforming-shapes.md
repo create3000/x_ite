@@ -42,7 +42,7 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='...'
     rotation='...'
@@ -68,7 +68,7 @@ The *children* field includes a list of one or more nodes
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform ...>
     <Shape><!-- ... --></Shape>
     <Shape><!-- ... --></Shape>
@@ -99,7 +99,7 @@ Translation positions a coordinate system in X, Y, and Z.
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- X Y Z -->
 <Transform
     translation='2.0 0.0 0.0'>
@@ -126,7 +126,7 @@ Rotation orients a coordinate system about a rotation axis by a rotation angle
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- X Y Z Angle -->
 <Transform
     rotation='0.0 0.0 1.0 0.52'>
@@ -175,7 +175,7 @@ Scale grows or shrinks a coordinate system by a scaling factor in X, Y, and Z.
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- X Y Z  -->
 <Transform
   scale='0.5 0.5 0.5'>
@@ -199,7 +199,7 @@ Scale, Rotate, and Translate a coordinate system, one after the other.
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='2.0 0.0 0.0'
     rotation='0.0 0.0 1.0 0.52'
@@ -228,7 +228,7 @@ Read operations bottom-up:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='-2.0 3.0 0.0'>
   <Shape>

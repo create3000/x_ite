@@ -46,7 +46,7 @@ A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) no
 
 ### XML Encoding
 
-```xml
+```x3d
 <VisibilitySensor DEF='Sensor'
     center='0.0 0.0 0.0'
     size='14.0 14.0 14.0'/>
@@ -75,7 +75,7 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProximitySensor DEF='Sensor'
     center='0.0 0.0 0.0'
     size='14.0 14.0 14.0'/>
@@ -100,7 +100,7 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProximitySensor DEF='Sensor' ... />
 
 <ROUTE fromNode='Sensor' fromField='position_changed' toNode='PetRobotFollower' toField='set_translation'/>
@@ -148,7 +148,7 @@ A [Collision](/x_ite/components/navigation/collision/) grouping node senses if t
 
 ### XML Encoding
 
-```xml
+```x3d
 <Collision DEF='Collide'
     enabled='true'>
   <Shape containerField='proxy'>

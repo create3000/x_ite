@@ -22,7 +22,7 @@ For a JavaScript program script, typically give the script in the Script node's 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='3'/>
   <field accessType='inputOnly' type='SFFloat' name='set_fraction'/>
@@ -141,7 +141,7 @@ Nodes needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform DEF='Ball'>
   <!-- children ... -->
 </Transform>
@@ -173,7 +173,7 @@ Script fields needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='3'/>
   <!-- ... -->
@@ -197,7 +197,7 @@ Inputs and outputs needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <!-- ... -->
   <field accessType='inputOnly' type='SFFloat' name='set_fraction'/>
@@ -230,7 +230,7 @@ Event processing actions needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <!-- ... -->
 <![CDATA[ecmascript:
@@ -267,7 +267,7 @@ Use a ball position equation roughly based upon Physics:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='3'/>
   <field accessType='inputOnly' type='SFFloat' name='set_fraction'/>
@@ -321,7 +321,7 @@ Routes needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Bouncer' toField='set_fraction'/>
 <ROUTE fromNode='Bouncer' fromField='value_changed' toNode='Ball' toField='set_translation'/>
 ```
@@ -335,7 +335,7 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
 
 ### XML Encoding
 
-```xml
+```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
 <X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
@@ -476,7 +476,7 @@ A toggle script turns on at 1st touch, off at 2nd:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Toggle'>
   <field accessType='inputOutput' type='SFBool' name='on' value='true'/>
   <field accessType='inputOnly' type='SFBool' name='set_active'/>
@@ -529,7 +529,7 @@ Use the toggle switch to make a lamp turn on and off
 
 ### XML Encoding
 
-```xml
+```x3d
 <TouchSensor DEF='LightSwitch'/>
 <SpotLight DEF='LampLight' ... />
 
@@ -559,7 +559,7 @@ A color selector script sends an on color on a **TRUE** input, and an off color 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='ColorSelector'>
   <field accessType='initializeOnly' type='SFColor' name='onColor' value='1 1 1'/>
   <field accessType='initializeOnly' type='SFColor' name='offColor'/>
@@ -598,7 +598,7 @@ function set_selection (value, time)
 
 ### XML Encoding
 
-```xml
+```x3d
 <TouchSensor DEF='LightSwitch'/>
 <SpotLight DEF='LampLight' ... />
 

@@ -60,7 +60,7 @@ Note that an object can be composed of multiple shapes, and you don't need to pu
 
 ### XML Encoding
 
-```xml
+```x3d
 <Group DEF='House'>
   <Transform DEF='InsideHouse'>
     <Shape>

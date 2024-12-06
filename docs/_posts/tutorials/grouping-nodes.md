@@ -13,7 +13,7 @@ X3D has several grouping nodes, including:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Group><!-- ... --></Group>
 <Switch><!-- ... --></Switch>
 <Transform><!-- ... --></Transform>
@@ -43,7 +43,7 @@ The [Group](/x_ite/components/grouping/group/) node creates a basic grouping.
 
 ### XML Encoding
 
-```xml
+```x3d
 <Group>
   <!-- children ... -->
 </Group>
@@ -68,7 +68,7 @@ The [Switch](/x_ite/components/grouping/switch/) group node creates a switched g
 
 ### XML Encoding
 
-```xml
+```x3d
 <Switch
     whichChoice='0'>
   <!-- children ... -->
@@ -92,7 +92,7 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='0.0 0.0 0.0'
     rotation='0.0 1.0 0.0 0.0'
@@ -121,7 +121,7 @@ The [Billboard](/x_ite/components/navigation/billboard/) group node creates a gr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Billboard
     axisOfRotation='0.0 1.0 0.0'>
   <!-- children ... -->
@@ -155,7 +155,7 @@ Billboard {
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- Y-axis -->
 <Billboard
     axisOfRotation='0.0 1.0 0.0'>
@@ -191,7 +191,7 @@ An [Anchor](/x_ite/components/networking/anchor/) node creates a group that acts
 
 ### XML Encoding
 
-```xml
+```x3d
 <Anchor
     url='"stairwy.wrl"'
     description='Twisty Stairs'>
@@ -218,7 +218,7 @@ An [Inline](/x_ite/components/networking/inline/) node creates a special group f
 
 ### XML Encoding
 
-```xml
+```x3d
 <Inline
   url='"table.wrl"'/>
 ```

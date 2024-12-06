@@ -58,7 +58,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material ... />
@@ -88,7 +88,7 @@ An [ImageTexture](/x_ite/components/texturing/imagetexture/) node selects a text
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material/>
@@ -122,7 +122,7 @@ A [PixelTexture](/x_ite/components/texturing/pixeltexture/) node specifies textu
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material/>
@@ -158,7 +158,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node selects a textu
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material/>

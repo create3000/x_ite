@@ -26,7 +26,7 @@ Here is a typical X3D Classic Encoded file with a single node:
 
 ### XML Encoding
 
-```xml
+```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
 <X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
@@ -77,7 +77,7 @@ Now we can start to add information to the file. The first node to deal with is 
 
 ### XML Encoding
 
-```xml
+```x3d
 <WorldInfo
     title='Tutorial'
     info='"Basic Nodes", "https://create3000.github.io/x_ite/"'/>
@@ -103,7 +103,7 @@ A [Shape](/x_ite/components/shape/shape/) node is the node to specify material a
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material/>
@@ -144,7 +144,7 @@ In order to make our world any use at all, we need to be able to transform objec
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='1 1 1'
     rotation='0 1 0 0.78'
@@ -174,7 +174,7 @@ In X3D, you navigate between pages the same way as in HTML. You have an object t
 
 ### XML Encoding
 
-```xml
+```x3d
 <Anchor
     url='"next-page.html"'
     description='Look forward'>
@@ -200,7 +200,7 @@ There are a couple of extra fields not shown above. One of these is *parameter* 
 
 ### XML Encoding
 
-```xml
+```x3d
 parameter='"target=_blank"'
 ```
 
@@ -216,7 +216,7 @@ There are two ways we can change the background of our scene. One is to specify 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Background
     skyColor='0.5 0.5 0.5'/>
 ```
@@ -237,7 +237,7 @@ To give the world camera another position or orientation there is a [Viewpoint](
 
 ### XML Encoding
 
-```xml
+```x3d
 <Viewpoint DEF='LookAtHouse'
     position='0 2 10'
     orientation='0 1 0 3.14'/>
@@ -258,7 +258,7 @@ If you define more than once viewpoint in an X3D file, the first viewpoint defin
 
 ### XML Encoding
 
-```xml
+```x3d
 <Anchor
     url='"#LookAtHouse"'/>
 ```
@@ -279,7 +279,7 @@ When using Gouraud shading browsers calculate lighting by working it out for eac
 
 ### XML Encoding
 
-```xml
+```x3d
 <NavigationInfo
     headlight='false'/>
 ```

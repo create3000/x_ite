@@ -32,7 +32,7 @@ An [AudioClip](/x_ite/components/sound/audioclip/) node creates a digital sound 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound>
   <AudioClip
       url='"myfile.mp3"'
@@ -67,7 +67,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node creates a movie
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound>
   <MovieTexture containerField='source'
       url='"movie.mp4"'
@@ -113,7 +113,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound
     location='0.0 0.0 0.0'
     direction='0.0 0.0 1.0'>
@@ -139,7 +139,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound
     ...
     intensity='1.0'
@@ -189,7 +189,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Group>
   <Shape>
     <Appearance>
@@ -267,7 +267,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound
     minBack='5'
     minFront='5'>

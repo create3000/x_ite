@@ -39,7 +39,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ex
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <Extrusion
@@ -74,7 +74,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ex
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <Extrusion
@@ -119,7 +119,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ge
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <Extrusion

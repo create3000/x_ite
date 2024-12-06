@@ -43,7 +43,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
 
 ### XML Encoding
 
-```xml
+```x3d
 <Background
     skyColor='0.1 0.1 0.0, ...'
     skyAngle='1.309, 1.571, ...'
@@ -80,7 +80,7 @@ Background {
 
 ### XML Encoding
 
-```xml
+```x3d
 <Background DEF='Summer'
     skyAngle='0.8,
               1.3,
@@ -153,7 +153,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
 
 ### XML Encoding
 
-```xml
+```x3d
 <Background
     ...
     frontUrl='"cloud1s.png"'
@@ -192,7 +192,7 @@ Background {
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- no top or bottom images -->
 <Background DEF='Summer'
     frontUrl='"clouds1.png"'
