@@ -218,8 +218,10 @@ Rely on automatic normal generation when possible instead of supplying your own 
 
 ## Compress Files
 
-Use JPEG or PNG format for textures. GIF is also acceptable in some cases. JPEG is a lossy form of compression (that is, when the file is compressed originally, some of the information is lost), but it can achieve a compression in the range of 100 to one. Utilities for JPEG compression allow you to control the tradeoff between compression and image quality. This form of image compression is generally very effective and results in little noticeable degradation of the image.
+Use AVIF, JPEG or PNG format for textures. GIF is also acceptable in some cases.
 
-Use MPG4 format for movies and animated textures.
+AVIF (AV1 Image File Format) is a modern image format that uses the AV1 codec for superior compression efficiency while maintaining high visual quality. It supports advanced features like HDR, transparency, and lossless compression, making it ideal for web and multimedia applications. AVIF is designed to compete with formats like JPEG, PNG, and WebP by offering smaller file sizes without significant quality loss.
 
-Finally, use with GZip compressed formats (.x3dz, .x3dvz) before you publish them. It's faster to uncompress a file that to transmit a large file over the network. All browsers automatically decompress files. Using GZip can result in up to 10 times reduction in file size. When you compress a file with GZip, white spaces are automatically compacted.
+Use MPEG-4 format for movies and animated textures.
+
+Finally, use with GZip compressed formats (.x3dz, .x3dvz) before you publish them. It's faster to uncompress a file than to transmit a large file over the network. All browsers automatically decompress files. Using GZip can result in up to 10 times reduction in file size. When you compress a file with GZip, white spaces are automatically compacted.
