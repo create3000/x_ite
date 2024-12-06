@@ -170,7 +170,7 @@ main ()
    texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
 
    // Animate vertex along x-axis.
-   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * (x3d_Vertex + vec3 (set_time % 1.0, 0, 0, 0));
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * (x3d_Vertex + vec4 (set_time % 1.0, 0.0, 0.0, 0.0));
 }
 ```
 
