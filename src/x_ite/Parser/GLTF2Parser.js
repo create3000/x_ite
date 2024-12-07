@@ -92,6 +92,7 @@ function GLTF2Parser (scene)
    this .cameras               = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
+   this .humanoidIndex         = new Map ();
    this .joints                = new Set ();
    this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
@@ -2021,8 +2022,8 @@ function eventsProcessed ()
       // 1. Replace skeleton nodes with humanoid.
       // 2. Add children.
 
-      this .nodes .forEach (node => this .nodeSkeleton (node));
-      this .nodes .forEach (node => this .nodeChildren (node));
+      this .nodes .forEach ((node, index) => this .nodeSkeleton (index, node));
+      this .nodes .forEach ((node, index) => this .nodeChildren (index, node));
    },
    nodeObject (node, index)
    {
@@ -2049,8 +2050,14 @@ function eventsProcessed ()
       {
          // Skins can be cloned.
 
-         skin .humanoidNode ??= scene .createNode ("HAnimHumanoid", false);
-         node .humanoidNode   = skin .humanoidNode;
+         if (!skin .humanoidNode)
+         {
+            skin .humanoidNode ??= scene .createNode ("HAnimHumanoid", false);
+
+            skin .joints .map (joint => this .humanoidIndex .set (joint, skin .humanoidNode))
+         }
+
+         node .humanoidNode = skin .humanoidNode;
       }
 
       node .childNode = node .humanoidNode ?? node .transformNode;
@@ -2058,7 +2065,7 @@ function eventsProcessed ()
 
       return node;
    },
-   nodeSkeleton (node)
+   nodeSkeleton (index, node)
    {
       const skin = this .skins [node .skin];
 
@@ -2075,7 +2082,7 @@ function eventsProcessed ()
       skeleton .humanoidNode = humanoidNode;
       skeleton .childNode    = humanoidNode;
    },
-   nodeChildren (node)
+   nodeChildren (index, node)
    {
       const
          scene         = this .getScene (),
@@ -2088,7 +2095,7 @@ function eventsProcessed ()
       {
          scene .addNamedNode (scene .getUniqueName (name), transformNode);
 
-         if (transformNode .getTypeName () === "HAnimJoint")
+         if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
             transformNode ._name = node .name;
       }
 
@@ -2143,7 +2150,37 @@ function eventsProcessed ()
 
       // Add children.
 
-      transformNode ._children .push (... this .nodeChildrenArray (node .children));
+      let children = this .nodeChildrenArray (node .children);
+
+      if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
+      {
+         // Add a HAnimSegment if there are recursive skeletons.
+
+         children = children .map (childNode =>
+         {
+            if (childNode .getType () .at (-1) === X3DConstants .HAnimHumanoid)
+            {
+               const segmentNode = scene .createNode ("HAnimSegment", false);
+
+               segmentNode ._children .push (childNode);
+
+               segmentNode .setup ();
+
+               const humanoidNode = this .humanoidIndex .get (index);
+
+               if (humanoidNode)
+                  humanoidNode ._segments .push (segmentNode);
+
+               return segmentNode;
+            }
+            else
+            {
+               return childNode;
+            }
+         });
+      }
+
+      transformNode ._children .push (... children);
 
       // Add Shape nodes.
 
