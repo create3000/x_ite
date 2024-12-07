@@ -2022,8 +2022,8 @@ function eventsProcessed ()
       // 1. Replace skeleton nodes with humanoid.
       // 2. Add children.
 
-      this .nodes .forEach ((node, index) => this .nodeSkeleton (index, node));
-      this .nodes .forEach ((node, index) => this .nodeChildren (index, node));
+      this .nodes .forEach ((node, index) => this .nodeSkeleton (node, index));
+      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
    },
    nodeObject (node, index)
    {
@@ -2052,7 +2052,7 @@ function eventsProcessed ()
 
          if (!skin .humanoidNode)
          {
-            skin .humanoidNode ??= scene .createNode ("HAnimHumanoid", false);
+            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
 
             skin .joints .map (joint => this .humanoidIndex .set (joint, skin .humanoidNode))
          }
@@ -2065,7 +2065,7 @@ function eventsProcessed ()
 
       return node;
    },
-   nodeSkeleton (index, node)
+   nodeSkeleton (node, index)
    {
       const skin = this .skins [node .skin];
 
@@ -2082,7 +2082,7 @@ function eventsProcessed ()
       skeleton .humanoidNode = humanoidNode;
       skeleton .childNode    = humanoidNode;
    },
-   nodeChildren (index, node)
+   nodeChildren (node, index)
    {
       const
          scene         = this .getScene (),
@@ -2280,14 +2280,21 @@ function eventsProcessed ()
       if (!(skin instanceof Object))
          return;
 
-      const scene = this .getScene ();
+      const
+         scene    = this .getScene (),
+         skeleton = skin .skeleton;
 
       skin .joints              = this .jointsArray (skin .joints);
-      skin .skeleton            = skin .skeleton ?? this .skeleton (skin .joints);
+      skin .skeleton            = skeleton ?? this .skeleton (skin .joints);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
-      if (skin .skeleton !== undefined)
-         this .joints .add (skin .skeleton);
+      if (skeleton !== undefined && !skin .joints .includes (skin .skeleton))
+      {
+         // Ensure skeleton root node becomes a HAnimJoint node.
+
+         this .joints .add (skeleton);
+         skin .joints .push (skeleton);
+      }
 
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
