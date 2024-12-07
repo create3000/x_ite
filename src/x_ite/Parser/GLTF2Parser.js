@@ -2260,7 +2260,7 @@ function eventsProcessed ()
       const nodes = Array .from (new Set (children
          .map (index => this .nodes [index] ?.childNode)
          .filter (node => node)
-         .filter (node => node .getTypeName () !== "HAnimHumanoid" || !node .getCloneCount ())
+         .filter (node => node .getType () .at (-1) !== X3DConstants .HAnimHumanoid || !node .getCloneCount ())
       ));
 
       return nodes;
@@ -3329,9 +3329,9 @@ function eventsProcessed ()
 
       if (textureCoordinateNode)
       {
-         switch (textureCoordinateNode .getTypeName ())
+         switch (textureCoordinateNode .getType () .at (-1))
          {
-            case "TextureCoordinate":
+            case X3DConstants .TextureCoordinate:
             {
                const
                   skinTextureCoordinateNode = skin .textureCoordinateNode,
@@ -3342,7 +3342,7 @@ function eventsProcessed ()
 
                break;
             }
-            case "MultiTextureCoordinate":
+            case X3DConstants .MultiTextureCoordinate:
             {
                const skinMultiTextureCoordinateNode = skin .multiTextureCoordinateNode;
 
