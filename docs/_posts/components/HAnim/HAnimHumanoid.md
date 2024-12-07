@@ -182,56 +182,6 @@ List of top-level [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and [HAnimSi
 
 - Top-level [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes must include `containerField='skeleton'` for proper validation and operation.
 
-### MFNode [in, out] **viewpoints** [ ] <small>[HAnimSite]</small>
-
-List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes that appear in the skeleton model, usually as USE node references. The *viewpoints* field contains zero or more special [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes that are only affected by HAnimHumanoid transformations (and no [HAnimJoint](/x_ite/components/hanim/hanimjoint/) transformations). Each [HAnimSite](/x_ite/components/hanim/hanimsite/) can contain a [Viewpoint](/x_ite/components/navigation/viewpoint/) as virtual camera in the HAnimHumanoid reference frame (such as viewing the face or profile of the human figure).
-
-#### Hints
-
-- The viewpoint field has different functionality than the joints, segments and sites fields.
-- The *viewpoints* field connects internal Site nodes that in turn hold relative [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes, such as `<[HAnimSite](/x_ite/components/hanim/hanimsite/) USE='ObserveFaceSite_view' containerField='viewpoints'/>` which has corresponding counterpart nodes `<[HAnimSite](/x_ite/components/hanim/hanimsite/) DEF='ObserveFaceSite_view' name='ObserveFaceSite_view' containerField='children'>` `<[Viewpoint](/x_ite/components/navigation/viewpoint/) description='look at me!'/>` \</[HAnimSite](/x_ite/components/hanim/hanimsite/)\>.
-
-#### Warnings
-
-- These are actual node declarations, not USE nodes.
-- Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes (in turn containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes) must include `containerField='viewpoints'` for proper validation and operation.
-
-### MFNode [in, out] **sites** [ ] <small>[HAnimSite]</small>
-
-*sites* field contains a list of USE references for all [HAnimSite](/x_ite/components/hanim/hanimsite/) node instances found within the preceding skeleton hierarchy.
-
-#### Hints
-
-- Order is irrelevant since names are contained in the original DEF objects.
-- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
-
-#### Warnings
-
-- The number of contained `<[HAnimSite](/x_ite/components/hanim/hanimsite/) USE='*' containerField='sites, skeleton or viewpoints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimSite](/x_ite/components/hanim/hanimsite/) node instances found within the preceding skeleton hierarchy.
-- Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) USE nodes must include `containerField='sites'` for proper validation and operation.
-
-### MFNode [in, out] **segments** [ ] <small>[HAnimSegment]</small>
-
-The *segments* field contains a list of USE references for all [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node instances found within the preceding skeleton hierarchy.
-
-#### Hints
-
-- Order is irrelevant since names are contained in the original DEF objects.
-- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
-
-#### Warnings
-
-- The number of contained `<[HAnimSegment](/x_ite/components/hanim/hanimsegment/) USE='*' containerField='segments'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node instances found within the preceding skeleton hierarchy.
-- Top-level [HAnimSegment](/x_ite/components/hanim/hanimsegment/) USE nodes must include `containerField='segments'` for proper validation and operation.
-
-### MFBool [in, out] **motionsEnabled** [ ]
-
-Array of boolean values corresponding to [HAnimMotion](/x_ite/components/hanim/hanimmotion/) nodes indicating which can animate the HAnimHumanoid.
-
-### MFNode [in, out] **motions** [ ] <small>[HAnimMotion]</small>
-
-Contains any [HAnimMotion](/x_ite/components/hanim/hanimmotion/) nodes that can animate the HAnimHumanoid.
-
 ### MFVec3f [in, out] **jointBindingPositions** [ ] <small>(-∞,∞)</small>
 
 Specifies an array of position values for each [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node in the joints field, in order, corresponding to each binding pose.
@@ -281,6 +231,56 @@ The *joints* field contains a list of USE references for all [HAnimJoint](/x_ite
 
 - The number of contained `<[HAnimJoint](/x_ite/components/hanim/hanimjoint/) USE='*' containerField='joints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node instances found within the preceding skeleton hierarchy.
 - Top-level [HAnimJoint](/x_ite/components/hanim/hanimjoint/) USE nodes must include `containerField='joints'` for proper validation and operation.
+
+### MFNode [in, out] **sites** [ ] <small>[HAnimSite]</small>
+
+*sites* field contains a list of USE references for all [HAnimSite](/x_ite/components/hanim/hanimsite/) node instances found within the preceding skeleton hierarchy.
+
+#### Hints
+
+- Order is irrelevant since names are contained in the original DEF objects.
+- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
+
+#### Warnings
+
+- The number of contained `<[HAnimSite](/x_ite/components/hanim/hanimsite/) USE='*' containerField='sites, skeleton or viewpoints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimSite](/x_ite/components/hanim/hanimsite/) node instances found within the preceding skeleton hierarchy.
+- Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) USE nodes must include `containerField='sites'` for proper validation and operation.
+
+### MFNode [in, out] **segments** [ ] <small>[HAnimSegment]</small>
+
+The *segments* field contains a list of USE references for all [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node instances found within the preceding skeleton hierarchy.
+
+#### Hints
+
+- Order is irrelevant since names are contained in the original DEF objects.
+- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
+
+#### Warnings
+
+- The number of contained `<[HAnimSegment](/x_ite/components/hanim/hanimsegment/) USE='*' containerField='segments'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node instances found within the preceding skeleton hierarchy.
+- Top-level [HAnimSegment](/x_ite/components/hanim/hanimsegment/) USE nodes must include `containerField='segments'` for proper validation and operation.
+
+### MFNode [in, out] **viewpoints** [ ] <small>[HAnimSite]</small>
+
+List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes that appear in the skeleton model, usually as USE node references. The *viewpoints* field contains zero or more special [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes that are only affected by HAnimHumanoid transformations (and no [HAnimJoint](/x_ite/components/hanim/hanimjoint/) transformations). Each [HAnimSite](/x_ite/components/hanim/hanimsite/) can contain a [Viewpoint](/x_ite/components/navigation/viewpoint/) as virtual camera in the HAnimHumanoid reference frame (such as viewing the face or profile of the human figure).
+
+#### Hints
+
+- The viewpoint field has different functionality than the joints, segments and sites fields.
+- The *viewpoints* field connects internal Site nodes that in turn hold relative [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes, such as `<[HAnimSite](/x_ite/components/hanim/hanimsite/) USE='ObserveFaceSite_view' containerField='viewpoints'/>` which has corresponding counterpart nodes `<[HAnimSite](/x_ite/components/hanim/hanimsite/) DEF='ObserveFaceSite_view' name='ObserveFaceSite_view' containerField='children'>` `<[Viewpoint](/x_ite/components/navigation/viewpoint/) description='look at me!'/>` \</[HAnimSite](/x_ite/components/hanim/hanimsite/)\>.
+
+#### Warnings
+
+- These are actual node declarations, not USE nodes.
+- Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes (in turn containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes) must include `containerField='viewpoints'` for proper validation and operation.
+
+### MFBool [in, out] **motionsEnabled** [ ]
+
+Array of boolean values corresponding to [HAnimMotion](/x_ite/components/hanim/hanimmotion/) nodes indicating which can animate the HAnimHumanoid.
+
+### MFNode [in, out] **motions** [ ] <small>[HAnimMotion]</small>
+
+Contains any [HAnimMotion](/x_ite/components/hanim/hanimmotion/) nodes that can animate the HAnimHumanoid.
 
 ### SFNode [in, out] **skinBindingNormals** NULL <small>[X3DNormalNode]</small>
 
