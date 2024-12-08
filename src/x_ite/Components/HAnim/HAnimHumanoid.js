@@ -404,15 +404,16 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const [joint, jointNode] of this .jointNodes .entries ())
       {
-         for (const displacerNode of jointNode .getDisplacers ())
+         for (const { _weight, _coordIndex, _displacements } of jointNode .getDisplacers ())
          {
-            const d = displacerNode ._displacements;
+            if (!_coordIndex .length)
+               continue;
 
             // Store reference to weight SFFloat.
-            this .displacementWeights .push (displacerNode ._weight, 0, 0, 0);
+            this .displacementWeights .push (_weight, 0, 0, 0);
 
-            for (const [i, index] of displacerNode ._coordIndex .entries ())
-               displacements [index] ?.push (... d [i], joint, displacer, 0, 0, 0);
+            for (const [i, index] of _coordIndex .entries ())
+               displacements [index] ?.push (... _displacements [i], joint, displacer, 0, 0, 0);
 
             ++ displacer;
          }

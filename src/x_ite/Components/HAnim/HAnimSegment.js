@@ -182,15 +182,16 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
 
       this .displacementWeights .length = 0;
 
-      for (const displacerNode of this .displacerNodes)
+      for (const { _weight, _coordIndex, _displacements } of this .displacerNodes)
       {
-         const d = displacerNode ._displacements;
+         if (!_coordIndex .length)
+            continue;
 
          // Store reference to weight SFFloat.
-         this .displacementWeights .push (displacerNode ._weight, 0, 0, 0);
+         this .displacementWeights .push (_weight, 0, 0, 0);
 
-         for (const [i, index] of displacerNode ._coordIndex .entries ())
-            displacements [index] ?.push (... d [i], 0, displacer, 0, 0, 0);
+         for (const [i, index] of _coordIndex .entries ())
+            displacements [index] ?.push (... _displacements [i], 0, displacer, 0, 0, 0);
 
          ++ displacer;
       }
