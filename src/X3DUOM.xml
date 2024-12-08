@@ -1071,7 +1071,6 @@
 					accessType="inputOutput"
 					default="1 1 1"
 					minInclusive="0"
-					maxInclusive="1"
 					description="The F0 color of the specular reflection (linear RGB)."
 				/>
 				<field name="specularColorTextureMapping"

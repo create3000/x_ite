@@ -75,7 +75,7 @@ Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis dire
 
 #### Hints
 
-- This is *orientation* _change_ from default direction (0 0 -1).
+- This is *orientation* change from default direction (0 0 -1) along the -X axis.
 - Complex rotations can be accomplished axis-by-axis using parent Transforms.
 
 #### Warning

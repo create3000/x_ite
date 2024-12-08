@@ -90,7 +90,7 @@ Rotation of [Viewpoint](/x_ite/components/navigation/viewpoint/), relative to de
 
 #### Hint
 
-- This is *orientation* _change_ from default direction along the (minus) -Z axis. +Y axis is the up vector for the local area (the normal to the tangent plane on the ellipsoid), -Z points towards the north pole, and +X is east 1 0 0 -1.570796 always looks down.
+- This is *orientation* change from default direction along the (minus) -Z axis. +Y axis is the up vector for the local area (the normal to the tangent plane on the ellipsoid), -Z points towards the north pole, and +X is east 1 0 0 -1.570796 always looks down.
 
 #### Warning
 
