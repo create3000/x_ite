@@ -913,14 +913,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    beginUpdate ()
    {
       this .setLive (true);
-      this .getExecutionContext () .setLive (true);
       this .advanceTime ();
       this .addBrowserEvent ();
    },
    endUpdate ()
    {
       this .setLive (false);
-      this .getExecutionContext () .setLive (false);
    },
    print (... args)
    {
