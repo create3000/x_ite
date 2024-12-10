@@ -94,6 +94,8 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
+
+   this [_browser] .getLive () .addInterest (_set_live__, this);
 }
 
 Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .prototype),
@@ -134,6 +136,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
       this .getOuterNode ?.()  ?.getLive () .removeInterest (_set_live__, this);
       this [_executionContext] ?.getLive () .removeInterest (_set_live__, this);
+      this [_browser]           .getLive () .removeInterest (_set_live__, this);
 
       // Currently only useful for Scene.
       this [_executionContext] = executionContext;
@@ -143,8 +146,11 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (this .getOuterNode ?.())
          this .getOuterNode () .getLive () .addInterest (_set_live__, this);
 
+      else if (this [_executionContext])
+         this [_executionContext] .getLive () .addInterest (_set_live__, this);
+
       else
-         this [_executionContext] ?.getLive () .addInterest (_set_live__, this);
+         this [_browser] .getLive () .addInterest (_set_live__, this);
 
       this [_set_live__] ();
    },
@@ -246,6 +252,9 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
       else if (this [_executionContext] && this !== this [_browser])
          return this [_live] && this [_executionContext] .getLive () .getValue ();
+
+      else if (!this [_executionContext] && this !== this [_browser])
+         return this [_live] && this [_browser] .isLive ();
 
       return this [_live];
    },

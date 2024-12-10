@@ -492,16 +492,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          fileLoader   = new FileLoader (this .getScriptNode () ?? this .getWorld ()),
          scene        = fileLoader .createX3DFromString (worldURL, `#VRML V2.0 utf8\n\n${vrmlSyntax}`);
 
-      if (external)
-      {
-         this .getLive () .addInterest ("setLive", scene);
-         scene .setLive (this .isLive ());
-      }
-      else
-      {
+      if (!external)
          scene .setExecutionContext (currentScene);
-         scene .setLive (true);
-      }
+
+      scene .setLive (true);
 
       return scene .rootNodes;
    },
@@ -520,16 +514,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          fileLoader .createX3DFromString (worldURL, x3dSyntax, resolve, reject);
       });
 
-      if (external)
-      {
-         this .getLive () .addInterest ("setLive", scene);
-         scene .setLive (this .isLive ());
-      }
-      else
-      {
+      if (!external)
          scene .setExecutionContext (currentScene);
-         scene .setLive (true);
-      }
+
+      scene .setLive (true);
 
       return scene;
    },
@@ -568,16 +556,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Handle getLive for script scenes here:
 
-         if (external)
-         {
-            this .getLive () .addInterest ("setLive", scene);
-            scene .setLive (this .isLive ());
-         }
-         else
-         {
+         if (!external)
             scene .setExecutionContext (currentScene);
-            scene .setLive (true);
-         }
+
+         scene .setLive (true);
 
          // Wait until scene is completely loaded, scene ._loadCount must be 0.
          field .setValue (scene .rootNodes);
@@ -608,16 +590,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
             if (scene)
             {
-               if (external)
-               {
-                  this .getLive () .addInterest ("setLive", scene);
-                  scene .setLive (this .isLive ());
-               }
-               else
-               {
+               if (!external)
                   scene .setExecutionContext (currentScene);
-                  scene .setLive (true);
-               }
+
+               scene .setLive (true);
 
                resolve (scene);
             }
@@ -799,16 +775,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       await new Promise (parser .parseIntoScene .bind (parser));
 
-      if (external)
-      {
-         this .getLive () .addInterest ("setLive", scene);
-         scene .setLive (this .isLive ());
-      }
-      else
-      {
+      if (!external)
          scene .setExecutionContext (currentScene);
-         scene .setLive (true);
-      }
+
+      scene .isLive (true);
 
       return scene;
    },
@@ -825,16 +795,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       await new Promise (parser .parseIntoScene .bind (parser));
 
-      if (external)
-      {
-         this .getLive () .addInterest ("setLive", scene);
-         scene .setLive (this .isLive ());
-      }
-      else
-      {
+      if (!external)
          scene .setExecutionContext (currentScene);
-         scene .setLive (true);
-      }
+
+      scene .isLive (true);
 
       return scene;
    },

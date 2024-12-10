@@ -48,6 +48,7 @@
 import X3DConstants from "../../Base/X3DConstants.js";
 import Fields       from "../../Fields.js";
 import URLs         from "./URLs.js";
+import X3DScene     from "../../Execution/X3DScene.js";
 import _            from "../../../locale/gettext.js";
 
 const
@@ -213,7 +214,11 @@ Object .assign (X3DNetworkingContext .prototype,
    {
       // Inline node's empty scene.
 
-      this [_defaultScene] = this .createScene ();
+      this [_defaultScene] = new X3DScene (this);
+
+      this [_defaultScene] .setup ();
+      this .getLive () .addInterest ("setLive", this [_defaultScene]);
+      this [_defaultScene] .setLive (this .isLive ());
 
       this .getDefaultScene = function () { return this [_defaultScene]; };
 
