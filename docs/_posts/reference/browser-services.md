@@ -514,6 +514,14 @@ Changes the bound viewpoint node to the last viewpoint in the list of user viewp
 
 Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
 
+#### **beginUpdate** (): void
+
+Start processing events.
+
+#### **endUpdate** (): void
+
+Stop processing events.
+
 #### **print** (*... args: any []*): void
 
 Prints *objects* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.

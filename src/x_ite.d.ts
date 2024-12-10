@@ -241,6 +241,14 @@ declare namespace X3D
       changeViewpoint (name: string): void;
       changeViewpoint (layer: SFNode, name: string): void;
       /**
+       * Start processing events.
+       */
+      beginUpdate (): void;
+      /**
+       * Stop processing events.
+       */
+      endUpdate (): void;
+      /**
        * Prints *args* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
        */
       print (... args: any []): void;
