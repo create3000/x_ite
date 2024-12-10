@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 
       this ._initialized = this .getBrowser () .getCurrentTime ();
    },
-   getLiveState ()
+   checkLiveState ()
    {
       ///  Determines the live state of this node.
 

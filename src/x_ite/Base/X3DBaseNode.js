@@ -223,7 +223,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
          // Add isLive event.
 
-         this .addChildObjects (X3DConstants .outputOnly, "live", new Fields .SFBool (this .getLiveState ()));
+         this .addChildObjects (X3DConstants .outputOnly, "live", new Fields .SFBool (this .checkLiveState ()));
 
          // Event processing is done manually and immediately, so:
          this ._live .removeParent (this);
@@ -244,7 +244,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          return this ._live;
       };
    })(),
-   getLiveState ()
+   checkLiveState ()
    {
       ///  Determines the live state of this node.
 
@@ -266,7 +266,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (!live)
          return;
 
-      if (this .getLiveState ())
+      if (this .checkLiveState ())
       {
          if (live .getValue ())
             return;
