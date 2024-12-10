@@ -441,12 +441,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
             const rootNodes = scene;
 
-            scene = this .createScene ();
+            scene = new X3DScene (this);
 
             for (const node of rootNodes .filter (node => node))
                scene .getLive () .addInterest ("setLive", node .getValue () .getExecutionContext ());
 
             scene .setRootNodes (rootNodes);
+            scene .setup ();
          }
 
          if (!(scene instanceof X3DScene))
