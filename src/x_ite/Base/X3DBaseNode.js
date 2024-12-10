@@ -94,8 +94,6 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
-
-   this [_browser] .getLive () .addInterest (_set_live__, this);
 }
 
 Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .prototype),
@@ -235,8 +233,11 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          if (this .getOuterNode ?.())
             this .getOuterNode () .getLive () .addInterest (_set_live__, this);
 
-         else if (this !== this [_browser])
-            this [_executionContext] ?.getLive () .addInterest (_set_live__, this);
+         else if (this [_executionContext] && this !== this [_browser])
+            this [_executionContext] .getLive () .addInterest (_set_live__, this);
+
+         else if (!this [_executionContext] && this !== this [_browser])
+            this [_browser] .getLive () .addInterest (_set_live__, this);
 
          // Return field.
 
