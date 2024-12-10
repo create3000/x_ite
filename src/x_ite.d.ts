@@ -150,7 +150,7 @@ declare namespace X3D
       /**
        * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
        */
-      createScene (profile: ProfileInfo, ... components: ComponentInfo []): X3DScene;
+      createScene (profile: ProfileInfo, ... components: ComponentInfo []): Promise<X3DScene>;
       /**
        * Loads all components, external and internal, specified by `args`. If the argument is a `String`, the name of a component must be given.
        */

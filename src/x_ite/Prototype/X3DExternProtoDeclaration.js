@@ -51,7 +51,6 @@ import FieldDefinitionArray    from "../Base/FieldDefinitionArray.js";
 import X3DUrlObject            from "../Components/Networking/X3DUrlObject.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
-import FileLoader              from "../InputOutput/FileLoader.js";
 
 const
    _proto = Symbol (),
@@ -110,6 +109,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          this .setError (new Error ("No URL given."));
          return;
       }
+
+      const { default: FileLoader } = await import ("../InputOutput/FileLoader.js");
 
       for (const url of this ._url)
       {

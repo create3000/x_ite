@@ -99,7 +99,7 @@ The `getProfile` service returns a ProfileInfo object of the named profile. The 
 
 The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only return a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
 
-#### **createScene** (*profile: ProfileInfo, ... components: ComponentInfo []*): X3DScene
+#### **createScene** (*profile: ProfileInfo, ... components: ComponentInfo []*): Promise\<X3DScene\>
 
 The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
 

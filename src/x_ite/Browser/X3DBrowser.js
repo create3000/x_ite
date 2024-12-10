@@ -121,7 +121,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
-      this .replaceWorld (this .createScene ())
+      const scene = new X3DScene (this);
+
+      scene .setup ();
+
+      this .replaceWorld (scene)
          .catch (DEVELOPMENT ? error => console .error (error) : Function .prototype);
 
       this [_DOMIntegration] = new DOMIntegration (this);
@@ -389,7 +393,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this [_fieldTypes];
    },
-   createScene (profile, ... components)
+   async createScene (profile, ... components)
    {
       const scene = new X3DScene (this);
 
@@ -411,6 +415,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       scene .setup ();
       scene .setLive (true);
+
+      this .loadComponents (scene);
 
       return scene;
    },
@@ -441,19 +447,20 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
             const rootNodes = scene;
 
-            scene = this .createScene ();
+            scene = new X3DScene (this);
 
             for (const node of rootNodes .filter (node => node))
-            {
                scene .getLive () .addInterest ("setLive", node .getValue () .getExecutionContext ());
-               node .getValue () .getExecutionContext () .setLive (true);
-            }
 
             scene .setRootNodes (rootNodes);
+            scene .setup ();
          }
 
          if (!(scene instanceof X3DScene))
-            scene = this .createScene ();
+         {
+            scene = new X3DScene (this);
+            scene .setup ();
+         }
 
          // Detach scene from parent.
 

@@ -45,12 +45,13 @@
  *
  ******************************************************************************/
 
-import X3DObject   from "../Base/X3DObject.js";
-import Fields      from "../Fields.js";
-import GoldenGate  from "../Parser/GoldenGate.js";
-import X3DWorld    from "../Execution/X3DWorld.js";
-import DEVELOPMENT from "../DEVELOPMENT.js";
+import X3DObject    from "../Base/X3DObject.js";
+import Fields       from "../Fields.js";
+import GoldenGate   from "../Parser/GoldenGate.js";
+import X3DWorld     from "../Execution/X3DWorld.js";
+import X3DScene     from "../Execution/X3DScene.js";
 import X3DConstants from "../Base/X3DConstants.js";
+import DEVELOPMENT  from "../DEVELOPMENT.js";
 
 const foreignMimeType = new Set ([
    "text/html",
@@ -108,13 +109,13 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    {
       try
       {
-         const scene = this .browser .createScene ();
+         const scene = new X3DScene (this .browser);
 
          if (!(this .node instanceof X3DWorld))
             scene .setExecutionContext (this .executionContext);
 
-         scene .setLive (false);
          scene .setWorldURL (new URL (worldURL, this .getBaseURL ()) .href);
+         scene .setup ();
 
          if (resolve)
             resolve = this .setScene .bind (this, scene, resolve, reject);

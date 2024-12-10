@@ -339,13 +339,9 @@ Object .assign (Bookmarks .prototype,
          return this .environmentLight;
 
       const
-         profile    = browser .getProfile ("Interchange"),
-         components = ["CubeMapTexturing", "Lighting", "Texturing"] .map (name => browser .getComponent (name));
-
-      await browser .loadComponents (profile, ... components);
-
-      const
-         scene             = browser .createScene (profile, ... components),
+         profile           = browser .getProfile ("Interchange"),
+         components        = ["CubeMapTexturing", "Lighting", "Texturing"] .map (name => browser .getComponent (name)),
+         scene             = await browser .createScene (profile, ... components),
          environmentLight  = scene .createNode ("EnvironmentLight"),
          diffuseTexture    = scene .createNode ("ImageCubeMapTexture"),
          specularTexture   = scene .createNode ("ImageCubeMapTexture"),
