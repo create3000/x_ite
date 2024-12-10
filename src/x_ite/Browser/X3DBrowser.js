@@ -416,7 +416,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       scene .setup ();
       scene .setLive (true);
 
-      this .loadComponents (scene);
+      await this .loadComponents (scene);
 
       return scene;
    },
