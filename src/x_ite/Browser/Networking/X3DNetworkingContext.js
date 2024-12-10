@@ -217,7 +217,6 @@ Object .assign (X3DNetworkingContext .prototype,
       this [_defaultScene] = new X3DScene (this);
 
       this [_defaultScene] .setup ();
-      this .getLive () .addInterest ("setLive", this [_defaultScene]);
       this [_defaultScene] .setLive (this .isLive ());
 
       this .getDefaultScene = function () { return this [_defaultScene]; };
