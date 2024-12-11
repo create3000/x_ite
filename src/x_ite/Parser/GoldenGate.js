@@ -129,7 +129,7 @@ class GoldenGate extends X3DParser
          }
       }
 
-      if (this .getScene () .worldURL .startsWith ("data:"))
+      if (this .getScene () .worldURL .match (/^(?:data|blob):/))
          throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
       else
          throw new Error (`Couldn't parse X3D. No suitable file handler found for '${this .getScene () .worldURL}'.`);

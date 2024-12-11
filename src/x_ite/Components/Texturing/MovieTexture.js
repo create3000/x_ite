@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
-      if (this .URL .protocol !== "data:")
+      if (!this .URL .protocol .match (/^(?:data|blob):/))
       {
          if (!this .getCache ())
             this .URL .searchParams .set ("_", Date .now ());
@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
+      if (!this .URL .protocol .match (/^(?:data|blob):/))
          console .warn (`Error loading movie '${decodeURI (this .URL .href)}':`, event .type);
 
       this .loadNext ();
@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          if (DEVELOPMENT)
          {
-            if (this .URL .protocol !== "data:")
+            if (!this .URL .protocol .match (/^(?:data|blob):/))
                console .info (`Done loading movie '${decodeURI (this .URL .href)}'.`);
          }
 

@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          this .setLinear (false);
          this .setMipMaps (true);
 
-         if (this .URL .protocol !== "data:")
+         if (!this .URL .protocol .match (/^(?:data|blob):/))
          {
             if (!this .getCache ())
                this .URL .searchParams .set ("_", Date .now ());
@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
+      if (!this .URL .protocol .match (/^(?:data|blob):/))
          console .warn (`Error loading image '${decodeURI (this .URL .href)}':`, event .type);
 
       this .loadNext ();
@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
+         if (!this .URL .protocol .match (/^(?:data|blob):/))
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
       }
 
@@ -176,7 +176,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
+         if (!this .URL .protocol .match (/^(?:data|blob):/))
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
       }
 

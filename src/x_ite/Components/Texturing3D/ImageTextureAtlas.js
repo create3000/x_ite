@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
 
       this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
-      if (this .URL .protocol !== "data:")
+      if (!this .URL .protocol .match (/^(?:data|blob):/))
       {
          if (!this .getCache ())
             this .URL .searchParams .set ("_", Date .now ());
@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
+      if (!this .URL .protocol .match (/^(?:data|blob):/))
          console .warn (`Error loading image '${decodeURI (this .URL .href)}':`, event .type);
 
       this .loadNext ();
@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
+         if (!this .URL .protocol .match (/^(?:data|blob):/))
             console .info (`Done loading image '${decodeURI (this .URL .href)}'.`);
       }
 

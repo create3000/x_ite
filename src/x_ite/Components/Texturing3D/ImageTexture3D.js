@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
 
       if (DEVELOPMENT)
       {
-         if (URL .protocol !== "data:")
+         if (!URL .protocol .match (/^(?:data|blob):/))
             console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'.`);
       }
 

@@ -186,7 +186,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
             if (DEVELOPMENT)
             {
-               if (URL .protocol !== "data:")
+               if (!URL .protocol .match (/^(?:data|blob):/))
                   console .info (`Done loading audio '${decodeURI (URL .href)}'.`);
             }
          }
