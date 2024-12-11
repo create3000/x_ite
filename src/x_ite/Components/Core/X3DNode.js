@@ -127,6 +127,25 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             {
                const destinationField = copy .getPredefinedField (sourceField .getName ());
 
+               let initializableReferences = false;
+
+               for (const originalReference of sourceField .getReferences ())
+                  initializableReferences ||= originalReference .isInitializable ();
+
+               if (sourceField .isInitializable () && !initializableReferences)
+               {
+                  switch (sourceField .getType ())
+                  {
+                     case X3DConstants .SFNode:
+                     case X3DConstants .MFNode:
+                        destinationField .assign (sourceField .copy (instance));
+                        break;
+                     default:
+                        destinationField .assign (sourceField);
+                        break;
+                  }
+               }
+
                if (sourceField .getReferences () .size)
                {
                   // IS relationship
@@ -143,22 +162,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                      }
                   }
                }
-               else
-               {
-                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-                  {
-                     switch (sourceField .getType ())
-                     {
-                        case X3DConstants .SFNode:
-                        case X3DConstants .MFNode:
-                           destinationField .assign (sourceField .copy (instance));
-                           break;
-                        default:
-                           destinationField .assign (sourceField);
-                           break;
-                     }
-                  }
-               }
 
                destinationField .setModificationTime (sourceField .getModificationTime ());
             }
@@ -172,7 +175,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const sourceField of this .getUserDefinedFields ())
          {
-            const destinationField = sourceField .copy (instance);
+            let initializableReferences = false;
+
+            for (const originalReference of sourceField .getReferences ())
+               initializableReferences ||= originalReference .isInitializable ();
+
+            const destinationField = initializableReferences
+               ? sourceField .create ()
+               : sourceField .copy (instance);
 
             copy .addUserDefinedField (sourceField .getAccessType (),
                                        sourceField .getName (),
@@ -777,11 +787,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          let
             index                  = 0,
-            initializableReference = false;
+            initializableReferences = false;
 
          for (const reference of field .getReferences ())
          {
-            initializableReference ||= reference .isInitializable ();
+            initializableReferences ||= reference .isInitializable ();
 
             // Output user defined reference field
 
@@ -802,7 +812,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                generator .string += generator .Break ();
          }
 
-         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
+         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReferences && !field .isDefaultValue ())
          {
             generator .string += generator .Break ();
             generator .string += generator .Indent ();
@@ -840,11 +850,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          let
             index                  = 0,
-            initializableReference = false;
+            initializableReferences = false;
 
          for (const reference of field .getReferences ())
          {
-            initializableReference ||= reference .isInitializable ();
+            initializableReferences ||= reference .isInitializable ();
 
             // Output build in reference field
 
@@ -861,7 +871,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                generator .string += generator .Break ();
          }
 
-         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
+         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReferences && !this .isDefaultValue (field))
          {
             // Output build in field
 
