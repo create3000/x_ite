@@ -7,6 +7,15 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v11.0 Series
+
+*Leipzig, 12th December 2024:* Again, these series fixes some long standing issues. There are also some breaking changes.
+
+* `X3DBrowser.createScene` now returns a Promise.
+* `X3DBaseNode.setExecutionContext (null)` always connects to browser.
+* Default value of `X3DTextureProjectorNode.upVector` is now `0 1 0`.
+* Fixed a bug when parsing string.
+
 ## X_ITE v10.5 Series
 
 *Leipzig, 8th September 2024:* These series fixes some long standing issues.
