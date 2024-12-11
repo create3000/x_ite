@@ -132,6 +132,10 @@ The callback has a signature of `function (value)`, where value is the current v
 
 Removes a field callback function associated with *key*.
 
+#### **dispose** (): void
+
+Disposes this X3DField. The object can then no longer be used.
+
 ## SFColor Object
 
 The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
@@ -587,10 +591,6 @@ For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmls
 Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
-
-#### **dispose** (): void
-
-Disposes this SFNode. The object can then no longer be used.
 
 ## SFRotation Object
 
