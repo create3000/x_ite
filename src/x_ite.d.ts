@@ -148,7 +148,7 @@ declare namespace X3D
        */
       getComponent (name : string, level?: number): ComponentInfo;
       /**
-       * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
+       * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
        */
       createScene (profile: ProfileInfo, ... components: ComponentInfo []): Promise<X3DScene>;
       /**

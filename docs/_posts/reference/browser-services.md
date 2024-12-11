@@ -101,7 +101,7 @@ The `getComponent` service returns a ComponentInfo object of the named component
 
 #### **createScene** (*profile: ProfileInfo, ... components: ComponentInfo []*): Promise\<X3DScene\>
 
-The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
+The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
 
 #### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non standard</small>
 
