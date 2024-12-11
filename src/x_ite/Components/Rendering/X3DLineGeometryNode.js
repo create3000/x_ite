@@ -224,8 +224,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          shaderNode .enableVertexAttribute      (gl, this [_lineTrianglesBuffer0], stride, vertexOffset);
       }
 
-      gl .frontFace (gl .CCW);
-      gl .enable (gl .CULL_FACE);
       gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
 
       return true;
@@ -319,8 +317,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          this .updateInstances = false;
       }
 
-      gl .frontFace (gl .CCW);
-      gl .enable (gl .CULL_FACE);
       gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3 * shapeNode .getNumInstances ());
 
       return true;
