@@ -845,7 +845,8 @@ Object .assign (X3DRenderObject .prototype,
                        viewport [3]);
 
          gl .scissor (0, 0, 1, 1);
-         gl .clear (gl .DEPTH_BUFFER_BIT);
+         gl .clearColor (0, 0, 0, 0);
+         gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
          // Render all objects
 
