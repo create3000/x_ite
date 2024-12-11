@@ -14,7 +14,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * `X3DBrowser.createScene` now returns a Promise.
 * `X3DBaseNode.setExecutionContext(null)` always connects to browser.
 * Default value of `X3DTextureProjectorNode.upVector` is now `0 1 0`.
-* Fixed a bug when parsing string.
+* Fixed a bug when parsing strings.
 
 ## X_ITE v10.5 Series
 
