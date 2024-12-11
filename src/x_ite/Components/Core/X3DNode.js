@@ -113,6 +113,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          const copy = this .create (executionContext);
 
+         // Support editing of protos.
          if (this .getNeedsName ())
             this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
 
