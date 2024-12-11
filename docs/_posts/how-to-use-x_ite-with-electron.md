@@ -96,9 +96,7 @@ window .addEventListener ("DOMContentLoaded", preload);
 
 function preload ()
 {
-  const
-    X3D = require ("x_ite"),
-    $   = require ("jquery");
+  const X3D = require ("x_ite");
 
   /// Do something with window, document and X3D.
 
@@ -106,7 +104,7 @@ function preload ()
     canvas  = document .createElement ("x3d-canvas"),
     browser = canvas .browser;
 
-  $("body") .append (canvas);
+  document .body .append (canvas);
 
   browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/x_ite/info/info.x3d"));
 }
