@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       if (DEVELOPMENT)
       {
-         if (!this .URL .protocol .match (/^(?:data|blob):/))
+         if (this .URL .protocol !== "data:")
             console .info (`Done loading scene '${decodeURI (this .URL .href)}'.`);
       }
    },
@@ -236,7 +236,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          }
       }
 
-      if (!this .URL .protocol .match (/^(?:data|blob):/) && this .bindViewpoint)
+      if (this .URL .protocol !== "data:" && this .bindViewpoint)
       {
          const referer = new URL (this .getBaseURL ());
 
@@ -260,7 +260,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (!this .URL .protocol .match (/^(?:data|blob):/) && this .URL .href .match (/\.(?:html|htm|xhtml)$/))
+         if (this .URL .protocol !== "data:" && this .URL .href .match (/\.(?:html|htm|xhtml)$/))
             return this .foreign (this .URL .href, this .target);
       }
 
@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    printError (error)
    {
-      if (this .URL .protocol .match (/^(?:data|blob):/))
+      if (this .URL .protocol === "data:")
          console .error (`Couldn't load data URL.`, error);
       else
          console .error (`Couldn't load URL '${$.try (() => decodeURI (this .URL)) ?? this .URL}'.`, error);

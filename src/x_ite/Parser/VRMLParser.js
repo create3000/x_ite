@@ -248,7 +248,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       let worldURL = this .getExecutionContext () .getWorldURL ();
 
-      if (worldURL .match (/^(?:data|blob):/))
+      if (worldURL .startsWith ("data:"))
          worldURL = worldURL .substring (0, worldURL .indexOf (","));
 
       // Format error.

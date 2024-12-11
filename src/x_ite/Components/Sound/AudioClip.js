@@ -111,7 +111,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
 
             if (DEVELOPMENT)
             {
-               if (!URL .protocol .match (/^(?:data|blob):/))
+               if (URL .protocol !== "data:")
                   console .info (`Done loading audio '${decodeURI (URL .href)}'.`);
             }
          }

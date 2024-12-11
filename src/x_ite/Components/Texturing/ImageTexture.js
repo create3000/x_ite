@@ -125,7 +125,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setLinear (false);
          this .setMipMaps (true);
 
-         if (!this .URL .protocol .match (/^(?:data|blob):/))
+         if (this .URL .protocol !== "data:")
          {
             if (!this .getCache ())
                this .URL .searchParams .set ("_", Date .now ());
@@ -136,7 +136,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    },
    setError (event)
    {
-      if (!this .URL .protocol .match (/^(?:data|blob):/))
+      if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}:'`, event .type);
 
       this .loadNext ();
@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       if (DEVELOPMENT)
       {
-         if (!this .URL .protocol .match (/^(?:data|blob):/))
+         if (this .URL .protocol !== "data:")
             console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
       }
 
@@ -172,7 +172,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    {
       if (DEVELOPMENT)
       {
-         if (!this .URL .protocol .match (/^(?:data|blob):/))
+         if (this .URL .protocol !== "data:")
             console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
       }
 

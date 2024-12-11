@@ -449,8 +449,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    setError (reason, error)
    {
-      const worldURL = this .getExecutionContext () .getWorldURL () .match (/^(data|blob):/) ?.[1]
-         ?? this .getExecutionContext () .getWorldURL ();
+      const worldURL = this .getExecutionContext () .getWorldURL () .startsWith ("data:")
+         ? "data:"
+         : this .getExecutionContext () .getWorldURL ();
 
       console .error (`JavaScript Error in Script '${this .getName ()}', ${reason}\nworld url is '${worldURL}':`);
       console .error (error);
