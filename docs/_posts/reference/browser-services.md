@@ -530,6 +530,10 @@ Prints *objects* to the browser's console without a newline character. Successiv
 
 Prints *objects* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
+#### **dispose** (): void
+
+Disposes this X3DBrowser. The object can then no longer be used.
+
 ### VRML Methods
 
 To be downward compatible with VRML, the following additional functions are available:

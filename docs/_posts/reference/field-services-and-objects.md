@@ -588,6 +588,10 @@ Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode fi
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
+#### **dispose** (): void
+
+Disposes this SFNode. The object can then no longer be used.
+
 ## SFRotation Object
 
 The SFRotation object corresponds to an X3D SFRotation field.

@@ -121,6 +121,10 @@ Remove the route if it is connected.
 
 Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
 
+#### **dispose** (): void
+
+Disposes this X3DExecutionContext. The object and all its nodes can then no longer be used.
+
 ## X3DScene
 
 A scene is an extension of the execution context services with additional services provided.
