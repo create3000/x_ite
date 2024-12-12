@@ -348,8 +348,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    evaluate (sourceText)
    {
-      if (!this .globalObject)
-         this .globalObject = this .createGlobalObject ();
+      this .globalObject ??= this .createGlobalObject ();
 
       return evaluate (SFNodeCache .get (this), this .globalObject, sourceText);
    },
