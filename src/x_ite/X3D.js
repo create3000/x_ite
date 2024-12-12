@@ -247,6 +247,4 @@ Namespace, Namespace .Fields,
    },
 });
 
-X3D .X3D = X3D;
-
 export default X3D;

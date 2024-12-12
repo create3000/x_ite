@@ -80,7 +80,6 @@ import X3DScriptNode               from "./X3DScriptNode.js";
 import FileLoader                  from "../../InputOutput/FileLoader.js";
 import X3DConstants                from "../../Base/X3DConstants.js";
 import SFNodeCache                 from "../../Fields/SFNodeCache.js";
-import X3D                         from "../../X3D.js"
 
 function Script (executionContext)
 {
@@ -218,7 +217,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          print: { value: browser .println .bind (browser) },
          trace: { value: browser .println .bind (browser) },
 
-         X3D:     { value: X3D },                                             // non-standard
          Browser: { value: browser },
 
          X3DConstants:                { value: X3DConstants },
