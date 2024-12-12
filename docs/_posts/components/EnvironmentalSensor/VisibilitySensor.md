@@ -51,15 +51,19 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>[0,∞)</small>
 
-*size* of visibility box around center location, oriented within local transformation frame.
+*size* of Proximity box around center location, oriented within local transformation frame.
+
+#### Hint
+
+- *size* 0 0 0 is same as enabled false.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 
-Translation offset from origin of local coordinate system.
+Position offset from origin of local coordinate system.
 
 ### SFTime [out] **enterTime**
 
-Time event generated when user's camera enters visibility region for sensor.
+Time event generated when user's camera enters the box.
 
 #### Warning
 
@@ -67,7 +71,7 @@ Time event generated when user's camera enters visibility region for sensor.
 
 ### SFTime [out] **exitTime**
 
-Time event generated when user's camera exits visibility region for sensor.
+Time event generated when user's camera exits the box.
 
 #### Warning
 
@@ -75,7 +79,7 @@ Time event generated when user's camera exits visibility region for sensor.
 
 ### SFBool [out] **isActive**
 
-*isActive* true/false events are sent when triggering the sensor. *isActive*=true when entering visibility region, *isActive*=false when exiting visibility region.
+*isActive* true/false events are sent as viewer enters/exits Proximity box. *isActive*=true when viewer enters Proximity box, *isActive*=false when viewer exits Proximity box.
 
 #### Warning
 

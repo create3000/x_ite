@@ -1,5 +1,5 @@
-/* X_ITE v10.5.15 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.15")];
+/* X_ITE v11.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -688,8 +688,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    },
    evaluate (sourceText)
    {
-      if (!this .globalObject)
-         this .globalObject = this .createGlobalObject ();
+      this .globalObject ??= this .createGlobalObject ();
 
       return Scripting_evaluate (external_X_ITE_X3D_SFNodeCache_default().get (this), this .globalObject, sourceText);
    },

@@ -148,9 +148,9 @@ declare namespace X3D
        */
       getComponent (name : string, level?: number): ComponentInfo;
       /**
-       * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
+       * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
        */
-      createScene (profile: ProfileInfo, ... components: ComponentInfo []): X3DScene;
+      createScene (profile: ProfileInfo, ... components: ComponentInfo []): Promise<X3DScene>;
       /**
        * Loads all components, external and internal, specified by `args`. If the argument is a `String`, the name of a component must be given.
        */
@@ -240,6 +240,14 @@ declare namespace X3D
        */
       changeViewpoint (name: string): void;
       changeViewpoint (layer: SFNode, name: string): void;
+      /**
+       * Start processing events.
+       */
+      beginUpdate (): void;
+      /**
+       * Stop processing events.
+       */
+      endUpdate (): void;
       /**
        * Prints *args* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
        */

@@ -72,22 +72,16 @@ Array of quoted font *family* names in preference order, browsers use the first 
 
 ### SFString [in, out] **style** "PLAIN" <small>["PLAIN"|"BOLD"|"ITALIC"|"BOLDITALIC"|""]</small>
 
-Pick one of four values for text *style* (PLAIN or BOLD or ITALIC or BOLDITALIC).
+The *style* attribute on each X3D node and statement provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets.
 
 #### Hints
 
-- [See 15.2.2.2 Font family and *style*](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Fontfamilyandstyle) for details.
-- Overlapping functionality with CSS *style* attribute provides a "best of both worlds" approach. The *style* attribute provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets.
+- This attribute is only functional if the X3D model is loaded within an HTML page.
 - [X3D Architecture Annex L, HTML authoring guidelines, CSS considerations](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/htmlGuidelines.html#CSS)
 - [W3C Cascading Style Sheets](https://www.w3.org/Style/CSS)
 - [CSS Snapshot](https://www.w3.org/TR/css-2018)
 - Https://www.w3.org/TR/css-*style*-attr
 - [Wikibooks, XML - Managing Data Exchange/XSLT and Style Sheets](https://en.wikibooks.org/wiki/XML_-_Managing_Data_Exchange/XSLT_and_Style_Sheets)
-
-#### Warnings
-
-- Overloaded name for CSS *style* attribute.
-- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFFloat [in, out] **pointSize** 12 <small>(0,∞)</small>
 

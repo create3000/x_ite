@@ -1,5 +1,5 @@
-/* X_ITE v10.5.15 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.15")];
+/* X_ITE v11.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -581,15 +581,16 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       for (const [joint, jointNode] of this .jointNodes .entries ())
       {
-         for (const displacerNode of jointNode .getDisplacers ())
+         for (const { _weight, _coordIndex, _displacements } of jointNode .getDisplacers ())
          {
-            const d = displacerNode ._displacements;
+            if (!_coordIndex .length)
+               continue;
 
             // Store reference to weight SFFloat.
-            this .displacementWeights .push (displacerNode ._weight, 0, 0, 0);
+            this .displacementWeights .push (_weight, 0, 0, 0);
 
-            for (const [i, index] of displacerNode ._coordIndex .entries ())
-               displacements [index] ?.push (... d [i], joint, displacer, 0, 0, 0);
+            for (const [i, index] of _coordIndex .entries ())
+               displacements [index] ?.push (... _displacements [i], joint, displacer, 0, 0, 0);
 
             ++ displacer;
          }
@@ -774,15 +775,15 @@ Object .defineProperties (HAnimHumanoid,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",              new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",            new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skeleton",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "viewpoints",            new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sites",                 new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "segments",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motionsEnabled",        new (external_X_ITE_X3D_Fields_default()).MFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motions",               new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "jointBindingPositions", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "jointBindingRotations", new (external_X_ITE_X3D_Fields_default()).MFRotation ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "jointBindingScales",    new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "joints",                new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "segments",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sites",                 new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "viewpoints",            new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motionsEnabled",        new (external_X_ITE_X3D_Fields_default()).MFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motions",               new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinBindingNormals",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinBindingCoords",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinNormal",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
@@ -1638,15 +1639,16 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
 
       this .displacementWeights .length = 0;
 
-      for (const displacerNode of this .displacerNodes)
+      for (const { _weight, _coordIndex, _displacements } of this .displacerNodes)
       {
-         const d = displacerNode ._displacements;
+         if (!_coordIndex .length)
+            continue;
 
          // Store reference to weight SFFloat.
-         this .displacementWeights .push (displacerNode ._weight, 0, 0, 0);
+         this .displacementWeights .push (_weight, 0, 0, 0);
 
-         for (const [i, index] of displacerNode ._coordIndex .entries ())
-            displacements [index] ?.push (... d [i], 0, displacer, 0, 0, 0);
+         for (const [i, index] of _coordIndex .entries ())
+            displacements [index] ?.push (... _displacements [i], 0, displacer, 0, 0, 0);
 
          ++ displacer;
       }
