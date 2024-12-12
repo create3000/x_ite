@@ -94,7 +94,7 @@ let initialized = false;
 * @param {function?} fallback
 * @returns {Promise<void>} Promise
 */
-export default Object .assign (function (callback, fallback)
+const X3D = Object .assign (function (callback, fallback)
 {
    return new Promise ((resolve, reject) =>
    {
@@ -246,3 +246,7 @@ Namespace, Namespace .Fields,
       return element;
    },
 });
+
+X3D .X3D = X3D;
+
+export default X3D;
