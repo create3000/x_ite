@@ -338,9 +338,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this [_concreteNodes] .update (ConcreteNode .typeName, ConcreteNode .typeName, ConcreteNode);
    },
-   removeConcreteNode (typeName)
+   removeConcreteNode (ConcreteNode)
    {
-      this [_concreteNodes] .remove (String (typeName));
+      this [_concreteNodes] .remove (ConcreteNode .typeName);
    },
    getConcreteNode (typeName)
    {
@@ -363,9 +363,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this [_abstractNodes] .update (AbstractNode .typeName, AbstractNode .typeName, AbstractNode);
    },
-   removeAbstractNode (typeName)
+   removeAbstractNode (AbstractNode)
    {
-      this [_abstractNodes] .remove (String (typeName));
+      this [_abstractNodes] .remove (AbstractNode .typeName);
    },
    getAbstractNode (typeName)
    {
