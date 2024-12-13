@@ -195,6 +195,11 @@ function TextureProjectorParallel (executionContext)
    this .addType (X3DConstants .TextureProjectorParallel);
 
    this ._fieldOfView .setUnit ("length");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this ._upVector = new Vector3 (0, 0, 1);
 }
 
 Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3DTextureProjectorNode .prototype),

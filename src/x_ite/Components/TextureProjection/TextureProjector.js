@@ -174,6 +174,11 @@ function TextureProjector (executionContext)
    this .addType (X3DConstants .TextureProjector);
 
    this ._fieldOfView .setUnit ("angle");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this ._upVector = new Vector3 (0, 0, 1);
 }
 
 Object .assign (Object .setPrototypeOf (TextureProjector .prototype, X3DTextureProjectorNode .prototype),
