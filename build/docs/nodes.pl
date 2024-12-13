@@ -291,6 +291,7 @@ sub spelling {
    $string =~ s/abitrary/arbitrary/sgo;
    $string =~ s/_change_/change/sgo;
    $string =~ s/traccking/tracking/sgo;
+   $string =~ s/travelling/traveling/sgo;
 
    $string =~ s|(https://en.wikipedia.org/wiki/Kilogram)|Kilogram $1|sgo;
 
