@@ -23,7 +23,7 @@ permalink: /
   contentScale="auto"
   xrSessionMode="NONE">
 </x3d-canvas>
-Credits: [Jonás](https://sketchfab.com/jonasaguilar) (Halloween Boy)
+Credits: [Jonás](https://sketchfab.com/jonasaguilar) (Halloween Child)
 {: .small }
 
 ## Overview
