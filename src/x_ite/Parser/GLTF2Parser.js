@@ -3437,10 +3437,10 @@ function eventsProcessed ()
             {
                const geometryNode = shapeNode ._geometry .getValue ();
 
-               if (!geometryNode)
+               if (!geometryNode || !geometryNode ._coord .getValue ())
                   continue;
 
-               if (attributes ["POSITION"] .field .length !== geometryNode ._coord .point .length)
+               if (attributes ["POSITION"] ?.field .length !== geometryNode ._coord .point .length)
                   continue;
 
                const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
@@ -3464,10 +3464,10 @@ function eventsProcessed ()
             {
                const geometryNode = shapeNode ._geometry .getValue ();
 
-               if (!geometryNode)
+               if (!geometryNode || !geometryNode ._normal .getValue ())
                   continue;
 
-               if (attributes ["NORMAL"] .field .length !== geometryNode ._normal .vector .length)
+               if (attributes ["NORMAL"] ?.field .length !== geometryNode ._normal .vector .length)
                   continue;
 
                const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");

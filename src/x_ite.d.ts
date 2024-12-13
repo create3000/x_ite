@@ -3099,6 +3099,8 @@ declare namespace X3D
        */
       alphaMode: "AUTO" | "OPAQUE" | "MASK" | "BLEND";
       /**
+       * Single contained Material, PhysicalMaterial or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc.
+       *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       backMaterial: X3DMaterialNodeProxy | null;
@@ -3127,7 +3129,7 @@ declare namespace X3D
        */
       lineProperties: LinePropertiesProxy | null;
       /**
-       * Single contained Material node that can specify visual attributes for lighting response (color types, transparency, etc.
+       * Single contained Material, PhysicalMaterial, TwoSidedMaterial (deprecated), or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10176,7 +10178,7 @@ declare namespace X3D
        */
       color: X3DColorNodeProxy | null;
       /**
-       * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
+       * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
        *
        * This field is of access type 'initializeOnly' and type MFInt32.
        */
@@ -10230,7 +10232,7 @@ declare namespace X3D
        */
       normal: X3DNormalNodeProxy | null;
       /**
-       * normalIndex values define the order in which normal vectors are applied to polygons (or vertices).
+       * normalIndex values define the order in which normal vectors are applied to polygons (or vertices), interspersed by -1 if normalPerVertex=true.
        *
        * This field is of access type 'initializeOnly' and type MFInt32.
        */
@@ -10242,7 +10244,7 @@ declare namespace X3D
        */
       normalPerVertex: boolean;
       /**
-       * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
+       * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
        *
        * This field is of access type 'inputOnly' and type MFInt32.
        */
@@ -10254,7 +10256,7 @@ declare namespace X3D
        */
       set_coordIndex: MFInt32;
       /**
-       * normalIndex values define the order in which normal vectors are applied to polygons (or vertices).
+       * normalIndex values define the order in which normal vectors are applied to polygons (or vertices), interspersed by -1 if normalPerVertex=true.
        *
        * This field is of access type 'inputOnly' and type MFInt32.
        */
@@ -10307,7 +10309,7 @@ declare namespace X3D
        */
       color: X3DColorNodeProxy | null;
       /**
-       * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
+       * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
        *
        * This field is of access type 'initializeOnly' and type MFInt32.
        */
@@ -10349,7 +10351,7 @@ declare namespace X3D
        */
       normal: X3DNormalNodeProxy | null;
       /**
-       * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
+       * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
        *
        * This field is of access type 'inputOnly' and type MFInt32.
        */
@@ -18704,6 +18706,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       texture: X3DTexture2DNodeProxy | null;
+      /**
+       * upVector describes the roll of the camera by saying which direction is up for the camera's orientation.
+       *
+       * This field is of access type 'inputOutput' and type SFVec3f.
+       */
+      upVector: SFVec3f;
    }
 
    /** TextureProperties allows precise fine-grained control over application of image textures to geometry. */
@@ -22211,6 +22219,10 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       texture: X3DTexture2DNodeProxy | null;
+      /**
+       * This field is of access type 'inputOutput' and type SFVec3f.
+       */
+      upVector: SFVec3f;
    }
 
    /** Base type for all nodes which specify a transformation of texture coordinates. */
