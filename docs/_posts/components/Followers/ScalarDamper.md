@@ -13,7 +13,7 @@ tags: [ScalarDamper, Followers]
 
 ## Overview
 
-ScalarDamper ...
+ScalarDamper generates a series of floating-point values that progressively change from initial value to destination value.
 
 The ScalarDamper node belongs to the **Followers** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.3 or higher.
 
@@ -88,6 +88,12 @@ Computed output value that approaches within tolerance of destination value, as 
 #### Warning
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advice
+
+### Hint
+
+- ROUTE value_changed output events to an interpolator node's set_fraction field, for example.
 
 ## See Also
 

@@ -63,7 +63,7 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 
 #### Warning
 
-- Without *description*, this [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) is unlikely to appear on browser Viewpoint menus.
+- Without *description*, this Viewpoint is unlikely to appear on browser Viewpoint menus.
 
 ### SFVec3f [in, out] **position** 0 0 10 <small>(-∞,∞)</small>
 
@@ -88,17 +88,17 @@ Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis dire
 
 ### SFFloat [in, out] **fieldOfView** π/4 <small>(0,π)</small>
 
-Minimum and maximum extents of view in units of local coordinate system. Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
+Preferred minimum viewing angle from this viewpoint in radians, providing minimum height or minimum width (whichever is smaller). Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
 
 #### Hints
 
-- Validation type SFVec3f is stricter than specification legacy value in order to detect illegal values.
-- Rectangular display width/height = (maxX-minX) / (maxY-minY)
+- Modifying Viewpoint distance to object may be better for zooming.
+- This field may be ignored, applying the default value regardless.
 
 #### Warnings
 
-- Minimum corner values must remain less than maximum corner values.
-- [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) *fieldOfView* has type MFFloat even though SFVec3f is more correct to prevent modeling errors, deficiency recorded as Mantis 1398
+- *fieldOfView* may not be correct for different window sizes and aspect ratios.
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness. Interchange profile
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 

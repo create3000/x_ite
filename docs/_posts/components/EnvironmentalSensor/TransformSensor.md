@@ -51,19 +51,15 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>[0,∞)</small>
 
-*size* of Proximity box around center location, oriented within local transformation frame.
-
-#### Hint
-
-- *size* 0 0 0 is same as enabled false.
+*size* of transformation-tracking box around center location, oriented within local transformation frame.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 
-Position offset from origin of local coordinate system.
+Translation offset from origin of local coordinate system.
 
 ### SFTime [out] **enterTime**
 
-Time event generated when user's camera enters the box.
+Time event generated when targetObject enters the box region for sensor.
 
 #### Warning
 
@@ -71,7 +67,7 @@ Time event generated when user's camera enters the box.
 
 ### SFTime [out] **exitTime**
 
-Time event generated when user's camera exits the box.
+Time event generated when targetObject exits the box region for sensor.
 
 #### Warning
 
@@ -79,7 +75,7 @@ Time event generated when user's camera exits the box.
 
 ### SFBool [out] **isActive**
 
-*isActive* true/false events are sent as viewer enters/exits Proximity box. *isActive*=true when viewer enters Proximity box, *isActive*=false when viewer exits Proximity box.
+*isActive* true/false events are sent when triggering the sensor. *isActive*=true when targetObject enters the box region, *isActive*=false when targetObject exits the box region.
 
 #### Warning
 
@@ -87,7 +83,7 @@ Time event generated when user's camera exits the box.
 
 ### SFVec3f [out] **position_changed**
 
-Sends translation event relative to center.
+Sends translation event relative to center whenever the target object is contained within the box region and results change.
 
 #### Warning
 
@@ -95,7 +91,7 @@ Sends translation event relative to center.
 
 ### SFRotation [out] **orientation_changed**
 
-Sends rotation event relative to center.
+Sends rotation event relative to center whenever the target object is contained within the box region and results change.
 
 #### Warning
 

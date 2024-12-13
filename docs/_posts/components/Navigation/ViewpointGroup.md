@@ -37,19 +37,16 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFString [in, out] **description** ""
 
-[Text](/x_ite/components/text/text/) *description* or navigation hint to describe the significance of this model [Viewpoint](/x_ite/components/navigation/viewpoint/).
+[Text](/x_ite/components/text/text/) *description* or navigation hint to identify this ViewpointGroup.
 
 #### Hints
 
-- A sequence of good Viewpoints with understandable descriptions can provide a guided tour of a model.
-- The currently bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node has a major effect on how a user might change viewing position and orientation after reaching this [Viewpoint](/x_ite/components/navigation/viewpoint/).
-- Consider paired [Viewpoint](/x_ite/components/navigation/viewpoint/)/[NavigationInfo](/x_ite/components/navigation/navigationinfo/) node combinations by defining ROUTE connections between corresponding isBound/set_bind fields.
 - Include space characters since a *description* is not a DEF identifier. Write short phrases that make descriptions clear and readable.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 #### Warning
 
-- Without *description*, this [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
+- Without *description*, this ViewpointGroup is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
 
 ### SFBool [in, out] **displayed** TRUE
 

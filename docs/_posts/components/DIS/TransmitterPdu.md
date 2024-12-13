@@ -99,7 +99,7 @@ Confirm whether there has been a recent network update.
 
 ### SFString [in, out] **address** "localhost"
 
-Multicast network *address*, or else 'localhost'; Example: 224.2.181.145.
+Multicast network *address*, or else 'localhost'. Example: 224.2.181.145.
 
 ### SFVec3f [in, out] **antennaLocation** 0 0 0 <small>(-∞,∞)</small>
 

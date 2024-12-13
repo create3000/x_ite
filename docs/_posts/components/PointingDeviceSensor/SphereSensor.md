@@ -61,7 +61,7 @@ Sends event and remembers last value sensed.
 
 #### Warning
 
-- ROUTE connecting translation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
+- ROUTE connecting rotation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
 
 ### SFVec3f [out] **trackPoint_changed**
 

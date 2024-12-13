@@ -83,7 +83,7 @@ Direction for projection.
 
 ### SFVec3f [in, out] **upVector** 0 1 0 <small>(-∞,∞)</small>
 
-*upVector* describes the roll of the camera by saying which direction is up for the camera's orientation.
+*upVector* describes the roll of the camera by defining which direction is up for the camera's orientation.
 
 ### MFFloat [in, out] **fieldOfView** [ -1, -1, 1, 1 ] <small>(-∞,∞)</small>
 
@@ -150,13 +150,10 @@ Size of the shadow map in pixels, must be power of two.
 
 ## Advice
 
-### Hint
+### Hints
 
-- Https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Images/ptmparallel.png
-
-### Warning
-
-- Add textureTransform field?
+- [Specification errata corrections](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/textureProjection.html#TextureProjectorParallel)
+- [Diagram](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Images/ptmparallel2.png)
 
 ## See Also
 

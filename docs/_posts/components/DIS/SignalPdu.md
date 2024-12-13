@@ -99,7 +99,7 @@ Confirm whether there has been a recent network update.
 
 ### SFString [in, out] **address** "localhost"
 
-Multicast network *address*, or else 'localhost'; Example: 224.2.181.145.
+Multicast network *address*, or else 'localhost'. Example: 224.2.181.145.
 
 ### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
 

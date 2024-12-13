@@ -52,34 +52,34 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
 
-#### Hints
+#### Hint
 
-- Number of keyValues must be an integer multiple of the number of keys!
-- KeyValue/*key* integer multiple defines how many coordinates are sent in value_changed outputOnlys.
 - Typical interval for values in *key* array is within range of 0 to 1, but larger intervals can be defined with arbitrary bounds.
 
-#### Warning
+#### Warnings
 
+- Number of keys must match number of keyValues!
 - Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFFloat [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
 
 Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
 
-#### Hints
+#### Hint
 
 - [Identical adjacent entries in *keyValue* array have the effect of defining constant-value step functions.](https://en.wikipedia.org/wiki/Step_function)
-- Number of keyValues must be an integer multiple of the number of keys!
-- *keyValue*/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
+
+#### Warning
+
+- Number of keys must match number of keyValues!
 
 ### SFFloat [out] **value_changed**
 
 Linearly interpolated output value determined by current key time and corresponding keyValue pair.
 
-#### Hints
+#### Hint
 
 - X3D players might not send unchanging intermediate values, thus avoiding excessive superfluous events that have no effect.
-- KeyValue/key integer multiple defines how many coordinates are sent in *value_changed* outputOnlys.
 
 #### Warning
 

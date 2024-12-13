@@ -290,6 +290,7 @@ sub spelling {
    $string =~ s/Hanim/HAnim/sgo;
    $string =~ s/abitrary/arbitrary/sgo;
    $string =~ s/_change_/change/sgo;
+   $string =~ s/traccking/tracking/sgo;
 
    $string =~ s|(https://en.wikipedia.org/wiki/Kilogram)|Kilogram $1|sgo;
 

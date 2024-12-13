@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFString [in, out] **description** ""
 
-Author-provided prose that describes intended purpose of the url asset.
+Author-provided prose that describes intended purpose of this node.
 
 #### Hint
 

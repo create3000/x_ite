@@ -85,7 +85,7 @@ Hover over geometry by aiming the mouse (or pointing device) to generate *isOver
 
 ### SFBool [out] **isActive**
 
-Select geometry by activating the pointing device (for example, clicking the mouse) to generate *isActive* events. Output event *isActive*=true is sent when geometry is selected (for example, when primary mouse button is pressed), output event *isActive*=false is sent when geometry is deselected (for example, when primary mouse button is released).
+Select geometry by activating the pointing device (for example, clicking the mouse) to generate *isActive* events. Output event *isActive*=true is sent when pointing device selection is activated, output event *isActive*=false is sent when pointing device is deselected.
 
 #### Warning
 

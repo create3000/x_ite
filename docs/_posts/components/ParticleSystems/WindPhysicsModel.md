@@ -41,7 +41,7 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **direction** 1 0 0 <small>(-∞,∞)</small>
 
-Initial *direction* from which particles emanate.
+*direction* in which wind is travelling in the form of a normalized, unit vector.
 
 ### SFFloat [in, out] **speed** 0.1 <small>[0,∞)</small>
 

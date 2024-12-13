@@ -57,9 +57,10 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - If in doubt, use *solid*='false' for maximum visibility.
 - AccessType relaxed to inputOutput in order to support animation and visualization.
 
-#### Warning
+#### Warnings
 
 - Default value true can completely hide geometry if viewed from wrong side!
+- *solid* false not supported in VRML97.
 
 ## Advice
 
