@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (Anchor .prototype, X3DGroupingNode .prot
          {
             X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
          }
-       }
+      }
       else
       {
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
