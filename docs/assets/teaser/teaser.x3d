@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Geometry2D' level='2'/>
     <component name='PointingDeviceSensor' level='1'/>
@@ -10,9 +10,9 @@
     <meta name='created' content='Sat, 28 Jan 2023 13:31:50 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.20, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.36, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Fri, 27 Sep 2024 08:57:08 GMT'/>
+    <meta name='modified' content='Fri, 13 Dec 2024 21:44:19 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -85,7 +85,7 @@
             <UnlitMaterial/>
           </Appearance>
           <Text DEF='_5'
-              string='"X_ITE v10.5.3"'
+              string='"X_ITE v11.0.0"'
               solid='true'>
             <FontStyle
                 family='"Michroma-Regular.ttf", "SANS"'
@@ -111,9 +111,22 @@ function initialize ()
 }
 ]]>
     </Script>
+    <Transform DEF='Männel'
+        translation='8.175832 -23.80504 2'
+        rotation='0 -1 0 37.9763545381293'
+        scale='0.08 0.08 0.08'
+        center='0 22.54239 -0.3160129'>
+      <Inline DEF='_7'
+          url='"viernes/scene.gltf", "../../../../../../Downloads/viernes/scene.gltf"'/>
+      <LoadSensor DEF='_8'>
+        <Inline USE='_7'/>
+      </LoadSensor>
+    </Transform>
+    <IMPORT inlineDEF='_7' importedDEF='Timer1'/>
     <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
     <ROUTE fromNode='_6' fromField='touchTime' toNode='_2' toField='set_startTime'/>
     <ROUTE fromNode='_2' fromField='fraction_changed' toNode='_3' toField='set_fraction'/>
     <ROUTE fromNode='_3' fromField='value_changed' toNode='Text' toField='set_rotation'/>
+    <ROUTE fromNode='_8' fromField='isLoaded' toNode='Timer1' toField='set_loop'/>
   </Scene>
 </X3D>
