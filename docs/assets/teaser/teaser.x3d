@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.36, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Sat, 14 Dec 2024 11:21:18 GMT'/>
+    <meta name='modified' content='Sat, 14 Dec 2024 11:36:03 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -117,7 +117,7 @@ function initialize ()
         scale='0.08 0.08 0.08'
         center='0 22.54239 -0.3160129'>
       <Inline DEF='_7'
-          url='"viernes.glb"'/>
+          url='"viernes.glb.gz"'/>
       <LoadSensor DEF='_8'>
         <Inline USE='_7'/>
       </LoadSensor>
