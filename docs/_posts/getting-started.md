@@ -14,7 +14,7 @@ permalink: /
 
 <x3d-canvas
   class="teaser"
-  src="/x_ite/assets/teaser/teaser.x3d"
+  src="/x_ite/assets/teaser/teaser.x3dz"
   update="auto"
   splashScreen="false"
   contextMenu="false"
