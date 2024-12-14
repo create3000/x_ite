@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.36, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sat, 14 Dec 2024 18:57:43 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='BrowserFrame'>
+          <MetadataBoolean
+              name='fixedSize'
+              value='true'/>
+          <MetadataDouble
+              name='aspectRatio'
+              value='780, 245'/>
+          <MetadataString
+              name='backgroundColor'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <NavigationInfo
+        type='"NONE"'/>
+    <Background
+        transparency='1'/>
+    <Transform
+        translation='-4.079085 2.505181 -1.181229'
+        scale='1.701448 1.701448 1.701448'>
+      <Transform DEF='HalloweenChild'
+          translation='5.815239 -23.80504 2'
+          rotation='0 -1 0 0.549344416768186'
+          scale='0.08 0.08 0.08'
+          center='0 22.54239 -0.3160129'>
+        <Inline DEF='_7'
+            url='"viernes.glb.gz"'/>
+        <LoadSensor DEF='_8'>
+          <Inline USE='_7'/>
+        </LoadSensor>
+      </Transform>
+    </Transform>
+    <IMPORT inlineDEF='_7' importedDEF='Timer1' AS='HalloweenChildTimer'/>
+    <ROUTE fromNode='_8' fromField='isLoaded' toNode='HalloweenChildTimer' toField='set_loop'/>
+  </Scene>
+</X3D>

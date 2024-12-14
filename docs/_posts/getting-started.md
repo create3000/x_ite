@@ -23,6 +23,19 @@ permalink: /
   contentScale="auto"
   xrSessionMode="NONE">
 </x3d-canvas>
+<div class="mascot-wrapper">
+  <x3d-canvas
+    class="mascot"
+    src="/x_ite/assets/teaser/halloween-child.x3d"
+    update="auto"
+    splashScreen="false"
+    contextMenu="false"
+    notifications="false"
+    timings="false"
+    contentScale="auto"
+    xrSessionMode="NONE">
+  </x3d-canvas>
+</div>
 Credits: [Jonás](https://sketchfab.com/jonasaguilar) (Halloween child)
 {: .small }
 

@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.36, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Sat, 14 Dec 2024 13:00:40 GMT'/>
+    <meta name='modified' content='Sat, 14 Dec 2024 18:54:40 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -111,22 +111,9 @@ function initialize ()
 ]]>
       </Script>
     </Transform>
-    <Transform DEF='HalloweenChild'
-        translation='5.815239 -23.80504 2'
-        rotation='0 -1 0 31.4751165798928'
-        scale='0.08 0.08 0.08'
-        center='0 22.54239 -0.3160129'>
-      <Inline DEF='_7'
-          url='"viernes.glb.gz"'/>
-      <LoadSensor DEF='_8'>
-        <Inline USE='_7'/>
-      </LoadSensor>
-    </Transform>
-    <IMPORT inlineDEF='_7' importedDEF='Timer1' AS='HalloweenChildTimer'/>
     <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
     <ROUTE fromNode='_6' fromField='touchTime' toNode='_2' toField='set_startTime'/>
     <ROUTE fromNode='_2' fromField='fraction_changed' toNode='_3' toField='set_fraction'/>
     <ROUTE fromNode='_3' fromField='value_changed' toNode='Text' toField='set_rotation'/>
-    <ROUTE fromNode='_8' fromField='isLoaded' toNode='HalloweenChildTimer' toField='set_loop'/>
   </Scene>
 </X3D>

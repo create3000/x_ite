@@ -226,6 +226,8 @@ small, .small {
   aspect-ratio: 16 / 9;
 }
 
+/* xr-button */
+
 x3d-canvas.xr-button-tr::part(xr-button) {
   top: 10px;
   right: 10px;
@@ -261,13 +263,28 @@ x3d-canvas.xr-button-tl::part(xr-button) {
   left: 10px;
 }
 
-.content x3d-canvas.teaser {
-  aspect-ratio: 16 / 5;
+/* teaser */
+
+.content .teaser,
+.content .mascot {
+    aspect-ratio: 16 / 5;
 }
 
-.content x3d-canvas.teaser::part(surface) {
+.content .teaser::part(surface) {
   cursor: default !important;
 }
+
+.content .mascot-wrapper {
+  position: relative;
+}
+
+.content .mascot {
+  pointer-events: none;
+  position: absolute;
+  transform: translateY(-65%);
+}
+
+/* */
 
 span[data-label-text="X3D" i],
 span[data-label-text="VRML" i] {
