@@ -124,7 +124,7 @@ function other ()
 
 	const cwd = process .cwd ();
 
-	systemSync (`sleep 10`);
+	systemSync (`sleep 20`);
 	systemSync (`npm cache clean --force`);
 
 	process .chdir (`${cwd}/../media`);
@@ -132,7 +132,7 @@ function other ()
 
 	process .chdir (`${cwd}/../x_ite-node`);
 	systemSync (`npm run release`);
-	systemSync (`sleep 10`);
+	systemSync (`sleep 20`);
 
 	process .chdir (`${cwd}/../x3d-tidy`);
 	systemSync (`npm run release`);
