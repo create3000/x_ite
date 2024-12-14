@@ -60,9 +60,8 @@ Because X3D files are pure text you can compress them on the fly. This can reduc
 </IfModule>
 
 <IfModule mod_brotli.c>
-  # Specifies the Brotli compression quality, which is '5' by default,
-  # but '4' is faster and more efficient compared to GZIP.
-  BrotliCompressionQuality 4
+  # Specifies the Brotli compression quality, which is '5' by default.
+  BrotliCompressionQuality 5
   AddOutputFilterByType BROTLI_COMPRESS model/x3d+xml
   AddOutputFilterByType BROTLI_COMPRESS model/x3d+json
   AddOutputFilterByType BROTLI_COMPRESS model/x3d+vrml
