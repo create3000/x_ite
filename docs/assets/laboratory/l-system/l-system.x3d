@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Sat, 16 Mar 2019 08:21:28 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.36, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.36, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/media/docs/laboratory/l-system/l-system.x3d'/>
-    <meta name='modified' content='Mon, 29 May 2023 11:16:47 GMT'/>
+    <meta name='modified' content='Sat, 14 Dec 2024 10:21:37 GMT'/>
   </head>
   <Scene>
     <WorldInfo
         title='L-System'
         info='"See also: https://en.wikipedia.org/wiki/L-system"'/>
-    <NavigationInfo
-        type='"EXAMINE"'
-        avatarSize='0.05, 1.6, 0.75'/>
     <Background
         skyColor='0.923837 0.947105 0.952409'/>
     <Viewpoint DEF='Viewpoint'
         description='L-System'
-        position='0 0 1.337'/>
+        position='0 0 1.337'>
+      <NavigationInfo containerField='navigationInfo'
+          type='"EXAMINE"'
+          avatarSize='0.05, 1.6, 0.75'/>
+    </Viewpoint>
     <Transform DEF='XForm'>
       <Shape>
         <IndexedLineSet DEF='L-System'
