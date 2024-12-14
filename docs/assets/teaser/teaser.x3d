@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.36, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Sat, 14 Dec 2024 19:56:13 GMT'/>
+    <meta name='modified' content='Sat, 14 Dec 2024 20:06:01 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -69,7 +69,7 @@
       </Shape>
     </Transform>
     <Transform DEF='Text_1'
-        translation='-8.39946 -0.4982367 3'
+        translation='-8.774472 -0.4982367 3'
         rotation='1 0 0 180'
         scale='0.8288495 0.8288495 0.8288495'
         center='5.160146 0 0'>
