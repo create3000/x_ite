@@ -265,8 +265,7 @@ x3d-canvas.xr-button-tl::part(xr-button) {
 
 /* teaser */
 
-.content .teaser,
-.content .mascot {
+.content .teaser {
     aspect-ratio: 16 / 5;
 }
 
@@ -279,9 +278,13 @@ x3d-canvas.xr-button-tl::part(xr-button) {
 }
 
 .content .mascot {
+    aspect-ratio: 780 / 280;
+}
+
+.content .mascot {
   pointer-events: none;
   position: absolute;
-  transform: translateY(-65%);
+  transform: translateY(-70%);
 }
 
 /* */

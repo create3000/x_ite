@@ -5,7 +5,7 @@
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.36, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 14 Dec 2024 19:29:01 GMT'/>
+    <meta name='modified' content='Sat, 14 Dec 2024 19:40:20 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -19,7 +19,7 @@
               value='true'/>
           <MetadataDouble
               name='aspectRatio'
-              value='780, 245'/>
+              value='780, 280'/>
           <MetadataString
               name='backgroundColor'
               value='""'/>
@@ -31,7 +31,7 @@
     <Background
         transparency='1'/>
     <Transform
-        translation='-4.079085 2.035274 -1.181229'
+        translation='-4.554505 2.035274 -1.181229'
         scale='1.65 1.65 1.65'>
       <Transform DEF='HalloweenChild'
           translation='5.815239 -23.80504 2'
