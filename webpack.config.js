@@ -182,6 +182,8 @@ export default Namespace .add ("${base}", __default__);`;
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.js`,
                   `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.js`,
+                  // asm
+                  `perl -p0i -e 's|"use\\s+asm";||sg' dist/x_ite{,.min}.js`,
                   // Source Maps
                   `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite{,.min}.js`,
                   // Debug
@@ -321,6 +323,8 @@ export default Namespace .add ("${base}", __default__);`;
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.mjs`,
                   `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.mjs`,
+                  // asm
+                  `perl -p0i -e 's|"use\\s+asm";||sg' dist/x_ite{,.min}.mjs`,
                   // Source Maps
                   `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite{,.min}.mjs`,
                   // Debug
@@ -444,6 +448,8 @@ export default Namespace .add ("${base}", __default__);`;
                      // Version
                      `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}Component{,.min}.js`,
                      `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/assets/components/${name}Component{,.min}.js`,
+                     // asm
+                     `perl -p0i -e 's|"use\\s+asm";||sg' dist/assets/components/${name}Component{,.min}.js`,
                      // Source Maps
                      `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}Component{,.min}.js`,
                      // Per component
