@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.36, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Sat, 14 Dec 2024 18:54:40 GMT'/>
+    <meta name='modified' content='Sat, 14 Dec 2024 19:56:13 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -68,9 +68,11 @@
         <Rectangle2D USE='_1'/>
       </Shape>
     </Transform>
-    <Transform DEF='Text'
+    <Transform DEF='Text_1'
+        translation='-8.39946 -0.4982367 3'
         rotation='1 0 0 180'
-        center='-3.834375 -0.643363 1'>
+        scale='0.8288495 0.8288495 0.8288495'
+        center='5.160146 0 0'>
       <Group DEF='Animation'>
         <TimeSensor DEF='_2'
             cycleInterval='0.5'
@@ -79,8 +81,7 @@
             key='0, 0.5, 1'
             keyValue='1 0 0 0, 1 0 0 90, 1 0 0 180'/>
       </Group>
-      <Transform DEF='Front'
-          translation='-9 -0.643363 1'>
+      <Transform DEF='Front'>
         <Shape DEF='_4'>
           <Appearance>
             <UnlitMaterial/>
@@ -96,7 +97,6 @@
         </Shape>
       </Transform>
       <Transform DEF='Back'
-          translation='-9 -0.643363 1'
           rotation='1 0 0 180'>
         <Shape USE='_4'/>
       </Transform>
@@ -114,6 +114,6 @@ function initialize ()
     <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
     <ROUTE fromNode='_6' fromField='touchTime' toNode='_2' toField='set_startTime'/>
     <ROUTE fromNode='_2' fromField='fraction_changed' toNode='_3' toField='set_fraction'/>
-    <ROUTE fromNode='_3' fromField='value_changed' toNode='Text' toField='set_rotation'/>
+    <ROUTE fromNode='_3' fromField='value_changed' toNode='Text_1' toField='set_rotation'/>
   </Scene>
 </X3D>
