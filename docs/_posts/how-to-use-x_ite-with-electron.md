@@ -22,10 +22,10 @@ https://gist.github.com/create3000/88bb73719dba1f70a0422d12d61db62f
 To get started, there are at least 4 files needed to open an Electron window:
 
 * app-folder
-  * main.js
-  * index.html
-  * preload.js
-  * styles.css
+  * [main.js](#mainjs)
+  * [index.html](#indexhtml)
+  * [preload.js](#preloadjs)
+  * [styles.css](#stylescss)
 
 Let us now look at the individual files.
 
