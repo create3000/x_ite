@@ -278,11 +278,8 @@ x3d-canvas.xr-button-tl::part(xr-button) {
 }
 
 .content .mascot {
-    aspect-ratio: 780 / 280;
-}
-
-.content .mascot {
   pointer-events: none;
+  aspect-ratio: 780 / 280;
   position: absolute;
   transform: translateY(-70%);
 }
