@@ -221,9 +221,9 @@ small, .small {
 .content x3d-canvas,
 .content iframe {
   border: none;
+  aspect-ratio: 16 / 9;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
 }
 
 /* xr-button */
