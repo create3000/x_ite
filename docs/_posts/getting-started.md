@@ -33,7 +33,9 @@ permalink: /
     notifications="false"
     timings="false"
     contentScale="auto"
-    xrSessionMode="NONE">
+    xrSessionMode="NONE"
+    style="display: none;"
+    oninitialized="$(this) .show ();">
   </x3d-canvas>
 </div>
 Credits: [Jonás](https://sketchfab.com/jonasaguilar) (Halloween child)
