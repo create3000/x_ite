@@ -35,7 +35,7 @@ permalink: /
     contentScale="auto"
     xrSessionMode="NONE"
     style="display: none;"
-    oninitialized="$(this) .show ();">
+    oninitialized="this .style .display = 'inline-block';">
   </x3d-canvas>
 </div>
 Credits: [Jonás](https://sketchfab.com/jonasaguilar) (Halloween child)
