@@ -1,5 +1,5 @@
-/* X_ITE v11.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.0")];
+/* X_ITE v11.0.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -437,6 +437,11 @@ function TextureProjector (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureProjector);
 
    this ._fieldOfView .setUnit ("angle");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this ._upVector = new (external_X_ITE_X3D_Vector3_default()) (0, 0, 1);
 }
 
 Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProjection_X3DTextureProjectorNode .prototype),
@@ -692,6 +697,11 @@ function TextureProjectorParallel (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureProjectorParallel);
 
    this ._fieldOfView .setUnit ("length");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this ._upVector = new (external_X_ITE_X3D_Vector3_default()) (0, 0, 1);
 }
 
 Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, TextureProjection_X3DTextureProjectorNode .prototype),
