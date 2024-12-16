@@ -216,10 +216,10 @@ Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3D
    {
       const length = this ._fieldOfView .length;
 
-      this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
-      this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
-      this .maximumX = (length > 2 ? this ._fieldOfView [2] :  1);
-      this .maximumY = (length > 3 ? this ._fieldOfView [3] :  1);
+      this .minimumX = this ._fieldOfView [0];
+      this .minimumY = this ._fieldOfView [1];
+      this .maximumX = this ._fieldOfView [2];
+      this .maximumY = this ._fieldOfView [3];
 
       this .sizeX = this .maximumX - this .minimumX;
       this .sizeY = this .maximumY - this .minimumY;
@@ -271,7 +271,7 @@ Object .defineProperties (TextureProjectorParallel,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "upVector",         new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",      new Fields .MFFloat (-1, -1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",      new Fields .SFVec4f (-1, -1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "nearDistance",     new Fields .SFFloat (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "farDistance",      new Fields .SFFloat (-1)),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "aspectRatio",      new Fields .SFFloat ()),
