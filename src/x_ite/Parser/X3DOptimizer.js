@@ -64,7 +64,9 @@ Object .assign (X3DOptimizer .prototype,
 
       nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes));
 
-      removedNodes .forEach (node => node .dispose ());
+      removedNodes
+         .filter (node => node .getValue () .getCloneCount () === 0)
+         .forEach (node => node .dispose ());
    },
    optimizeNodes (parent, nodes, combine, removedNodes)
    {
@@ -113,7 +115,22 @@ Object .assign (X3DOptimizer .prototype,
          {
             node .children = this .optimizeNodes (node, node .children, true, removedNodes);
 
-            return node;
+            switch (parent ?.getNodeTypeName ())
+            {
+               case "HAnimHumanoid":
+               case "HAnimJoint":
+               case "HAnimSegment":
+               case "HAnimSite":
+               {
+                  return node;
+               }
+               default:
+               {
+                  removedNodes .push (node);
+
+                  return [ ];
+               }
+            }
          }
          case "HAnimHumanoid":
          {
