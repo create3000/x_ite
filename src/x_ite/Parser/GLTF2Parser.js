@@ -2284,21 +2284,15 @@ function eventsProcessed ()
          skeleton = skin .skeleton;
 
       skin .joints              = this .jointsArray (skin .joints);
-      skin .skeleton            = skeleton ? [skeleton] : this .skeleton (skin .joints, nodes);
+      skin .skeleton            = skeleton !== undefined ? [skeleton] : this .skeleton (skin .joints, nodes);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
-      if (skeleton !== undefined)
+      if (skeleton !== undefined && !skin .joints .includes (skeleton))
       {
          // Ensure skeleton root node becomes a HAnimJoint node.
 
-         for (const s of skin .skeleton)
-         {
-            if (skin .joints .includes (skin .skeleton))
-               continue;
-
-            this .joints .add (skeleton);
-            skin .joints .push (skeleton);
-         }
+         this .joints .add (skeleton);
+         skin .joints .push (skeleton);
       }
 
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
