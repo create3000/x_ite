@@ -214,8 +214,6 @@ Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3D
    },
    set_fieldOfView___ ()
    {
-      const length = this ._fieldOfView .length;
-
       this .minimumX = this ._fieldOfView [0];
       this .minimumY = this ._fieldOfView [1];
       this .maximumX = this ._fieldOfView [2];
