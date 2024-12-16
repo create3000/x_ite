@@ -85,7 +85,7 @@ Direction for projection.
 
 *upVector* describes the roll of the camera by defining which direction is up for the camera's orientation.
 
-### MFFloat [in, out] **fieldOfView** [ -1, -1, 1, 1 ] <small>(-∞,∞)</small>
+### SFVec4f [in, out] **fieldOfView** -1, -1, 1, 1 <small>(-∞,∞)</small>
 
 Minimum and maximum extents of projection texture in units of local coordinate system. Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
 
