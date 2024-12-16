@@ -2168,8 +2168,7 @@ function eventsProcessed ()
 
                const humanoidNode = this .humanoidIndex .get (index);
 
-               if (humanoidNode)
-                  humanoidNode ._segments .push (segmentNode);
+               humanoidNode ?._segments .push (segmentNode);
 
                return segmentNode;
             }
