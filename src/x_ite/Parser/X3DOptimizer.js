@@ -113,20 +113,7 @@ Object .assign (X3DOptimizer .prototype,
          {
             node .children = this .optimizeNodes (node, node .children, true, removedNodes);
 
-            switch (parent ?.getNodeTypeName ())
-            {
-               case "HAnimHumanoid":
-               case "HAnimJoint":
-               case "HAnimSegment":
-               case "HAnimSite":
-               {
-                  return node;
-               }
-               default:
-               {
-                  return this .removeIfNoChildren (node, removedNodes);
-               }
-            }
+            return node;
          }
          case "HAnimHumanoid":
          {
