@@ -45,6 +45,6 @@
  *
  ******************************************************************************/
 
-// Latest implemented specification version:
+// Latest implemented X3D specification version:
 
-export default "4.0";
+export default "4.1";
