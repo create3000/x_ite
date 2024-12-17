@@ -209,7 +209,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .materialsArray  (glTF .materials);
       this .meshesArray     (glTF .meshes);
       this .camerasArray    (glTF .cameras);
-      this .skinsArray      (glTF .skins);
+      this .skinsArray      (glTF .skins, glTF .nodes);
       this .nodesArray      (glTF .nodes);
       this .scenesArray     (glTF, glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
@@ -2073,10 +2073,10 @@ function eventsProcessed ()
          return;
 
       const
-         skeleton     = this .nodes [skin .skeleton],
+         skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
          humanoidNode = skin .humanoidNode;
 
-      if (!skeleton)
+      if (skeleton .length === null)
          return;
 
       skeleton .humanoidNode = humanoidNode;
@@ -2168,8 +2168,7 @@ function eventsProcessed ()
 
                const humanoidNode = this .humanoidIndex .get (index);
 
-               if (humanoidNode)
-                  humanoidNode ._segments .push (segmentNode);
+               humanoidNode ?._segments .push (segmentNode);
 
                return segmentNode;
             }
@@ -2207,10 +2206,7 @@ function eventsProcessed ()
          humanoidNode ._version               = "2.0";
          humanoidNode ._skeletalConfiguration = "GLTF";
 
-         const skeletonNode = this .nodes [skin .skeleton] ?.transformNode;
-
-         if (skeletonNode)
-            humanoidNode ._skeleton .push (skeletonNode);
+         humanoidNode ._skeleton .push (... skin .skeleton .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
 
          for (const [i, joint] of skin .joints .entries ())
          {
@@ -2265,17 +2261,20 @@ function eventsProcessed ()
 
       return nodes;
    },
-   skinsArray (skins)
+   skinsArray (skins, nodes)
    {
       if (!(skins instanceof Array))
+         return;
+
+      if (!(nodes instanceof Array))
          return;
 
       this .skins = skins;
 
       for (const skin of skins)
-         this .skinObject (skin);
+         this .skinObject (skin, nodes);
    },
-   skinObject: function (skin)
+   skinObject (skin, nodes)
    {
       if (!(skin instanceof Object))
          return;
@@ -2285,10 +2284,10 @@ function eventsProcessed ()
          skeleton = skin .skeleton;
 
       skin .joints              = this .jointsArray (skin .joints);
-      skin .skeleton            = skeleton ?? this .skeleton (skin .joints);
+      skin .skeleton            = skeleton !== undefined ? [skeleton] : this .skeleton (skin .joints, nodes);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
-      if (skeleton !== undefined && !skin .joints .includes (skin .skeleton))
+      if (skeleton !== undefined && !skin .joints .includes (skeleton))
       {
          // Ensure skeleton root node becomes a HAnimJoint node.
 
@@ -2308,7 +2307,7 @@ function eventsProcessed ()
       skin .normalNode                 .setup ();
       skin .coordinateNode             .setup ();
    },
-   jointsArray: function (joints)
+   jointsArray (joints)
    {
       if (!(joints instanceof Array))
          return [ ];
@@ -2317,17 +2316,17 @@ function eventsProcessed ()
 
       return joints;
    },
-   skeleton: function (joints)
+   skeleton (joints, nodes)
    {
       const children = new Set (joints
-         .map (index => this .nodes [index])
+         .map (index => nodes [index])
          .filter (node => node instanceof Object)
          .filter (node => node .children instanceof Array)
          .flatMap (node => node .children));
 
-      return joints .filter (index => !children .has (index)) [0];
+      return joints .filter (index => !children .has (index));
    },
-   inverseBindMatricesAccessors: function (inverseBindMatrices)
+   inverseBindMatricesAccessors (inverseBindMatrices)
    {
       if (!inverseBindMatrices)
          return [ ];
@@ -3267,7 +3266,7 @@ function eventsProcessed ()
 
       return position .coordinateNode = coordinateNode;
    },
-   attributesJointsArray: function (skin, joints, weights)
+   attributesJointsArray (skin, joints, weights)
    {
       if (!(skin instanceof Object))
          return;
@@ -3281,7 +3280,7 @@ function eventsProcessed ()
       for (let i = 0, length = joints .length; i < length; ++ i)
          this .attributesJointsObject (skin, joints [i], weights [i]);
    },
-   attributesJointsObject: function (skin, joints, weights)
+   attributesJointsObject (skin, joints, weights)
    {
       if (joints ?.type !== "VEC4")
          return;
@@ -3308,7 +3307,7 @@ function eventsProcessed ()
                index     = skin .joints [jointsArray [v * 4 + i]],
                jointNode = this .nodes [index] ?.transformNode;
 
-            if (!jointNode)
+            if (jointNode ?.getType () .at (-1) !== X3DConstants .HAnimJoint)
                continue;
 
             jointNode ._skinCoordIndex  .push (v + start);
@@ -3316,7 +3315,7 @@ function eventsProcessed ()
          }
       }
    },
-   skinGeometry: function (skin, geometryNode)
+   skinGeometry (skin, geometryNode)
    {
       if (!(skin instanceof Object))
          return;

@@ -64,7 +64,9 @@ Object .assign (X3DOptimizer .prototype,
 
       nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes));
 
-      removedNodes .forEach (node => node .dispose ());
+      removedNodes
+         .filter (node => node .getValue () .getCloneCount () === 0)
+         .forEach (node => node .dispose ());
    },
    optimizeNodes (parent, nodes, combine, removedNodes)
    {
@@ -124,7 +126,9 @@ Object .assign (X3DOptimizer .prototype,
                }
                default:
                {
-                  return this .removeIfNoChildren (node, removedNodes);
+                  removedNodes .push (node);
+
+                  return [ ];
                }
             }
          }
