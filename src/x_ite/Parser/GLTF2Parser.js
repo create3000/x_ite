@@ -3307,7 +3307,7 @@ function eventsProcessed ()
                index     = skin .joints [jointsArray [v * 4 + i]],
                jointNode = this .nodes [index] ?.transformNode;
 
-            if (!jointNode)
+            if (jointNode ?.getType () .at (-1) !== X3DConstants .HAnimJoint)
                continue;
 
             jointNode ._skinCoordIndex  .push (v + start);
