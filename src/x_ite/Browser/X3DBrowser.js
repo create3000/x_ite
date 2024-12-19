@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
              `      Max lights per shape: ${this .getMaxLights ()}\n` +
              `      Max textures per shape: ${this .getMaxTextures ()}\n` +
              `      Max texture size: ${this .getMaxTextureSize ()} × ${this .getMaxTextureSize ()} pixels\n` +
-             `      Texture memory: ${this .getTextureMemory ()}\n` +
+             `      Texture memory: ${this .getTextureMemory () || "n/a"}\n` +
              `      Texture units: ${this .getMaxCombinedTextureUnits ()}\n` +
              `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
              `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
