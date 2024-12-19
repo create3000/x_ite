@@ -234,7 +234,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 
          this .set_start ();
 
-         if (this .getLive () .getValue ())
+         if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
          {
             this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
          }
@@ -251,7 +251,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       {
          this ._isPaused = true;
 
-         if (this .getLive () .getValue ())
+         if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
             this .real_pause ();
       }
    },
@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       {
          this ._isPaused = false;
 
-         if (this .getLive () .getValue ())
+         if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
             this .real_resume ();
       }
    },
