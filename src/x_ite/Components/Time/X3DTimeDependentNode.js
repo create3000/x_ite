@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    initialize ()
    {
       this .getLive ()  .addInterest ("set_live__", this);
-      this ._isEvenLive .addInterest ("set_live__", this);
+      this ._isEvenLive .addInterest (Symbol .for ("X_ITE.X3DBaseNode.set_live__"), this);
 
       this ._initialized .addInterest ("set_loop__",       this);
       this ._enabled     .addInterest ("set_enabled__",    this);
@@ -90,6 +90,12 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 
       this ._initialized = this .getBrowser () .getCurrentTime ();
    },
+   checkLiveState ()
+   {
+      ///  Determines the live state of this node.
+
+      return this .isLive () && (this .getExecutionContext () .getLive () .getValue () || this ._isEvenLive .getValue ());
+   },
    getElapsedTime ()
    {
       return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
@@ -102,7 +108,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
    set_live__ ()
    {
-      if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
+      if (this .getLive () .getValue ())
       {
          if (this .disabled)
          {
@@ -228,7 +234,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 
          this .set_start ();
 
-         if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
+         if (this .getLive () .getValue ())
          {
             this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
          }
@@ -245,7 +251,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       {
          this ._isPaused = true;
 
-         if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
+         if (this .getLive () .getValue ())
             this .real_pause ();
       }
    },
@@ -263,7 +269,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       {
          this ._isPaused = false;
 
-         if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
+         if (this .getLive () .getValue ())
             this .real_resume ();
       }
    },
@@ -317,7 +323,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       if (!this ._enabled .getValue ())
          return;
 
-      if (!(this .getLive () .getValue () || this ._isEvenLive .getValue ()))
+      if (!(this .getLive () .getValue ()))
          return;
 
       this .getBrowser () .advanceTime ();

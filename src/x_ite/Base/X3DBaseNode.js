@@ -64,7 +64,7 @@ const
    _childObjects      = Symbol (),
    _initialized       = Symbol (),
    _live              = Symbol (),
-   _set_live__        = Symbol ();
+   _set_live__        = Symbol .for ("X_ITE.X3DBaseNode.set_live__");
 
 function X3DBaseNode (executionContext, browser = executionContext .getBrowser ())
 {
