@@ -108,7 +108,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
          }
          else
          {
-            if (this .checkLiveState ())
+            if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
                this .set_start ();
             else
                this .set_pause ();
