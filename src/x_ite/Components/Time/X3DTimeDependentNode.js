@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    initialize ()
    {
       this .getLive ()  .addInterest ("set_live__", this);
-      this ._isEvenLive .addInterest ("set_live__", this);
+      this ._isEvenLive .addInterest (Symbol .for ("X_ITE.X3DBaseNode.set_live__"), this);
 
       this ._initialized .addInterest ("set_loop__",       this);
       this ._enabled     .addInterest ("set_enabled__",    this);
@@ -108,7 +108,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
    set_live__ ()
    {
-      if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
+      if (this .getLive () .getValue ())
       {
          if (this .disabled)
          {
@@ -323,7 +323,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       if (!this ._enabled .getValue ())
          return;
 
-      if (!(this .getLive () .getValue () || this ._isEvenLive .getValue ()))
+      if (!(this .getLive () .getValue ()))
          return;
 
       this .getBrowser () .advanceTime ();
