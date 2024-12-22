@@ -1,5 +1,5 @@
-/* X_ITE v11.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.1")];
+/* X_ITE v11.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -437,11 +437,6 @@ function TextureProjector (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureProjector);
 
    this ._fieldOfView .setUnit ("angle");
-
-   // Legacy
-
-   if (executionContext .getSpecificationVersion () <= 4.0)
-      this ._upVector = new (external_X_ITE_X3D_Vector3_default()) (0, 0, 1);
 }
 
 Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProjection_X3DTextureProjectorNode .prototype),
@@ -478,7 +473,7 @@ Object .defineProperties (TextureProjector,
 
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "location",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "direction",        new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fieldOfView",      new (external_X_ITE_X3D_Fields_default()).SFFloat (0.785398)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "nearDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "farDistance",      new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
@@ -697,11 +692,6 @@ function TextureProjectorParallel (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureProjectorParallel);
 
    this ._fieldOfView .setUnit ("length");
-
-   // Legacy
-
-   if (executionContext .getSpecificationVersion () <= 4.0)
-      this ._upVector = new (external_X_ITE_X3D_Vector3_default()) (0, 0, 1);
 }
 
 Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, TextureProjection_X3DTextureProjectorNode .prototype),
@@ -716,12 +706,10 @@ Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, Tex
    },
    set_fieldOfView___ ()
    {
-      const length = this ._fieldOfView .length;
-
-      this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
-      this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
-      this .maximumX = (length > 2 ? this ._fieldOfView [2] :  1);
-      this .maximumY = (length > 3 ? this ._fieldOfView [3] :  1);
+      this .minimumX = this ._fieldOfView [0];
+      this .minimumY = this ._fieldOfView [1];
+      this .maximumX = this ._fieldOfView [2];
+      this .maximumY = this ._fieldOfView [3];
 
       this .sizeX = this .maximumX - this .minimumX;
       this .sizeY = this .maximumY - this .minimumY;
@@ -772,8 +760,8 @@ Object .defineProperties (TextureProjectorParallel,
 
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "location",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "direction",        new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fieldOfView",      new (external_X_ITE_X3D_Fields_default()).MFFloat (-1, -1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fieldOfView",      new (external_X_ITE_X3D_Fields_default()).SFVec4f (-1, -1, 1, 1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "nearDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "farDistance",      new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "aspectRatio",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),

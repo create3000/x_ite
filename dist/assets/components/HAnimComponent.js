@@ -1,5 +1,5 @@
-/* X_ITE v11.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.1")];
+/* X_ITE v11.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -272,7 +272,7 @@ function HAnimHumanoid (executionContext)
    this .numJoints            = 0;
    this .numDisplacements     = 0;
    this .skinCoordNode        = null;
-   this .change               = new Lock ();
+   this .update               = new Lock ();
    this .skinning             = Function .prototype;
 }
 
@@ -466,7 +466,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       for (const jointNode of jointNodes)
       {
-         jointNode .removeInterest ("enable", this .change);
+         jointNode .removeInterest ("unlock", this .update);
 
          jointNode ._skinCoordIndex      .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight     .removeInterest ("addEvent", this ._jointTextures);
@@ -495,7 +495,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       for (const jointNode of jointNodes)
       {
-         jointNode .addInterest ("enable", this .change);
+         jointNode .addInterest ("unlock", this .update);
 
          jointNode ._skinCoordIndex      .addInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight     .addInterest ("addEvent", this ._jointTextures);
@@ -564,7 +564,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       // Trigger update.
 
-      this .change .enable ();
+      this .update .unlock ();
       this .set_humanoidKey__ ();
    },
    set_displacementsTexture__ ()
@@ -624,7 +624,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       // Trigger update.
 
-      this .change .enable ();
+      this .update .unlock ();
       this .set_humanoidKey__ ();
    },
    set_displacementWeightsTexture__ ()
@@ -686,7 +686,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
    },
    skinning (type, renderObject)
    {
-      if (type !== (external_X_ITE_X3D_TraverseType_default()).DISPLAY || this .change .lock ())
+      if (type !== (external_X_ITE_X3D_TraverseType_default()).DISPLAY || this .update .lock ())
          return;
 
       // Create joint matrices.
@@ -819,7 +819,7 @@ class Lock
 {
    #locked = true;
 
-   enable ()
+   unlock ()
    {
       this .#locked = false;
    }
