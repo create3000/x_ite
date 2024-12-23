@@ -1205,7 +1205,7 @@ Object .assign (X3DRenderObject .prototype,
 
          if (independent && this .transmission)
          {
-            // Transmission
+            // Render to transmission buffer.
 
             const transmissionBuffer = browser .getTransmissionBuffer ();
 
@@ -1215,17 +1215,11 @@ Object .assign (X3DRenderObject .prototype,
             gl .generateMipmap (gl .TEXTURE_2D);
 
             this .transmission = false;
-
-            // Draw with sorted blend or OIT.
-
-            this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
          }
-         else
-         {
-            // Draw with sorted blend or OIT.
 
-            this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
-         }
+         // Draw with sorted blend or OIT.
+
+         this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
       }
 
       // POST DRAW
