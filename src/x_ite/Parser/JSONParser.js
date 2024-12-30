@@ -277,7 +277,19 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
 
       if (object === null)
       {
-         this .elementSetAttribute (element, "value", null);
+         const isArray = !isNaN (parseInt (parentkey));
+
+         if (isArray)
+         {
+            const child = this .createElement ("NULL", containerField);
+
+            element .appendChild (child);
+         }
+         else
+         {
+            this .elementSetAttribute (element, "value", null);
+         }
+
          return element;
       }
 
