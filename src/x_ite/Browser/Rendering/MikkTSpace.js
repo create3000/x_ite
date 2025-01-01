@@ -6,6 +6,11 @@ export default new class MikkTSpace
 {
    #promise;
 
+   constructor ()
+   {
+      this .#heap .push (undefined, null, true, false);
+   }
+
    async initialize ()
    {
       return this .#promise = this .#promise ?? new Promise (async resolve =>
@@ -122,7 +127,7 @@ export default new class MikkTSpace
       return this .#textDecoder .decode (this .#getUint8Memory0 () .subarray (ptr, ptr + len));
    }
 
-   #heap = new Array (32) .fill (undefined) .toSpliced (32, 0, undefined, null, true, false);
+   #heap = new Array (32) .fill (undefined);
    #heap_next = this .#heap .length;
 
    #addHeapObject (obj)

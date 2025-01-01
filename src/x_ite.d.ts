@@ -18600,7 +18600,7 @@ declare namespace X3D
        */
       texture: X3DTexture2DNodeProxy | null;
       /**
-       * upVector describes the roll of the camera by saying which direction is up for the camera's orientation.
+       * upVector describes the roll of the camera by defining which direction is up for camera orientation.
        *
        * This field is of access type 'inputOutput' and type SFVec3f.
        */
@@ -18707,7 +18707,7 @@ declare namespace X3D
        */
       texture: X3DTexture2DNodeProxy | null;
       /**
-       * upVector describes the roll of the camera by saying which direction is up for the camera's orientation.
+       * upVector describes the roll of the camera by defining which direction is up for camera orientation.
        *
        * This field is of access type 'inputOutput' and type SFVec3f.
        */
