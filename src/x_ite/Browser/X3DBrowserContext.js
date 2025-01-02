@@ -199,6 +199,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_world] = new X3DWorld (executionContext);
       this [_world] .setup ();
+      this [_world] .bindBindables ();
    },
    addBrowserEvent ()
    {
