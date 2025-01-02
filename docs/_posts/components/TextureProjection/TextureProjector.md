@@ -83,7 +83,7 @@ Direction for projection.
 
 ### SFVec3f [in, out] **upVector** 0 0 1 <small>(-∞,∞)</small>
 
-*upVector* describes the roll of the camera by defining which direction is up for the camera's orientation.
+*upVector* describes the roll of the camera by defining which direction is up for camera orientation.
 
 ### SFFloat [in, out] **fieldOfView** π/4 <small>(0,π)</small>
 
