@@ -469,14 +469,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Replace.
 
+         this .setExecutionContext (scene);
          this .setDescription ("");
          this .setBrowserLoading (true);
 
          for (const object of scene .getLoadingObjects ())
             this .addLoadingObject (object);
-
-         this .setExecutionContext (scene);
-         this .getWorld () .bindBindables ();
 
          this ._loadCount .addInterest ("checkLoadCount", this, resolve);
          this ._loadCount .addEvent ();
