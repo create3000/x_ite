@@ -124,9 +124,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       const scene = new X3DScene (this);
 
       scene .setup ();
-      scene .setLive (true);
 
-      this .setExecutionContext (scene);
+      this .replaceWorld (scene)
+         .catch (DEVELOPMENT ? error => console .error (error) : Function .prototype);
 
       this [_DOMIntegration] = new DOMIntegration (this);
 
@@ -431,10 +431,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Remove world.
 
-         this .getExecutionContext () .setLive (false);
-         this .shutdown () .processInterests ();
-         this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
-         this .callBrowserEventHandler ("shutdown");
+         if (this .initialized () .getValue ())
+         {
+            this .getExecutionContext () .setLive (false);
+            this .shutdown () .processInterests ();
+            this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
+            this .callBrowserEventHandler ("shutdown");
+         }
 
          // Replace world.
 
@@ -474,7 +477,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             this .addLoadingObject (object);
 
          this .setExecutionContext (scene);
-         this .checkLoadCount (resolve, this ._loadCount);
+         this .getWorld () .bindBindables ();
       });
    },
    checkLoadCount (resolve, loadCount)
