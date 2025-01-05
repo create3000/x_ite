@@ -1,9 +1,9 @@
-/* X_ITE v11.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.2")];
+/* X_ITE v11.0.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 906:
+/***/ 166:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 140:
+/***/ 400:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -74,7 +74,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 192:
+/***/ 652:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4030,7 +4030,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 796:
+/***/ 464:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7314,10 +7314,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(192);
-/* provided dependency */ var JpegImage = __webpack_require__(796);
-/* provided dependency */ var CharLS = __webpack_require__(906);
-/* provided dependency */ var OpenJPEG = __webpack_require__(140);
+/* provided dependency */ var dicomParser = __webpack_require__(652);
+/* provided dependency */ var JpegImage = __webpack_require__(464);
+/* provided dependency */ var CharLS = __webpack_require__(166);
+/* provided dependency */ var OpenJPEG = __webpack_require__(400);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
