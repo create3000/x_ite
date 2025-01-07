@@ -2297,12 +2297,9 @@ function eventsProcessed ()
 
       if (!nodes .some (node => node .skin === index))
       {
-         // Make the first node the humanoid if this skin is not referenced anywhere.
+         // If skin is not references anywhere, don't create HAnimJoint nodes.
 
-         const node = nodes [skin .skeleton [0]];
-
-         if (node)
-            node .skin = index;
+         skin .joints .forEach (index => this .joints .delete (index));
       }
 
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
