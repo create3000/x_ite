@@ -2297,6 +2297,8 @@ function eventsProcessed ()
 
       if (!nodes .some (node => node .skin === index))
       {
+         // Make the first node the humanoid if this skin is not referenced anywhere.
+
          const node = nodes [skin .skeleton [0]];
 
          if (node)
