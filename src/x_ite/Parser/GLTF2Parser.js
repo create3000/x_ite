@@ -2076,11 +2076,11 @@ function eventsProcessed ()
          skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
          humanoidNode = skin .humanoidNode;
 
-      if (skeleton .length === null)
-         return;
-
-      skeleton .humanoidNode = humanoidNode;
-      skeleton .childNode    = humanoidNode;
+      for (const node of skeleton)
+      {
+         node .humanoidNode = humanoidNode;
+         node .childNode    = humanoidNode;
+      }
    },
    nodeChildren (node, index)
    {
