@@ -2283,7 +2283,7 @@ function eventsProcessed ()
          scene    = this .getScene (),
          skeleton = skin .skeleton;
 
-      skin .joints              = this .jointsArray (skin .joints);
+      skin .joints              = this .jointsArray (skin .joints, nodes .some (node => node .skin === index));
       skin .skeleton            = skeleton !== undefined ? [skeleton] : this .skeleton (skin .joints, nodes);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
@@ -2293,13 +2293,6 @@ function eventsProcessed ()
 
          this .joints .add (skeleton);
          skin .joints .push (skeleton);
-      }
-
-      if (!nodes .some (node => node .skin === index))
-      {
-         // If skin is not references anywhere, don't create HAnimJoint nodes.
-
-         skin .joints .forEach (index => this .joints .delete (index));
       }
 
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
@@ -2314,12 +2307,15 @@ function eventsProcessed ()
       skin .normalNode                 .setup ();
       skin .coordinateNode             .setup ();
    },
-   jointsArray (joints)
+   jointsArray (joints, add)
    {
       if (!(joints instanceof Array))
          return [ ];
 
-      joints .forEach (index => this .joints .add (index));
+      // If skin is not references anywhere, don't create HAnimJoint nodes.
+
+      if (add)
+         joints .forEach (index => this .joints .add (index));
 
       return joints;
    },
