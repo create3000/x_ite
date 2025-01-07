@@ -2271,10 +2271,10 @@ function eventsProcessed ()
 
       this .skins = skins;
 
-      for (const skin of skins)
-         this .skinObject (skin, nodes);
+      for (const [i, skin] of skins .entries ())
+         this .skinObject (i, skin, nodes);
    },
-   skinObject (skin, nodes)
+   skinObject (index, skin, nodes)
    {
       if (!(skin instanceof Object))
          return;
@@ -2293,6 +2293,14 @@ function eventsProcessed ()
 
          this .joints .add (skeleton);
          skin .joints .push (skeleton);
+      }
+
+      if (!nodes .some (node => node .skin === index))
+      {
+         const node = nodes [skin .skeleton [0]];
+
+         if (node)
+            node .skin = index;
       }
 
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
