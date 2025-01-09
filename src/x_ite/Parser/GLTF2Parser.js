@@ -2206,7 +2206,8 @@ function eventsProcessed ()
          humanoidNode ._version               = "2.0";
          humanoidNode ._skeletalConfiguration = "GLTF";
 
-         humanoidNode ._skeleton .push (... skin .skeleton .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
+         humanoidNode ._skeleton .push (... skin .skeleton
+            .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
 
          for (const [i, joint] of skin .joints .entries ())
          {
