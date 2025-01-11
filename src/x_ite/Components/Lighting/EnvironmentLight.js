@@ -183,6 +183,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
       this ._specularTexture .addInterest ("set_specularTexture__", this);
 
+      // Preload LUTs.
+      this .getBrowser () .getLibraryTexture ("lut_ggx.png");
+      this .getBrowser () .getLibraryTexture ("lut_charlie.png");
+
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
    },
