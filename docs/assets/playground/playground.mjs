@@ -382,7 +382,7 @@ class Playground
       if (fullSize)
       {
          this .viewState = this .editor .saveViewState ();
-         
+
          this .editor .setModel (null);
 
          $(".playground x3d-canvas") .css ("height", "100%");
