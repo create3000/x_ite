@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
 
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_charlie.png");
-      this .getBrowser () .getLibraryTexture ("lut_sheen_E.png")
+      this .getBrowser () .getLibraryTexture ("lut_sheen_E.png");
 
       this ._sheenColor            .addInterest ("set_sheenColor__",            this);
       this ._sheenColorTexture     .addInterest ("set_sheenColorTexture__",     this);
