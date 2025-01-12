@@ -381,6 +381,8 @@ class Playground
 
       if (fullSize)
       {
+         this .viewState = this .editor .saveViewState ();
+         
          this .editor .setModel (null);
 
          $(".playground x3d-canvas") .css ("height", "100%");
@@ -394,6 +396,7 @@ class Playground
          $(".playground .viewer-column2") .show ();
 
          this .editor .setModel (this .model);
+         this .editor .restoreViewState (this .viewState);
       }
    }
 
