@@ -180,12 +180,11 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    {
       X3DLightNode .prototype .initialize .call (this);
 
-      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
-      this ._specularTexture .addInterest ("set_specularTexture__", this);
-
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_ggx.png");
-      this .getBrowser () .getLibraryTexture ("lut_charlie.png");
+
+      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
+      this ._specularTexture .addInterest ("set_specularTexture__", this);
 
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
