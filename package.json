@@ -1,6 +1,6 @@
 {
   "name": "x_ite",
-  "version": "11.0.3",
+  "version": "11.0.4",
   "description": "X_ITE X3D Browser, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.",
   "main": "dist/x_ite.js",
   "module": "dist/x_ite.mjs",
