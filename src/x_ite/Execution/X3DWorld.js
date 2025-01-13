@@ -124,8 +124,8 @@ Object .assign (Object .setPrototypeOf (X3DWorld .prototype, X3DBaseNode .protot
 
       this .layerSet .setLayer0 (this .layer0);
 
-      oldLayerSet    ._activeLayer .removeInterest ("set_activeLayer__", this);
-      this .layerSet ._activeLayer .addInterest ("set_activeLayer__", this);
+      oldLayerSet    ._activeLayerNode .removeInterest ("set_activeLayer__", this);
+      this .layerSet ._activeLayerNode .addInterest    ("set_activeLayer__", this);
 
       this .set_activeLayer__ ();
    },

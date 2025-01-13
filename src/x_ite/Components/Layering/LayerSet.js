@@ -59,9 +59,10 @@ function LayerSet (executionContext)
 
    this .addType (X3DConstants .LayerSet);
 
-   this .layerNodes      = [ new Layer (executionContext) ];
-   this .layerNode0      = this .layerNodes [0];
-   this .activeLayerNode = null;
+   this .addChildObject (X3DConstants .outputOnly, "activeLayerNode",  new Fields .SFNode ());
+
+   this .layerNodes = [ new Layer (executionContext) ];
+   this .layerNode0 = this .layerNodes [0];
 }
 
 Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype),
@@ -75,14 +76,14 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
       this .layerNode0 .setLayer0 (true);
 
       this ._activeLayer .addInterest ("set_activeLayer__", this);
-      this ._order       .addInterest ("set_layers__", this);
-      this ._layers      .addInterest ("set_layers__", this);
+      this ._order       .addInterest ("set_layers__",      this);
+      this ._layers      .addInterest ("set_layers__",      this);
 
       this .set_layers__ ();
    },
    getActiveLayer ()
    {
-      return this .activeLayerNode;
+      return this ._activeLayerNode .getValue ();
    },
    getLayer0 ()
    {
@@ -102,28 +103,34 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
    {
       if (this ._activeLayer .getValue () === 0)
       {
-         if (this .activeLayerNode !== this .layerNode0)
-            this .activeLayerNode = this .layerNode0;
+         var activeLayerNode = this .layerNode0;
       }
       else
       {
-         const index = this ._activeLayer - 1;
+         const index = this ._activeLayer .getValue () - 1;
 
          if (index >= 0 && index < this ._layers .length)
          {
-            if (this .activeLayerNode !== this ._layers [index] .getValue ())
-               this .activeLayerNode = X3DCast (X3DConstants .X3DLayerNode, this ._layers [index]);
+            var activeLayerNode = X3DCast (X3DConstants .X3DLayerNode, this ._layers [index]);
          }
          else
          {
-            if (this .activeLayerNode !== null)
-               this .activeLayerNode = null;
+            var activeLayerNode = null;
          }
       }
+
+      if (!activeLayerNode ?._display .getValue ())
+         activeLayerNode = null;
+
+      if (this ._activeLayerNode .getValue () !== activeLayerNode)
+         this ._activeLayerNode = activeLayerNode;
    },
    set_layers__ ()
    {
       const layers = this ._layers .getValue ();
+
+      for (const layerNode of this .layerNodes)
+         layerNode ._display .removeInterest ("set_layers__", this);
 
       this .layerNodes .length = 0;
 
@@ -131,6 +138,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
       {
          if (index === 0)
          {
+            this .layerNode0 ._display .addInterest ("set_layers__", this);
             this .layerNodes .push (this .layerNode0);
          }
          else
@@ -141,7 +149,12 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
             {
                const layerNode = X3DCast (X3DConstants .X3DLayerNode, layers [index]);
 
-               if (layerNode)
+               if (!layerNode)
+                  continue;
+
+               layerNode ._display .addInterest ("set_layers__", this);
+
+               if (layerNode ._display .getValue ())
                   this .layerNodes .push (layerNode);
             }
          }
@@ -151,16 +164,13 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
    },
    bindBindables (viewpointName)
    {
-      const layers = this ._layers .getValue ();
+      this .layerNode0 ?.bindBindables (viewpointName);
 
-      this .layerNode0 .bindBindables (viewpointName);
-
-      for (let i = 0, length = layers .length; i < length; ++ i)
+      for (const node of this ._layers)
       {
-         const layerNode = X3DCast (X3DConstants .X3DLayerNode, layers [i]);
+         const layerNode = X3DCast (X3DConstants .X3DLayerNode, node);
 
-         if (layerNode)
-            layerNode .bindBindables (viewpointName);
+         layerNode ?.bindBindables (viewpointName);
       }
    },
    traverse (type, renderObject)

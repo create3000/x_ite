@@ -299,9 +299,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    traverse (type, renderObject = this)
    {
-      if (!this ._display .getValue ())
-         return
-
       const
          browser       = this .getBrowser (),
          viewpointNode = this .getViewpoint (),
