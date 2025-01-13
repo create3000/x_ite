@@ -299,6 +299,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    traverse (type, renderObject = this)
    {
+      if (!this ._display .getValue ())
+         return
+
       const
          browser       = this .getBrowser (),
          viewpointNode = this .getViewpoint (),
@@ -379,36 +382,33 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    camera (type, renderObject)
    {
-      if (this ._display .getValue ())
-      {
-         this .getModelViewMatrix () .push (Matrix4 .Identity);
+      this .getModelViewMatrix () .push (Matrix4 .Identity);
 
-         this .viewportNode .push (this);
-         this .groupNodes .traverse (type, renderObject);
-         this .viewportNode .pop (this);
+      this .viewportNode .push (this);
+      this .groupNodes .traverse (type, renderObject);
+      this .viewportNode .pop (this);
 
-         this .getModelViewMatrix () .pop ();
+      this .getModelViewMatrix () .pop ();
 
-         this .navigationInfos .update (this, this .navigationInfoStack);
-         this .viewpoints      .update (this, this .viewpointStack);
-         this .backgrounds     .update (this, this .backgroundStack);
-         this .fogs            .update (this, this .fogStack);
+      this .navigationInfos .update (this, this .navigationInfoStack);
+      this .viewpoints      .update (this, this .viewpointStack);
+      this .backgrounds     .update (this, this .backgroundStack);
+      this .fogs            .update (this, this .fogStack);
 
-         this .getViewpoint () .update ();
-      }
+      this .getViewpoint () .update ();
    },
    picking (type, renderObject)
    {
-      if (this ._pickable .getValue ())
-      {
-         this .getModelViewMatrix () .push (Matrix4 .Identity);
+      if (!this ._pickable .getValue ())
+         return;
 
-         this .viewportNode .push (this);
-         this .groupNodes .traverse (type, renderObject);
-         this .viewportNode .pop (this);
+      this .getModelViewMatrix () .push (Matrix4 .Identity);
 
-         this .getModelViewMatrix () .pop ();
-      }
+      this .viewportNode .push (this);
+      this .groupNodes .traverse (type, renderObject);
+      this .viewportNode .pop (this);
+
+      this .getModelViewMatrix () .pop ();
    },
    collision: (() =>
    {
@@ -416,46 +416,40 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
       return function (type, renderObject)
       {
-         if (this ._display .getValue ())
-         {
-            const navigationInfo = this .getNavigationInfo ();
+         const navigationInfo = this .getNavigationInfo ();
 
-            if (navigationInfo ._transitionActive .getValue ())
-               return;
+         if (navigationInfo ._transitionActive .getValue ())
+            return;
 
-            const
-               collisionRadius = navigationInfo .getCollisionRadius (),
-               avatarHeight    = navigationInfo .getAvatarHeight (),
-               size            = Math .max (collisionRadius * 2, avatarHeight * 2);
+         const
+            collisionRadius = navigationInfo .getCollisionRadius (),
+            avatarHeight    = navigationInfo .getAvatarHeight (),
+            size            = Math .max (collisionRadius * 2, avatarHeight * 2);
 
-            Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
+         Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 
-            this .getProjectionMatrix () .push (projectionMatrix);
-            this .getModelViewMatrix  () .push (this .getViewMatrix () .get ());
+         this .getProjectionMatrix () .push (projectionMatrix);
+         this .getModelViewMatrix  () .push (this .getViewMatrix () .get ());
 
-            // Render
-            this .viewportNode .push (this);
-            renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
-            this .viewportNode .pop (this);
-
-            this .getModelViewMatrix  () .pop ();
-            this .getProjectionMatrix () .pop ();
-         }
-      };
-   })(),
-   display (type, renderObject)
-   {
-      if (this ._display .getValue ())
-      {
-         this .getNavigationInfo () .enable (type, renderObject);
-         this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
-
+         // Render
          this .viewportNode .push (this);
          renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
          this .viewportNode .pop (this);
 
-         this .getModelViewMatrix () .pop ();
-      }
+         this .getModelViewMatrix  () .pop ();
+         this .getProjectionMatrix () .pop ();
+      };
+   })(),
+   display (type, renderObject)
+   {
+      this .getNavigationInfo () .enable (type, renderObject);
+      this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
+
+      this .viewportNode .push (this);
+      renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
+      this .viewportNode .pop (this);
+
+      this .getModelViewMatrix () .pop ();
    },
 });
 
