@@ -70,7 +70,7 @@ import DEVELOPMENT               from "../DEVELOPMENT.js";
 const Grammar = Expressions ({
    // General
    Whitespaces: /[\x20\n,\t\r]+/gy,
-   Comment:     /#.*?(?=[\n\r]|$)/gy,
+   Comment:     /#\/\*[\s\S]*?\*\/#|#.*?(?=[\n\r]|$)/gy,
    Break:       /\r?\n/g,
 
    // Header
