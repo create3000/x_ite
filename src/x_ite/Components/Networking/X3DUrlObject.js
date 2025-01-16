@@ -225,9 +225,9 @@ Object .assign (X3DUrlObject .prototype,
       if (this ._autoRefresh .getValue () <= 0)
          return;
 
-      const autoRefreshTimeLimit = Math .max (this ._autoRefreshTimeLimit .getValue (), 0);
+      const autoRefreshTimeLimit = this ._autoRefreshTimeLimit .getValue ();
 
-      if (autoRefreshTimeLimit !== 0)
+      if (autoRefreshTimeLimit > 0)
       {
          if ((Date .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
             return;
