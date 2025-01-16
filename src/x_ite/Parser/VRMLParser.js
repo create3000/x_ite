@@ -71,6 +71,7 @@ const Grammar = Expressions ({
    // General
    Whitespaces: /[\x20\n,\t\r]+/gy,
    Comment:     /#\/\*[\s\S]*?\*\/#|#.*?(?=[\n\r]|$)/gy,
+   Comment3_2:  /#.*?(?=[\n\r]|$)/gy,
    Break:       /\r?\n/g,
 
    // Header
@@ -135,6 +136,8 @@ const Grammar = Expressions ({
 function VRMLParser (scene)
 {
    X3DParser .call (this, scene);
+
+   this .Comment = Grammar .Comment;
 }
 
 Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .prototype),
@@ -308,7 +311,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (this .whitespaces ())
          return true;
 
-      return Grammar .Comment .parse (this);
+      return this .Comment .parse (this);
    },
    whitespaces ()
    {
@@ -393,7 +396,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (Grammar .Header .parse (this))
       {
          this .getScene () .setSpecificationVersion (this .result [2]);
-         this .getScene () .setEncoding             ("VRML");
+
+         if (this .getScene () .getSpecificationVersion () <= "3.2")
+            this .Comment = Grammar .Comment3_2;
+
          return true;
       }
 
