@@ -137,7 +137,10 @@ function VRMLParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .Comment = Grammar .Comment;
+   this .Grammar =
+   {
+      Comment: Grammar .Comment,
+   };
 }
 
 Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .prototype),
@@ -311,7 +314,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (this .whitespaces ())
          return true;
 
-      return this .Comment .parse (this);
+      return this .Grammar .Comment .parse (this);
    },
    whitespaces ()
    {
@@ -398,7 +401,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          this .getScene () .setSpecificationVersion (this .result [2]);
 
          if (this .getScene () .getSpecificationVersion () <= 3.2)
-            this .Comment = Grammar .Comment3_2;
+            this .Grammar .Comment = Grammar .Comment3_2;
 
          return true;
       }
