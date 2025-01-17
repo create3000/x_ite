@@ -45,19 +45,18 @@
  *
  ******************************************************************************/
 
-import Fields          from "../../Fields.js";
-import X3DBaseNode     from "../../Base/X3DBaseNode.js";
-import X3DConstants    from "../../Base/X3DConstants.js";
-import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
-import Complex         from "../../../standard/Math/Numbers/Complex.js";
+import Fields         from "../../Fields.js";
+import X3DBaseNode    from "../../Base/X3DBaseNode.js";
+import X3DConstants   from "../../Base/X3DConstants.js";
+import IndexedLineSet from "../../Components/Rendering/IndexedLineSet.js";
+import Coordinate     from "../../Components/Rendering/Coordinate.js";
+import Complex        from "../../../standard/Math/Numbers/Complex.js";
 
 function Circle2DOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
    this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (40))
-
-   this .vertices = X3DGeometryNode .createArray ();
 }
 
 Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, X3DBaseNode .prototype),
@@ -68,35 +67,56 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, X3DBaseNode 
 
       this .addInterest ("eventsProcessed", this);
    },
-   getVertices ()
+   getGeometry ()
    {
-      if (!this .vertices .length)
+      if (!this .geometry)
          this .build ();
 
-      return this .vertices;
+      return this .geometry;
    },
-   build ()
+   createCoordIndex ()
+   {
+      const
+         dimension  = this ._dimension .getValue (),
+         coordIndex = this .geometry ._coordIndex;
+
+      for (let n = 0; n < dimension; ++ n)
+         coordIndex .push (n);
+
+      coordIndex .push (0, -1);
+   },
+   createPoints ()
    {
       const
          dimension = this ._dimension .getValue (),
          angle     = Math .PI * 2 / dimension,
-         vertices  = this .vertices;
+         point     = this .geometry ._coord .getValue () ._point;
 
       for (let n = 0; n < dimension; ++ n)
       {
-         const
-            point1 = Complex .Polar (1, angle * n),
-            point2 = Complex .Polar (1, angle * (n + 1));
+         const p = Complex .Polar (1, angle * n);
 
-         vertices .push (point1 .real, point1 .imag, 0, 1);
-         vertices .push (point2 .real, point2 .imag, 0, 1);
+         point .push (new Fields .SFVec3f (p .real, p .imag, 0));
       }
+   },
+   build ()
+   {
+      this .geometry         = new IndexedLineSet (this .getExecutionContext ());
+      this .geometry ._coord = new Coordinate (this .getExecutionContext ());
 
-      vertices .shrinkToFit ();
+      this .createCoordIndex ();
+      this .createPoints ();
+
+      const
+         geometry = this .geometry,
+         coord    = this .geometry ._coord .getValue ();
+
+      coord    .setup ();
+      geometry .setup ();
    },
    eventsProcessed ()
    {
-      this .vertices .length = 0;
+      this .geometry = null;
    },
 });
 
