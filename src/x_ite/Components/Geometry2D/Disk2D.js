@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          }
 
          // Circle
-         
+
          const
             options  = this .getBrowser () .getCircle2DOptions (),
             geometry = options .getGeometry ();
