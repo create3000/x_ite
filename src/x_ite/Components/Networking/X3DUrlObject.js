@@ -85,7 +85,7 @@ Object .assign (X3DUrlObject .prototype,
       if (value === X3DConstants .COMPLETE_STATE)
       {
          this [_autoRefreshCompleteTime] = Date .now ();
-         this .setAutoRefreshTimer (this ._autoRefresh .getValue ());
+         this .setAutoRefreshTimer (Math .max (this ._autoRefresh .getValue (), 0));
       }
 
       if (!notify)
@@ -269,7 +269,7 @@ Object .assign (X3DUrlObject .prototype,
 
       const
          elapsedTime = (Date .now () - this [_autoRefreshCompleteTime]) / 1000,
-         autoRefresh = this ._autoRefresh .getValue ();
+         autoRefresh = Math .max (this ._autoRefresh .getValue (), 0);
 
       let autoRefreshInterval = autoRefresh - elapsedTime;
 
