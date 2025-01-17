@@ -110,14 +110,18 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          }
 
          // Circle
+         
+         const
+            options  = this .getBrowser () .getCircle2DOptions (),
+            geometry = options .getGeometry ();
 
          if (outerRadius === 1)
          {
-            vertexArray .assign (options .getCircleVertices ());
+            vertexArray .assign (geometry .getVertices ());
          }
          else
          {
-            const defaultVertices = options .getCircleVertices () .getValue ();
+            const defaultVertices = geometry .getVertices () .getValue ();
 
             for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
