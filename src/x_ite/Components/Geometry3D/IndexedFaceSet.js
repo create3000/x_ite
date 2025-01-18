@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
       return this ._coordIndex [index];
    },
-   getColorIndex (index)
+   getColorPerFaceIndex (index)
    {
       if (index < this ._colorIndex .length)
          return this ._colorIndex [index];
@@ -102,7 +102,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
       return this ._coordIndex [index];
    },
-   getNormalIndex (index)
+   getNormalPerFaceIndex (index)
    {
       if (index < this ._normalIndex .length)
          return this ._normalIndex [index];
@@ -158,12 +158,12 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
             fogCoordNode ?.addDepth (index, fogDepthArray);
 
-            colorNode ?.addColor (colorPerVertex ? this .getColorPerVertexIndex (i) : this .getColorIndex (face), colorArray);
+            colorNode ?.addColor (colorPerVertex ? this .getColorPerVertexIndex (i) : this .getColorPerFaceIndex (face), colorArray);
 
             texCoordNode ?.addPoint (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
-            normalNode  ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalIndex (face), normalArray);
-            tangentNode ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalIndex (face), tangentArray);
+            normalNode  ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalPerFaceIndex (face), normalArray);
+            tangentNode ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalPerFaceIndex (face), tangentArray);
 
             coordNode .addPoint (index, vertexArray);
          }
