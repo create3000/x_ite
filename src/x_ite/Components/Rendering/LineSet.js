@@ -189,7 +189,7 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, X3DLineGeometryNode 
 
          if (count > 1)
          {
-            count = 2 * count - 2; // numVertices for line lines trip
+            count = 2 * count - 2; // numVertices for line strip
 
             for (let i = 0; i < count; ++ i, index += i & 1)
             {
