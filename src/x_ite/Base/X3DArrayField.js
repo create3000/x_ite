@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    findIndex: Array .prototype .findIndex,
    findLast: Array .prototype .findLast,
    findLastIndex: Array .prototype .findLastIndex,
-   // flat: Array .prototype .flat,
+   flat: Array .prototype .flat,
    // flatMap: Array .prototype .flatMap,
    forEach: Array .prototype .forEach,
    includes: Array .prototype .includes,

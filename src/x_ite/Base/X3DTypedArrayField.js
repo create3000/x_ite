@@ -670,6 +670,19 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
       return result;
    },
+   flat ()
+   {
+      const
+         target     = this [_target],
+         array      = target .shrinkToFit (),
+         components = target .getComponents (),
+         valueType  = target .getValueType ();
+
+      if (components === 1)
+         return Array .from (array, value => valueType (value));
+
+      return Array .from (array);
+   },
    reverse ()
    {
       const
