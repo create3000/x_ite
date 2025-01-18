@@ -252,9 +252,10 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
       const
          a = target .getValue (),
-         b = otherTarget .getValue ();
+         b = otherTarget .getValue (),
+         l = length * target .getComponents ();
 
-      for (let i = 0, l = length * target .getComponents (); i < l; ++ i)
+      for (let i = 0; i < l; ++ i)
       {
          if (a [i] !== b [i])
             return false;
