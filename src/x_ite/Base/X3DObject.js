@@ -52,7 +52,8 @@ const
    _name      = Symbol (),
    _interests = Symbol (),
    _registry  = Symbol (),
-   _userData  = Symbol ();
+   _userData  = Symbol (),
+   _generator = Symbol ();
 
 function X3DObject () { }
 
@@ -62,6 +63,7 @@ Object .assign (X3DObject .prototype,
    [_interests]: new Map (),
    [_registry]: new FinalizationRegistry (Function .prototype),
    [_userData]: new Map (),
+   [_generator]: new Generator ({ }),
    getId ()
    {
       return X3DObject .getId (this);
@@ -140,98 +142,78 @@ Object .assign (X3DObject .prototype,
    {
       this [_userData] .delete (key);
    },
-   toString: (function ()
+   toString (options)
    {
-      const defaultGenerator = new Generator ({ });
+      const generator = !options || $.isEmptyObject (options)
+         ? this [_generator]
+         : new Generator (options);
 
-      return function (options)
-      {
-         const generator = !options || $.isEmptyObject (options)
-            ? defaultGenerator
-            : new Generator (options);
+      generator .string = "";
 
-         generator .string = "";
+      if (options ?.scene)
+         generator .PushExecutionContext (options .scene);
 
-         if (options ?.scene)
-            generator .PushExecutionContext (options .scene);
+      this .toStream (generator);
 
-         this .toStream (generator);
+      if (options ?.scene)
+         generator .PopExecutionContext ();
 
-         if (options ?.scene)
-            generator .PopExecutionContext ();
-
-         return generator .string;
-      };
-   })(),
-   toVRMLString: (function ()
+      return generator .string;
+   },
+   toVRMLString (options)
    {
-      const defaultGenerator = new Generator ({ });
+      const generator = !options || $.isEmptyObject (options)
+         ? this [_generator]
+         : new Generator (options);
 
-      return function (options)
-      {
-         const generator = !options || $.isEmptyObject (options)
-            ? defaultGenerator
-            : new Generator (options);
+      generator .string = "";
 
-         generator .string = "";
+      if (options ?.scene)
+         generator .PushExecutionContext (options .scene);
 
-         if (options ?.scene)
-            generator .PushExecutionContext (options .scene);
+      this .toVRMLStream (generator);
 
-         this .toVRMLStream (generator);
+      if (options ?.scene)
+         generator .PopExecutionContext ();
 
-         if (options ?.scene)
-            generator .PopExecutionContext ();
-
-         return generator .string;
-      };
-   })(),
-   toXMLString: (function ()
+      return generator .string;
+   },
+   toXMLString (options)
    {
-      const defaultGenerator = new Generator ({ });
+      const generator = !options || $.isEmptyObject (options)
+         ? this [_generator]
+         : new Generator (options);
 
-      return function (options)
-      {
-         const generator = !options || $.isEmptyObject (options)
-            ? defaultGenerator
-            : new Generator (options);
+      generator .string = "";
 
-         generator .string = "";
+      if (options ?.scene)
+         generator .PushExecutionContext (options .scene);
 
-         if (options ?.scene)
-            generator .PushExecutionContext (options .scene);
+      this .toXMLStream (generator);
 
-         this .toXMLStream (generator);
+      if (options ?.scene)
+         generator .PopExecutionContext ();
 
-         if (options ?.scene)
-            generator .PopExecutionContext ();
-
-         return generator .string;
-      };
-   })(),
-   toJSONString: (function ()
+      return generator .string;
+   },
+   toJSONString (options)
    {
-      const defaultGenerator = new Generator ({ });
+      const generator = !options || $.isEmptyObject (options)
+         ? this [_generator]
+         : new Generator (options);
 
-      return function (options)
-      {
-         const generator = !options || $.isEmptyObject (options)
-            ? defaultGenerator
-            : new Generator (options);
+      generator .string = "";
 
-         generator .string = "";
+      if (options ?.scene)
+         generator .PushExecutionContext (options .scene);
 
-         if (options ?.scene)
-            generator .PushExecutionContext (options .scene);
+      this .toJSONStream (generator);
 
-         this .toJSONStream (generator);
+      if (options ?.scene)
+         generator .PopExecutionContext ();
 
-         if (options ?.scene)
-            generator .PopExecutionContext ();
-
-         return generator .string;
-      };
-   })(),
+      return generator .string;
+   },
    toStream (generator)
    {
       generator .string = Object .prototype .toString .call (this);
