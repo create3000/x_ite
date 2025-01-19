@@ -176,7 +176,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       if (this .getBrowser () .getBrowserOption ("Timings"))
       {
          this .element .stop (true, true) .fadeIn ();
-         this .fps .reset ();
          this .getBrowser () .addBrowserCallback (this, X3DConstants .INITIALIZED_EVENT, () => this .reset ());
          this .getBrowser () .prepareEvents () .addInterest ("update", this);
          this .reset ();
@@ -213,19 +212,16 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       else
          this .button .text (_("More Properties"));
    },
-   reset ()
+   async reset ()
    {
-      this .getBrowser () .addBrowserEvent ();
+      await this .getBrowser () .nextFrame ();
 
-      this .getBrowser () .getSession () .requestAnimationFrame (() =>
-      {
-         this .fps .reset ();
-         this .build ();
-      });
+      this .fps .reset ();
+      this .build ();
    },
    update ()
    {
-      this .fps .stop ()
+      this .fps .stop ();
 
       if (this .fps .elapsedTime > 1000)
       {
