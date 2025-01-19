@@ -452,7 +452,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    refineNormals (normalIndex, normals, creaseAngle)
    {
-      if (creaseAngle === 0)
+      if (creaseAngle <= 0)
          return normals;
 
       const
