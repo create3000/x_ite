@@ -152,35 +152,86 @@ Object .assign (X3DObject .prototype,
 
          generator .string = "";
 
+         if (options ?.scene)
+            generator .PushExecutionContext (options .scene);
+
          this .toStream (generator);
+
+         if (options ?.scene)
+            generator .PoPExecutionContext ();
 
          return generator .string;
       };
    })(),
-   toVRMLString (options = { })
+   toVRMLString: (function ()
    {
-      const generator = new Generator (options);
+      const defaultGenerator = new Generator ({ });
 
-      this .toVRMLStream (generator);
+      return function (options)
+      {
+         const generator = !options || $.isEmptyObject (options)
+            ? defaultGenerator
+            : new Generator (options);
 
-      return generator .string;
-   },
-   toXMLString (options = { })
+         generator .string = "";
+
+         if (options ?.scene)
+            generator .PushExecutionContext (options .scene);
+
+         this .toVRMLStream (generator);
+
+         if (options ?.scene)
+            generator .PoPExecutionContext ();
+
+         return generator .string;
+      };
+   })(),
+   toXMLString: (function ()
    {
-      const generator = new Generator (options);
+      const defaultGenerator = new Generator ({ });
 
-      this .toXMLStream (generator);
+      return function (options)
+      {
+         const generator = !options || $.isEmptyObject (options)
+            ? defaultGenerator
+            : new Generator (options);
 
-      return generator .string;
-   },
-   toJSONString (options = { })
+         generator .string = "";
+
+         if (options ?.scene)
+            generator .PushExecutionContext (options .scene);
+
+         this .toXMLStream (generator);
+
+         if (options ?.scene)
+            generator .PoPExecutionContext ();
+
+         return generator .string;
+      };
+   })(),
+   toJSONString: (function ()
    {
-      const generator = new Generator (options);
+      const defaultGenerator = new Generator ({ });
 
-      this .toJSONStream (generator);
+      return function (options)
+      {
+         const generator = !options || $.isEmptyObject (options)
+            ? defaultGenerator
+            : new Generator (options);
 
-      return generator .string;
-   },
+         generator .string = "";
+
+         if (options ?.scene)
+            generator .PushExecutionContext (options .scene);
+
+         this .toJSONStream (generator);
+
+         if (options ?.scene)
+            generator .PoPExecutionContext ();
+
+         return generator .string;
+      };
+   })(),
    toStream (generator)
    {
       generator .string = Object .prototype .toString .call (this);
