@@ -82,10 +82,15 @@ Object .assign (X3DUrlObject .prototype,
    {
       this ._loadState = value;
 
-      if (value === X3DConstants .COMPLETE_STATE)
+      switch (value)
       {
-         this [_autoRefreshCompleteTime] = Date .now ();
-         this .setAutoRefreshTimer (Math .max (this ._autoRefresh .getValue (), 0));
+         case X3DConstants .COMPLETE_STATE:
+         case X3DConstants .FAILED_STATE:
+         {
+            this [_autoRefreshCompleteTime] = Date .now ();
+            this .setAutoRefreshTimer (Math .max (this ._autoRefresh .getValue (), 0));
+            break;
+         }
       }
 
       if (!notify)
