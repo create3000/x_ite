@@ -158,7 +158,7 @@ Object .assign (X3DObject .prototype,
          this .toStream (generator);
 
          if (options ?.scene)
-            generator .PoPExecutionContext ();
+            generator .PopExecutionContext ();
 
          return generator .string;
       };
@@ -181,7 +181,7 @@ Object .assign (X3DObject .prototype,
          this .toVRMLStream (generator);
 
          if (options ?.scene)
-            generator .PoPExecutionContext ();
+            generator .PopExecutionContext ();
 
          return generator .string;
       };
@@ -204,7 +204,7 @@ Object .assign (X3DObject .prototype,
          this .toXMLStream (generator);
 
          if (options ?.scene)
-            generator .PoPExecutionContext ();
+            generator .PopExecutionContext ();
 
          return generator .string;
       };
@@ -227,7 +227,7 @@ Object .assign (X3DObject .prototype,
          this .toJSONStream (generator);
 
          if (options ?.scene)
-            generator .PoPExecutionContext ();
+            generator .PopExecutionContext ();
 
          return generator .string;
       };
