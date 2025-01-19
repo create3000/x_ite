@@ -54,6 +54,8 @@ const
    _registry  = Symbol (),
    _userData  = Symbol ();
 
+const defaultOptions = { };
+
 function X3DObject () { }
 
 Object .assign (X3DObject .prototype,
@@ -140,45 +142,42 @@ Object .assign (X3DObject .prototype,
    {
       this [_userData] .delete (key);
    },
-   toString (options = Object .prototype)
+   toString: (function ()
+   {
+      const defaultGenerator = new Generator ({ });
+
+      return function (options = defaultOptions)
+      {
+         const generator = $.isEmptyObject (options)
+            ? defaultGenerator
+            : new Generator (options);
+
+         generator .string = "";
+
+         this .toStream (generator);
+
+         return generator .string;
+      };
+   })(),
+   toVRMLString (options = defaultOptions)
    {
       const generator = new Generator (options);
-
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
-
-      this .toStream (generator);
-
-      return generator .string;
-   },
-   toVRMLString (options = Object .prototype)
-   {
-      const generator = new Generator (options);
-
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
 
       this .toVRMLStream (generator);
 
       return generator .string;
    },
-   toXMLString (options = Object .prototype)
+   toXMLString (options = defaultOptions)
    {
       const generator = new Generator (options);
-
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
 
       this .toXMLStream (generator);
 
       return generator .string;
    },
-   toJSONString (options = Object .prototype)
+   toJSONString (options = defaultOptions)
    {
       const generator = new Generator (options);
-
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
 
       this .toJSONStream (generator);
 

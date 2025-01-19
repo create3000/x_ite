@@ -49,7 +49,7 @@ import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
+function Generator ({ scene, style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
 {
    this .string          = "";
    this .indent          = indent;
@@ -78,6 +78,9 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .containerFields       = [ ];
 
    this .PushExecutionContext (null);
+
+   if (scene)
+      this .PushExecutionContext (scene);
 }
 
 Object .assign (Generator .prototype,
