@@ -54,8 +54,6 @@ const
    _registry  = Symbol (),
    _userData  = Symbol ();
 
-const defaultOptions = { };
-
 function X3DObject () { }
 
 Object .assign (X3DObject .prototype,
@@ -146,9 +144,9 @@ Object .assign (X3DObject .prototype,
    {
       const defaultGenerator = new Generator ({ });
 
-      return function (options = defaultOptions)
+      return function (options)
       {
-         const generator = $.isEmptyObject (options)
+         const generator = !options || $.isEmptyObject (options)
             ? defaultGenerator
             : new Generator (options);
 
@@ -159,7 +157,7 @@ Object .assign (X3DObject .prototype,
          return generator .string;
       };
    })(),
-   toVRMLString (options = defaultOptions)
+   toVRMLString (options = { })
    {
       const generator = new Generator (options);
 
@@ -167,7 +165,7 @@ Object .assign (X3DObject .prototype,
 
       return generator .string;
    },
-   toXMLString (options = defaultOptions)
+   toXMLString (options = { })
    {
       const generator = new Generator (options);
 
@@ -175,7 +173,7 @@ Object .assign (X3DObject .prototype,
 
       return generator .string;
    },
-   toJSONString (options = defaultOptions)
+   toJSONString (options = { })
    {
       const generator = new Generator (options);
 
