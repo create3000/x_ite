@@ -211,17 +211,17 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
       target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
       target .addEvent ();
    },
-   unshift (value)
+   unshift (... args)
    {
       const
          target = this [_target],
          array  = target .getValue ();
 
-      for (let i = arguments .length - 1; i >= 0; -- i)
+      for (let i = args .length - 1; i >= 0; -- i)
       {
          const field = new (target .getSingleType ()) ();
 
-         field .setValue (arguments [i]);
+         field .setValue (args [i]);
          target .addChildObject (field);
          array .unshift (field);
       }
@@ -248,13 +248,13 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
          return result;
       }
    },
-   push (value)
+   push (... args)
    {
       const
          target = this [_target],
          array  = target .getValue ();
 
-      for (const argument of arguments)
+      for (const argument of args)
       {
          const field = new (target .getSingleType ()) ();
 

@@ -329,13 +329,13 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          target .addEvent ();
       }
    },
-   unshift (value)
+   unshift (... args)
    {
       const
          target          = this [_target],
          components      = target .getComponents (),
          length          = target [_length],
-         argumentsLength = arguments .length,
+         argumentsLength = args .length,
          array           = target [_grow] ((length + argumentsLength) * components);
 
       array .copyWithin (argumentsLength * components, 0, length * components);
@@ -345,13 +345,13 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          const valueType = target .getValueType ();
 
          for (let a = 0; a < argumentsLength; ++ a)
-            array [a] = valueType (arguments [a]);
+            array [a] = valueType (args [a]);
       }
       else
       {
          for (let i = 0, a = 0; a < argumentsLength; ++ a)
          {
-            const argument = arguments [a];
+            const argument = args [a];
 
             for (let c = 0; c < components; ++ c, ++ i)
             {
@@ -403,13 +403,13 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          return value;
       }
    },
-   push (value)
+   push (... args)
    {
       const
          target          = this [_target],
          components      = target .getComponents (),
          length          = target [_length],
-         argumentsLength = arguments .length,
+         argumentsLength = args .length,
          array           = target [_grow] ((length + argumentsLength) * components);
 
       if (components === 1)
@@ -417,13 +417,13 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          const valueType = target .getValueType ();
 
          for (let a = 0, i = length; a < argumentsLength; ++ a, ++ i)
-            array [i] = valueType (arguments [a]);
+            array [i] = valueType (args [a]);
       }
       else
       {
          for (let i = length * components, a = 0; a < argumentsLength; ++ a)
          {
-            const argument = arguments [a];
+            const argument = args [a];
 
             for (let c = 0; c < components; ++ c,  ++ i)
             {
@@ -683,6 +683,10 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          return Array .from (array, value => valueType (value));
 
       return Array .from (array);
+   },
+   flatMap (... args)
+   {
+      return this .map (...args) .flat ();
    },
    reverse ()
    {
