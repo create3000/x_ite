@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import SFString     from "../../Fields/SFString.js";
+import Fields       from "../../Fields.js";
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
@@ -66,7 +66,7 @@ function Notification (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects (X3DConstants .inputOutput, "string", new SFString ());
+   this .addChildObjects (X3DConstants .inputOutput, "string", new Fields .SFString ());
 }
 
 Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .prototype),
