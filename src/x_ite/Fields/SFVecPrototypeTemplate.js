@@ -49,7 +49,9 @@ import X3DField from "../Base/X3DField.js";
 
 function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properties = { })
 {
-   const _formatter = double ? "DoubleFormat" : "FloatFormat";
+   const
+      _fround    = double ? v => v : v => v .fround (),
+      _formatter = double ? "DoubleFormat" : "FloatFormat";
 
    Object .defineProperties (Constructor,
    {
@@ -80,7 +82,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       set (value)
       {
-         this .getValue () .assign (value);
+         _fround (this .getValue () .assign (value));
       },
       abs ()
       {
@@ -205,72 +207,77 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
    for (const key of Object .keys (Constructor .prototype))
       Object .defineProperty (Constructor .prototype, key, { enumerable: false });
 
-   const x = {
-      get ()
-      {
-         return this .getValue () .x;
-      },
-      set (value)
-      {
-         this .getValue () .x = +value;
-         this .addEvent ();
-      },
-   };
+   (function ()
+   {
+      const _fround = double ? v => v : Math .fround;
 
-   const y = {
-      get ()
-      {
-         return this .getValue () .y;
-      },
-      set (value)
-      {
-         this .getValue () .y = +value;
-         this .addEvent ();
-      },
-   };
+      const x = {
+         get ()
+         {
+            return this .getValue () .x;
+         },
+         set (value)
+         {
+            this .getValue () .x = _fround (+value);
+            this .addEvent ();
+         },
+      };
 
-   const z = {
-      get ()
-      {
-         return this .getValue () .z;
-      },
-      set (value)
-      {
-         this .getValue () .z = +value;
-         this .addEvent ();
-      },
-   };
+      const y = {
+         get ()
+         {
+            return this .getValue () .y;
+         },
+         set (value)
+         {
+            this .getValue () .y = _fround (+value);
+            this .addEvent ();
+         },
+      };
 
-   const w = {
-      get ()
-      {
-         return this .getValue () .w;
-      },
-      set (value)
-      {
-         this .getValue () .w = +value;
-         this .addEvent ();
-      },
-   };
+      const z = {
+         get ()
+         {
+            return this .getValue () .z;
+         },
+         set (value)
+         {
+            this .getValue () .z = _fround (+value);
+            this .addEvent ();
+         },
+      };
 
-   const indices = [
-      [0, x],
-      [1, y],
-      [2, z],
-      [3, w],
-   ];
+      const w = {
+         get ()
+         {
+            return this .getValue () .w;
+         },
+         set (value)
+         {
+            this .getValue () .w = _fround (+value);
+            this .addEvent ();
+         },
+      };
 
-   const props = [
-      ["x", Object .assign ({ enumerable: true }, x)],
-      ["y", Object .assign ({ enumerable: true }, y)],
-      ["z", Object .assign ({ enumerable: true }, z)],
-      ["w", Object .assign ({ enumerable: true }, w)],
-   ];
+      const indices = [
+         [0, x],
+         [1, y],
+         [2, z],
+         [3, w],
+      ];
 
-   indices .length = Vector .prototype .length;
-   props   .length = Vector .prototype .length;
+      const props = [
+         ["x", Object .assign ({ enumerable: true }, x)],
+         ["y", Object .assign ({ enumerable: true }, y)],
+         ["z", Object .assign ({ enumerable: true }, z)],
+         ["w", Object .assign ({ enumerable: true }, w)],
+      ];
 
-   Object .defineProperties (Constructor .prototype, Object .fromEntries (indices .concat (props)));
+      indices .length = Vector .prototype .length;
+      props   .length = Vector .prototype .length;
+
+      Object .defineProperties (Constructor .prototype, Object .fromEntries (indices .concat (props)));
+   })();
 
    return Constructor;
 }

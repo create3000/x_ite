@@ -51,6 +51,8 @@ import Matrix4                   from "../../standard/Math/Numbers/Matrix4.js";
 
 function SFMatrix4Template (TypeName, double)
 {
+   const _fround = double ? v => v : v => v .fround ();
+
    function SFMatrix4 (m00, m01, m02, m03,
                        m10, m11, m12, m13,
                        m20, m21, m22, m23,
@@ -63,7 +65,7 @@ function SFMatrix4Template (TypeName, double)
             break;
 
          case 1:
-            X3DField .call (this, arguments [0]);
+            X3DField .call (this, _fround (arguments [0]));
             break;
 
          case 4:
@@ -74,19 +76,19 @@ function SFMatrix4Template (TypeName, double)
                r2 = arguments [2],
                r3 = arguments [3];
 
-            X3DField .call (this, new Matrix4 (r0 .x, r0 .y, r0 .z, r0 .w,
-                                               r1 .x, r1 .y, r1 .z, r1 .w,
-                                               r2 .x, r2 .y, r2 .z, r2 .w,
-                                               r3 .x, r3 .y, r3 .z, r3 .w));
+            X3DField .call (this, _fround (new Matrix4 (r0 .x, r0 .y, r0 .z, r0 .w,
+                                                        r1 .x, r1 .y, r1 .z, r1 .w,
+                                                        r2 .x, r2 .y, r2 .z, r2 .w,
+                                                        r3 .x, r3 .y, r3 .z, r3 .w)));
 
             break;
          }
          case 16:
          {
-            X3DField .call (this, new Matrix4 (+m00, +m01, +m02, +m03,
-                                               +m10, +m11, +m12, +m13,
-                                               +m20, +m21, +m22, +m23,
-                                               +m30, +m31, +m32, +m33));
+            X3DField .call (this, _fround ((new Matrix4 (+m00, +m01, +m02, +m03,
+                                                         +m10, +m11, +m12, +m13,
+                                                         +m20, +m21, +m22, +m23,
+                                                         +m30, +m31, +m32, +m33))));
 
             break;
          }

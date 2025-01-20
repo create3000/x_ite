@@ -49,7 +49,9 @@ import X3DField from "../Base/X3DField.js";
 
 function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, properties = { })
 {
-   const _formatter = double ? "DoubleFormat" : "FloatFormat";
+   const
+      _fround    = double ? v => v : v => v .fround (),
+      _formatter = double ? "DoubleFormat" : "FloatFormat";
 
    Object .defineProperties (Constructor,
    {
@@ -80,7 +82,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       },
       set (value)
       {
-         this .getValue () .assign (value);
+         _fround (this .getValue () .assign (value));
       },
       setTransform: (function ()
       {
@@ -102,7 +104,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
                args .pop ();
             }
 
-            this .getValue () .set (... args);
+            _fround (this .getValue () .set (... args));
 
             args .length = 0;
          };
@@ -238,25 +240,30 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
    for (const key of Object .keys (Constructor .prototype))
       Object .defineProperty (Constructor .prototype, key, { enumerable: false });
 
-   function defineProperty (i)
+   (function ()
    {
-      Object .defineProperty (Constructor .prototype, i,
-      {
-         get ()
-         {
-            return this .getValue () [i];
-         },
-         set (value)
-         {
-            this .getValue () [i] = value;
-            this .addEvent ();
-         },
-         enumerable: true,
-      });
-   }
+      const _fround = double ? v => v : Math .fround;
 
-   for (let i = 0; i < Matrix .prototype .length; ++ i)
-      defineProperty (i);
+      function defineProperty (i)
+      {
+         Object .defineProperty (Constructor .prototype, i,
+         {
+            get ()
+            {
+               return this .getValue () [i];
+            },
+            set (value)
+            {
+               this .getValue () [i] = _fround (value);
+               this .addEvent ();
+            },
+            enumerable: true,
+         });
+      }
+
+      for (let i = 0; i < Matrix .prototype .length; ++ i)
+         defineProperty (i);
+   })();
 
    return Constructor;
 }

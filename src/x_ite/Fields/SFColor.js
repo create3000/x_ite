@@ -57,11 +57,11 @@ function SFColor (r, g, b)
          break;
 
       case 1:
-         X3DField .call (this, arguments [0]);
+         X3DField .call (this, arguments [0] .fround ());
          break;
 
       case 3:
-         X3DField .call (this, new Color3 (+r, +g, +b));
+         X3DField .call (this, new Color3 (+r, +g, +b) .fround ());
          break;
 
       default:
@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    },
    set (value)
    {
-      this .getValue () .assign (value);
+      this .getValue () .assign (value) .fround ();
    },
    getHSV ()
    {
@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    },
    setHSV (h, s, v)
    {
-      this .getValue () .setHSV (h, s, v);
+      this .getValue () .setHSV (h, s, v) .fround ();
       this .addEvent ();
    },
    linearToSRGB ()
@@ -188,7 +188,7 @@ const r = {
    },
    set (value)
    {
-      this .getValue () .r = +value;
+      this .getValue () .r = Math .fround (+value);
       this .addEvent ();
    },
 };
@@ -200,7 +200,7 @@ const g = {
    },
    set (value)
    {
-      this .getValue () .g = +value;
+      this .getValue () .g = Math .fround (+value);
       this .addEvent ();
    },
 };
@@ -212,7 +212,7 @@ const b = {
    },
    set (value)
    {
-      this .getValue () .b = +value;
+      this .getValue () .b = Math .fround (+value);
       this .addEvent ();
    },
 };

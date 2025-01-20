@@ -51,6 +51,8 @@ import Matrix3                   from "../../standard/Math/Numbers/Matrix3.js";
 
 function SFMatrix3Template (TypeName, double)
 {
+   const _fround = double ? v => v : v => v .fround ();
+
    function SFMatrix3 (m00, m01, m02,
                        m10, m11, m12,
                        m20, m21, m22)
@@ -62,7 +64,7 @@ function SFMatrix3Template (TypeName, double)
             break;
 
          case 1:
-            X3DField .call (this, arguments [0]);
+            X3DField .call (this, _fround (arguments [0]));
             break;
 
          case 3:
@@ -72,17 +74,17 @@ function SFMatrix3Template (TypeName, double)
                r1 = arguments [1],
                r2 = arguments [2];
 
-            X3DField .call (this, new Matrix3 (r0 .x, r0 .y, r0 .z,
-                                               r1 .x, r1 .y, r1 .z,
-                                               r2 .x, r2 .y, r2 .z));
+            X3DField .call (this, _fround (new Matrix3 (r0 .x, r0 .y, r0 .z,
+                                                        r1 .x, r1 .y, r1 .z,
+                                                        r2 .x, r2 .y, r2 .z)));
 
             break;
          }
          case 9:
          {
-            X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
-                                               +m10, +m11, +m12,
-                                               +m20, +m21, +m22));
+            X3DField .call (this, _fround (new Matrix3 (+m00, +m01, +m02,
+                                                        +m10, +m11, +m12,
+                                                        +m20, +m21, +m22)));
 
             break;
          }
@@ -109,7 +111,7 @@ function SFMatrix3Template (TypeName, double)
                args .pop ();
             }
 
-            this .getValue () .set (... args);
+            _fround (this .getValue () .set (... args));
 
             args .length = 0;
          };

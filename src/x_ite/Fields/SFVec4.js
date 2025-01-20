@@ -51,6 +51,8 @@ import Vector4                from "../../standard/Math/Numbers/Vector4.js";
 
 function SFVec4Template (TypeName, double)
 {
+   const _fround = double ? v => v : v => v .fround ();
+
    function SFVec4 (x, y, z, w)
    {
       switch (arguments .length)
@@ -60,11 +62,11 @@ function SFVec4Template (TypeName, double)
             break;
 
          case 1:
-            X3DField .call (this, arguments [0]);
+            X3DField .call (this, _fround (arguments [0]));
             break;
 
          case 4:
-            X3DField .call (this, new Vector4 (+x, +y, +z, +w));
+            X3DField .call (this, _fround (new Vector4 (+x, +y, +z, +w)));
             break;
 
          default:

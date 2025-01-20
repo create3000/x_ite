@@ -58,11 +58,11 @@ function SFColorRGBA (r, g, b, a)
          break;
 
       case 1:
-         X3DField .call (this, arguments [0]);
+         X3DField .call (this, arguments [0] .fround ());
          break;
 
       case 4:
-         X3DField .call (this, new Color4 (+r, +g, +b, +a));
+         X3DField .call (this, new Color4 (+r, +g, +b, +a) .fround ());
          break
 
       default:
@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
    },
    setHSVA (h, s, v, a)
    {
-      this .getValue () .setHSVA (h, s, v, a);
+      this .getValue () .setHSVA (h, s, v, a) .fround ();
       this .addEvent ();
    },
    linearToSRGB ()
@@ -141,7 +141,7 @@ const r = {
    },
    set (value)
    {
-      this .getValue () .r = +value;
+      this .getValue () .r = Math .fround (+value);
       this .addEvent ();
    },
 };
@@ -153,7 +153,7 @@ const g = {
    },
    set (value)
    {
-      this .getValue () .g = +value;
+      this .getValue () .g = Math .fround (+value);
       this .addEvent ();
    },
 };
@@ -165,7 +165,7 @@ const b = {
    },
    set (value)
    {
-      this .getValue () .b = +value;
+      this .getValue () .b = Math .fround (+value);
       this .addEvent ();
    },
 };
@@ -177,7 +177,7 @@ const a = {
    },
    set (value)
    {
-      this .getValue () .a = +value;
+      this .getValue () .a = Math .fround (+value);
       this .addEvent ();
    },
 };

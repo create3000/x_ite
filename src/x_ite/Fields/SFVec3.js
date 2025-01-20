@@ -51,6 +51,8 @@ import Vector3                from "../../standard/Math/Numbers/Vector3.js";
 
 function SFVec3Template (TypeName, double)
 {
+   const _fround = double ? v => v : v => v .fround ();
+
    function SFVec3 (x, y, z)
    {
       switch (arguments .length)
@@ -60,11 +62,11 @@ function SFVec3Template (TypeName, double)
             break;
 
          case 1:
-            X3DField .call (this, arguments [0]);
+            X3DField .call (this, _fround (arguments [0]));
             break;
 
          case 3:
-            X3DField .call (this, new Vector3 (+x, +y, +z));
+            X3DField .call (this, _fround (new Vector3 (+x, +y, +z)));
             break;
 
          default:
