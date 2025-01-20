@@ -47,62 +47,75 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFDouble (value)
+function SFNumberTemplate (TypeName, double)
 {
-   X3DField .call (this, arguments .length ? +value : 0);
+   const _formatter = double ? "DoubleFormat" : "FloatFormat";
+
+   function SFNumber (value)
+   {
+      X3DField .call (this, arguments .length ? +value : 0);
+   }
+
+   Object .assign (Object .setPrototypeOf (SFNumber .prototype, X3DField .prototype),
+   {
+      copy ()
+      {
+         return new SFNumber (this .getValue ());
+      },
+      isDefaultValue ()
+      {
+         return this .getValue () === 0;
+      },
+      set (value)
+      {
+         X3DField .prototype .set .call (this, +value);
+      },
+      valueOf: X3DField .prototype .getValue,
+      toStream (generator)
+      {
+         const category = this .getUnit ();
+
+         generator .string += generator [_formatter] (generator .ToUnit (category, this .getValue ()));
+      },
+      toVRMLStream (generator)
+      {
+         this .toStream (generator);
+      },
+      toXMLStream (generator)
+      {
+         this .toStream (generator);
+      },
+      toJSONStream (generator)
+      {
+         this .toJSONStreamValue (generator);
+      },
+      toJSONStreamValue (generator)
+      {
+         const category = this .getUnit ();
+
+         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, this .getValue ())));
+      },
+   });
+
+   for (const key of Object .keys (SFNumber .prototype))
+      Object .defineProperty (SFNumber .prototype, key, { enumerable: false });
+
+   Object .defineProperties (SFNumber,
+   {
+      typeName:
+      {
+         value: TypeName,
+         enumerable: true,
+      },
+   });
+
+   return SFNumber;
 }
 
-Object .assign (Object .setPrototypeOf (SFDouble .prototype, X3DField .prototype),
-{
-   copy ()
-   {
-      return new SFDouble (this .getValue ());
-   },
-   isDefaultValue ()
-   {
-      return this .getValue () === 0;
-   },
-   set (value)
-   {
-      X3DField .prototype .set .call (this, +value);
-   },
-   valueOf: X3DField .prototype .getValue,
-   toStream (generator)
-   {
-      const category = this .getUnit ();
+const SFNumber = {
+   SFDouble: SFNumberTemplate ("SFDouble", true),
+   SFFloat:  SFNumberTemplate ("SFFloat",  false),
+   SFTime:   SFNumberTemplate ("SFTime",   true),
+};
 
-      generator .string += generator .DoubleFormat (generator .ToUnit (category, this .getValue ()));
-   },
-   toVRMLStream (generator)
-   {
-      this .toStream (generator);
-   },
-   toXMLStream (generator)
-   {
-      this .toStream (generator);
-   },
-   toJSONStream (generator)
-   {
-      this .toJSONStreamValue (generator);
-   },
-   toJSONStreamValue (generator)
-   {
-      const category = this .getUnit ();
-
-      generator .string += generator .JSONNumber (generator .DoubleFormat (generator .ToUnit (category, this .getValue ())));
-   },
-});
-
-for (const key of Object .keys (SFDouble .prototype))
-   Object .defineProperty (SFDouble .prototype, key, { enumerable: false });
-
-Object .defineProperties (SFDouble,
-{
-   typeName:
-   {
-      value: "SFDouble",
-      enumerable: true,
-   },
-});
-
-export default SFDouble;
+export default SFNumber;
