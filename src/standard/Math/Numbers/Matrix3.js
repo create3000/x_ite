@@ -535,6 +535,13 @@ Object .assign (Matrix3 .prototype,
 
       return this;
    },
+   fround ()
+   {
+      for (let i = 0; i < 9; ++ i)
+         this [i] = Math .fround (this [i]);
+
+      return this;
+   },
    toString ()
    {
       return Array .prototype .join .call (this, " ");

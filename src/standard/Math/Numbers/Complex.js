@@ -152,6 +152,12 @@ Object .assign (Complex .prototype,
       this .imag = (ai * br - ar * bi) / d;
       return this;
    },
+   fround ()
+   {
+      this .real = Math .fround (this .real);
+      this .imag = Math .fround (this .imag);
+      return this;
+   },
    toString ()
    {
       let string = "";

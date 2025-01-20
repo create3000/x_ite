@@ -265,6 +265,14 @@ Object .assign (Vector4 .prototype,
       this .w = Algorithm .clamp (this .w, minW, maxW);
       return this;
    },
+   fround ()
+   {
+      this .x = Math .fround (this .x);
+      this .y = Math .fround (this .y);
+      this .z = Math .fround (this .z);
+      this .w = Math .fround (this .w);
+      return this;
+   },
    toString ()
    {
       return this .x + " " +

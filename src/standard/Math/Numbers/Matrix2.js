@@ -225,6 +225,13 @@ Object .assign (Matrix2 .prototype,
       this [2] = 0;
       this [3] = 1;
    },
+   fround ()
+   {
+      for (let i = 0; i < 4; ++ i)
+         this [i] = Math .fround (this [i]);
+
+      return this;
+   },
    toString ()
    {
       return Array .prototype .join .call (this, " ");

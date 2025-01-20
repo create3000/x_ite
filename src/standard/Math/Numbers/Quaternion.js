@@ -566,6 +566,14 @@ Object .assign (Quaternion .prototype,
                                Algorithm .slerp (t2 .assign (a), t3 .assign (b), t),
                                2 * t * (1 - t));
    },
+   fround ()
+   {
+      this .x = Math .fround (this .x);
+      this .y = Math .fround (this .y);
+      this .z = Math .fround (this .z);
+      this .w = Math .fround (this .w);
+      return this;
+   },
    toString ()
    {
       return this .x + " " +

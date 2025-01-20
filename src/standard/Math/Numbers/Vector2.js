@@ -215,6 +215,12 @@ Object .assign (Vector2 .prototype,
       this .y = Algorithm .clamp (this .y, minY, maxY);
       return this;
    },
+   fround ()
+   {
+      this .x = Math .fround (this .x);
+      this .y = Math .fround (this .y);
+      return this;
+   },
    toString ()
    {
       return this .x + " " +

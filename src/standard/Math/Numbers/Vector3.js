@@ -259,6 +259,13 @@ Object .assign (Vector3 .prototype,
       this .z = Algorithm .clamp (this .z, minZ, maxZ);
       return this;
    },
+   fround ()
+   {
+      this .x = Math .fround (this .x);
+      this .y = Math .fround (this .y);
+      this .z = Math .fround (this .z);
+      return this;
+   },
    toString ()
    {
       return this .x + " " +

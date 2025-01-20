@@ -138,6 +138,14 @@ Object .assign (Color4 .prototype,
 
       return color;
    },
+   fround ()
+   {
+      this [_r] = Math .fround (this [_r]);
+      this [_g] = Math .fround (this [_g]);
+      this [_b] = Math .fround (this [_b]);
+      this [_a] = Math .fround (this [_a]);
+      return this;
+   },
    toString ()
    {
       return this [_r] + " " +
