@@ -82,10 +82,15 @@ Object .assign (X3DUrlObject .prototype,
    {
       this ._loadState = value;
 
-      if (value === X3DConstants .COMPLETE_STATE)
+      switch (value)
       {
-         this [_autoRefreshCompleteTime] = Date .now ();
-         this .setAutoRefreshTimer (this ._autoRefresh .getValue ());
+         case X3DConstants .COMPLETE_STATE:
+         case X3DConstants .FAILED_STATE:
+         {
+            this [_autoRefreshCompleteTime] = Date .now ();
+            this .setAutoRefreshTimer (Math .max (this ._autoRefresh .getValue (), 0));
+            break;
+         }
       }
 
       if (!notify)
@@ -227,7 +232,7 @@ Object .assign (X3DUrlObject .prototype,
 
       const autoRefreshTimeLimit = this ._autoRefreshTimeLimit .getValue ();
 
-      if (autoRefreshTimeLimit !== 0)
+      if (autoRefreshTimeLimit > 0)
       {
          if ((Date .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
             return;
@@ -269,7 +274,7 @@ Object .assign (X3DUrlObject .prototype,
 
       const
          elapsedTime = (Date .now () - this [_autoRefreshCompleteTime]) / 1000,
-         autoRefresh = this ._autoRefresh .getValue ();
+         autoRefresh = Math .max (this ._autoRefresh .getValue (), 0);
 
       let autoRefreshInterval = autoRefresh - elapsedTime;
 

@@ -281,7 +281,11 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_AutoUpdate__ (autoUpdate)
    {
-      const events = ["resize", "scroll", "load"]
+      const windowEvents = ["resize", "scroll", "load"]
+         .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
+         .join (" ");
+
+      const documentEvents = ["visibilitychange"]
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
          .join (" ");
 
@@ -293,7 +297,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
          const checkUpdate = () =>
          {
-            if (element .isInViewport ())
+            if (!document .hidden && element .isInViewport ())
             {
                if (!browser .isLive ())
                   browser .beginUpdate ();
@@ -305,12 +309,15 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
             }
          };
 
-         $(window) .on (events, checkUpdate);
+         $(window)   .on (windowEvents,   checkUpdate);
+         $(document) .on (documentEvents, checkUpdate);
+
          checkUpdate ();
       }
       else
       {
-         $(window) .off (events);
+         $(window)   .off (windowEvents);
+         $(document) .off (documentEvents);
       }
    },
    set_ContentScale__ (contentScale)

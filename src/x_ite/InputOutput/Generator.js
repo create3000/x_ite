@@ -269,18 +269,29 @@ Object .assign (Generator .prototype,
          return;
 
       this .executionContextIndex .add (executionContext);
-
-      this .importedNodesIndex .set (executionContext, new Set ());
-      this .importedNames      .set (executionContext, new Map ());
-      this .exportedNodesIndex .set (executionContext, new Set ());
-      this .nodes              .set (executionContext, new Set ());
-      this .names              .set (executionContext, new Set ());
-      this .namesByNode        .set (executionContext, new Map ());
-      this .routeNodes         .set (executionContext, new Set ());
+      this .importedNodesIndex    .set (executionContext, new Set ());
+      this .importedNames         .set (executionContext, new Map ());
+      this .exportedNodesIndex    .set (executionContext, new Set ());
+      this .nodes                 .set (executionContext, new Set ());
+      this .names                 .set (executionContext, new Set ());
+      this .namesByNode           .set (executionContext, new Map ());
+      this .routeNodes            .set (executionContext, new Set ());
    },
    PopExecutionContext ()
    {
-      this .executionContextStack .pop ();
+      const executionContext = this .executionContextStack .pop ();
+
+      if (this .executionContextStack .at (-1) === executionContext)
+         return;
+
+      this .executionContextIndex .delete (executionContext);
+      this .importedNodesIndex    .delete (executionContext);
+      this .importedNames         .delete (executionContext);
+      this .exportedNodesIndex    .delete (executionContext);
+      this .nodes                 .delete (executionContext);
+      this .names                 .delete (executionContext);
+      this .namesByNode           .delete (executionContext);
+      this .routeNodes            .delete (executionContext);
    },
    ExecutionContext ()
    {

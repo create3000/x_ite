@@ -452,7 +452,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    refineNormals (normalIndex, normals, creaseAngle)
    {
-      if (creaseAngle === 0)
+      if (creaseAngle <= 0)
          return normals;
 
       const
@@ -483,11 +483,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    transformLine (hitRay)
    {
-      // Apply sceen nodes transformation in place here.
+      // Apply screen nodes transformation in place here.
    },
    transformMatrix (hitRay)
    {
-      // Apply sceen nodes transformation in place here.
+      // Apply screen nodes transformation in place here.
    },
    isClipped (point, clipPlanes)
    {

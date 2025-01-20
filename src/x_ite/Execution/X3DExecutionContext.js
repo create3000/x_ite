@@ -865,14 +865,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
             generator .string += generator .Indent ();
 
             if (rootNode)
-            {
                rootNode .toJSONStream (generator);
-            }
             else
-            {
-               generator .string += generator .Indent ();
                generator .string += "null";
-            }
 
             generator .string += ',';
             generator .string += generator .TidyBreak ();

@@ -80,16 +80,17 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode
    {
       const
          options     = this .getBrowser () .getCircle2DOptions (),
+         geometry    = options .getGeometry (),
          vertexArray = this .getVertices (),
          radius      = this ._radius .getValue ();
 
       if (radius === 1)
       {
-         vertexArray .assign (options .getVertices ());
+         vertexArray .assign (geometry .getVertices ());
       }
       else
       {
-         const defaultVertices = options .getVertices () .getValue ();
+         const defaultVertices = geometry .getVertices () .getValue ();
 
          for (let i = 0, length = defaultVertices .length; i < length; i += 4)
             vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);

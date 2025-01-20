@@ -75,13 +75,13 @@ Brightness of ambient (nondirectional background) emission from the light. Inter
 
 Input/Output field *rotation*.
 
-### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
-
-Input/Output field *diffuseTexture*.
-
 ### MFFloat [in, out] **diffuseCoefficients** [ ]
 
 Input/Output field *diffuseCoefficients*.
+
+### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
+
+Input/Output field *diffuseTexture*.
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 

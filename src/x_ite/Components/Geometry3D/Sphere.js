@@ -91,9 +91,6 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prot
       if (radius === 1)
       {
          vertexArray .assign (geometry .getVertices ());
-
-         this .getMin () .assign (geometry .getMin ());
-         this .getMax () .assign (geometry .getMax ());
       }
       else
       {
@@ -106,10 +103,10 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prot
                                radius * defaultVertices [i + 2],
                                1);
          }
-
-         this .getMin () .set (-radius, -radius, -radius);
-         this .getMax () .set ( radius,  radius,  radius);
       }
+
+      this .getMin () .set (-radius, -radius, -radius);
+      this .getMax () .set ( radius,  radius,  radius);
 
       this .setSolid (this ._solid .getValue ());
    },

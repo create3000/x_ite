@@ -52,6 +52,7 @@ const ibl_files = [
    "OrientationTest",
    "PotOfCoals",
    "PrimitiveModeNormalsTest",
+   "ReciprocatingSaw",
    "RecursiveSkeletons",
    "Sheen",
    "SimpleInstancing",

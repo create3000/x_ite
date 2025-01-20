@@ -122,7 +122,7 @@ export default new class MikkTSpace
       return this .#textDecoder .decode (this .#getUint8Memory0 () .subarray (ptr, ptr + len));
    }
 
-   #heap = new Array (32) .fill (undefined) .toSpliced (32, 0, undefined, null, true, false);
+   #heap = Array .from ({ length: 32 }) .concat ([undefined, null, true, false]);
    #heap_next = this .#heap .length;
 
    #addHeapObject (obj)

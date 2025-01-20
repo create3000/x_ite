@@ -24,8 +24,10 @@ class Playground
 
       const
          browser = X3D .getBrowser (),
+         model   = monaco .editor .createModel ("", "xml"),
          editor  = monaco .editor .create (document .getElementById ("editor"),
          {
+            model: model,
             language: "xml",
             contextmenu: true,
             automaticLayout: true,
@@ -40,6 +42,7 @@ class Playground
       this .canvas       = $(browser .element);
       this .localStorage = this .browser .getLocalStorage () .addNameSpace ("Playground.");
       this .editor       = editor;
+      this .model        = model;
 
       this .localStorage .setDefaultValues ({
          fullSize: false,
@@ -65,12 +68,12 @@ class Playground
 
       const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
 
-      monaco .editor .setModelLanguage (editor .getModel (), encoding .toLowerCase ());
+      monaco .editor .setModelLanguage (model, encoding .toLowerCase ());
 
       this .updateLanguage (encoding);
 
-      editor .setValue (browser .currentScene [`to${encoding}String`] ());
-      editor .getModel () .onDidChangeContent (event => this .onDidChangeContent (event));
+      model .setValue (browser .currentScene [`to${encoding}String`] ());
+      model .onDidChangeContent (event => this .onDidChangeContent (event));
 
       browser .beginUpdate ();
 
@@ -129,8 +132,8 @@ class Playground
       {
          await this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
 
-         this .editor .setValue (this .browser .currentScene .toXMLString ());
-         monaco .editor .setModelLanguage (this .editor .getModel (), "xml");
+         this .model .setValue (this .browser .currentScene .toXMLString ());
+         monaco .editor .setModelLanguage (this .model, "xml");
          this .updateLanguage ("XML");
       });
 
@@ -142,6 +145,7 @@ class Playground
       const
          browser         = this .browser,
          editor          = this .editor,
+         model           = this .model,
          activeViewpoint = browser .activeViewpoint ?.getValue (),
          text            = editor .getValue (),
          url             = encodeURI (`data:,${text}`);
@@ -173,7 +177,7 @@ class Playground
          activeViewpoint .setFarDistance (farDistance);
       }
 
-      monaco .editor .setModelLanguage (editor .getModel (), browser .currentScene .encoding .toLowerCase ());
+      monaco .editor .setModelLanguage (model, browser .currentScene .encoding .toLowerCase ());
 
       this .changed = false;
 
@@ -185,7 +189,7 @@ class Playground
    {
       const
          browser = this .browser,
-         editor  = this .editor,
+         model   = this .model,
          toolbar = $(".playground .toolbar");
 
       toolbar .empty ();
@@ -324,8 +328,8 @@ class Playground
          .text ("XML")
          .on ("click", () =>
          {
-            editor .setValue (browser .currentScene .toXMLString ());
-            monaco .editor .setModelLanguage (editor .getModel (), "xml");
+            model .setValue (browser .currentScene .toXMLString ());
+            monaco .editor .setModelLanguage (model, "xml");
             this .updateLanguage ("XML");
          })
          .appendTo (right);
@@ -339,8 +343,8 @@ class Playground
          .text ("VRML")
          .on ("click", () =>
          {
-            editor .setValue (browser .currentScene .toVRMLString ());
-            monaco .editor .setModelLanguage (editor .getModel (), "vrml");
+            model .setValue (browser .currentScene .toVRMLString ());
+            monaco .editor .setModelLanguage (model, "vrml");
             this .updateLanguage ("VRML");
          })
          .appendTo (right);
@@ -354,8 +358,8 @@ class Playground
          .text ("JSON")
          .on ("click", () =>
          {
-            editor .setValue (browser .currentScene .toJSONString ());
-            monaco .editor .setModelLanguage (editor .getModel (), "json");
+            model .setValue (browser .currentScene .toJSONString ());
+            monaco .editor .setModelLanguage (model, "json");
             this .updateLanguage ("JSON");
          })
          .appendTo (right);
@@ -377,6 +381,10 @@ class Playground
 
       if (fullSize)
       {
+         this .viewState = this .editor .saveViewState ();
+
+         this .editor .setModel (null);
+
          $(".playground x3d-canvas") .css ("height", "100%");
          $(".playground .console") .hide ();
          $(".playground .viewer-column2") .hide ();
@@ -386,6 +394,9 @@ class Playground
          $(".playground x3d-canvas") .css ("height", "");
          $(".playground .console") .show ();
          $(".playground .viewer-column2") .show ();
+
+         this .editor .setModel (this .model);
+         this .editor .restoreViewState (this .viewState);
       }
    }
 

@@ -244,13 +244,15 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    {
       this .getBrowser () .leaveNotifyEvent ();
    },
-   onverifymotion (x, y)
+   async onverifymotion (x, y)
    {
       // Verify isOver state. This is necessary if an Switch changes on buttonReleaseEvent
       // and the new child has a sensor node inside. This sensor node must be updated to
       // reflect the correct isOver state.
 
-      this .getBrowser () .getSession () .requestAnimationFrame (() => this .onmotion (x, y));
+      await this .getBrowser () .nextFrame ();
+
+      this .onmotion (x, y);
    },
    showContextMenu (event)
    {

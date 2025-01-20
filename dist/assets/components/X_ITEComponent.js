@@ -1,5 +1,5 @@
-/* X_ITE v11.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.1")];
+/* X_ITE v11.0.5 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.5")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1986,6 +1986,10 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
    initialize ()
    {
       X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      // Preload LUTs.
+      this .getBrowser () .getLibraryTexture ("lut_charlie.png");
+      this .getBrowser () .getLibraryTexture ("lut_sheen_E.png");
 
       this ._sheenColor            .addInterest ("set_sheenColor__",            this);
       this ._sheenColorTexture     .addInterest ("set_sheenColorTexture__",     this);

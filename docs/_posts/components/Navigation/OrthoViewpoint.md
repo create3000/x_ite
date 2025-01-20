@@ -75,7 +75,7 @@ Rotation (axis, angle in radians) of [Viewpoint](/x_ite/components/navigation/vi
 
 #### Hints
 
-- This is *orientation* change from default direction (0 0 -1) along the -X axis.
+- This is *orientation* change from default direction along the -Z axis (0 0 -1).
 - Complex rotations can be accomplished axis-by-axis using parent Transforms.
 
 #### Warning
@@ -98,6 +98,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 #### Warnings
 
 - Minimum corner values must remain less than maximum corner values.
+- If provided, OrthoViewpoint *fieldOfView* has exactly four numeric values, otherwise results are undefined.
 - OrthoViewpoint *fieldOfView* has type MFFloat even though SFVec3f is more correct to prevent modeling errors, deficiency recorded as Mantis 1398
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>

@@ -2076,11 +2076,11 @@ function eventsProcessed ()
          skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
          humanoidNode = skin .humanoidNode;
 
-      if (skeleton .length === null)
-         return;
-
-      skeleton .humanoidNode = humanoidNode;
-      skeleton .childNode    = humanoidNode;
+      for (const node of skeleton)
+      {
+         node .humanoidNode = humanoidNode;
+         node .childNode    = humanoidNode;
+      }
    },
    nodeChildren (node, index)
    {
@@ -2206,7 +2206,8 @@ function eventsProcessed ()
          humanoidNode ._version               = "2.0";
          humanoidNode ._skeletalConfiguration = "GLTF";
 
-         humanoidNode ._skeleton .push (... skin .skeleton .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
+         humanoidNode ._skeleton .push (... skin .skeleton
+            .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
 
          for (const [i, joint] of skin .joints .entries ())
          {
@@ -2271,10 +2272,10 @@ function eventsProcessed ()
 
       this .skins = skins;
 
-      for (const skin of skins)
-         this .skinObject (skin, nodes);
+      for (const [i, skin] of skins .entries ())
+         this .skinObject (i, skin, nodes);
    },
-   skinObject (skin, nodes)
+   skinObject (index, skin, nodes)
    {
       if (!(skin instanceof Object))
          return;
@@ -2283,7 +2284,7 @@ function eventsProcessed ()
          scene    = this .getScene (),
          skeleton = skin .skeleton;
 
-      skin .joints              = this .jointsArray (skin .joints);
+      skin .joints              = this .jointsArray (skin .joints, nodes .some (node => node .skin === index));
       skin .skeleton            = skeleton !== undefined ? [skeleton] : this .skeleton (skin .joints, nodes);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
@@ -2307,12 +2308,15 @@ function eventsProcessed ()
       skin .normalNode                 .setup ();
       skin .coordinateNode             .setup ();
    },
-   jointsArray (joints)
+   jointsArray (joints, add)
    {
       if (!(joints instanceof Array))
          return [ ];
 
-      joints .forEach (index => this .joints .add (index));
+      // If skin is not references anywhere, don't create HAnimJoint nodes.
+
+      if (add)
+         joints .forEach (index => this .joints .add (index));
 
       return joints;
    },

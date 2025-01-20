@@ -1,5 +1,5 @@
-/* X_ITE v11.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.1")];
+/* X_ITE v11.0.5 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.5")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -202,9 +202,12 @@ const ArcClose2DOptions_default_ = ArcClose2DOptions;
 ;
 
 /* harmony default export */ const Geometry2D_ArcClose2DOptions = (external_X_ITE_X3D_Namespace_default().add ("ArcClose2DOptions", ArcClose2DOptions_default_));
-;// external "__X_ITE_X3D__ .X3DGeometryNode"
-const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
-var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
+;// external "__X_ITE_X3D__ .IndexedLineSet"
+const external_X_ITE_X3D_IndexedLineSet_namespaceObject = __X_ITE_X3D__ .IndexedLineSet;
+var external_X_ITE_X3D_IndexedLineSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_IndexedLineSet_namespaceObject);
+;// external "__X_ITE_X3D__ .Coordinate"
+const external_X_ITE_X3D_Coordinate_namespaceObject = __X_ITE_X3D__ .Coordinate;
+var external_X_ITE_X3D_Coordinate_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Coordinate_namespaceObject);
 ;// external "__X_ITE_X3D__ .Complex"
 const external_X_ITE_X3D_Complex_namespaceObject = __X_ITE_X3D__ .Complex;
 var external_X_ITE_X3D_Complex_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Complex_namespaceObject);
@@ -262,13 +265,12 @@ var external_X_ITE_X3D_Complex_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
 function Circle2DOptions (executionContext)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
-
-   this .vertices = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
 }
 
 Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
@@ -279,35 +281,56 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (external_X_
 
       this .addInterest ("eventsProcessed", this);
    },
-   getVertices ()
+   getGeometry ()
    {
-      if (!this .vertices .length)
+      if (!this .geometry)
          this .build ();
 
-      return this .vertices;
+      return this .geometry;
    },
-   build ()
+   createCoordIndex ()
+   {
+      const
+         dimension  = this ._dimension .getValue (),
+         coordIndex = this .geometry ._coordIndex;
+
+      for (let n = 0; n < dimension; ++ n)
+         coordIndex .push (n);
+
+      coordIndex .push (0, -1);
+   },
+   createPoints ()
    {
       const
          dimension = this ._dimension .getValue (),
          angle     = Math .PI * 2 / dimension,
-         vertices  = this .vertices;
+         point     = this .geometry ._coord .getValue () ._point;
 
       for (let n = 0; n < dimension; ++ n)
       {
-         const
-            point1 = external_X_ITE_X3D_Complex_default().Polar (1, angle * n),
-            point2 = external_X_ITE_X3D_Complex_default().Polar (1, angle * (n + 1));
+         const p = external_X_ITE_X3D_Complex_default().Polar (1, angle * n);
 
-         vertices .push (point1 .real, point1 .imag, 0, 1);
-         vertices .push (point2 .real, point2 .imag, 0, 1);
+         point .push (new (external_X_ITE_X3D_Fields_default()).SFVec3f (p .real, p .imag, 0));
       }
+   },
+   build ()
+   {
+      this .geometry         = new (external_X_ITE_X3D_IndexedLineSet_default()) (this .getExecutionContext ());
+      this .geometry ._coord = new (external_X_ITE_X3D_Coordinate_default()) (this .getExecutionContext ());
 
-      vertices .shrinkToFit ();
+      this .createCoordIndex ();
+      this .createPoints ();
+
+      const
+         geometry = this .geometry,
+         coord    = this .geometry ._coord .getValue ();
+
+      coord    .setup ();
+      geometry .setup ();
    },
    eventsProcessed ()
    {
-      this .vertices .length = 0;
+      this .geometry = null;
    },
 });
 
@@ -324,6 +347,9 @@ const Circle2DOptions_default_ = Circle2DOptions;
 ;
 
 /* harmony default export */ const Geometry2D_Circle2DOptions = (external_X_ITE_X3D_Namespace_default().add ("Circle2DOptions", Circle2DOptions_default_));
+;// external "__X_ITE_X3D__ .X3DGeometryNode"
+const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
+var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
 ;// ./src/x_ite/Browser/Geometry2D/Disk2DOptions.js
 /*******************************************************************************
  *
@@ -384,10 +410,9 @@ function Disk2DOptions (executionContext)
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
 
-   this .circleVertices = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
-   this .diskTexCoords  = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
-   this .diskNormals    = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
-   this .diskVertices   = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
+   this .diskTexCoords = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
+   this .diskNormals   = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
+   this .diskVertices  = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
 }
 
 Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
@@ -397,13 +422,6 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (external_X_IT
       external_X_ITE_X3D_X3DBaseNode_default().prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
-   },
-   getCircleVertices ()
-   {
-      if (!this .circleVertices .length)
-         this .build ();
-
-      return this .circleVertices;
    },
    getDiskTexCoords ()
    {
@@ -438,12 +456,11 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (external_X_IT
       return function ()
       {
          const
-            dimension      = this ._dimension .getValue (),
-            angle          = Math .PI * 2 / dimension,
-            circleVertices = this .circleVertices,
-            diskTexCoords  = this .diskTexCoords,
-            diskNormals    = this .diskNormals,
-            diskVertices   = this .diskVertices;
+            dimension     = this ._dimension .getValue (),
+            angle         = Math .PI * 2 / dimension,
+            diskTexCoords = this .diskTexCoords,
+            diskNormals   = this .diskNormals,
+            diskVertices  = this .diskVertices;
 
          for (let n = 0; n < dimension; ++ n)
          {
@@ -455,11 +472,6 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (external_X_IT
             texCoord2 .setPolar (0.5, theta2) .add (half);
             point1    .setPolar (1, theta1);
             point2    .setPolar (1, theta2);
-
-            // Circle
-
-            circleVertices .push (point1 .real, point1 .imag, 0, 1);
-            circleVertices .push (point2 .real, point2 .imag, 0, 1);
 
             // Disk
 
@@ -474,7 +486,6 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (external_X_IT
                                 point2 .real, point2 .imag, 0, 1);
          }
 
-         circleVertices .shrinkToFit ();
          diskTexCoords  .shrinkToFit ();
          diskNormals    .shrinkToFit ();
          diskVertices   .shrinkToFit ();
@@ -482,10 +493,9 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (external_X_IT
    })(),
    eventsProcessed ()
    {
-      this .circleVertices .length = 0;
-      this .diskTexCoords  .length = 0;
-      this .diskNormals    .length = 0;
-      this .diskVertices   .length = 0;
+      this .diskTexCoords .length = 0;
+      this .diskNormals   .length = 0;
+      this .diskVertices  .length = 0;
    },
 });
 
@@ -505,9 +515,6 @@ const Disk2DOptions_default_ = Disk2DOptions;
 ;// external "__X_ITE_X3D__ .IndexedFaceSet"
 const external_X_ITE_X3D_IndexedFaceSet_namespaceObject = __X_ITE_X3D__ .IndexedFaceSet;
 var external_X_ITE_X3D_IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_IndexedFaceSet_namespaceObject);
-;// external "__X_ITE_X3D__ .Coordinate"
-const external_X_ITE_X3D_Coordinate_namespaceObject = __X_ITE_X3D__ .Coordinate;
-var external_X_ITE_X3D_Coordinate_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Coordinate_namespaceObject);
 ;// external "__X_ITE_X3D__ .TextureCoordinate"
 const external_X_ITE_X3D_TextureCoordinate_namespaceObject = __X_ITE_X3D__ .TextureCoordinate;
 var external_X_ITE_X3D_TextureCoordinate_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureCoordinate_namespaceObject);
@@ -1219,16 +1226,17 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, (external_X_ITE_X3D
    {
       const
          options     = this .getBrowser () .getCircle2DOptions (),
+         geometry    = options .getGeometry (),
          vertexArray = this .getVertices (),
          radius      = this ._radius .getValue ();
 
       if (radius === 1)
       {
-         vertexArray .assign (options .getVertices ());
+         vertexArray .assign (geometry .getVertices ());
       }
       else
       {
-         const defaultVertices = options .getVertices () .getValue ();
+         const defaultVertices = geometry .getVertices () .getValue ();
 
          for (let i = 0, length = defaultVertices .length; i < length; i += 4)
             vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
@@ -1373,13 +1381,17 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
 
          // Circle
 
+         const
+            options  = this .getBrowser () .getCircle2DOptions (),
+            geometry = options .getGeometry ();
+
          if (outerRadius === 1)
          {
-            vertexArray .assign (options .getCircleVertices ());
+            vertexArray .assign (geometry .getVertices ());
          }
          else
          {
-            const defaultVertices = options .getCircleVertices () .getValue ();
+            const defaultVertices = geometry .getVertices () .getValue ();
 
             for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);

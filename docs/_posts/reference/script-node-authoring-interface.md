@@ -63,7 +63,7 @@ function anInputField (value, time)
 
   if (aField === 1.5)
   {
-    a = true;   // 'a' contains a boolean
+    a = true;   // 'a' contains a boolean.
   }
 
   if (a)
@@ -71,12 +71,12 @@ function anInputField (value, time)
     value = 5;  // ATTENTION, 'value' now contains a number!
   }
 
-  aField = anOutputField;  // SFInt32 converted to SFFloat
+  aField = anOutputField;  // SFInt32 converted to SFFloat.
 
-  let s = 'Two\\nLines';   // 's' contains a String, escape backslashes
-  let b = aField;          // 'b' contains a number
+  let s = 'Two\nLines';    // 's' contains a String.
+  let b = aField;          // 'b' contains a number.
 
-  b      = anOutputField;  // 'b' now contains a different number
+  b      = anOutputField;  // 'b' now contains a different number.
   aField = aVector;        // ERROR, can't assign SFVec3f to SFFloat!
 
   const scene = Browser .currentScene; // Get current scene from browser.
@@ -98,8 +98,8 @@ Every object has a set of *properties* and *methods*. Properties are names on th
 function someFunction ()
 {
   let a = new SFColor (0.5, 0.5, 0.5);
-  let b = a .r;                        // 'b' contains 0.5
-  a .setHSV (0.1, 0.1, 0.1);           // 'a' now contains new properties
+  let b = a .r;                        // 'b' contains 0.5.
+  a .setHSV (0.1, 0.1, 0.1);           // 'a' now contains new properties.
 }
 ```
 
@@ -110,8 +110,8 @@ The value *a.r* selects the property which corresponds to the red component of t
 For each object type there is a corresponding constructor. Constructors typically take a flexible set of parameters to allow construction of objects with any initial value. MF objects are essentially arrays so they always take 0 or more parameters of the corresponding SF object type. A value of a given data type is created using the *new* keyword with the data type name. For instance:
 
 ```js
-let a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0
-let b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats
+let a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0.
+let b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats.
 ```
 
 ### Data Conversion

@@ -49,7 +49,7 @@ Whether or not associated geometry is *hatched*.
 
 #### Hint
 
-- [Detailed descriptions of hatchstyle values are found at the ISO/IEC 9973 International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register) [](https://isotc.iso.org/livelink/livelink/fetch/-8916524/8916549/8916590/6208440/class_pages/hatchstyle.html)
+- [Detailed descriptions of hatchstyle values are found at the ISO/IEC 9973 International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register)
 
 ### SFColor [in, out] **hatchColor** 1 1 1 <small>[0,1]</small>
 
