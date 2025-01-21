@@ -266,7 +266,10 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
    findLast: Array .prototype .findLast,
    findLastIndex: Array .prototype .findLastIndex,
    flat: Array .prototype .flat,
-   // flatMap: Array .prototype .flatMap,
+   flatMap (... args)
+   {
+      return this .map (... args) .flat ();
+   },
    forEach: Array .prototype .forEach,
    includes: Array .prototype .includes,
    indexOf: Array .prototype .indexOf,
