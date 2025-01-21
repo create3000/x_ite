@@ -54,7 +54,7 @@ function SFBoolTemplate (TypeName)
       X3DField .call (this, !! value);
    }
 
-   return SFScalarPrototypeTemplate (SFBool, TypeName, false,
+   return SFScalarPrototypeTemplate (SFBool, TypeName,
    {
       isDefaultValue ()
       {
@@ -81,12 +81,32 @@ function SFBoolTemplate (TypeName)
 
 function SFNumberTemplate (TypeName, double)
 {
+   const _formatter = double ? "DoubleFormat" : "FloatFormat";
+
    function SFNumber (value)
    {
       X3DField .call (this, arguments .length ? +value : 0);
    }
 
-   return SFScalarPrototypeTemplate (SFNumber, TypeName, double);
+   return SFScalarPrototypeTemplate (SFNumber, TypeName,
+   {
+      set (value)
+      {
+         X3DField .prototype .set .call (this, +value);
+      },
+      toStream (generator)
+      {
+         const category = this .getUnit ();
+
+         generator .string += generator [_formatter] (generator .ToUnit (category, this .getValue ()));
+      },
+      toJSONStreamValue (generator)
+      {
+         const category = this .getUnit ();
+
+         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, this .getValue ())));
+      },
+   });
 }
 
 function SFInt32Template (TypeName)
@@ -96,19 +116,11 @@ function SFInt32Template (TypeName)
       X3DField .call (this, value|0);
    }
 
-   return SFScalarPrototypeTemplate (SFInt32, TypeName, false,
+   return SFScalarPrototypeTemplate (SFInt32, TypeName,
    {
       set (value)
       {
          X3DField .prototype .set .call (this, value|0);
-      },
-      toStream (generator)
-      {
-         generator .string += this .getValue () .toString ();
-      },
-      toJSONStreamValue (generator)
-      {
-         this .toStream (generator);
       },
    });
 }
@@ -120,7 +132,7 @@ function SFStringTemplate (TypeName)
       X3DField .call (this, arguments .length ? String (value) : "");
    }
 
-   SFScalarPrototypeTemplate (SFString, TypeName, false,
+   SFScalarPrototypeTemplate (SFString, TypeName,
    {
       *[Symbol .iterator] ()
       {
@@ -177,10 +189,8 @@ function SFStringTemplate (TypeName)
    return SFString;
 }
 
-function SFScalarPrototypeTemplate (Constructor, TypeName, double, properties = { })
+function SFScalarPrototypeTemplate (Constructor, TypeName, properties = { })
 {
-   const _formatter = double ? "DoubleFormat" : "FloatFormat";
-
    Object .defineProperties (Constructor,
    {
       typeName:
@@ -207,9 +217,7 @@ function SFScalarPrototypeTemplate (Constructor, TypeName, double, properties = 
       valueOf: X3DField .prototype .getValue,
       toStream (generator)
       {
-         const category = this .getUnit ();
-
-         generator .string += generator [_formatter] (generator .ToUnit (category, this .getValue ()));
+         generator .string += this .getValue () .toString ();
       },
       toVRMLStream (generator)
       {
@@ -225,9 +233,7 @@ function SFScalarPrototypeTemplate (Constructor, TypeName, double, properties = 
       },
       toJSONStreamValue (generator)
       {
-         const category = this .getUnit ();
-
-         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, this .getValue ())));
+         this .toStream (generator);
       },
    },
    properties);
