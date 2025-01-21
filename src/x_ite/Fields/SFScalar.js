@@ -47,67 +47,6 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFScalarPrototypeTemplate (Constructor, TypeName, double, properties = { })
-{
-   const _formatter = double ? "DoubleFormat" : "FloatFormat";
-
-   Object .defineProperties (Constructor,
-   {
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
-   });
-
-   Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
-   {
-      copy ()
-      {
-         return new Constructor (this .getValue ());
-      },
-      isDefaultValue ()
-      {
-         return this .getValue () === 0;
-      },
-      set (value)
-      {
-         X3DField .prototype .set .call (this, +value);
-      },
-      valueOf: X3DField .prototype .getValue,
-      toStream (generator)
-      {
-         const category = this .getUnit ();
-
-         generator .string += generator [_formatter] (generator .ToUnit (category, this .getValue ()));
-      },
-      toVRMLStream (generator)
-      {
-         this .toStream (generator);
-      },
-      toXMLStream (generator)
-      {
-         this .toStream (generator);
-      },
-      toJSONStream (generator)
-      {
-         this .toJSONStreamValue (generator);
-      },
-      toJSONStreamValue (generator)
-      {
-         const category = this .getUnit ();
-
-         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, this .getValue ())));
-      },
-   },
-   properties);
-
-   for (const key of Object .keys (Constructor .prototype))
-      Object .defineProperty (Constructor .prototype, key, { enumerable: false });
-
-   return Constructor;
-}
-
 function SFBoolTemplate (TypeName)
 {
    function SFBool (value)
@@ -236,6 +175,67 @@ function SFStringTemplate (TypeName)
    });
 
    return SFString;
+}
+
+function SFScalarPrototypeTemplate (Constructor, TypeName, double, properties = { })
+{
+   const _formatter = double ? "DoubleFormat" : "FloatFormat";
+
+   Object .defineProperties (Constructor,
+   {
+      typeName:
+      {
+         value: TypeName,
+         enumerable: true,
+      },
+   });
+
+   Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
+   {
+      copy ()
+      {
+         return new Constructor (this .getValue ());
+      },
+      isDefaultValue ()
+      {
+         return this .getValue () === 0;
+      },
+      set (value)
+      {
+         X3DField .prototype .set .call (this, +value);
+      },
+      valueOf: X3DField .prototype .getValue,
+      toStream (generator)
+      {
+         const category = this .getUnit ();
+
+         generator .string += generator [_formatter] (generator .ToUnit (category, this .getValue ()));
+      },
+      toVRMLStream (generator)
+      {
+         this .toStream (generator);
+      },
+      toXMLStream (generator)
+      {
+         this .toStream (generator);
+      },
+      toJSONStream (generator)
+      {
+         this .toJSONStreamValue (generator);
+      },
+      toJSONStreamValue (generator)
+      {
+         const category = this .getUnit ();
+
+         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, this .getValue ())));
+      },
+   },
+   properties);
+
+   for (const key of Object .keys (Constructor .prototype))
+      Object .defineProperty (Constructor .prototype, key, { enumerable: false });
+
+   return Constructor;
 }
 
 const SFScalar = {
