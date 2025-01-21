@@ -173,7 +173,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 ## Lighting
 
 - [DirectionalLight](/x_ite/components/lighting/directionallight/)
-- [EnvironmentLight](/x_ite/components/lighting/environmentlight/) <small class="blue">experimental</small>
+- [EnvironmentLight](/x_ite/components/lighting/environmentlight/)
 - [PointLight](/x_ite/components/lighting/pointlight/)
 - [SpotLight](/x_ite/components/lighting/spotlight/)
 
