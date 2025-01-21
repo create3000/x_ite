@@ -45,19 +45,14 @@
  *
  ******************************************************************************/
 
-import SFBool              from "./SFBool.js";
+import SFScalar            from "./SFScalar.js";
 import SFColor             from "./SFColor.js";
 import SFColorRGBA         from "./SFColorRGBA.js";
-import SFDouble            from "./SFDouble.js";
-import SFFloat             from "./SFFloat.js";
 import SFImage             from "./SFImage.js";
-import SFInt32             from "./SFInt32.js";
 import SFMatrix3           from "./SFMatrix3.js";
 import SFMatrix4           from "./SFMatrix4.js";
 import SFNode              from "./SFNode.js";
 import SFRotation          from "./SFRotation.js";
-import SFString            from "./SFString.js";
-import SFTime              from "./SFTime.js";
 import SFVec2              from "./SFVec2.js";
 import SFVec3              from "./SFVec3.js";
 import SFVec4              from "./SFVec4.js";
@@ -65,6 +60,7 @@ import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
 
 const
+   { SFBool, SFDouble, SFFloat, SFInt32, SFString, SFTime } = SFScalar,
    { SFMatrix3d, SFMatrix3f } = SFMatrix3,
    { SFMatrix4d, SFMatrix4f } = SFMatrix4,
    { SFVec2d, SFVec2f }       = SFVec2,

@@ -63,7 +63,7 @@ Rotation (axis, angle in radians) of listening point direction relative to defau
 
 #### Hints
 
-- This is *orientation* change from default direction along the -Z axis (0 0 -1).
+- This is *orientation* change from default direction (0 0 -1) along the -X axis.
 - Complex rotations can be accomplished axis-by-axis using parent Transforms.
 
 #### Warning
