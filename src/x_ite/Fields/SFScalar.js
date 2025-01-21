@@ -90,6 +90,10 @@ function SFNumberTemplate (TypeName, double)
 
    return SFScalarPrototypeTemplate (SFNumber, TypeName,
    {
+      isDefaultValue ()
+      {
+         return this .getValue () === 0;
+      },
       set (value)
       {
          X3DField .prototype .set .call (this, +value);
@@ -118,6 +122,10 @@ function SFInt32Template (TypeName)
 
    return SFScalarPrototypeTemplate (SFInt32, TypeName,
    {
+      isDefaultValue ()
+      {
+         return this .getValue () === 0;
+      },
       set (value)
       {
          X3DField .prototype .set .call (this, value|0);
@@ -206,18 +214,10 @@ function SFScalarPrototypeTemplate (Constructor, TypeName, properties = { })
       {
          return new Constructor (this .getValue ());
       },
-      isDefaultValue ()
-      {
-         return this .getValue () === 0;
-      },
-      set (value)
-      {
-         X3DField .prototype .set .call (this, +value);
-      },
       valueOf: X3DField .prototype .getValue,
       toStream (generator)
       {
-         generator .string += this .getValue () .toString ();
+         generator .string += String (this .getValue ());
       },
       toVRMLStream (generator)
       {
