@@ -303,20 +303,41 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    createFaceNormals (verticesPerPolygon, polygonsSize)
    {
       const
-         cw      = !this ._ccw .getValue (),
          coord   = this .coordNode,
          normals = [ ];
 
-      for (let i = 0; i < polygonsSize; i += verticesPerPolygon)
+      for (let index = 0; index < polygonsSize; index += verticesPerPolygon)
       {
-         const normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
-
-         if (cw)
-            normal .negate ();
+         switch (verticesPerPolygon)
+         {
+            case 3:
+            {
+               var normal = coord .getNormal (this .getPolygonIndex (index),
+                                              this .getPolygonIndex (index + 1),
+                                              this .getPolygonIndex (index + 2));
+               break;
+            }
+            case 4:
+            {
+               var normal = coord .getQuadNormal (this .getPolygonIndex (index),
+                                                  this .getPolygonIndex (index + 1),
+                                                  this .getPolygonIndex (index + 2),
+                                                  this .getPolygonIndex (index + 3));
+               break;
+            }
+            default:
+            {
+               var normal = this .getPolygonNormal (index, verticesPerPolygon, coord);
+               break;
+            }
+         }
 
          for (let n = 0; n < verticesPerPolygon; ++ n)
             normals .push (normal);
       }
+
+      if (!this ._ccw .getValue ())
+         normals .forEach (normal => normal .negate ());
 
       return normals;
    },
