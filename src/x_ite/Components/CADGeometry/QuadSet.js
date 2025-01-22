@@ -86,9 +86,9 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, X3DComposedGeometryN
 
       X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
-   createNormals (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize, polygons)
    {
-      return this .createFaceNormals (verticesPerPolygon, polygonsSize);
+      return this .createFaceNormals (verticesPerPolygon, polygonsSize, polygons);
    },
 });
 

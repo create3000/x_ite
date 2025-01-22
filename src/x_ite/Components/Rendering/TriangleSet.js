@@ -76,9 +76,9 @@ Object .assign (Object .setPrototypeOf (TriangleSet .prototype, X3DComposedGeome
 
       X3DComposedGeometryNode .prototype .build .call (this, 3, this .getCoord () .getSize (), 3, this .getCoord () .getSize ());
    },
-   createNormals (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize, polygons)
    {
-      return this .createFaceNormals (verticesPerPolygon, polygonsSize);
+      return this .createFaceNormals (verticesPerPolygon, polygonsSize, polygons);
    },
 });
 
