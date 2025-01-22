@@ -139,13 +139,10 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    async set_loadCount__ (scene, resolve, reject, field)
    {
-      // Wait for extern protos to be loaded.
+      // Wait for extern protos to be loaded or failed.
 
-      for (const externproto of scene .externprotos)
-      {
-         if (externproto .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-            return;
-      }
+      if (scene .externprotos .some (externproto => externproto .checkLoadState () === X3DConstants .IN_PROGRESS_STATE))
+         return;
 
       scene ._loadCount .removeInterest ("set_loadCount__", this);
 
