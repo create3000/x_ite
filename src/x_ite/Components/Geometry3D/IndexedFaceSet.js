@@ -307,6 +307,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
    createNormals (polygons)
    {
       const
+         cw          = !this ._ccw .getValue (),
          coordIndex  = this ._coordIndex .getValue (),
          coord       = this .getCoord (),
          normalIndex = new Map (),
@@ -340,6 +341,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
             }
          }
 
+         if (cw)
+            normal .negate ();
+
          // Add a normal index for each point.
 
          for (const index of vertices)
@@ -358,9 +362,6 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
             normals [index] = normal;
          }
       }
-
-      if (!this ._ccw .getValue ())
-         normals .forEach (normal => normal .negate ());
 
       if (!this ._normalPerVertex .getValue ())
          return normals;
