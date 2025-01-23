@@ -280,7 +280,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       this .setCCW (this ._ccw .getValue ());
 
       // Clear arrays.
-      
+
       polygons  .length = 0;
       triangles .length = 0;
    },
