@@ -63,6 +63,9 @@ function X3DComposedGeometryNode (executionContext)
    this .normalNode   = null;
    this .tangentNode  = null;
    this .coordNode    = null;
+   this .triangles    = [ ];
+   this .polygons     = [ ];
+
 }
 
 Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DGeometryNode .prototype),
@@ -228,8 +231,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          normalArray        = this .getNormals (),
          tangentArray       = this .getTangents (),
          vertexArray        = this .getVertices (),
-         triangles          = [ ],
-         polygons           = [ ];
+         triangles          = this .triangles,
+         polygons           = this .polygons;
 
       // Init TextureCoordinateNode.
 
@@ -275,6 +278,11 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
+
+      // Clear arrays.
+      
+      polygons  .length = 0;
+      triangles .length = 0;
    },
    generateNormals (verticesPerPolygon, polygonsSize, polygons, trianglesSize, triangles)
    {
