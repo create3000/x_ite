@@ -67,9 +67,6 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
 
       const browser = this .getBrowser ();
 
-      // Preload texture.
-      browser .getLinetypeTexture ();
-
       browser .getRenderingProperties () ._ContentScale .addInterest ("set_linewidthScaleFactor__", this);
 
       this ._applied              .addInterest ("set_applied__",              this);
@@ -79,6 +76,9 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
       this .set_applied__ ();
       this .set_linetype__ ();
       this .set_linewidthScaleFactor__ ();
+
+      // Preload texture.
+      browser .getLinetypeTexture ();
    },
    getStyleKey ()
    {
