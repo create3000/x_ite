@@ -1078,6 +1078,11 @@ Object .defineProperties (X3DBrowser .prototype,
       },
       enumerable: true,
    },
+   contextMenu:
+   {
+      get: X3DBrowser .prototype .getContextMenu,
+      enumerable: true,
+   },
    element:
    {
       get ()
