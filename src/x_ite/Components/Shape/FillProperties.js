@@ -69,6 +69,9 @@ Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearance
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
+      // Preload texture.
+      this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
+
       this ._filled     .addInterest ("set_filled__",     this);
       this ._hatched    .addInterest ("set_hatched__",    this);
       this ._hatchColor .addInterest ("set_hatchColor__", this);
@@ -78,9 +81,6 @@ Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearance
       this .set_hatched__ ();
       this .set_hatchColor__ ();
       this .set_hatchStyle__ ();
-
-      // Preload texture.
-      this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
    getStyleKey ()
    {
