@@ -409,6 +409,7 @@ declare namespace X3D
 
    class ContextMenu
    {
+      userMenu: UserMenuCallback;
       getUserMenu (): UserMenuCallback;
       setUserMenu (cb: UserMenuCallback): void;
    }
