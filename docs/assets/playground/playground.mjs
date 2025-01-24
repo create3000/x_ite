@@ -51,7 +51,7 @@ class Playground
       this .addVRMLEncoding ();
       this .updateToolbar ();
 
-      browser .getContextMenu () .setUserMenu (() => this .updateUserMenu ());
+      browser .contextMenu .userMenu = () => this .updateUserMenu ();
 
       await browser .loadComponents (browser .getProfile ("Full"), browser .getComponent ("X_ITE"));
 
