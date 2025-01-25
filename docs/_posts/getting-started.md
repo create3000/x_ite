@@ -866,7 +866,7 @@ Ctrl+5
 
 ## Extending the Context Menu
 
-The context menu is similar to the jQuery context menu plugin, but more lightweight, and it can be extended using the `items` syntax. The full documentation [can be found here](https://swisnl.github.io/jQuery-contextMenu/docs/items.html).
+The context menu is similar to the jQuery context menu plugin, but more lightweight, and it can be extended using the `items` syntax. Basically `Browser .contextMenu .userMenu` is being assigned a function that returns a menu object. The full documentation [can be found here](https://swisnl.github.io/jQuery-contextMenu/docs/items.html).
 
 ### Example
 
