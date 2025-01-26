@@ -1,5 +1,5 @@
-/* X_ITE v11.0.5 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.5")];
+/* X_ITE v11.0.6 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.6")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -880,9 +880,9 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, (external_X_ITE_X3D_
 
       external_X_ITE_X3D_X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
-   createNormals (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize, polygons)
    {
-      return this .createFaceNormals (verticesPerPolygon, polygonsSize);
+      return this .createFaceNormals (verticesPerPolygon, polygonsSize, polygons);
    },
 });
 
