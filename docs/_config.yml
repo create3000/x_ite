@@ -21,8 +21,8 @@ tagline: Ready for X3Dv4! # it will display as the sub-title
 description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser and VRML Viewer, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.
 
-x_ite_latest_version: 11.0.5 # x_ite latest version
-x_ite_compressed_size: 274 # size in kb
+x_ite_latest_version: 11.0.6 # x_ite latest version
+x_ite_compressed_size: 273 # size in kb
 x3d_latest_version: 4.0 # x3d latest version
 
 # Fill in the protocol & hostname for your site.
