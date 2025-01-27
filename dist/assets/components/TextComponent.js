@@ -1,9 +1,9 @@
-/* X_ITE v11.0.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.6")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 437:
+/***/ 310:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16039,6 +16039,8 @@ function FontStyle (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).FontStyle);
 
+   // Units
+
    this ._size .setUnit ("length");
 }
 
@@ -16081,7 +16083,7 @@ const FontStyle_default_ = FontStyle;
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
 ;// ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(437);
+/* provided dependency */ var opentype = __webpack_require__(310);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16286,6 +16288,8 @@ function Text (executionContext)
    external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).Text);
+
+   // Units
 
    this ._length     .setUnit ("length");
    this ._maxExtent  .setUnit ("length");

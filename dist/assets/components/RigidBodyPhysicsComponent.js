@@ -1,5 +1,5 @@
-/* X_ITE v11.0.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.6")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -169,8 +169,6 @@ function X3DRigidJointNode (executionContext)
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "collection", new (external_X_ITE_X3D_Fields_default()).SFNode ());
 
-   this .bodyNode1             = null;
-   this .bodyNode2             = null;
    this .initialInverseMatrix1 = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .initialInverseMatrix2 = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .output                = false;
@@ -481,6 +479,8 @@ function BallJoint (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).BallJoint);
 
    this ._anchorPoint .setUnit ("length");
+
+   // Units
 
    this .joint             = null;
    this .outputs           = new Set ();
@@ -843,8 +843,6 @@ function CollidableOffset (executionContext)
    RigidBodyPhysics_X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollidableOffset);
-
-   this .collidableNode = null;
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPhysics_X3DNBodyCollidableNode .prototype),
@@ -1092,13 +1090,7 @@ function CollidableShape (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollidableShape);
 
-   this .convex         = false;
-   this .shapeNode      = null;
-   this .visibleNode    = null;
-   this .boundedObject  = null;
-   this .geometryNode   = null;
-   this .collisionShape = null;
-   this .triangleMesh   = null;
+   this .convex = false;
 }
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhysics_X3DNBodyCollidableNode .prototype),
@@ -1641,10 +1633,14 @@ function CollisionCollection (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollisionCollection);
 
+   // Units
+
    this ._minBounceSpeed           .setUnit ("speed");
    this ._surfaceSpeed             .setUnit ("speed");
    this ._softnessConstantForceMix .setUnit ("force");
 
+   // Private properties
+   
    this .appliedParameters   = new Set ();
    this .collidableNodes     = [ ];
    this .collisionSpaceNodes = [ ];
@@ -1860,7 +1856,6 @@ function CollisionSensor (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollisionSensor);
 
-   this .colliderNode = null;
    this .contactCache = [ ];
 }
 
@@ -2918,6 +2913,8 @@ function RigidBody (executionContext)
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transform",     new (external_X_ITE_X3D_Fields_default()).SFTime (),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "otherGeometry", new (external_X_ITE_X3D_Fields_default()).MFNode ());
 
+   // Units
+
    this ._position            .setUnit ("length");
    this ._linearVelocity      .setUnit ("speed");
    this ._angularVelocity     .setUnit ("angularRate");
@@ -2927,6 +2924,8 @@ function RigidBody (executionContext)
    this ._disableLinearSpeed  .setUnit ("speed");
    this ._disableAngularSpeed .setUnit ("angularRate");
 
+   // Private properties
+   
    this .compoundShape      = new AmmoClass .btCompoundShape ();
    this .motionState        = new AmmoClass .btDefaultMotionState ();
    this .constructionInfo   = new AmmoClass .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
@@ -3445,7 +3444,6 @@ function RigidBodyCollection (executionContext)
    this .solver                 = new AmmoClass .btSequentialImpulseConstraintSolver ();
    this .dynamicsWorld          = new AmmoClass .btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
    this .deltaTime              = 0;
-   this .colliderNode           = null;
    this .bodyNodes              = [ ];
    this .otherBodyNodes         = [ ];
    this .rigidBodies            = [ ];
@@ -4064,12 +4062,16 @@ function SliderJoint (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).SliderJoint);
 
+   // Units
+
    this ._minSeparation  .setUnit ("length");
    this ._maxSeparation  .setUnit ("length");
    this ._sliderForce    .setUnit ("force");
    this ._separation     .setUnit ("force");
    this ._separationRate .setUnit ("speed");
 
+   // Private properties
+   
    this .joint   = null;
    this .outputs = new Set ();
 }

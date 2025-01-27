@@ -1,5 +1,5 @@
-/* X_ITE v11.0.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.6")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -364,6 +364,8 @@ function Layout (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).Layout);
 
+   // Private properties
+   
    this .alignX          = CENTER;
    this .alignY          = CENTER;
    this .offsetUnitX     = WORLD;
@@ -985,8 +987,6 @@ function LayoutGroup (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).LayoutGroup);
 
-   this .viewportNode    = null;
-   this .layoutNode      = null;
    this .matrix          = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .screenMatrix    = new (external_X_ITE_X3D_Matrix4_default()) ();

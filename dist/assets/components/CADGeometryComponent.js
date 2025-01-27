@@ -1,5 +1,5 @@
-/* X_ITE v11.0.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.6")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -299,10 +299,6 @@ function CADFace (executionContext)
    external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CADFace);
-
-   this .childNode     = null;
-   this .visibleNode   = null;
-   this .boundedObject = null;
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProductStructureChildNode .prototype),

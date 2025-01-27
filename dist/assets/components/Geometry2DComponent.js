@@ -1,5 +1,5 @@
-/* X_ITE v11.0.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.6")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -837,6 +837,8 @@ function Arc2D (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).Arc2D);
 
+   // Units
+
    this ._startAngle .setUnit ("angle");
    this ._endAngle   .setUnit ("angle");
    this ._radius     .setUnit ("length");
@@ -990,6 +992,8 @@ function ArcClose2D (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ArcClose2D);
 
    this .setGeometryType (2);
+
+   // Units
 
    this ._startAngle .setUnit ("angle");
    this ._endAngle   .setUnit ("angle");
@@ -1204,6 +1208,8 @@ function Circle2D (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).Circle2D);
 
+   // Units
+
    this ._radius .setUnit ("length");
 }
 
@@ -1329,6 +1335,8 @@ function Disk2D (executionContext)
    external_X_ITE_X3D_X3DLineGeometryNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).Disk2D);
+
+   // Units
 
    this ._innerRadius .setUnit ("length");
    this ._outerRadius .setUnit ("length");
@@ -1575,6 +1583,8 @@ function Polyline2D (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).Polyline2D);
 
+   // Units
+
    this ._lineSegments .setUnit ("length");
 }
 
@@ -1671,6 +1681,8 @@ function Polypoint2D (executionContext)
    external_X_ITE_X3D_X3DPointGeometryNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).Polypoint2D);
+
+   // Units
 
    this ._point .setUnit ("length");
 }
@@ -1773,6 +1785,8 @@ function Rectangle2D (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).Rectangle2D);
 
    this .setGeometryType (2);
+
+   // Units
 
    this ._size .setUnit ("length");
 }
@@ -1906,6 +1920,8 @@ function TriangleSet2D (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).TriangleSet2D);
 
    this .setGeometryType (2);
+
+   // Units
 
    this ._vertices .setUnit ("length");
 }

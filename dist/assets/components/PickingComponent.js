@@ -1,5 +1,5 @@
-/* X_ITE v11.0.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.6")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -396,8 +396,9 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
 
          const
             browser             = this .getBrowser (),
-            shapeNode           = browser .getPrivateScene () .createNode ("Shape",           false),
-            collidableShapeNode = browser .getPrivateScene () .createNode ("CollidableShape", false);
+            privateScene        = browser .getPrivateScene (),
+            shapeNode           = privateScene .createNode ("Shape",           false),
+            collidableShapeNode = privateScene .createNode ("CollidableShape", false);
 
          shapeNode .setPrivate (true);
          collidableShapeNode .setPrivate (true);
@@ -766,8 +767,6 @@ function LinePickSensor (executionContext)
    Picking_X3DPickSensorNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).LinePickSensor);
-
-   this .pickingGeometryNode = null;
 }
 
 Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPickSensorNode .prototype),
@@ -1585,7 +1584,6 @@ function PointPickSensor (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).PointPickSensor);
 
-   this .pickingGeometryNode = null;
    this .picker              = new Picking_VolumePicker ();
    this .compoundShapes      = [ ];
 }
@@ -1919,8 +1917,7 @@ function PrimitivePickSensor (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).PrimitivePickSensor);
 
-   this .pickingGeometryNode = null;
-   this .picker              = new Picking_VolumePicker ();
+   this .picker = new Picking_VolumePicker ();
 }
 
 Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, Picking_X3DPickSensorNode .prototype),
@@ -2177,8 +2174,7 @@ function VolumePickSensor (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).VolumePickSensor);
 
-   this .pickingGeometryNode = null;
-   this .picker              = new Picking_VolumePicker ();
+   this .picker = new Picking_VolumePicker ();
 }
 
 Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, Picking_X3DPickSensorNode .prototype),

@@ -1,5 +1,5 @@
-/* X_ITE v11.0.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.6")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1896,20 +1896,24 @@ function X3DVolumeDataNode (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DVolumeDataNode);
 
-   const browser = this .getBrowser ();
-
-   this .proximitySensorNode      = browser .getPrivateScene () .createNode ("ProximitySensor",     false);
-   this .transformNode            = browser .getPrivateScene () .createNode ("Transform",           false);
-   this .shapeNode                = browser .getPrivateScene () .createNode ("Shape",               false);
-   this .appearanceNode           = browser .getPrivateScene () .createNode ("Appearance",          false);
-   this .textureTransformNode     = browser .getPrivateScene () .createNode ("TextureTransform3D",  false);
-   this .geometryNode             = browser .getPrivateScene () .createNode ("QuadSet",             false);
-   this .textureCoordinateNode    = browser .getPrivateScene () .createNode ("TextureCoordinate3D", false);
-   this .coordinateNode           = browser .getPrivateScene () .createNode ("Coordinate",          false);
-   this .volumeMaterialNode       = new VolumeRendering_VolumeMaterial (browser .getPrivateScene (), this);
-   this .textureNormalMatrixArray = new Float32Array (9);
-
    this .setCameraObject (true);
+
+   // Private properties
+
+   const
+      browser      = this .getBrowser (),
+      privateScene = browser .getPrivateScene ();
+
+   this .proximitySensorNode      = privateScene .createNode ("ProximitySensor",     false);
+   this .transformNode            = privateScene .createNode ("Transform",           false);
+   this .shapeNode                = privateScene .createNode ("Shape",               false);
+   this .appearanceNode           = privateScene .createNode ("Appearance",          false);
+   this .textureTransformNode     = privateScene .createNode ("TextureTransform3D",  false);
+   this .geometryNode             = privateScene .createNode ("QuadSet",             false);
+   this .textureCoordinateNode    = privateScene .createNode ("TextureCoordinate3D", false);
+   this .coordinateNode           = privateScene .createNode ("Coordinate",          false);
+   this .volumeMaterialNode       = new VolumeRendering_VolumeMaterial (privateScene, this);
+   this .textureNormalMatrixArray = new Float32Array (9);
 }
 
 Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
@@ -2721,8 +2725,7 @@ function SegmentedVolumeData (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).SegmentedVolumeData);
 
-   this .segmentIdentifiersNode = null;
-   this .renderStyleNodes       = [ ];
+   this .renderStyleNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRendering_X3DVolumeDataNode .prototype),

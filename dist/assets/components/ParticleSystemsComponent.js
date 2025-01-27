@@ -1,5 +1,5 @@
-/* X_ITE v11.0.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.6")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -205,10 +205,14 @@ function X3DParticleEmitterNode (executionContext)
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "bbox_changed", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
+   // Units
+
    this ._speed       .setUnit ("speed");
    this ._mass        .setUnit ("mass");
    this ._surfaceArea .setUnit ("area");
 
+   // Private properties
+   
    this .defines   = [ ];
    this .samplers  = [ ];
    this .uniforms  = new Map ();
@@ -733,6 +737,8 @@ function PointEmitter (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).PointEmitter);
 
+   // Units
+
    this ._position .setUnit ("length");
 }
 
@@ -1162,6 +1168,8 @@ function ConeEmitter (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ConeEmitter);
 
+   // Units
+
    this ._position .setUnit ("length");
    this ._angle    .setUnit ("angle");
 }
@@ -1329,6 +1337,8 @@ function ExplosionEmitter (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ExplosionEmitter);
 
+   // Units
+
    this ._position .setUnit ("length");
 }
 
@@ -1468,6 +1478,8 @@ function ForcePhysicsModel (executionContext)
    ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ForcePhysicsModel);
+
+   // Units
 
    this ._force .setUnit ("force");
 }
@@ -3405,7 +3417,6 @@ function SurfaceEmitter (executionContext)
 
    this .verticesIndex = -1;
    this .normalsIndex  = -1;
-   this .surfaceNode   = null;
    this .surfaceArray  = new Float32Array ();
 }
 
