@@ -65,18 +65,20 @@ function X3DVolumeDataNode (executionContext)
    this .setCameraObject (true);
 
    // Private properties
-   
-   const browser = this .getBrowser ();
 
-   this .proximitySensorNode      = browser .getPrivateScene () .createNode ("ProximitySensor",     false);
-   this .transformNode            = browser .getPrivateScene () .createNode ("Transform",           false);
-   this .shapeNode                = browser .getPrivateScene () .createNode ("Shape",               false);
-   this .appearanceNode           = browser .getPrivateScene () .createNode ("Appearance",          false);
-   this .textureTransformNode     = browser .getPrivateScene () .createNode ("TextureTransform3D",  false);
-   this .geometryNode             = browser .getPrivateScene () .createNode ("QuadSet",             false);
-   this .textureCoordinateNode    = browser .getPrivateScene () .createNode ("TextureCoordinate3D", false);
-   this .coordinateNode           = browser .getPrivateScene () .createNode ("Coordinate",          false);
-   this .volumeMaterialNode       = new VolumeMaterial (browser .getPrivateScene (), this);
+   const
+      browser      = this .getBrowser (),
+      privateScene = browser .getPrivateScene ();
+
+   this .proximitySensorNode      = privateScene .createNode ("ProximitySensor",     false);
+   this .transformNode            = privateScene .createNode ("Transform",           false);
+   this .shapeNode                = privateScene .createNode ("Shape",               false);
+   this .appearanceNode           = privateScene .createNode ("Appearance",          false);
+   this .textureTransformNode     = privateScene .createNode ("TextureTransform3D",  false);
+   this .geometryNode             = privateScene .createNode ("QuadSet",             false);
+   this .textureCoordinateNode    = privateScene .createNode ("TextureCoordinate3D", false);
+   this .coordinateNode           = privateScene .createNode ("Coordinate",          false);
+   this .volumeMaterialNode       = new VolumeMaterial (privateScene, this);
    this .textureNormalMatrixArray = new Float32Array (9);
 }
 

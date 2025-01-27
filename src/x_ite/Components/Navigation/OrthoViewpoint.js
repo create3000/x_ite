@@ -71,12 +71,16 @@ function OrthoViewpoint (executionContext)
    this ._fieldOfView      .setUnit ("length");
 
    // Private properties
-   
+
+   const
+      browser      = this .getBrowser (),
+      privateScene = browser .getPrivateScene ();
+
    this .projectionMatrix               = new Matrix4 ();
-   this .fieldOfViewOffsetInterpolator0 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-   this .fieldOfViewOffsetInterpolator1 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-   this .fieldOfViewOffsetInterpolator2 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-   this .fieldOfViewOffsetInterpolator3 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+   this .fieldOfViewOffsetInterpolator0 = new ScalarInterpolator (privateScene);
+   this .fieldOfViewOffsetInterpolator1 = new ScalarInterpolator (privateScene);
+   this .fieldOfViewOffsetInterpolator2 = new ScalarInterpolator (privateScene);
+   this .fieldOfViewOffsetInterpolator3 = new ScalarInterpolator (privateScene);
 }
 
 Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointNode .prototype),
