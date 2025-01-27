@@ -62,6 +62,10 @@ function X3DVolumeDataNode (executionContext)
 
    this .addType (X3DConstants .X3DVolumeDataNode);
 
+   this .setCameraObject (true);
+
+   // Private properties
+   
    const browser = this .getBrowser ();
 
    this .proximitySensorNode      = browser .getPrivateScene () .createNode ("ProximitySensor",     false);
@@ -74,8 +78,6 @@ function X3DVolumeDataNode (executionContext)
    this .coordinateNode           = browser .getPrivateScene () .createNode ("Coordinate",          false);
    this .volumeMaterialNode       = new VolumeMaterial (browser .getPrivateScene (), this);
    this .textureNormalMatrixArray = new Float32Array (9);
-
-   this .setCameraObject (true);
 }
 
 Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNode .prototype),
