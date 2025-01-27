@@ -73,6 +73,8 @@ function PlaneSensor (executionContext)
 
    this .addType (X3DConstants .PlaneSensor);
 
+   // Units
+
    this ._offset              .setUnit ("length");
    this ._minPosition         .setUnit ("length");
    this ._maxPosition         .setUnit ("length");

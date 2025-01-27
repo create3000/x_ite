@@ -59,9 +59,13 @@ function SquadOrientationInterpolator (executionContext)
 
    this .addType (X3DConstants .SquadOrientationInterpolator);
 
+   // Units
+
    this ._keyValue      .setUnit ("angle");
    this ._value_changed .setUnit ("angle");
 
+   // Private properties
+   
    this .squad = new SquatInterpolator ();
 }
 

@@ -64,10 +64,14 @@ function OrthoViewpoint (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "fieldOfViewOffset", new Fields .MFFloat (0, 0, 0, 0));
 
+   // Units
+
    this ._position         .setUnit ("length");
    this ._centerOfRotation .setUnit ("length");
    this ._fieldOfView      .setUnit ("length");
 
+   // Private properties
+   
    this .projectionMatrix               = new Matrix4 ();
    this .fieldOfViewOffsetInterpolator0 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
    this .fieldOfViewOffsetInterpolator1 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());

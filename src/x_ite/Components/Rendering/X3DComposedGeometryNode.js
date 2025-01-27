@@ -57,12 +57,8 @@ function X3DComposedGeometryNode (executionContext)
 
    this .addType (X3DConstants .X3DComposedGeometryNode);
 
-   this .fogCoordNode = null;
-   this .colorNode    = null;
-   this .texCoordNode = null;
-   this .normalNode   = null;
-   this .tangentNode  = null;
-   this .coordNode    = null;
+   // Private properties
+   
    this .triangles    = [ ];
    this .polygons     = [ ];
 

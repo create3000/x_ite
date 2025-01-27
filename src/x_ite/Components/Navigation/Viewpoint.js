@@ -61,10 +61,14 @@ function Viewpoint (executionContext)
 
    this .addType (X3DConstants .Viewpoint);
 
+   // Units
+
    this ._position         .setUnit ("length");
    this ._centerOfRotation .setUnit ("length");
    this ._fieldOfView      .setUnit ("angle");
 
+   // Private properties
+   
    this .projectionMatrix = new Matrix4 ();
 }
 

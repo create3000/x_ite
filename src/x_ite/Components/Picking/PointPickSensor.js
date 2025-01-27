@@ -65,7 +65,6 @@ function PointPickSensor (executionContext)
 
    this .addType (X3DConstants .PointPickSensor);
 
-   this .pickingGeometryNode = null;
    this .picker              = new VolumePicker ();
    this .compoundShapes      = [ ];
 }

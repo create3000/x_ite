@@ -61,6 +61,8 @@ function GeoTouchSensor (executionContext)
 
    this .addType (X3DConstants .GeoTouchSensor);
 
+   // Units
+
    this ._hitPoint_changed .setUnit ("length");
 }
 

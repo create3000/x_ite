@@ -58,6 +58,8 @@ function FogCoordinate (executionContext)
 
    this .addType (X3DConstants .FogCoordinate);
 
+   // Units
+
    this ._depth .setUnit ("length");
 }
 

@@ -58,6 +58,8 @@ function Circle2D (executionContext)
 
    this .addType (X3DConstants .Circle2D);
 
+   // Units
+
    this ._radius .setUnit ("length");
 }
 

@@ -58,6 +58,8 @@ function Polypoint2D (executionContext)
 
    this .addType (X3DConstants .Polypoint2D);
 
+   // Units
+
    this ._point .setUnit ("length");
 }
 

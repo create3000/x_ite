@@ -69,6 +69,8 @@ function RigidBody (executionContext)
                           X3DConstants .inputOutput, "transform",     new Fields .SFTime (),
                           X3DConstants .inputOutput, "otherGeometry", new Fields .MFNode ());
 
+   // Units
+
    this ._position            .setUnit ("length");
    this ._linearVelocity      .setUnit ("speed");
    this ._angularVelocity     .setUnit ("angularRate");
@@ -78,6 +80,8 @@ function RigidBody (executionContext)
    this ._disableLinearSpeed  .setUnit ("speed");
    this ._disableAngularSpeed .setUnit ("angularRate");
 
+   // Private properties
+   
    this .compoundShape      = new Ammo .btCompoundShape ();
    this .motionState        = new Ammo .btDefaultMotionState ();
    this .constructionInfo   = new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);

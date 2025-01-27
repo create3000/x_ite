@@ -58,11 +58,6 @@ function LineSet (executionContext)
    X3DLineGeometryNode .call (this, executionContext);
 
    this .addType (X3DConstants .LineSet);
-
-   this .fogCoordNode = null;
-   this .colorNode    = null;
-   this .normalNode   = null;
-   this .coordNode    = null;
 }
 
 Object .assign (Object .setPrototypeOf (LineSet .prototype, X3DLineGeometryNode .prototype),

@@ -59,6 +59,8 @@ function FontStyle (executionContext)
 
    this .addType (X3DConstants .FontStyle);
 
+   // Units
+
    this ._size .setUnit ("length");
 }
 

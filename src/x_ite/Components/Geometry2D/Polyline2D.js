@@ -58,6 +58,8 @@ function Polyline2D (executionContext)
 
    this .addType (X3DConstants .Polyline2D);
 
+   // Units
+
    this ._lineSegments .setUnit ("length");
 }
 

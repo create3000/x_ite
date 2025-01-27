@@ -70,8 +70,12 @@ function GeoLOD (executionContext)
 
    this .addType (X3DConstants .GeoLOD);
 
+   // Units
+
    this ._range .setUnit ("length");
 
+   // Private properties
+   
    this .unload           = false;
    this .rootGroup        = new Group (this .getBrowser () .getPrivateScene ());
    this .rootInline       = new Inline (executionContext);

@@ -59,6 +59,8 @@ function OrientationInterpolator (executionContext)
 
    this .addType (X3DConstants .OrientationInterpolator);
 
+   // Units
+
    this ._keyValue      .setUnit ("angle");
    this ._value_changed .setUnit ("angle");
 }

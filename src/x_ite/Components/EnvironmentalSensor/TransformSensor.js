@@ -67,15 +67,18 @@ function TransformSensor (executionContext)
 
    this .addType (X3DConstants .TransformSensor);
 
-   this ._position_changed .setUnit ("length");
-
    this .setZeroTest (true);
 
-   this .min              = new Vector3 ();
-   this .max              = new Vector3 ();
-   this .targetObjectNode = null;
-   this .modelMatrices    = [ ];
-   this .targetMatrices   = [ ];
+   // Units
+
+   this ._position_changed .setUnit ("length");
+
+   // Private properties
+
+   this .min            = new Vector3 ();
+   this .max            = new Vector3 ();
+   this .modelMatrices  = [ ];
+   this .targetMatrices = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironmentalSensorNode .prototype),

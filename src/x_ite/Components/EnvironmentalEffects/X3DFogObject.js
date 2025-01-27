@@ -92,7 +92,11 @@ function X3DFogObject (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "hidden", new Fields .SFBool ());
 
+   // Units
+
    this ._visibilityRange .setUnit ("length");
+
+   // Private properties
 
    this .colorArray = new Float32Array (3);
 }

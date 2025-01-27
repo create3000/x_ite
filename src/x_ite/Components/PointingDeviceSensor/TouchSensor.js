@@ -58,6 +58,8 @@ function TouchSensor (executionContext)
 
    this .addType (X3DConstants .TouchSensor);
 
+   // Units
+
    this ._hitPoint_changed .setUnit ("length");
 }
 

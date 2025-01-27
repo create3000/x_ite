@@ -60,6 +60,8 @@ function IndexedFaceSet (executionContext)
 
    this .addType (X3DConstants .IndexedFaceSet);
 
+   // Units
+
    this ._creaseAngle .setUnit ("angle");
 }
 

@@ -60,6 +60,8 @@ function Arc2D (executionContext)
 
    this .addType (X3DConstants .Arc2D);
 
+   // Units
+
    this ._startAngle .setUnit ("angle");
    this ._endAngle   .setUnit ("angle");
    this ._radius     .setUnit ("length");

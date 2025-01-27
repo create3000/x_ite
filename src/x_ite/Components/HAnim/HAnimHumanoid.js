@@ -94,7 +94,6 @@ function HAnimHumanoid (executionContext)
    this .displacementWeights  = [ ];
    this .numJoints            = 0;
    this .numDisplacements     = 0;
-   this .skinCoordNode        = null;
    this .update               = new Lock ();
    this .skinning             = Function .prototype;
 }

@@ -80,7 +80,6 @@ function RigidBodyCollection (executionContext)
    this .solver                 = new Ammo .btSequentialImpulseConstraintSolver ();
    this .dynamicsWorld          = new Ammo .btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
    this .deltaTime              = 0;
-   this .colliderNode           = null;
    this .bodyNodes              = [ ];
    this .otherBodyNodes         = [ ];
    this .rigidBodies            = [ ];

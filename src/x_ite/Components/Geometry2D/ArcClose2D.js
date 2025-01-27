@@ -62,6 +62,8 @@ function ArcClose2D (executionContext)
 
    this .setGeometryType (2);
 
+   // Units
+
    this ._startAngle .setUnit ("angle");
    this ._endAngle   .setUnit ("angle");
    this ._radius     .setUnit ("length");

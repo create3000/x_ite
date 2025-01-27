@@ -62,12 +62,16 @@ function SliderJoint (executionContext)
 
    this .addType (X3DConstants .SliderJoint);
 
+   // Units
+
    this ._minSeparation  .setUnit ("length");
    this ._maxSeparation  .setUnit ("length");
    this ._sliderForce    .setUnit ("force");
    this ._separation     .setUnit ("force");
    this ._separationRate .setUnit ("speed");
 
+   // Private properties
+   
    this .joint   = null;
    this .outputs = new Set ();
 }

@@ -63,8 +63,7 @@ function VolumePickSensor (executionContext)
 
    this .addType (X3DConstants .VolumePickSensor);
 
-   this .pickingGeometryNode = null;
-   this .picker              = new VolumePicker ();
+   this .picker = new VolumePicker ();
 }
 
 Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, X3DPickSensorNode .prototype),

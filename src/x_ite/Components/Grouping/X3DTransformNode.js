@@ -55,6 +55,8 @@ function X3DTransformNode (executionContext)
 
    this .addType (X3DConstants .X3DTransformNode);
 
+   // Units
+
    this ._translation .setUnit ("length");
    this ._center      .setUnit ("length");
 }

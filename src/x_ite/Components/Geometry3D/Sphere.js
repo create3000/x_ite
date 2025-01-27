@@ -58,6 +58,8 @@ function Sphere (executionContext)
 
    this .addType (X3DConstants .Sphere);
 
+   // Units
+
    this ._radius .setUnit ("length");
 }
 

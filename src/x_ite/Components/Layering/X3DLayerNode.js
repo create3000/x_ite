@@ -84,10 +84,9 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    groupNodes ._children = [groupNode];
    groupNodes .setPrivate (true);
 
-   this .active       = false;
-   this .layer0       = false;
-   this .groupNodes   = groupNodes;
-   this .viewportNode = null;
+   this .active     = false;
+   this .layer0     = false;
+   this .groupNodes = groupNodes;
 
    this .defaultNavigationInfo = new NavigationInfo (executionContext);
    this .defaultViewpoint      = defaultViewpoint;

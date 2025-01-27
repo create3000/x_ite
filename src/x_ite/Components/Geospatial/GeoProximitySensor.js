@@ -64,8 +64,12 @@ function GeoProximitySensor (executionContext)
 
    this .addType (X3DConstants .GeoProximitySensor);
 
+   // Units
+
    this ._position_changed         .setUnit ("length");
    this ._centerOfRotation_changed .setUnit ("length");
+
+   // Private properties
 
    this .proximitySensor = new ProximitySensor (executionContext);
 

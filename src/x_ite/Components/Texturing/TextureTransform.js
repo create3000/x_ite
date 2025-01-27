@@ -61,8 +61,12 @@ function TextureTransform (executionContext)
 
    this .addType (X3DConstants .TextureTransform);
 
+   // Units
+
    this ._rotation .setUnit ("angle");
 
+   // Private properties
+   
    this .matrix = new Matrix4 ();
 }
 

@@ -59,8 +59,6 @@ function X3DRigidJointNode (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "collection", new Fields .SFNode ());
 
-   this .bodyNode1             = null;
-   this .bodyNode2             = null;
    this .initialInverseMatrix1 = new Matrix4 ();
    this .initialInverseMatrix2 = new Matrix4 ();
    this .output                = false;

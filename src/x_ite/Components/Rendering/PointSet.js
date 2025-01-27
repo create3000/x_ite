@@ -58,11 +58,6 @@ function PointSet (executionContext)
    X3DPointGeometryNode .call (this, executionContext);
 
    this .addType (X3DConstants .PointSet);
-
-   this .fogCoordNode = null;
-   this .colorNode    = null;
-   this .normalNode   = null;
-   this .coordNode    = null;
 }
 
 Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNode .prototype),

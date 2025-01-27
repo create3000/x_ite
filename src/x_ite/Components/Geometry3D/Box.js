@@ -59,6 +59,8 @@ function Box (executionContext)
 
    this .addType (X3DConstants .Box);
 
+   // Units
+
    this ._size .setUnit ("length");
 }
 

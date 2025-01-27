@@ -68,12 +68,16 @@ function Sound (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
 
+   // Units
+
    this ._location .setUnit ("length");
    this ._minBack  .setUnit ("length");
    this ._minFront .setUnit ("length");
    this ._maxBack  .setUnit ("length");
    this ._maxFront .setUnit ("length");
 
+   // Private properties
+   
    this .childNodes       = [ ];
    this .currentTraversed = true;
 }

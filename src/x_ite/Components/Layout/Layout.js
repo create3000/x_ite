@@ -76,6 +76,8 @@ function Layout (executionContext)
 
    this .addType (X3DConstants .Layout);
 
+   // Private properties
+   
    this .alignX          = CENTER;
    this .alignY          = CENTER;
    this .offsetUnitX     = WORLD;
