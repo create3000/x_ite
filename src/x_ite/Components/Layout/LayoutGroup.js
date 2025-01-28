@@ -61,8 +61,6 @@ function LayoutGroup (executionContext)
 
    this .addType (X3DConstants .LayoutGroup);
 
-   this .viewportNode    = null;
-   this .layoutNode      = null;
    this .matrix          = new Matrix4 ();
    this .modelViewMatrix = new Matrix4 ();
    this .screenMatrix    = new Matrix4 ();

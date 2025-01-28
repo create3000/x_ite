@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
       this .set_linewidthScaleFactor__ ();
 
       // Preload texture.
-      this .getBrowser () .getLinetypeTexture ();
+      browser .getLinetypeTexture ();
    },
    getStyleKey ()
    {

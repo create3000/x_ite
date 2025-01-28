@@ -63,11 +63,14 @@ function ProximitySensor (executionContext)
    this .addType (X3DConstants .ProximitySensor);
 
    this .setCameraObject (true);
+   this .setZeroTest (true);
+
+   // Units
 
    this ._centerOfRotation_changed .setUnit ("length");
    this ._position_changed         .setUnit ("length");
 
-   this .setZeroTest (true);
+   // Private properties
 
    this .min           = new Vector3 ();
    this .max           = new Vector3 ();

@@ -1,5 +1,5 @@
-/* X_ITE v11.0.5 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.5")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1511,13 +1511,11 @@ function GeoElevationGrid (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeoElevationGrid);
 
+   // Units
+
    this ._set_height  .setUnit ("length");
    this ._creaseAngle .setUnit ("angle");
    this ._height      .setUnit ("length");
-
-   this .colorNode    = null;
-   this .texCoordNode = null;
-   this .normalNode   = null;
 }
 
 Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X_ITE_X3D_X3DGeometryNode_default()).prototype),
@@ -1948,8 +1946,12 @@ function GeoLOD (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeoLOD);
 
+   // Units
+
    this ._range .setUnit ("length");
 
+   // Private properties
+   
    this .unload           = false;
    this .rootGroup        = new (external_X_ITE_X3D_Group_default()) (this .getBrowser () .getPrivateScene ());
    this .rootInline       = new (external_X_ITE_X3D_Inline_default()) (executionContext);
@@ -2727,8 +2729,12 @@ function GeoPositionInterpolator (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeoPositionInterpolator);
 
+   // Units
+
    this ._value_changed .setUnit ("length");
 
+   // Private properties
+   
    this .geocentric = new Geospatial_Geocentric ();
 }
 
@@ -2877,8 +2883,12 @@ function GeoProximitySensor (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeoProximitySensor);
 
+   // Units
+
    this ._position_changed         .setUnit ("length");
    this ._centerOfRotation_changed .setUnit ("length");
+
+   // Private properties
 
    this .proximitySensor = new (external_X_ITE_X3D_ProximitySensor_default()) (executionContext);
 
@@ -3030,6 +3040,8 @@ function GeoTouchSensor (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeoTouchSensor);
 
+   // Units
+
    this ._hitPoint_changed .setUnit ("length");
 }
 
@@ -3154,6 +3166,8 @@ function GeoTransform (executionContext)
    Geospatial_X3DGeospatialObject      .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeoTransform);
+
+   // Units
 
    this ._translation .setUnit ("length");
 }

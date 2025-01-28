@@ -150,13 +150,11 @@ Object .assign (X3DObject .prototype,
 
       generator .string = "";
 
-      if (options ?.scene)
-         generator .PushExecutionContext (options .scene);
+      generator .PushExecutionContext (options ?.scene ?? null);
 
       this .toStream (generator);
 
-      if (options ?.scene)
-         generator .PopExecutionContext ();
+      generator .PopExecutionContext ();
 
       return generator .string;
    },
@@ -168,13 +166,11 @@ Object .assign (X3DObject .prototype,
 
       generator .string = "";
 
-      if (options ?.scene)
-         generator .PushExecutionContext (options .scene);
+      generator .PushExecutionContext (options ?.scene ?? null);
 
       this .toVRMLStream (generator);
 
-      if (options ?.scene)
-         generator .PopExecutionContext ();
+      generator .PopExecutionContext ();
 
       return generator .string;
    },
@@ -186,13 +182,11 @@ Object .assign (X3DObject .prototype,
 
       generator .string = "";
 
-      if (options ?.scene)
-         generator .PushExecutionContext (options .scene);
+      generator .PushExecutionContext (options ?.scene ?? null);
 
       this .toXMLStream (generator);
 
-      if (options ?.scene)
-         generator .PopExecutionContext ();
+      generator .PopExecutionContext ();
 
       return generator .string;
    },
@@ -204,13 +198,11 @@ Object .assign (X3DObject .prototype,
 
       generator .string = "";
 
-      if (options ?.scene)
-         generator .PushExecutionContext (options .scene);
+      generator .PushExecutionContext (options ?.scene ?? null);
 
       this .toJSONStream (generator);
 
-      if (options ?.scene)
-         generator .PopExecutionContext ();
+      generator .PopExecutionContext ();
 
       return generator .string;
    },

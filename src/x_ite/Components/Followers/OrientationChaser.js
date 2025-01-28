@@ -63,6 +63,8 @@ function OrientationChaser (executionContext)
 
    this .addType (X3DConstants .OrientationChaser);
 
+   // Units
+
    this ._set_value          .setUnit ("angle");
    this ._set_destination    .setUnit ("angle");
    this ._initialValue       .setUnit ("angle");

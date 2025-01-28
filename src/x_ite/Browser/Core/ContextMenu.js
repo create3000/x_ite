@@ -696,6 +696,16 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
    },
 });
 
+Object .defineProperties (ContextMenu .prototype,
+{
+   userMenu:
+   {
+      get: ContextMenu .prototype .getUserMenu,
+      set: ContextMenu .prototype .setUserMenu,
+      enumerable: true,
+   },
+});
+
 Object .defineProperties (ContextMenu,
 {
    typeName:

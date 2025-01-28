@@ -62,8 +62,7 @@ function PrimitivePickSensor (executionContext)
 
    this .addType (X3DConstants .PrimitivePickSensor);
 
-   this .pickingGeometryNode = null;
-   this .picker              = new VolumePicker ();
+   this .picker = new VolumePicker ();
 }
 
 Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickSensorNode .prototype),

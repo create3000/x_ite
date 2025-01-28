@@ -60,9 +60,13 @@ function X3DBoundedObject (executionContext)
                           X3DConstants .outputOnly,  "display",                  new Fields .SFBool (true),
                           X3DConstants .outputOnly,  "transformSensors_changed", new Fields .SFTime ());
 
+   // Units
+
    this ._bboxSize   .setUnit ("length");
    this ._bboxCenter .setUnit ("length");
 
+   // Private properties
+   
    this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
    this .transformSensorNodes = new Set ();
 }

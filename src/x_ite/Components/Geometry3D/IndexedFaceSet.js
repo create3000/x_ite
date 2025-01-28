@@ -60,6 +60,8 @@ function IndexedFaceSet (executionContext)
 
    this .addType (X3DConstants .IndexedFaceSet);
 
+   // Units
+
    this ._creaseAngle .setUnit ("angle");
 }
 
@@ -341,6 +343,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
             }
          }
 
+         if (cw)
+            normal .negate ();
+
          // Add a normal index for each point.
 
          for (const index of vertices)
@@ -358,9 +363,6 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
             normals [index] = normal;
          }
-
-         if (cw)
-            normal .negate ();
       }
 
       if (!this ._normalPerVertex .getValue ())

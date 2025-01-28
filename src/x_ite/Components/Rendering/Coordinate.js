@@ -58,6 +58,8 @@ function Coordinate (executionContext)
 
    this .addType (X3DConstants .Coordinate);
 
+   // Units
+
    this ._point .setUnit ("length");
 }
 

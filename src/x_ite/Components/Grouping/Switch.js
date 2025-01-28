@@ -64,12 +64,6 @@ function Switch (executionContext)
 
    if (executionContext .getSpecificationVersion () == 2.0)
       this .addAlias ("choice", this ._children);
-
-   // Private properties
-
-   this .childNode     = null;
-   this .visibleNode   = null;
-   this .boundedObject = null;
 }
 
 Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prototype),

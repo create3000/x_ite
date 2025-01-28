@@ -194,6 +194,8 @@ function TextureProjectorParallel (executionContext)
 
    this .addType (X3DConstants .TextureProjectorParallel);
 
+   // Units
+
    this ._fieldOfView .setUnit ("length");
 
    // Legacy

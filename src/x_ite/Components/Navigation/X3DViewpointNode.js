@@ -83,15 +83,17 @@ function X3DViewpointNode (executionContext)
    this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
    this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
 
-   const browser = this .getBrowser ();
+   const
+      browser      = this .getBrowser (),
+      privateScene = browser .getPrivateScene ();
 
-   this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
-   this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
-   this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
-   this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
-   this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
-   this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
-   this .fieldOfViewScaleInterpolator = new ScalarInterpolator      (browser .getPrivateScene ());
+   this .timeSensor                   = new TimeSensor              (privateScene);
+   this .easeInEaseOut                = new EaseInEaseOut           (privateScene);
+   this .positionInterpolator         = new PositionInterpolator    (privateScene);
+   this .orientationInterpolator      = new OrientationInterpolator (privateScene);
+   this .scaleInterpolator            = new PositionInterpolator    (privateScene);
+   this .scaleOrientationInterpolator = new OrientationInterpolator (privateScene);
+   this .fieldOfViewScaleInterpolator = new ScalarInterpolator      (privateScene);
 }
 
 Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindableNode .prototype),

@@ -59,6 +59,8 @@ function ExplosionEmitter (executionContext)
 
    this .addType (X3DConstants .ExplosionEmitter);
 
+   // Units
+
    this ._position .setUnit ("length");
 }
 

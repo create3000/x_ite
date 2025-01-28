@@ -68,8 +68,12 @@ function X3DBackgroundNode (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "hidden", new Fields .SFBool ());
 
+   // Units
+
    this ._skyAngle    .setUnit ("angle");
    this ._groundAngle .setUnit ("angle");
+
+   // Private properties
 
    this .modelMatrix     = new Matrix4 ();
    this .clipPlanes      = [ ];

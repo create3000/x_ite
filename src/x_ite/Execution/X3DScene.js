@@ -1018,12 +1018,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      const browser = this .getBrowser ();
+      const parent = this .getScene () ?? this .getBrowser ();
 
-      if (this === browser .getExecutionContext ())
-         browser .addLoadingObject (node);
-
-      this .getScene () ?.addLoadingObject (node);
+      parent .addLoadingObject (node);
    },
    removeLoadingObject (node)
    {
@@ -1034,8 +1031,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      this .getBrowser () .removeLoadingObject (node);
-      this .getScene ()  ?.removeLoadingObject (node);
+      const parent = this .getScene () ?? this .getBrowser ();
+
+      parent .removeLoadingObject (node);
    },
 });
 

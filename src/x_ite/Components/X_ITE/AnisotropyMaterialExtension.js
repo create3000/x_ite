@@ -64,6 +64,12 @@ function AnisotropyMaterialExtension (executionContext)
 
    this .addType (X3DConstants .AnisotropyMaterialExtension);
 
+   // Units
+
+   this ._anisotropyRotation .setUnit ("angle");
+   
+   // Private properties
+
    this .anisotropyArray = new Float32Array (3);
 }
 

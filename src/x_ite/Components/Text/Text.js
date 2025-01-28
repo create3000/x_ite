@@ -59,6 +59,8 @@ function Text (executionContext)
 
    this .addType (X3DConstants .Text);
 
+   // Units
+
    this ._length     .setUnit ("length");
    this ._maxExtent  .setUnit ("length");
    this ._origin     .setUnit ("length");

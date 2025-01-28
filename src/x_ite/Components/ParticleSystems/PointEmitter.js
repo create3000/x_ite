@@ -59,6 +59,8 @@ function PointEmitter (executionContext)
 
    this .addType (X3DConstants .PointEmitter);
 
+   // Units
+
    this ._position .setUnit ("length");
 }
 

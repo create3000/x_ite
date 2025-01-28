@@ -63,6 +63,8 @@ function Extrusion (executionContext)
 
    this .addType (X3DConstants .Extrusion);
 
+   // Units
+
    this ._creaseAngle  .setUnit ("angle");
    this ._crossSection .setUnit ("length");
    this ._spine        .setUnit ("length");

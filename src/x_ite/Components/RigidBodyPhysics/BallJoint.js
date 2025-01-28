@@ -62,6 +62,8 @@ function BallJoint (executionContext)
 
    this ._anchorPoint .setUnit ("length");
 
+   // Units
+
    this .joint             = null;
    this .outputs           = new Set ();
    this .localAnchorPoint1 = new Vector3 ();

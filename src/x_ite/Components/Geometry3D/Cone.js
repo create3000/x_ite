@@ -60,6 +60,8 @@ function Cone (executionContext)
 
    this .addType (X3DConstants .Cone);
 
+   // Units
+
    this ._height       .setUnit ("length");
    this ._bottomRadius .setUnit ("length");
 }

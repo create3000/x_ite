@@ -135,8 +135,9 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
          const
             browser             = this .getBrowser (),
-            shapeNode           = browser .getPrivateScene () .createNode ("Shape",           false),
-            collidableShapeNode = browser .getPrivateScene () .createNode ("CollidableShape", false);
+            privateScene        = browser .getPrivateScene (),
+            shapeNode           = privateScene .createNode ("Shape",           false),
+            collidableShapeNode = privateScene .createNode ("CollidableShape", false);
 
          shapeNode .setPrivate (true);
          collidableShapeNode .setPrivate (true);

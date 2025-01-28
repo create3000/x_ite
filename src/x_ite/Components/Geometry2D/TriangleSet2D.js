@@ -60,6 +60,8 @@ function TriangleSet2D (executionContext)
 
    this .setGeometryType (2);
 
+   // Units
+
    this ._vertices .setUnit ("length");
 }
 

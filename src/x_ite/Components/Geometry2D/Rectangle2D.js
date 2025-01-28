@@ -61,6 +61,8 @@ function Rectangle2D (executionContext)
 
    this .setGeometryType (2);
 
+   // Units
+
    this ._size .setUnit ("length");
 }
 

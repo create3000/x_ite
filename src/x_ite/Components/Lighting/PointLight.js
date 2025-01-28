@@ -270,6 +270,8 @@ function PointLight (executionContext)
 
    this .addType (X3DConstants .PointLight);
 
+   // Units
+
    this ._location .setUnit ("length");
    this ._radius   .setUnit ("length");
 }

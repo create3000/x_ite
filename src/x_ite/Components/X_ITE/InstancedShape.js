@@ -53,7 +53,6 @@ import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
 
@@ -68,6 +67,13 @@ function InstancedShape (executionContext)
    this .addType (X3DConstants .InstancedShape);
 
    this .addChildObjects (X3DConstants .outputOnly, "matrices", new Fields .SFTime ());
+
+   // Units
+
+   this ._translations .setUnit ("length");
+   this ._centers      .setUnit ("length");
+
+   // Private properties
 
    this .numInstances       = 0;
    this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3

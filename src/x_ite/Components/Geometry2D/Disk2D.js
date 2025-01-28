@@ -60,6 +60,8 @@ function Disk2D (executionContext)
 
    this .addType (X3DConstants .Disk2D);
 
+   // Units
+
    this ._innerRadius .setUnit ("length");
    this ._outerRadius .setUnit ("length");
 }

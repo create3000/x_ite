@@ -62,8 +62,12 @@ function GeoPositionInterpolator (executionContext)
 
    this .addType (X3DConstants .GeoPositionInterpolator);
 
+   // Units
+
    this ._value_changed .setUnit ("length");
 
+   // Private properties
+   
    this .geocentric = new Geocentric ();
 }
 

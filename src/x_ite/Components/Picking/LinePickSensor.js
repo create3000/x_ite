@@ -62,8 +62,6 @@ function LinePickSensor (executionContext)
    X3DPickSensorNode .call (this, executionContext);
 
    this .addType (X3DConstants .LinePickSensor);
-
-   this .pickingGeometryNode = null;
 }
 
 Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensorNode .prototype),

@@ -350,9 +350,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
             Ssize     = p .Ssize,
             S         = min [Sindex],
             T         = min [Tindex],
-            vertices  = this .vertices .getValue ();
+            vertices  = this .vertices .getValue (),
+            length    = vertices .length;
 
-         for (let i = 0, length = vertices .length; i < length; i += 4)
+         for (let i = 0; i < length; i += 4)
          {
             texCoords .push ((vertices [i + Sindex] - S) / Ssize,
                              (vertices [i + Tindex] - T) / Ssize,

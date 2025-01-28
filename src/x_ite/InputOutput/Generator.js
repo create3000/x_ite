@@ -76,8 +76,6 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .namesByNode           = new Map ();
    this .routeNodes            = new Map ();
    this .containerFields       = [ ];
-
-   this .PushExecutionContext (null);
 }
 
 Object .assign (Generator .prototype,

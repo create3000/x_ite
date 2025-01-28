@@ -65,6 +65,8 @@ function GeoTransform (executionContext)
 
    this .addType (X3DConstants .GeoTransform);
 
+   // Units
+
    this ._translation .setUnit ("length");
 }
 

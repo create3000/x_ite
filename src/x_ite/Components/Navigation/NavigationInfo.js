@@ -64,11 +64,19 @@ function NavigationInfo (executionContext)
    this .addChildObjects (X3DConstants .outputOnly, "transitionStart",  new Fields .SFBool (),
                           X3DConstants .outputOnly, "transitionActive", new Fields .SFBool (),
                           X3DConstants .outputOnly, "availableViewers", new Fields .MFString (),
-                          X3DConstants .outputOnly, "viewer",           new Fields .SFString ("EXAMINE"));
+                          X3DConstants .outputOnly, "viewer",           new Fields .SFString ());
+
+   // Units
 
    this ._avatarSize      .setUnit ("length");
    this ._speed           .setUnit ("speed");
    this ._visibilityLimit .setUnit ("length");
+
+   // Legacy
+
+   // Actually the type field had this value, but we never knew this.
+   // if (executionContext .getSpecificationVersion () == 2.0)
+   //    this ._type = ["WALK", "ANY"]; // VRML2
 }
 
 Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNode .prototype),

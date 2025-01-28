@@ -77,6 +77,10 @@ Returns the bound NavigationInfo node in the active layer, if any. This property
 
 Returns the bound X3DViewpointNode in the active layer, if any. This property is read only.
 
+#### **contextMenu**: ContextMenu
+
+Returns a reference to the corresponding ContextMenu. This property is read only.
+
 #### **element**: X3DCanvasElement
 
 Returns a reference to the corresponding X3DCanvasElement. This property is read only.

@@ -64,13 +64,11 @@ function GeoElevationGrid (executionContext)
 
    this .addType (X3DConstants .GeoElevationGrid);
 
+   // Units
+
    this ._set_height  .setUnit ("length");
    this ._creaseAngle .setUnit ("angle");
    this ._height      .setUnit ("length");
-
-   this .colorNode    = null;
-   this .texCoordNode = null;
-   this .normalNode   = null;
 }
 
 Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometryNode .prototype),

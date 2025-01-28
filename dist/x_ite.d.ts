@@ -128,6 +128,10 @@ declare namespace X3D
        */
       readonly activeViewpoint: X3DViewpointNodeProxy | null;
       /**
+       * Returns a reference to the corresponding ContextMenu. This property is read only.
+       */
+      readonly contextMenu: ContextMenu;
+      /**
        * Returns a reference to the corresponding X3DCanvasElement. This property is read only.
        */
       readonly element: X3DCanvasElement;
@@ -405,6 +409,7 @@ declare namespace X3D
 
    class ContextMenu
    {
+      userMenu: UserMenuCallback;
       getUserMenu (): UserMenuCallback;
       setUserMenu (cb: UserMenuCallback): void;
    }

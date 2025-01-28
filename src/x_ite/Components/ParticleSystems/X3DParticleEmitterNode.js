@@ -62,10 +62,14 @@ function X3DParticleEmitterNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime ());
 
+   // Units
+
    this ._speed       .setUnit ("speed");
    this ._mass        .setUnit ("mass");
    this ._surfaceArea .setUnit ("area");
 
+   // Private properties
+   
    this .defines   = [ ];
    this .samplers  = [ ];
    this .uniforms  = new Map ();

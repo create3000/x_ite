@@ -58,6 +58,8 @@ function HAnimDisplacer (executionContext)
 
    this .addType (X3DConstants .HAnimDisplacer);
 
+   // Units
+
    this ._displacements .setUnit ("length");
 }
 

@@ -60,7 +60,6 @@ function CollisionSensor (executionContext)
 
    this .addType (X3DConstants .CollisionSensor);
 
-   this .colliderNode = null;
    this .contactCache = [ ];
 }
 

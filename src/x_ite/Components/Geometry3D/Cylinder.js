@@ -58,6 +58,8 @@ function Cylinder (executionContext)
 
    this .addType (X3DConstants .Cylinder);
 
+   // Units
+
    this ._height .setUnit ("length");
    this ._radius .setUnit ("length");
 }

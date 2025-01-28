@@ -59,6 +59,8 @@ function X3DTextureProjectorNode (executionContext)
 
    this .addType (X3DConstants .X3DTextureProjectorNode);
 
+   // Units
+
    this ._location    .setUnit ("length");
    this ._farDistance .setUnit ("length");
    this ._location    .setUnit ("length");

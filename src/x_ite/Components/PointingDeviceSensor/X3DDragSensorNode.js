@@ -55,6 +55,8 @@ function X3DDragSensorNode (executionContext)
 
    this .addType (X3DConstants .X3DDragSensorNode);
 
+   // Units
+
    this ._trackPoint_changed .setUnit ("length");
 }
 

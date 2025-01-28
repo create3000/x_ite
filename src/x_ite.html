@@ -42,7 +42,7 @@ const
    Browser      = X3D .getBrowser (),
    localStorage = Browser .getLocalStorage ();
 
-Browser .getContextMenu () .setUserMenu (() =>
+Browser .contextMenu .userMenu = () =>
 {
    return {
       "transforms": {
@@ -64,7 +64,7 @@ Browser .getContextMenu () .setUserMenu (() =>
       },
       ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
    };
-});
+};
 
 localStorage .setDefaultValues ({
    "Bookmarks.history": ["https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
@@ -220,6 +220,7 @@ main.color-management #browser {
 
 #file {
    margin: 10px 40px 10px 20px;
+   word-break: break-all;
 }
 
 #file.loaded {

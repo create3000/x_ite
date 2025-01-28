@@ -62,10 +62,14 @@ function CollisionCollection (executionContext)
 
    this .addType (X3DConstants .CollisionCollection);
 
+   // Units
+
    this ._minBounceSpeed           .setUnit ("speed");
    this ._surfaceSpeed             .setUnit ("speed");
    this ._softnessConstantForceMix .setUnit ("force");
 
+   // Private properties
+   
    this .appliedParameters   = new Set ();
    this .collidableNodes     = [ ];
    this .collisionSpaceNodes = [ ];

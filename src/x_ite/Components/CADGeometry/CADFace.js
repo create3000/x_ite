@@ -61,10 +61,6 @@ function CADFace (executionContext)
    X3DBoundedObject             .call (this, executionContext);
 
    this .addType (X3DConstants .CADFace);
-
-   this .childNode     = null;
-   this .visibleNode   = null;
-   this .boundedObject = null;
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureChildNode .prototype),

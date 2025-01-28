@@ -64,10 +64,14 @@ function SpatialSound (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
 
+   // Units
+
    this ._location       .setUnit ("length");
    this ._coneInnerAngle .setUnit ("angle");
    this ._coneOuterAngle .setUnit ("angle");
 
+   // Private properties
+   
    this .childNodes       = [ ];
    this .currentTraversed = true;
 }

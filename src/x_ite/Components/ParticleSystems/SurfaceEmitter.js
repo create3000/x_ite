@@ -63,7 +63,6 @@ function SurfaceEmitter (executionContext)
 
    this .verticesIndex = -1;
    this .normalsIndex  = -1;
-   this .surfaceNode   = null;
    this .surfaceArray  = new Float32Array ();
 }
 

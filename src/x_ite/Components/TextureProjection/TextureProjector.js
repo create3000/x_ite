@@ -173,6 +173,8 @@ function TextureProjector (executionContext)
 
    this .addType (X3DConstants .TextureProjector);
 
+   // Units
+
    this ._fieldOfView .setUnit ("angle");
 
    // Legacy

@@ -58,11 +58,6 @@ function IndexedLineSet (executionContext)
    X3DLineGeometryNode .call (this, executionContext);
 
    this .addType (X3DConstants .IndexedLineSet);
-
-   this .fogCoordNode = null;
-   this .colorNode    = null;
-   this .normalNode   = null;
-   this .coordNode    = null;
 }
 
 Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeometryNode .prototype),

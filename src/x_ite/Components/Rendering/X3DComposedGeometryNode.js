@@ -57,12 +57,11 @@ function X3DComposedGeometryNode (executionContext)
 
    this .addType (X3DConstants .X3DComposedGeometryNode);
 
-   this .fogCoordNode = null;
-   this .colorNode    = null;
-   this .texCoordNode = null;
-   this .normalNode   = null;
-   this .tangentNode  = null;
-   this .coordNode    = null;
+   // Private properties
+   
+   this .triangles    = [ ];
+   this .polygons     = [ ];
+
 }
 
 Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DGeometryNode .prototype),
@@ -227,17 +226,29 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          multiTexCoordArray = this .getMultiTexCoords (),
          normalArray        = this .getNormals (),
          tangentArray       = this .getTangents (),
-         vertexArray        = this .getVertices ();
+         vertexArray        = this .getVertices (),
+         triangles          = this .triangles,
+         polygons           = this .polygons;
+
+      // Init TextureCoordinateNode.
 
       texCoordNode ?.init (multiTexCoordArray);
 
-      // Fill GeometryNode
+      // Fill index arrays.
+
+      for (let i = 0; i < polygonsSize; ++ i)
+         polygons .push (this .getPolygonIndex (i));
+
+      for (let i = 0; i < trianglesSize; ++ i)
+         triangles .push (this .getTriangleIndex (i));
+
+      // Fill GeometryNode.
 
       for (let i = 0; i < trianglesSize; ++ i)
       {
          const
             face  = Math .floor (i / verticesPerFace),
-            index = this .getPolygonIndex (this .getTriangleIndex (i));
+            index = polygons [triangles [i]];
 
          coordIndicesArray .push (index);
 
@@ -259,27 +270,32 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       // Autogenerate normal if not specified.
 
       if (!this .getNormal ())
-         this .generateNormals (verticesPerPolygon, polygonsSize, trianglesSize);
+         this .generateNormals (verticesPerPolygon, polygonsSize, polygons, trianglesSize, triangles);
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
+
+      // Clear arrays.
+
+      polygons  .length = 0;
+      triangles .length = 0;
    },
-   generateNormals (verticesPerPolygon, polygonsSize, trianglesSize)
+   generateNormals (verticesPerPolygon, polygonsSize, polygons, trianglesSize, triangles)
    {
       const
-         normals     = this .createNormals (verticesPerPolygon, polygonsSize),
+         normals     = this .createNormals (verticesPerPolygon, polygonsSize, polygons),
          normalArray = this .getNormals ();
 
       for (let i = 0; i < trianglesSize; ++ i)
       {
-         const { x, y, z } = normals [this .getTriangleIndex (i)];
+         const { x, y, z } = normals [triangles [i]];
 
          normalArray .push (x, y, z);
       }
    },
-   createNormals (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize, polygons)
    {
-      const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
+      const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize, polygons);
 
       if (!this ._normalPerVertex .getValue ())
          return normals;
@@ -288,7 +304,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       for (let i = 0; i < polygonsSize; ++ i)
       {
-         const index = this .getPolygonIndex (i);
+         const index = polygons [i];
 
          let pointIndex = normalIndex .get (index);
 
@@ -300,16 +316,38 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       return this .refineNormals (normalIndex, normals, Math .PI);
    },
-   createFaceNormals (verticesPerPolygon, polygonsSize)
+   createFaceNormals (verticesPerPolygon, polygonsSize, polygons)
    {
       const
          cw      = !this ._ccw .getValue (),
          coord   = this .coordNode,
          normals = [ ];
 
-      for (let i = 0; i < polygonsSize; i += verticesPerPolygon)
+      for (let index = 0; index < polygonsSize; index += verticesPerPolygon)
       {
-         const normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
+         switch (verticesPerPolygon)
+         {
+            case 3:
+            {
+               var normal = coord .getNormal (polygons [index],
+                                              polygons [index + 1],
+                                              polygons [index + 2]);
+               break;
+            }
+            case 4:
+            {
+               var normal = coord .getQuadNormal (polygons [index],
+                                                  polygons [index + 1],
+                                                  polygons [index + 2],
+                                                  polygons [index + 3]);
+               break;
+            }
+            default:
+            {
+               var normal = this .getPolygonNormal (index, verticesPerPolygon, polygons, coord);
+               break;
+            }
+         }
 
          if (cw)
             normal .negate ();
@@ -326,14 +364,14 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          current = new Vector3 (),
          next    = new Vector3 ();
 
-      return function (index, verticesPerPolygon, coord)
+      return function (index, verticesPerPolygon, polygons, coord)
       {
          // Determine polygon normal.
          // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
          const normal = new Vector3 ();
 
-         coord .get1Point (this .getPolygonIndex (index), next);
+         coord .get1Point (polygons [index], next);
 
          for (let i = 0; i < verticesPerPolygon; ++ i)
          {
@@ -341,7 +379,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
             current = next;
             next    = tmp;
 
-            coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
+            coord .get1Point (polygons [index + (i + 1) % verticesPerPolygon], next);
 
             normal .x += (current .y - next .y) * (current .z + next .z);
             normal .y += (current .z - next .z) * (current .x + next .x);

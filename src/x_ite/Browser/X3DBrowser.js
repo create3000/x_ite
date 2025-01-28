@@ -473,9 +473,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          this .setDescription ("");
          this .setBrowserLoading (true);
 
-         for (const object of scene .getLoadingObjects ())
-            this .addLoadingObject (object);
-
          this ._loadCount .addInterest ("checkLoadCount", this, resolve);
          this ._loadCount .addEvent ();
       });
@@ -1079,6 +1076,11 @@ Object .defineProperties (X3DBrowser .prototype,
 
          return this ._activeViewpoint .valueOf ();
       },
+      enumerable: true,
+   },
+   contextMenu:
+   {
+      get: X3DBrowser .prototype .getContextMenu,
       enumerable: true,
    },
    element:

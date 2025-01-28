@@ -59,6 +59,8 @@ function ConeEmitter (executionContext)
 
    this .addType (X3DConstants .ConeEmitter);
 
+   // Units
+
    this ._position .setUnit ("length");
    this ._angle    .setUnit ("angle");
 }

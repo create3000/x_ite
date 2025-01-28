@@ -59,9 +59,13 @@ function X3DEnvironmentalSensorNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
 
+   // Units
+
    this ._size   .setUnit ("length");
    this ._center .setUnit ("length");
 
+   // Private properties
+   
    this .zeroTest         = false;
    this .currentTraversed = true;
 }

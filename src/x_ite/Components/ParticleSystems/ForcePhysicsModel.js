@@ -59,6 +59,8 @@ function ForcePhysicsModel (executionContext)
 
    this .addType (X3DConstants .ForcePhysicsModel);
 
+   // Units
+
    this ._force .setUnit ("force");
 }
 

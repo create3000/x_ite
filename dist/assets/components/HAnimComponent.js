@@ -1,5 +1,5 @@
-/* X_ITE v11.0.5 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.5")];
+/* X_ITE v11.0.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -123,6 +123,8 @@ function HAnimDisplacer (executionContext)
    external_X_ITE_X3D_X3DGeometricPropertyNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimDisplacer);
+
+   // Units
 
    this ._displacements .setUnit ("length");
 }
@@ -271,7 +273,6 @@ function HAnimHumanoid (executionContext)
    this .displacementWeights  = [ ];
    this .numJoints            = 0;
    this .numDisplacements     = 0;
-   this .skinCoordNode        = null;
    this .update               = new Lock ();
    this .skinning             = Function .prototype;
 }

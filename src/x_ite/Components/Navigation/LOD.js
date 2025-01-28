@@ -76,9 +76,6 @@ function LOD (executionContext)
 
    this .frameRate        = 60;
    this .keepCurrentLevel = false;
-   this .childNode        = null;
-   this .visibleNode      = null;
-   this .boundedObject    = null;
 }
 
 Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototype),

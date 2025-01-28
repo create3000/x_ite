@@ -65,6 +65,8 @@ function CylinderSensor (executionContext)
 
    this .addType (X3DConstants .CylinderSensor);
 
+   // Units
+
    this ._diskAngle .setUnit ("angle");
    this ._minAngle  .setUnit ("angle");
    this ._maxAngle  .setUnit ("angle");

@@ -61,13 +61,7 @@ function CollidableShape (executionContext)
 
    this .addType (X3DConstants .CollidableShape);
 
-   this .convex         = false;
-   this .shapeNode      = null;
-   this .visibleNode    = null;
-   this .boundedObject  = null;
-   this .geometryNode   = null;
-   this .collisionShape = null;
-   this .triangleMesh   = null;
+   this .convex = false;
 }
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),
