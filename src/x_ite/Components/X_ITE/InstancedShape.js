@@ -69,6 +69,13 @@ function InstancedShape (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "matrices", new Fields .SFTime ());
 
+   // Units
+
+   this ._translations .setUnit ("length");
+   this ._centers      .setUnit ("length");
+
+   // Private properties
+
    this .numInstances       = 0;
    this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
    this .matrixOffset       = 0;
