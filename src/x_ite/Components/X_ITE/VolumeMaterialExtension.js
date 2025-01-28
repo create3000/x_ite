@@ -64,6 +64,13 @@ function VolumeMaterialExtension (executionContext)
 
    this .addType (X3DConstants .VolumeMaterialExtension);
 
+   // Units
+
+   this ._thickness           .setUnit ("length");
+   this ._attenuationDistance .setUnit ("length");
+
+   // Private properties
+
    this .attenuationColorArray = new Float32Array (3);
 }
 
@@ -73,7 +80,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      this ._thickness            .addInterest ("set_thickness__",          this);
+      this ._thickness           .addInterest ("set_thickness__",           this);
       this ._thicknessTexture    .addInterest ("set_thicknessTexture__",    this);
       this ._attenuationDistance .addInterest ("set_attenuationDistance__", this);
       this ._attenuationColor    .addInterest ("set_attenuationColor__",    this);
