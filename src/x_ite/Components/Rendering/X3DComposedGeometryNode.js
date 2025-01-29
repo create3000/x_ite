@@ -58,9 +58,9 @@ function X3DComposedGeometryNode (executionContext)
    this .addType (X3DConstants .X3DComposedGeometryNode);
 
    // Private properties
-   
-   this .triangles    = [ ];
-   this .polygons     = [ ];
+
+   this .triangles = [ ];
+   this .polygons  = [ ];
 
 }
 
@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       // Autogenerate normal if not specified.
 
-      if (!this .getNormal ())
+      if (!normalNode)
          this .generateNormals (verticesPerPolygon, polygonsSize, polygons, trianglesSize, triangles);
 
       this .setSolid (this ._solid .getValue ());
