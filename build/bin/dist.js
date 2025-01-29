@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 "use strict";
 
-const fs = require ("fs");
 const { systemSync, sh } = require ("shell-tools");
 
 function copy_files ()
@@ -37,36 +36,11 @@ function html ()
 	systemSync (`perl -p0i -e 's|"./Bookmarks.js"|"./src/Bookmarks.js"|sg'     x_ite.min.html`);
 }
 
-function docs ()
-{
-	const files = [
-		"x_ite.js",
-		"x_ite.min.js",
-		"x_ite.mjs",
-		"x_ite.min.mjs",
-		"x_ite.css",
-	];
-
-	let config = sh (`cat docs/_config.yml`);
-
-	for (const file of files)
-	{
-		const
-			key    = file .replace (/\./g, "_"),
-			shasum = sh (`shasum -b -a 384 dist/${file} | awk '{ print $1 }' | xxd -r -p | base64`) .trim ();
-
-		config = config .replace (new RegExp (`(${key}_integrity):.*?\n`), `$1: sha384-${shasum}\n`);
-	}
-
-	fs .writeFileSync (`docs/_config.yml`, config);
-}
-
 function main ()
 {
    copy_files ();
    systemSync (`npx webpack`);
    html ();
-	docs ();
    systemSync (`brotli -6 dist/x_ite.min.mjs --stdout | wc -c`);
    systemSync (`du -h dist/x_ite.min.js`);
 }
