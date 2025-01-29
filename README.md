@@ -169,7 +169,7 @@ scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_ro
 
 // Show scene.
 
-browser .replaceWorld (scene);
+await browser .replaceWorld (scene);
 </script>
 <!-- x3d-canvas element comes here: -->
 <x3d-canvas></x3d-canvas>
