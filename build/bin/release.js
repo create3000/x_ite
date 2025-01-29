@@ -195,9 +195,8 @@ function release ()
 	{
 		readme (version);
 		docs (version);
+		integrity ();
 	}
-
-	integrity ();
 
 	// confirm
 
@@ -220,7 +219,9 @@ function release ()
 
 	commit (version);
 	tags (version);
-	systemSync (`npm publish`);
+
+	if (!version .endsWith ("a"))
+		systemSync (`npm publish`);
 
 	// code
 
