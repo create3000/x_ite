@@ -111,12 +111,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.0.7/dist/x_ite.min.mjs";
 
 const
    browser = X3D .getBrowser (),
-   scene   = browser .currentScene;
-
-scene .setProfile (browser .getProfile ("Interchange"));
-scene .addComponent (browser .getComponent ("Interpolation", 1));
-
-await browser .loadComponents (scene);
+   scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
 // Viewpoint
 
@@ -150,7 +145,7 @@ scene .rootNodes .push (transformNode);
 // Give the node a name if you like.
 scene .addNamedNode ("Box", transformNode);
 
-// Animation
+// Create animation.
 
 const
    timeSensorNode   = scene .createNode ("TimeSensor"),
@@ -167,10 +162,14 @@ for (let i = 0; i < 5; ++ i)
 
 scene .rootNodes .push (timeSensorNode, interpolatorNode);
 
-// Routes
+// Create routes.
 
 scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
 scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
+
+// Show scene.
+
+browser .replaceWorld (scene);
 </script>
 <!-- x3d-canvas element comes here: -->
 <x3d-canvas></x3d-canvas>
