@@ -107,13 +107,13 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.0.7/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
 const
    browser = X3D .getBrowser (),
    scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
-// Viewpoint
+// Create Viewpoint:
 
 const viewpointNode = scene .createNode ("Viewpoint");
 
@@ -124,7 +124,7 @@ viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.12382
 
 scene .rootNodes .push (viewpointNode);
 
-// Box
+// Create Box:
 
 const
    transformNode  = scene .createNode ("Transform"),
@@ -145,7 +145,7 @@ scene .rootNodes .push (transformNode);
 // Give the node a name if you like.
 scene .addNamedNode ("Box", transformNode);
 
-// Create animation.
+// Create animation:
 
 const
    timeSensorNode   = scene .createNode ("TimeSensor"),
@@ -162,7 +162,7 @@ for (let i = 0; i < 5; ++ i)
 
 scene .rootNodes .push (timeSensorNode, interpolatorNode);
 
-// Create routes.
+// Add routes:
 
 scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
 scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
