@@ -110,7 +110,7 @@ timeSensorNode .loop          = true;
 for (let i = 0; i < 5; ++ i)
 {
   interpolatorNode .key [i]      = i / 4;
-  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI * i / 2);
+  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
 }
 
 scene .rootNodes .push (timeSensorNode, interpolatorNode);
