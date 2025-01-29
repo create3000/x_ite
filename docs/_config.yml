@@ -28,6 +28,7 @@ x_ite_js_integrity: sha384-pKhd3ZCEG3eq7Yw0SmydB4TaFXo3IGtv3OD0DhnbfI8mrlWY1F71+
 x_ite_min_js_integrity: sha384-BX6J891mUM+KgUtRvB4P7y+Xo5avztbRaqvsjoYi3npE0LRNeyjY/qqNlRmEj6Fj
 x_ite_mjs_integrity: sha384-hTgbrioipi1URaFpWhczxhab+Hh/OmsFvmI/vYD8ToliMFstwgq2PoD4OYl9w/Ro
 x_ite_min_mjs_integrity: sha384-/IbN+PXkm/uupNOzUI4q3yLI6pcdE2jezGCWLghFRgOGN9yaNgSAbfvvNNo/W7VH
+x_ite_css_integrity: sha384-nP0Qa7dY0rVGWJZGDj2z61cXehJ687wzhtSoN/FZMzQj2+g33I6S4CCEOIvCPQpD
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
