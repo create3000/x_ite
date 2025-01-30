@@ -216,6 +216,9 @@ export default Namespace .add ("${base}", __default__);`;
             path: false,
             fs: false,
          },
+         alias: {
+         //   "jquery": "jquery/dist/jquery.slim.js",
+         },
       },
       stats: "errors-warnings",
       performance: {
@@ -353,6 +356,9 @@ export default Namespace .add ("${base}", __default__);`;
             process: false,
             path: false,
             fs: false,
+         },
+         alias: {
+         //   "jquery": "jquery/dist/jquery.slim.js",
          },
       },
       stats: "errors-warnings",
