@@ -1,11 +1,11 @@
 const
-   webpack            = require ("webpack"),
-   madge              = require ("madge"),
-   path               = require ("path"),
-   fs                 = require ("fs"),
-   os                 = require ("os"),
-   { exec }           = require ("child_process"),
-   { sh, systemSync } = require ("shell-tools");
+   webpack  = require ("webpack"),
+   madge    = require ("madge"),
+   path     = require ("path"),
+   fs       = require ("fs"),
+   os       = require ("os"),
+   { exec } = require ("child_process"),
+   { sh }   = require ("shell-tools");
 
 for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename => filename .match (/\.js$/)))
 {
@@ -119,6 +119,9 @@ export default Namespace .add ("${base}", __default__);`;
       ],
    };
 
+   sh (`perl -p0e 's|\\/\\*.*?\\*\\/||sg' src/x_ite.css | npx sass --stdin --style compressed > dist/x_ite.css`);
+   sh (`perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`);
+
    const integrity = "sha384-" + sh (`shasum -b -a 384 dist/x_ite.css | awk '{ print $1 }' | xxd -r -p | base64`) .trim ();
 
    targets .push ({
@@ -172,8 +175,6 @@ export default Namespace .add ("${base}", __default__);`;
             onBuildStart: {
                scripts: [
                   `echo 'Bundling x_ite ...'`,
-                  `perl -p0e 's|\\/\\*.*?\\*\\/||sg' src/x_ite.css | npx sass --stdin --style compressed > dist/x_ite.css`,
-                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
                   `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/BROWSER_VERSION.js`,
                   `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEVELOPMENT.js`,
                ],
