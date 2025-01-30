@@ -636,10 +636,10 @@ If you want to do an [integrity check](https://developer.mozilla.org/en-US/docs/
 
 | File          | Integrity                           |
 |---------------|-------------------------------------|
-| x_ite.js      | @{{ site.x_ite_js_integrity }}      |
-| x_ite.min.js  | @{{ site.x_ite_min_js_integrity }}  |
-| x_ite.mjs     | @{{ site.x_ite_mjs_integrity }}     |
-| x_ite.min.mjs | @{{ site.x_ite_min_mjs_integrity }} |
+| x_ite.js      | {{ site.x_ite_js_integrity }}      |
+| x_ite.min.js  | {{ site.x_ite_min_js_integrity }}  |
+| x_ite.mjs     | {{ site.x_ite_mjs_integrity }}     |
+| x_ite.min.mjs | {{ site.x_ite_min_mjs_integrity }} |
 {% enddetails %}
 
 ### You Can Also Get it from NPM
