@@ -93,8 +93,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       this .video
          .on ("abort error", this .setError .bind (this))
          .on ("suspend stalled", this .setTimeout .bind (this))
-         .prop ("crossOrigin", "Anonymous")
-         .prop ("preload", "auto");
+         .attr ("crossorigin", "anonymous")
+         .attr ("preload", "auto");
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
