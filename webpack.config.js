@@ -119,7 +119,7 @@ export default Namespace .add ("${base}", __default__);`;
       ],
    };
 
-   const integrity = sh (`shasum -b -a 384 dist/x_ite.css | awk '{ print $1 }' | xxd -r -p | base64`) .trim ();
+   const integrity = "sha384-" + sh (`shasum -b -a 384 dist/x_ite.css | awk '{ print $1 }' | xxd -r -p | base64`) .trim ();
 
    targets .push ({
       entry: {
