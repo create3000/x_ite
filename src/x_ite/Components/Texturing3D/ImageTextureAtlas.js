@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
       X3DUrlObject     .prototype .initialize .call (this);
 
       this .image
-         .on ("load",        this .setImage .bind (this))
+         .on ("load", this .setImage .bind (this))
          .on ("abort error", this .setError .bind (this))
          .attr ("crossorigin", "anonymous");
 

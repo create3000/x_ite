@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       this ._colorSpaceConversion .addInterest ("loadNow", this);
 
       this .image
-         .on ("load",        this .setImage .bind (this))
+         .on ("load", this .setImage .bind (this))
          .on ("abort error", this .setError .bind (this))
          .attr ("crossorigin", "anonymous");
 

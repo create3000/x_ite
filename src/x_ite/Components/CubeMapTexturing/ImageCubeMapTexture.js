@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       // Initialize.
 
       this .image
-         .on ("load",        this .setImage .bind (this))
+         .on ("load", this .setImage .bind (this))
          .on ("abort error", this .setError .bind (this))
          .attr ("crossorigin", "anonymous");
 
