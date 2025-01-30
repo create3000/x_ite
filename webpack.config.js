@@ -1,10 +1,11 @@
 const
-   webpack  = require ("webpack"),
-   madge    = require ("madge"),
-   path     = require ("path"),
-   fs       = require ("fs"),
-   os       = require ("os"),
-   { exec } = require ("child_process");
+   webpack            = require ("webpack"),
+   madge              = require ("madge"),
+   path               = require ("path"),
+   fs                 = require ("fs"),
+   os                 = require ("os"),
+   { exec }           = require ("child_process"),
+   { sh, systemSync } = require ("shell-tools");
 
 for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename => filename .match (/\.js$/)))
 {
@@ -118,6 +119,8 @@ export default Namespace .add ("${base}", __default__);`;
       ],
    };
 
+   const integrity = sh (`shasum -b -a 384 dist/x_ite.css | awk '{ print $1 }' | xxd -r -p | base64`) .trim ();
+
    targets .push ({
       entry: {
          "x_ite": "./src/x_ite.js",
@@ -182,6 +185,8 @@ export default Namespace .add ("${base}", __default__);`;
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.js`,
                   `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.js`,
+                  // Subresource Integrity Hash Values
+                  `perl -p0i -e 's|css-integrity-placeholder|integrity=\\\\"${integrity}\\\\" crossorigin=\\\\"anonymous\\\\"|sg' dist/x_ite{,.min}.js`,
                   // asm
                   `perl -p0i -e 's|"use\\s+asm"\\s*;?||sg' dist/x_ite{,.min}.js`,
                   // Source Maps
@@ -323,6 +328,8 @@ export default Namespace .add ("${base}", __default__);`;
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.mjs`,
                   `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.mjs`,
+                  // Subresource Integrity Hash Values
+                  `perl -p0i -e 's|css-integrity-placeholder|integrity=\\\\"${integrity}\\\\" crossorigin=\\\\"anonymous\\\\"|sg' dist/x_ite{,.min}.mjs`,
                   // asm
                   `perl -p0i -e 's|"use\\s+asm"\\s*;?||sg' dist/x_ite{,.min}.mjs`,
                   // Source Maps

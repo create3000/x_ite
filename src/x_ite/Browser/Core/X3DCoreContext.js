@@ -109,7 +109,7 @@ function X3DCoreContext (element)
    {
       const shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
-      $("<link/>")
+      $("<link css-integrity-placeholder/>")
          .on ("load", () => browser .show ())
          .attr ("rel", "stylesheet")
          .attr ("type", "text/css")
