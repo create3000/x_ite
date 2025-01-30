@@ -631,9 +631,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 >**Info:** It is no longer necessary to include the CSS file.
 {: .prompt-info }
 
-<!--
-##### Subresource Integrity
-
+{% details Subresource Integrity Hash Values %}
 If you want to do an [integrity check](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) for the JavaScript file, here are the corresponding hash values. Keep in mind that these values will change from version to version.
 
 | File          | Integrity                           |
@@ -642,7 +640,7 @@ If you want to do an [integrity check](https://developer.mozilla.org/en-US/docs/
 | x_ite.min.js  | @{{ site.x_ite_min_js_integrity }}  |
 | x_ite.mjs     | @{{ site.x_ite_mjs_integrity }}     |
 | x_ite.min.mjs | @{{ site.x_ite_min_mjs_integrity }} |
--->
+{% enddetails %}
 
 ### You Can Also Get it from NPM
 

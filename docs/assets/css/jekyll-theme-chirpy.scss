@@ -196,6 +196,10 @@ html {
   color: var(--h3-color);
 }
 
+.content summary {
+  margin: 1.5rem 0 0.5rem 0;
+}
+
 .post-tail-wrapper .nav-wrapper {
   border: 1px solid var(--nav-border-color);
   border-radius: 10px;
