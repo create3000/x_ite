@@ -634,8 +634,8 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 {% details Subresource Integrity Hash Values %}
 If you want to do an [integrity check](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) for the JavaScript file, here are the corresponding hash values. Keep in mind that these values will change from version to version.
 
-| File          | Integrity                           |
-|---------------|-------------------------------------|
+| File          | Integrity                          |
+|---------------|------------------------------------|
 | x_ite.js      | {{ site.x_ite_js_integrity }}      |
 | x_ite.min.js  | {{ site.x_ite_min_js_integrity }}  |
 | x_ite.mjs     | {{ site.x_ite_mjs_integrity }}     |
