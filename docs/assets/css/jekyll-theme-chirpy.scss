@@ -197,13 +197,19 @@ html {
 }
 
 .content details {
+  box-shadow: var(--language-border-color) 0 0 0 1px;
+  border-radius: 10px;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
 }
 
-.content summary {
-  margin-bottom: 0.5rem;
+.content details summary {
   font-weight: bold;
+}
+
+.content details[open] summary {
+  margin-bottom: .5rem;
 }
 
 .post-tail-wrapper .nav-wrapper {
