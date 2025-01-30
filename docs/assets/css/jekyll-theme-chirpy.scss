@@ -196,8 +196,14 @@ html {
   color: var(--h3-color);
 }
 
+.content details {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
 .content summary {
-  margin: 1.5rem 0 0.5rem 0;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 .post-tail-wrapper .nav-wrapper {
