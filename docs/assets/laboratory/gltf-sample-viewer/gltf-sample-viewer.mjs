@@ -808,11 +808,8 @@ class SampleViewer
       $("#scenes, #viewpoints, #material-variants, #animations") .hide ();
 
       await this .browser .loadURL (new X3D .MFString (filename));
-      await this .browser .nextFrame ();
 
-      if (!this .browser .activeViewpoint ?.description)
-         this .browser .viewAll (0);
-
+      this .viewAll ();
       this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
       this .setHeadlight (!no_headlight .some (name => filename .includes (name)));
       this .setToneMapping (this .localStorage .toneMapping);
@@ -821,6 +818,14 @@ class SampleViewer
       this .addViewpoints ();
       this .addMaterialVariants ();
       this .addAnimations ();
+   }
+
+   async viewAll ()
+   {
+      await this .browser .nextFrame ();
+
+      if (!this .browser .activeViewpoint ?.description)
+         this .browser .viewAll (0);
    }
 
    async setEnvironmentLight (on, ibl = this .localStorage .ibl)

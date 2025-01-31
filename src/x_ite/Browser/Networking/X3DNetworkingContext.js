@@ -131,7 +131,11 @@ Object .assign (X3DNetworkingContext .prototype,
          if (this .getBrowserOption ("SplashScreen"))
          {
             this .getCanvas () .show ();
-            this .getSplashScreen () .addClass ("x_ite-private-fade-out-2000");
+            this .nextFrame () .then (() =>
+            {
+               if (!this [_loading])
+                  this .getSplashScreen () .addClass ("x_ite-private-fade-out-2000");
+            });
          }
       }
    },
