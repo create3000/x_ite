@@ -132,6 +132,7 @@ Object .assign (X3DNetworkingContext .prototype,
          {
             this .getCanvas () .show ();
 
+            // Defer until promises are resolved.
             setTimeout (() =>
             {
                if (!this [_loading])
