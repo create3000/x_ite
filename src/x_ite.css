@@ -658,17 +658,17 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-fade-in-300 {
   visibility: visible;
   opacity: 1;
-  transition: opacity 300ms linear;
+  transition: opacity 300ms ease-in-out;
 }
 
 .x_ite-private-fade-out-2000 {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 2s, opacity 2s linear;
+  transition: visibility 0s 2s, opacity 2s ease-in-out;
 }
 
 .x_ite-private-fade-out-300 {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 300ms, opacity 300ms linear;
+  transition: visibility 0s 300ms, opacity 300ms ease-in-out;
 }

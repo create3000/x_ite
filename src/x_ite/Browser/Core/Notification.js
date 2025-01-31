@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
       this .element .css ({
          visibility: "visible",
          width: this .element .textWidth (),
-         transition: "width 300ms linear",
+         transition: "width 300ms ease-in-out",
       });
 
       this .timeoutId = setTimeout (() =>
@@ -108,7 +108,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
          this .element .css ({
             visibility: "hidden",
             width: 0,
-            transition: "visibility 0s 300ms, width 300ms linear",
+            transition: "visibility 0s 300ms, width 300ms ease-in-out",
          });
       },
       5000);
