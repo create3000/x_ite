@@ -197,6 +197,16 @@ ROUTE Timer1.fraction_changed TO Rot1.set_fraction
 ROUTE Rot1.value_changed      TO Frame1.set_rotation
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/touch1/screenshot.png" alt="TouchSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/touch1/touch1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv)
+{: .example-links }
+
 ## Using multiple routes
 
 You can have **fan-out**

@@ -104,6 +104,16 @@ ROUTE Timer1.fraction_changed TO Rot1.set_fraction
 ROUTE Rot1.value_changed      TO Frame1.set_rotation
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/touch1/screenshot.png" alt="TouchSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/touch1/touch1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv)
+{: .example-links }
+
 ## Syntax: SphereSensor
 
 A [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/) node senses a cursor drag and generates rotations as if rotating a ball:
@@ -132,6 +142,16 @@ Transform {
 }
 ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/rotator2/rotator2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/rotator2/screenshot.png" alt="SphereSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/rotator2/rotator2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/rotator2/rotator2.x3dv)
+{: .example-links }
 
 ## Syntax: CylinderSensor
 
@@ -162,6 +182,16 @@ Transform {
 ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/rotator1/rotator1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/rotator1/screenshot.png" alt="CylinderSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/rotator1/rotator1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/rotator1/rotator1.x3dv)
+{: .example-links }
+
 ## Syntax: PlaneSensor
 
 A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses a cursor drag and generates translations as if sliding on a plane:
@@ -190,6 +220,16 @@ Transform {
 }
 ROUTE Mover.translation_changed TO MoveMe.set_translation
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/mover1/mover1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/mover1/screenshot.png" alt="PlaneSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/mover1/mover1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/mover1/mover1.x3dv)
+{: .example-links }
 
 ## Using multiple sensors
 

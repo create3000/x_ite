@@ -66,6 +66,16 @@ Shape {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/extrusion1/extrusion1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/extrusion1/screenshot.png" alt="Extrusion"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/extrusion1/extrusion1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/extrusion1/extrusion1.x3dv)
+{: .example-links }
+
 An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates extruded geometry:
 
 - *solid* - shape is solid

@@ -265,6 +265,16 @@ Transform {
 ...
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder2/cylinder2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/cylinder2/screenshot.png" alt="Cylinder"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder2/cylinder2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/cylinder2/cylinder2.x3dv)
+{: .example-links }
+
 ## Summary
 
 - All shapes are built in a coordinate system

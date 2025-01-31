@@ -92,6 +92,16 @@ Shape {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/points1/points1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/points1/screenshot.png" alt="PointSet"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/points1/points1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/points1/points1.x3dv)
+{: .example-links }
+
 ## Syntax: IndexedLineSet
 
 An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node creates geometry out of lines:
@@ -124,6 +134,16 @@ Shape {
   }
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/lines1/lines1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/lines1/screenshot.png" alt="IndexedLineSet"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/lines1/lines1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/lines1/lines1.x3dv)
+{: .example-links }
 
 ## Using line set coordinate indexes
 
@@ -181,6 +201,16 @@ Shape {
   }
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/faces1/faces1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/faces1/screenshot.png" alt="IndexedFaceSet"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/faces1/faces1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/faces1/faces1.x3dv)
+{: .example-links }
 
 ## Using face set coordinate index lists
 
