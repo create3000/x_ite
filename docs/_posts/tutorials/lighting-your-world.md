@@ -64,6 +64,16 @@ PointLight {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light1/light1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/light1/screenshot.png" alt="PointLight"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/light1/light1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/light1/light1.x3dv)
+{: .example-links }
+
 ## Syntax: DirectionalLight
 
 A [DirectionalLight](/x_ite/components/lighting/directionallight/) node illuminates in one direction from infinitely far away:
@@ -86,6 +96,16 @@ DirectionalLight {
   color     1.0 1.0 1.0
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light2/light2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/light2/screenshot.png" alt="DirectionalLight"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/light2/light2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/light2/light2.x3dv)
+{: .example-links }
 
 ## Syntax: SpotLight
 
@@ -113,6 +133,16 @@ SpotLight {
   cutOffAngle 0.785
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light3/light3.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/light3/screenshot.png" alt="SpotLight"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/light3/light3.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/light3/light3.x3dv)
+{: .example-links }
 
 - The maximum width of a spot light's cone is controlled by the cutOffAngle field
 - An inner cone region with constant brightness is controlled by the beamWidth field

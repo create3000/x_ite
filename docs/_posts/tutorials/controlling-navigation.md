@@ -66,6 +66,16 @@ NavigationInfo {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/navigation1/navigation1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/navigation1/screenshot.png" alt="NavigationInfo"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/navigation1/navigation1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/navigation1/navigation1.x3dv)
+{: .example-links }
+
 ## Summary
 
 The navigation type specifies how a viewer can move in a world:

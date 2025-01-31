@@ -113,6 +113,16 @@ Shape {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image1/image1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/image1/screenshot.png" alt="ImageTexture"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/image1/image1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/image1/image1.x3dv)
+{: .example-links }
+
 ## Syntax: PixelTexture
 
 A [PixelTexture](/x_ite/components/texturing/pixeltexture/) node specifies texture image pixels for texture mapping:
@@ -127,8 +137,8 @@ A [PixelTexture](/x_ite/components/texturing/pixeltexture/) node specifies textu
   <Appearance>
     <Material/>
     <PixelTexture
-        image='2 1 3
-          0xFFFF00 0xFF0000'/>
+        image='2 2 3
+          0xff0000 0xff00 0xff 0xffffff'/>
   </Appearance>
   <!-- geometry ... -->
 </Shape>
@@ -141,13 +151,24 @@ Shape {
   appearance Appearance {
     material Material { }
     texture PixelTexture {
-      image 2 1 3
-        0xFFFF00 0xFF0000
+      image 2 2 3
+        0xff0000 0xff00
+        0xff 0xffffff
     }
   }
   geometry ...
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image2/image2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/image2/screenshot.png" alt="PixelTexture"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/image2/image2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/image2/image2.x3dv)
+{: .example-links }
 
 ## Syntax: MovieTexture
 
@@ -190,6 +211,16 @@ Shape {
   geometry ...
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image3/image3.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/image3/screenshot.png" alt="MovieTexture"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/image3/image3.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/image3/image3.x3dv)
+{: .example-links }
 
 ## Using materials with textures
 

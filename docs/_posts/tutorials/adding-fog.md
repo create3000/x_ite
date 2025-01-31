@@ -61,6 +61,16 @@ Fog {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/fog1/fog1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/fog1/screenshot.png" alt="Fog"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/fog1/fog1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/fog1/fog1.x3dv)
+{: .example-links }
+
 ## Summary
 
 - Fog has a color, a type, and a visibility range
