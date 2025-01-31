@@ -127,7 +127,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          delete this .hide;
 
          layer .remove ();
-         ul .children () .fadeOut (options .animation ?? 0, () => ul .remove ());
+         ul .children ()
+            .removeClass ("x_ite-private-fade-in-300")
+            .addClass ("x_ite-private-fade-out-300");
+
+         setTimeout (() => ul .remove (), 2000);
 
          return false;
       };
@@ -149,9 +153,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Show
 
-      ul .children () .hide ();
+      ul .children () .addClass ("x_ite-private-hidden");
       ul .show ();
-      ul .children () .fadeIn (options .animation ?? 0);
+      ul .children ()
+         .removeClass ("x_ite-private-hidden")
+         .addClass ("x_ite-private-fade-in-300");
 
       // Reposition menu if to right or to low.
 

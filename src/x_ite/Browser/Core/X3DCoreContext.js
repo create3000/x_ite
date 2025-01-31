@@ -101,7 +101,7 @@ function X3DCoreContext (element)
    const
       browser      = $("<div></div>") .addClass ("x_ite-private-browser") .attr ("part", "browser") .attr ("tabindex", 0),
       surface      = $("<div></div>") .addClass ("x_ite-private-surface") .attr ("part", "surface") .appendTo (browser),
-      splashScreen = $("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
+      splashScreen = $("<div></div>") .addClass (["x_ite-private-splash-screen", "x_ite-private-hidden"]) .appendTo (browser),
       spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
       progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
 

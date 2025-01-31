@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
       X3DBaseNode .prototype .initialize .call (this);
 
       this .element = $("<div></div>")
-         .hide ()
+         .css ("visibility", "hidden")
          .addClass ("x_ite-private-notification")
          .appendTo (this .getBrowser () .getSurface ())
          .css ("width", 0);
@@ -93,15 +93,25 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
       if (this ._string .length === 0)
          return;
 
+      clearTimeout (this .timeoutId);
+
       this .element .children () .text (this ._string .getValue ());
 
-      this .element
-         .stop (true, true)
-         .fadeIn (0)
-         .animate ({ width: this .element .textWidth () })
-         .animate ({ "delay": 1 }, 5000)
-         .animate ({ width: 0 })
-         .fadeOut (0);
+      this .element .css ({
+         visibility: "visible",
+         width: this .element .textWidth (),
+         transition: "width 300ms linear",
+      });
+
+      this .timeoutId = setTimeout (() =>
+      {
+         this .element .css ({
+            visibility: "hidden",
+            width: 0,
+            transition: "visibility 0s 300ms, width 300ms linear",
+         });
+      },
+      5000);
    },
 });
 

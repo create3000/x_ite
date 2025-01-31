@@ -71,8 +71,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       this .localStorage .setDefaultValues ({ type: "LESS" });
 
       this .element = $("<div></div>")
-         .hide ()
-         .addClass ("x_ite-private-browser-timings")
+         .addClass (["x_ite-private-browser-timings", "x_ite-private-hidden"])
          .appendTo (this .getBrowser () .getSurface ());
 
       this .table = $("<table></table>")
@@ -175,14 +174,21 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
    {
       if (this .getBrowser () .getBrowserOption ("Timings"))
       {
-         this .element .stop (true, true) .fadeIn ();
+         this .element
+            .removeClass (["x_ite-private-fade-out-300", "x_ite-private-hidden"])
+            .addClass ("x_ite-private-fade-in-300");
+
          this .getBrowser () .addBrowserCallback (this, X3DConstants .INITIALIZED_EVENT, () => this .reset ());
          this .getBrowser () .prepareEvents () .addInterest ("update", this);
          this .reset ();
       }
       else
       {
-         this .element .stop (true, true) .fadeOut ();
+
+         this .element
+            .removeClass ("x_ite-private-fade-in-300")
+            .addClass ("x_ite-private-fade-out-300");
+
          this .getBrowser () .removeBrowserCallback (this, X3DConstants .INITIALIZED_EVENT);
          this .getBrowser () .prepareEvents () .removeInterest ("update", this);
       }

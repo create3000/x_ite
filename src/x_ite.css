@@ -316,7 +316,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-menu.context-menu-list,
 .x_ite-private-menu .context-menu-list {
-  display: none;
+  visibility: hidden;
   box-sizing: border-box;
   min-width: 120px;
   margin: 0;
@@ -399,7 +399,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item:hover > .context-menu-list {
-  display: block;
+  visibility: visible;
 }
 
 .x_ite-private-menu .context-menu-not-selectable {
@@ -648,4 +648,27 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: url("assets/images/XR.svg");
   opacity: 0.6;
   cursor: pointer;
+}
+
+.x_ite-private-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.x_ite-private-fade-in-300 {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 300ms linear;
+}
+
+.x_ite-private-fade-out-2000 {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.x_ite-private-fade-out-300 {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 300ms, opacity 300ms linear;
 }
