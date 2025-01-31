@@ -52,13 +52,14 @@ import X3DConstants from "../../Base/X3DConstants.js";
 $.fn.textWidth = function (string)
 {
    const
-      children = $(this) .children (),
-      html     = $(this) .html (),
-      span     = '<span>' + html + '</span>';
-   $(this) .html (span);
-   const width = $(this) .find ('span:first') .width ();
-   $(this) .empty ();
-   $(this) .append (children);
+      self     = $(this),
+      children = self .children (),
+      html     = self .html (),
+      span     = $("<span></span>") .html (html);
+
+   self .html (span);
+   const width = span .width ();
+   self .empty () .append (children);
    return width;
 };
 
