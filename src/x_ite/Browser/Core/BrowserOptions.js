@@ -104,6 +104,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       this .set_Antialiased__                  (this ._Antialiased);
       this .set_Shading__                      (this ._Shading);
+      this .set_AutoUpdate__                   (this ._AutoUpdate);
       this .set_ContentScale__                 (this ._ContentScale);
       this .set_Exposure__                     (this ._Exposure);
       this .set_LogarithmicDepthBuffer__       (this ._LogarithmicDepthBuffer);
@@ -289,36 +290,28 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
          .join (" ");
 
-      if (autoUpdate .getValue ())
-      {
-         const
-            browser = this .getBrowser (),
-            element = browser .getElement ();
+      const
+         browser = this .getBrowser (),
+         element = browser .getElement ();
 
-         const checkUpdate = () =>
+      const checkUpdate = () =>
+      {
+         if (!document .hidden && element .isInViewport ())
          {
-            if (!document .hidden && element .isInViewport ())
-            {
-               if (!browser .isLive ())
-                  browser .beginUpdate ();
-            }
-            else
-            {
-               if (browser .isLive ())
-                  browser .endUpdate ();
-            }
-         };
+            if (!browser .isLive ())
+               browser .beginUpdate ();
+         }
+         else
+         {
+            if (browser .isLive ())
+               browser .endUpdate ();
+         }
+      };
 
-         $(window)   .on (windowEvents,   checkUpdate);
-         $(document) .on (documentEvents, checkUpdate);
+      $(window)   .off (windowEvents)   .on (windowEvents,   checkUpdate);
+      $(document) .off (documentEvents) .on (documentEvents, checkUpdate);
 
-         checkUpdate ();
-      }
-      else
-      {
-         $(window)   .off (windowEvents);
-         $(document) .off (documentEvents);
-      }
+      checkUpdate ();
    },
    set_ContentScale__ (contentScale)
    {
