@@ -382,7 +382,7 @@ Object .assign (X3DCoreContext .prototype,
             if (! this .getBrowserOption ("SplashScreen"))
             {
                this .getCanvas () .show ();
-               this .getSplashScreen () .stop (true, true) .hide ();
+               this .getSplashScreen () .removeClass ("x_ite-private-fade-out-2000") .addClass ("x_ite-private-hidden");
             }
 
             break;
