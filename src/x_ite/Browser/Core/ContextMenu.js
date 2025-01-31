@@ -73,7 +73,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          element: browser .getElement (),
          appendTo: browser .getShadow (),
          build: this .build .bind (this),
-         animation: 300,
       };
 
       this [_options] .element .on ("contextmenu.ContextMenu", event => this .show (event));
