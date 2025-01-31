@@ -77,6 +77,7 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
+import X3DCanvasElement            from "./X3DCanvasElement.js";
 import QuickSort                   from "../standard/Math/Algorithms/QuickSort.js";
 import jQuery                      from "../lib/jquery.js";
 import libtess                     from "../lib/libtess.js";
