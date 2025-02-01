@@ -84,7 +84,7 @@ Shape {
 ## Using comments
 
 ```vrml
-# A Cylinder
+# A comment
 #/* A
   * multi-line
   * comment */#
