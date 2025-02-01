@@ -83,6 +83,16 @@ Shape {
 
 ## Using comments
 
+### XML Encoding
+
+```x3d
+<!-- A comment -->
+```
+
+- Comments start with '\<\!\-\-' and must end with '\-\-\>'.
+
+### Classic VRML Encoding
+
 ```vrml
 # A comment
 #/* A
