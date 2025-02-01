@@ -76,6 +76,8 @@ DEF XForm Transform {
 ROUTE Sensor.translation_changed TO XForm.set_translation
 ```
 
+Be careful! X3D is a case sensitive language.
+
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/simple/simple.x3dv" update="auto">
@@ -85,8 +87,6 @@ ROUTE Sensor.translation_changed TO XForm.set_translation
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/simple/simple.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/simple/simple.x3dv)
 {: .example-links }
-
-Be careful! X3D is a case sensitive language.
 
 ## Key Concept
 
