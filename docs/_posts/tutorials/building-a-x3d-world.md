@@ -95,13 +95,14 @@ Shape {
 
 ```vrml
 # A comment
+
 #/* A
   * multi-line
   * comment */#
 ```
 
 - Comments start with a number-sign '**\#**' and extend to the end of the line.
-- Mult-line comments start with '**#/\***' and must end with '**\*/#**'.
+- Mult-line comments start with '**\#/\***' and must end with '**\*/\#**'.
 
 ## Using nodes
 
