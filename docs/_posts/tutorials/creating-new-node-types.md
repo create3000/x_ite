@@ -173,6 +173,16 @@ BouncingBall {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/proto/proto.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/proto/screenshot.png" alt="BouncingBall"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/proto/proto.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/proto/proto.x3dv)
+{: .example-links }
+
 ## Controlling usage rules
 
 Recall that node use must be appropriate for the context:
@@ -333,6 +343,16 @@ EXTERNPROTO BouncingBall [
   "bounce.x3d#BouncingBall"
 ]
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/externproto/externproto.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/externproto/screenshot.png" alt="BouncingBall"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/externproto/externproto.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/externproto/externproto.x3dv)
+{: .example-links }
 
 ## Summary
 

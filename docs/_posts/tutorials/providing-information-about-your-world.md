@@ -33,3 +33,13 @@ WorldInfo {
   info  [ "License GPLv3, https://www.gnu.org/licenses/gpl-3.0.en.html" ]
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/world-info/world-info.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/world-info/screenshot.png" alt="WorldInfo"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/world-info/world-info.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/world-info/world-info.x3dv)
+{: .example-links }
