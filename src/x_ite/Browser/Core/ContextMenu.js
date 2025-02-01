@@ -561,7 +561,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   const
                      priv      = browser .getShadow () .find (".x_ite-private-browser"),
                      overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-                     div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
+                     div       = $("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
                      worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
                      title     = worldInfo .title,
                      info      = worldInfo .info;
@@ -578,7 +578,16 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      $("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
                   }
 
-                  overlay .on ("click", () => overlay .remove ());
+                  div
+                     .show ()
+                     .removeClass ("x_ite-private-hidden")
+                     .addClass ("x_ite-private-fade-in-300");
+
+                  overlay .on ("click", () =>
+                  {
+                     div .addClass ("x_ite-private-fade-out-300");
+                     setTimeout (() => overlay .remove (), 300);
+                  });
                },
             },
             "about": {
