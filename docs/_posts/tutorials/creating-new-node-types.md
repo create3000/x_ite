@@ -32,7 +32,7 @@ A PROTO statement declares a new node type (a prototype):
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <field accessType='inputOutput' type='SFTime' name='cycleInterval' value='1'/>
-    <field accessType='inputOutput' type='SFFloat' name='bounceHeight' value='1'/>
+    <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='1'/>
   </ProtoInterface>
   <ProtoBody>
     <!-- ... -->
@@ -44,8 +44,8 @@ A PROTO statement declares a new node type (a prototype):
 
 ```vrml
 PROTO BouncingBall [
-  inputOutput SFTime  cycleInterval 1.0
-  inputOutput SFFloat bounceHeight  1.0
+  inputOutput    SFTime  cycleInterval 1.0
+  initializeOnly SFFloat bounceHeight  1.0
 ]
 {
   ...
@@ -103,7 +103,7 @@ Interface items connected by IS need not have the same name as an item in the bo
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <field accessType='inputOutput' type='SFTime' name='cycleInterval' value='1'/>
-    <field accessType='inputOutput' type='SFFloat' name='bounceHeight' value='1'/>
+    <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='1'/>
   </ProtoInterface>
   <ProtoBody>
     <!-- ... -->
@@ -122,8 +122,8 @@ Interface items connected by IS need not have the same name as an item in the bo
 
 ```vrml
 PROTO BouncingBall [
-  inputOutput SFTime  cycleInterval 1.0
-  inputOutput SFFloat bounceHeight  1.0
+  inputOutput    SFTime  cycleInterval 1.0
+  initializeOnly SFFloat bounceHeight  1.0
 ]
 {
   ...
@@ -238,7 +238,7 @@ Fields needed:
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <field accessType='inputOutput' type='SFTime' name='cycleInterval' value='1'/>
-    <field accessType='inputOutput' type='SFFloat' name='bounceHeight' value='1'/>
+    <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='1'/>
   </ProtoInterface>
   <ProtoBody>
     <!-- ... -->
@@ -250,8 +250,8 @@ Fields needed:
 
 ```vrml
 PROTO BouncingBall [
-  inputOutput SFTime  cycleInterval 1.0
-  inputOutput SFFloat bounceHeight 1.0
+  inputOutput    SFTime  cycleInterval 1.0
+  initializeOnly SFFloat bounceHeight 1.0
 ]
 {
   ...
@@ -327,7 +327,7 @@ Prototypes are typically in a separate external file, referenced by an **EXTERNP
 ```x3d
 <ExternProtoDeclare name='BouncingBall' url='"bounce.x3dv#BouncingBall", "bounce.x3d#BouncingBall"'>
   <field accessType='inputOutput' type='SFTime' name='cycleInterval'/>
-  <field accessType='inputOutput' type='SFFloat' name='bounceHeight'/>
+  <field accessType='initializeOnly' type='SFFloat' name='bounceHeight'/>
 </ExternProtoDeclare>
 ```
 
@@ -335,8 +335,8 @@ Prototypes are typically in a separate external file, referenced by an **EXTERNP
 
 ```vrml
 EXTERNPROTO BouncingBall [
-  inputOutput SFTime  cycleInterval
-  inputOutput SFFloat bounceHeight
+  inputOutput    SFTime  cycleInterval
+  initializeOnly SFFloat bounceHeight
 ]
 [
   "bounce.x3dv#BouncingBall",
