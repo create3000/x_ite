@@ -155,7 +155,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/colors1/colors1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/colors1/screenshot.png" alt="Color"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/colors1/screenshot.avif" alt="Color"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/colors1/colors1.zip)

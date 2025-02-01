@@ -205,7 +205,7 @@ ROUTE Touch.isOver TO Button.set_whichChoice
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/boolean-switch/boolean-switch.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/boolean-switch/screenshot.png" alt="BooleanSwitch"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/boolean-switch/screenshot.avif" alt="BooleanSwitch"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/boolean-switch/boolean-switch.zip)

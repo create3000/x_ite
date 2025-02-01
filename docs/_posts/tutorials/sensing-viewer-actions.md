@@ -107,7 +107,7 @@ ROUTE Rot1.value_changed      TO Frame1.set_rotation
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/touch1/screenshot.png" alt="TouchSensor"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/touch1/screenshot.avif" alt="TouchSensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/touch1/touch1.zip)
@@ -146,7 +146,7 @@ ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/rotator2/rotator2.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/rotator2/screenshot.png" alt="SphereSensor"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/rotator2/screenshot.avif" alt="SphereSensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/rotator2/rotator2.zip)
@@ -185,7 +185,7 @@ ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/rotator1/rotator1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/rotator1/screenshot.png" alt="CylinderSensor"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/rotator1/screenshot.avif" alt="CylinderSensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/rotator1/rotator1.zip)
@@ -224,7 +224,7 @@ ROUTE Mover.translation_changed TO MoveMe.set_translation
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/mover1/mover1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/mover1/screenshot.png" alt="PlaneSensor"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/mover1/screenshot.avif" alt="PlaneSensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/mover1/mover1.zip)

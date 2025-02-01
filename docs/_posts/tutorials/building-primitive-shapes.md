@@ -133,7 +133,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.png" alt="Cylinder"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.avif" alt="Cylinder"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip)
@@ -203,7 +203,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/screenshot.png" alt="Multiple Shapes"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/screenshot.avif" alt="Multiple Shapes"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.zip)

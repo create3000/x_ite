@@ -95,7 +95,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/points1/points1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/points1/screenshot.png" alt="PointSet"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/points1/screenshot.avif" alt="PointSet"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/points1/points1.zip)
@@ -138,7 +138,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/lines1/lines1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/lines1/screenshot.png" alt="IndexedLineSet"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/lines1/screenshot.avif" alt="IndexedLineSet"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/lines1/lines1.zip)
@@ -205,7 +205,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/faces1/faces1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/faces1/screenshot.png" alt="IndexedFaceSet"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/faces1/screenshot.avif" alt="IndexedFaceSet"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/faces1/faces1.zip)

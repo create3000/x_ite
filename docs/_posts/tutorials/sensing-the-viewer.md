@@ -68,7 +68,7 @@ ROUTE Sensor.enterTime TO Clock.set_startTime
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/VisibilitySensor.x3d" update="auto">
-  <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/screenshot.png" alt="VisibilitySensor"/>
+  <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/screenshot.avif" alt="VisibilitySensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/VisibilitySensor.zip)
@@ -107,7 +107,7 @@ ROUTE Sensor.enterTime TO Clock.set_startTime
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/ProximitySensor.x3d" update="auto">
-  <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/screenshot.png" alt="ProximitySensor"/>
+  <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/screenshot.avif" alt="ProximitySensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/ProximitySensor.zip)
@@ -197,7 +197,7 @@ ROUTE Collide.collideTime TO OuchSound.set_startTime
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Navigation/Collision/Collision.x3d" update="auto">
-  <img src="https://create3000.github.io/media/examples/Navigation/Collision/screenshot.png" alt="Collision"/>
+  <img src="https://create3000.github.io/media/examples/Navigation/Collision/screenshot.avif" alt="Collision"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Navigation/Collision/Collision.zip)

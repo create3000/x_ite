@@ -176,7 +176,7 @@ BouncingBall {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/proto/proto.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/proto/screenshot.png" alt="BouncingBall"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/proto/screenshot.avif" alt="BouncingBall"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/proto/proto.zip)
@@ -347,7 +347,7 @@ EXTERNPROTO BouncingBall [
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/externproto/externproto.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/externproto/screenshot.png" alt="BouncingBall"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/externproto/screenshot.avif" alt="BouncingBall"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/externproto/externproto.zip)

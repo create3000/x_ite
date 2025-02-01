@@ -450,7 +450,7 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/bouncer/screenshot.png" alt="Bouncer"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/bouncer/screenshot.avif" alt="Bouncer"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.zip)
