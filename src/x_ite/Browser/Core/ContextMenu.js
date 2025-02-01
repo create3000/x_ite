@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // If the submenu is higher than vh, reposition it.
 
-      ul .find ("li") .on ("mouseenter touchstart", function (event)
+      ul .find ("li") .on ("mouseenter touchstart", event =>
       {
          event .stopImmediatePropagation ();
 
@@ -578,7 +578,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      $("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
                   }
 
-                  overlay .on ("click", function () { overlay .remove (); });
+                  overlay .on ("click", () => overlay .remove ());
                },
             },
             "about": {
