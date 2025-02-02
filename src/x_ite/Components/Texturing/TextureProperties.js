@@ -62,9 +62,9 @@ function TextureProperties (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
-      this ._minificationFilter  = "DEFAULT";
-      this ._magnificationFilter = "DEFAULT";
-      this ._textureCompression  = "DEFAULT";
+      this ._minificationFilter  = "FASTEST";
+      this ._magnificationFilter = "FASTEST";
+      this ._textureCompression  = "FASTEST";
    }
 }
 
@@ -173,12 +173,12 @@ Object .defineProperties (TextureProperties,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "borderWidth",         new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "anisotropicDegree",   new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "generateMipMaps",     new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "minificationFilter",  new Fields .SFString ("FASTEST")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "magnificationFilter", new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "minificationFilter",  new Fields .SFString ("DEFAULT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "magnificationFilter", new Fields .SFString ("DEFAULT")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeS",       new Fields .SFString ("REPEAT")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeT",       new Fields .SFString ("REPEAT")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeR",       new Fields .SFString ("REPEAT")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "textureCompression",  new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "textureCompression",  new Fields .SFString ("DEFAULT")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "texturePriority",     new Fields .SFFloat ()),
       ]),
       enumerable: true,

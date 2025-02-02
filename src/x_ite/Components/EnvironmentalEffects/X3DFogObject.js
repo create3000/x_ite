@@ -152,6 +152,9 @@ Object .assign (X3DFogObject .prototype,
    })(),
    set_color__ ()
    {
+      //We cannot use this in Windows Edge:
+      //this .colorArray .set (this ._color .getValue ());
+
       const
          color      = this ._color .getValue (),
          colorArray = this .colorArray;
