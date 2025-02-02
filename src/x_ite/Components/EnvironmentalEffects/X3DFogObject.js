@@ -76,9 +76,10 @@ Object .assign (FogContainer .prototype,
 
       const fogNode = this .fogNode;
 
-      gl .uniform3fv       (shaderObject .x3d_FogColor,           fogNode .colorArray);
-      gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, fogNode .visibilityRange);
-      gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
+      gl .uniform3fv       (shaderObject .x3d_FogColor,            fogNode .colorArray);
+      gl .uniform1f        (shaderObject .x3d_FogVisibilityOffset, fogNode .visibilityOffset);
+      gl .uniform1f        (shaderObject .x3d_FogVisibilityRange,  fogNode .visibilityRange);
+      gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,    this .fogMatrix);
    },
    dispose ()
    {
@@ -105,12 +106,14 @@ Object .assign (X3DFogObject .prototype,
 {
    initialize ()
    {
-      this ._hidden          .addInterest ("set_fogType__",         this);
-      this ._fogType         .addInterest ("set_fogType__",         this);
-      this ._color           .addInterest ("set_color__",           this);
-      this ._visibilityRange .addInterest ("set_visibilityRange__", this);
+      this ._hidden           .addInterest ("set_fogType__",          this);
+      this ._fogType          .addInterest ("set_fogType__",          this);
+      this ._color            .addInterest ("set_color__",            this);
+      this ._visibilityOffset .addInterest ("set_visibilityOffset__", this);
+      this ._visibilityRange  .addInterest ("set_visibilityRange__",  this);
 
       this .set_color__ ();
+      this .set_visibilityOffset__ ();
       this .set_visibilityRange__ ();
    },
    isHidden ()
@@ -156,6 +159,10 @@ Object .assign (X3DFogObject .prototype,
       colorArray [0] = color .r;
       colorArray [1] = color .g;
       colorArray [2] = color .b;
+   },
+   set_visibilityOffset__ ()
+   {
+      this .visibilityOffset = Math .max (0, this ._visibilityOffset .getValue ());
    },
    set_visibilityRange__ ()
    {

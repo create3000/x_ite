@@ -8099,6 +8099,12 @@ declare namespace X3D
        */
       set_bind: boolean;
       /**
+       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      visibilityOffset: number;
+      /**
        * Distance in meters where objects are totally obscured by the fog, using local coordinate system.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
@@ -11790,6 +11796,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFNode.
        */
       metadata: X3DMetadataObjectProxy | null;
+      /**
+       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      visibilityOffset: number;
       /**
        * Distance in meters where objects are totally obscured by the fog, using local coordinate system.
        *
@@ -21075,6 +21087,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFString.
        */
       fogType: "LINEAR" | "EXPONENTIAL";
+      /**
+       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      visibilityOffset: number;
       /**
        * This field is of access type 'inputOutput' and type SFFloat.
        */
