@@ -73,7 +73,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          element: browser .getElement (),
          appendTo: browser .getShadow (),
          build: this .build .bind (this),
-         animation: 300,
       };
 
       this [_options] .element .on ("contextmenu.ContextMenu", event => this .show (event));
@@ -127,7 +126,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          delete this .hide;
 
          layer .remove ();
-         ul .children () .fadeOut (options .animation ?? 0, () => ul .remove ());
+         ul .children ()
+            .removeClass ("x_ite-private-fade-in-300")
+            .addClass ("x_ite-private-fade-out-300");
+
+         setTimeout (() => ul .remove (), 2000);
 
          return false;
       };
@@ -149,9 +152,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Show
 
-      ul .children () .hide ();
+      ul .children () .addClass ("x_ite-private-hidden");
       ul .show ();
-      ul .children () .fadeIn (options .animation ?? 0);
+      ul .children ()
+         .removeClass ("x_ite-private-hidden")
+         .addClass ("x_ite-private-fade-in-300");
 
       // Reposition menu if to right or to low.
 
@@ -186,7 +191,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // If the submenu is higher than vh, reposition it.
 
-      ul .find ("li") .on ("mouseenter touchstart", function (event)
+      ul .find ("li") .on ("mouseenter touchstart", event =>
       {
          event .stopImmediatePropagation ();
 
@@ -556,7 +561,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   const
                      priv      = browser .getShadow () .find (".x_ite-private-browser"),
                      overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-                     div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
+                     div       = $("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
                      worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
                      title     = worldInfo .title,
                      info      = worldInfo .info;
@@ -573,7 +578,16 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      $("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
                   }
 
-                  overlay .on ("click", function () { overlay .remove (); });
+                  div
+                     .show ()
+                     .removeClass ("x_ite-private-hidden")
+                     .addClass ("x_ite-private-fade-in-300");
+
+                  overlay .on ("click", () =>
+                  {
+                     div .addClass ("x_ite-private-fade-out-300");
+                     setTimeout (() => overlay .remove (), 300);
+                  });
                },
             },
             "about": {

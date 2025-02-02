@@ -148,9 +148,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (let i = 0; i < maxClipPlanes; ++ i)
          this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
 
-      this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
-      this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
-      this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
+      this .x3d_FogColor            = this .getUniformLocation (gl, program, "x3d_Fog.color",            "x3d_FogColor");
+      this .x3d_FogVisibilityOffset = this .getUniformLocation (gl, program, "x3d_Fog.visibilityOffset", "x3d_FogVisibilityOffset");
+      this .x3d_FogVisibilityRange  = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange",  "x3d_FogVisibilityRange");
+      this .x3d_FogMatrix           = this .getUniformLocation (gl, program, "x3d_Fog.matrix",           "x3d_FogMatrix");
 
       this .x3d_PointPropertiesPointSizeScaleFactor = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeScaleFactor");
       this .x3d_PointPropertiesPointSizeMinValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMinValue");

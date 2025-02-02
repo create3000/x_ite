@@ -66,7 +66,7 @@ const
    browser = X3D .getBrowser (),
    scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
-// Viewpoint
+// Create Viewpoint:
 
 const viewpointNode = scene .createNode ("Viewpoint");
 
@@ -77,7 +77,7 @@ viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.12382
 
 scene .rootNodes .push (viewpointNode);
 
-// Box
+// Create Box:
 
 const
    transformNode  = scene .createNode ("Transform"),
@@ -98,7 +98,7 @@ scene .rootNodes .push (transformNode);
 // Give the node a name if you like.
 scene .addNamedNode ("Box", transformNode);
 
-// Create animation.
+// Create animation:
 
 const
    timeSensorNode   = scene .createNode ("TimeSensor"),
@@ -110,19 +110,19 @@ timeSensorNode .loop          = true;
 for (let i = 0; i < 5; ++ i)
 {
   interpolatorNode .key [i]      = i / 4;
-  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI * i / 2);
+  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
 }
 
 scene .rootNodes .push (timeSensorNode, interpolatorNode);
 
-// Create routes.
+// Add routes:
 
 scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
 scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
 
 // Show scene.
 
-browser .replaceWorld (scene);
+await browser .replaceWorld (scene);
 </script>
 <!-- x3d-canvas element comes here: -->
 <x3d-canvas></x3d-canvas>

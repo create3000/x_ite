@@ -7,7 +7,7 @@ tags: [Basic, Nodes]
 ---
 ## Overview
 
-X3D is capable of representing static and animated objects and it can have hyperlinks to other media such as sound, movies, and image. X\_ITE is a browsers for X3D and available for many different platforms as well as [Sunrize](/sunrize/) is an authoring tools for the creation X3D files. For programmers there is an JavaScript API interface to access X3D nodes and commonly used 3D application programmer interface features.
+X3D is capable of representing static and animated objects and it can have hyperlinks to other media such as sound, movies, and image. X\_ITE is a browsers for X3D and available for many different platforms as well as [Sunrize](/sunrize/) is an authoring tools for the creation X3D files. For programmers there is a JavaScript API interface to access X3D nodes and commonly used 3D application programmer interface features.
 
 ## Let The Games Begin…
 
@@ -29,7 +29,10 @@ Here is a typical X3D Classic Encoded file with a single node:
 ```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
-<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+  <head>
+    <component name='PointingDeviceSensor' level='1'/>
+  </head>
   <Scene>
     <PlaneSensor DEF='Sensor'
         offset='0 2 0'/>
@@ -48,6 +51,10 @@ Here is a typical X3D Classic Encoded file with a single node:
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
+
+PROFILE Interchange
+
+COMPONENT PointingDeviceSensor : 1
 
 # A sample file with a simple scene
 
@@ -70,6 +77,16 @@ ROUTE Sensor.translation_changed TO XForm.set_translation
 ```
 
 Be careful! X3D is a case sensitive language.
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/simple/simple.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/simple/screenshot.avif" alt="Simple Example"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/simple/simple.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/simple/simple.x3dv)
+{: .example-links }
 
 ## Key Concept
 

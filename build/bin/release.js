@@ -64,6 +64,30 @@ function docs (version)
 	fs .writeFileSync ("docs/_config.yml", config);
 }
 
+function integrity ()
+{
+	const files = [
+		"x_ite.js",
+		"x_ite.min.js",
+		"x_ite.mjs",
+		"x_ite.min.mjs",
+		"x_ite.css",
+	];
+
+	let config = sh (`cat docs/_config.yml`);
+
+	for (const file of files)
+	{
+		const
+			key    = file .replace (/\./g, "_"),
+			shasum = sh (`shasum -b -a 384 dist/${file} | awk '{ print $1 }' | xxd -r -p | base64`) .trim ();
+
+		config = config .replace (new RegExp (`(${key}_integrity):.*?\n`), `$1: sha384-${shasum}\n`);
+	}
+
+	fs .writeFileSync (`docs/_config.yml`, config);
+}
+
 function commit (version)
 {
 	systemSync (`git commit -am 'Published version ${version}'`);
@@ -157,25 +181,13 @@ function release ()
 
 	console .log ("Waiting for confirmation ...");
 
-	const
-		version = sh (`npm pkg get version | sed 's/"//g'`) .trim (),
-		result  = systemSync (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
-
-	if (result !== 0)
-		process .exit (1);
-
-	console .log (`Publishing X_ITE X3D v${version} now.`);
+	const version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
 
 	systemSync (`npm run docs-table`);
 	systemSync (`npm run docs-components`);
 	systemSync (`npm run docs-nodes`);
 	systemSync (`npm run docs-reference`);
 	systemSync (`npm run glTF-samples`);
-	systemSync (`git add -A`);
-	systemSync (`git commit -am 'Build version ${version}'`);
-	systemSync (`git push origin`);
-	systemSync (`git checkout main`);
-	systemSync (`git merge development`);
 
 	// docs
 
@@ -183,13 +195,33 @@ function release ()
 	{
 		readme (version);
 		docs (version);
+		integrity ();
 	}
+
+	// confirm
+
+	const result = systemSync (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
+
+	if (result !== 0)
+		process .exit (1);
+
+	console .log (`Publishing X_ITE X3D v${version} now.`);
+
+	// commit and merge development branch into main
+
+	systemSync (`git add -A`);
+	systemSync (`git commit -am 'Build version ${version}'`);
+	systemSync (`git push origin`);
+	systemSync (`git checkout main`);
+	systemSync (`git merge development`);
 
 	// publish
 
 	commit (version);
 	tags (version);
-	systemSync (`npm publish`);
+
+	if (!version .endsWith ("a"))
+		systemSync (`npm publish`);
 
 	// code
 

@@ -4,7 +4,8 @@ const
    path     = require ("path"),
    fs       = require ("fs"),
    os       = require ("os"),
-   { exec } = require ("child_process");
+   { exec } = require ("child_process"),
+   { sh }   = require ("shell-tools");
 
 for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename => filename .match (/\.js$/)))
 {
@@ -118,6 +119,11 @@ export default Namespace .add ("${base}", __default__);`;
       ],
    };
 
+   sh (`perl -p0e 's|\\/\\*.*?\\*\\/||sg' src/x_ite.css | npx sass --stdin --style compressed > dist/x_ite.css`);
+   sh (`perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`);
+
+   const integrity = "sha384-" + sh (`shasum -b -a 384 dist/x_ite.css | awk '{ print $1 }' | xxd -r -p | base64`) .trim ();
+
    targets .push ({
       entry: {
          "x_ite": "./src/x_ite.js",
@@ -169,8 +175,6 @@ export default Namespace .add ("${base}", __default__);`;
             onBuildStart: {
                scripts: [
                   `echo 'Bundling x_ite ...'`,
-                  `perl -p0e 's|\\/\\*.*?\\*\\/||sg' src/x_ite.css | npx sass --stdin --style compressed > dist/x_ite.css`,
-                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
                   `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/BROWSER_VERSION.js`,
                   `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEVELOPMENT.js`,
                ],
@@ -182,6 +186,8 @@ export default Namespace .add ("${base}", __default__);`;
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.js`,
                   `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.js`,
+                  // Subresource Integrity Hash Values
+                  `perl -p0i -e 's|css-integrity-placeholder|integrity=\\\\"${integrity}\\\\" crossorigin=\\\\"anonymous\\\\"|sg' dist/x_ite{,.min}.js`,
                   // asm
                   `perl -p0i -e 's|"use\\s+asm"\\s*;?||sg' dist/x_ite{,.min}.js`,
                   // Source Maps
@@ -209,6 +215,9 @@ export default Namespace .add ("${base}", __default__);`;
             process: false,
             path: false,
             fs: false,
+         },
+         alias: {
+           "jquery": "jquery/dist/jquery.slim.js",
          },
       },
       stats: "errors-warnings",
@@ -323,6 +332,8 @@ export default Namespace .add ("${base}", __default__);`;
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.mjs`,
                   `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.mjs`,
+                  // Subresource Integrity Hash Values
+                  `perl -p0i -e 's|css-integrity-placeholder|integrity=\\\\"${integrity}\\\\" crossorigin=\\\\"anonymous\\\\"|sg' dist/x_ite{,.min}.mjs`,
                   // asm
                   `perl -p0i -e 's|"use\\s+asm"\\s*;?||sg' dist/x_ite{,.min}.mjs`,
                   // Source Maps
@@ -345,6 +356,9 @@ export default Namespace .add ("${base}", __default__);`;
             process: false,
             path: false,
             fs: false,
+         },
+         alias: {
+           "jquery": "jquery/dist/jquery.slim.js",
          },
       },
       stats: "errors-warnings",

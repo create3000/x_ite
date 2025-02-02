@@ -1,5 +1,5 @@
-/* X_ITE v11.0.7 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
+/* X_ITE v11.1.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -284,6 +284,12 @@ function AnisotropyMaterialExtension (executionContext)
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).AnisotropyMaterialExtension);
+
+   // Units
+
+   this ._anisotropyRotation .setUnit ("angle");
+   
+   // Private properties
 
    this .anisotropyArray = new Float32Array (3);
 }
@@ -1308,8 +1314,6 @@ var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .VertexArray"
 const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArray;
 var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
-;// external "__X_ITE_X3D__ .Vector3"
-const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 ;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
@@ -1375,7 +1379,6 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
 
 
 
-
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -1387,6 +1390,13 @@ function InstancedShape (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).InstancedShape);
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "matrices", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+
+   // Units
+
+   this ._translations .setUnit ("length");
+   this ._centers      .setUnit ("length");
+
+   // Private properties
 
    this .numInstances       = 0;
    this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
@@ -2866,6 +2876,13 @@ function VolumeMaterialExtension (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).VolumeMaterialExtension);
 
+   // Units
+
+   this ._thickness           .setUnit ("length");
+   this ._attenuationDistance .setUnit ("length");
+
+   // Private properties
+
    this .attenuationColorArray = new Float32Array (3);
 }
 
@@ -2875,7 +2892,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    {
       X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      this ._thickness            .addInterest ("set_thickness__",          this);
+      this ._thickness           .addInterest ("set_thickness__",           this);
       this ._thicknessTexture    .addInterest ("set_thicknessTexture__",    this);
       this ._attenuationDistance .addInterest ("set_attenuationDistance__", this);
       this ._attenuationColor    .addInterest ("set_attenuationColor__",    this);

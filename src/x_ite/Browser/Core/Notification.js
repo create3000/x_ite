@@ -52,13 +52,14 @@ import X3DConstants from "../../Base/X3DConstants.js";
 $.fn.textWidth = function (string)
 {
    const
-      children = $(this) .children (),
-      html     = $(this) .html (),
-      span     = '<span>' + html + '</span>';
-   $(this) .html (span);
-   const width = $(this) .find ('span:first') .width ();
-   $(this) .empty ();
-   $(this) .append (children);
+      self     = $(this),
+      children = self .children (),
+      html     = self .html (),
+      span     = $("<span></span>") .html (html);
+
+   self .html (span);
+   const width = span .width ();
+   self .empty () .append (children);
    return width;
 };
 
@@ -76,7 +77,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
       X3DBaseNode .prototype .initialize .call (this);
 
       this .element = $("<div></div>")
-         .hide ()
+         .css ("visibility", "hidden")
          .addClass ("x_ite-private-notification")
          .appendTo (this .getBrowser () .getSurface ())
          .css ("width", 0);
@@ -93,15 +94,25 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
       if (this ._string .length === 0)
          return;
 
+      clearTimeout (this .timeoutId);
+
       this .element .children () .text (this ._string .getValue ());
 
-      this .element
-         .stop (true, true)
-         .fadeIn (0)
-         .animate ({ width: this .element .textWidth () })
-         .animate ({ "delay": 1 }, 5000)
-         .animate ({ width: 0 })
-         .fadeOut (0);
+      this .element .css ({
+         visibility: "visible",
+         width: this .element .textWidth (),
+         transition: "width 300ms ease-in-out",
+      });
+
+      this .timeoutId = setTimeout (() =>
+      {
+         this .element .css ({
+            visibility: "hidden",
+            width: 0,
+            transition: "visibility 0s 300ms, width 300ms ease-in-out",
+         });
+      },
+      5000);
    },
 });
 

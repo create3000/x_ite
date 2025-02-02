@@ -123,7 +123,7 @@ Object .assign (X3DNetworkingContext .prototype,
          {
             this .getContextMenu () .hide ();
             this .getCanvas () .hide ();
-            this .getSplashScreen () .stop (true, true) .show ();
+            this .getSplashScreen () .removeClass (["x_ite-private-fade-out-2000", "x_ite-private-hidden"]);
          }
       }
       else
@@ -131,7 +131,13 @@ Object .assign (X3DNetworkingContext .prototype,
          if (this .getBrowserOption ("SplashScreen"))
          {
             this .getCanvas () .show ();
-            this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
+
+            // Defer until promises are resolved.
+            setTimeout (() =>
+            {
+               if (!this [_loading])
+                  this .getSplashScreen () .addClass ("x_ite-private-fade-out-2000");
+            });
          }
       }
    },

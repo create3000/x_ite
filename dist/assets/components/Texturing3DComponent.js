@@ -1,9 +1,9 @@
-/* X_ITE v11.0.7 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
+/* X_ITE v11.1.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 314:
+/***/ 247:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 164:
+/***/ 217:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -74,7 +74,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 528:
+/***/ 429:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4030,7 +4030,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 172:
+/***/ 9:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7314,10 +7314,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(528);
-/* provided dependency */ var JpegImage = __webpack_require__(172);
-/* provided dependency */ var CharLS = __webpack_require__(314);
-/* provided dependency */ var OpenJPEG = __webpack_require__(164);
+/* provided dependency */ var dicomParser = __webpack_require__(429);
+/* provided dependency */ var JpegImage = __webpack_require__(9);
+/* provided dependency */ var CharLS = __webpack_require__(247);
+/* provided dependency */ var OpenJPEG = __webpack_require__(217);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8711,9 +8711,10 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
       Texturing3D_X3DTexture3DNode .prototype .initialize .call (this);
       external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
 
-      this .image .on ("load",        this .setImage .bind (this));
-      this .image .on ("abort error", this .setError .bind (this));
-      this .image .prop ("crossOrigin", "Anonymous");
+      this .image
+         .on ("load", this .setImage .bind (this))
+         .on ("abort error", this .setError .bind (this))
+         .attr ("crossorigin", "anonymous");
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },

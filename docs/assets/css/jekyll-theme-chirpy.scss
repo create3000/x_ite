@@ -196,6 +196,21 @@ html {
   color: var(--h3-color);
 }
 
+.content details {
+  box-shadow: var(--language-border-color) 0 0 0 1px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.content details summary {
+  font-weight: bold;
+}
+
+.content details[open] summary {
+  margin-bottom: .5rem;
+}
+
 .post-tail-wrapper .nav-wrapper {
   border: 1px solid var(--nav-border-color);
   border-radius: 10px;

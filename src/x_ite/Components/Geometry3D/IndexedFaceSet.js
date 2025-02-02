@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
       // Autogenerate normals if not specified.
 
-      if (!this .getNormal ())
+      if (!normalNode)
          this .generateNormals (polygons);
 
       this .setSolid (this ._solid .getValue ());

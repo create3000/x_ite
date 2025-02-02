@@ -21,12 +21,12 @@ In this tutorial, you will learn how to create a simple hello world scene with X
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/hello-world/hello-world.x3d" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/hello-world/screenshot.png" alt="Hello World Image"/>
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/hello-world1/hello-world1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/hello-world1/screenshot.avif" alt="Hello World Image"/>
 </x3d-canvas>
 
-- [Download ZIP Archive](https://create3000.github.io/media/tutorials/hello-world/hello-world.zip)
-- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/hello-world/hello-world.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/hello-world1/hello-world1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/hello-world1/hello-world1.x3dv)
 {: .example-links }
 
 As first a very easy example, we will create a sphere with a texture and a text below the sphere. Let's start with the sphere:
@@ -204,7 +204,10 @@ We position the text below the sphere by a translation of about 1 Meter along th
 
 ### Result
 
-<x3d-canvas src="/x_ite/assets/tutorials/hello-world.x3d" update="auto"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/hello-world2/hello-world2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/hello-world2/screenshot.avif" alt="Hello World Image"/>
+</x3d-canvas>
 
-- [View Source in Playground](/x_ite/playground/?url=/x_ite/assets/tutorials/hello-world.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/hello-world2/hello-world2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/hello-world2/hello-world2.x3dv)
 {: .example-links }

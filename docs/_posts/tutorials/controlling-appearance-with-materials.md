@@ -175,7 +175,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/box1/box1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/box1/screenshot.png" alt="Box 1"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/box1/screenshot.avif" alt="Box 1"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/box1/box1.zip)

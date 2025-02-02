@@ -58,7 +58,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.png" alt="Cylinder"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.avif" alt="Cylinder"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip)
@@ -83,11 +83,26 @@ Shape {
 
 ## Using comments
 
-```vrml
-# A Cylinder
+### XML Encoding
+
+```x3d
+<!-- A comment -->
 ```
 
-- Comments start with a number-sign (**\#**) and extend to the end of the line
+- Comments start with `<!--` and must end with `-->`.
+
+### Classic VRML Encoding
+
+```vrml
+# A comment
+
+#/* A
+  * multi-line
+  * comment */#
+```
+
+- Comments start with a number-sign `#` and extend to the end of the line.
+- Mult-line comments start with `#/*` and must end with `*/#`.
 
 ## Using nodes
 

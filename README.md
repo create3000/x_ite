@@ -36,10 +36,10 @@ If you are going to use X_ITE in a production environment, you should use a fixe
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.0.7/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.1.0/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.0.7/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.1.0/dist/x_ite.min.mjs";
 </script>
 ```
 
@@ -68,7 +68,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ### Declarative Syntax
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.0.7/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.1.0/dist/x_ite.min.js"></script>
 <x3d-canvas>
   <X3D profile='Interchange' version='4.1'>
     <head>
@@ -107,18 +107,13 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.0.7/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.1.0/dist/x_ite.min.mjs";
 
 const
    browser = X3D .getBrowser (),
-   scene   = browser .currentScene;
+   scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
-scene .setProfile (browser .getProfile ("Interchange"));
-scene .addComponent (browser .getComponent ("Interpolation", 1));
-
-await browser .loadComponents (scene);
-
-// Viewpoint
+// Create Viewpoint:
 
 const viewpointNode = scene .createNode ("Viewpoint");
 
@@ -129,7 +124,7 @@ viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.12382
 
 scene .rootNodes .push (viewpointNode);
 
-// Box
+// Create Box:
 
 const
    transformNode  = scene .createNode ("Transform"),
@@ -150,7 +145,7 @@ scene .rootNodes .push (transformNode);
 // Give the node a name if you like.
 scene .addNamedNode ("Box", transformNode);
 
-// Animation
+// Create animation:
 
 const
    timeSensorNode   = scene .createNode ("TimeSensor"),
@@ -162,15 +157,19 @@ timeSensorNode .loop          = true;
 for (let i = 0; i < 5; ++ i)
 {
   interpolatorNode .key [i]      = i / 4;
-  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI * i / 2);
+  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
 }
 
 scene .rootNodes .push (timeSensorNode, interpolatorNode);
 
-// Routes
+// Add routes:
 
 scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
 scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
+
+// Show scene.
+
+await browser .replaceWorld (scene);
 </script>
 <!-- x3d-canvas element comes here: -->
 <x3d-canvas></x3d-canvas>

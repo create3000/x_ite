@@ -49,6 +49,7 @@ import Fields       from "../../Fields.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import ObjectCache  from "../../../standard/Utility/ObjectCache.js";
+import Algorithm    from "../../../standard/Math/Algorithm.js";
 
 const Fogs = ObjectCache (FogContainer);
 
@@ -76,9 +77,10 @@ Object .assign (FogContainer .prototype,
 
       const fogNode = this .fogNode;
 
-      gl .uniform3fv       (shaderObject .x3d_FogColor,           fogNode .colorArray);
-      gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, fogNode .visibilityRange);
-      gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
+      gl .uniform3fv       (shaderObject .x3d_FogColor,            fogNode .colorArray);
+      gl .uniform1f        (shaderObject .x3d_FogVisibilityOffset, fogNode .visibilityOffset);
+      gl .uniform1f        (shaderObject .x3d_FogVisibilityRange,  fogNode .visibilityRange);
+      gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,    this .fogMatrix);
    },
    dispose ()
    {
@@ -105,10 +107,11 @@ Object .assign (X3DFogObject .prototype,
 {
    initialize ()
    {
-      this ._hidden          .addInterest ("set_fogType__",         this);
-      this ._fogType         .addInterest ("set_fogType__",         this);
-      this ._color           .addInterest ("set_color__",           this);
-      this ._visibilityRange .addInterest ("set_visibilityRange__", this);
+      this ._hidden           .addInterest ("set_fogType__",         this);
+      this ._fogType          .addInterest ("set_fogType__",         this);
+      this ._color            .addInterest ("set_color__",           this);
+      this ._visibilityOffset .addInterest ("set_visibilityRange__", this);
+      this ._visibilityRange  .addInterest ("set_visibilityRange__", this);
 
       this .set_color__ ();
       this .set_visibilityRange__ ();
@@ -149,6 +152,9 @@ Object .assign (X3DFogObject .prototype,
    })(),
    set_color__ ()
    {
+      //We cannot use this in Windows Edge:
+      //this .colorArray .set (this ._color .getValue ());
+
       const
          color      = this ._color .getValue (),
          colorArray = this .colorArray;
@@ -159,7 +165,8 @@ Object .assign (X3DFogObject .prototype,
    },
    set_visibilityRange__ ()
    {
-      this .visibilityRange = Math .max (0, this ._visibilityRange .getValue ());
+      this .visibilityRange  = Math .max (this ._visibilityRange .getValue (), 0);
+      this .visibilityOffset = Algorithm .clamp (this ._visibilityOffset .getValue (), 0, this .visibilityRange - 0.001);
 
       this .set_fogType__ ();
    },
