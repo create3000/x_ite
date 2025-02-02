@@ -1,5 +1,5 @@
-/* X_ITE v11.0.7 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.0.7")];
+/* X_ITE v11.1.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -1162,9 +1162,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       // Initialize.
 
-      this .image .on ("load",        this .setImage .bind (this));
-      this .image .on ("abort error", this .setError .bind (this));
-      this .image .prop ("crossOrigin", "Anonymous");
+      this .image
+         .on ("load", this .setImage .bind (this))
+         .on ("abort error", this .setError .bind (this))
+         .attr ("crossorigin", "anonymous");
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
