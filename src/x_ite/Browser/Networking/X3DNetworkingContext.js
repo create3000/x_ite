@@ -62,11 +62,11 @@ const
 
 function getBaseURI (element)
 {
-   let baseURI = element .prop ("baseURI");
+   const baseURI = element .prop ("baseURI");
 
    // Fix for Edge.
    if (baseURI .startsWith ("about:"))
-      baseURI = document .baseURI;
+      return document .baseURI;
 
    return baseURI;
 }
