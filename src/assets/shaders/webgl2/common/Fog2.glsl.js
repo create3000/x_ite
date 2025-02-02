@@ -12,7 +12,7 @@ getFogInterpolant ()
       return clamp (1.0 - fogDepth, 0.0, 1.0);
    #else
       float visibilityOffset = x3d_Fog .visibilityOffset;
-      float visibilityRange  = max (x3d_Fog .visibilityRange - visibilityOffset, 0.001);
+      float visibilityRange  = x3d_Fog .visibilityRange - visibilityOffset;
       float dV               = max (length (x3d_Fog .matrix * vertex) - visibilityOffset, 0.0);
 
       #if defined (X3D_FOG_LINEAR)

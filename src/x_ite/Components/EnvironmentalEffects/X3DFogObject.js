@@ -49,6 +49,7 @@ import Fields       from "../../Fields.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import ObjectCache  from "../../../standard/Utility/ObjectCache.js";
+import Algorithm    from "../../../standard/Math/Algorithm.js";
 
 const Fogs = ObjectCache (FogContainer);
 
@@ -106,14 +107,13 @@ Object .assign (X3DFogObject .prototype,
 {
    initialize ()
    {
-      this ._hidden           .addInterest ("set_fogType__",          this);
-      this ._fogType          .addInterest ("set_fogType__",          this);
-      this ._color            .addInterest ("set_color__",            this);
-      this ._visibilityOffset .addInterest ("set_visibilityOffset__", this);
-      this ._visibilityRange  .addInterest ("set_visibilityRange__",  this);
+      this ._hidden           .addInterest ("set_fogType__",         this);
+      this ._fogType          .addInterest ("set_fogType__",         this);
+      this ._color            .addInterest ("set_color__",           this);
+      this ._visibilityOffset .addInterest ("set_visibilityRange__", this);
+      this ._visibilityRange  .addInterest ("set_visibilityRange__", this);
 
       this .set_color__ ();
-      this .set_visibilityOffset__ ();
       this .set_visibilityRange__ ();
    },
    isHidden ()
@@ -160,13 +160,10 @@ Object .assign (X3DFogObject .prototype,
       colorArray [1] = color .g;
       colorArray [2] = color .b;
    },
-   set_visibilityOffset__ ()
-   {
-      this .visibilityOffset = Math .max (0, this ._visibilityOffset .getValue ());
-   },
    set_visibilityRange__ ()
    {
-      this .visibilityRange = Math .max (0, this ._visibilityRange .getValue ());
+      this .visibilityRange  = Math .max (this ._visibilityRange .getValue (), 0);
+      this .visibilityOffset = Algorithm .clamp (this ._visibilityOffset .getValue (), 0, this .visibilityRange - 0.001);
 
       this .set_fogType__ ();
    },
