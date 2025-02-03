@@ -70,7 +70,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Must declare *generateMipMaps*='true' for minificationFilter modes with MIPMAP in their value.
 
-### SFString [in, out] **minificationFilter** "FASTEST" <small>["AVG_PIXEL", "AVG_PIXEL_AVG_MIPMAP", "AVG_PIXEL_NEAREST_MIPMAP", "DEFAULT", "FASTEST", "NEAREST_PIXEL", "NEAREST_PIXEL_AVG_MIPMAP", "NEAREST_PIXEL_NEAREST_MIPMAP", "NICEST"]</small>
+### SFString [in, out] **minificationFilter** "DEFAULT" <small>["AVG_PIXEL", "AVG_PIXEL_AVG_MIPMAP", "AVG_PIXEL_NEAREST_MIPMAP", "DEFAULT", "FASTEST", "NEAREST_PIXEL", "NEAREST_PIXEL_AVG_MIPMAP", "NEAREST_PIXEL_NEAREST_MIPMAP", "NICEST"]</small>
 
 *minificationFilter* indicates texture filter when image is larger than screen space representation.
 
@@ -82,7 +82,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### SFString [in, out] **magnificationFilter** "FASTEST" <small>["AVG_PIXEL", "DEFAULT", "FASTEST", "NEAREST_PIXEL", "NICEST"]</small>
+### SFString [in, out] **magnificationFilter** "DEFAULT" <small>["AVG_PIXEL", "DEFAULT", "FASTEST", "NEAREST_PIXEL", "NICEST"]</small>
 
 *magnificationFilter* indicates texture filter when image is smaller than screen space representation.
 
@@ -130,7 +130,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### SFString [in, out] **textureCompression** "FASTEST" <small>["DEFAULT", "FASTEST", "HIGH", "LOW", "MEDIUM", "NICEST"]</small>
+### SFString [in, out] **textureCompression** "DEFAULT" <small>["DEFAULT", "FASTEST", "HIGH", "LOW", "MEDIUM", "NICEST"]</small>
 
 *textureCompression* indicates compression algorithm selection mode.
 
