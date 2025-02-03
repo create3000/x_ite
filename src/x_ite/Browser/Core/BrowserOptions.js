@@ -290,6 +290,12 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
          .join (" ");
 
+      $(window)   .off (windowEvents);
+      $(document) .off (documentEvents);
+
+      if (!autoUpdate .getValue ())
+         return;
+
       const
          browser = this .getBrowser (),
          element = browser .getElement ();
@@ -308,8 +314,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          }
       };
 
-      $(window)   .off (windowEvents)   .on (windowEvents,   checkUpdate);
-      $(document) .off (documentEvents) .on (documentEvents, checkUpdate);
+      $(window)   .on (windowEvents,   checkUpdate);
+      $(document) .on (documentEvents, checkUpdate);
 
       checkUpdate ();
    },
