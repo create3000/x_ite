@@ -8099,17 +8099,17 @@ declare namespace X3D
        */
       set_bind: boolean;
       /**
-       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
-       *
-       * This field is of access type 'inputOutput' and type SFFloat.
-       */
-      visibilityOffset: number;
-      /**
        * Distance in meters where objects are totally obscured by the fog, using local coordinate system.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       visibilityRange: number;
+      /**
+       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      visibilityStart: number;
    }
 
    /** FogCoordinate defines a set of explicit fog depths on a per-vertex basis, overriding Fog visibilityRange. */
@@ -11797,17 +11797,17 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
-       *
-       * This field is of access type 'inputOutput' and type SFFloat.
-       */
-      visibilityOffset: number;
-      /**
        * Distance in meters where objects are totally obscured by the fog, using local coordinate system.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       visibilityRange: number;
+      /**
+       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      visibilityStart: number;
    }
 
    /** LOD (Level Of Detail) uses camera-to-object distance to switch among contained child levels. */
@@ -21088,15 +21088,15 @@ declare namespace X3D
        */
       fogType: "LINEAR" | "EXPONENTIAL";
       /**
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      visibilityRange: number;
+      /**
        * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
-      visibilityOffset: number;
-      /**
-       * This field is of access type 'inputOutput' and type SFFloat.
-       */
-      visibilityRange: number;
+      visibilityStart: number;
    }
 
    /** X3DFollowerNode is the abstract base class for all nodes in the Followers component. */

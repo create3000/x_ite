@@ -92,7 +92,7 @@ export default /* glsl */ `
 struct x3d_FogParameters {
    mediump int   type;
    mediump vec3  color;
-   mediump float visibilityOffset;
+   mediump float visibilityStart;
    mediump float visibilityRange;
    mediump mat3  matrix;
 };
