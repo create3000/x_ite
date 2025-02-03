@@ -211,6 +211,15 @@ html {
   margin-bottom: .5rem;
 }
 
+.content a:has(> .example-icon),
+.content a:has(> .example-icon):hover {
+  border-bottom: none;
+}
+
+.content .example-icon {
+  margin: 0 0.2rem;
+}
+
 .post-tail-wrapper .nav-wrapper {
   border: 1px solid var(--nav-border-color);
   border-radius: 10px;

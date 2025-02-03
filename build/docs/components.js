@@ -105,6 +105,9 @@ function updateComponents (supported)
 
          list += `- [${node}](/x_ite/components/${slug}/)`;
 
+         if (fs .existsSync (`../media/docs/examples/${component}/${node}`))
+            list += ` [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/${slug}/#example)`;
+
          if (file .includes ("NOT SUPPORTED"))
             list += ` <small class="red">not supported</small>`;
 
