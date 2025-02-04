@@ -64,7 +64,9 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
+  <img src="https://create3000.github.io/media/examples/Shape/LineProperties/screenshot.png" alt="LineProperties"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d)

@@ -98,7 +98,9 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Followers/ColorDamper/ColorDamper.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Followers/ColorDamper/ColorDamper.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
+  <img src="https://create3000.github.io/media/examples/Followers/ColorDamper/screenshot.png" alt="ColorDamper"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Followers/ColorDamper/ColorDamper.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Followers/ColorDamper/ColorDamper.x3d)
