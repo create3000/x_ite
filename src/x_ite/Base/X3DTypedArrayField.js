@@ -598,6 +598,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             {
                const
                   i0 = length * components,
+                  i1 = i0 + components,
                   il = newLength * components;
 
                for (let i = i0, c = 0; c < components; ++ c, ++ i)
@@ -605,9 +606,9 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                   array [i] = value [c];
                }
 
-               for (let i = i0 + components; i < il; i += components)
+               for (let i = i1; i < il; i += components)
                {
-                  array .copyWithin (i, i0, i0 + components);
+                  array .copyWithin (i, i0, i1);
                }
             }
          }
