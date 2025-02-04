@@ -58,9 +58,10 @@ import SFVec3              from "./SFVec3.js";
 import SFVec4              from "./SFVec4.js";
 import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
-import Vector4             from "../../standard/Math/Numbers/Vector4.js";
 import Matrix3             from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4             from "../../standard/Math/Numbers/Matrix4.js";
+import Rotation4           from "../../standard/Math/Numbers/Rotation4.js";
+import Vector4             from "../../standard/Math/Numbers/Vector4.js";
 
 const
    { SFBool, SFDouble, SFFloat, SFInt32, SFString, SFTime } = SFScalar,
@@ -474,7 +475,7 @@ const ArrayFields =
    MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  SFMatrix4d,  SFMatrix4d,  Float64Array, 16, Matrix4 .Identity),
    MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  SFMatrix4f,  SFMatrix4f,  Float32Array, 16, Matrix4 .Identity),
    MFNode:      MFNode,
-   MFRotation:  TypedArrayTemplate ("MFRotation",  SFRotation,  SFRotation,  Float64Array, 4),
+   MFRotation:  TypedArrayTemplate ("MFRotation",  SFRotation,  SFRotation,  Float64Array, 4,  Rotation4 .Identity),
    MFString:    MFString,
    MFTime:      TypedArrayTemplate ("MFTime",      SFTime,      Value,       Float64Array, 1,  -1),
    MFVec2d:     TypedArrayTemplate ("MFVec2d",     SFVec2d,     SFVec2d,     Float64Array, 2),
