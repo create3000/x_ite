@@ -431,7 +431,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Remove world.
 
-         if (this .initialized () .getValue ())
+         if (this .initialized () .getValue () >= 0)
          {
             this .getExecutionContext () .setLive (false);
             this .shutdown () .processInterests ();

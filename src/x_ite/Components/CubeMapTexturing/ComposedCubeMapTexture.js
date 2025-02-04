@@ -60,7 +60,7 @@ function ComposedCubeMapTexture (executionContext)
 
    this .addType (X3DConstants .ComposedCubeMapTexture);
 
-   this .addChildObjects (X3DConstants .inputOutput, "update", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "update", new Fields .SFTime ());
 
    // Legacy
 

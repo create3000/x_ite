@@ -59,7 +59,7 @@ function ComposedTexture3D (executionContext)
 
    this .addType (X3DConstants .ComposedTexture3D);
 
-   this .addChildObjects (X3DConstants .inputOutput, "update",    new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "update", new Fields .SFTime ());
 
    this .textureNodes = [ ];
 }
@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
       const textureNodes = this .textureNodes;
 
       for (const textureNode of textureNodes)
-         textureNode .removeInterest ("set_update__", this);
+         textureNode .removeInterest ("addEvent", this ._update);
 
       textureNodes .length = 0;
 
@@ -93,12 +93,8 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
       }
 
       for (const textureNode of textureNodes)
-         textureNode .addInterest ("set_update__", this);
+         textureNode .addInterest ("addEvent", this ._update);
 
-      this .set_update__ ();
-   },
-   set_update__ ()
-   {
       this ._update .addEvent ();
    },
    isComplete ()

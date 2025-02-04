@@ -254,7 +254,7 @@ Object .defineProperties (ImageTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "colorSpaceConversion", new Fields .SFBool (true)), // experimental
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),

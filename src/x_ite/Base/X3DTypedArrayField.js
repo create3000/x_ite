@@ -80,7 +80,7 @@ const handler =
             let array = target .getValue ();
 
             if (index >= target [_length])
-               array = target .resize (index + 1);
+               array = target .resize (index + 1, target .getSingleValue ());
 
             if (components === 1)
             {
@@ -116,7 +116,7 @@ const handler =
          array = target .getValue ();
 
       if (index >= target [_length])
-         array = target .resize (index + 1);
+         array = target .resize (index + 1, target .getSingleValue ());
 
       if (components === 1)
       {
@@ -1011,7 +1011,12 @@ for (const key of Object .keys (X3DTypedArrayField .prototype))
 Object .defineProperty (X3DTypedArrayField .prototype, "length",
 {
    get () { return this [_length]; },
-   set (value) { this [_target] .resize (value); },
+   set (value)
+   {
+      const target = this [_target];
+
+      target .resize (value, target .getSingleValue ());
+   },
 });
 
 // Getter/Setter functions to reference a value for a given index.
