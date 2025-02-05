@@ -604,7 +604,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                   i1 = i0 + components,
                   il = newLength * components;
 
-               for (let i = i0, c = 0; c < components; ++ c, ++ i)
+               for (let i = i0, c = 0; c < components; ++ i, ++ c)
                {
                   array [i] = value [c];
                }
