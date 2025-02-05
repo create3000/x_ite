@@ -3,7 +3,7 @@ const X_ITE_EXAMPLES = [
    { component: "Core", test: "glTF" },
    { component: "Core", test: "OBJ", xrButtonPosition: "tr" },
    { component: "Core", test: "STL", xrButtonPosition: "tr" },
-   { component: "CubeMapTexturing", test: "ComposedCubeMapTexture" },
+   { component: "CubeMapTexturing", test: "ComposedCubeMapTexture", xrMovementControl: "VIEWPOINT" },
    { component: "CubeMapTexturing", test: "GeneratedCubeMapTexture", xrMovementControl: "VIEWPOINT" },
    { component: "EnvironmentalEffects", test: "Background" },
    { component: "EnvironmentalEffects", test: "Fog", xrButtonPosition: "tr" },
