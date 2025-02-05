@@ -1161,28 +1161,28 @@ Object .assign (X3DRenderObject .prototype,
 
          // XR support
 
-         this .view = browser .getPose () ?.views [i];
+         const view = this .view = browser .getPose () ?.views [i];
 
          // Set global uniforms.
 
          this .viewportArray .set (viewport);
 
-         if (this .view)
+         if (view)
          {
-            this .projectionMatrixArray .set (this .view .projectionMatrix);
+            this .projectionMatrixArray .set (view .projectionMatrix);
 
             if (!this .isActive () || browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
             {
                this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
                this .viewMatrixArray        .set (this .getViewMatrix () .get ());
 
-               Matrix4 .prototype .multLeft  (this .cameraSpaceMatrixArray, this .view .inverse);
-               Matrix4 .prototype .multRight (this .viewMatrixArray,        this .view .matrix);
+               Matrix4 .prototype .multLeft  (this .cameraSpaceMatrixArray, view .inverse);
+               Matrix4 .prototype .multRight (this .viewMatrixArray,        view .matrix);
             }
             else
             {
-               this .cameraSpaceMatrixArray .set (this .view .cameraSpaceMatrix);
-               this .viewMatrixArray        .set (this .view .viewMatrix);
+               this .cameraSpaceMatrixArray .set (view .cameraSpaceMatrix);
+               this .viewMatrixArray        .set (view .viewMatrix);
             }
          }
          else
