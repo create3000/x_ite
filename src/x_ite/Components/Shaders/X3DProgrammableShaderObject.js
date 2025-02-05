@@ -1037,9 +1037,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    },
    setUniforms: (() =>
    {
-      const
-         xrModelViewMatrix = new Float32Array (16),
-         normalMatrix      = new Float32Array (9);
+      const normalMatrix = new Float32Array (9);
 
       return function (gl, renderContext, geometryContext, front = true)
       {
@@ -1101,10 +1099,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          if (view)
          {
-            xrModelViewMatrix .set (modelViewMatrix);
-            Matrix4 .prototype .multRight .call (xrModelViewMatrix, view .matrix);
+            Matrix4 .prototype .multRight .call (modelViewMatrix, view .matrix);
 
-            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, xrModelViewMatrix);
+            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
          }
          else
          {
