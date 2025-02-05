@@ -303,7 +303,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          viewpointNode = this .getViewpoint (),
          pose          = browser .getPose ();
 
-      if (pose && this .active)
+      if (this .active && pose)
       {
          this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
 
@@ -320,7 +320,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       }
       else
       {
-         this .getProjectionMatrix ()  .push (viewpointNode .getProjectionMatrix (this));
+         this .getProjectionMatrix ()  .push (pose ?.views [0] .projectionMatrix ?? viewpointNode .getProjectionMatrix (this));
          this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
          this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
       }

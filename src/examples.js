@@ -133,7 +133,7 @@ const X_ITE_EXAMPLES = [
    { component: "VolumeRendering", test: "VolumeData" },
    { component: "X3D", test: "Apartment" },
    { component: "X3D", test: "Approach", xrMovementControl: "VIEWPOINT" },
-   { component: "X3D", test: "Arcadia", xrButtonPosition: "bl" },
+   { component: "X3D", test: "Arcadia", xrMovementControl: "VIEWPOINT", xrButtonPosition: "bl" },
    { component: "X3D", test: "Astronomy" },
    { component: "X3D", test: "BeyondGermany", xrButtonPosition: "tl" },
    { component: "X3D", test: "BIC", xrMovementControl: "VIEWPOINT" },
@@ -144,7 +144,7 @@ const X_ITE_EXAMPLES = [
    { component: "X3D", test: "FlashingLights" },
    { component: "X3D", test: "FoldUp" },
    { component: "X3D", test: "LogoPieces" },
-   { component: "X3D", test: "LustForLife" },
+   { component: "X3D", test: "LustForLife", xrMovementControl: "VIEWPOINT" },
    { component: "X3D", test: "MagicMushrooms" },
    { component: "X3D", test: "MilkyWayAndBeyond" },
    { component: "X3D", test: "NYC" },
@@ -163,4 +163,3 @@ const X_ITE_EXAMPLES = [
    { component: "X_ITE", test: "InstancedShape" },
 ];
 X_ITE_EXAMPLES .server = "https://create3000.github.io/media/examples";
-
