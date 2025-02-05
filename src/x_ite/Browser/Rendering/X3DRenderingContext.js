@@ -467,16 +467,22 @@ Object .assign (X3DRenderingContext .prototype,
             .attr ("part", "xr-button")
             .addClass ("x_ite-private-xr-button")
             .on ("mousedown touchstart", false)
-            .on ("mouseup touchend", event => this .startXRSession (event))
+            .on ("mouseup touchend", event =>
+            {
+               event .preventDefault ();
+               event .stopImmediatePropagation ();
+               event .stopPropagation ();
+
+               if (this [_session] === window)
+                  this .startXRSession ();
+               else
+                  this .stopXRSession ();
+            })
             .appendTo (this .getSurface ());
       });
    },
-   startXRSession (event)
+   startXRSession ()
    {
-      event ?.preventDefault ();
-      event ?.stopImmediatePropagation ();
-      event ?.stopPropagation ();
-
       return Lock .acquire (`X3DRenderingContext.session-${this .getId ()}`, async () =>
       {
          if (!await this .checkXRSupport ())
