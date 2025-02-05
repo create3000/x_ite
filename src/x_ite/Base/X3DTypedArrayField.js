@@ -56,7 +56,8 @@ const
    _length = Symbol (),
    _insert = Symbol (),
    _erase  = Symbol (),
-   _grow   = Symbol ();
+   _grow   = Symbol (),
+   _fill   = Symbol ();
 
 const handler =
 {
@@ -574,6 +575,8 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
       let array = target .getValue ();
 
+      target [_length] = newLength;
+
       if (newLength < length)
       {
          array .fill (0, newLength * components, length * components);
@@ -589,46 +592,11 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          array = target [_grow] (newLength * components);
 
          if (value !== undefined)
-         {
-            if (components === 1)
-            {
-               array .fill (value, length * components, newLength * components);
-            }
-            else
-            {
-               // More efficient way to copy repeating sequence into TypedArray?
-               // https://stackoverflow.com/questions/46313130/more-efficient-way-to-copy-repeating-sequence-into-typedarray
-
-               const
-                  i0 = length * components,
-                  il = newLength * components;
-
-               for (let i = i0, c = 0; c < components; ++ i, ++ c)
-               {
-                  array [i] = value [c];
-               }
-
-               let
-                  i = i0 + components,
-                  c = components;
-
-               while (i < il)
-               {
-                  const sl = i + c > il ? il - i : c;
-
-                  array .copyWithin (i, i0, i0 + sl);
-
-                  i  += c;
-                  c <<= 1;
-               }
-            }
-         }
+            this [_fill] (value, length, newLength);
 
          if (!silently)
             target .addEvent ();
       }
-
-      target [_length] = newLength;
 
       return array;
    },
@@ -705,6 +673,82 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
    flatMap (... args)
    {
       return this .map (...args) .flat ();
+   },
+   [_fill] (value, start = 0, end = this .length)
+   {
+      const
+         target     = this [_target],
+         length     = target [_length],
+         array      = target .getValue (),
+         components = target .getComponents ();
+
+      if (-length <= start && start < 0)
+         start = start + length;
+
+      if (start < -length)
+         start = 0;
+
+      if (start >= length)
+         return;
+
+      if (-length <= end && end < 0)
+         end = end + length;
+
+      if (end < -length)
+         end = 0;
+
+      if (end >= length)
+         end = length;
+
+      if (start >= end)
+         return;
+
+      if (components === 1)
+      {
+         const valueType = target .getValueType ();
+
+         array .fill (valueType (value), start * components, end * components);
+      }
+      else
+      {
+         // More efficient way to copy repeating sequence into TypedArray?
+         // https://stackoverflow.com/questions/46313130/more-efficient-way-to-copy-repeating-sequence-into-typedarray
+
+         const
+            i0 = start * components,
+            il = end * components;
+
+         for (let i = i0, c = 0; c < components; ++ i, ++ c)
+         {
+            array [i] = value [c];
+         }
+
+         let
+            i = i0 + components,
+            c = components;
+
+         while (i < il)
+         {
+            const sl = i + c > il ? il - i : c;
+
+            array .copyWithin (i, i0, i0 + sl);
+
+            i  += c;
+            c <<= 1;
+         }
+      }
+
+      return target [_proxy];
+   },
+   fill (value, start = 0, end = this .length)
+   {
+      const target = this [_target];
+
+      this [_fill] (value, start, end);
+
+      target .addEvent ();
+
+      return target [_proxy];
    },
    reverse ()
    {

@@ -316,7 +316,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
    {
       const target = this .getTarget ();
 
-      target .resize (0, undefined, false);
+      target .resize (0, undefined, true);
       target .processInterests ();
 
       X3DObjectArrayField .prototype .dispose .call (target);
