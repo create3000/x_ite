@@ -525,6 +525,10 @@ select.select option {
   display: block;
 }
 
+.table-wrapper > table.examples a.img-link:hover {
+  outline: 1px solid #d2603a;
+}
+
 .table-wrapper > table.examples a.popup {
   margin: 0;
 }
