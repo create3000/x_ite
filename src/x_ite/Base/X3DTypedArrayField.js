@@ -596,6 +596,9 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             }
             else
             {
+               // More efficient way to copy repeating sequence into TypedArray?
+               // https://stackoverflow.com/questions/46313130/more-efficient-way-to-copy-repeating-sequence-into-typedarray
+
                const
                   i0 = length * components,
                   i1 = i0 + components,
