@@ -21,7 +21,7 @@ In this tutorial, you will learn how to create a simple hello world scene with X
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/hello-world1/hello-world1.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/hello-world1/hello-world1.x3dv" update="auto" xrSessionMode="IMMERSIVE_AR">
   <img src="https://create3000.github.io/media/tutorials/scenes/hello-world1/screenshot.avif" alt="Hello World Image"/>
 </x3d-canvas>
 
