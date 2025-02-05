@@ -606,9 +606,18 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                   array [i] = value [c];
                }
 
-               for (let i = i1; i < il; i += components)
+               let
+                  i = i1,
+                  c = components;
+
+               while (i < il)
                {
-                  array .copyWithin (i, i0, i1);
+                  const sl = i + c > il ? il - i : c;
+
+                  array .copyWithin (i, i0, i0 + sl);
+
+                  i  += c;
+                  c <<= 1;
                }
             }
          }
