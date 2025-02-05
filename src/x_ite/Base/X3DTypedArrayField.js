@@ -601,7 +601,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
                const
                   i0 = length * components,
-                  i1 = i0 + components,
                   il = newLength * components;
 
                for (let i = i0, c = 0; c < components; ++ i, ++ c)
@@ -610,7 +609,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                }
 
                let
-                  i = i1,
+                  i = i0 + components,
                   c = components;
 
                while (i < il)
