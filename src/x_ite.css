@@ -650,6 +650,12 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   cursor: pointer;
 }
 
+.x_ite-private-xr-button:hover {
+  opacity: 1;
+}
+
+/* Animations */
+
 .x_ite-private-hidden {
   visibility: hidden;
   opacity: 0;
