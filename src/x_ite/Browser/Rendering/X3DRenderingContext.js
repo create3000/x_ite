@@ -50,7 +50,10 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
+import RubberBand             from "../Navigation/RubberBand.js";
+import ViewVolume             from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
 import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
@@ -72,7 +75,9 @@ const
    _referenceSpace     = Symbol (),
    _baseLayer          = Symbol (),
    _defaultFrameBuffer = Symbol (),
-   _pose               = Symbol ();
+   _pose               = Symbol (),
+   _inputRays          = Symbol (),
+   _inputRay           = Symbol ();
 
 // WebXR Emulator and polyfill:
 const canvasCSS = {
@@ -509,7 +514,8 @@ Object .assign (X3DRenderingContext .prototype,
             ignoreDepthValues: true,
          });
 
-         this .endEvents () .addInterest ("endFrame", this);
+         this .finishedEvents () .addInterest ("finishedFrame", this);
+         this .endEvents ()      .addInterest ("endFrame",      this);
 
          session .updateRenderState ({ baseLayer });
          session .addEventListener ("end", () => this .stopXRSession ());
@@ -524,6 +530,20 @@ Object .assign (X3DRenderingContext .prototype,
             viewMatrix: new Matrix4 (),
             views: [ ],
          };
+
+         this [_inputRays] = [ ];
+         this [_inputRay]  = new RubberBand (this);
+
+         // $(session) .on ("select", event =>
+         // {
+         //    const { inputSource, frame } = event .originalEvent;
+
+         //    /* handle the event */
+
+         //    console .log (event)
+         //    console .log (inputSource)
+         //    console .log (frame)
+         // });
 
          this .setReferenceSpace ();
          this .reshape ();
@@ -544,7 +564,8 @@ Object .assign (X3DRenderingContext .prototype,
          { }
          finally
          {
-            this .endEvents () .removeInterest ("endFrame", this);
+            this .finishedEvents () .removeInterest ("finishedFrame", this);
+            this .endEvents ()      .removeInterest ("endFrame",      this);
 
             for (const frameBuffer of this [_frameBuffers])
                frameBuffer .dispose ();
@@ -556,6 +577,8 @@ Object .assign (X3DRenderingContext .prototype,
             this [_baseLayer]          = null;
             this [_defaultFrameBuffer] = null;
             this [_pose]               = null;
+            this [_inputRays]          = null;
+            this [_inputRay]           = null;
 
             this .reshape ();
          }
@@ -593,20 +616,20 @@ Object .assign (X3DRenderingContext .prototype,
       if (!frame)
          return;
 
-      const
-         pose     = frame .getViewerPose (this [_referenceSpace]),
-         numViews = pose .views .length;
+      const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
+
+      // Get matrices from views.
+
+      const pose = frame .getViewerPose (this [_referenceSpace]);
 
       this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
       this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
 
       let v = 0;
 
-      for (let i = 0; i < numViews; ++ i)
+      for (const view of pose .views)
       {
-         const
-            view                    = pose .views [i],
-            { x, y, width, height } = this [_baseLayer] .getViewport (view);
+         const { x, y, width, height } = this [_baseLayer] .getViewport (view);
 
          // WebXR Emulator: second view has width zero if in non-stereo mode.
          if (!width)
@@ -634,11 +657,66 @@ Object .assign (X3DRenderingContext .prototype,
       this [_frameBuffers] .length = v;
 
       // WebXR Emulator or polyfill.
-      if (!this .getCanvas () .parent () .is (this .getSurface ()))
+      if (emulator)
          this .getCanvas () .css (canvasCSS);
+
+      // Get target ray matrices from input sources.
+
+      let r = 0;
+
+      for (const inputSource of this [_session] .inputSources)
+      {
+         const
+            targetRaySpace = inputSource .targetRaySpace,
+            targetRayPose  = frame .getPose (targetRaySpace, this [_referenceSpace]);
+
+         if (!targetRayPose)
+            continue;
+
+         const matrix = this [_inputRays] [r] ??= new Matrix4 ();
+
+         matrix .assign (targetRayPose .transform .matrix);
+
+         ++ r;
+      }
+
+      this [_inputRays] .length = r;
+
+      // Trigger new frame.
 
       this .addBrowserEvent ();
    },
+   finishedFrame: (function ()
+   {
+      const
+         fromPoint = new Vector3 (),
+         toPoint   = new Vector3 (),
+         toVector  = new Vector3 (0, 0, -1);
+
+      return function ()
+      {
+         // Draw input source rays.
+
+         for (const [i, view] of this [_pose] .views .entries ())
+         {
+            const
+               frameBuffer      = this .getFrameBuffers () [i],
+               viewport         = this .getViewport () .getValue (),
+               projectionMatrix = view .projectionMatrix,
+               viewMatrix       = view .viewMatrix;
+
+            for (const inputRayMatrix of this [_inputRays])
+            {
+               inputRayMatrix .multRight (viewMatrix);
+
+               ViewVolume .projectPoint (Vector3 .Zero, inputRayMatrix, projectionMatrix, viewport, fromPoint),
+               ViewVolume .projectPoint (toVector,      inputRayMatrix, projectionMatrix, viewport, toPoint);
+
+               this [_inputRay] .display (fromPoint, toPoint, frameBuffer);
+            }
+         }
+      };
+   })(),
    endFrame ()
    {
       const gl = this .getContext ();
@@ -649,6 +727,10 @@ Object .assign (X3DRenderingContext .prototype,
    getPose ()
    {
       return this [_pose];
+   },
+   getInputRays ()
+   {
+      return this [_inputRays];
    },
    dispose ()
    {

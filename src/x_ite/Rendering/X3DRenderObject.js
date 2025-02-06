@@ -1155,6 +1155,8 @@ Object .assign (X3DRenderObject .prototype,
 
       // DRAW
 
+      this .viewportArray .set (viewport);
+
       for (let i = 0; i < numFrameBuffers; ++ i)
       {
          const frameBuffer = frameBuffers [i];
@@ -1162,10 +1164,6 @@ Object .assign (X3DRenderObject .prototype,
          // XR support
 
          const view = this .view = browser .getPose () ?.views [i];
-
-         // Set global uniforms.
-
-         this .viewportArray .set (viewport);
 
          if (view)
          {
