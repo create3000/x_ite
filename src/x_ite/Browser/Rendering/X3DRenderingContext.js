@@ -532,7 +532,7 @@ Object .assign (X3DRenderingContext .prototype,
          };
 
          this [_inputRays] = [ ];
-         this [_inputRay]  = new RubberBand (this);
+         this [_inputRay]  = new RubberBand (this, 5, 1);
 
          // $(session) .on ("select", event =>
          // {
@@ -698,11 +698,12 @@ Object .assign (X3DRenderingContext .prototype,
       {
          // Draw input source rays.
 
+         const viewport = this .getViewport () .getValue ();
+
          for (const [i, view] of this [_pose] .views .entries ())
          {
             const
                frameBuffer      = this .getFrameBuffers () [i],
-               viewport         = this .getViewport () .getValue (),
                projectionMatrix = view .projectionMatrix,
                viewMatrix       = view .viewMatrix;
 

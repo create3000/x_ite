@@ -50,11 +50,13 @@ import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
 
-function RubberBand (browser)
+function RubberBand (browser, fromWidth = 1, toWidth = fromWidth)
 {
    const gl = browser .getContext ();
 
    this .browser               = browser;
+   this .fromWidth             = fromWidth;
+   this .toWidth               = toWidth;
    this .lineIndexBuffer       = gl .createBuffer ();
    this .lineColorBuffer       = gl .createBuffer ();
    this .lineVertexBuffer      = gl .createBuffer ();
@@ -78,7 +80,8 @@ Object .assign (RubberBand .prototype,
    display: (() =>
    {
       const
-         normal                = new Vector3 (),
+         fromNormal            = new Vector3 (),
+         toNormal              = new Vector3 (),
          vertex                = new Vector3 (),
          projectionMatrix      = new Matrix4 (),
          projectionMatrixArray = new Float32Array (Matrix4 .Identity),
@@ -95,7 +98,7 @@ Object .assign (RubberBand .prototype,
             viewport        = browser .getViewport (),
             width           = viewport [2],
             height          = viewport [3],
-            contentScale    = browser .getRenderingProperty ("ContentScale"),
+            contentScale1_2 = browser .getRenderingProperty ("ContentScale") / 2,
             lineVertexArray = this .lineVertexArray;
 
          frameBuffer .bind ();
@@ -107,29 +110,41 @@ Object .assign (RubberBand .prototype,
 
          // Set black line quad vertices.
 
-         normal .assign (toPoint)
+         fromNormal .assign (toPoint)
             .subtract (fromPoint)
             .normalize ()
-            .multiply (contentScale)
-            .set (-normal .y, normal .x, 0);
+            .multiply (contentScale1_2 * this .fromWidth + 0.5)
+            .set (-fromNormal .y, fromNormal .x, 0);
 
-         lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      0);
-         lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 4);
-         lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 8);
-         lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      12);
+         toNormal .assign (toPoint)
+            .subtract (fromPoint)
+            .normalize ()
+            .multiply (contentScale1_2 * this .toWidth + 0.5)
+            .set (-toNormal .y, toNormal .x, 0);
+
+         lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      0);
+         lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 4);
+         lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   8);
+         lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        12);
 
          // Set white line quad vertices.
 
-         normal .assign (toPoint)
+         fromNormal .assign (toPoint)
             .subtract (fromPoint)
             .normalize ()
-            .multiply (contentScale / 2)
-            .set (-normal .y, normal .x, 0);
+            .multiply (contentScale1_2 * this .fromWidth)
+            .set (-fromNormal .y, fromNormal .x, 0);
 
-         lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      16);
-         lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 20);
-         lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 24);
-         lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      28);
+         toNormal .assign (toPoint)
+            .subtract (fromPoint)
+            .normalize ()
+            .multiply (contentScale1_2 * this .toWidth)
+            .set (-toNormal .y, toNormal .x, 0);
+
+         lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      16);
+         lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 20);
+         lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   24);
+         lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        28);
 
          // Transfer line.
 

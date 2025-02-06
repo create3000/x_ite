@@ -643,13 +643,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
          for (const frameBuffer of browser .getFrameBuffers ())
             this .rubberBand .display (fromPoint, toPoint, frameBuffer);
-
-
-         fromPoint .set (0, 0, 0)
-         toPoint   .set (100, 100, 0)
-
-         this .rubberBand .display (fromPoint, toPoint, browser .getFrameBuffers () [0]);
-
       };
    })(),
    disconnect ()
