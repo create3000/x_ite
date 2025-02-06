@@ -73,10 +73,29 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth)
 
    gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
    gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
+
+   this .setColor (Color3 .White);
 }
 
 Object .assign (RubberBand .prototype,
 {
+   setColor (color)
+   {
+      const
+         browser        = this .browser,
+         gl             = browser .getContext (),
+         lineColorArray = this .lineColorArray;
+
+      lineColorArray .set (color, 16);
+      lineColorArray .set (color, 20);
+      lineColorArray .set (color, 24);
+      lineColorArray .set (color, 28);
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, lineColorArray, gl .STATIC_DRAW);
+
+      return this;
+   },
    display: (() =>
    {
       const
@@ -88,7 +107,7 @@ Object .assign (RubberBand .prototype,
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
          clipPlanes            = [ ];
 
-      return function (fromPoint, toPoint, frameBuffer, color = Color3 .White)
+      return function (fromPoint, toPoint, frameBuffer)
       {
          // Configure HUD
 
@@ -99,8 +118,7 @@ Object .assign (RubberBand .prototype,
             width           = viewport [2],
             height          = viewport [3],
             contentScale1_2 = browser .getRenderingProperty ("ContentScale") / 2,
-            lineVertexArray = this .lineVertexArray,
-            lineColorArray  = this .lineColorArray;
+            lineVertexArray = this .lineVertexArray;
 
          frameBuffer .bind ();
 
@@ -128,12 +146,7 @@ Object .assign (RubberBand .prototype,
          lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   8);
          lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        12);
 
-         // Set white line quad vertices.
-
-         lineColorArray .set (color, 16);
-         lineColorArray .set (color, 20);
-         lineColorArray .set (color, 24);
-         lineColorArray .set (color, 28);
+         // Set line quad vertices.
 
          fromNormal .assign (toPoint)
             .subtract (fromPoint)
@@ -153,9 +166,6 @@ Object .assign (RubberBand .prototype,
          lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        28);
 
          // Transfer line.
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, lineColorArray, gl .STATIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, lineVertexArray, gl .DYNAMIC_DRAW);

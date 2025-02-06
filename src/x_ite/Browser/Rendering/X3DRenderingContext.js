@@ -50,7 +50,7 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
-import RubberBand             from "../Navigation/RubberBand.js";
+import ScreenLine             from "../Navigation/ScreenLine.js";
 import ViewVolume             from "../../../standard/Math/Geometry/ViewVolume.js";
 import Color3                 from "../../../standard/Math/Numbers/Color3.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
@@ -532,7 +532,7 @@ Object .assign (X3DRenderingContext .prototype,
          };
 
          this [_inputSources] = [ ];
-         this [_inputRay]     = new RubberBand (this, 5, 1);
+         this [_inputRay]     = new ScreenLine (this, 5, 1);
 
          // $(session) .on ("select", event =>
          // {
@@ -720,7 +720,9 @@ Object .assign (X3DRenderingContext .prototype,
                ViewVolume .projectPoint (Vector3 .Zero, inputRayMatrix, projectionMatrix, viewport, fromPoint),
                ViewVolume .projectPoint (toVector,      inputRayMatrix, projectionMatrix, viewport, toPoint);
 
-               this [_inputRay] .display (fromPoint, toPoint, frameBuffer, color);
+               this [_inputRay]
+                  .setColor (color)
+                  .display (fromPoint, toPoint, frameBuffer);
             }
          }
       };

@@ -46,7 +46,7 @@
  ******************************************************************************/
 
 import X3DViewer         from "./X3DViewer.js";
-import RubberBand        from "./RubberBand.js";
+import ScreenLine        from "./ScreenLine.js";
 import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
@@ -85,7 +85,7 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .event                 = null;
    this .lookAround            = false;
    this .orientationChaser     = new OrientationChaser (executionContext);
-   this .rubberBand            = new RubberBand (browser);
+   this .rubberBand            = new ScreenLine (browser);
 }
 
 Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prototype),
