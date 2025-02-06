@@ -52,8 +52,8 @@ import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
 import RubberBand             from "../Navigation/RubberBand.js";
 import ViewVolume             from "../../../standard/Math/Geometry/ViewVolume.js";
+import Color3                 from "../../../standard/Math/Numbers/Color3.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
-import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
 import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
@@ -76,7 +76,7 @@ const
    _baseLayer          = Symbol (),
    _defaultFrameBuffer = Symbol (),
    _pose               = Symbol (),
-   _inputRays          = Symbol (),
+   _inputSources       = Symbol (),
    _inputRay           = Symbol ();
 
 // WebXR Emulator and polyfill:
@@ -531,8 +531,8 @@ Object .assign (X3DRenderingContext .prototype,
             views: [ ],
          };
 
-         this [_inputRays] = [ ];
-         this [_inputRay]  = new RubberBand (this, 5, 1);
+         this [_inputSources] = [ ];
+         this [_inputRay]     = new RubberBand (this, 5, 1);
 
          // $(session) .on ("select", event =>
          // {
@@ -577,7 +577,7 @@ Object .assign (X3DRenderingContext .prototype,
             this [_baseLayer]          = null;
             this [_defaultFrameBuffer] = null;
             this [_pose]               = null;
-            this [_inputRays]          = null;
+            this [_inputSources]       = null;
             this [_inputRay]           = null;
 
             this .reshape ();
@@ -673,14 +673,17 @@ Object .assign (X3DRenderingContext .prototype,
          if (!targetRayPose)
             continue;
 
-         const matrix = this [_inputRays] [r] ??= new Matrix4 ();
+         const is = this [_inputSources] [r] ??= {
+            matrix: new Matrix4 (),
+         };
 
-         matrix .assign (targetRayPose .transform .matrix);
+         is .matrix .assign (targetRayPose .transform .matrix);
+         is .buttons = inputSource .gamepad ?.buttons,
 
          ++ r;
       }
 
-      this [_inputRays] .length = r;
+      this [_inputSources] .length = r;
 
       // Trigger new frame.
 
@@ -692,7 +695,8 @@ Object .assign (X3DRenderingContext .prototype,
          inputRayMatrix = new Matrix4 (),
          toVector       = new Vector3 (0, 0, -0.5),
          fromPoint      = new Vector3 (),
-         toPoint        = new Vector3 ();
+         toPoint        = new Vector3 (),
+         blue           = new Color3 (0.5, 0.75, 1);
 
       return function ()
       {
@@ -707,14 +711,16 @@ Object .assign (X3DRenderingContext .prototype,
                projectionMatrix = view .projectionMatrix,
                viewMatrix       = view .viewMatrix;
 
-            for (const matrix of this [_inputRays])
+            for (const { matrix, buttons } of this [_inputSources])
             {
+               const color = buttons ?.some (button => button .pressed) ? blue : Color3 .White;
+
                inputRayMatrix .assign (matrix) .multRight (viewMatrix);
 
                ViewVolume .projectPoint (Vector3 .Zero, inputRayMatrix, projectionMatrix, viewport, fromPoint),
                ViewVolume .projectPoint (toVector,      inputRayMatrix, projectionMatrix, viewport, toPoint);
 
-               this [_inputRay] .display (fromPoint, toPoint, frameBuffer);
+               this [_inputRay] .display (fromPoint, toPoint, frameBuffer, color);
             }
          }
       };
@@ -729,10 +735,6 @@ Object .assign (X3DRenderingContext .prototype,
    getPose ()
    {
       return this [_pose];
-   },
-   getInputRays ()
-   {
-      return this [_inputRays];
    },
    dispose ()
    {

@@ -46,6 +46,7 @@
  ******************************************************************************/
 import GeometryContext from "../Rendering/GeometryContext.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
+import Color3          from "../../../standard/Math/Numbers/Color3.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
@@ -61,6 +62,7 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth)
    this .lineColorBuffer       = gl .createBuffer ();
    this .lineVertexBuffer      = gl .createBuffer ();
    this .lineVertexArrayObject = new VertexArray (gl);
+   this .lineColorArray        = new Float32Array ([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
    this .lineVertexArray       = new Float32Array (8 * 4) .fill (1);
 
    this .geometryContext = new GeometryContext ({
@@ -71,8 +73,6 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth)
 
    gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
    gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
-   gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
-   gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]), gl .STATIC_DRAW);
 }
 
 Object .assign (RubberBand .prototype,
@@ -88,7 +88,7 @@ Object .assign (RubberBand .prototype,
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
          clipPlanes            = [ ];
 
-      return function (fromPoint, toPoint, frameBuffer)
+      return function (fromPoint, toPoint, frameBuffer, color = Color3 .White)
       {
          // Configure HUD
 
@@ -99,7 +99,8 @@ Object .assign (RubberBand .prototype,
             width           = viewport [2],
             height          = viewport [3],
             contentScale1_2 = browser .getRenderingProperty ("ContentScale") / 2,
-            lineVertexArray = this .lineVertexArray;
+            lineVertexArray = this .lineVertexArray,
+            lineColorArray  = this .lineColorArray;
 
          frameBuffer .bind ();
 
@@ -129,6 +130,11 @@ Object .assign (RubberBand .prototype,
 
          // Set white line quad vertices.
 
+         lineColorArray .set (color, 16);
+         lineColorArray .set (color, 20);
+         lineColorArray .set (color, 24);
+         lineColorArray .set (color, 28);
+
          fromNormal .assign (toPoint)
             .subtract (fromPoint)
             .normalize ()
@@ -148,6 +154,9 @@ Object .assign (RubberBand .prototype,
 
          // Transfer line.
 
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, lineColorArray, gl .STATIC_DRAW);
+
          gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, lineVertexArray, gl .DYNAMIC_DRAW);
 
@@ -160,7 +169,6 @@ Object .assign (RubberBand .prototype,
 
          gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-         gl .uniform3f        (shaderNode .x3d_EmissiveColor, 1, 1, 1);
          gl .uniform1f        (shaderNode .x3d_Transparency,  0);
 
          if (this .lineVertexArrayObject .enable (shaderNode .getProgram ()))
