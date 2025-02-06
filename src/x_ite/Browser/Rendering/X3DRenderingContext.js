@@ -675,9 +675,12 @@ Object .assign (X3DRenderingContext .prototype,
 
          const is = this [_inputSources] [r] ??= {
             matrix: new Matrix4 (),
+            inverse: new Matrix4 (),
          };
 
-         is .matrix .assign (targetRayPose .transform .matrix);
+         is .matrix  .assign (targetRayPose .transform .matrix);
+         is .inverse .assign (targetRayPose .transform .inverse .matrix);
+
          is .buttons = inputSource .gamepad ?.buttons,
 
          ++ r;
@@ -713,12 +716,14 @@ Object .assign (X3DRenderingContext .prototype,
 
             for (const { matrix, buttons } of this [_inputSources])
             {
+               // Draw input ray.
+               
                const color = buttons ?.some (button => button .pressed) ? blue : Color3 .White;
 
-               inputRayMatrix .assign (matrix) .multRight (viewMatrix);
+               inputRayMatrix .assign (matrix) .multRight (viewMatrix) .multRight (projectionMatrix);
 
-               ViewVolume .projectPoint (Vector3 .Zero, inputRayMatrix, projectionMatrix, viewport, fromPoint),
-               ViewVolume .projectPoint (toVector,      inputRayMatrix, projectionMatrix, viewport, toPoint);
+               ViewVolume .projectPointMatrix (Vector3 .Zero, inputRayMatrix, viewport, fromPoint),
+               ViewVolume .projectPointMatrix (toVector,      inputRayMatrix, viewport, toPoint);
 
                this [_inputRay]
                   .setColor (color)
