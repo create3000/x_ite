@@ -689,9 +689,10 @@ Object .assign (X3DRenderingContext .prototype,
    finishedFrame: (function ()
    {
       const
-         fromPoint = new Vector3 (),
-         toPoint   = new Vector3 (),
-         toVector  = new Vector3 (0, 0, -1);
+         inputRayMatrix = new Matrix4 (),
+         toVector       = new Vector3 (0, 0, -0.5),
+         fromPoint      = new Vector3 (),
+         toPoint        = new Vector3 ();
 
       return function ()
       {
@@ -705,9 +706,9 @@ Object .assign (X3DRenderingContext .prototype,
                projectionMatrix = view .projectionMatrix,
                viewMatrix       = view .viewMatrix;
 
-            for (const inputRayMatrix of this [_inputRays])
+            for (const matrix of this [_inputRays])
             {
-               inputRayMatrix .multRight (viewMatrix);
+               inputRayMatrix .assign (matrix) .multRight (viewMatrix);
 
                ViewVolume .projectPoint (Vector3 .Zero, inputRayMatrix, projectionMatrix, viewport, fromPoint),
                ViewVolume .projectPoint (toVector,      inputRayMatrix, projectionMatrix, viewport, toPoint);
