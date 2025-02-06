@@ -181,13 +181,13 @@ Object .assign (RubberBand .prototype,
 
          // Draw a black and a white line.
 
-         gl .disable (gl .DEPTH_TEST);
          gl .enable (gl .BLEND);
+         gl .disable (gl .DEPTH_TEST);
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
          gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
-         gl .enable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
+         gl .enable (gl .DEPTH_TEST);
       };
    })(),
    dispose ()
