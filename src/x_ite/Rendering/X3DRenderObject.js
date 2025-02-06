@@ -1174,7 +1174,7 @@ Object .assign (X3DRenderObject .prototype,
             if (!this .isActive () || browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
             {
                this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-               this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+               this .viewMatrixArray        .set (this .getViewMatrix ()        .get ());
 
                Matrix4 .prototype .multLeft  (this .cameraSpaceMatrixArray, view .inverse);
                Matrix4 .prototype .multRight (this .viewMatrixArray,        view .matrix);
@@ -1187,9 +1187,9 @@ Object .assign (X3DRenderObject .prototype,
          }
          else
          {
-            this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+            this .projectionMatrixArray  .set (this .getProjectionMatrix ()  .get ());
             this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-            this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+            this .viewMatrixArray        .set (this .getViewMatrix ()        .get ());
          }
 
          // Set up shadow matrix for all lights, and matrix for all projective textures.

@@ -1098,15 +1098,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          const view = renderObject .getView ();
 
          if (view)
-         {
             Matrix4 .prototype .multRight .call (modelViewMatrix, view .matrix);
 
-            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
-         }
-         else
-         {
-            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
-         }
+         gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 
          // Normal matrix
 
