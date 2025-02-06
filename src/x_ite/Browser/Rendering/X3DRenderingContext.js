@@ -532,7 +532,7 @@ Object .assign (X3DRenderingContext .prototype,
          };
 
          this [_inputSources] = [ ];
-         this [_inputRay]     = new ScreenLine (this, 5, 1);
+         this [_inputRay]     = new ScreenLine (this, 5, 2);
 
          // $(session) .on ("select", event =>
          // {

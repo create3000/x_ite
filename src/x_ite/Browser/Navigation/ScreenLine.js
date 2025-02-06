@@ -45,8 +45,9 @@
  *
  ******************************************************************************/
 import GeometryContext from "../Rendering/GeometryContext.js";
+import AlphaMode       from "../Shape/AlphaMode.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
-import Color3          from "../../../standard/Math/Numbers/Color3.js";
+import Color4          from "../../../standard/Math/Numbers/Color4.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
@@ -66,7 +67,8 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth)
    this .lineVertexArray       = new Float32Array (8 * 4) .fill (1);
 
    this .geometryContext = new GeometryContext ({
-      renderObject: browser .getActiveLayer (),
+      renderObject: browser .getWorld () .getLayer0 (),
+      alphaMode: AlphaMode .BLEND,
       geometryType: 2,
       colorMaterial: true,
    });
@@ -74,12 +76,12 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth)
    gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
    gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
 
-   this .setColor (Color3 .White);
+   this .setColor (Color4 .White);
 }
 
 Object .assign (RubberBand .prototype,
 {
-   setColor (color)
+   setColor (color, tip)
    {
       const
          browser        = this .browser,
@@ -180,10 +182,12 @@ Object .assign (RubberBand .prototype,
          // Draw a black and a white line.
 
          gl .disable (gl .DEPTH_TEST);
+         gl .enable (gl .BLEND);
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
          gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
          gl .enable (gl .DEPTH_TEST);
+         gl .disable (gl .BLEND);
       };
    })(),
    dispose ()
