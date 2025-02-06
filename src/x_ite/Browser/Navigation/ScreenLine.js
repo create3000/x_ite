@@ -99,6 +99,7 @@ Object .assign (RubberBand .prototype,
    display: (() =>
    {
       const
+         normal                = new Vector3 (),
          fromNormal            = new Vector3 (),
          toNormal              = new Vector3 (),
          vertex                = new Vector3 (),
@@ -129,17 +130,13 @@ Object .assign (RubberBand .prototype,
 
          // Set black line quad vertices.
 
-         fromNormal .assign (toPoint)
+         normal .assign (toPoint)
             .subtract (fromPoint)
             .normalize ()
-            .multiply (contentScale1_2 * this .fromWidth + 0.5)
-            .set (-fromNormal .y, fromNormal .x, 0);
+            .set (-normal .y, normal .x, 0);
 
-         toNormal .assign (toPoint)
-            .subtract (fromPoint)
-            .normalize ()
-            .multiply (contentScale1_2 * this .toWidth + 0.5)
-            .set (-toNormal .y, toNormal .x, 0);
+         fromNormal .assign (normal) .multiply (contentScale1_2 * this .fromWidth + 0.5);
+         toNormal   .assign (normal) .multiply (contentScale1_2 * this .toWidth   + 0.5);
 
          lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      0);
          lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 4);
@@ -148,17 +145,8 @@ Object .assign (RubberBand .prototype,
 
          // Set line quad vertices.
 
-         fromNormal .assign (toPoint)
-            .subtract (fromPoint)
-            .normalize ()
-            .multiply (contentScale1_2 * this .fromWidth)
-            .set (-fromNormal .y, fromNormal .x, 0);
-
-         toNormal .assign (toPoint)
-            .subtract (fromPoint)
-            .normalize ()
-            .multiply (contentScale1_2 * this .toWidth)
-            .set (-toNormal .y, toNormal .x, 0);
+         fromNormal .assign (normal) .multiply (contentScale1_2 * this .fromWidth);
+         toNormal   .assign (normal) .multiply (contentScale1_2 * this .toWidth);
 
          lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      16);
          lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 20);
@@ -179,7 +167,7 @@ Object .assign (RubberBand .prototype,
 
          gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-         gl .uniform1f        (shaderNode .x3d_Transparency,  0);
+         gl .uniform1f        (shaderNode .x3d_Transparency, 0);
 
          if (this .lineVertexArrayObject .enable (shaderNode .getProgram ()))
          {

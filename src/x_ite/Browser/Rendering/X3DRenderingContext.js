@@ -717,7 +717,7 @@ Object .assign (X3DRenderingContext .prototype,
             for (const { matrix, buttons } of this [_inputSources])
             {
                // Draw input ray.
-               
+
                const color = buttons ?.some (button => button .pressed) ? blue : Color3 .White;
 
                inputRayMatrix .assign (matrix) .multRight (viewMatrix) .multRight (projectionMatrix);
