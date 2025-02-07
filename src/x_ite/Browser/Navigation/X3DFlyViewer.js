@@ -85,7 +85,7 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .event                 = null;
    this .lookAround            = false;
    this .orientationChaser     = new OrientationChaser (executionContext);
-   this .rubberBand            = new ScreenLine (browser);
+   this .rubberBand            = new ScreenLine (browser, 1, 1, 0.4);
 }
 
 Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prototype),

@@ -53,7 +53,7 @@ import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
 
-function ScreenLine (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.4)
+function ScreenLine (browser, fromWidth, toWidth, tipStart)
 {
    const gl = browser .getContext ();
 
