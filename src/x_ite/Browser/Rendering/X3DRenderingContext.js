@@ -734,8 +734,11 @@ Object .assign (X3DRenderingContext .prototype,
                // Draw input ray.
 
                const color = hit .id || buttons ?.some (button => button .pressed) ? blue : Color3 .White;
-
-               inputRayMatrix .assign (matrix) .multRight (viewMatrix) .multRight (projectionMatrix);
+      ;
+               inputRayMatrix
+                  .assign (matrix)
+                  .multRight (viewMatrix)
+                  .multRight (projectionMatrix);
 
                ViewVolume .projectPointMatrix (Vector3 .Zero, inputRayMatrix, viewport, fromPoint);
                ViewVolume .projectPointMatrix (toVector,      inputRayMatrix, viewport, toPoint);

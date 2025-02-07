@@ -1037,11 +1037,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    },
    setUniforms: (() =>
    {
-      const normalMatrix = new Float32Array (9);
+      const
+         normalMatrix      = new Float32Array (9),
+         modelViewMatrixXR = new Float32Array (16);
 
       return function (gl, renderContext, geometryContext, front = true)
       {
-         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix } = renderContext;
+         const { renderObject, fogNode, appearanceNode, hAnimNode } = renderContext;
+
+         let { modelViewMatrix } = renderContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
@@ -1098,7 +1102,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          const view = renderObject .getView ();
 
          if (view)
-            Matrix4 .prototype .multRight .call (modelViewMatrix, view .matrix);
+         {
+            modelViewMatrixXR .set (modelViewMatrix);
+
+            modelViewMatrix = Matrix4 .prototype .multRight .call (modelViewMatrixXR, view .matrix);
+         }
 
          gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 
