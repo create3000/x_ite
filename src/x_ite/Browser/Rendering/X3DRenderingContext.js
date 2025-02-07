@@ -79,7 +79,7 @@ const
    _pose               = Symbol (),
    _inputSources       = Symbol (),
    _inputRay           = Symbol (),
-   _inputCircle        = Symbol ();
+   _inputPoint         = Symbol ();
 
 // WebXR Emulator and polyfill:
 const canvasCSS = {
@@ -535,7 +535,7 @@ Object .assign (X3DRenderingContext .prototype,
 
          this [_inputSources] = [ ];
          this [_inputRay]     = new ScreenLine (this, 5, 3, 0.9);
-         this [_inputCircle]  = new ScreenPoint (this);
+         this [_inputPoint]   = new ScreenPoint (this);
 
          // $(session) .on ("select", event =>
          // {
@@ -582,7 +582,7 @@ Object .assign (X3DRenderingContext .prototype,
             this [_pose]               = null;
             this [_inputSources]       = null;
             this [_inputRay]           = null;
-            this [_inputCircle]        = null;
+            this [_inputPoint]         = null;
 
             this .reshape ();
          }
@@ -744,7 +744,7 @@ Object .assign (X3DRenderingContext .prototype,
                   .setColor (color)
                   .display (fromPoint, toPoint, frameBuffer);
 
-               // Draw hit circle.
+               // Draw hit disk.
 
                if (!hit .id)
                   continue;
@@ -755,7 +755,7 @@ Object .assign (X3DRenderingContext .prototype,
                   .translate (hit .point)
                   .scale (new Vector3 (0.2, 0.2, 0.2));
 
-               this [_inputCircle] .display (Color3 .White, inputRayMatrix, projectionMatrix, frameBuffer);
+               this [_inputPoint] .display (Color3 .White, inputRayMatrix, projectionMatrix, frameBuffer);
             }
          }
       };
