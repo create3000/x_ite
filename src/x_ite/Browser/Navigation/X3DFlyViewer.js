@@ -73,19 +73,17 @@ function X3DFlyViewer (executionContext, navigationInfo)
 {
    X3DViewer .call (this, executionContext, navigationInfo);
 
-   const
-      browser = this .getBrowser (),
-      gl      = browser .getContext ();
+   const browser = this .getBrowser ();
 
-   this .button                = -1;
-   this .fromVector            = new Vector3 ();
-   this .toVector              = new Vector3 ();
-   this .direction             = new Vector3 ();
-   this .startTime             = 0;
-   this .event                 = null;
-   this .lookAround            = false;
-   this .orientationChaser     = new OrientationChaser (executionContext);
-   this .rubberBand            = new ScreenLine (browser, 1, 1, 0.4);
+   this .button            = -1;
+   this .fromVector        = new Vector3 ();
+   this .toVector          = new Vector3 ();
+   this .direction         = new Vector3 ();
+   this .startTime         = 0;
+   this .event             = null;
+   this .lookAround        = false;
+   this .orientationChaser = new OrientationChaser (executionContext);
+   this .rubberBand        = new ScreenLine (browser, 1, 1, 0.4);
 }
 
 Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prototype),
