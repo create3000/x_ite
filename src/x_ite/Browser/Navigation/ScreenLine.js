@@ -59,7 +59,6 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
    this .browser               = browser;
    this .fromWidth             = fromWidth;
    this .toWidth               = toWidth;
-   this .tipStart              = tipStart;
    this .lineIndexBuffer       = gl .createBuffer ();
    this .lineColorBuffer       = gl .createBuffer ();
    this .lineVertexBuffer      = gl .createBuffer ();
@@ -97,7 +96,7 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
       vertex          = new Vector3 (),
       lineVertexArray = this .lineVertexArray;
 
-   midPoint .assign (fromPoint) .lerp (toPoint, this .tipStart);
+   midPoint .assign (fromPoint) .lerp (toPoint, tipStart);
 
    normal .assign (toPoint)
       .subtract (fromPoint)
