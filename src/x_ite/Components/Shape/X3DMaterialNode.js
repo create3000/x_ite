@@ -324,7 +324,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       }
       else
       {
-         const { renderObject, alphaMode, localObjectsKeys, styleProperties, textureNode } = geometryContext;
+         const { renderObject, alphaMode, localObjectsKeys, textureNode } = geometryContext;
 
          if (renderObject .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -351,9 +351,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
                break;
             }
          }
-
-         if (styleProperties)
-            options .push ("X3D_STYLE_PROPERTIES");
 
          const numClipPlanes = localObjectsKeys .reduce ((a, c) => a + (c === 0), 0);
 

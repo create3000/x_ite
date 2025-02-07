@@ -749,9 +749,13 @@ Object .assign (X3DRenderingContext .prototype,
                if (!hit .id)
                   continue;
 
-               ViewVolume .projectPointMatrix (hit .point, inputRayMatrix, viewport, fromPoint);
+               inputRayMatrix
+                  .assign (matrix)
+                  .multRight (viewMatrix)
+                  .translate (hit .point)
+                  .scale (new Vector3 (0.2, 0.2, 0.2));
 
-               this [_inputCircle] .display (fromPoint, 10, Color3 .White, frameBuffer);
+               this [_inputCircle] .display (Color3 .White, inputRayMatrix, projectionMatrix, frameBuffer);
             }
          }
       };

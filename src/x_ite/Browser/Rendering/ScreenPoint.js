@@ -56,16 +56,17 @@ function ScreenPoint (browser)
    const gl = browser .getContext ();
 
    this .browser           = browser;
-   this .colorBuffer       = gl .createBuffer ();
    this .vertexBuffer      = gl .createBuffer ();
    this .vertexArrayObject = new VertexArray (gl);
-   this .vertexArray       = new Float32Array ([0, 0, 0, 1]);
+   this .vertexArray       = new Float32Array ([
+      -1, -1, 0, 1,  1, -1, 0, 1,   1, 1, 0, 1,
+      -1, -1, 0, 1,  1,  1, 0, 1,  -1, 1, 0, 1,
+   ]);
 
    this .geometryContext   = new GeometryContext ({
       renderObject: new Layer (browser .getPrivateScene ()),
-      alphaMode: AlphaMode .OPAQUE,
-      geometryType: 0,
-      styleProperties: true,
+      alphaMode: AlphaMode .BLEND,
+      geometryType: 3,
    });
 
    this .geometryContext .renderObject .setup ();
@@ -81,12 +82,11 @@ Object .assign (ScreenPoint .prototype,
    display: (() =>
    {
       const
-         projectionMatrix      = new Matrix4 (),
          projectionMatrixArray = new Float32Array (Matrix4 .Identity),
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
          clipPlanes            = [ ];
 
-      return function (position, size, color, frameBuffer)
+      return function (color, modelViewMatrix, projectionMatrix, frameBuffer)
       {
          // Configure HUD
 
@@ -94,8 +94,6 @@ Object .assign (ScreenPoint .prototype,
             browser      = this .browser,
             gl           = browser .getContext (),
             viewport     = browser .getViewport (),
-            width        = viewport [2],
-            height       = viewport [3],
             contentScale = browser .getRenderingProperty ("ContentScale");
 
          frameBuffer .bind ();
@@ -107,8 +105,8 @@ Object .assign (ScreenPoint .prototype,
 
          // Set projection and model view matrix.
 
-         projectionMatrixArray .set (Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
-         modelViewMatrixArray  .set (position, 12);
+         projectionMatrixArray .set (projectionMatrix);
+         modelViewMatrixArray  .set (modelViewMatrix);
 
          // Set uniforms and attributes.
 
@@ -122,25 +120,16 @@ Object .assign (ScreenPoint .prototype,
          gl .uniform3f        (shaderNode .x3d_EmissiveColor, ... color);
          gl .uniform1f        (shaderNode .x3d_Transparency, 0);
 
-         gl .uniform1f (shaderNode .x3d_PointPropertiesPointSizeScaleFactor, size * contentScale);
-         gl .uniform1f (shaderNode .x3d_PointPropertiesPointSizeMinValue,    size * contentScale);
-         gl .uniform1f (shaderNode .x3d_PointPropertiesPointSizeMaxValue,    size * contentScale);
-         gl .uniform3f (shaderNode .x3d_PointPropertiesAttenuation,          1, 0, 0);
-
          if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          // Draw a black and a white point.
 
          gl .disable (gl .DEPTH_TEST);
-         gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .enable (gl .BLEND);
-         gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
-         gl .drawArrays (gl .POINTS, 0, 1);
+         gl .drawArrays (gl .TRIANGLES, 0, 6);
          gl .enable (gl .DEPTH_TEST);
-         gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .disable (gl .BLEND);
-         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       };
    })(),
    dispose ()
