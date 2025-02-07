@@ -57,8 +57,6 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
    const gl = browser .getContext ();
 
    this .browser               = browser;
-   this .fromWidth             = fromWidth;
-   this .toWidth               = toWidth;
    this .lineIndexBuffer       = gl .createBuffer ();
    this .lineColorBuffer       = gl .createBuffer ();
    this .lineVertexBuffer      = gl .createBuffer ();
@@ -104,8 +102,8 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
       .multiply (0.5)
       .set (-normal .y, normal .x, 0);
 
-   fromNormal .assign (normal) .multiply (this .fromWidth + 1);
-   toNormal   .assign (normal) .multiply (this .toWidth   + 1);
+   fromNormal .assign (normal) .multiply (fromWidth + 1);
+   toNormal   .assign (normal) .multiply (toWidth   + 1);
 
    lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      0);
    lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 4);
@@ -116,8 +114,8 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
 
    // Set line quad vertices.
 
-   fromNormal .assign (normal) .multiply (this .fromWidth);
-   toNormal   .assign (normal) .multiply (this .toWidth);
+   fromNormal .assign (normal) .multiply (fromWidth);
+   toNormal   .assign (normal) .multiply (toWidth);
 
    lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      24);
    lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 28);
