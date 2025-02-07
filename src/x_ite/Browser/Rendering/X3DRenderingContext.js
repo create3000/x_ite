@@ -726,7 +726,7 @@ Object .assign (X3DRenderingContext .prototype,
                ViewVolume .projectPointMatrix (toVector,      inputRayMatrix, viewport, toPoint);
 
                this [_inputRay]
-                  .setColor (color, 0)
+                  .setColor (color)
                   .display (fromPoint, toPoint, frameBuffer);
             }
          }

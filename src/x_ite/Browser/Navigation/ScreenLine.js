@@ -47,7 +47,7 @@
 import GeometryContext from "../Rendering/GeometryContext.js";
 import AlphaMode       from "../Shape/AlphaMode.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
-import Color4          from "../../../standard/Math/Numbers/Color4.js";
+import Color3          from "../../../standard/Math/Numbers/Color3.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
@@ -65,8 +65,8 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
    this .lineVertexBuffer      = gl .createBuffer ();
    this .lineVertexArrayObject = new VertexArray (gl);
    this .lineColorArray        = new Float32Array ([
-      0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
    ]);
    this .lineVertexArray       = new Float32Array (12 * 4) .fill (1);
 
@@ -83,12 +83,12 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
       6, 7, 9, 6, 9, 8, 8, 9, 11, 8, 11, 10,
    ]), gl .STATIC_DRAW);
 
-   this .setColor (Color4 .White, 0);
+   this .setColor (Color3 .White);
 }
 
 Object .assign (RubberBand .prototype,
 {
-   setColor (color, tip = 1)
+   setColor (color)
    {
       const
          browser        = this .browser,
@@ -97,11 +97,6 @@ Object .assign (RubberBand .prototype,
 
       for (let i = 0; i < 6; ++ i)
          lineColorArray .set (color, 24 + i * 4);
-
-      lineColorArray [19] = tip;
-      lineColorArray [23] = tip;
-      lineColorArray [43] = tip;
-      lineColorArray [47] = tip;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, lineColorArray, gl .STATIC_DRAW);
