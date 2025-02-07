@@ -85,7 +85,7 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
 
    this .setColor (Color3 .White);
 
-   // Set black line quad vertices.
+   // Set black and white line quad vertices.
 
    const
       fromPoint       = new Vector3 (),
