@@ -65,8 +65,8 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
    this .lineVertexBuffer      = gl .createBuffer ();
    this .lineVertexArrayObject = new VertexArray (gl);
    this .lineColorArray        = new Float32Array ([
-      0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
+      0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 0,  0, 0, 0, 0,
+      1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 0,  1, 1, 1, 0,
    ]);
    this .lineVertexArray       = new Float32Array (12 * 4) .fill (1);
 
