@@ -307,15 +307,25 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       {
          this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
 
-         if (!this .active || browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
+         if (type === TraverseType .POINTER)
          {
-            this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
-            this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+            const inputSource = browser .getPointingInputSource ();
+
+            this .getCameraSpaceMatrix () .push (inputSource .matrix);
+            this .getViewMatrix ()        .push (inputSource .inverse);
          }
          else
          {
-            this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
-            this .getViewMatrix ()        .push (pose .viewMatrix);
+            if (!this .active || browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
+            {
+               this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+               this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+            }
+            else
+            {
+               this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
+               this .getViewMatrix ()        .push (pose .viewMatrix);
+            }
          }
       }
       else
@@ -366,14 +376,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
             return;
       }
 
-      const inputSource = browser .getPointingInputSource ();
-
-      if (inputSource)
-      {
-         this .getCameraSpaceMatrix () .push (inputSource .matrix);
-         this .getViewMatrix ()        .push (inputSource .inverse);
-      }
-
       this .setHitRay (this .getProjectionMatrix () .get (), viewport, browser .getPointer ());
       this .getNavigationInfo () .enable (type, renderObject);
       this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
@@ -383,12 +385,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this .viewportNode .pop (this);
 
       this .getModelViewMatrix () .pop ();
-
-      if (inputSource)
-      {
-         this .getCameraSpaceMatrix () .pop ();
-         this .getViewMatrix ()        .pop ();
-      }
    },
    camera (type, renderObject)
    {

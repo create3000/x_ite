@@ -582,6 +582,7 @@ Object .assign (X3DRenderingContext .prototype,
             this [_pose]               = null;
             this [_inputSources]       = null;
             this [_inputRay]           = null;
+            this [_inputCircle]        = null;
 
             this .reshape ();
          }
