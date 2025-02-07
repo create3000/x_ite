@@ -182,8 +182,8 @@ Object .assign (RubberBand .prototype,
          xAxis .assign (toPoint) .subtract (fromPoint);
          yAxis .set (-xAxis .y, xAxis .x, 0) .normalize () .multiply (contentScale);
 
-         modelViewMatrixArray .set (xAxis, 0);
-         modelViewMatrixArray .set (yAxis, 4);
+         modelViewMatrixArray .set (xAxis,      0);
+         modelViewMatrixArray .set (yAxis,      4);
          modelViewMatrixArray .set (fromPoint, 12);
 
          // Set uniforms and attributes.
