@@ -47,12 +47,13 @@
 import GeometryContext from "../Rendering/GeometryContext.js";
 import AlphaMode       from "../Shape/AlphaMode.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
+import Layer           from "../../Components/Layering/Layer.js"
 import Color3          from "../../../standard/Math/Numbers/Color3.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
 
-function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8)
+function ScreenLine (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.6)
 {
    const gl = browser .getContext ();
 
@@ -68,11 +69,13 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
    this .lineVertexArray       = new Float32Array (12 * 4) .fill (1);
 
    this .geometryContext = new GeometryContext ({
-      renderObject: browser .getWorld () .getLayer0 (),
+      renderObject: new Layer (browser .getPrivateScene ()),
       alphaMode: AlphaMode .BLEND,
       geometryType: 2,
       colorMaterial: true,
    });
+
+   this .geometryContext .renderObject .setup ();
 
    gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
    gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([
@@ -130,7 +133,7 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
    gl .bufferData (gl .ARRAY_BUFFER, lineVertexArray, gl .DYNAMIC_DRAW);
 }
 
-Object .assign (RubberBand .prototype,
+Object .assign (ScreenLine .prototype,
 {
    setColor (color)
    {
@@ -226,4 +229,4 @@ Object .assign (RubberBand .prototype,
    },
 });
 
-export default RubberBand;
+export default ScreenLine;
