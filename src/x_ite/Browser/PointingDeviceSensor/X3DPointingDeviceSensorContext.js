@@ -52,6 +52,7 @@ import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4        from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
+import Line3          from "../../../standard/Math/Geometry/Line3.js";
 import StopWatch      from "../../../standard/Time/StopWatch.js";
 
 const
@@ -66,6 +67,7 @@ const
    _pointingTime              = Symbol (),
    _pointingBuffer            = Symbol (),
    _pointingShaders           = Symbol (),
+   _inputSource               = Symbol (),
    _id                        = Symbol (),
    _pointingContexts          = Symbol (),
    _processEvents             = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
@@ -86,7 +88,7 @@ function X3DPointingDeviceSensorContext ()
    this [_hit] = {
       id: 0,
       pointer: this [_pointer],
-      hitRay: null,
+      hitRay: new Line3 (),
       sensors: [ ],
       viewMatrix: new Matrix4 (),
       modelViewMatrix: new Matrix4 (),
@@ -190,6 +192,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
              pointer .y >= rectangle .y &&
              pointer .y <= rectangle .y + rectangle .w;
    },
+   getPointingInputSource ()
+   {
+      return this [_inputSource];
+   },
    getPointingLayer ()
    {
       return this [_pointingLayer];
@@ -253,7 +259,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    leaveNotifyEvent ()
    { },
-   touch (x, y)
+   touch (x, y, inputSource = null, hit = this [_hit])
    {
       this [_pointingTime] .start ();
 
@@ -265,9 +271,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
-      const hit = this [_hit];
-
-      this [_id] = 0;
+      this [_inputSource] = inputSource;
+      this [_id]          = 0;
 
       this [_pointer] .set (x, y);
       this [_pointingBuffer] .bind ();

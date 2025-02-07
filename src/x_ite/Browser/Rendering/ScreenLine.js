@@ -44,7 +44,7 @@
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-import GeometryContext from "../Rendering/GeometryContext.js";
+import GeometryContext from "./GeometryContext.js";
 import AlphaMode       from "../Shape/AlphaMode.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
 import Layer           from "../../Components/Layering/Layer.js"
@@ -57,27 +57,27 @@ function ScreenLine (browser, fromWidth, toWidth, tipStart)
 {
    const gl = browser .getContext ();
 
-   this .browser               = browser;
-   this .lineIndexBuffer       = gl .createBuffer ();
-   this .lineColorBuffer       = gl .createBuffer ();
-   this .lineVertexBuffer      = gl .createBuffer ();
-   this .lineVertexArrayObject = new VertexArray (gl);
-   this .lineColorArray        = new Float32Array ([
+   this .browser           = browser;
+   this .indexBuffer       = gl .createBuffer ();
+   this .colorBuffer       = gl .createBuffer ();
+   this .vertexBuffer      = gl .createBuffer ();
+   this .vertexArrayObject = new VertexArray (gl);
+   this .colorArray        = new Float32Array ([
       0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 0,  0, 0, 0, 0, // black
       1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 0,  1, 1, 1, 0, // white
    ]);
-   this .lineVertexArray       = new Float32Array (12 * 4) .fill (1);
+   this .vertexArray       = new Float32Array (12 * 4) .fill (1);
 
-   this .geometryContext = new GeometryContext ({
+   this .geometryContext   = new GeometryContext ({
       renderObject: new Layer (browser .getPrivateScene ()),
       alphaMode: AlphaMode .BLEND,
-      geometryType: 2,
+      geometryType: 3,
       colorMaterial: true,
    });
 
    this .geometryContext .renderObject .setup ();
 
-   gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
+   gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .indexBuffer);
    gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([
       0, 1, 3,  0, 3, 2,  2, 3,  5,  2,  5,  4, // black
       6, 7, 9,  6, 9, 8,  8, 9, 11,  8, 11, 10, // white
@@ -88,14 +88,14 @@ function ScreenLine (browser, fromWidth, toWidth, tipStart)
    // Set black and white line quad vertices.
 
    const
-      fromPoint       = new Vector3 (),
-      toPoint         = new Vector3 (1, 0, 0),
-      midPoint        = new Vector3 (),
-      normal          = new Vector3 (),
-      fromNormal      = new Vector3 (),
-      toNormal        = new Vector3 (),
-      vertex          = new Vector3 (),
-      lineVertexArray = this .lineVertexArray;
+      fromPoint   = new Vector3 (),
+      toPoint     = new Vector3 (1, 0, 0),
+      midPoint    = new Vector3 (),
+      normal      = new Vector3 (),
+      fromNormal  = new Vector3 (),
+      toNormal    = new Vector3 (),
+      vertex      = new Vector3 (),
+      vertexArray = this .vertexArray;
 
    midPoint .assign (fromPoint) .lerp (toPoint, tipStart);
 
@@ -108,29 +108,29 @@ function ScreenLine (browser, fromWidth, toWidth, tipStart)
    fromNormal .assign (normal) .multiply (fromWidth + 1);
    toNormal   .assign (normal) .multiply (toWidth   + 1);
 
-   lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      0);
-   lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 4);
-   lineVertexArray .set (vertex .assign (midPoint)  .add (toNormal),        8);
-   lineVertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   12);
-   lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        16);
-   lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   20);
+   vertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      0);
+   vertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 4);
+   vertexArray .set (vertex .assign (midPoint)  .add (toNormal),        8);
+   vertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   12);
+   vertexArray .set (vertex .assign (toPoint)   .add (toNormal),        16);
+   vertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   20);
 
    // Set line quad vertices.
 
    fromNormal .assign (normal) .multiply (fromWidth);
    toNormal   .assign (normal) .multiply (toWidth);
 
-   lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      24);
-   lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 28);
-   lineVertexArray .set (vertex .assign (midPoint)  .add (toNormal),        32);
-   lineVertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   36);
-   lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        40);
-   lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   44);
+   vertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      24);
+   vertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 28);
+   vertexArray .set (vertex .assign (midPoint)  .add (toNormal),        32);
+   vertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   36);
+   vertexArray .set (vertex .assign (toPoint)   .add (toNormal),        40);
+   vertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   44);
 
    // Transfer line.
 
-   gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
-   gl .bufferData (gl .ARRAY_BUFFER, lineVertexArray, gl .DYNAMIC_DRAW);
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+   gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
 }
 
 Object .assign (ScreenLine .prototype,
@@ -140,13 +140,13 @@ Object .assign (ScreenLine .prototype,
       const
          browser        = this .browser,
          gl             = browser .getContext (),
-         lineColorArray = this .lineColorArray;
+         colorArray = this .colorArray;
 
       for (let i = 0; i < 6; ++ i)
-         lineColorArray .set (color, 24 + i * 4);
+         colorArray .set (color, 24 + i * 4);
 
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
-      gl .bufferData (gl .ARRAY_BUFFER, lineColorArray, gl .STATIC_DRAW);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
 
       return this;
    },
@@ -201,12 +201,12 @@ Object .assign (ScreenLine .prototype,
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
          gl .uniform1f        (shaderNode .x3d_Transparency, 0);
 
-         if (this .lineVertexArrayObject .enable (shaderNode .getProgram ()))
+         if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
          {
-            gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
+            gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .indexBuffer);
 
-            shaderNode .enableColorAttribute  (gl, this .lineColorBuffer,  0, 0);
-            shaderNode .enableVertexAttribute (gl, this .lineVertexBuffer, 0, 0);
+            shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
          }
 
          // Draw a black and a white line.
@@ -224,8 +224,8 @@ Object .assign (ScreenLine .prototype,
    {
       const gl = this .browser .getContext ();
 
-      gl .deleteBuffer (this .lineVertexBuffer);
-      this .lineVertexArrayObject .dispose (gl);
+      gl .deleteBuffer (this .vertexBuffer);
+      this .vertexArrayObject .dispose (gl);
    },
 });
 

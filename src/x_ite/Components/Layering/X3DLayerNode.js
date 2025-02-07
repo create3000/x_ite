@@ -366,6 +366,14 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
             return;
       }
 
+      const inputSource = browser .getPointingInputSource ();
+
+      if (inputSource)
+      {
+         this .getCameraSpaceMatrix () .push (inputSource .matrix);
+         this .getViewMatrix ()        .push (inputSource .inverse);
+      }
+
       this .setHitRay (this .getProjectionMatrix () .get (), viewport, browser .getPointer ());
       this .getNavigationInfo () .enable (type, renderObject);
       this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
@@ -375,6 +383,12 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this .viewportNode .pop (this);
 
       this .getModelViewMatrix () .pop ();
+
+      if (inputSource)
+      {
+         this .getCameraSpaceMatrix () .pop ();
+         this .getViewMatrix ()        .pop ();
+      }
    },
    camera (type, renderObject)
    {

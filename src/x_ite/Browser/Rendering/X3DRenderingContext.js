@@ -50,13 +50,14 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
-import ScreenLine             from "../Navigation/ScreenLine.js";
+import ScreenLine             from "./ScreenLine.js";
 import ViewVolume             from "../../../standard/Math/Geometry/ViewVolume.js";
 import Color3                 from "../../../standard/Math/Numbers/Color3.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
+import ScreenPoint from "./ScreenPoint.js";
 
 const
    _frameBuffers       = Symbol (),
@@ -77,7 +78,8 @@ const
    _defaultFrameBuffer = Symbol (),
    _pose               = Symbol (),
    _inputSources       = Symbol (),
-   _inputRay           = Symbol ();
+   _inputRay           = Symbol (),
+   _inputCircle        = Symbol ();
 
 // WebXR Emulator and polyfill:
 const canvasCSS = {
@@ -533,6 +535,7 @@ Object .assign (X3DRenderingContext .prototype,
 
          this [_inputSources] = [ ];
          this [_inputRay]     = new ScreenLine (this, 5, 3, 0.9);
+         this [_inputCircle]  = new ScreenPoint (this);
 
          // $(session) .on ("select", event =>
          // {
@@ -676,7 +679,11 @@ Object .assign (X3DRenderingContext .prototype,
          const is = this [_inputSources] [r] ??= {
             matrix: new Matrix4 (),
             inverse: new Matrix4 (),
+            hit: this .getHit () .copy (),
          };
+
+         // this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
+         // this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
 
          is .matrix  .assign (targetRayPose .transform .matrix);
          is .inverse .assign (targetRayPose .transform .inverse .matrix);
@@ -703,31 +710,47 @@ Object .assign (X3DRenderingContext .prototype,
 
       return function ()
       {
+         const
+            pose     = this [_pose],
+            viewport = this .getViewport () .getValue ();
+
+         // Test for hit.
+
+         for (const inputSource of this [_inputSources])
+            this .touch (viewport [2] / 2, viewport [3] / 2, inputSource, inputSource .hit);
+
          // Draw input source rays.
 
-         const viewport = this .getViewport () .getValue ();
-
-         for (const [i, view] of this [_pose] .views .entries ())
+         for (const [i, view] of pose .views .entries ())
          {
             const
                frameBuffer      = this .getFrameBuffers () [i],
                projectionMatrix = view .projectionMatrix,
                viewMatrix       = view .viewMatrix;
 
-            for (const { matrix, buttons } of this [_inputSources])
+            for (const { matrix, buttons, hit } of this [_inputSources])
             {
                // Draw input ray.
 
-               const color = buttons ?.some (button => button .pressed) ? blue : Color3 .White;
+               const color = hit .id || buttons ?.some (button => button .pressed) ? blue : Color3 .White;
 
                inputRayMatrix .assign (matrix) .multRight (viewMatrix) .multRight (projectionMatrix);
 
-               ViewVolume .projectPointMatrix (Vector3 .Zero, inputRayMatrix, viewport, fromPoint),
+               ViewVolume .projectPointMatrix (Vector3 .Zero, inputRayMatrix, viewport, fromPoint);
                ViewVolume .projectPointMatrix (toVector,      inputRayMatrix, viewport, toPoint);
 
                this [_inputRay]
                   .setColor (color)
                   .display (fromPoint, toPoint, frameBuffer);
+
+               // Draw hit circle.
+
+               if (!hit .id)
+                  continue;
+
+               ViewVolume .projectPointMatrix (hit .point, inputRayMatrix, viewport, fromPoint);
+
+               this [_inputCircle] .display (fromPoint, 10, Color3 .White, frameBuffer);
             }
          }
       };

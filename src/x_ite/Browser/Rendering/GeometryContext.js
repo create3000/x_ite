@@ -58,6 +58,7 @@ function GeometryContext (options = { })
       colorMaterial: false,
       hasNormals: false,
       hasTangents: false,
+      styleProperties: false,
       textureNode: null,
       localObjectsKeys: [ ],
       textureCoordinateMapping: new Map (),

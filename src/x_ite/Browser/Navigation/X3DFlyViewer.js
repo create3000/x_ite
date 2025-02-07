@@ -46,7 +46,7 @@
  ******************************************************************************/
 
 import X3DViewer         from "./X3DViewer.js";
-import ScreenLine        from "./ScreenLine.js";
+import ScreenLine        from "../Rendering/ScreenLine.js";
 import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
