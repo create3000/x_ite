@@ -126,7 +126,7 @@ Object .assign (RubberBand .prototype,
             viewport        = browser .getViewport (),
             width           = viewport [2],
             height          = viewport [3],
-            contentScale1_2 = browser .getRenderingProperty ("ContentScale") / 2,
+            contentScale    = browser .getRenderingProperty ("ContentScale"),
             lineVertexArray = this .lineVertexArray;
 
          frameBuffer .bind ();
@@ -143,10 +143,11 @@ Object .assign (RubberBand .prototype,
          normal .assign (toPoint)
             .subtract (fromPoint)
             .normalize ()
+            .multiply (contentScale / 2)
             .set (-normal .y, normal .x, 0);
 
-         fromNormal .assign (normal) .multiply (contentScale1_2 * this .fromWidth + 0.5);
-         toNormal   .assign (normal) .multiply (contentScale1_2 * this .toWidth   + 0.5);
+         fromNormal .assign (normal) .multiply (this .fromWidth + 1);
+         toNormal   .assign (normal) .multiply (this .toWidth   + 1);
 
          lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      0);
          lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 4);
@@ -157,8 +158,8 @@ Object .assign (RubberBand .prototype,
 
          // Set line quad vertices.
 
-         fromNormal .assign (normal) .multiply (contentScale1_2 * this .fromWidth);
-         toNormal   .assign (normal) .multiply (contentScale1_2 * this .toWidth);
+         fromNormal .assign (normal) .multiply (this .fromWidth);
+         toNormal   .assign (normal) .multiply (this .toWidth);
 
          lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      24);
          lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 28);
