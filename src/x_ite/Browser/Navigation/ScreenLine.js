@@ -174,8 +174,12 @@ Object .assign (RubberBand .prototype,
 
          frameBuffer .bind ();
 
+         // Set viewport.
+
          gl .viewport (... viewport);
          gl .scissor (... viewport);
+
+         // Set projection and model view matrix.
 
          projectionMatrixArray .set (Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
 
