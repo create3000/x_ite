@@ -65,8 +65,8 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
    this .lineVertexBuffer      = gl .createBuffer ();
    this .lineVertexArrayObject = new VertexArray (gl);
    this .lineColorArray        = new Float32Array ([
-      0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 0,  0, 0, 0, 0,
-      1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 0,  1, 1, 1, 0,
+      0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 1,  0, 0, 0, 0,  0, 0, 0, 0, // black
+      1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 0,  1, 1, 1, 0, // white
    ]);
    this .lineVertexArray       = new Float32Array (12 * 4) .fill (1);
 
@@ -79,8 +79,8 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
 
    gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
    gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([
-      0, 1, 3, 0, 3, 2, 2, 3, 5, 2, 5, 4,
-      6, 7, 9, 6, 9, 8, 8, 9, 11, 8, 11, 10,
+      0, 1, 3,  0, 3, 2,  2, 3,  5,  2,  5,  4, // black
+      6, 7, 9,  6, 9, 8,  8, 9, 11,  8, 11, 10, // white
    ]), gl .STATIC_DRAW);
 
    this .setColor (Color3 .White);
