@@ -703,13 +703,14 @@ Object .assign (X3DRenderingContext .prototype,
    finishedFrame: (function ()
    {
       const
-         blue           = new Color3 (0.5, 0.75, 1),
-         inputRayMatrix = new Matrix4 (),
-         toVector       = new Vector3 (0, 0, -0.5),
-         fromPoint      = new Vector3 (),
-         toPoint        = new Vector3 (),
-         hitRotation    = new Rotation4 (),
-         hitScale       = new Vector3 (0.2, 0.2, 0.2);
+         blue            = new Color3 (0.5, 0.75, 1),
+         inputRayMatrix  = new Matrix4 (),
+         toVector        = new Vector3 (0, 0, -0.5),
+         fromPoint       = new Vector3 (),
+         toPoint         = new Vector3 (),
+         hitRotation     = new Rotation4 (),
+         hitScale        = new Vector3 (0.2, 0.2, 0.2),
+         hitScalePressed = new Vector3 (0.15, 0.15, 0.15);
 
       return function ()
       {
@@ -735,7 +736,7 @@ Object .assign (X3DRenderingContext .prototype,
             {
                // Draw input ray.
 
-               const color = hit .id || buttons ?.some (button => button .pressed) ? blue : Color3 .White;
+               const pressed = buttons ?.some (button => button .pressed);
 
                inputRayMatrix
                   .assign (matrix)
@@ -749,7 +750,7 @@ Object .assign (X3DRenderingContext .prototype,
                toPoint   .z = 0;
 
                this [_inputRay]
-                  .setColor (color)
+                  .setColor (hit .id || pressed ? blue : Color3 .White)
                   .display (fromPoint, toPoint, frameBuffer);
 
                // Draw hit disk.
@@ -764,7 +765,7 @@ Object .assign (X3DRenderingContext .prototype,
                   .multLeft (matrix)
                   .translate (hit .point)
                   .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal))
-                  .scale (hitScale);
+                  .scale (pressed ? hitScalePressed : hitScale);
 
                this [_inputPoint] .display (Color3 .White, inputRayMatrix, projectionMatrix, frameBuffer);
             }
