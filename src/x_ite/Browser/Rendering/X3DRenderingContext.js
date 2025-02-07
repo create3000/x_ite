@@ -51,13 +51,13 @@ import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
 import ScreenLine             from "./ScreenLine.js";
+import ScreenPoint            from "./ScreenPoint.js";
 import ViewVolume             from "../../../standard/Math/Geometry/ViewVolume.js";
 import Color3                 from "../../../standard/Math/Numbers/Color3.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
-import ScreenPoint from "./ScreenPoint.js";
 
 const
    _frameBuffers       = Symbol (),
@@ -703,11 +703,13 @@ Object .assign (X3DRenderingContext .prototype,
    finishedFrame: (function ()
    {
       const
+         blue           = new Color3 (0.5, 0.75, 1),
          inputRayMatrix = new Matrix4 (),
          toVector       = new Vector3 (0, 0, -0.5),
          fromPoint      = new Vector3 (),
          toPoint        = new Vector3 (),
-         blue           = new Color3 (0.5, 0.75, 1);
+         hitRotation    = new Rotation4 (),
+         hitScale       = new Vector3 (0.2, 0.2, 0.2);
 
       return function ()
       {
@@ -734,7 +736,7 @@ Object .assign (X3DRenderingContext .prototype,
                // Draw input ray.
 
                const color = hit .id || buttons ?.some (button => button .pressed) ? blue : Color3 .White;
-      ;
+
                inputRayMatrix
                   .assign (matrix)
                   .multRight (viewMatrix)
@@ -752,11 +754,14 @@ Object .assign (X3DRenderingContext .prototype,
                if (!hit .id)
                   continue;
 
+               // hp * matrix * viewMatrix
+
                inputRayMatrix
-                  .assign (matrix)
-                  .multRight (viewMatrix)
+                  .assign (viewMatrix)
+                  .multLeft (matrix)
                   .translate (hit .point)
-                  .scale (new Vector3 (0.2, 0.2, 0.2));
+                  .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal))
+                  .scale (hitScale);
 
                this [_inputPoint] .display (Color3 .White, inputRayMatrix, projectionMatrix, frameBuffer);
             }
