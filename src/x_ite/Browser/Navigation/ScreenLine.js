@@ -84,6 +84,53 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8
    ]), gl .STATIC_DRAW);
 
    this .setColor (Color3 .White);
+
+   // Set black line quad vertices.
+
+   const
+      fromPoint       = new Vector3 (),
+      toPoint         = new Vector3 (1, 0, 0),
+      midPoint        = new Vector3 (),
+      normal          = new Vector3 (),
+      fromNormal      = new Vector3 (),
+      toNormal        = new Vector3 (),
+      vertex          = new Vector3 (),
+      lineVertexArray = this .lineVertexArray;
+
+   midPoint .assign (fromPoint) .lerp (toPoint, this .tipStart);
+
+   normal .assign (toPoint)
+      .subtract (fromPoint)
+      .normalize ()
+      .multiply (0.5)
+      .set (-normal .y, normal .x, 0);
+
+   fromNormal .assign (normal) .multiply (this .fromWidth + 1);
+   toNormal   .assign (normal) .multiply (this .toWidth   + 1);
+
+   lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      0);
+   lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 4);
+   lineVertexArray .set (vertex .assign (midPoint)  .add (toNormal),        8);
+   lineVertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   12);
+   lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        16);
+   lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   20);
+
+   // Set line quad vertices.
+
+   fromNormal .assign (normal) .multiply (this .fromWidth);
+   toNormal   .assign (normal) .multiply (this .toWidth);
+
+   lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      24);
+   lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 28);
+   lineVertexArray .set (vertex .assign (midPoint)  .add (toNormal),        32);
+   lineVertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   36);
+   lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        40);
+   lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   44);
+
+   // Transfer line.
+
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
+   gl .bufferData (gl .ARRAY_BUFFER, lineVertexArray, gl .DYNAMIC_DRAW);
 }
 
 Object .assign (RubberBand .prototype,
@@ -106,11 +153,8 @@ Object .assign (RubberBand .prototype,
    display: (() =>
    {
       const
-         midPoint              = new Vector3 (),
-         normal                = new Vector3 (),
-         fromNormal            = new Vector3 (),
-         toNormal              = new Vector3 (),
-         vertex                = new Vector3 (),
+         xAxis                 = new Vector3 (),
+         yAxis                 = new Vector3 (),
          projectionMatrix      = new Matrix4 (),
          projectionMatrixArray = new Float32Array (Matrix4 .Identity),
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
@@ -121,13 +165,12 @@ Object .assign (RubberBand .prototype,
          // Configure HUD
 
          const
-            browser         = this .browser,
-            gl              = browser .getContext (),
-            viewport        = browser .getViewport (),
-            width           = viewport [2],
-            height          = viewport [3],
-            contentScale    = browser .getRenderingProperty ("ContentScale"),
-            lineVertexArray = this .lineVertexArray;
+            browser      = this .browser,
+            gl           = browser .getContext (),
+            viewport     = browser .getViewport (),
+            width        = viewport [2],
+            height       = viewport [3],
+            contentScale = browser .getRenderingProperty ("ContentScale");
 
          frameBuffer .bind ();
 
@@ -136,42 +179,12 @@ Object .assign (RubberBand .prototype,
 
          projectionMatrixArray .set (Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
 
-         // Set black line quad vertices.
+         xAxis .assign (toPoint) .subtract (fromPoint);
+         yAxis .set (-xAxis .y, xAxis .x, 0) .normalize () .multiply (contentScale);
 
-         midPoint .assign (fromPoint) .lerp (toPoint, this .tipStart);
-
-         normal .assign (toPoint)
-            .subtract (fromPoint)
-            .normalize ()
-            .multiply (contentScale / 2)
-            .set (-normal .y, normal .x, 0);
-
-         fromNormal .assign (normal) .multiply (this .fromWidth + 1);
-         toNormal   .assign (normal) .multiply (this .toWidth   + 1);
-
-         lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      0);
-         lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 4);
-         lineVertexArray .set (vertex .assign (midPoint)  .add (toNormal),        8);
-         lineVertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   12);
-         lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        16);
-         lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   20);
-
-         // Set line quad vertices.
-
-         fromNormal .assign (normal) .multiply (this .fromWidth);
-         toNormal   .assign (normal) .multiply (this .toWidth);
-
-         lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      24);
-         lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 28);
-         lineVertexArray .set (vertex .assign (midPoint)  .add (toNormal),        32);
-         lineVertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   36);
-         lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        40);
-         lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   44);
-
-         // Transfer line.
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, lineVertexArray, gl .DYNAMIC_DRAW);
+         modelViewMatrixArray .set (xAxis, 0);
+         modelViewMatrixArray .set (yAxis, 4);
+         modelViewMatrixArray .set (fromPoint, 12);
 
          // Set uniforms and attributes.
 
