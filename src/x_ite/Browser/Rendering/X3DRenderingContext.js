@@ -532,7 +532,7 @@ Object .assign (X3DRenderingContext .prototype,
          };
 
          this [_inputSources] = [ ];
-         this [_inputRay]     = new ScreenLine (this, 5, 2);
+         this [_inputRay]     = new ScreenLine (this, 5, 3, 0.9);
 
          // $(session) .on ("select", event =>
          // {
@@ -726,7 +726,7 @@ Object .assign (X3DRenderingContext .prototype,
                ViewVolume .projectPointMatrix (toVector,      inputRayMatrix, viewport, toPoint);
 
                this [_inputRay]
-                  .setColor (color)
+                  .setColor (color, 0)
                   .display (fromPoint, toPoint, frameBuffer);
             }
          }

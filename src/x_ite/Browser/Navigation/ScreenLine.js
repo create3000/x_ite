@@ -52,19 +52,23 @@ import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
 
-function RubberBand (browser, fromWidth = 1, toWidth = fromWidth)
+function RubberBand (browser, fromWidth = 1, toWidth = fromWidth, tipStart = 0.8)
 {
    const gl = browser .getContext ();
 
    this .browser               = browser;
    this .fromWidth             = fromWidth;
    this .toWidth               = toWidth;
+   this .tipStart              = tipStart;
    this .lineIndexBuffer       = gl .createBuffer ();
    this .lineColorBuffer       = gl .createBuffer ();
    this .lineVertexBuffer      = gl .createBuffer ();
    this .lineVertexArrayObject = new VertexArray (gl);
-   this .lineColorArray        = new Float32Array ([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-   this .lineVertexArray       = new Float32Array (8 * 4) .fill (1);
+   this .lineColorArray        = new Float32Array ([
+      0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+   ]);
+   this .lineVertexArray       = new Float32Array (12 * 4) .fill (1);
 
    this .geometryContext = new GeometryContext ({
       renderObject: browser .getWorld () .getLayer0 (),
@@ -74,24 +78,30 @@ function RubberBand (browser, fromWidth = 1, toWidth = fromWidth)
    });
 
    gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
-   gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
+   gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([
+      0, 1, 3, 0, 3, 2, 2, 3, 5, 2, 5, 4,
+      6, 7, 9, 6, 9, 8, 8, 9, 11, 8, 11, 10,
+   ]), gl .STATIC_DRAW);
 
-   this .setColor (Color4 .White);
+   this .setColor (Color4 .White, 0);
 }
 
 Object .assign (RubberBand .prototype,
 {
-   setColor (color, tip)
+   setColor (color, tip = 1)
    {
       const
          browser        = this .browser,
          gl             = browser .getContext (),
          lineColorArray = this .lineColorArray;
 
-      lineColorArray .set (color, 16);
-      lineColorArray .set (color, 20);
-      lineColorArray .set (color, 24);
-      lineColorArray .set (color, 28);
+      for (let i = 0; i < 6; ++ i)
+         lineColorArray .set (color, 24 + i * 4);
+
+      lineColorArray [19] = tip;
+      lineColorArray [23] = tip;
+      lineColorArray [43] = tip;
+      lineColorArray [47] = tip;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, lineColorArray, gl .STATIC_DRAW);
@@ -101,6 +111,7 @@ Object .assign (RubberBand .prototype,
    display: (() =>
    {
       const
+         midPoint              = new Vector3 (),
          normal                = new Vector3 (),
          fromNormal            = new Vector3 (),
          toNormal              = new Vector3 (),
@@ -132,6 +143,8 @@ Object .assign (RubberBand .prototype,
 
          // Set black line quad vertices.
 
+         midPoint .assign (fromPoint) .lerp (toPoint, this .tipStart);
+
          normal .assign (toPoint)
             .subtract (fromPoint)
             .normalize ()
@@ -142,18 +155,22 @@ Object .assign (RubberBand .prototype,
 
          lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      0);
          lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 4);
-         lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   8);
-         lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        12);
+         lineVertexArray .set (vertex .assign (midPoint)  .add (toNormal),        8);
+         lineVertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   12);
+         lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        16);
+         lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   20);
 
          // Set line quad vertices.
 
          fromNormal .assign (normal) .multiply (contentScale1_2 * this .fromWidth);
          toNormal   .assign (normal) .multiply (contentScale1_2 * this .toWidth);
 
-         lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      16);
-         lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 20);
-         lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   24);
-         lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        28);
+         lineVertexArray .set (vertex .assign (fromPoint) .add (fromNormal),      24);
+         lineVertexArray .set (vertex .assign (fromPoint) .subtract (fromNormal), 28);
+         lineVertexArray .set (vertex .assign (midPoint)  .add (toNormal),        32);
+         lineVertexArray .set (vertex .assign (midPoint)  .subtract (toNormal),   36);
+         lineVertexArray .set (vertex .assign (toPoint)   .add (toNormal),        40);
+         lineVertexArray .set (vertex .assign (toPoint)   .subtract (toNormal),   44);
 
          // Transfer line.
 
@@ -185,7 +202,7 @@ Object .assign (RubberBand .prototype,
          gl .disable (gl .DEPTH_TEST);
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
-         gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
+         gl .drawElements (gl .TRIANGLES, 24, gl .UNSIGNED_BYTE, 0);
          gl .disable (gl .BLEND);
          gl .enable (gl .DEPTH_TEST);
       };
