@@ -81,18 +81,12 @@ class Vector3 extends Float64Array
 
    copy ()
    {
-      const copy = Object .create (Vector3 .prototype);
-      copy [0] = this [0];
-      copy [1] = this [1];
-      copy [2] = this [2];
-      return copy;
+      return Object .create (Vector3 .prototype) .assign (this);
    }
 
-   assign ([x, y, z])
+   assign (vector)
    {
-      this [0] = x;
-      this [1] = y;
-      this [2] = z;
+      super .set (vector);
       return this;
    }
 
@@ -262,7 +256,7 @@ class Vector3 extends Float64Array
    {
       let [x, y, z] = this;
 
-      for (const { x: minX, y: minY, z: minZ } of arguments)
+      for (const [minX, minY, minZ] of arguments)
       {
          x = Math .min (x, minX);
          y = Math .min (y, minY);
@@ -279,7 +273,7 @@ class Vector3 extends Float64Array
    {
       let [x, y, z] = this;
 
-      for (const { x: maxX, y: maxY, z: maxZ } of arguments)
+      for (const [maxX, maxY, maxZ] of arguments)
       {
          x = Math .max (x, maxX);
          y = Math .max (y, maxY);
@@ -311,7 +305,7 @@ class Vector3 extends Float64Array
 const a = new Vector3 (Math .random (), Math .random (), Math .random ());
 const b = new Vector3 (Math .random (), Math .random (), Math .random ());
 
-console .time ("Vector3");
+console .time ("Vector3.N2");
 
 for (let i = 0; i < 1000000; i++)
 {
@@ -333,6 +327,6 @@ for (let i = 0; i < 1000000; i++)
    a .clamp (b, b);
 }
 
-console .timeEnd ("Vector3");
+console .timeEnd ("Vector3.N2");
 
 export default Vector3;

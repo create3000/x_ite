@@ -311,7 +311,7 @@ class Vector3 extends Float64Array
 const a = new Vector3 (Math .random (), Math .random (), Math .random ());
 const b = new Vector3 (Math .random (), Math .random (), Math .random ());
 
-console .time ("Vector3");
+console .time ("Vector3.N1");
 
 for (let i = 0; i < 1000000; i++)
 {
@@ -333,6 +333,6 @@ for (let i = 0; i < 1000000; i++)
    a .clamp (b, b);
 }
 
-console .timeEnd ("Vector3");
+console .timeEnd ("Vector3.N1");
 
 export default Vector3;
