@@ -126,10 +126,8 @@ Object .assign (ScreenPoint .prototype,
 
          gl .disable (gl .DEPTH_TEST);
          gl .enable (gl .CULL_FACE);
-         gl .enable (gl .BLEND);
          gl .drawArrays (gl .TRIANGLES, 0, this .numVertices);
          gl .enable (gl .DEPTH_TEST);
-         gl .disable (gl .BLEND);
       };
    })(),
    dispose ()
