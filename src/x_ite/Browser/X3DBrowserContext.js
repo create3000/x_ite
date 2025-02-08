@@ -201,6 +201,16 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_world] .setup ();
       this [_world] .bindBindables ();
    },
+   setSession (session)
+   {
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
+
+      X3DRenderingContext .prototype .setSession .call (this, session);
+
+      this [_tainted] = false;
+
+      this .addBrowserEvent ();
+   },
    addBrowserEvent ()
    {
       if (this [_tainted])
@@ -331,28 +341,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    getDisplayTime ()
    {
       return this [_displayTime];
-   },
-   async startXRSession (event)
-   {
-      const session = this .getSession ();
-
-      await X3DRenderingContext .prototype .startXRSession .call (this, event);
-
-      this [_tainted] = false;
-
-      session .cancelAnimationFrame (this [_animFrame]);
-      this .addBrowserEvent ();
-   },
-   async stopXRSession ()
-   {
-      const session = this .getSession ();
-
-      await X3DRenderingContext .prototype .stopXRSession .call (this);
-
-      this [_tainted] = false;
-
-      session .cancelAnimationFrame (this [_animFrame]);
-      this .addBrowserEvent ();
    },
    dispose ()
    {
