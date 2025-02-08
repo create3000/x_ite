@@ -762,13 +762,13 @@ Object .assign (X3DRenderingContext .prototype,
                if (!hit .id)
                   continue;
 
+               const radius = (pressed ? hitPressedSize : hitSize);
+
                inputRayMatrix
                   .assign (matrix)
                   .multRight (viewMatrix)
                   .translate (hit .point)
                   .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal));
-
-               const radius = (pressed ? hitPressedSize : hitSize);
 
                this [_inputPoint] .display (radius, color, 0.3, inputRayMatrix, projectionMatrix, frameBuffer);
             }
