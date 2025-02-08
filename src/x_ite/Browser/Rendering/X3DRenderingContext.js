@@ -683,9 +683,6 @@ Object .assign (X3DRenderingContext .prototype,
             hit: this .getHit () .copy (),
          };
 
-         // this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
-         // this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
-
          is .matrix  .assign (targetRayPose .transform .matrix);
          is .inverse .assign (targetRayPose .transform .inverse .matrix);
 
@@ -761,8 +758,8 @@ Object .assign (X3DRenderingContext .prototype,
                // hp * matrix * viewMatrix
 
                inputRayMatrix
-                  .assign (viewMatrix)
-                  .multLeft (matrix)
+                  .assign (matrix)
+                  .multRight (viewMatrix)
                   .translate (hit .point)
                   .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal))
                   .scale (pressed ? hitScalePressed : hitScale);

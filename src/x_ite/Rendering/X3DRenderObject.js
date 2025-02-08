@@ -837,17 +837,17 @@ Object .assign (X3DRenderObject .prototype,
 
          projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
-         // Configure viewport and background
+         // Configure viewport and background.
 
-         gl .viewport (viewport [0] - x,
-                       viewport [1] - y,
-                       viewport [2],
-                       viewport [3]);
+         gl .viewport (viewport .x - x,
+                       viewport .y - y,
+                       viewport .z,
+                       viewport .w);
 
          gl .scissor (0, 0, 1, 1);
          gl .clear (gl .DEPTH_BUFFER_BIT);
 
-         // Render all objects
+         // Render all objects.
 
          gl .disable (gl .CULL_FACE);
 
@@ -868,7 +868,7 @@ Object .assign (X3DRenderObject .prototype,
                          scissor .z,
                          scissor .w);
 
-            // Draw
+            // Draw shape.
 
             shaderNode .enable (gl);
             shaderNode .setClipPlanes (gl, clipPlanes);

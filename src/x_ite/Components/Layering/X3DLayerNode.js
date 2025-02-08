@@ -305,17 +305,19 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
       if (pose)
       {
-         this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
-
          if (type === TraverseType .POINTER)
          {
             const inputSource = browser .getPointingInputSource ();
 
+            this .getProjectionMatrix ()  .push (viewpointNode .getProjectionMatrix (this));
             this .getCameraSpaceMatrix () .push (inputSource .matrix);
             this .getViewMatrix ()        .push (inputSource .inverse);
          }
          else
          {
+            // This matrix will change later before rendering.
+            this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
+
             if (!this .active || browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
             {
                this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
