@@ -706,8 +706,8 @@ Object .assign (X3DRenderingContext .prototype,
          fromPoint      = new Vector3 (),
          toPoint        = new Vector3 (),
          hitRotation    = new Rotation4 (),
-         hitSize        = 0.01,
-         hitPressedSize = 0.007;
+         hitSize        = 0.007,
+         hitPressedSize = 0.005;
 
       return function ()
       {
@@ -739,11 +739,16 @@ Object .assign (X3DRenderingContext .prototype,
 
                inputRayMatrix
                   .assign (matrix)
-                  .multRight (viewMatrix)
-                  .multRight (projectionMatrix);
+                  .multRight (viewMatrix);
 
-               ViewVolume .projectPointMatrix (Vector3 .Zero, inputRayMatrix, viewport, fromPoint);
-               ViewVolume .projectPointMatrix (toVector,      inputRayMatrix, viewport, toPoint);
+               inputRayMatrix .multVecMatrix (fromPoint .assign (Vector3 .Zero));
+               inputRayMatrix .multVecMatrix (toPoint .assign (toVector));
+
+               if (toPoint .z > fromPoint .z)
+                  continue;
+
+               ViewVolume .projectPointMatrix (fromPoint, projectionMatrix, viewport, fromPoint);
+               ViewVolume .projectPointMatrix (toPoint,   projectionMatrix, viewport, toPoint);
 
                fromPoint .z = 0;
                toPoint   .z = 0;
@@ -777,7 +782,7 @@ Object .assign (X3DRenderingContext .prototype,
 
                inputRayMatrix .set (... x, 0, ... y, 0, ... z, 0, ... inputRayMatrix .origin, 1);
 
-               this [_inputPoint] .display (color, inputRayMatrix, projectionMatrix, frameBuffer);
+               this [_inputPoint] .display (color, 0.3, inputRayMatrix, projectionMatrix, frameBuffer);
             }
          }
       };

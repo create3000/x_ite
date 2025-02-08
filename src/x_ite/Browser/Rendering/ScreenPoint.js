@@ -85,7 +85,7 @@ Object .assign (ScreenPoint .prototype,
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
          clipPlanes            = [ ];
 
-      return function (color, modelViewMatrix, projectionMatrix, frameBuffer)
+      return function (color, transparency, modelViewMatrix, projectionMatrix, frameBuffer)
       {
          // Configure HUD
 
@@ -117,7 +117,7 @@ Object .assign (ScreenPoint .prototype,
          gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
          gl .uniform3f        (shaderNode .x3d_EmissiveColor, ... color);
-         gl .uniform1f        (shaderNode .x3d_Transparency, 0);
+         gl .uniform1f        (shaderNode .x3d_Transparency, transparency);
 
          if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
@@ -125,9 +125,11 @@ Object .assign (ScreenPoint .prototype,
          // Draw a black and a white point.
 
          gl .disable (gl .DEPTH_TEST);
+         gl .enable (gl .BLEND);
          gl .enable (gl .CULL_FACE);
          gl .drawArrays (gl .TRIANGLES, 0, this .numVertices);
          gl .enable (gl .DEPTH_TEST);
+         gl .disable (gl .BLEND);
       };
    })(),
    dispose ()
