@@ -49,60 +49,31 @@ import AlphaMode       from "../Shape/AlphaMode.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
 import Layer           from "../../Components/Layering/Layer.js"
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
-import ImageTexture    from "../../Components/Texturing/ImageTexture.js";
+import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 
 function ScreenPoint (browser)
 {
    const gl = browser .getContext ();
 
    this .browser           = browser;
-   this .textureNode       = new ImageTexture (browser .getPrivateScene ());
-   this .texCoordBuffer    = gl .createBuffer ();
-   this .texCoordArray     = new Float32Array ([
-      0, 0, 0, 1,  1, 0, 0, 1,   1, 1, 0, 1,
-      0, 0, 0, 1,  1,  1, 0, 1,  0, 1, 0, 1,
-   ]);
    this .vertexBuffer      = gl .createBuffer ();
    this .vertexArrayObject = new VertexArray (gl);
-   this .vertexArray       = new Float32Array ([
-      -1, -1, 0, 1,  1, -1, 0, 1,   1, 1, 0, 1,
-      -1, -1, 0, 1,  1,  1, 0, 1,  -1, 1, 0, 1,
-   ]);
-
    this .geometryContext   = new GeometryContext ({
       renderObject: new Layer (browser .getPrivateScene ()),
       alphaMode: AlphaMode .BLEND,
       geometryType: 3,
-      textureNode: this .textureNode,
    });
 
    this .geometryContext .renderObject .setup ();
 
-   // Transfer texCoord and vertices.
+   // Transfer vertices.
 
-   gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffer);
-   gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
+   const vertexArray = browser .getSphereOptions () .getGeometry () .getVertices ();
+
+   this .numVertices = vertexArray .length / 4;
 
    gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-   gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
-
-   // Setup texture.
-
-   this .textureNode ._url = [`data:image/svg+xml;base64,` + btoa (`<svg
-xmlns="http://www.w3.org/2000/svg"
-width="16"
-height="16"
-viewBox="0 0 20 20">
-<circle
-style="fill:#ffffff;"
-cx="10"
-cy="10"
-r="10"/>
-</svg>`)];
-
-   this .textureNode ._textureProperties = browser .getDefaultTextureProperties ();
-
-   this .textureNode .setup ();
+   gl .bufferData (gl .ARRAY_BUFFER, vertexArray .getValue (), gl .STATIC_DRAW);
 }
 
 Object .assign (ScreenPoint .prototype,
@@ -112,7 +83,6 @@ Object .assign (ScreenPoint .prototype,
       const
          projectionMatrixArray = new Float32Array (Matrix4 .Identity),
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
-         textureMatrixArray    = new Float32Array (Matrix4 .Identity),
          clipPlanes            = [ ];
 
       return function (color, modelViewMatrix, projectionMatrix, frameBuffer)
@@ -135,6 +105,7 @@ Object .assign (ScreenPoint .prototype,
 
          projectionMatrixArray .set (projectionMatrix);
          modelViewMatrixArray  .set (modelViewMatrix);
+         modelViewMatrixArray  .set (Vector3 .Zero, 8);
 
          // Set uniforms and attributes.
 
@@ -148,22 +119,15 @@ Object .assign (ScreenPoint .prototype,
          gl .uniform3f        (shaderNode .x3d_EmissiveColor, ... color);
          gl .uniform1f        (shaderNode .x3d_Transparency, 0);
 
-         this .textureNode .setShaderUniforms (gl, shaderNode);
-
-         gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
-
          if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
-         {
-            shaderNode .enableTexCoordAttribute (gl, [this .texCoordBuffer], 0, 0);
-            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,     0, 0);
-         }
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          // Draw a black and a white point.
 
          gl .disable (gl .DEPTH_TEST);
          gl .enable (gl .CULL_FACE);
          gl .enable (gl .BLEND);
-         gl .drawArrays (gl .TRIANGLES, 0, 6);
+         gl .drawArrays (gl .TRIANGLES, 0, this .numVertices);
          gl .enable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
       };
@@ -172,7 +136,6 @@ Object .assign (ScreenPoint .prototype,
    {
       const gl = this .browser .getContext ();
 
-      gl .deleteBuffer (this .texCoordBuffer);
       gl .deleteBuffer (this .vertexBuffer);
 
       this .vertexArrayObject .dispose (gl);
