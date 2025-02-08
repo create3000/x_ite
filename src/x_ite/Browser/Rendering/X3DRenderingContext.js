@@ -773,7 +773,7 @@ Object .assign (X3DRenderingContext .prototype,
                const
                   x = inputRayMatrix .xAxis .normalize () .multiply (radius),
                   y = inputRayMatrix .yAxis .normalize () .multiply (radius),
-                  z = inputRayMatrix .zAxis .normalize ();radius
+                  z = inputRayMatrix .zAxis .normalize ();
 
                inputRayMatrix .set (... x, 0, ... y, 0, ... z, 0, ... inputRayMatrix .origin, 1);
 
