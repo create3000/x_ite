@@ -700,14 +700,14 @@ Object .assign (X3DRenderingContext .prototype,
    finishedFrame: (function ()
    {
       const
-         blue            = new Color3 (0.5, 0.75, 1),
-         inputRayMatrix  = new Matrix4 (),
-         toVector        = new Vector3 (0, 0, -0.5),
-         fromPoint       = new Vector3 (),
-         toPoint         = new Vector3 (),
-         hitRotation     = new Rotation4 (),
-         hitScale        = new Vector3 (0.2, 0.2, 0.2),
-         hitScalePressed = new Vector3 (0.15, 0.15, 0.15);
+         blue           = new Color3 (0.5, 0.75, 1),
+         inputRayMatrix = new Matrix4 (),
+         toVector       = new Vector3 (0, 0, -0.5),
+         fromPoint      = new Vector3 (),
+         toPoint        = new Vector3 (),
+         hitRotation    = new Rotation4 (),
+         hitSize        = 0.01,
+         hitPressedSize = 0.006;
 
       return function ()
       {
@@ -733,7 +733,9 @@ Object .assign (X3DRenderingContext .prototype,
             {
                // Draw input ray.
 
-               const pressed = buttons ?.some (button => button .pressed);
+               const
+                  pressed = buttons ?.some (button => button .pressed),
+                  color   = pressed ? blue : Color3 .White;
 
                inputRayMatrix
                   .assign (matrix)
@@ -747,24 +749,35 @@ Object .assign (X3DRenderingContext .prototype,
                toPoint   .z = 0;
 
                this [_inputRay]
-                  .setColor (hit .id || pressed ? blue : Color3 .White)
+                  .setColor (color)
                   .display (fromPoint, toPoint, frameBuffer);
 
-               // Draw hit disk.
+               // Draw hit point.
 
                if (!hit .id)
                   continue;
-
-               // hp * matrix * viewMatrix
 
                inputRayMatrix
                   .assign (matrix)
                   .multRight (viewMatrix)
                   .translate (hit .point)
-                  .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal))
-                  .scale (pressed ? hitScalePressed : hitScale);
+                  .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal));
 
-               this [_inputPoint] .display (Color3 .White, inputRayMatrix, projectionMatrix, frameBuffer);
+               // Apply screen scale to matrix.
+
+               const
+                  contentScale = this .getRenderingProperty ("ContentScale"),
+                  screenScale  = contentScale * Math .abs (inputRayMatrix .origin .z),
+                  radius       = (pressed ? hitPressedSize : hitSize) * screenScale;
+
+               const
+                  x = inputRayMatrix .xAxis .normalize () .multiply (radius),
+                  y = inputRayMatrix .yAxis .normalize () .multiply (radius),
+                  z = inputRayMatrix .zAxis .normalize ();radius
+
+               inputRayMatrix .set (... x, 0, ... y, 0, ... z, 0, ... inputRayMatrix .origin, 1);
+
+               this [_inputPoint] .display (color, inputRayMatrix, projectionMatrix, frameBuffer);
             }
          }
       };

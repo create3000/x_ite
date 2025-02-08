@@ -49,7 +49,6 @@ import AlphaMode       from "../Shape/AlphaMode.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
 import Layer           from "../../Components/Layering/Layer.js"
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
-import Camera          from "../../../standard/Math/Geometry/Camera.js";
 
 function ScreenPoint (browser)
 {
@@ -91,10 +90,9 @@ Object .assign (ScreenPoint .prototype,
          // Configure HUD
 
          const
-            browser      = this .browser,
-            gl           = browser .getContext (),
-            viewport     = browser .getViewport (),
-            contentScale = browser .getRenderingProperty ("ContentScale");
+            browser  = this .browser,
+            gl       = browser .getContext (),
+            viewport = browser .getViewport ();
 
          frameBuffer .bind ();
 
