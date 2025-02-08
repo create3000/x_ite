@@ -83,9 +83,10 @@ Object .assign (ScreenPoint .prototype,
       const
          projectionMatrixArray = new Float32Array (Matrix4 .Identity),
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
+         screenMatrix          = new Matrix4 (),
          clipPlanes            = [ ];
 
-      return function (color, transparency, modelViewMatrix, projectionMatrix, frameBuffer)
+      return function (radius, color, transparency, modelViewMatrix, projectionMatrix, frameBuffer)
       {
          // Configure HUD
 
@@ -101,10 +102,24 @@ Object .assign (ScreenPoint .prototype,
          gl .viewport (... viewport);
          gl .scissor (... viewport);
 
+         // Apply screen scale to matrix.
+
+         const
+            contentScale = browser .getRenderingProperty ("ContentScale"),
+            screenScale  = contentScale * Math .abs (modelViewMatrix .origin .z),
+            scale        = radius * screenScale;
+
+         const
+            x = modelViewMatrix .xAxis .normalize () .multiply (scale),
+            y = modelViewMatrix .yAxis .normalize () .multiply (scale),
+            z = modelViewMatrix .zAxis .normalize () .multiply (scale);
+
+         screenMatrix .set (... x, 0, ... y, 0, ... z, 0, ... modelViewMatrix .origin, 1);
+
          // Set projection and model view matrix.
 
          projectionMatrixArray .set (projectionMatrix);
-         modelViewMatrixArray  .set (modelViewMatrix);
+         modelViewMatrixArray  .set (screenMatrix);
          modelViewMatrixArray  .set (Vector3 .Zero, 8);
 
          // Set uniforms and attributes.

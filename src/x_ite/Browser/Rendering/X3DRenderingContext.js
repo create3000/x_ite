@@ -768,21 +768,9 @@ Object .assign (X3DRenderingContext .prototype,
                   .translate (hit .point)
                   .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal));
 
-               // Apply screen scale to matrix.
+               const radius = (pressed ? hitPressedSize : hitSize);
 
-               const
-                  contentScale = this .getRenderingProperty ("ContentScale"),
-                  screenScale  = contentScale * Math .abs (inputRayMatrix .origin .z),
-                  radius       = (pressed ? hitPressedSize : hitSize) * screenScale;
-
-               const
-                  x = inputRayMatrix .xAxis .normalize () .multiply (radius),
-                  y = inputRayMatrix .yAxis .normalize () .multiply (radius),
-                  z = inputRayMatrix .zAxis .normalize ();
-
-               inputRayMatrix .set (... x, 0, ... y, 0, ... z, 0, ... inputRayMatrix .origin, 1);
-
-               this [_inputPoint] .display (color, 0.3, inputRayMatrix, projectionMatrix, frameBuffer);
+               this [_inputPoint] .display (radius, color, 0.3, inputRayMatrix, projectionMatrix, frameBuffer);
             }
          }
       };
