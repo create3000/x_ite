@@ -208,6 +208,8 @@ Object .assign (X3DRenderingContext .prototype,
       for (const frameBuffer of this [_frameBuffers])
          frameBuffer .dispose ();
 
+      this [_frameBuffers] = [ ];
+
       this .reshape ();
    },
    getTransmissionBuffer ()
