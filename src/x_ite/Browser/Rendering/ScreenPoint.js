@@ -50,7 +50,6 @@ import VertexArray     from "../../Rendering/VertexArray.js";
 import Layer           from "../../Components/Layering/Layer.js"
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import ImageTexture    from "../../Components/Texturing/ImageTexture.js";
-import URLs            from "../Networking/URLs.js";
 
 function ScreenPoint (browser)
 {
@@ -89,7 +88,20 @@ function ScreenPoint (browser)
 
    // Setup texture.
 
-   this .textureNode ._url = [URLs .getLibraryURL ("point.svg")];
+   this .textureNode ._url = [`data:image/svg+xml;base64,` + btoa (`<svg
+xmlns="http://www.w3.org/2000/svg"
+width="16"
+height="16"
+viewBox="0 0 20 20">
+<circle
+style="fill:#ffffff;"
+cx="10"
+cy="10"
+r="10"/>
+</svg>`)];
+
+   this .textureNode ._textureProperties = browser .getDefaultTextureProperties ();
+
    this .textureNode .setup ();
 }
 

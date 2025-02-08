@@ -707,7 +707,7 @@ Object .assign (X3DRenderingContext .prototype,
          toPoint        = new Vector3 (),
          hitRotation    = new Rotation4 (),
          hitSize        = 0.01,
-         hitPressedSize = 0.006;
+         hitPressedSize = 0.007;
 
       return function ()
       {
