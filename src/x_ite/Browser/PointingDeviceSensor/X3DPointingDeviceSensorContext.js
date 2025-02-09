@@ -260,15 +260,18 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    { },
    touch (x, y, inputSource = null, hit = this [_hit])
    {
-      this [_pointingTime] .start ();
-
       if (this .getViewer () ._isActive .getValue ())
       {
          this [_pointingTime] .reset ();
          return false;
       }
 
+      if (Boolean (this .getPose ()) !== Boolean (inputSource))
+         return;
+
       // Pick.
+
+      this [_pointingTime] .start ();
 
       this [_inputSource] = inputSource;
       this [_id]          = 0;
