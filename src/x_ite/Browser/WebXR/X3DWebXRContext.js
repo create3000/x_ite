@@ -69,12 +69,9 @@ Object .assign (X3DWebXRContext .prototype,
 {
    initialize ()
    {
-      console .log ("Loaded X3DWebXRContext.");
-
       // Events
 
       this ._activeViewpoint .addInterest ("setReferenceSpace", this);
-
    },
    async initXRSession ()
    {
@@ -311,9 +308,9 @@ Object .assign (X3DWebXRContext .prototype,
                   .multRight (viewMatrix);
 
                inputRayMatrix .multVecMatrix (fromPoint .assign (Vector3 .Zero));
-               inputRayMatrix .multVecMatrix (toPoint .assign (toVector));
+               inputRayMatrix .multVecMatrix (toPoint   .assign (toVector));
 
-               if (toPoint .z > fromPoint .z)
+               if (toPoint .z > fromPoint .z || fromPoint .z < 0 || toPoint .z < 0)
                   continue;
 
                ViewVolume .projectPointMatrix (fromPoint, projectionMatrix, viewport, fromPoint);
