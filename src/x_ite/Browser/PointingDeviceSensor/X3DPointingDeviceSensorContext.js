@@ -101,7 +101,7 @@ function X3DPointingDeviceSensorContext ()
          return {
             id: this .id,
             pointer: this .pointer .copy (),
-            hitRay: null,
+            hitRay: this .hitRay ?.copy (),
             sensors: this .sensors .slice (),
             viewMatrix: this .viewMatrix .copy (),
             modelViewMatrix: this .modelViewMatrix .copy (),
