@@ -211,15 +211,16 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       return id;
    },
-   buttonPressEvent (x, y)
+   buttonPressEvent (x, y, hit = this [_hit])
    {
       if (!this [_pointingDeviceSensorNodes] .size)
          return false;
 
-      if (!this .touch (x, y))
-         return false;
-
-      const hit = this [_hit];
+      if (hit === this [_hit])
+      {
+         if (!this .touch (x, y))
+            return false;
+      }
 
       this [_activeSensors] = hit .sensors;
       this [_pointingLayer] = hit .layerNode;
@@ -227,11 +228,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (true, hit);
 
-      this [_processEvents] ();
+      if (hit === this [_hit])
+         this [_processEvents] ();
 
       return !! hit .sensors .length;
    },
-   buttonReleaseEvent ()
+   buttonReleaseEvent (hit = this [_hit])
    {
       if (!this [_pointingDeviceSensorNodes] .size)
          return;
@@ -242,19 +244,23 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this [_activeSensors] = Array .prototype;
       this [_pointingLayer] = null;
 
-      this [_processEvents] ();
+      if (hit === this [_hit])
+         this [_processEvents] ();
    },
-   motionNotifyEvent (x, y)
+   motionNotifyEvent (x, y, hit = this [_hit])
    {
       if (!this [_pointingDeviceSensorNodes] .size)
          return false;
 
-      this .touch (x, y);
-      this .motion ();
+      if (hit === this [_hit])
+         this .touch (x, y);
 
-      this [_processEvents] ();
+      this .motion (hit);
 
-      return !! this [_hit] .sensors .length;
+      if (hit === this [_hit])
+         this [_processEvents] ();
+
+      return !! hit .sensors .length;
    },
    leaveNotifyEvent ()
    { },
@@ -327,29 +333,24 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       return !! hit .id;
    },
-   motion ()
+   motion (hit = this [_hit])
    {
-      const hit = this [_hit];
-
       // Set isOver to FALSE for appropriate nodes
 
-      if (hit .id)
-      {
-         var difference = this [_overSensors] .filter (a => !hit .sensors .find (b => a .node === b .node));
-      }
-      else
-      {
-         var difference = this [_overSensors];
-      }
+      const sensors = hit .combinedSensors ?? hit .sensors;
+
+      const difference = sensors .length
+         ? this [_overSensors] .filter (a => !sensors .find (b => a .node === b .node))
+         : this [_overSensors];
 
       for (const sensor of difference)
          sensor .set_over__ (false, hit);
 
       // Set isOver to TRUE for appropriate nodes
 
-      if (hit .id)
+      if (sensors .length)
       {
-         this [_overSensors] = hit .sensors;
+         this [_overSensors] = sensors .slice ();
 
          for (const sensor of this [_overSensors])
             sensor .set_over__ (true, hit);
