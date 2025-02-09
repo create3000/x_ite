@@ -47,7 +47,7 @@
 
 import Vector3 from "../Numbers/Vector3.js";
 
-function Line3 (point = Vector3 .Zero, direction = Vector3 .zAxis)
+function Line3 (point, direction)
 {
    this .point     = point     .copy ();
    this .direction = direction .copy ();

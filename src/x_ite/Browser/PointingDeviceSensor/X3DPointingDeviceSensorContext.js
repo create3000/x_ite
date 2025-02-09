@@ -52,7 +52,6 @@ import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4        from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
-import Line3          from "../../../standard/Math/Geometry/Line3.js";
 import StopWatch      from "../../../standard/Time/StopWatch.js";
 
 const
@@ -88,7 +87,7 @@ function X3DPointingDeviceSensorContext ()
    this [_hit] = {
       id: 0,
       pointer: this [_pointer],
-      hitRay: new Line3 (),
+      hitRay: null,
       sensors: [ ],
       viewMatrix: new Matrix4 (),
       modelViewMatrix: new Matrix4 (),
@@ -102,7 +101,7 @@ function X3DPointingDeviceSensorContext ()
          return {
             id: this .id,
             pointer: this .pointer .copy (),
-            hitRay: this .hitRay .copy (),
+            hitRay: null,
             sensors: this .sensors .slice (),
             viewMatrix: this .viewMatrix .copy (),
             modelViewMatrix: this .modelViewMatrix .copy (),
