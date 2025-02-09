@@ -337,7 +337,7 @@ Object .assign (X3DWebXRContext .prototype,
                if (!hit .id)
                   continue;
 
-               const radius = (pressed ? hitPressedSize : hitSize);
+               const radius = pressed ? hitPressedSize : hitSize;
 
                inputRayMatrix
                   .assign (matrix)
