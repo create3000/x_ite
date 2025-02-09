@@ -301,6 +301,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          {
             const inputSource = browser .getPointingInputSource ();
 
+            if (!inputSource)
+               return;
+
             this .getProjectionMatrix ()  .push (viewpointNode .getProjectionMatrix (this));
             this .getCameraSpaceMatrix () .push (inputSource .matrix);
             this .getViewMatrix ()        .push (inputSource .inverse);
