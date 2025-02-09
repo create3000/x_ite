@@ -102,6 +102,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .endEvents ()      .addInterest ("endFrame",      this);
 
          session .updateRenderState ({ baseLayer });
+         session .addEventListener( "inputsourceschange", () => this .setInputSources ());
          session .addEventListener ("end", () => this .stopXRSession ());
 
          this [_baseReferenceSpace] = referenceSpace;
@@ -120,6 +121,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .setSession (session);
          this .setDefaultFrameBuffer (baseLayer .framebuffer);
          this .setReferenceSpace ();
+         this .setInputSources ();
 
          // $(session) .on ("select", event =>
          // {
@@ -185,12 +187,31 @@ Object .assign (X3DWebXRContext .prototype,
 
       this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
    },
+   setInputSources ()
+   {
+      this [_inputSources] = Array .from (this .getSession () .inputSources) .map (inputSource =>
+      {
+         return {
+            inputSource: inputSource,
+            matrix: new Matrix4 (),
+            inverse: new Matrix4 (),
+            hit: Object .assign (this .getHit () .copy (),
+            {
+               pulse: true,
+            }),
+         };
+      });
+   },
    setFrame (frame)
    {
       if (!frame)
          return;
 
       const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
+
+      // WebXR Emulator or polyfill.
+      if (emulator)
+         this .getCanvas () .css (this .getXREmulatorCSS ());
 
       // Get matrices from views.
 
@@ -230,40 +251,17 @@ Object .assign (X3DWebXRContext .prototype,
 
       this .getFrameBuffers () .length = v;
 
-      // WebXR Emulator or polyfill.
-      if (emulator)
-         this .getCanvas () .css (this .getXREmulatorCSS ());
-
       // Get target ray matrices from input sources.
 
-      let r = 0;
-
-      for (const inputSource of this .getSession () .inputSources)
+      for (const { inputSource, matrix, inverse } of this [_inputSources])
       {
          const
             targetRaySpace = inputSource .targetRaySpace,
             targetRayPose  = frame .getPose (targetRaySpace, this [_referenceSpace]);
 
-         if (!targetRayPose)
-            continue;
-
-         const is = this [_inputSources] [r] ??= {
-            matrix: new Matrix4 (),
-            inverse: new Matrix4 (),
-            hit: this .getHit () .copy (),
-            gamepad: null,
-            pulse: true,
-         };
-
-         is .matrix  .assign (targetRayPose .transform .matrix);
-         is .inverse .assign (targetRayPose .transform .inverse .matrix);
-
-         is .gamepad = inputSource .gamepad;
-
-         ++ r;
+         matrix  .assign (targetRayPose .transform .matrix);
+         inverse .assign (targetRayPose .transform .inverse .matrix);
       }
-
-      this [_inputSources] .length = r;
 
       // Trigger new frame.
 
@@ -301,16 +299,16 @@ Object .assign (X3DWebXRContext .prototype,
                projectionMatrix = view .projectionMatrix,
                viewMatrix       = view .viewMatrix;
 
-            for (const { matrix, hit, gamepad } of this [_inputSources])
+            for (const { inputSource, matrix, hit } of this [_inputSources])
             {
                // Make a puls if there is a sensor hit.
 
-               this .sensorHitPulse (hit, gamepad);
+               this .sensorHitPulse (hit, inputSource .gamepad);
 
                // Draw input ray.
 
                const
-                  pressed = gamepad ?.buttons .some (button => button .pressed),
+                  pressed = inputSource .gamepad ?.buttons .some (button => button .pressed),
                   color   = pressed ? blue : Color3 .White;
 
                inputRayMatrix
