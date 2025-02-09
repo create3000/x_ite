@@ -247,7 +247,7 @@ Object .assign (X3DWebXRContext .prototype,
             targetRaySpace = inputSource .targetRaySpace,
             targetRayPose  = frame .getPose (targetRaySpace, this [_referenceSpace]);
 
-         inputSource .active = !!targetRayPose;
+         inputSource .active = !! targetRayPose;
 
          if (!targetRayPose)
             continue;
