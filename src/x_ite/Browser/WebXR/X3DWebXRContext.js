@@ -364,7 +364,7 @@ Object .assign (X3DWebXRContext .prototype,
       {
          if (hit .pulse)
          {
-            gamepad .hapticActuators ?.[0] ?.pulse (1, 100);
+            gamepad .hapticActuators ?.[0] ?.pulse (0.2, 10);
 
             hit .pulse = false;
          }
