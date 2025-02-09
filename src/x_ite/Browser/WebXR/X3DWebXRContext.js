@@ -159,14 +159,6 @@ Object .assign (X3DWebXRContext .prototype,
          this .setDefaultFrameBuffer (null);
       });
    },
-   getPose ()
-   {
-      return this [_pose];
-   },
-   getReferenceSpace ()
-   {
-      return this [_referenceSpace];
-   },
    setReferenceSpace ()
    {
       if (!this [_baseReferenceSpace])
@@ -380,6 +372,10 @@ Object .assign (X3DWebXRContext .prototype,
       {
          hit .pulse = true;
       }
+   },
+   getPose ()
+   {
+      return this [_pose];
    },
 });
 
