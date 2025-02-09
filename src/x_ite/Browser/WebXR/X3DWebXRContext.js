@@ -251,12 +251,14 @@ Object .assign (X3DWebXRContext .prototype,
             matrix: new Matrix4 (),
             inverse: new Matrix4 (),
             hit: this .getHit () .copy (),
+            gamepad: null,
+            pulse: true,
          };
 
          is .matrix  .assign (targetRayPose .transform .matrix);
          is .inverse .assign (targetRayPose .transform .inverse .matrix);
 
-         is .buttons = inputSource .gamepad ?.buttons,
+         is .gamepad = inputSource .gamepad;
 
          ++ r;
       }
@@ -299,12 +301,16 @@ Object .assign (X3DWebXRContext .prototype,
                projectionMatrix = view .projectionMatrix,
                viewMatrix       = view .viewMatrix;
 
-            for (const { matrix, buttons, hit } of this [_inputSources])
+            for (const { matrix, hit, gamepad } of this [_inputSources])
             {
+               // Make a puls if there is a sensor hit.
+
+               this .sensorHitPulse (hit, gamepad);
+
                // Draw input ray.
 
                const
-                  pressed = buttons ?.some (button => button .pressed),
+                  pressed = gamepad ?.buttons .some (button => button .pressed),
                   color   = pressed ? blue : Color3 .White;
 
                inputRayMatrix
@@ -351,6 +357,22 @@ Object .assign (X3DWebXRContext .prototype,
 
       // WebXR Emulator and polyfill: bind to null, to prevent changes.
       gl .bindVertexArray (null);
+   },
+   sensorHitPulse (hit, gamepad)
+   {
+      if (hit .sensors .length)
+      {
+         if (hit .pulse)
+         {
+            gamepad .hapticActuators ?.[0] ?.pulse (1, 100);
+
+            hit .pulse = false;
+         }
+      }
+      else
+      {
+         hit .pulse = true;
+      }
    },
 });
 
