@@ -340,7 +340,7 @@ Object .assign (X3DWebXRContext .prototype,
                   .translate (hit .point)
                   .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal));
 
-               this [_inputPoint] .display (radius, color, 0.3, 0.7, inputRayMatrix, projectionMatrix, frameBuffer);
+               this [_inputPoint] .display (radius, color, 0.3, 0.8, inputRayMatrix, projectionMatrix, frameBuffer);
             }
          }
       };
