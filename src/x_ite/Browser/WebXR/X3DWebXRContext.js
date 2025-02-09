@@ -250,6 +250,7 @@ Object .assign (X3DWebXRContext .prototype,
       }
 
       this .getFrameBuffers () .length = v;
+      this [_pose] .views .length      = v;
 
       // Get target ray matrices from input sources.
 
