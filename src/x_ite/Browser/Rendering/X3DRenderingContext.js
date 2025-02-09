@@ -459,7 +459,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    updateXRButton ()
    {
-      return Lock .acquire (`X3DRenderingContext.updateXRButton-${this .getId ()}`, async () =>
+      return Lock .acquire (`X3DWebXRContext.updateXRButton-${this .getId ()}`, async () =>
       {
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
@@ -489,11 +489,14 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async startXRSession ()
    {
-      if (!await this .checkXRSupport ())
-         return;
+      return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
+      {
+         if (!await this .checkXRSupport ())
+            return;
 
-      await this .loadComponents (this .getComponent ("WebXR"));
-      await this .initXRSession ();
+         await this .loadComponents (this .getComponent ("WebXR"));
+         await this .initXRSession ();
+      });
    },
    getSession ()
    {
