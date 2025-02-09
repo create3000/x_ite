@@ -68,7 +68,7 @@ function ScreenPoint (browser)
 
    // Transfer vertices.
 
-   const vertexArray = browser .getSphereOptions () .getGeometry () .getVertices ();
+   const vertexArray = browser .getDisk2DOptions () .getDiskVertices ();
 
    this .numVertices = vertexArray .length / 4;
 
@@ -120,7 +120,6 @@ Object .assign (ScreenPoint .prototype,
 
          projectionMatrixArray .set (projectionMatrix);
          modelViewMatrixArray  .set (screenMatrix);
-         modelViewMatrixArray  .set (Vector3 .Zero, 8);
 
          // Set uniforms and attributes.
 

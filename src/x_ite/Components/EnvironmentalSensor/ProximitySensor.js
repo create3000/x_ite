@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                   .multRight (invModelMatrix)
                   .get (centerOfRotation);
 
-               if (pose && this .layerNode .isActive () && browser .getBrowserOption ("XRMovementControl") !== "VIEWPOINT")
+               if (pose && this .layerNode === browser .getActiveLayer () && browser .getBrowserOption ("XRMovementControl") !== "VIEWPOINT")
                   invModelMatrix .multLeft (pose .cameraSpaceMatrix);
                else
                   invModelMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());

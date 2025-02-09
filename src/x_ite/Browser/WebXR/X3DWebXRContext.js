@@ -80,6 +80,8 @@ Object .assign (X3DWebXRContext .prototype,
          if (this .getSession () !== window)
             return;
 
+         await this .loadComponents (this .getComponent ("Geometry2D"));
+
          const
             gl             = this .getContext (),
             mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
@@ -161,6 +163,10 @@ Object .assign (X3DWebXRContext .prototype,
             this .setDefaultFrameBuffer (null);
          }
       });
+   },
+   getPose ()
+   {
+      return this [_pose];
    },
    getReferenceSpace ()
    {
@@ -347,10 +353,6 @@ Object .assign (X3DWebXRContext .prototype,
 
       // WebXR Emulator and polyfill: bind to null, to prevent changes.
       gl .bindVertexArray (null);
-   },
-   getPose ()
-   {
-      return this [_pose];
    },
 });
 
