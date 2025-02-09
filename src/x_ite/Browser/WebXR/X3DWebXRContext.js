@@ -357,6 +357,10 @@ Object .assign (X3DWebXRContext .prototype,
       // WebXR Emulator and polyfill: bind to null, to prevent changes.
       gl .bindVertexArray (null);
    },
+   getPose ()
+   {
+      return this [_pose];
+   },
    sensorHitPulse (hit, gamepad)
    {
       if (hit .sensors .length)
@@ -372,10 +376,6 @@ Object .assign (X3DWebXRContext .prototype,
       {
          hit .pulse = true;
       }
-   },
-   getPose ()
-   {
-      return this [_pose];
    },
 });
 
