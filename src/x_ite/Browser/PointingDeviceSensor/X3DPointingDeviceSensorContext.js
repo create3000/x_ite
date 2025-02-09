@@ -268,7 +268,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       if (Boolean (this .getPose ()) !== Boolean (inputSource))
          return false;
-      
+
       // Pick.
 
       this [_pointingTime] .start ();
