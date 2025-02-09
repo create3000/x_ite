@@ -75,62 +75,63 @@ Object .assign (X3DWebXRContext .prototype,
    },
    async initXRSession ()
    {
-      if (this .getSession () !== window)
-         return;
-
-      await this .loadComponents (this .getComponent ("Geometry2D"));
-
-      const
-         gl             = this .getContext (),
-         mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-         compatible     = await gl .makeXRCompatible (),
-         session        = await navigator .xr .requestSession (mode),
-         referenceSpace = await session .requestReferenceSpace ("local");
-
-      // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-      const baseLayer = new XRWebGLLayer (session, gl,
+      return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
       {
-         antialias: false,
-         alpha: true,
-         depth: false,
-         ignoreDepthValues: true,
+         if (this .getSession () !== window)
+            return;
+
+         const
+            gl             = this .getContext (),
+            mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
+            compatible     = await gl .makeXRCompatible (),
+            session        = await navigator .xr .requestSession (mode),
+            referenceSpace = await session .requestReferenceSpace ("local");
+
+         // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
+         const baseLayer = new XRWebGLLayer (session, gl,
+         {
+            antialias: false,
+            alpha: true,
+            depth: false,
+            ignoreDepthValues: true,
+         });
+
+         this .finishedEvents () .addInterest ("finishedFrame", this);
+         this .endEvents ()      .addInterest ("endFrame",      this);
+
+         session .updateRenderState ({ baseLayer });
+         session .addEventListener ("end", () => this .stopXRSession ());
+
+         this [_baseReferenceSpace] = referenceSpace;
+         this [_baseLayer]          = baseLayer;
+
+         this [_pose] = {
+            cameraSpaceMatrix: new Matrix4 (),
+            viewMatrix: new Matrix4 (),
+            views: [ ],
+         };
+
+         this [_inputSources] = [ ];
+         this [_inputRay]     = new ScreenLine (this, 5, 3, 0.9);
+         this [_inputPoint]   = new ScreenPoint (this);
+
+         this .setSession (session);
+         this .setDefaultFrameBuffer (baseLayer .framebuffer);
+         this .setReferenceSpace ();
+
+         // $(session) .on ("select", event =>
+         // {
+         //    const { inputSource, frame } = event .originalEvent;
+
+         //    /* handle the event */
+
+         //    console .log (event)
+         //    console .log (inputSource)
+         //    console .log (frame)
+         // });
       });
-
-      this .finishedEvents () .addInterest ("finishedFrame", this);
-      this .endEvents ()      .addInterest ("endFrame",      this);
-
-      session .updateRenderState ({ baseLayer });
-      session .addEventListener ("end", () => this .stopXRSession ());
-
-      this [_baseReferenceSpace] = referenceSpace;
-      this [_baseLayer]          = baseLayer;
-
-      this [_pose] = {
-         cameraSpaceMatrix: new Matrix4 (),
-         viewMatrix: new Matrix4 (),
-         views: [ ],
-      };
-
-      this [_inputSources] = [ ];
-      this [_inputRay]     = new ScreenLine (this, 5, 3, 0.9);
-      this [_inputPoint]   = new ScreenPoint (this);
-
-      this .setSession (session);
-      this .setDefaultFrameBuffer (baseLayer .framebuffer);
-      this .setReferenceSpace ();
-
-      // $(session) .on ("select", event =>
-      // {
-      //    const { inputSource, frame } = event .originalEvent;
-
-      //    /* handle the event */
-
-      //    console .log (event)
-      //    console .log (inputSource)
-      //    console .log (frame)
-      // });
    },
    stopXRSession ()
    {
@@ -339,7 +340,7 @@ Object .assign (X3DWebXRContext .prototype,
                   .translate (hit .point)
                   .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal));
 
-               this [_inputPoint] .display (radius, color, 0.3, inputRayMatrix, projectionMatrix, frameBuffer);
+               this [_inputPoint] .display (radius, color, 0.3, 0.7, inputRayMatrix, projectionMatrix, frameBuffer);
             }
          }
       };

@@ -49,31 +49,51 @@ import AlphaMode       from "../Shape/AlphaMode.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
 import Layer           from "../../Components/Layering/Layer.js"
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
-import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 
 function ScreenPoint (browser)
 {
    const gl = browser .getContext ();
 
    this .browser           = browser;
-   this .vertexBuffer      = gl .createBuffer ();
    this .vertexArrayObject = new VertexArray (gl);
-   this .geometryContext   = new GeometryContext ({
+
+   // Black Circle
+
+   this .circleVertexBuffer    = gl .createBuffer ();
+   this .circleGeometryContext = new GeometryContext ({
       renderObject: new Layer (browser .getPrivateScene ()),
+      alphaMode: AlphaMode .BLEND,
+      geometryType: 1,
+   });
+
+   this .circleGeometryContext .renderObject .setup ();
+
+   // Transfer circle vertices.
+
+   const circleVertexArray = browser .getCircle2DOptions () .getGeometry () .getVertices ();
+
+   this .circleNumVertices = circleVertexArray .length / 4;
+
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .circleVertexBuffer);
+   gl .bufferData (gl .ARRAY_BUFFER, circleVertexArray .getValue (), gl .STATIC_DRAW);
+
+   // Disk
+
+   this .diskVertexBuffer      = gl .createBuffer ();
+   this .diskGeometryContext   = new GeometryContext ({
+      renderObject: this .circleGeometryContext .renderObject,
       alphaMode: AlphaMode .BLEND,
       geometryType: 3,
    });
 
-   this .geometryContext .renderObject .setup ();
+   // Transfer disk vertices.
 
-   // Transfer vertices.
+   const diskVertexArray = browser .getDisk2DOptions () .getDiskVertices ();
 
-   const vertexArray = browser .getDisk2DOptions () .getDiskVertices ();
+   this .diskNumVertices = diskVertexArray .length / 4;
 
-   this .numVertices = vertexArray .length / 4;
-
-   gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-   gl .bufferData (gl .ARRAY_BUFFER, vertexArray .getValue (), gl .STATIC_DRAW);
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .diskVertexBuffer);
+   gl .bufferData (gl .ARRAY_BUFFER, diskVertexArray .getValue (), gl .STATIC_DRAW);
 }
 
 Object .assign (ScreenPoint .prototype,
@@ -86,7 +106,7 @@ Object .assign (ScreenPoint .prototype,
          screenMatrix          = new Matrix4 (),
          clipPlanes            = [ ];
 
-      return function (radius, color, transparency, modelViewMatrix, projectionMatrix, frameBuffer)
+      return function (radius, color, transparency, circle, modelViewMatrix, projectionMatrix, frameBuffer)
       {
          // Configure HUD
 
@@ -121,27 +141,58 @@ Object .assign (ScreenPoint .prototype,
          projectionMatrixArray .set (projectionMatrix);
          modelViewMatrixArray  .set (screenMatrix);
 
-         // Set uniforms and attributes.
+         // Change state.
 
-         const shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext);
-
-         shaderNode .enable (gl);
-         shaderNode .setClipPlanes (gl, clipPlanes);
-
-         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-         gl .uniform3f        (shaderNode .x3d_EmissiveColor, ... color);
-         gl .uniform1f        (shaderNode .x3d_Transparency, transparency);
-
-         if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
-            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-         // Draw a black and a white point.
-
+         gl .depthMask (false);
          gl .disable (gl .DEPTH_TEST);
          gl .enable (gl .BLEND);
-         gl .enable (gl .CULL_FACE);
-         gl .drawArrays (gl .TRIANGLES, 0, this .numVertices);
+         gl .disable (gl .CULL_FACE);
+
+         {
+            // Set uniforms and attributes.
+
+            const shaderNode = browser .getDefaultMaterial () .getShader (this .circleGeometryContext);
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniform3f        (shaderNode .x3d_EmissiveColor, 0, 0, 0);
+            gl .uniform1f        (shaderNode .x3d_Transparency, circle);
+
+            if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+               shaderNode .enableVertexAttribute (gl, this .circleVertexBuffer, 0, 0);
+
+            // Draw a black and a white point.
+
+            gl .drawArrays (gl .LINES, 0, this .circleNumVertices);
+         }
+
+         {
+            // Set uniforms and attributes.
+
+            const shaderNode = browser .getDefaultMaterial () .getShader (this .diskGeometryContext);
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniform3f        (shaderNode .x3d_EmissiveColor, ... color);
+            gl .uniform1f        (shaderNode .x3d_Transparency, transparency);
+
+            if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+               shaderNode .enableVertexAttribute (gl, this .diskVertexBuffer, 0, 0);
+
+            // Draw a black and a white point.
+
+            gl .drawArrays (gl .TRIANGLES, 0, this .diskNumVertices);
+         }
+
+         // Reset state.
+
+         gl .depthMask (true);
          gl .enable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
       };
@@ -150,9 +201,9 @@ Object .assign (ScreenPoint .prototype,
    {
       const gl = this .browser .getContext ();
 
-      gl .deleteBuffer (this .vertexBuffer);
+      gl .deleteBuffer (this .diskVertexBuffer);
 
-      this .vertexArrayObject .dispose (gl);
+      this .diskVertexArrayObject .dispose (gl);
    },
 });
 

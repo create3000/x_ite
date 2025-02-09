@@ -211,13 +211,15 @@ Object .assign (ScreenLine .prototype,
 
          // Draw a black and a white line.
 
-         gl .enable (gl .BLEND);
+         gl .depthMask (false);
          gl .disable (gl .DEPTH_TEST);
+         gl .enable (gl .BLEND);
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
          gl .drawElements (gl .TRIANGLES, 24, gl .UNSIGNED_BYTE, 0);
-         gl .disable (gl .BLEND);
+         gl .depthMask (true);
          gl .enable (gl .DEPTH_TEST);
+         gl .disable (gl .BLEND);
       };
    })(),
    dispose ()

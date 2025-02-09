@@ -489,14 +489,11 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async startXRSession ()
    {
-      return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
-      {
-         if (!await this .checkXRSupport ())
-            return;
+      if (!await this .checkXRSupport ())
+         return;
 
-         await this .loadComponents (this .getComponent ("WebXR"));
-         await this .initXRSession ();
-      });
+      await this .loadComponents (this .getComponent ("WebXR"), this .getComponent ("Geometry2D"));
+      await this .initXRSession ();
    },
    getSession ()
    {
