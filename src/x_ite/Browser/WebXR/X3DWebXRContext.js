@@ -299,15 +299,20 @@ Object .assign (X3DWebXRContext .prototype,
 
             this .sensorHitPulse (hit, gamepad);
 
-            // Determine pointer position.
+            // Update matrices and determine pointer position.
 
             if (!hit .id)
                continue;
 
+            const projectionMatrix = pose .views [0] ?.projectionMatrix ?? Matrix4 .Identity;
+
+            for (const sensor of hit .sensors)
+               sensor .projectionMatrix .assign (projectionMatrix);
+
             inputRayMatrix
                .assign (inputSource .matrix)
                .multRight (pose .viewMatrix)
-               .multRight (pose .views [0] ?.projectionMatrix ?? Matrix4 .Identity);
+               .multRight (projectionMatrix);
 
             ViewVolume .projectPointMatrix (hit .point, inputRayMatrix, viewport, hit .pointer);
          }
