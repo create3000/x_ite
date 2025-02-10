@@ -347,7 +347,7 @@ Object .assign (X3DWebXRContext .prototype,
             combinedSensors .push (... hit .sensors);
          }
 
-         // Handle sensors.
+         // Handle X3DPointingDeviceSensorNodes.
 
          // Move pressed hit to beginning.
          this [_inputSources] .sort ((a, b) => b .hit .pressed - a .hit .pressed);
