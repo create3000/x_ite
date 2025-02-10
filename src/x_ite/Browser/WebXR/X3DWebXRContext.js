@@ -145,6 +145,9 @@ Object .assign (X3DWebXRContext .prototype,
          this .finishedEvents () .removeInterest ("finishedFrame", this);
          this .endEvents ()      .removeInterest ("endFrame",      this);
 
+         this .setSession (window);
+         this .setDefaultFrameBuffer (null);
+
          for (const { hit } of this [_inputSources] .values ())
             this .removeHit (hit);
 
@@ -155,9 +158,6 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputSources]       = null;
          this [_inputRay]           = null;
          this [_inputPoint]         = null;
-
-         this .setSession (window);
-         this .setDefaultFrameBuffer (null);
       });
    },
    setReferenceSpace ()
