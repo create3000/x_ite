@@ -286,16 +286,16 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Test for hit.
 
-         for (const [original, inputSource] of this [_inputSources])
+         for (const [{ active, gamepad }, inputSource] of this [_inputSources])
          {
-            if (!original .active)
+            if (!active)
                continue;
 
             this .touch (viewport [2] / 2, viewport [3] / 2, inputSource, inputSource .hit);
 
             // Make a puls if there is a sensor hit.
 
-            this .sensorHitPulse (inputSource .hit, original .gamepad);
+            this .sensorHitPulse (inputSource .hit, gamepad);
          }
 
          // Combine sensors.
@@ -304,9 +304,9 @@ Object .assign (X3DWebXRContext .prototype,
 
          combinedSensors .length = 0;
 
-         for (const [original, { hit }] of this [_inputSources])
+         for (const [{ active }, { hit }] of this [_inputSources])
          {
-            if (!original .active)
+            if (!active)
                continue;
 
             combinedSensors .push (... hit .sensors);
@@ -314,16 +314,16 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Handle sensors.
 
-         for (const [original, { hit }] of this [_inputSources])
+         for (const [{ active, gamepad }, { hit }] of this [_inputSources])
          {
-            if (!original .active)
+            if (!active)
                continue;
 
             // Pointing
 
             this .motionNotifyEvent (0, 0, hit);
 
-            const button = original .gamepad ?.buttons [0];
+            const button = gamepad ?.buttons [0];
 
             if (button ?.pressed)
             {
@@ -355,15 +355,15 @@ Object .assign (X3DWebXRContext .prototype,
                projectionMatrix = view .projectionMatrix,
                viewMatrix       = view .viewMatrix;
 
-            for (const [original, { matrix, hit }] of this [_inputSources])
+            for (const [{ active, gamepad }, { matrix, hit }] of this [_inputSources])
             {
-               if (!original .active)
+               if (!active)
                   continue;
 
                // Draw input ray.
 
                const
-                  pressed = original .gamepad ?.buttons .some (button => button .pressed),
+                  pressed = gamepad ?.buttons .some (button => button .pressed),
                   color   = pressed ? blue : Color3 .White;
 
                inputRayMatrix
