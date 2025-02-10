@@ -363,12 +363,9 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Draw input source rays.
 
-         for (const [i, view] of pose .views .entries ())
+         for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
-            const
-               frameBuffer      = this .getFrameBuffers () [i],
-               projectionMatrix = view .projectionMatrix,
-               viewMatrix       = view .viewMatrix;
+            const frameBuffer = this .getFrameBuffers () [i];
 
             for (const [{ active, gamepad }, { matrix, hit }] of this [_inputSources])
             {
