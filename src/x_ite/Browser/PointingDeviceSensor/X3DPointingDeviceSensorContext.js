@@ -90,7 +90,6 @@ function X3DPointingDeviceSensorContext ()
       pointer: this [_pointer],
       ray: new Line3 (),
       sensors: [ ],
-      viewMatrix: new Matrix4 (),
       modelViewMatrix: new Matrix4 (),
       point: new Vector3 (),
       normal: new Vector3 (),
@@ -104,7 +103,6 @@ function X3DPointingDeviceSensorContext ()
             pointer: this .pointer .copy (),
             ray: this .ray .copy (),
             sensors: this .sensors .slice (),
-            viewMatrix: this .viewMatrix .copy (),
             modelViewMatrix: this .modelViewMatrix .copy (),
             point: this .point .copy (),
             normal: this .normal .copy (),
@@ -310,7 +308,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .layerNode = pointingContext .renderObject;
          hit .shapeNode = shapeNode;
 
-         hit .viewMatrix      .assign (pointingContext .renderObject .getViewpoint () .getViewMatrix ());
          hit .modelViewMatrix .assign (pointingContext .modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
@@ -332,7 +329,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .layerNode = this [_pointingLayer];
          hit .shapeNode = null;
 
-         hit .viewMatrix      .assign (Matrix4 .Identity);
          hit .modelViewMatrix .assign (Matrix4 .Identity);
       }
 
