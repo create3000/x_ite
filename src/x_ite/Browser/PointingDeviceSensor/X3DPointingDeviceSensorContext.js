@@ -228,8 +228,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (true, hit);
 
-      if (hit === this [_hit])
-         this [_processEvents] ();
+      // Immediately process events to be able
+      // to do audio and window.open stuff.
+      this [_processEvents] ();
 
       return !! hit .sensors .length;
    },
@@ -244,8 +245,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this [_activeSensors] = Array .prototype;
       this [_pointingLayer] = null;
 
-      if (hit === this [_hit])
-         this [_processEvents] ();
+      // Immediately process events to be able
+      // to do audio and window.open stuff.
+      this [_processEvents] ();
    },
    motionNotifyEvent (x, y, hit = this [_hit])
    {
@@ -257,8 +259,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       this .motion (hit);
 
-      if (hit === this [_hit])
-         this [_processEvents] ();
+      // Immediately process events to be able
+      // to do audio and window.open stuff.
+      this [_processEvents] ();
 
       return !! hit .sensors .length;
    },
