@@ -200,98 +200,81 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputSources] .delete (removed);
       }
    },
-   setFrame (frame)
+   setFrame: (function ()
    {
-      if (!frame)
-         return;
+      const inputRayMatrix = new Matrix4 ();
 
-      const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
-
-      // WebXR Emulator or polyfill.
-      if (emulator)
-         this .getCanvas () .css (this .getXREmulatorCSS ());
-
-      // Get matrices from views.
-
-      const
-         originalPose = frame .getViewerPose (this [_referenceSpace]),
-         pose         = this [_pose];
-
-      pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
-      pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
-
-      let v = 0;
-
-      for (const originalView of originalPose .views)
+      return function (frame)
       {
-         const { x, y, width, height } = this [_baseLayer] .getViewport (originalView);
+         if (!frame)
+            return;
 
-         // WebXR Emulator: second view has width zero if in non-stereo mode.
-         if (!width)
-            continue;
+         const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
 
-         this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
+         // WebXR Emulator or polyfill.
+         if (emulator)
+            this .getCanvas () .css (this .getXREmulatorCSS ());
 
-         const view = pose .views [v] ??= {
-            projectionMatrix: new Matrix4 (),
-            cameraSpaceMatrix: new Matrix4 (),
-            viewMatrix: new Matrix4 (),
-            matrix: new Matrix4 (),
-            inverse: new Matrix4 (),
-         };
+         // Get matrices from views.
 
-         view .projectionMatrix .assign (originalView .projectionMatrix);
-         view .cameraSpaceMatrix .assign (originalView .transform .matrix);
-         view .viewMatrix .assign (originalView .transform .inverse .matrix);
-         view .matrix .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
-         view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
-
-         ++ v;
-      }
-
-      pose .views .length              = v;
-      this .getFrameBuffers () .length = v;
-
-      // Get target ray matrices from input sources.
-
-      for (const [original, { matrix, inverse }] of this [_inputSources])
-      {
          const
-            targetRaySpace = original .targetRaySpace,
-            targetRayPose  = frame .getPose (targetRaySpace, this [_referenceSpace]);
+            viewport     = this .getViewport () .getValue (),
+            originalPose = frame .getViewerPose (this [_referenceSpace]),
+            pose         = this [_pose];
 
-         original .active = !! targetRayPose;
+         pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
+         pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
 
-         if (!targetRayPose)
-            continue;
+         let v = 0;
 
-         matrix  .assign (targetRayPose .transform .matrix);
-         inverse .assign (targetRayPose .transform .inverse .matrix);
-      }
+         for (const originalView of originalPose .views)
+         {
+            const { x, y, width, height } = this [_baseLayer] .getViewport (originalView);
 
-      // Trigger new frame.
+            // WebXR Emulator: second view has width zero if in non-stereo mode.
+            if (!width)
+               continue;
 
-      this .addBrowserEvent ();
-   },
-   finishedFrame: (function ()
-   {
-      const
-         blue           = new Color3 (0.5, 0.75, 1),
-         inputRayMatrix = new Matrix4 (),
-         toVector       = new Vector3 (0, 0, -0.5),
-         fromPoint      = new Vector3 (),
-         toPoint        = new Vector3 (),
-         hitRotation    = new Rotation4 (),
-         hitSize        = 0.007,
-         hitPressedSize = 0.005;
+            this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
 
-      return function ()
-      {
-         const
-            pose     = this [_pose],
-            viewport = this .getViewport () .getValue ();
+            const view = pose .views [v] ??= {
+               projectionMatrix: new Matrix4 (),
+               cameraSpaceMatrix: new Matrix4 (),
+               viewMatrix: new Matrix4 (),
+               matrix: new Matrix4 (),
+               inverse: new Matrix4 (),
+            };
 
-         // Test for hit.
+            view .projectionMatrix .assign (originalView .projectionMatrix);
+            view .cameraSpaceMatrix .assign (originalView .transform .matrix);
+            view .viewMatrix .assign (originalView .transform .inverse .matrix);
+            view .matrix .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
+            view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
+
+            ++ v;
+         }
+
+         pose .views .length              = v;
+         this .getFrameBuffers () .length = v;
+
+         // Get target ray matrices from input sources.
+
+         for (const [original, { matrix, inverse }] of this [_inputSources])
+         {
+            const
+               targetRaySpace = original .targetRaySpace,
+               targetRayPose  = frame .getPose (targetRaySpace, this [_referenceSpace]);
+
+            original .active = !! targetRayPose;
+
+            if (!targetRayPose)
+               continue;
+
+            matrix  .assign (targetRayPose .transform .matrix);
+            inverse .assign (targetRayPose .transform .inverse .matrix);
+         }
+
+         // Test for hits.
 
          for (const [original, inputSource] of this [_inputSources])
          {
@@ -365,6 +348,29 @@ Object .assign (X3DWebXRContext .prototype,
                this .buttonReleaseEvent (hit);
             }
          }
+
+         // Trigger new frame.
+
+         this .addBrowserEvent ();
+      };
+   })(),
+   finishedFrame: (function ()
+   {
+      const
+         blue           = new Color3 (0.5, 0.75, 1),
+         inputRayMatrix = new Matrix4 (),
+         toVector       = new Vector3 (0, 0, -0.5),
+         fromPoint      = new Vector3 (),
+         toPoint        = new Vector3 (),
+         hitRotation    = new Rotation4 (),
+         hitSize        = 0.007,
+         hitPressedSize = 0.005;
+
+      return function ()
+      {
+         const
+            viewport = this .getViewport () .getValue (),
+            pose     = this [_pose];
 
          // Draw input source rays.
 

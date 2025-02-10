@@ -49,8 +49,7 @@ const
    _taintedFields     = Symbol (),
    _taintedFieldsTemp = Symbol (),
    _taintedNodes      = Symbol (),
-   _taintedNodesTemp  = Symbol (),
-   _active            = Symbol ();
+   _taintedNodesTemp  = Symbol ();
 
 function X3DRoutingContext ()
 {
@@ -58,7 +57,6 @@ function X3DRoutingContext ()
    this [_taintedFieldsTemp] = [ ];
    this [_taintedNodes]      = [ ];
    this [_taintedNodesTemp]  = [ ];
-   this [_active]            = false;
 }
 
 Object .assign (X3DRoutingContext .prototype,
@@ -74,11 +72,6 @@ Object .assign (X3DRoutingContext .prototype,
    },
    [Symbol .for ("X_ITE.X3DRoutingContext.processEvents")] ()
    {
-      if (this [_active])
-         return;
-
-      this [_active] = true;
-
       do
       {
          // Process field events
@@ -116,8 +109,6 @@ Object .assign (X3DRoutingContext .prototype,
          while (! this [_taintedFields] .length && this [_taintedNodes] .length);
       }
       while (this [_taintedFields] .length);
-
-      this [_active] = false;
    },
    dispose () { },
 });
