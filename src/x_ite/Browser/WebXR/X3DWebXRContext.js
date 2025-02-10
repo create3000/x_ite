@@ -212,16 +212,18 @@ Object .assign (X3DWebXRContext .prototype,
 
       // Get matrices from views.
 
-      const pose = frame .getViewerPose (this [_referenceSpace]);
+      const
+         originalPose = frame .getViewerPose (this [_referenceSpace]),
+         pose         = this [_pose];
 
-      this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
-      this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
+      pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
+      pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
 
       let v = 0;
 
-      for (const view of pose .views)
+      for (const originalView of originalPose .views)
       {
-         const { x, y, width, height } = this [_baseLayer] .getViewport (view);
+         const { x, y, width, height } = this [_baseLayer] .getViewport (originalView);
 
          // WebXR Emulator: second view has width zero if in non-stereo mode.
          if (!width)
@@ -229,7 +231,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
 
-         const pv = this [_pose] .views [v] ??= {
+         const view = pose .views [v] ??= {
             projectionMatrix: new Matrix4 (),
             cameraSpaceMatrix: new Matrix4 (),
             viewMatrix: new Matrix4 (),
@@ -237,17 +239,17 @@ Object .assign (X3DWebXRContext .prototype,
             inverse: new Matrix4 (),
          };
 
-         pv .projectionMatrix .assign (view .projectionMatrix);
-         pv .cameraSpaceMatrix .assign (view .transform .matrix);
-         pv .viewMatrix .assign (view .transform .inverse .matrix);
-         pv .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
-         pv .inverse .assign (pv .matrix) .inverse ();
+         view .projectionMatrix .assign (originalView .projectionMatrix);
+         view .cameraSpaceMatrix .assign (originalView .transform .matrix);
+         view .viewMatrix .assign (originalView .transform .inverse .matrix);
+         view .matrix .assign (pose .cameraSpaceMatrix) .multRight (originalView .transform .inverse .matrix);
+         view .inverse .assign (view .matrix) .inverse ();
 
          ++ v;
       }
 
+      pose .views .length              = v;
       this .getFrameBuffers () .length = v;
-      this [_pose] .views .length      = v;
 
       // Get target ray matrices from input sources.
 
