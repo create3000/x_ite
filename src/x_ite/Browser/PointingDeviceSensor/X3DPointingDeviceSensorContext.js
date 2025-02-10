@@ -242,6 +242,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          if (this [_activeSensors] .has (node))
             continue;
 
+         this [_overSensors]   .set (node, sensor);
          this [_activeSensors] .set (node, sensor);
 
          sensor .set_active__ (true, hit);
