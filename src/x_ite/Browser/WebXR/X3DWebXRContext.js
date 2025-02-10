@@ -324,10 +324,6 @@ Object .assign (X3DWebXRContext .prototype,
             if (!active)
                continue;
 
-            // Motion
-
-            this .motionNotifyEvent (0, 0, hit);
-
             // Press & Release
 
             const button = gamepad ?.buttons [0];
@@ -347,6 +343,10 @@ Object .assign (X3DWebXRContext .prototype,
 
                this .buttonReleaseEvent (hit);
             }
+
+            // Motion
+
+            this .motionNotifyEvent (0, 0, hit);
          }
 
          // Trigger new frame.
