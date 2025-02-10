@@ -291,11 +291,25 @@ Object .assign (X3DWebXRContext .prototype,
             if (!active)
                continue;
 
-            this .touch (viewport [2] / 2, viewport [3] / 2, inputSource, inputSource .hit);
+            const { hit } = inputSource;
 
-            // Make a puls if there is a sensor hit.
+            this .touch (viewport [2] / 2, viewport [3] / 2, inputSource, hit);
 
-            this .sensorHitPulse (inputSource .hit, gamepad);
+            // Make a vibration puls if there is a sensor hit.
+
+            this .sensorHitPulse (hit, gamepad);
+
+            // Determine pointer position.
+
+            if (!hit .id)
+               continue;
+
+            inputRayMatrix
+               .assign (inputSource .matrix)
+               .multRight (pose .viewMatrix)
+               .multRight (pose .views [0] ?.projectionMatrix ?? Matrix4 .Identity);
+
+            ViewVolume .projectPointMatrix (hit .point, inputRayMatrix, viewport, hit .pointer);
          }
 
          // Combine sensors.
