@@ -64,7 +64,7 @@ Object .assign (Object .setPrototypeOf (X3DTouchSensorNode .prototype, X3DPointi
    {
       X3DPointingDeviceSensorNode .prototype .set_active__ .call (this, active, hit);
 
-      if (this ._enabled .getValue () && this ._isOver .getValue () && ! active)
+      if (this ._enabled .getValue () && this ._isOver .getValue () && !active)
          this ._touchTime = this .getBrowser () .getCurrentTime ();
    },
    set_over__: (() =>
@@ -77,15 +77,15 @@ Object .assign (Object .setPrototypeOf (X3DTouchSensorNode .prototype, X3DPointi
       {
          X3DPointingDeviceSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         if (this ._isOver .getValue ())
-         {
-            texCoord .set (hit .texCoord .x, hit .texCoord .y) .divide (hit .texCoord .w);
-            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+         if (!this ._isOver .getValue ())
+            return;
 
-            this ._hitTexCoord_changed = texCoord;
-            this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (hit .normal .copy ()) .normalize ();
-            this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (hit .point .copy ());
-         }
+         texCoord .set (hit .texCoord .x, hit .texCoord .y) .divide (hit .texCoord .w);
+         invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
+         this ._hitTexCoord_changed = texCoord;
+         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (hit .normal .copy ()) .normalize ();
+         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (hit .point .copy ());
       };
    })(),
 });
