@@ -51,6 +51,7 @@ import TraverseType   from "../../Rendering/TraverseType.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4        from "../../../standard/Math/Numbers/Vector4.js";
+import Line3          from "../../../standard/Math/Geometry/Line3.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 import StopWatch      from "../../../standard/Time/StopWatch.js";
 
@@ -87,7 +88,7 @@ function X3DPointingDeviceSensorContext ()
    this [_hit] = {
       id: 0,
       pointer: this [_pointer],
-      hitRay: null,
+      hitRay: new Line3 (Vector3 .Zero, Vector3 .zAxis),
       sensors: [ ],
       viewMatrix: new Matrix4 (),
       modelViewMatrix: new Matrix4 (),
@@ -101,7 +102,7 @@ function X3DPointingDeviceSensorContext ()
          return {
             id: this .id,
             pointer: this .pointer .copy (),
-            hitRay: this .hitRay ?.copy (),
+            hitRay: this .hitRay .copy (),
             sensors: this .sensors .slice (),
             viewMatrix: this .viewMatrix .copy (),
             modelViewMatrix: this .modelViewMatrix .copy (),
@@ -222,8 +223,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             return false;
       }
 
-      this [_activeSensors] = hit .sensors;
-      this [_pointingLayer] = hit .layerNode;
+      this [_pointingLayer]         = hit .layerNode;
+      this [_activeSensors] .length = 0;
+      this [_activeSensors] .push (... hit .sensors);
 
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (true, hit);
@@ -242,8 +244,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (false, null);
 
-      this [_activeSensors] = Array .prototype;
-      this [_pointingLayer] = null;
+      this [_pointingLayer]         = null;
+      this [_activeSensors] .length = 0;
 
       // Immediately process events to be able
       // to do audio and window.open stuff.
@@ -269,6 +271,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    { },
    touch (x, y, inputSource = null, hit = this [_hit])
    {
+      this [_pointingTime] .start ();
+
       if (this .getViewer () ._isActive .getValue ())
       {
          this [_pointingTime] .reset ();
@@ -280,7 +284,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
-      this [_pointingTime] .start ();
+      hit .sensors .length = 0;
 
       this [_inputSource] = inputSource;
       this [_id]          = 0;
@@ -300,8 +304,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             appearanceNode  = shapeNode .getAppearance (),
             geometryContext = shapeNode .getGeometryContext ();
 
-         hit .hitRay    = pointingContext .renderObject .getHitRay ();
-         hit .sensors   = pointingContext .sensors .slice ();
+         hit .hitRay .assign (pointingContext .renderObject .getHitRay ());
+         hit .sensors .push (... pointingContext .sensors);
+
          hit .layerNode = pointingContext .renderObject;
          hit .shapeNode = shapeNode;
 
@@ -319,9 +324,11 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       }
       else
       {
-         hit .id        = 0;
-         hit .hitRay    = this [_pointingLayer] ? this [_pointingLayer] .getHitRay () : null;
-         hit .sensors   = Array .prototype;
+         hit .id = 0;
+
+         if (this [_pointingLayer])
+            hit .hitRay .assign (this [_pointingLayer] .getHitRay ());
+
          hit .layerNode = this [_pointingLayer];
          hit .shapeNode = null;
 
