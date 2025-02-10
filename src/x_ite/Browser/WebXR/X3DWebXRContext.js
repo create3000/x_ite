@@ -61,8 +61,7 @@ const
    _pose               = Symbol (),
    _inputSources       = Symbol (),
    _inputRay           = Symbol (),
-   _inputPoint         = Symbol (),
-   _combinedSensors    = Symbol ();
+   _inputPoint         = Symbol ();
 
 function X3DWebXRContext () { }
 
@@ -70,10 +69,6 @@ Object .assign (X3DWebXRContext .prototype,
 {
    initialize ()
    {
-      // Properties
-
-      this [_combinedSensors] = [ ];
-
       // Events
 
       this ._activeViewpoint .addInterest ("setReferenceSpace", this);
@@ -194,7 +189,6 @@ Object .assign (X3DWebXRContext .prototype,
                poseViewMatrix: new Matrix4 (),
                originalPoint: new Vector3 (),
                originalNormal: new Vector3 (),
-               combinedSensors: this [_combinedSensors],
                pulse: true,
             }),
          });
@@ -324,7 +318,7 @@ Object .assign (X3DWebXRContext .prototype,
 
             inputRayMatrix .assign (inputSource .matrix) .multRight (hit .poseViewMatrix);
 
-            for (const sensor of hit .sensors)
+            for (const sensor of hit .sensors .values ())
             {
                sensor .projectionMatrix .assign (projectionMatrix);
                sensor .modelViewMatrix  .multRight (inputRayMatrix);
@@ -340,25 +334,7 @@ Object .assign (X3DWebXRContext .prototype,
             inputRayMatrix .inverse () .multMatrixDir (hit .normal);
          }
 
-         // Combine sensors.
-
-         const combinedSensors = this [_combinedSensors];
-
-         combinedSensors .length = 0;
-
-         for (const [original, { hit }] of this [_inputSources])
-         {
-            if (!original .active)
-               continue;
-
-            combinedSensors .push (... hit .sensors);
-         }
-
          // Handle X3DPointingDeviceSensorNodes.
-
-         let
-            motion = false,
-            noHit  = null;
 
          for (const [{ active, gamepad }, { hit }] of this [_inputSources])
          {
@@ -367,13 +343,7 @@ Object .assign (X3DWebXRContext .prototype,
 
             // Motion
 
-            if (hit .id)
-               motion = true;
-            else
-               noHit = hit;
-
-            if (hit .id)
-               this .motionNotifyEvent (0, 0, hit);
+            this .motionNotifyEvent (0, 0, hit);
 
             // Press & Release
 
@@ -395,9 +365,6 @@ Object .assign (X3DWebXRContext .prototype,
                this .buttonReleaseEvent (hit);
             }
          }
-
-         if (!motion && noHit)
-            this .motionNotifyEvent (0, 0, noHit);
 
          // Draw input source rays.
 
@@ -467,7 +434,7 @@ Object .assign (X3DWebXRContext .prototype,
    },
    sensorHitPulse (hit, gamepad)
    {
-      if (hit .sensors .length)
+      if (hit .sensors .size)
       {
          if (hit .pulse)
          {

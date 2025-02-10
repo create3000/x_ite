@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
             const hit = this .getBrowser () .getHit ();
 
-            if (hit .id === 0 || hit .sensors .length === 0)
+            if (hit .id === 0 || hit .sensors .size === 0)
             {
                this .touchX       = event .pageX;
                this .touchY       = event .pageY;

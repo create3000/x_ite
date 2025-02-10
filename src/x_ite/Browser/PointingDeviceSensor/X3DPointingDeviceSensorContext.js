@@ -77,7 +77,7 @@ function X3DPointingDeviceSensorContext ()
    this [_pointingDevice]            = new PointingDevice (this .getPrivateScene ());
    this [_pointingDeviceSensorNodes] = new Set ();
    this [_pointer]                   = new Vector2 ();
-   this [_overSensors]               = [ ];
+   this [_overSensors]               = new Map ();
    this [_activeSensors]             = new Map ();
    this [_pointingLayer]             = null;
    this [_pointingTime]              = new StopWatch ();
@@ -89,7 +89,7 @@ function X3DPointingDeviceSensorContext ()
       id: 0,
       pointer: this [_pointer],
       ray: new Line3 (),
-      sensors: [ ],
+      sensors: new Map (),
       modelViewMatrix: new Matrix4 (),
       point: new Vector3 (),
       normal: new Vector3 (),
@@ -102,7 +102,7 @@ function X3DPointingDeviceSensorContext ()
             id: this .id,
             pointer: this .pointer .copy (),
             ray: this .ray .copy (),
-            sensors: this .sensors .slice (),
+            sensors: new Map (this .sensors),
             modelViewMatrix: this .modelViewMatrix .copy (),
             point: this .point .copy (),
             normal: this .normal .copy (),
@@ -223,12 +223,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       this [_pointingLayer] = hit .layerNode;
 
-      for (const sensor of hit .sensors)
+      for (const [node, sensor] of hit .sensors)
       {
-         if (this [_activeSensors] .has (sensor .node))
+         if (this [_activeSensors] .has (node))
             continue;
 
-         this [_activeSensors] .set (sensor .node, sensor);
+         this [_activeSensors] .set (node, sensor);
 
          sensor .set_active__ (true, hit);
       }
@@ -237,7 +237,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       // to do audio and window.open stuff.
       this [_processEvents] ();
 
-      return !! hit .sensors .length;
+      return !! hit .sensors .size;
    },
    buttonReleaseEvent (hit = this [_hit])
    {
@@ -251,9 +251,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          if (sensor .hit !== hit)
             continue;
 
-         sensor .set_active__ (false, hit);
-
          this [_activeSensors] .delete (node);
+
+         sensor .set_active__ (false, hit);
       }
 
       // Immediately process events to be able
@@ -274,7 +274,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       // to do audio and window.open stuff.
       this [_processEvents] ();
 
-      return !! hit .sensors .length;
+      return !! hit .sensors .size;
    },
    leaveNotifyEvent ()
    { },
@@ -293,7 +293,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
-      hit .sensors .length = 0;
+      hit .sensors .clear ();
 
       this [_inputSource] = inputSource;
       this [_id]          = 0;
@@ -314,7 +314,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             geometryContext = shapeNode .getGeometryContext ();
 
          hit .ray .assign (pointingContext .renderObject .getHitRay ());
-         hit .sensors .push (... pointingContext .sensors);
+
+         pointingContext .sensors .forEach (sensor => hit .sensors .set (sensor .node, sensor));
          hit .sensors .forEach (sensor => sensor .hit = hit);
 
          hit .layerNode = pointingContext .renderObject;
@@ -355,26 +356,31 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       // Set isOver to FALSE for appropriate nodes
 
-      const sensors = hit .combinedSensors ?? hit .sensors;
-
-      for (const sensor of this [_overSensors])
+      for (const [node, sensor] of this [_overSensors])
       {
-         if (sensors .some (other => sensor .node === other .node))
+         if (sensor .hit !== hit)
             continue;
+
+         if (hit .id && hit .sensors .has (node))
+            continue;
+
+         this [_overSensors] .delete (node);
 
          sensor .set_over__ (false, hit);
       }
 
       // Set isOver to TRUE for appropriate nodes
 
-      this [_overSensors] .length = 0;
-
-      if (sensors .length)
+      for (const [node, sensor] of hit .sensors)
       {
-         this [_overSensors] .push (... sensors);
+         const overSensor = this [_overSensors] .get (node);
 
-         for (const sensor of this [_overSensors])
-            sensor .set_over__ (true, hit);
+         if (overSensor && overSensor .hit !== hit)
+            continue;
+
+         this [_overSensors] .set (node, sensor);
+
+         sensor .set_over__ (true, hit);
       }
 
       // Forward motion event to active drag sensor nodes
