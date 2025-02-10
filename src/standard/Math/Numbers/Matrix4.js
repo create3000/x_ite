@@ -406,6 +406,8 @@ Object .assign (Matrix4 .prototype,
    },
    inverse ()
    {
+      // Complexity 43 +, 140 *.
+      
       const
          { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
            8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this,
@@ -465,6 +467,8 @@ Object .assign (Matrix4 .prototype,
    },
    multLeft (matrix)
    {
+      // Complexity 48 +, 64 *.
+
       const
          { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
            8: a08, 9: a09, 10: a10, 11: a11, 12: a12, 13: a13, 14: a14, 15: a15 } = this,
@@ -492,6 +496,8 @@ Object .assign (Matrix4 .prototype,
    },
    multRight (matrix)
    {
+      // Complexity 48 +, 64 *.
+
       const
          { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
            8: a08, 9: a09, 10: a10, 11: a11, 12: a12, 13: a13, 14: a14, 15: a15 } = this,
