@@ -313,13 +313,13 @@ Object .assign (X3DWebXRContext .prototype,
 
             inputRayMatrix .assign (inputSource .matrix) .multRight (pose .viewMatrix);
 
-            ViewVolume .projectPoint (hit .point, inputRayMatrix, projectionMatrix, viewport, hit .pointer);
-
             for (const sensor of hit .sensors)
             {
                sensor .projectionMatrix .assign (projectionMatrix);
                sensor .modelViewMatrix  .multRight (inputRayMatrix);
             }
+
+            ViewVolume .projectPoint (hit .point, inputRayMatrix, projectionMatrix, viewport, hit .pointer);
 
             hit .originalPoint  .assign (hit .point);
             hit .originalNormal .assign (hit .normal);
