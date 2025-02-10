@@ -322,11 +322,6 @@ Object .assign (X3DWebXRContext .prototype,
 
             for (const sensor of hit .sensors)
             {
-               if (sensor .transformed)
-                  continue;
-
-               sensor .transformed = true;
-
                sensor .projectionMatrix .assign (projectionMatrix);
                sensor .modelViewMatrix  .multRight (inputRayMatrix);
             }
