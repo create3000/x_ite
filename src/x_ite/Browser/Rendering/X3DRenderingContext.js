@@ -76,7 +76,7 @@ const xrEmulatorCSS = {
 
 function X3DRenderingContext ()
 {
-   this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .MFInt32 (0, 0, 300, 150));
+   this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .SFVec4f (0, 0, 300, 150));
 
    this [_frameBuffers] = [ ];
    this [_depthShaders] = new Map ();
