@@ -121,7 +121,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .setSession (session);
          this .setDefaultFrameBuffer (baseLayer .framebuffer);
          this .setReferenceSpace ();
-         this .buttonReleaseEvent (this .getHit ());
+         this .removeHit (this .getHit ());
 
          // session .addEventListener ("select", event =>
          // {
@@ -146,7 +146,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .endEvents ()      .removeInterest ("endFrame",      this);
 
          for (const { hit } of this [_inputSources] .values ())
-            this .buttonReleaseEvent (hit);
+            this .removeHit (hit);
 
          this [_baseReferenceSpace] = null;
          this [_referenceSpace]     = null;
@@ -196,7 +196,7 @@ Object .assign (X3DWebXRContext .prototype,
 
       for (const removed of event .removed)
       {
-         this .buttonReleaseEvent (this [_inputSources] .get (removed) .hit);
+         this .removeHit (this [_inputSources] .get (removed) .hit);
          this [_inputSources] .delete (removed);
       }
    },

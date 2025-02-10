@@ -208,6 +208,14 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       return this [_hit];
    },
+   removeHit (hit)
+   {
+      hit .id = 0;
+      hit .sensors .clear ();
+
+      this .buttonReleaseEvent (hit);
+      this .motion (hit);
+   },
    addPointingShape (pointingContext)
    {
       const id = ++ this [_id];
