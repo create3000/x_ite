@@ -78,7 +78,7 @@ function X3DRenderObject (executionContext)
    this .projectionMatrixArray    = new Float32Array (16);
    this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
-   this .hitRay                   = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   this .hitRay                   = new Line3 ();
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
    this .lights                   = [ ];

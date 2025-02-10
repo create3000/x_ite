@@ -77,7 +77,7 @@ function Sound (executionContext)
    this ._maxFront .setUnit ("length");
 
    // Private properties
-   
+
    this .childNodes       = [ ];
    this .currentTraversed = true;
 }
@@ -292,7 +292,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          scale           = new Vector3 (1, 1, 1),
          sphere          = new Sphere3 (1, Vector3 .Zero),
          normal          = new Vector3 (),
-         line            = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+         line            = new Line3 (),
          enterPoint      = new Vector3 (),
          exitPoint       = new Vector3 ();
 

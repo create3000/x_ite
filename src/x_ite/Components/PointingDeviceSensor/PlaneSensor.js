@@ -63,9 +63,9 @@ import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js"
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 const
-   screenLine     = new Line2 (Vector2 .Zero, Vector2 .Zero),
+   screenLine     = new Line2 (),
    trackPoint1    = new Vector2 (),
-   trackPointLine = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   trackPointLine = new Line3 ();
 
 function PlaneSensor (executionContext)
 {

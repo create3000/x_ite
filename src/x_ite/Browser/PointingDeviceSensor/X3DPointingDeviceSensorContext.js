@@ -88,7 +88,7 @@ function X3DPointingDeviceSensorContext ()
    this [_hit] = {
       id: 0,
       pointer: this [_pointer],
-      hitRay: new Line3 (Vector3 .Zero, Vector3 .zAxis),
+      hitRay: new Line3 (),
       sensors: [ ],
       viewMatrix: new Matrix4 (),
       modelViewMatrix: new Matrix4 (),

@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
       this .modelViewMatrix    = new Matrix4 ();
       this .invModelViewMatrix = new Matrix4 ();
 
-      this .cylinder    = new Cylinder3 (new Line3 (new Vector3 (), new Vector3 ()), 0);
+      this .cylinder    = new Cylinder3 (new Line3 (), 0);
       this .disk        = false;
       this .yPlane      = null;
       this .zPlane      = null;
@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
       const
-         axis   = new Line3 (new Vector3 (), yAxis),
+         axis   = new Line3 (Vector3 .Zero, yAxis),
          radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 ()) .magnitude ();
 
       this .cylinder = new Cylinder3 (axis, radius);

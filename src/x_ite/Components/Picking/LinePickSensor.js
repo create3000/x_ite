@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
          matrix                  = new Matrix4 (),
          point1                  = new Vector3 (),
          point2                  = new Vector3 (),
-         line                    = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+         line                    = new Line3 (),
          a                       = new Vector3 (),
          b                       = new Vector3 (),
          clipPlanes              = [ ],
