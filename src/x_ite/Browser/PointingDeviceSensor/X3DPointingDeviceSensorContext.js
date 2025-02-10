@@ -342,25 +342,24 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       const sensors = hit .combinedSensors ?? hit .sensors;
 
-      const difference = sensors .length
-         ? this [_overSensors] .filter (a => !sensors .find (b => a .node === b .node))
-         : this [_overSensors];
+      for (const sensor of this [_overSensors])
+      {
+         if (sensors .some (other => sensor .node === other .node))
+            continue;
 
-      for (const sensor of difference)
          sensor .set_over__ (false, hit);
+      }
 
       // Set isOver to TRUE for appropriate nodes
 
+      this [_overSensors] .length = 0;
+
       if (sensors .length)
       {
-         this [_overSensors] = sensors .slice ();
+         this [_overSensors] .push (... sensors);
 
          for (const sensor of this [_overSensors])
             sensor .set_over__ (true, hit);
-      }
-      else
-      {
-         this [_overSensors] = Array .prototype;
       }
 
       // Forward motion event to active drag sensor nodes
