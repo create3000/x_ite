@@ -314,14 +314,26 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Handle sensors.
 
+         let
+            motion = false,
+            noHit  = null;
+
          for (const [{ active, gamepad }, { hit }] of this [_inputSources])
          {
             if (!active)
                continue;
 
-            // Pointing
+            // Motion
 
-            this .motionNotifyEvent (0, 0, hit);
+            if (hit .id)
+               motion = true;
+            else
+               noHit = hit;
+
+            if (hit .id)
+               this .motionNotifyEvent (0, 0, hit);
+
+            // Press & Release
 
             const button = gamepad ?.buttons [0];
 
@@ -345,6 +357,9 @@ Object .assign (X3DWebXRContext .prototype,
                break;
             }
          }
+
+         if (!motion && noHit)
+            this .motionNotifyEvent (0, 0, noHit);
 
          // Draw input source rays.
 
