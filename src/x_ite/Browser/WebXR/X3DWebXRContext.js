@@ -349,7 +349,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Handle X3DPointingDeviceSensorNodes.
 
-         // Move pressed hit to beginning.
+         // Move pressed hits to beginning.
          this [_inputSources] .sort ((a, b) => b .hit .pressed - a .hit .pressed);
 
          let
