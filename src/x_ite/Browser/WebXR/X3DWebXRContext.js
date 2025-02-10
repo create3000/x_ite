@@ -290,8 +290,6 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Test for hit.
 
-         let xxx = 0;
-
          for (const [{ active, gamepad }, inputSource] of this [_inputSources])
          {
             if (!active)
@@ -308,9 +306,6 @@ Object .assign (X3DWebXRContext .prototype,
             // Update matrices and determine pointer position.
 
             if (!hit .id)
-               continue;
-
-            if (!pose .views .length)
                continue;
 
             const projectionMatrix = pose .views [0] .projectionMatrix;
