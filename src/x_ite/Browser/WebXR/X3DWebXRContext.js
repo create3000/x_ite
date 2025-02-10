@@ -243,7 +243,7 @@ Object .assign (X3DWebXRContext .prototype,
          view .cameraSpaceMatrix .assign (originalView .transform .matrix);
          view .viewMatrix .assign (originalView .transform .inverse .matrix);
          view .matrix .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
-         view .inverse .assign (view .matrix) .inverse ();
+         view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
 
          ++ v;
       }
