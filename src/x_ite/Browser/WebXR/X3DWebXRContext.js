@@ -186,6 +186,8 @@ Object .assign (X3DWebXRContext .prototype,
             inverse: new Matrix4 (),
             hit: Object .assign (this .getHit () .copy (),
             {
+               pressed: false,
+               poseViewMatrix: new Matrix4 (),
                originalPoint: new Vector3 (),
                originalNormal: new Vector3 (),
                combinedSensors: this [_combinedSensors],
@@ -288,6 +290,8 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Test for hit.
 
+         let xxx = 0;
+
          for (const [{ active, gamepad }, inputSource] of this [_inputSources])
          {
             if (!active)
@@ -311,10 +315,18 @@ Object .assign (X3DWebXRContext .prototype,
 
             const projectionMatrix = pose .views [0] .projectionMatrix;
 
-            inputRayMatrix .assign (inputSource .matrix) .multRight (pose .viewMatrix);
+            if (!hit .pressed)
+               hit .poseViewMatrix .assign (pose .viewMatrix);
+
+            inputRayMatrix .assign (inputSource .matrix) .multRight (hit .poseViewMatrix);
 
             for (const sensor of hit .sensors)
             {
+               if (sensor .transformed)
+                  continue;
+
+               sensor .transformed = true;
+
                sensor .projectionMatrix .assign (projectionMatrix);
                sensor .modelViewMatrix  .multRight (inputRayMatrix);
             }
