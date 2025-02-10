@@ -186,6 +186,8 @@ Object .assign (X3DWebXRContext .prototype,
             inverse: new Matrix4 (),
             hit: Object .assign (this .getHit () .copy (),
             {
+               originalPoint: new Vector3 (),
+               originalNormal: new Vector3 (),
                combinedSensors: this [_combinedSensors],
                pulse: true,
             }),
@@ -304,17 +306,27 @@ Object .assign (X3DWebXRContext .prototype,
             if (!hit .id)
                continue;
 
-            const projectionMatrix = pose .views [0] ?.projectionMatrix ?? Matrix4 .Identity;
+            if (!pose .views .length)
+               continue;
+
+            const projectionMatrix = pose .views [0] .projectionMatrix;
+
+            inputRayMatrix .assign (inputSource .matrix) .multRight (pose .viewMatrix);
 
             for (const sensor of hit .sensors)
+            {
                sensor .projectionMatrix .assign (projectionMatrix);
+               sensor .modelViewMatrix  .multRight (inputRayMatrix);
+            }
 
-            inputRayMatrix
-               .assign (inputSource .matrix)
-               .multRight (pose .viewMatrix)
-               .multRight (projectionMatrix);
+            ViewVolume .projectPoint (hit .point, inputRayMatrix, projectionMatrix, viewport, hit .pointer);
 
-            ViewVolume .projectPointMatrix (hit .point, inputRayMatrix, viewport, hit .pointer);
+            hit .originalPoint  .assign (hit .point);
+            hit .originalNormal .assign (hit .normal);
+
+            hit .ray .multLineMatrix (inputRayMatrix);
+            inputRayMatrix .multVecMatrix (hit .point);
+            inputRayMatrix .inverse () .multMatrixDir (hit .normal);
          }
 
          // Combine sensors.
@@ -427,8 +439,8 @@ Object .assign (X3DWebXRContext .prototype,
                inputRayMatrix
                   .assign (matrix)
                   .multRight (viewMatrix)
-                  .translate (hit .point)
-                  .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .normal));
+                  .translate (hit .originalPoint)
+                  .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .originalNormal));
 
                this [_inputPoint] .display (radius, color, 0.3, 0.8, inputRayMatrix, projectionMatrix, frameBuffer);
             }

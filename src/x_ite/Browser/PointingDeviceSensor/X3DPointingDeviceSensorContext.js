@@ -88,7 +88,7 @@ function X3DPointingDeviceSensorContext ()
    this [_hit] = {
       id: 0,
       pointer: this [_pointer],
-      hitRay: new Line3 (),
+      ray: new Line3 (),
       sensors: [ ],
       viewMatrix: new Matrix4 (),
       modelViewMatrix: new Matrix4 (),
@@ -102,7 +102,7 @@ function X3DPointingDeviceSensorContext ()
          return {
             id: this .id,
             pointer: this .pointer .copy (),
-            hitRay: this .hitRay .copy (),
+            ray: this .ray .copy (),
             sensors: this .sensors .slice (),
             viewMatrix: this .viewMatrix .copy (),
             modelViewMatrix: this .modelViewMatrix .copy (),
@@ -304,7 +304,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             appearanceNode  = shapeNode .getAppearance (),
             geometryContext = shapeNode .getGeometryContext ();
 
-         hit .hitRay .assign (pointingContext .renderObject .getHitRay ());
+         hit .ray .assign (pointingContext .renderObject .getHitRay ());
          hit .sensors .push (... pointingContext .sensors);
 
          hit .layerNode = pointingContext .renderObject;
@@ -327,7 +327,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .id = 0;
 
          if (this [_pointingLayer])
-            hit .hitRay .assign (this [_pointingLayer] .getHitRay ());
+            hit .ray .assign (this [_pointingLayer] .getHitRay ());
 
          hit .layerNode = this [_pointingLayer];
          hit .shapeNode = null;

@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
    set_motion__ (hit)
    {
       const
-         hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay     = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          trackPoint = new Vector3 ();
 
       if (this .getTrackPoint (hitRay, trackPoint, this .behind))

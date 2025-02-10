@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
    activate (hit)
    {
       const
-         hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay   = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
 
       const axisRotation = this ._axisRotation .getValue ();
@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
          if (this .planeSensor)
          {
             const
-               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+               hitRay   = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
                endPoint = new Vector3 ();
 
             if (this .plane .intersectsLine (hitRay, endPoint))

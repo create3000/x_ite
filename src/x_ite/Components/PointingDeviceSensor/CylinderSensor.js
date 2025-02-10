@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    activate (hit)
    {
       const
-         hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay   = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
 
       const
@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
       this .motionHit = hit .copy ();
 
       const
-         hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay     = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          trackPoint = new Vector3 ();
 
       if (this .disk)
