@@ -78,7 +78,7 @@ function X3DPointingDeviceSensorContext ()
    this [_pointingDeviceSensorNodes] = new Set ();
    this [_pointer]                   = new Vector2 ();
    this [_overSensors]               = [ ];
-   this [_activeSensors]             = [ ];
+   this [_activeSensors]             = new Map ();
    this [_pointingLayer]             = null;
    this [_pointingTime]              = new StopWatch ();
    this [_pointingBuffer]            = new PointingBuffer (this);
@@ -221,12 +221,17 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             return false;
       }
 
-      this [_pointingLayer]         = hit .layerNode;
-      this [_activeSensors] .length = 0;
-      this [_activeSensors] .push (... hit .sensors);
+      this [_pointingLayer] = hit .layerNode;
 
-      for (const sensor of this [_activeSensors])
+      for (const sensor of hit .sensors)
+      {
+         if (this [_activeSensors] .has (sensor .node))
+            continue;
+
+         this [_activeSensors] .set (sensor .node, sensor);
+
          sensor .set_active__ (true, hit);
+      }
 
       // Immediately process events to be able
       // to do audio and window.open stuff.
@@ -239,11 +244,17 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (!this [_pointingDeviceSensorNodes] .size)
          return;
 
-      for (const sensor of this [_activeSensors])
-         sensor .set_active__ (false, null);
+      this [_pointingLayer] = null;
 
-      this [_pointingLayer]         = null;
-      this [_activeSensors] .length = 0;
+      for (const [node, sensor] of this [_activeSensors])
+      {
+         if (sensor .hit !== hit)
+            continue;
+
+         sensor .set_active__ (false, hit);
+
+         this [_activeSensors] .delete (node);
+      }
 
       // Immediately process events to be able
       // to do audio and window.open stuff.
@@ -304,6 +315,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
          hit .ray .assign (pointingContext .renderObject .getHitRay ());
          hit .sensors .push (... pointingContext .sensors);
+         hit .sensors .forEach (sensor => sensor .hit = hit);
 
          hit .layerNode = pointingContext .renderObject;
          hit .shapeNode = shapeNode;
@@ -367,8 +379,13 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Forward motion event to active drag sensor nodes
 
-      for (const sensor of this [_activeSensors])
+      for (const sensor of this [_activeSensors] .values ())
+      {
+         if (sensor .hit !== hit)
+            continue;
+
          sensor .set_motion__ (hit);
+      }
    },
    getPointingShader (numClipPlanes, shapeNode, hAnimNode)
    {
