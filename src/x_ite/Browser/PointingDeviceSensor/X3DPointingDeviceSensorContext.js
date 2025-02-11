@@ -96,7 +96,7 @@ function X3DPointingDeviceSensorContext ()
          sensors: new Map (),
          modelViewMatrix: new Matrix4 (),
          point: new Vector3 (),
-         normal: new Vector3 (),
+         normal: new Vector3 (), // Must be normalized if used.
          texCoord: new Vector4 (),
          layerNode: null,
          shapeNode: null,
@@ -347,9 +347,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .modelViewMatrix .assign (modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
+         // Hit normal must be normalized if used.
 
          if (geometryContext .hasNormals)
-            hit .modelViewMatrix .submatrix .inverse () .multMatrixVec (hit .normal) .normalize ();
+            hit .modelViewMatrix .submatrix .inverse () .multMatrixVec (hit .normal);
          else
             hit .normal .assign (Vector3 .zAxis);
 
