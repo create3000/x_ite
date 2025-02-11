@@ -317,7 +317,7 @@ Object .assign (X3DWebXRContext .prototype,
             inputRayMatrix .submatrix .inverse () .multMatrixVec (hit .normal);
          }
 
-         // Handle X3DPointingDeviceSensorNodes.
+         // Handle nodes of type X3DPointingDeviceSensorNodes.
 
          for (const [{ active, gamepad }, { hit }] of this [_inputSources])
          {
