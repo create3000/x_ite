@@ -57,10 +57,10 @@ const PointingDeviceSensors = ObjectCache (PointingDeviceSensorContainer);
 function PointingDeviceSensorContainer ()
 {
    this .node             = null;
+   this .hit              = null;
    this .modelViewMatrix  = new Matrix4 ();
    this .projectionMatrix = new Matrix4 ();
    this .viewport         = new Vector4 ();
-   this .hit              = null;
 }
 
 Object .assign (PointingDeviceSensorContainer .prototype,
