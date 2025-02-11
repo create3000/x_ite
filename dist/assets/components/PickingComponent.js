@@ -817,7 +817,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
          matrix                  = new (external_X_ITE_X3D_Matrix4_default()) (),
          point1                  = new (external_X_ITE_X3D_Vector3_default()) (),
          point2                  = new (external_X_ITE_X3D_Vector3_default()) (),
-         line                    = new (external_X_ITE_X3D_Line3_default()) ((external_X_ITE_X3D_Vector3_default()).Zero, (external_X_ITE_X3D_Vector3_default()).zAxis),
+         line                    = new (external_X_ITE_X3D_Line3_default()) (),
          a                       = new (external_X_ITE_X3D_Vector3_default()) (),
          b                       = new (external_X_ITE_X3D_Vector3_default()) (),
          clipPlanes              = [ ],

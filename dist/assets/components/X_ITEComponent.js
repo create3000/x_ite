@@ -1000,16 +1000,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    set_diffuseTransmissionColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .diffuseTransmissionColorArray .set (this ._diffuseTransmissionColor .getValue ());
-
-      const
-         diffuseTransmissionColorArray = this .diffuseTransmissionColorArray,
-         diffuseTransmissionColor      = this ._diffuseTransmissionColor .getValue ();
-
-      diffuseTransmissionColorArray [0] = diffuseTransmissionColor .r;
-      diffuseTransmissionColorArray [1] = diffuseTransmissionColor .g;
-      diffuseTransmissionColorArray [2] = diffuseTransmissionColor .b;
+      this .diffuseTransmissionColorArray .set (this ._diffuseTransmissionColor .getValue ());
    },
    set_diffuseTransmissionColorTexture__ ()
    {
@@ -2013,16 +2004,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
    },
    set_sheenColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .sheenColorArray .set (this ._sheenColor .getValue ());
-
-      const
-         sheenColorArray = this .sheenColorArray,
-         sheenColor      = this ._sheenColor .getValue ();
-
-      sheenColorArray [0] = sheenColor .r;
-      sheenColorArray [1] = sheenColor .g;
-      sheenColorArray [2] = sheenColor .b;
+      this .sheenColorArray .set (this ._sheenColor .getValue ());
    },
    set_sheenColorTexture__ ()
    {
@@ -2244,16 +2226,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
    },
    set_diffuseColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
-
-      const
-         diffuseColorArray = this .diffuseColorArray,
-         diffuseColor      = this ._diffuseColor .getValue ();
-
-      diffuseColorArray [0] = diffuseColor .r;
-      diffuseColorArray [1] = diffuseColor .g;
-      diffuseColorArray [2] = diffuseColor .b;
+      this .diffuseColorArray .set (this ._diffuseColor .getValue ());
    },
    set_diffuseTexture__ ()
    {
@@ -2277,16 +2250,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
    },
    set_specularColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .specularColorArray .set (this ._specularColor .getValue ());
-
-      const
-         specularColorArray = this .specularColorArray,
-         specularColor      = this ._specularColor .getValue ();
-
-      specularColorArray [0] = specularColor .r;
-      specularColorArray [1] = specularColor .g;
-      specularColorArray [2] = specularColor .b;
+      this .specularColorArray .set (this ._specularColor .getValue ());
    },
    set_glossiness__ ()
    {
@@ -2554,16 +2518,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
    },
    set_specularColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .specularColorArray .set (this ._specularColor .getValue ());
-
-      const
-         specularColorArray = this .specularColorArray,
-         specularColor      = this ._specularColor .getValue ();
-
-      specularColorArray [0] = specularColor .r;
-      specularColorArray [1] = specularColor .g;
-      specularColorArray [2] = specularColor .b;
+      this .specularColorArray .set (this ._specularColor .getValue ());
    },
    set_specularColorTexture__ ()
    {
@@ -2918,16 +2873,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    },
    set_attenuationColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .attenuationColorArray .set (this ._attenuationColor .getValue ());
-
-      const
-         attenuationColorArray = this .attenuationColorArray,
-         attenuationColor      = this ._attenuationColor .getValue ();
-
-      attenuationColorArray [0] = attenuationColor .r;
-      attenuationColorArray [1] = attenuationColor .g;
-      attenuationColorArray [2] = attenuationColor .b;
+      this .attenuationColorArray .set (this ._attenuationColor .getValue ());
    },
    getExtensionKey ()
    {

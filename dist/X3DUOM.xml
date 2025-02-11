@@ -44,7 +44,7 @@
 
 		<AbstractNodeType name="X3DFogObject">
 			<InterfaceDefinition>
-				<field name="visibilityOffset"
+				<field name="visibilityStart"
 					type="SFFloat"
 					accessType="inputOutput"
 					default="1"
@@ -1445,7 +1445,7 @@
 
 		<ConcreteNode name="Fog">
 			<InterfaceDefinition>
-				<field name="visibilityOffset"
+				<field name="visibilityStart"
 					type="SFFloat"
 					accessType="inputOutput"
 					default="1"
@@ -1457,7 +1457,7 @@
 
 		<ConcreteNode name="LocalFog">
 			<InterfaceDefinition>
-				<field name="visibilityOffset"
+				<field name="visibilityStart"
 					type="SFFloat"
 					accessType="inputOutput"
 					default="1"

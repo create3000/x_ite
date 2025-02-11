@@ -401,7 +401,7 @@ function ComposedCubeMapTexture (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ComposedCubeMapTexture);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "update", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "update", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    // Legacy
 
@@ -668,10 +668,6 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_
       external_X_ITE_X3D_X3DRenderObject_default().prototype .initialize .call (this);
    },
    isIndependent ()
-   {
-      return false;
-   },
-   isActive ()
    {
       return false;
    },
@@ -1452,7 +1448,7 @@ Object .defineProperties (ImageCubeMapTexture,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "textureProperties",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),

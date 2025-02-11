@@ -2910,8 +2910,8 @@ function RigidBody (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).RigidBody);
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "collection",    new (external_X_ITE_X3D_Fields_default()).SFNode (),
-                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transform",     new (external_X_ITE_X3D_Fields_default()).SFTime (),
-                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "otherGeometry", new (external_X_ITE_X3D_Fields_default()).MFNode ());
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "transform",     new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "otherGeometry", new (external_X_ITE_X3D_Fields_default()).MFNode ());
 
    // Units
 
@@ -2925,7 +2925,7 @@ function RigidBody (executionContext)
    this ._disableAngularSpeed .setUnit ("angularRate");
 
    // Private properties
-   
+
    this .compoundShape      = new AmmoClass .btCompoundShape ();
    this .motionState        = new AmmoClass .btDefaultMotionState ();
    this .constructionInfo   = new AmmoClass .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
@@ -3344,7 +3344,7 @@ Object .defineProperties (RigidBody,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "torques",              new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "inertia",              new (external_X_ITE_X3D_Fields_default()).SFMatrix3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoDisable",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableTime",          new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableTime",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableLinearSpeed",   new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableAngularSpeed",  new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "geometry",             new (external_X_ITE_X3D_Fields_default()).MFNode ()),
@@ -3733,7 +3733,7 @@ Object .defineProperties (RigidBodyCollection,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "maxCorrectionSpeed",      new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "contactSurfaceThickness", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoDisable",             new (external_X_ITE_X3D_Fields_default()).SFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableTime",             new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableTime",             new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableLinearSpeed",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableAngularSpeed",     new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "collider",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),

@@ -3032,8 +3032,6 @@ function NurbsOrientationInterpolator (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsOrientationInterpolator);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
-
    this .geometry = new NURBS_NurbsCurve (executionContext);
 }
 

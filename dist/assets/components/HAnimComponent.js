@@ -245,9 +245,9 @@ function HAnimHumanoid (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimHumanoid);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "jointTextures",              new (external_X_ITE_X3D_Fields_default()).SFTime (),
-                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "displacementsTexture",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
-                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "displacementWeightsTexture", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "jointTextures",              new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementsTexture",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeightsTexture", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    // Units
 
@@ -1520,8 +1520,8 @@ function HAnimSegment (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "displacementsTexture",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
-                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "displacementWeightsTexture", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementsTexture",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeightsTexture", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    // Units
 

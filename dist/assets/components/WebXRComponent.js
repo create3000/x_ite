@@ -60,9 +60,6 @@ var external_X_ITE_X3D_Layer_default = /*#__PURE__*/__webpack_require__.n(extern
 ;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// external "__X_ITE_X3D__ .Vector3"
-const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
-var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
 ;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
@@ -119,30 +116,50 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
-
 function ScreenPoint (browser)
 {
    const gl = browser .getContext ();
 
    this .browser           = browser;
-   this .vertexBuffer      = gl .createBuffer ();
    this .vertexArrayObject = new (external_X_ITE_X3D_VertexArray_default()) (gl);
-   this .geometryContext   = new (external_X_ITE_X3D_GeometryContext_default()) ({
+
+   // Black Circle
+
+   this .circleVertexBuffer    = gl .createBuffer ();
+   this .circleGeometryContext = new (external_X_ITE_X3D_GeometryContext_default()) ({
       renderObject: new (external_X_ITE_X3D_Layer_default()) (browser .getPrivateScene ()),
+      alphaMode: (external_X_ITE_X3D_AlphaMode_default()).BLEND,
+      geometryType: 1,
+   });
+
+   this .circleGeometryContext .renderObject .setup ();
+
+   // Transfer circle vertices.
+
+   const circleVertexArray = browser .getCircle2DOptions () .getGeometry () .getVertices ();
+
+   this .circleNumVertices = circleVertexArray .length / 4;
+
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .circleVertexBuffer);
+   gl .bufferData (gl .ARRAY_BUFFER, circleVertexArray .getValue (), gl .STATIC_DRAW);
+
+   // Disk
+
+   this .diskVertexBuffer      = gl .createBuffer ();
+   this .diskGeometryContext   = new (external_X_ITE_X3D_GeometryContext_default()) ({
+      renderObject: this .circleGeometryContext .renderObject,
       alphaMode: (external_X_ITE_X3D_AlphaMode_default()).BLEND,
       geometryType: 3,
    });
 
-   this .geometryContext .renderObject .setup ();
+   // Transfer disk vertices.
 
-   // Transfer vertices.
+   const diskVertexArray = browser .getDisk2DOptions () .getDiskVertices ();
 
-   const vertexArray = browser .getSphereOptions () .getGeometry () .getVertices ();
+   this .diskNumVertices = diskVertexArray .length / 4;
 
-   this .numVertices = vertexArray .length / 4;
-
-   gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-   gl .bufferData (gl .ARRAY_BUFFER, vertexArray .getValue (), gl .STATIC_DRAW);
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .diskVertexBuffer);
+   gl .bufferData (gl .ARRAY_BUFFER, diskVertexArray .getValue (), gl .STATIC_DRAW);
 }
 
 Object .assign (ScreenPoint .prototype,
@@ -155,7 +172,7 @@ Object .assign (ScreenPoint .prototype,
          screenMatrix          = new (external_X_ITE_X3D_Matrix4_default()) (),
          clipPlanes            = [ ];
 
-      return function (radius, color, transparency, modelViewMatrix, projectionMatrix, frameBuffer)
+      return function (radius, color, transparency, circle, modelViewMatrix, projectionMatrix, frameBuffer)
       {
          // Configure HUD
 
@@ -189,29 +206,59 @@ Object .assign (ScreenPoint .prototype,
 
          projectionMatrixArray .set (projectionMatrix);
          modelViewMatrixArray  .set (screenMatrix);
-         modelViewMatrixArray  .set ((external_X_ITE_X3D_Vector3_default()).Zero, 8);
 
-         // Set uniforms and attributes.
+         // Change state.
 
-         const shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext);
-
-         shaderNode .enable (gl);
-         shaderNode .setClipPlanes (gl, clipPlanes);
-
-         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-         gl .uniform3f        (shaderNode .x3d_EmissiveColor, ... color);
-         gl .uniform1f        (shaderNode .x3d_Transparency, transparency);
-
-         if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
-            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-         // Draw a black and a white point.
-
+         gl .depthMask (false);
          gl .disable (gl .DEPTH_TEST);
          gl .enable (gl .BLEND);
-         gl .enable (gl .CULL_FACE);
-         gl .drawArrays (gl .TRIANGLES, 0, this .numVertices);
+         gl .disable (gl .CULL_FACE);
+
+         {
+            // Set uniforms and attributes.
+
+            const shaderNode = browser .getDefaultMaterial () .getShader (this .circleGeometryContext);
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniform3f        (shaderNode .x3d_EmissiveColor, 0, 0, 0);
+            gl .uniform1f        (shaderNode .x3d_Transparency, circle);
+
+            if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+               shaderNode .enableVertexAttribute (gl, this .circleVertexBuffer, 0, 0);
+
+            // Draw a black and a white point.
+
+            gl .drawArrays (gl .LINES, 0, this .circleNumVertices);
+         }
+
+         {
+            // Set uniforms and attributes.
+
+            const shaderNode = browser .getDefaultMaterial () .getShader (this .diskGeometryContext);
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniform3f        (shaderNode .x3d_EmissiveColor, ... color);
+            gl .uniform1f        (shaderNode .x3d_Transparency, transparency);
+
+            if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+               shaderNode .enableVertexAttribute (gl, this .diskVertexBuffer, 0, 0);
+
+            // Draw a black and a white point.
+
+            gl .drawArrays (gl .TRIANGLES, 0, this .diskNumVertices);
+         }
+
+         // Reset state.
+
+         gl .depthMask (true);
          gl .enable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
       };
@@ -220,9 +267,9 @@ Object .assign (ScreenPoint .prototype,
    {
       const gl = this .browser .getContext ();
 
-      gl .deleteBuffer (this .vertexBuffer);
+      gl .deleteBuffer (this .diskVertexBuffer);
 
-      this .vertexArrayObject .dispose (gl);
+      this .diskVertexArrayObject .dispose (gl);
    },
 });
 
@@ -236,6 +283,9 @@ var external_X_ITE_X3D_ViewVolume_default = /*#__PURE__*/__webpack_require__.n(e
 ;// external "__X_ITE_X3D__ .Color3"
 const external_X_ITE_X3D_Color3_namespaceObject = __X_ITE_X3D__ .Color3;
 var external_X_ITE_X3D_Color3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Color3_namespaceObject);
+;// external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
 ;// external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
@@ -314,12 +364,9 @@ Object .assign (X3DWebXRContext .prototype,
 {
    initialize ()
    {
-      console .log ("Loaded X3DWebXRContext.");
-
       // Events
 
       this ._activeViewpoint .addInterest ("setReferenceSpace", this);
-
    },
    async initXRSession ()
    {
@@ -350,14 +397,11 @@ Object .assign (X3DWebXRContext .prototype,
          this .endEvents ()      .addInterest ("endFrame",      this);
 
          session .updateRenderState ({ baseLayer });
+         session .addEventListener( "inputsourceschange", event => this .setInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
 
          this [_baseReferenceSpace] = referenceSpace;
          this [_baseLayer]          = baseLayer;
-
-         this .setSession (session);
-         this .setDefaultFrameBuffer (baseLayer .framebuffer);
-         this .setReferenceSpace ();
 
          this [_pose] = {
             cameraSpaceMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
@@ -365,16 +409,19 @@ Object .assign (X3DWebXRContext .prototype,
             views: [ ],
          };
 
-         this [_inputSources] = [ ];
+         this [_inputSources] = new Map ();
          this [_inputRay]     = new (external_X_ITE_X3D_ScreenLine_default()) (this, 5, 3, 0.9);
          this [_inputPoint]   = new Rendering_ScreenPoint (this);
 
-         // $(session) .on ("select", event =>
+         this .setSession (session);
+         this .setDefaultFrameBuffer (baseLayer .framebuffer);
+         this .setReferenceSpace ();
+         this .removeHit (this .getHit ());
+
+         // session .addEventListener ("select", event =>
          // {
-         //    const { inputSource, frame } = event .originalEvent;
-
-         //    /* handle the event */
-
+         //    const { inputSource, frame } = event;
+         //
          //    console .log (event)
          //    console .log (inputSource)
          //    console .log (frame)
@@ -388,33 +435,25 @@ Object .assign (X3DWebXRContext .prototype,
          if (this .getSession () === window)
             return;
 
-         try
-         {
-            await this .getSession () .end ();
-         }
-         catch
-         { }
-         finally
-         {
-            this .finishedEvents () .removeInterest ("finishedFrame", this);
-            this .endEvents ()      .removeInterest ("endFrame",      this);
+         await this .getSession () .end () .catch (Function .prototype);
 
-            this .setSession (window);
-            this .setDefaultFrameBuffer (null);
+         this .finishedEvents () .removeInterest ("finishedFrame", this);
+         this .endEvents ()      .removeInterest ("endFrame",      this);
 
-            this [_baseReferenceSpace] = null;
-            this [_referenceSpace]     = null;
-            this [_baseLayer]          = null;
-            this [_pose]               = null;
-            this [_inputSources]       = null;
-            this [_inputRay]           = null;
-            this [_inputPoint]         = null;
-         }
+         this .setSession (window);
+         this .setDefaultFrameBuffer (null);
+
+         for (const { hit } of this [_inputSources] .values ())
+            this .removeHit (hit);
+
+         this [_baseReferenceSpace] = null;
+         this [_referenceSpace]     = null;
+         this [_baseLayer]          = null;
+         this [_pose]               = null;
+         this [_inputSources]       = null;
+         this [_inputRay]           = null;
+         this [_inputPoint]         = null;
       });
-   },
-   getReferenceSpace ()
-   {
-      return this [_referenceSpace];
    },
    setReferenceSpace ()
    {
@@ -431,88 +470,180 @@ Object .assign (X3DWebXRContext .prototype,
 
       this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
    },
-   setFrame (frame)
+   setInputSources (event)
    {
-      if (!frame)
-         return;
-
-      const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
-
-      // Get matrices from views.
-
-      const pose = frame .getViewerPose (this [_referenceSpace]);
-
-      this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
-      this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
-
-      let v = 0;
-
-      for (const view of pose .views)
+      for (const inputSource of event .added)
       {
-         const { x, y, width, height } = this [_baseLayer] .getViewport (view);
-
-         // WebXR Emulator: second view has width zero if in non-stereo mode.
-         if (!width)
-            continue;
-
-         this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
-
-         const pv = this [_pose] .views [v] ??= {
-            projectionMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
-            cameraSpaceMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
-            viewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+         this [_inputSources] .set (inputSource,
+         {
             matrix: new (external_X_ITE_X3D_Matrix4_default()) (),
             inverse: new (external_X_ITE_X3D_Matrix4_default()) (),
-         };
-
-         pv .projectionMatrix .assign (view .projectionMatrix);
-         pv .cameraSpaceMatrix .assign (view .transform .matrix);
-         pv .viewMatrix .assign (view .transform .inverse .matrix);
-         pv .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
-         pv .inverse .assign (pv .matrix) .inverse ();
-
-         ++ v;
+            hit: Object .assign (this .getHit () .copy (),
+            {
+               pressed: false,
+               pulse: true,
+               poseViewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+               originalPoint: new (external_X_ITE_X3D_Vector3_default()) (),
+               originalNormal: new (external_X_ITE_X3D_Vector3_default()) (),
+            }),
+         });
       }
 
-      this .getFrameBuffers () .length = v;
-
-      // WebXR Emulator or polyfill.
-      if (emulator)
-         this .getCanvas () .css (this .getXREmulatorCSS ());
-
-      // Get target ray matrices from input sources.
-
-      let r = 0;
-
-      for (const inputSource of this .getSession () .inputSources)
+      for (const removed of event .removed)
       {
-         const
-            targetRaySpace = inputSource .targetRaySpace,
-            targetRayPose  = frame .getPose (targetRaySpace, this [_referenceSpace]);
-
-         if (!targetRayPose)
-            continue;
-
-         const is = this [_inputSources] [r] ??= {
-            matrix: new (external_X_ITE_X3D_Matrix4_default()) (),
-            inverse: new (external_X_ITE_X3D_Matrix4_default()) (),
-            hit: this .getHit () .copy (),
-         };
-
-         is .matrix  .assign (targetRayPose .transform .matrix);
-         is .inverse .assign (targetRayPose .transform .inverse .matrix);
-
-         is .buttons = inputSource .gamepad ?.buttons,
-
-         ++ r;
+         this .removeHit (this [_inputSources] .get (removed) .hit);
+         this [_inputSources] .delete (removed);
       }
-
-      this [_inputSources] .length = r;
-
-      // Trigger new frame.
-
-      this .addBrowserEvent ();
    },
+   setFrame: (function ()
+   {
+      const inputRayMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+
+      return function (frame)
+      {
+         if (!frame)
+            return;
+
+         const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
+
+         // WebXR Emulator or polyfill.
+         if (emulator)
+            this .getCanvas () .css (this .getXREmulatorCSS ());
+
+         // Get matrices from views.
+
+         const
+            viewport     = this .getViewport () .getValue (),
+            originalPose = frame .getViewerPose (this [_referenceSpace]),
+            pose         = this [_pose];
+
+         pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
+         pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
+
+         let v = 0;
+
+         for (const originalView of originalPose .views)
+         {
+            const { x, y, width, height } = this [_baseLayer] .getViewport (originalView);
+
+            // WebXR Emulator: second view has width zero if in non-stereo mode.
+            if (!width)
+               continue;
+
+            this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
+
+            const view = pose .views [v] ??= {
+               projectionMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+               cameraSpaceMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+               viewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+               matrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+               inverse: new (external_X_ITE_X3D_Matrix4_default()) (),
+            };
+
+            view .projectionMatrix .assign (originalView .projectionMatrix);
+            view .cameraSpaceMatrix .assign (originalView .transform .matrix);
+            view .viewMatrix .assign (originalView .transform .inverse .matrix);
+            view .matrix .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
+            view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
+
+            ++ v;
+         }
+
+         pose .views .length              = v;
+         this .getFrameBuffers () .length = v;
+
+         // Get target ray matrices from input sources.
+
+         for (const [original, { matrix, inverse }] of this [_inputSources])
+         {
+            const
+               targetRaySpace = original .targetRaySpace,
+               targetRayPose  = frame .getPose (targetRaySpace, this [_referenceSpace]);
+
+            original .active = !! targetRayPose;
+
+            if (!targetRayPose)
+               continue;
+
+            matrix  .assign (targetRayPose .transform .matrix);
+            inverse .assign (targetRayPose .transform .inverse .matrix);
+         }
+
+         // Test for hits.
+
+         for (const [original, inputSource] of this [_inputSources])
+         {
+            if (!original .active)
+               continue;
+
+            const { hit } = inputSource;
+
+            this .touch (viewport [2] / 2, viewport [3] / 2, hit, inputSource);
+
+            // Make a vibration puls if there is a sensor hit.
+
+            this .sensorHitPulse (hit, original .gamepad);
+
+            // Update matrices and determine pointer position.
+
+            if (!hit .id)
+               continue;
+
+            const projectionMatrix = pose .views [0] .projectionMatrix;
+
+            if (!hit .pressed)
+               hit .poseViewMatrix .assign (pose .viewMatrix);
+
+            inputRayMatrix .assign (inputSource .matrix) .multRight (hit .poseViewMatrix);
+
+            for (const sensor of hit .sensors .values ())
+            {
+               sensor .projectionMatrix .assign (projectionMatrix);
+               sensor .modelViewMatrix  .multRight (inputRayMatrix);
+            }
+
+            external_X_ITE_X3D_ViewVolume_default().projectPoint (hit .point, inputRayMatrix, projectionMatrix, viewport, hit .pointer);
+
+            hit .originalPoint  .assign (hit .point);
+            hit .originalNormal .assign (hit .normal);
+
+            hit .ray .multLineMatrix (inputRayMatrix);
+            inputRayMatrix .multVecMatrix (hit .point);
+            inputRayMatrix .submatrix .inverse () .multMatrixVec (hit .normal);
+         }
+
+         // Handle nodes of type X3DPointingDeviceSensorNodes.
+
+         for (const [{ active, gamepad }, { hit }] of this [_inputSources])
+         {
+            if (!active)
+               continue;
+
+            // Press & Release
+
+            const button = gamepad ?.buttons [0];
+
+            if (button ?.pressed)
+            {
+               hit .pressed ||= this .buttonPressEvent (0, 0, hit);
+            }
+            else if (hit .pressed)
+            {
+               hit .pressed = false;
+
+               this .buttonReleaseEvent (hit);
+            }
+
+            // Motion
+
+            this .motionNotifyEvent (0, 0, hit);
+         }
+
+         // Trigger new frame.
+
+         this .addBrowserEvent ();
+      };
+   })(),
    finishedFrame: (function ()
    {
       const
@@ -528,29 +659,24 @@ Object .assign (X3DWebXRContext .prototype,
       return function ()
       {
          const
-            pose     = this [_pose],
-            viewport = this .getViewport () .getValue ();
-
-         // Test for hit.
-
-         for (const inputSource of this [_inputSources])
-            this .touch (viewport [2] / 2, viewport [3] / 2, inputSource, inputSource .hit);
+            viewport = this .getViewport () .getValue (),
+            pose     = this [_pose];
 
          // Draw input source rays.
 
-         for (const [i, view] of pose .views .entries ())
+         for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
-            const
-               frameBuffer      = this .getFrameBuffers () [i],
-               projectionMatrix = view .projectionMatrix,
-               viewMatrix       = view .viewMatrix;
+            const frameBuffer = this .getFrameBuffers () [i];
 
-            for (const { matrix, buttons, hit } of this [_inputSources])
+            for (const [{ active, gamepad }, { matrix, hit }] of this [_inputSources])
             {
+               if (!active)
+                  continue;
+
                // Draw input ray.
 
                const
-                  pressed = buttons ?.some (button => button .pressed),
+                  pressed = gamepad ?.buttons .some (button => button .pressed),
                   color   = pressed ? blue : (external_X_ITE_X3D_Color3_default()).White;
 
                inputRayMatrix
@@ -558,9 +684,9 @@ Object .assign (X3DWebXRContext .prototype,
                   .multRight (viewMatrix);
 
                inputRayMatrix .multVecMatrix (fromPoint .assign ((external_X_ITE_X3D_Vector3_default()).Zero));
-               inputRayMatrix .multVecMatrix (toPoint .assign (toVector));
+               inputRayMatrix .multVecMatrix (toPoint   .assign (toVector));
 
-               if (toPoint .z > fromPoint .z)
+               if (fromPoint .z > 0 || toPoint .z > 0)
                   continue;
 
                external_X_ITE_X3D_ViewVolume_default().projectPointMatrix (fromPoint, projectionMatrix, viewport, fromPoint);
@@ -578,15 +704,15 @@ Object .assign (X3DWebXRContext .prototype,
                if (!hit .id)
                   continue;
 
-               const radius = (pressed ? hitPressedSize : hitSize);
+               const radius = pressed ? hitPressedSize : hitSize;
 
                inputRayMatrix
                   .assign (matrix)
                   .multRight (viewMatrix)
-                  .translate (hit .point)
-                  .rotate (hitRotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, hit .normal));
+                  .translate (hit .originalPoint)
+                  .rotate (hitRotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, hit .originalNormal));
 
-               this [_inputPoint] .display (radius, color, 0.3, inputRayMatrix, projectionMatrix, frameBuffer);
+               this [_inputPoint] .display (radius, color, 0.3, 0.8, inputRayMatrix, projectionMatrix, frameBuffer);
             }
          }
       };
@@ -601,6 +727,22 @@ Object .assign (X3DWebXRContext .prototype,
    getPose ()
    {
       return this [_pose];
+   },
+   sensorHitPulse (hit, gamepad)
+   {
+      if (hit .sensors .size)
+      {
+         if (hit .pulse)
+         {
+            gamepad ?.hapticActuators ?.[0] ?.pulse (0.2, 10);
+
+            hit .pulse = false;
+         }
+      }
+      else
+      {
+         hit .pulse = true;
+      }
    },
 });
 
