@@ -314,7 +314,7 @@ Object .assign (X3DWebXRContext .prototype,
 
             hit .ray .multLineMatrix (inputRayMatrix);
             inputRayMatrix .multVecMatrix (hit .point);
-            inputRayMatrix .inverse () .multMatrixDir (hit .normal);
+            inputRayMatrix .submatrix .inverse () .multMatrixVec (hit .normal);
          }
 
          // Handle X3DPointingDeviceSensorNodes.

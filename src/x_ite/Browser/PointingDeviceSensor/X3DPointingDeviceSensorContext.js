@@ -314,8 +314,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
-      hit .sensors .clear ();
-
       this [_inputSource] = inputSource;
       this [_id]          = 0;
 
@@ -326,28 +324,32 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       this [_pointingBuffer] .getHit (hit);
 
+      hit .sensors .clear ();
+
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {
          const
-            pointingContext = this [_pointingContexts] [hit .id],
-            shapeNode       = pointingContext .shapeNode,
+            { renderObject, sensors, modelViewMatrix, shapeNode } = this [_pointingContexts] [hit .id],
             appearanceNode  = shapeNode .getAppearance (),
             geometryContext = shapeNode .getGeometryContext ();
 
-         hit .ray .assign (pointingContext .renderObject .getHitRay ());
+         hit .ray .assign (renderObject .getHitRay ());
 
-         pointingContext .sensors .forEach (sensor => hit .sensors .set (sensor .node, sensor));
-         hit .sensors .forEach (sensor => sensor .hit = hit);
+         for (const sensor of sensors)
+         {
+            sensor .hit = hit;
+            hit .sensors .set (sensor .node, sensor);
+         }
 
-         hit .layerNode = pointingContext .renderObject;
+         hit .layerNode = renderObject;
          hit .shapeNode = shapeNode;
 
-         hit .modelViewMatrix .assign (pointingContext .modelViewMatrix);
+         hit .modelViewMatrix .assign (modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
 
          if (geometryContext .hasNormals)
-            hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
+            hit .modelViewMatrix .submatrix .inverse () .multMatrixVec (hit .normal) .normalize ();
          else
             hit .normal .assign (Vector3 .zAxis);
 

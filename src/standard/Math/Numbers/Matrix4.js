@@ -406,8 +406,8 @@ Object .assign (Matrix4 .prototype,
    },
    inverse ()
    {
-      // Complexity 43 +, 140 *.
-      
+      // Complexity 43 +, 40 -, 140 *. 1 /
+
       const
          { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
            8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this,
