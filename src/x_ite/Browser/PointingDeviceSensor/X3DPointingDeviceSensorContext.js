@@ -88,7 +88,7 @@ function X3DPointingDeviceSensorContext ()
 
    this [_hit] = {
       id: 0,
-      pointer: this [_pointer],
+      pointer: new Vector2 (),
       ray: new Line3 (),
       sensors: new Map (),
       modelViewMatrix: new Matrix4 (),
@@ -313,7 +313,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this [_pointingLayer] = hit .pointingLayerNode;
       this [_id]            = 0;
 
-      this [_pointer] .set (x, y);
+      this [_pointer] .assign (hit .pointer .set (x, y));
       this [_pointingBuffer] .bind ();
 
       this .getWorld () .traverse (TraverseType .POINTER);
