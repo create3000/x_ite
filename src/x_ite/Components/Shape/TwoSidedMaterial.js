@@ -121,42 +121,15 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    },
    set_diffuseColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
-
-      const
-         diffuseColorArray = this .diffuseColorArray,
-         diffuseColor      = this ._diffuseColor .getValue ();
-
-      diffuseColorArray [0] = diffuseColor .r;
-      diffuseColorArray [1] = diffuseColor .g;
-      diffuseColorArray [2] = diffuseColor .b;
+      this .diffuseColorArray .set (this ._diffuseColor .getValue ());
    },
    set_specularColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .specularColorArray .set (this ._specularColor .getValue ());
-
-      const
-         specularColorArray = this .specularColorArray,
-         specularColor      = this ._specularColor .getValue ();
-
-      specularColorArray [0] = specularColor .r;
-      specularColorArray [1] = specularColor .g;
-      specularColorArray [2] = specularColor .b;
+      this .specularColorArray .set (this ._specularColor .getValue ());
    },
    set_emissiveColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .emissiveColorArray .set (this ._emissiveColor .getValue ());
-
-      const
-         emissiveColorArray = this .emissiveColorArray,
-         emissiveColor      = this ._emissiveColor .getValue ();
-
-      emissiveColorArray [0] = emissiveColor .r;
-      emissiveColorArray [1] = emissiveColor .g;
-      emissiveColorArray [2] = emissiveColor .b;
+      this .emissiveColorArray .set (this ._emissiveColor .getValue ());
    },
    set_shininess__ ()
    {
@@ -175,42 +148,15 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    },
    set_backDiffuseColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .backDiffuseColorArray .set (this ._backDiffuseColor .getValue ());
-
-      const
-         backDiffuseColorArray = this .backDiffuseColorArray,
-         backDiffuseColor      = this ._backDiffuseColor .getValue ();
-
-      backDiffuseColorArray [0] = backDiffuseColor .r;
-      backDiffuseColorArray [1] = backDiffuseColor .g;
-      backDiffuseColorArray [2] = backDiffuseColor .b;
+      this .backDiffuseColorArray .set (this ._backDiffuseColor .getValue ());
    },
    set_backSpecularColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .backSpecularColorArray .set (this ._backSpecularColor .getValue ());
-
-      const
-         backSpecularColorArray = this .backSpecularColorArray,
-         backSpecularColor      = this ._backSpecularColor .getValue ();
-
-      backSpecularColorArray [0] = backSpecularColor .r;
-      backSpecularColorArray [1] = backSpecularColor .g;
-      backSpecularColorArray [2] = backSpecularColor .b;
+      this .backSpecularColorArray .set (this ._backSpecularColor .getValue ());
    },
    set_backEmissiveColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .backEmissiveColorArray .set (this ._backEmissiveColor .getValue ());
-
-      const
-         backEmissiveColorArray = this .backEmissiveColorArray,
-         backEmissiveColor      = this ._backEmissiveColor .getValue ();
-
-      backEmissiveColorArray [0] = backEmissiveColor .r;
-      backEmissiveColorArray [1] = backEmissiveColor .g;
-      backEmissiveColorArray [2] = backEmissiveColor .b;
+      this .backEmissiveColorArray .set (this ._backEmissiveColor .getValue ());
    },
    set_backShininess__ ()
    {

@@ -95,16 +95,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    set_diffuseTransmissionColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .diffuseTransmissionColorArray .set (this ._diffuseTransmissionColor .getValue ());
-
-      const
-         diffuseTransmissionColorArray = this .diffuseTransmissionColorArray,
-         diffuseTransmissionColor      = this ._diffuseTransmissionColor .getValue ();
-
-      diffuseTransmissionColorArray [0] = diffuseTransmissionColor .r;
-      diffuseTransmissionColorArray [1] = diffuseTransmissionColor .g;
-      diffuseTransmissionColorArray [2] = diffuseTransmissionColor .b;
+      this .diffuseTransmissionColorArray .set (this ._diffuseTransmissionColor .getValue ());
    },
    set_diffuseTransmissionColorTexture__ ()
    {
