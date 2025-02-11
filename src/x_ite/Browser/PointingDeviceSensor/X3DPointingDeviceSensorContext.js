@@ -300,7 +300,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    leaveNotifyEvent ()
    { },
-   touch (x, y, inputSource = null, hit = this [_hit])
+   touch (x, y, hit = this [_hit], inputSource = null)
    {
       this [_pointingTime] .start ();
 

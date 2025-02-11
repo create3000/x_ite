@@ -283,7 +283,7 @@ Object .assign (X3DWebXRContext .prototype,
 
             const { hit } = inputSource;
 
-            this .touch (viewport [2] / 2, viewport [3] / 2, inputSource, hit);
+            this .touch (viewport [2] / 2, viewport [3] / 2, hit, inputSource);
 
             // Make a vibration puls if there is a sensor hit.
 
