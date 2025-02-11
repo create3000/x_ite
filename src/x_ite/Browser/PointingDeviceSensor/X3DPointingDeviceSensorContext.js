@@ -81,7 +81,6 @@ function X3DPointingDeviceSensorContext ()
    this [_sensors]                   = [ ];
    this [_overSensors]               = new Map ();
    this [_activeSensors]             = new Map ();
-   this [_pointingLayer]             = null;
    this [_pointingTime]              = new StopWatch ();
    this [_pointingBuffer]            = new PointingBuffer (this);
    this [_pointingShaders]           = new Map ();
@@ -99,6 +98,7 @@ function X3DPointingDeviceSensorContext ()
          normal: new Vector3 (), // Must be normalized if used.
          texCoord: new Vector4 (),
          layerNode: null,
+         pointingLayerNode: null,
          shapeNode: null,
          create,
          copy ()
@@ -113,6 +113,7 @@ function X3DPointingDeviceSensorContext ()
                normal: this .normal .copy (),
                texCoord: this .texCoord .copy (),
                layerNode: this .layerNode,
+               pointingLayerNode: this .pointingLayerNode,
                shapeNode: this .shapeNode,
                copy: this .copy,
             };
@@ -241,7 +242,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (!hit .id)
          return false;
 
-      this [_pointingLayer] = hit .layerNode;
+      hit .pointingLayerNode = hit .layerNode;
 
       for (const [node, sensor] of hit .sensors)
       {
@@ -265,7 +266,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (!this [_pointingDeviceSensorNodes] .size)
          return;
 
-      this [_pointingLayer] = null;
+      hit .pointingLayerNode = null;
 
       for (const [node, sensor] of this [_activeSensors])
       {
@@ -314,8 +315,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
-      this [_inputSource] = inputSource;
-      this [_id]          = 0;
+      this [_inputSource]   = inputSource;
+      this [_pointingLayer] = hit .pointingLayerNode;
+      this [_id]            = 0;
 
       this [_pointer] .set (x, y);
       this [_pointingBuffer] .bind ();
@@ -357,8 +359,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       {
          hit .id = 0;
 
-         if (this [_pointingLayer])
-            hit .ray .assign (this [_pointingLayer] .getHitRay ());
+         if (hit .pointingLayerNode)
+            hit .ray .assign (hit .pointingLayerNode .getHitRay ());
 
          hit .layerNode = null;
          hit .shapeNode = null;
