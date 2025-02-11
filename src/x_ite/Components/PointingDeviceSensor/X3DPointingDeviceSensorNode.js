@@ -47,8 +47,53 @@
 
 import X3DNode                       from "../Core/X3DNode.js";
 import X3DSensorNode                 from "../Core/X3DSensorNode.js";
-import PointingDeviceSensorContainer from "../../Browser/PointingDeviceSensor/PointingDeviceSensorContainer.js";
 import X3DConstants                  from "../../Base/X3DConstants.js";
+import ObjectCache                   from "../../../standard/Utility/ObjectCache.js";
+import Vector4                       from "../../../standard/Math/Numbers/Vector4.js";
+import Matrix4                       from "../../../standard/Math/Numbers/Matrix4.js";
+
+const PointingDeviceSensors = ObjectCache (PointingDeviceSensorContainer);
+
+function PointingDeviceSensorContainer ()
+{
+   this .node             = null;
+   this .modelViewMatrix  = new Matrix4 ();
+   this .projectionMatrix = new Matrix4 ();
+   this .viewport         = new Vector4 ();
+   this .hit              = null;
+}
+
+Object .assign (PointingDeviceSensorContainer .prototype,
+{
+   set (node, modelViewMatrix, projectionMatrix, viewport)
+   {
+      this .node = node;
+
+      this .modelViewMatrix  .assign (modelViewMatrix);
+      this .projectionMatrix .assign (projectionMatrix);
+      this .viewport         .assign (viewport);
+   },
+   set_over__ (over, hit)
+   {
+      this .node .set_over__ (over, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
+   },
+   set_active__ (active, hit)
+   {
+      this .node .set_active__ (active, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
+   },
+   set_motion__ (hit)
+   {
+      this .node .set_motion__ (hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
+   },
+   dispose ()
+   {
+      this .hit = null;
+
+      // Return container
+
+      PointingDeviceSensors .push (this);
+   },
+});
 
 function X3DPointingDeviceSensorNode (executionContext)
 {
@@ -109,10 +154,16 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
    { },
    push (renderObject, sensors)
    {
-      sensors .push (new PointingDeviceSensorContainer (this,
-                                                        renderObject .getModelViewMatrix  () .get (),
-                                                        renderObject .getProjectionMatrix () .get (),
-                                                        renderObject .getViewVolume () .getViewport ()));
+      const sensor = PointingDeviceSensors .pop ();
+
+      sensor .set (this,
+                   renderObject .getModelViewMatrix  () .get (),
+                   renderObject .getProjectionMatrix () .get (),
+                   renderObject .getViewVolume () .getViewport ())
+
+      this .getBrowser () .addSensor (sensor);
+
+      sensors .push (sensor);
    },
 });
 

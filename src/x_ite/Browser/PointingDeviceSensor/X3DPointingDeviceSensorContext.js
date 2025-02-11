@@ -61,6 +61,7 @@ const
    _cursorType                = Symbol (),
    _pointer                   = Symbol (),
    _hit                       = Symbol (),
+   _sensors                   = Symbol (),
    _overSensors               = Symbol (),
    _activeSensors             = Symbol (),
    _pointingLayer             = Symbol (),
@@ -77,6 +78,7 @@ function X3DPointingDeviceSensorContext ()
    this [_pointingDevice]            = new PointingDevice (this .getPrivateScene ());
    this [_pointingDeviceSensorNodes] = new Set ();
    this [_pointer]                   = new Vector2 ();
+   this [_sensors]                   = [ ];
    this [_overSensors]               = new Map ();
    this [_activeSensors]             = new Map ();
    this [_pointingLayer]             = null;
@@ -215,6 +217,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       this .buttonReleaseEvent (hit);
       this .motion (hit);
+   },
+   addSensor (sensor)
+   {
+      this [_sensors] .push (sensor);
    },
    addPointingShape (pointingContext)
    {
@@ -359,6 +365,18 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
          hit .modelViewMatrix .assign (Matrix4 .Identity);
       }
+
+      // Dispose unused sensors.
+
+      for (const sensor of this [_sensors])
+      {
+         if (sensor .hit)
+            continue;
+
+         sensor .dispose ();
+      }
+
+      this [_sensors] .length = 0;
 
       // Picking end.
 
