@@ -236,10 +236,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          return false;
 
       if (hit === this [_hit])
-      {
-         if (!this .touch (x, y))
-            return false;
-      }
+         this .touch (x, y);
+
+      if (!hit .id)
+         return false;
 
       this [_pointingLayer] = hit .layerNode;
 
@@ -360,7 +360,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          if (this [_pointingLayer])
             hit .ray .assign (this [_pointingLayer] .getHitRay ());
 
-         hit .layerNode = this [_pointingLayer];
+         hit .layerNode = null;
          hit .shapeNode = null;
 
          hit .modelViewMatrix .assign (Matrix4 .Identity);
