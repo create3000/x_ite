@@ -330,7 +330,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       {
          const
             { renderObject, sensors, modelViewMatrix, shapeNode } = this [_pointingContexts] [hit .id],
-            appearanceNode  = shapeNode .getAppearance (),
             geometryContext = shapeNode .getGeometryContext ();
 
          hit .ray .assign (renderObject .getHitRay ());
@@ -353,8 +352,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             hit .modelViewMatrix .submatrix .inverse () .multMatrixVec (hit .normal);
          else
             hit .normal .assign (Vector3 .zAxis);
-
-         appearanceNode .getTextureTransform () .transformPoint (hit .texCoord);
       }
       else
       {
