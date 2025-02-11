@@ -330,8 +330,7 @@ Object .assign (X3DWebXRContext .prototype,
 
             if (button ?.pressed)
             {
-               if (!hit .pressed)
-                  hit .pressed = this .buttonPressEvent (0, 0, hit);
+               hit .pressed ||= this .buttonPressEvent (0, 0, hit);
             }
             else if (hit .pressed)
             {
