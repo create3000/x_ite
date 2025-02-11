@@ -257,10 +257,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    buttonReleaseEvent (hit = this [_hit])
    {
+      hit .pointingLayerNode = null;
+
       if (!this [_pointingDeviceSensorNodes] .size)
          return;
-
-      hit .pointingLayerNode = null;
 
       for (const [node, sensor] of this [_activeSensors])
       {

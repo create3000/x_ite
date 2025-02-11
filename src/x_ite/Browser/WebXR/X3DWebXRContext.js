@@ -186,10 +186,10 @@ Object .assign (X3DWebXRContext .prototype,
             hit: Object .assign (this .getHit () .copy (),
             {
                pressed: false,
+               pulse: true,
                poseViewMatrix: new Matrix4 (),
                originalPoint: new Vector3 (),
                originalNormal: new Vector3 (),
-               pulse: true,
             }),
          });
       }
