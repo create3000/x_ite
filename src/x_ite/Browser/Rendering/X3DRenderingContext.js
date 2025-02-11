@@ -471,6 +471,7 @@ Object .assign (X3DRenderingContext .prototype,
 
          $("<div></div>")
             .attr ("part", "xr-button")
+            .attr ("title", "Start WebXR session.")
             .addClass ("x_ite-private-xr-button")
             .on ("mousedown touchstart", false)
             .on ("mouseup touchend", event =>
