@@ -183,7 +183,7 @@ Object .assign (X3DWebXRContext .prototype,
          {
             matrix: new Matrix4 (),
             inverse: new Matrix4 (),
-            hit: Object .assign (this .getHit () .create (),
+            hit: Object .assign (this .getHit () .copy (),
             {
                pressed: false,
                poseViewMatrix: new Matrix4 (),

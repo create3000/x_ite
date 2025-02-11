@@ -86,42 +86,36 @@ function X3DPointingDeviceSensorContext ()
    this [_pointingShaders]           = new Map ();
    this [_pointingContexts]          = [ ];
 
-   const create = () =>
-   {
-      return {
-         id: 0,
-         pointer: this [_pointer],
-         ray: new Line3 (),
-         sensors: new Map (),
-         modelViewMatrix: new Matrix4 (),
-         point: new Vector3 (),
-         normal: new Vector3 (), // Must be normalized if used.
-         texCoord: new Vector4 (),
-         layerNode: null,
-         pointingLayerNode: null,
-         shapeNode: null,
-         create,
-         copy ()
-         {
-            return {
-               id: this .id,
-               pointer: this .pointer .copy (),
-               ray: this .ray .copy (),
-               sensors: new Map (this .sensors),
-               modelViewMatrix: this .modelViewMatrix .copy (),
-               point: this .point .copy (),
-               normal: this .normal .copy (),
-               texCoord: this .texCoord .copy (),
-               layerNode: this .layerNode,
-               pointingLayerNode: this .pointingLayerNode,
-               shapeNode: this .shapeNode,
-               copy: this .copy,
-            };
-         },
-      };
+   this [_hit] = {
+      id: 0,
+      pointer: this [_pointer],
+      ray: new Line3 (),
+      sensors: new Map (),
+      modelViewMatrix: new Matrix4 (),
+      point: new Vector3 (),
+      normal: new Vector3 (), // Must be normalized if used.
+      texCoord: new Vector4 (),
+      layerNode: null,
+      pointingLayerNode: null,
+      shapeNode: null,
+      copy ()
+      {
+         return {
+            id: this .id,
+            pointer: this .pointer .copy (),
+            ray: this .ray .copy (),
+            sensors: new Map (this .sensors),
+            modelViewMatrix: this .modelViewMatrix .copy (),
+            point: this .point .copy (),
+            normal: this .normal .copy (),
+            texCoord: this .texCoord .copy (),
+            layerNode: this .layerNode,
+            pointingLayerNode: this .pointingLayerNode,
+            shapeNode: this .shapeNode,
+            copy: this .copy,
+         };
+      },
    };
-
-   this [_hit] = create ();
 }
 
 Object .assign (X3DPointingDeviceSensorContext .prototype,
