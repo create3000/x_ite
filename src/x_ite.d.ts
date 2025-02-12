@@ -383,7 +383,6 @@ declare namespace X3D
       Timings:                      boolean,
       ToneMapping:                  ToneMappingTypes,
       XRButton:                     boolean,
-      XRMovementControl:            "VIEWER_POSE" | "VIEWPOINT",
       XRSessionMode:                "NONE" | "IMMERSIVE_VR",
    };
 

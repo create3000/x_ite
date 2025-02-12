@@ -58,7 +58,7 @@ The *color* field defines an array of 4-tuple RGBA colors.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/ColorRGBA/ColorRGBA.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/ColorRGBA/ColorRGBA.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/ColorRGBA/screenshot.png" alt="ColorRGBA"/>
 </x3d-canvas>
 

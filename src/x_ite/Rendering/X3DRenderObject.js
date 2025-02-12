@@ -1169,18 +1169,18 @@ Object .assign (X3DRenderObject .prototype,
          {
             this .projectionMatrixArray .set (view .projectionMatrix);
 
-            if (this .getLayer () !== browser .getActiveLayer () || browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
+            if (this .getLayer () === browser .getActiveLayer ())
+            {
+               this .cameraSpaceMatrixArray .set (view .cameraSpaceMatrix);
+               this .viewMatrixArray        .set (view .viewMatrix);
+            }
+            else
             {
                this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
                this .viewMatrixArray        .set (this .getViewMatrix ()        .get ());
 
                Matrix4 .prototype .multLeft  (this .cameraSpaceMatrixArray, view .inverse);
                Matrix4 .prototype .multRight (this .viewMatrixArray,        view .matrix);
-            }
-            else
-            {
-               this .cameraSpaceMatrixArray .set (view .cameraSpaceMatrix);
-               this .viewMatrixArray        .set (view .viewMatrix);
             }
          }
          else

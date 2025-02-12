@@ -451,12 +451,6 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("XRButton", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
-         case "xrMovementControl":
-         case "xrmovementcontrol":
-         {
-            this .setBrowserOption ("XRMovementControl", newValue || "VIEWER_POSE");
-            break;
-         }
          case "xrSessionMode":
          case "xrsessionmode":
          {

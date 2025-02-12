@@ -154,7 +154,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/Transform/Transform.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/Transform/Transform.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Grouping/Transform/screenshot.png" alt="Transform"/>
 </x3d-canvas>
 

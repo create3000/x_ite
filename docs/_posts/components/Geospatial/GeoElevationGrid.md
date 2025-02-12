@@ -238,7 +238,7 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/GeoElevationGrid.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/GeoElevationGrid.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/screenshot.png" alt="GeoElevationGrid"/>
 </x3d-canvas>
 
