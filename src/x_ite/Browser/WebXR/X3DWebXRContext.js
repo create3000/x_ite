@@ -171,7 +171,17 @@ Object .assign (X3DWebXRContext .prototype,
          if (!this [_baseReferenceSpace])
             return;
 
-         this .getActiveViewpoint () ?.getViewMatrix () .get (translation, rotation)
+         const viewpointNode = this .getActiveViewpoint ();
+
+         if (viewpointNode)
+         {
+            viewpointNode .getViewMatrix () .get (translation, rotation);
+         }
+         else
+         {
+            translation .assign (Vector3. Zero);
+            rotation    .assign (Rotation4 .Identity);
+         }
 
          const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
 
