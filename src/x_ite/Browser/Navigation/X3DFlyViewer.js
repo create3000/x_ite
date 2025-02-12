@@ -63,7 +63,8 @@ const
    PAN_SPEED_FACTOR       = SPEED_FACTOR,
    PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
    ROLL_ANGLE             = macOS ? Math .PI / 512 : Math .PI / 32,
-   ROTATE_TIME            = 0.3;
+   ROTATE_TIME            = 0.3,
+   GAMEPAD_SPEED_FACTOR   = new Vector3 (100, 0, 500);
 
 const
    MOVE = 0,
@@ -393,6 +394,20 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          }
       }
    },
+   gamepad (gamepad)
+   {
+      if (gamepad .axes .length < 4)
+         return;
+
+      if (gamepad .axes [2] === 0 && gamepad .axes [3] === 0)
+         return;
+
+      this .direction
+         .set (gamepad .axes [2], 0, gamepad .axes [3])
+         .multVec (GAMEPAD_SPEED_FACTOR);
+
+      this .fly ();
+   },
    fly: (() =>
    {
       const
@@ -420,7 +435,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          else
             rubberBandRotation .setFromToVec (axis .set (0, 0, -1), this .direction);
 
-            const rubberBandLength = this .direction .magnitude ();
+         const rubberBandLength = this .direction .magnitude ();
 
          // Determine positionOffset.
 

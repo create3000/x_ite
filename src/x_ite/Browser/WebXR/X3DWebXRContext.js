@@ -160,21 +160,24 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]         = null;
       });
    },
-   setReferenceSpace ()
+   setReferenceSpace: (function ()
    {
-      if (!this [_baseReferenceSpace])
-         return;
-
       const
          translation = new Vector3 (),
          rotation    = new Rotation4 ();
 
-      this .getActiveViewpoint () ?.getViewMatrix () .get (translation, rotation)
+      return function ()
+      {
+         if (!this [_baseReferenceSpace])
+            return;
 
-      const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
+         this .getActiveViewpoint () ?.getViewMatrix () .get (translation, rotation)
 
-      this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
-   },
+         const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
+
+         this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
+      };
+   })(),
    setInputSources (event)
    {
       for (const inputSource of event .added)
@@ -214,6 +217,18 @@ Object .assign (X3DWebXRContext .prototype,
          // WebXR Emulator or polyfill.
          if (emulator)
             this .getCanvas () .css (this .getXREmulatorCSS ());
+
+         // Navigation
+
+         for (const [{ active, gamepad }, { hit }] of this [_inputSources])
+         {
+            if (!active)
+               continue;
+
+            this .getViewer () .gamepad (gamepad);
+         }
+
+         this .setReferenceSpace ();
 
          // Get matrices from views.
 
