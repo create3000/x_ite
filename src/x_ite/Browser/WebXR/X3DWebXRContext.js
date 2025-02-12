@@ -221,13 +221,14 @@ Object .assign (X3DWebXRContext .prototype,
          pose          = this [_pose],
          viewpointNode = this .getActiveViewpoint ();
 
-      pose .cameraSpaceMatrix
-         .assign (originalPose .transform .matrix)
-         .multRight (viewpointNode .getCameraSpaceMatrix ());
+      pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
+      pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
 
-      pose .viewMatrix
-         .assign (originalPose .transform .inverse .matrix)
-         .multLeft (viewpointNode .getViewMatrix ());
+      if (viewpointNode)
+      {
+         pose .cameraSpaceMatrix .multRight (viewpointNode .getCameraSpaceMatrix ());
+         pose .viewMatrix        .multLeft  (viewpointNode .getViewMatrix ());
+      }
 
       let v = 0;
 
@@ -249,23 +250,18 @@ Object .assign (X3DWebXRContext .prototype,
             inverse: new Matrix4 (),
          };
 
-         view .projectionMatrix .assign (originalView .projectionMatrix);
+         view .projectionMatrix  .assign (originalView .projectionMatrix);
+         view .cameraSpaceMatrix .assign (originalView .transform .matrix);
+         view .viewMatrix        .assign (originalView .transform .inverse .matrix);
 
-         view .cameraSpaceMatrix
-            .assign (originalView .transform .matrix)
-            .multRight (viewpointNode .getCameraSpaceMatrix ());
+         if (viewpointNode)
+         {
+            view .cameraSpaceMatrix .multRight (viewpointNode .getCameraSpaceMatrix ());
+            view .viewMatrix        .multLeft  (viewpointNode .getViewMatrix ());
+         }
 
-         view .viewMatrix
-            .assign (originalView .transform .inverse .matrix)
-            .multLeft (viewpointNode .getViewMatrix ());
-
-         view .matrix
-            .assign (pose .cameraSpaceMatrix)
-            .multRight (view .viewMatrix);
-
-         view .inverse
-            .assign (view .cameraSpaceMatrix)
-            .multRight (pose .viewMatrix);
+         view .matrix  .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
+         view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
 
          ++ v;
       }
@@ -288,8 +284,9 @@ Object .assign (X3DWebXRContext .prototype,
       return function ()
       {
          const
-            viewport = this .getViewport () .getValue (),
-            pose     = this [_pose];
+            viewport      = this .getViewport () .getValue (),
+            pose          = this [_pose],
+            viewpointNode = this .getActiveViewpoint ();
 
          // Get target ray matrices from input sources.
 
@@ -306,6 +303,12 @@ Object .assign (X3DWebXRContext .prototype,
 
             matrix  .assign (targetRayPose .transform .matrix);
             inverse .assign (targetRayPose .transform .inverse .matrix);
+
+            if (viewpointNode)
+            {
+               matrix  .multRight (viewpointNode .getCameraSpaceMatrix ());
+               inverse .multLeft  (viewpointNode .getViewMatrix ());
+            }
          }
 
          // Test for hits.
