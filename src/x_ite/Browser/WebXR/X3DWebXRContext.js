@@ -231,7 +231,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Navigation
 
-         for (const [{ active, gamepad }, { hit }] of this [_inputSources])
+         for (const { active, gamepad } of this [_inputSources] .keys ())
          {
             if (!active)
                continue;
