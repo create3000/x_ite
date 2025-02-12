@@ -296,17 +296,36 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .updateReferenceSpace ();
 
-         // Get target ray matrices from input sources.
+         // Trigger new frame.
 
+         this .addBrowserEvent ();
+      };
+   })(),
+   finishedFrame: (function ()
+   {
+      const
+         blue           = new Color3 (0.5, 0.75, 1),
+         inputRayMatrix = new Matrix4 (),
+         toVector       = new Vector3 (0, 0, -0.5),
+         fromPoint      = new Vector3 (),
+         toPoint        = new Vector3 (),
+         hitRotation    = new Rotation4 (),
+         hitSize        = 0.007,
+         hitPressedSize = 0.005;
+
+      return function ()
+      {
          const
             viewport = this .getViewport () .getValue (),
             pose     = this [_pose];
+
+         // Get target ray matrices from input sources.
 
          for (const [original, { matrix, inverse }] of this [_inputSources])
          {
             const
                targetRaySpace = original .targetRaySpace,
-               targetRayPose  = frame .getPose (targetRaySpace, this [_referenceSpace]);
+               targetRayPose  = this [_frame] .getPose (targetRaySpace, this [_referenceSpace]);
 
             original .active = !! targetRayPose;
 
@@ -386,29 +405,6 @@ Object .assign (X3DWebXRContext .prototype,
 
             this .motionNotifyEvent (0, 0, hit);
          }
-
-         // Trigger new frame.
-
-         this .addBrowserEvent ();
-      };
-   })(),
-   finishedFrame: (function ()
-   {
-      const
-         blue           = new Color3 (0.5, 0.75, 1),
-         inputRayMatrix = new Matrix4 (),
-         toVector       = new Vector3 (0, 0, -0.5),
-         fromPoint      = new Vector3 (),
-         toPoint        = new Vector3 (),
-         hitRotation    = new Rotation4 (),
-         hitSize        = 0.007,
-         hitPressedSize = 0.005;
-
-      return function ()
-      {
-         const
-            viewport = this .getViewport () .getValue (),
-            pose     = this [_pose];
 
          // Draw input source rays.
 
