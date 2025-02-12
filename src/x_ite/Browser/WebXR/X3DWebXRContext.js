@@ -99,7 +99,7 @@ Object .assign (X3DWebXRContext .prototype,
             ignoreDepthValues: true,
          });
 
-         this .displayEvents ()  .addInterest ("updateReferenceSpace", this);
+         this .cameraEvents ()   .addInterest ("updateReferenceSpace", this);
          this .finishedEvents () .addInterest ("finishedFrame",        this);
          this .endEvents ()      .addInterest ("endFrame",             this);
 
@@ -143,7 +143,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .displayEvents ()  .removeInterest ("updateReferenceSpace", this);
+         this .cameraEvents ()   .removeInterest ("updateReferenceSpace", this);
          this .finishedEvents () .removeInterest ("finishedFrame",        this);
          this .endEvents ()      .removeInterest ("endFrame",             this);
 
@@ -165,6 +165,60 @@ Object .assign (X3DWebXRContext .prototype,
    getPose ()
    {
       return this [_pose];
+   },
+   setInputSources (event)
+   {
+      for (const inputSource of event .added)
+      {
+         this [_inputSources] .set (inputSource,
+         {
+            matrix: new Matrix4 (),
+            inverse: new Matrix4 (),
+            hit: Object .assign (this .getHit () .copy (),
+            {
+               pressed: false,
+               pulse: true,
+               poseViewMatrix: new Matrix4 (),
+               originalPoint: new Vector3 (),
+               originalNormal: new Vector3 (),
+            }),
+         });
+      }
+
+      for (const removed of event .removed)
+      {
+         this .removeHit (this [_inputSources] .get (removed) .hit);
+         this [_inputSources] .delete (removed);
+      }
+   },
+   setFrame (frame)
+   {
+      if (!frame)
+         return;
+
+      this [_frame] = frame;
+
+      // Emulator
+
+      const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
+
+      // WebXR Emulator or polyfill.
+      if (emulator)
+         this .getCanvas () .css (this .getXREmulatorCSS ());
+
+      // Navigation
+
+      for (const { active, gamepad } of this [_inputSources] .keys ())
+      {
+         if (!active)
+            continue;
+
+         this .getViewer () .gamepad (gamepad);
+      }
+
+      // Trigger new frame.
+
+      this .addBrowserEvent ();
    },
    updateReferenceSpace: (function ()
    {
@@ -240,67 +294,6 @@ Object .assign (X3DWebXRContext .prototype,
       pose .views .length              = v;
       this .getFrameBuffers () .length = v;
    },
-   setInputSources (event)
-   {
-      for (const inputSource of event .added)
-      {
-         this [_inputSources] .set (inputSource,
-         {
-            matrix: new Matrix4 (),
-            inverse: new Matrix4 (),
-            hit: Object .assign (this .getHit () .copy (),
-            {
-               pressed: false,
-               pulse: true,
-               poseViewMatrix: new Matrix4 (),
-               originalPoint: new Vector3 (),
-               originalNormal: new Vector3 (),
-            }),
-         });
-      }
-
-      for (const removed of event .removed)
-      {
-         this .removeHit (this [_inputSources] .get (removed) .hit);
-         this [_inputSources] .delete (removed);
-      }
-   },
-   setFrame: (function ()
-   {
-      const inputRayMatrix = new Matrix4 ();
-
-      return function (frame)
-      {
-         if (!frame)
-            return;
-
-         this [_frame] = frame;
-
-         // Emulator
-
-         const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
-
-         // WebXR Emulator or polyfill.
-         if (emulator)
-            this .getCanvas () .css (this .getXREmulatorCSS ());
-
-         // Navigation
-
-         for (const { active, gamepad } of this [_inputSources] .keys ())
-         {
-            if (!active)
-               continue;
-
-            this .getViewer () .gamepad (gamepad);
-         }
-
-         this .updateReferenceSpace ();
-
-         // Trigger new frame.
-
-         this .addBrowserEvent ();
-      };
-   })(),
    finishedFrame: (function ()
    {
       const

@@ -124,6 +124,7 @@ function X3DBrowserContext (element)
                           X3DConstants .outputOnly, "shutdown",       new Fields .SFTime (),
                           X3DConstants .outputOnly, "prepareEvents",  new Fields .SFTime (),
                           X3DConstants .outputOnly, "timeEvents",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "cameraEvents",   new Fields .SFTime (),
                           X3DConstants .outputOnly, "sensorEvents",   new Fields .SFTime (),
                           X3DConstants .outputOnly, "displayEvents",  new Fields .SFTime (),
                           X3DConstants .outputOnly, "finishedEvents", new Fields .SFTime (),
@@ -164,6 +165,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    timeEvents ()
    {
       return this ._timeEvents;
+   },
+   cameraEvents ()
+   {
+      return this ._cameraEvents;
    },
    sensorEvents ()
    {
@@ -280,6 +285,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_cameraTime] .start ();
       this [_world] .traverse (TraverseType .CAMERA);
       this [_cameraTime] .stop ();
+
+      this .addTaintedField (this ._cameraEvents);
+      this [_processEvents] ();
 
       // Collision
 
