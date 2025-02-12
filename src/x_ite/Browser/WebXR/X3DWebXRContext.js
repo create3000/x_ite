@@ -55,6 +55,7 @@ import Matrix4     from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock        from "../../../standard/Utility/Lock.js";
 
 const
+   _frame              = Symbol (),
    _baseReferenceSpace = Symbol (),
    _referenceSpace     = Symbol (),
    _baseLayer          = Symbol (),
@@ -71,7 +72,7 @@ Object .assign (X3DWebXRContext .prototype,
    {
       // Events
 
-      this ._activeViewpoint .addInterest ("setReferenceSpace", this);
+      this ._activeViewpoint .addInterest ("updateReferenceSpace", this);
    },
    async initXRSession ()
    {
@@ -98,8 +99,9 @@ Object .assign (X3DWebXRContext .prototype,
             ignoreDepthValues: true,
          });
 
-         this .finishedEvents () .addInterest ("finishedFrame", this);
-         this .endEvents ()      .addInterest ("endFrame",      this);
+         this .sensorEvents ()   .addInterest ("updateReferenceSpace", this);
+         this .finishedEvents () .addInterest ("finishedFrame",        this);
+         this .endEvents ()      .addInterest ("endFrame",             this);
 
          session .updateRenderState ({ baseLayer });
          session .addEventListener( "inputsourceschange", event => this .setInputSources (event));
@@ -120,7 +122,6 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .setSession (session);
          this .setDefaultFrameBuffer (baseLayer .framebuffer);
-         this .setReferenceSpace ();
          this .removeHit (this .getHit ());
 
          // session .addEventListener ("select", event =>
@@ -142,8 +143,9 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .finishedEvents () .removeInterest ("finishedFrame", this);
-         this .endEvents ()      .removeInterest ("endFrame",      this);
+         this .sensorEvents ()   .removeInterest ("updateReferenceSpace", this);
+         this .finishedEvents () .removeInterest ("finishedFrame",        this);
+         this .endEvents ()      .removeInterest ("endFrame",             this);
 
          this .setSession (window);
          this .setDefaultFrameBuffer (null);
@@ -160,7 +162,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]         = null;
       });
    },
-   setReferenceSpace: (function ()
+   updateReferenceSpace: (function ()
    {
       const
          translation = new Vector3 (),
@@ -187,8 +189,53 @@ Object .assign (X3DWebXRContext .prototype,
          const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
 
          this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
+
+         this .updatePose ();
       };
    })(),
+   updatePose ()
+   {
+      // Get matrices from views.
+
+      const
+         originalPose = this [_frame] .getViewerPose (this [_referenceSpace]),
+         pose         = this [_pose];
+
+      pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
+      pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
+
+      let v = 0;
+
+      for (const originalView of originalPose .views)
+      {
+         const { x, y, width, height } = this [_baseLayer] .getViewport (originalView);
+
+         // WebXR Emulator: second view has width zero if in non-stereo mode.
+         if (!width)
+            continue;
+
+         this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
+
+         const view = pose .views [v] ??= {
+            projectionMatrix: new Matrix4 (),
+            cameraSpaceMatrix: new Matrix4 (),
+            viewMatrix: new Matrix4 (),
+            matrix: new Matrix4 (),
+            inverse: new Matrix4 (),
+         };
+
+         view .projectionMatrix .assign (originalView .projectionMatrix);
+         view .cameraSpaceMatrix .assign (originalView .transform .matrix);
+         view .viewMatrix .assign (originalView .transform .inverse .matrix);
+         view .matrix .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
+         view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
+
+         ++ v;
+      }
+
+      pose .views .length              = v;
+      this .getFrameBuffers () .length = v;
+   },
    setInputSources (event)
    {
       for (const inputSource of event .added)
@@ -223,6 +270,10 @@ Object .assign (X3DWebXRContext .prototype,
          if (!frame)
             return;
 
+         this [_frame] = frame;
+
+         // Emulator
+
          const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
 
          // WebXR Emulator or polyfill.
@@ -239,51 +290,13 @@ Object .assign (X3DWebXRContext .prototype,
             this .getViewer () .gamepad (gamepad);
          }
 
-         this .setReferenceSpace ();
-
-         // Get matrices from views.
-
-         const
-            viewport     = this .getViewport () .getValue (),
-            originalPose = frame .getViewerPose (this [_referenceSpace]),
-            pose         = this [_pose];
-
-         pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
-         pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
-
-         let v = 0;
-
-         for (const originalView of originalPose .views)
-         {
-            const { x, y, width, height } = this [_baseLayer] .getViewport (originalView);
-
-            // WebXR Emulator: second view has width zero if in non-stereo mode.
-            if (!width)
-               continue;
-
-            this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
-
-            const view = pose .views [v] ??= {
-               projectionMatrix: new Matrix4 (),
-               cameraSpaceMatrix: new Matrix4 (),
-               viewMatrix: new Matrix4 (),
-               matrix: new Matrix4 (),
-               inverse: new Matrix4 (),
-            };
-
-            view .projectionMatrix .assign (originalView .projectionMatrix);
-            view .cameraSpaceMatrix .assign (originalView .transform .matrix);
-            view .viewMatrix .assign (originalView .transform .inverse .matrix);
-            view .matrix .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
-            view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
-
-            ++ v;
-         }
-
-         pose .views .length              = v;
-         this .getFrameBuffers () .length = v;
+         this .updateReferenceSpace ();
 
          // Get target ray matrices from input sources.
+
+         const
+            viewport = this .getViewport () .getValue (),
+            pose     = this [_pose];
 
          for (const [original, { matrix, inverse }] of this [_inputSources])
          {
