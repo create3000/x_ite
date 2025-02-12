@@ -179,7 +179,7 @@ Object .assign (X3DWebXRContext .prototype,
          }
          else
          {
-            translation .assign (Vector3. Zero);
+            translation .assign (Vector3 .Zero);
             rotation    .assign (Rotation4 .Identity);
          }
 
