@@ -100,7 +100,7 @@ Object .assign (X3DWebXRContext .prototype,
          });
 
          this .cameraEvents ()   .addInterest ("updateReferenceSpace", this);
-         this .finishedEvents () .addInterest ("finishedFrame",        this);
+         this .finishedEvents () .addInterest ("updatePointers",        this);
          this .endEvents ()      .addInterest ("endFrame",             this);
 
          session .updateRenderState ({ baseLayer });
@@ -144,7 +144,7 @@ Object .assign (X3DWebXRContext .prototype,
          await this .getSession () .end () .catch (Function .prototype);
 
          this .cameraEvents ()   .removeInterest ("updateReferenceSpace", this);
-         this .finishedEvents () .removeInterest ("finishedFrame",        this);
+         this .finishedEvents () .removeInterest ("updatePointers",        this);
          this .endEvents ()      .removeInterest ("endFrame",             this);
 
          this .setSession (window);
@@ -294,7 +294,7 @@ Object .assign (X3DWebXRContext .prototype,
       pose .views .length              = v;
       this .getFrameBuffers () .length = v;
    },
-   finishedFrame: (function ()
+   updatePointers: (function ()
    {
       const
          blue           = new Color3 (0.5, 0.75, 1),
