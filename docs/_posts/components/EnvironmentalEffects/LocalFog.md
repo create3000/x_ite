@@ -88,7 +88,7 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 ## Example
 
-<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/LocalFog.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
+<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/LocalFog.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/screenshot.png" alt="LocalFog"/>
 </x3d-canvas>
 

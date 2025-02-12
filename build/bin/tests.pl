@@ -40,9 +40,6 @@ sub examples
       $extra .= ", xrButtonPosition: \"$tree->{$component}->{$typeName}->{xrButtonPosition}\""
          if $tree -> {$component} -> {$typeName} -> {"xrButtonPosition"};
 
-      $extra .= ", xrMovementControl: \"$tree->{$component}->{$typeName}->{xrMovementControl}\""
-         if $tree -> {$component} -> {$typeName} -> {"xrMovementControl"};
-
       say FILE "   { component: \"$component\", test: \"$typeName\"$extra },",
    }
 

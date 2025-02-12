@@ -68,7 +68,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsCurve/NurbsCurve.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsCurve/NurbsCurve.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/NURBS/NurbsCurve/screenshot.png" alt="NurbsCurve"/>
 </x3d-canvas>
 

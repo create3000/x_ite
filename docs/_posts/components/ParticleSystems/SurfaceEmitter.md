@@ -94,7 +94,7 @@ The geometry node provides geometry used as the emitting *surface*.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/SurfaceEmitter/SurfaceEmitter.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/SurfaceEmitter/SurfaceEmitter.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/ParticleSystems/SurfaceEmitter/screenshot.png" alt="SurfaceEmitter"/>
 </x3d-canvas>
 

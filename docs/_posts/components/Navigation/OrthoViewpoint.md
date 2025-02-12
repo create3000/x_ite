@@ -204,7 +204,7 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/screenshot.png" alt="OrthoViewpoint"/>
 </x3d-canvas>
 

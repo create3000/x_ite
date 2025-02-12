@@ -75,7 +75,7 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWPOINT">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/screenshot.png" alt="GeneratedCubeMapTexture"/>
 </x3d-canvas>
 

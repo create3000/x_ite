@@ -175,6 +175,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          if (viewpointNode)
          {
+            viewpointNode .update ();
             viewpointNode .getViewMatrix () .get (translation, rotation);
          }
          else

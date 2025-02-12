@@ -122,9 +122,10 @@ Object .assign (Bookmarks .prototype,
       console .time ("Scene loaded in");
 
       this .browser .getBrowserOptions () .reset ();
-      $(this .browser .element) .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`));
-      $(this .browser .element) .addClass (`xr-button-${options .xrButtonPosition ?? "br"}`);
-      this .browser .setBrowserOption ("XRMovementControl", options .xrMovementControl ?? "VIEWER_POSE");
+
+      $(this .browser .element)
+         .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`))
+         .addClass (`xr-button-${options .xrButtonPosition ?? "br"}`);
 
       await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
