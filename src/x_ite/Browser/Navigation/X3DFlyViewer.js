@@ -396,6 +396,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    gamepad (gamepad)
    {
+      if (!gamepad)
+         return;
+
       if (gamepad .axes .length < 4)
          return;
 
