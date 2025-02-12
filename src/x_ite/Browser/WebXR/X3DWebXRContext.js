@@ -55,25 +55,18 @@ import Matrix4     from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock        from "../../../standard/Utility/Lock.js";
 
 const
-   _frame              = Symbol (),
-   _baseReferenceSpace = Symbol (),
-   _referenceSpace     = Symbol (),
-   _baseLayer          = Symbol (),
-   _pose               = Symbol (),
-   _inputSources       = Symbol (),
-   _inputRay           = Symbol (),
-   _inputPoint         = Symbol ();
+   _frame          = Symbol (),
+   _referenceSpace = Symbol (),
+   _baseLayer      = Symbol (),
+   _pose           = Symbol (),
+   _inputSources   = Symbol (),
+   _inputRay       = Symbol (),
+   _inputPoint     = Symbol ();
 
 function X3DWebXRContext () { }
 
 Object .assign (X3DWebXRContext .prototype,
 {
-   initialize ()
-   {
-      // Events
-
-      this ._activeViewpoint .addInterest ("updateReferenceSpace", this);
-   },
    async initXRSession ()
    {
       return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
@@ -99,16 +92,16 @@ Object .assign (X3DWebXRContext .prototype,
             ignoreDepthValues: true,
          });
 
-         this .cameraEvents ()   .addInterest ("updateReferenceSpace", this);
-         this .finishedEvents () .addInterest ("updatePointers",        this);
-         this .endEvents ()      .addInterest ("endFrame",             this);
+         this .cameraEvents ()   .addInterest ("updatePose",     this);
+         this .finishedEvents () .addInterest ("updatePointers", this);
+         this .endEvents ()      .addInterest ("endFrame",       this);
 
          session .updateRenderState ({ baseLayer });
          session .addEventListener( "inputsourceschange", event => this .setInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
 
-         this [_baseReferenceSpace] = referenceSpace;
-         this [_baseLayer]          = baseLayer;
+         this [_referenceSpace] = referenceSpace;
+         this [_baseLayer]      = baseLayer;
 
          this [_pose] = {
             cameraSpaceMatrix: new Matrix4 (),
@@ -143,9 +136,9 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .cameraEvents ()   .removeInterest ("updateReferenceSpace", this);
-         this .finishedEvents () .removeInterest ("updatePointers",        this);
-         this .endEvents ()      .removeInterest ("endFrame",             this);
+         this .cameraEvents ()   .removeInterest ("updatePose",     this);
+         this .finishedEvents () .removeInterest ("updatePointers", this);
+         this .endEvents ()      .removeInterest ("endFrame",       this);
 
          this .setSession (window);
          this .setDefaultFrameBuffer (null);
@@ -153,13 +146,12 @@ Object .assign (X3DWebXRContext .prototype,
          for (const { hit } of this [_inputSources] .values ())
             this .removeHit (hit);
 
-         this [_baseReferenceSpace] = null;
-         this [_referenceSpace]     = null;
-         this [_baseLayer]          = null;
-         this [_pose]               = null;
-         this [_inputSources]       = null;
-         this [_inputRay]           = null;
-         this [_inputPoint]         = null;
+         this [_referenceSpace] = null;
+         this [_baseLayer]      = null;
+         this [_pose]           = null;
+         this [_inputSources]   = null;
+         this [_inputRay]       = null;
+         this [_inputPoint]     = null;
       });
    },
    getPose ()
@@ -220,46 +212,22 @@ Object .assign (X3DWebXRContext .prototype,
 
       this .addBrowserEvent ();
    },
-   updateReferenceSpace: (function ()
-   {
-      const
-         translation = new Vector3 (),
-         rotation    = new Rotation4 ();
-
-      return function ()
-      {
-         if (!this [_baseReferenceSpace])
-            return;
-
-         const viewpointNode = this .getActiveViewpoint ();
-
-         if (viewpointNode)
-         {
-            viewpointNode .getViewMatrix () .get (translation, rotation);
-         }
-         else
-         {
-            translation .assign (Vector3 .Zero);
-            rotation    .assign (Rotation4 .Identity);
-         }
-
-         const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
-
-         this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
-
-         this .updatePose ();
-      };
-   })(),
    updatePose ()
    {
       // Get matrices from views.
 
       const
-         originalPose = this [_frame] .getViewerPose (this [_referenceSpace]),
-         pose         = this [_pose];
+         originalPose  = this [_frame] .getViewerPose (this [_referenceSpace]),
+         pose          = this [_pose],
+         viewpointNode = this .getActiveViewpoint ();
 
-      pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
-      pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
+      pose .cameraSpaceMatrix
+         .assign (originalPose .transform .matrix)
+         .multRight (viewpointNode .getCameraSpaceMatrix ());
+
+      pose .viewMatrix
+         .assign (originalPose .transform .inverse .matrix)
+         .multLeft (viewpointNode .getViewMatrix ());
 
       let v = 0;
 
@@ -282,10 +250,22 @@ Object .assign (X3DWebXRContext .prototype,
          };
 
          view .projectionMatrix .assign (originalView .projectionMatrix);
-         view .cameraSpaceMatrix .assign (originalView .transform .matrix);
-         view .viewMatrix .assign (originalView .transform .inverse .matrix);
-         view .matrix .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
-         view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
+
+         view .cameraSpaceMatrix
+            .assign (originalView .transform .matrix)
+            .multRight (viewpointNode .getCameraSpaceMatrix ());
+
+         view .viewMatrix
+            .assign (originalView .transform .inverse .matrix)
+            .multLeft (viewpointNode .getViewMatrix ());
+
+         view .matrix
+            .assign (pose .cameraSpaceMatrix)
+            .multRight (view .viewMatrix);
+
+         view .inverse
+            .assign (view .cameraSpaceMatrix)
+            .multRight (pose .viewMatrix);
 
          ++ v;
       }
