@@ -269,8 +269,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       // Time
 
-      this .setFrame (frame);
       this .advanceTime ();
+      this .setFrame (frame);
 
       // Events
 
