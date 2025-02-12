@@ -162,6 +162,10 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]         = null;
       });
    },
+   getPose ()
+   {
+      return this [_pose];
+   },
    updateReferenceSpace: (function ()
    {
       const
@@ -467,10 +471,6 @@ Object .assign (X3DWebXRContext .prototype,
 
       // WebXR Emulator and polyfill: bind to null, to prevent changes.
       gl .bindVertexArray (null);
-   },
-   getPose ()
-   {
-      return this [_pose];
    },
    sensorHitPulse (hit, gamepad)
    {
