@@ -114,7 +114,7 @@ Time event generated when sensor is touched by pointing device, and then deselec
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/TouchSensor.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/TouchSensor.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/screenshot.png" alt="TouchSensor"/>
 </x3d-canvas>
 

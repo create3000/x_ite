@@ -95,7 +95,7 @@ Linearly interpolated output value determined by current key time and correspond
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Interpolation/CoordinateInterpolator/CoordinateInterpolator.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Interpolation/CoordinateInterpolator/CoordinateInterpolator.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/Interpolation/CoordinateInterpolator/screenshot.png" alt="CoordinateInterpolator"/>
 </x3d-canvas>
 

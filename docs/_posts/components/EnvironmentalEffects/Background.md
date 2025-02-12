@@ -237,7 +237,7 @@ Event sent when node becomes active/inactive.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Background/Background.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Background/Background.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/EnvironmentalEffects/Background/screenshot.png" alt="Background"/>
 </x3d-canvas>
 

@@ -142,7 +142,7 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/screenshot.png" alt="MicrophoneSource"/>
 </x3d-canvas>
 

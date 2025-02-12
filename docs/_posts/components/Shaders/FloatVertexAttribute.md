@@ -67,7 +67,7 @@ Required *name* for this particular VertexAttribute instance.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/FloatVertexAttribute.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/FloatVertexAttribute.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/screenshot.png" alt="FloatVertexAttribute"/>
 </x3d-canvas>
 

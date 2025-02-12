@@ -138,7 +138,7 @@ Size of the shadow map in pixels, must be power of two.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Lighting/SpotLight/SpotLight.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Lighting/SpotLight/SpotLight.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/Lighting/SpotLight/screenshot.png" alt="SpotLight"/>
 </x3d-canvas>
 

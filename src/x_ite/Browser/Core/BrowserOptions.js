@@ -133,13 +133,15 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "TextCompression",
          "ToneMapping",
          "XRButton",
+         "XRMovementControl",
          "XRSessionMode",
       ]);
 
       const mappings = new Map ([
-         ["AutoUpdate",    "update"],
-         ["XRButton",      "xrButton"],
-         ["XRSessionMode", "xrSessionMode"],
+         ["AutoUpdate",        "update"],
+         ["XRButton",          "xrButton"],
+         ["XRMovementControl", "xrMovementControl"],
+         ["XRSessionMode",     "xrSessionMode"],
       ]);
 
       const restorable = new Set ([
@@ -438,6 +440,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ToneMapping",                  new Fields .SFString ("NONE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "XRButton",                     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "XRMovementControl",            new Fields .SFString ("VIEWER_POSE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "XRSessionMode",                new Fields .SFString ("IMMERSIVE_VR")),
       ]),
       enumerable: true,

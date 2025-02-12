@@ -120,7 +120,7 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/Shaders/ShaderPart/screenshot.png" alt="ShaderPart"/>
 </x3d-canvas>
 

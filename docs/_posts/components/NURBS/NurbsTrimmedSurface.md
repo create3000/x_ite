@@ -121,7 +121,7 @@ A set of [Contour2D](/x_ite/components/nurbs/contour2d/) nodes are used as trimm
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/NurbsTrimmedSurface.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/NurbsTrimmedSurface.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/screenshot.png" alt="NurbsTrimmedSurface"/>
 </x3d-canvas>
 

@@ -109,6 +109,8 @@ class X3DCanvasElement extends HTMLElement
          "url",
          "xrButton",
          "xrbutton",
+         "xrMovementControl",
+         "xrmovementcontrol",
          "xrSessionMode",
          "xrsessionmode",
       ];

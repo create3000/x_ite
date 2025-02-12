@@ -115,7 +115,7 @@ Nonlinearly interpolated output value computed by using current time fraction al
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/SplineScalarInterpolator.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/SplineScalarInterpolator.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/screenshot.png" alt="SplineScalarInterpolator"/>
 </x3d-canvas>
 

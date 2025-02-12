@@ -122,6 +122,7 @@ Object .assign (Bookmarks .prototype,
       console .time ("Scene loaded in");
 
       this .browser .getBrowserOptions () .reset ();
+      this .browser .setBrowserOption ("XRMovementControl", options .xrMovementControl ?? "VIEWER_POSE");
 
       $(this .browser .element)
          .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`))

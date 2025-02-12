@@ -307,10 +307,19 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          }
          else
          {
-            // This projection matrix will change later before rendering.
-            this .getProjectionMatrix ()  .push (pose .views [0] .projectionMatrix);
-            this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
-            this .getViewMatrix ()        .push (pose .viewMatrix);
+            // This matrix will change later before rendering.
+            this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
+
+            if (this !== browser .getActiveLayer () || browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
+            {
+               this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+               this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+            }
+            else
+            {
+               this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
+               this .getViewMatrix ()        .push (pose .viewMatrix);
+            }
          }
       }
       else

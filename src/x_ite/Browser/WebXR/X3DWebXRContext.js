@@ -99,7 +99,7 @@ Object .assign (X3DWebXRContext .prototype,
             ignoreDepthValues: true,
          });
 
-         this .sensorEvents ()   .addInterest ("updateReferenceSpace", this);
+         this .displayEvents ()  .addInterest ("updateReferenceSpace", this);
          this .finishedEvents () .addInterest ("finishedFrame",        this);
          this .endEvents ()      .addInterest ("endFrame",             this);
 
@@ -143,7 +143,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .sensorEvents ()   .removeInterest ("updateReferenceSpace", this);
+         this .displayEvents ()  .removeInterest ("updateReferenceSpace", this);
          this .finishedEvents () .removeInterest ("finishedFrame",        this);
          this .endEvents ()      .removeInterest ("endFrame",             this);
 

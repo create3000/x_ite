@@ -174,7 +174,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/Networking/Inline/screenshot.png" alt="Inline"/>
 </x3d-canvas>
 

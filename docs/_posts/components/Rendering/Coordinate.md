@@ -42,7 +42,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/Coordinate/Coordinate.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/Coordinate/Coordinate.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/Rendering/Coordinate/screenshot.png" alt="Coordinate"/>
 </x3d-canvas>
 

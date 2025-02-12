@@ -105,7 +105,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsPatchSurface/NurbsPatchSurface.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsPatchSurface/NurbsPatchSurface.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/NURBS/NurbsPatchSurface/screenshot.png" alt="NurbsPatchSurface"/>
 </x3d-canvas>
 

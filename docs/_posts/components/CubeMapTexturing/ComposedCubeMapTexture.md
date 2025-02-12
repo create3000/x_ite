@@ -120,7 +120,7 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/CubeMapTexturing/ComposedCubeMapTexture/ComposedCubeMapTexture.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/CubeMapTexturing/ComposedCubeMapTexture/ComposedCubeMapTexture.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/CubeMapTexturing/ComposedCubeMapTexture/screenshot.png" alt="ComposedCubeMapTexture"/>
 </x3d-canvas>
 

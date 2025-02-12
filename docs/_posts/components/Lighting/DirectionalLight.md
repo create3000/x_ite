@@ -106,7 +106,7 @@ Size of the shadow map in pixels, must be power of two.
 
 ## Example
 
-<x3d-canvas class="xr-button-bl" src="https://create3000.github.io/media/examples/Lighting/DirectionalLight/DirectionalLight.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-bl" src="https://create3000.github.io/media/examples/Lighting/DirectionalLight/DirectionalLight.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE">
   <img src="https://create3000.github.io/media/examples/Lighting/DirectionalLight/screenshot.png" alt="DirectionalLight"/>
 </x3d-canvas>
 
