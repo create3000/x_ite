@@ -415,6 +415,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             .set (gamepad .axes [2], 0, gamepad .axes [3])
             .multiply (GAMEPAD_SPEED_FACTOR);
 
+         // Moving average.
          this .direction .add (axis) .divide (2);
 
          this .fly ();
