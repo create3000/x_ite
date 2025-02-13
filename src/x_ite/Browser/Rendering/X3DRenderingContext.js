@@ -82,14 +82,10 @@ function X3DRenderingContext ()
    this [_depthShaders] = new Map ();
    this [_localObjects] = [ ]; // shader objects dumpster
 
-   // XR support
+   // WebXR support
 
    this [_session]            = window;
    this [_defaultFrameBuffer] = null;
-
-   navigator .xr .addEventListener ("devicechange", () => this .updateXRButton ());
-
-   this .updateXRButton ();
 }
 
 Object .assign (X3DRenderingContext .prototype,
@@ -127,6 +123,12 @@ Object .assign (X3DRenderingContext .prototype,
       ]
       .map (event => `${event}.X3DRenderingContext-${this .getInstanceId ()}`)
       .join (" "), () => this .onfullscreen ());
+
+      // Check for WebXR support.
+
+      navigator .xr .addEventListener ("devicechange", () => this .updateXRButton ());
+
+      this .updateXRButton ();
    },
    getRenderer ()
    {
