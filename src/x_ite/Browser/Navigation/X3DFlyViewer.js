@@ -409,7 +409,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             return;
 
          if (gamepad .axes [2] === 0 && gamepad .axes [3] === 0)
+         {
+            this .startTime = Date .now ();
             return;
+         }
 
          axis
             .set (gamepad .axes [2], 0, gamepad .axes [3])
