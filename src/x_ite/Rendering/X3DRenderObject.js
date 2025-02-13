@@ -487,12 +487,14 @@ Object .assign (X3DRenderObject .prototype,
          this .collisionTime .start ();
 
          const
+            browser         = this .getBrowser (),
             viewpoint       = this .getViewpoint (),
             navigationInfo  = this .getNavigationInfo (),
             collisionRadius = navigationInfo .getCollisionRadius (),
             bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
             nearValue       = navigationInfo .getNearValue (),
-            avatarHeight    = navigationInfo .getAvatarHeight ();
+            avatarHeight    = navigationInfo .getAvatarHeight (),
+            pose            = browser .getPose ();
 
          // Determine width and height of camera
 
@@ -517,8 +519,12 @@ Object .assign (X3DRenderObject .prototype,
             .translate (viewpoint .getUserPosition ())
             .rotate (rotation)
             .inverse ()
-            .multRight (projectionMatrix)
-            .multLeft (viewpoint .getCameraSpaceMatrix ());
+            .multRight (projectionMatrix);
+
+         if (pose)
+            cameraSpaceProjectionMatrix .multLeft (pose .cameraSpaceMatrix);
+         else
+            cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
