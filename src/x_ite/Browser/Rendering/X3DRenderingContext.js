@@ -87,6 +87,8 @@ function X3DRenderingContext ()
    this [_session]            = window;
    this [_defaultFrameBuffer] = null;
 
+   navigator .xr .addEventListener ("devicechange", () => this .updateXRButton ());
+
    this .updateXRButton ();
 }
 
