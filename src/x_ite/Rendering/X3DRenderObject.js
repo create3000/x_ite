@@ -512,13 +512,13 @@ Object .assign (X3DRenderObject .prototype,
          rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
          viewpoint .straightenHorizon (rotation);
 
-         cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-         cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-         cameraSpaceProjectionMatrix .rotate (rotation);
-         cameraSpaceProjectionMatrix .inverse ();
-
-         cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-         cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+         cameraSpaceProjectionMatrix
+            .assign (viewpoint .getModelMatrix ())
+            .translate (viewpoint .getUserPosition ())
+            .rotate (rotation)
+            .inverse ()
+            .multRight (projectionMatrix)
+            .multLeft (viewpoint .getCameraSpaceMatrix ());
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
