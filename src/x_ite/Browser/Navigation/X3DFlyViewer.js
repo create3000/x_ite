@@ -64,7 +64,7 @@ const
    PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
    ROLL_ANGLE             = macOS ? Math .PI / 512 : Math .PI / 32,
    ROTATE_TIME            = 0.3,
-   GAMEPAD_SPEED_FACTOR   = 500;
+   GAMEPAD_SPEED_FACTOR   = 400;
 
 const
    MOVE = 0,
