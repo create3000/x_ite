@@ -64,7 +64,7 @@ const
    PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
    ROLL_ANGLE             = macOS ? Math .PI / 512 : Math .PI / 32,
    ROTATE_TIME            = 0.3,
-   GAMEPAD_SPEED_FACTOR   = new Vector3 (200, 0, 500);
+   GAMEPAD_SPEED_FACTOR   = 500;
 
 const
    MOVE = 0,
@@ -221,6 +221,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .event  = null;
       this .button = -1;
+
+      this .direction .set (0, 0, 0);
 
       $(document) .off (".X3DFlyViewer" + this .getId ());
 
@@ -394,23 +396,30 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          }
       }
    },
-   gamepad (gamepad)
+   gamepad: (function ()
    {
-      if (!gamepad)
-         return;
+      const axis = new Vector3 ();
 
-      if (gamepad .axes .length < 4)
-         return;
+      return function (gamepad)
+      {
+         if (!gamepad)
+            return;
 
-      if (gamepad .axes [2] === 0 && gamepad .axes [3] === 0)
-         return;
+         if (gamepad .axes .length < 4)
+            return;
 
-      this .direction
-         .set (gamepad .axes [2], 0, gamepad .axes [3])
-         .multVec (GAMEPAD_SPEED_FACTOR);
+         if (gamepad .axes [2] === 0 && gamepad .axes [3] === 0)
+            return;
 
-      this .fly ();
-   },
+         axis
+            .set (gamepad .axes [2], 0, gamepad .axes [3])
+            .multiply (GAMEPAD_SPEED_FACTOR);
+
+         this .direction .add (axis) .divide (2);
+
+         this .fly ();
+      };
+   })(),
    fly: (() =>
    {
       const
