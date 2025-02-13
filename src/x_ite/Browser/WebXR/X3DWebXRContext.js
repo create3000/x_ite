@@ -277,6 +277,7 @@ Object .assign (X3DWebXRContext .prototype,
          toVector       = new Vector3 (0, 0, -0.5),
          fromPoint      = new Vector3 (),
          toPoint        = new Vector3 (),
+         hitPoint       = new Vector3 (),
          hitRotation    = new Rotation4 (),
          hitSize        = 0.007,
          hitPressedSize = 0.005;
@@ -404,6 +405,11 @@ Object .assign (X3DWebXRContext .prototype,
 
                inputRayMatrix .multVecMatrix (fromPoint .assign (Vector3 .Zero));
                inputRayMatrix .multVecMatrix (toPoint   .assign (toVector));
+               inputRayMatrix .multVecMatrix (hitPoint  .assign (hit .originalPoint));
+
+               // Make ray shorter if track point is very close.
+               if (hitPoint .distance (fromPoint) < toPoint .distance (fromPoint))
+                  toPoint .assign (hitPoint);
 
                if (fromPoint .z > 0 || toPoint .z > 0)
                   continue;
