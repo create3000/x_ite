@@ -64,7 +64,7 @@ const
    PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
    ROLL_ANGLE             = macOS ? Math .PI / 512 : Math .PI / 32,
    ROTATE_TIME            = 0.3,
-   GAMEPAD_SPEED_FACTOR   = 400;
+   GAMEPAD_SPEED_FACTOR   = new Vector3 (300, 0, 400);
 
 const
    MOVE = 0,
@@ -416,7 +416,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
          axis
             .set (gamepad .axes [2], 0, gamepad .axes [3])
-            .multiply (GAMEPAD_SPEED_FACTOR);
+            .multVec (GAMEPAD_SPEED_FACTOR);
 
          // Moving average.
          this .direction .add (axis) .divide (2);
