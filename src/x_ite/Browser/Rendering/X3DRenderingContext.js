@@ -126,7 +126,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Check for WebXR support.
 
-      navigator .xr .addEventListener ("devicechange", () => this .updateXRButton ());
+      navigator .xr ?.addEventListener ("devicechange", () => this .updateXRButton ());
 
       this .updateXRButton ();
    },
@@ -485,6 +485,8 @@ Object .assign (X3DRenderingContext .prototype,
                event .preventDefault ();
                event .stopImmediatePropagation ();
                event .stopPropagation ();
+
+               this .startAudioElements ();
 
                if (this [_session] === window)
                   this .startXRSession ();

@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
       }
       else
       {
-         this .audioElement .pause ();
+         this .getBrowser () .stopAudioElement (this .audioElement);
 
          for (const track of this .mediaStreamAudioDestinationNode .stream .getAudioTracks ())
             track .stop ();

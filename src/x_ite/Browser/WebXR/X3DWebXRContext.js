@@ -81,9 +81,6 @@ Object .assign (X3DWebXRContext .prototype,
             session        = await navigator .xr .requestSession (mode),
             referenceSpace = await session .requestReferenceSpace ("local");
 
-         // Start audio context.
-         this .getAudioContext ();
-
          // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
