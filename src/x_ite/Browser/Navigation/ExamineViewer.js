@@ -63,14 +63,15 @@ typeof jquery_mousewheel; // import plugin
 const macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
-   SPIN_RELEASE_TIME = 20,
-   SPIN_ANGLE        = Algorithm .radians (2),
-   SPIN_FACTOR       = 0.3,
-   SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
-   MOVE_TIME         = 0.2,
-   ROTATE_TIME       = 0.2,
-   DISK_ANGLE        = Algorithm .radians (15),
-   CRITICAL_ANGLE    = Algorithm .radians (0.1);
+   SPIN_RELEASE_TIME   = 20,
+   SPIN_ANGLE          = Algorithm .radians (2),
+   SPIN_FACTOR         = 0.3,
+   SCROLL_FACTOR       = macOS ? 1 / 120 : 1 / 20,
+   MOVE_TIME           = 0.2,
+   ROTATE_TIME         = 0.2,
+   DISK_ANGLE          = Algorithm .radians (15),
+   CRITICAL_ANGLE      = Algorithm .radians (0.1),
+   GAMEPAD_SPIN_FACTOR = 10;
 
 function ExamineViewer (executionContext, navigationInfo)
 {
@@ -196,23 +197,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-
-            if (this .getStraightenHorizon ())
-            {
-               const viewpoint = this .getActiveViewpoint ();
-
-               this .fromPointer .set (x, y);
-               this .startOrientation .assign (viewpoint .getUserOrientation ());
-               this .lastRoll = 0;
-               this .negate   = 0;
-            }
-            else
-            {
-               this .trackballProjectToSphere (x, y, this .fromVector);
-            }
-
-            this .rotation      .assign (Rotation4 .Identity);
-            this .deltaRotation .assign (Rotation4 .Identity);
+            this .startRotate (x, y);
 
             this .motionTime = Date .now ();
 
@@ -237,7 +222,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-
             this .getPointOnCenterPlane (x, y, this .fromPoint);
 
             this ._isActive = true;
@@ -300,10 +284,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    mousemove: (() =>
    {
-      const
-         translation = new Vector2 (),
-         axis        = new Vector3 (),
-         fromPoint   = new Vector3 ();
+      const fromPoint = new Vector3 ();
 
       return function (event)
       {
@@ -319,65 +300,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                event .preventDefault ();
                event .stopImmediatePropagation ();
 
-               if (this .getStraightenHorizon ())
-               {
-                  const
-                     viewpoint = this .getActiveViewpoint (),
-                     upVector  = viewpoint .getUpVector (true);
-
-                  translation .set (x, y) .subtract (this .fromPointer);
-
-                  const
-                     pixelPerRevolutionX = this .getViewport () [2] * 2,
-                     pixelPerRevolutionY = this .getViewport () [3] * 2,
-                     startRoll           = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .zAxis)) .dot (upVector), -1, 1)),
-                     roll                = Math .PI * 2 * +translation .y / pixelPerRevolutionY,
-                     clampedRoll         = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
-
-                  // Adjust fromPointer y.
-
-                  if (this .lastRoll - Math .abs (roll) > 0)
-                     this .fromPointer .y += (roll - clampedRoll) / (Math .PI * 2) * pixelPerRevolutionY;
-
-                  this .lastRoll = Math .abs (roll);
-
-                  // Check disk angle.
-
-                  if (!this .negate)
-                  {
-                     if (Math .PI / 2 - Math .abs (startRoll - Math .PI / 2) < DISK_ANGLE)
-                     {
-                        if (y - this .getViewport () [1] > this .getViewport () [3] / 2)
-                           this .negate = startRoll < Math .PI / 4 ? -1 : 1;
-                        else
-                           this .negate = startRoll > Math .PI / 4 ? -1 : 1;
-                     }
-                     else
-                     {
-                        this .negate = 1;
-                     }
-                  }
-
-                  // Determine roll and rotation.
-
-                  this .deltaRotation .assign (this .rotation);
-                  this .roll .set (1, 0, 0, clampedRoll);
-                  this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolutionX * this .negate);
-                  this .deltaRotation .inverse () .multRight (this .rotation);
-               }
-               else
-               {
-                  const toVector = this .trackballProjectToSphere (x, y, this .toVector);
-
-                  // Determine roll and rotation.
-
-                  this .deltaRotation .assign (this .rotation);
-                  this .roll .assign (Rotation4 .Identity);
-                  this .rotation .setFromToVec (toVector, this .fromVector);
-                  this .deltaRotation .inverse () .multRight (this .rotation);
-               }
-
-               this .addRotate (this .roll, this .rotation, this .deltaRotation);
+               this .rotate (x, y);
 
                this .motionTime = Date .now ();
                break;
@@ -621,6 +544,12 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       if (gamepad .axes .length < 4)
          return;
 
+      if (gamepad .axes [2] === 0 && gamepad .axes [3] === 0)
+      {
+         this .rotationChaser ._set_value = Rotation4 .Identity;
+         return;
+      }
+
       if (gamepad .buttons [1] .pressed)
       {
          // Zoom
@@ -628,27 +557,99 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       else // default
       {
          // Rotate
+
+         this .startRotate (0, 0);
+         this .rotate (gamepad .axes [2] * GAMEPAD_SPIN_FACTOR, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR / 2);
       }
    },
-   set_positionOffset__ (value)
+   startRotate (x, y)
    {
-      const viewpoint = this .getActiveViewpoint ();
+      if (this .getStraightenHorizon ())
+      {
+         const viewpoint = this .getActiveViewpoint ();
 
-      viewpoint ._positionOffset = value;
+         this .fromPointer .set (x, y);
+         this .startOrientation .assign (viewpoint .getUserOrientation ());
+         this .lastRoll = 0;
+         this .negate   = 0;
+      }
+      else
+      {
+         this .trackballProjectToSphere (x, y, this .fromVector);
+      }
+
+      this .rotation      .assign (Rotation4 .Identity);
+      this .deltaRotation .assign (Rotation4 .Identity);
    },
-   set_centerOfRotationOffset__ (value)
+   rotate: (() =>
    {
-      const viewpoint = this .getActiveViewpoint ();
+      const
+         translation = new Vector2 (),
+         axis        = new Vector3 ();
 
-      viewpoint ._centerOfRotationOffset = value;
-   },
-   set_rotation__ (value)
-   {
-      const viewpoint = this .getActiveViewpoint ();
+      return function (x, y)
+      {
+         if (this .getStraightenHorizon ())
+         {
+            const
+               viewpoint = this .getActiveViewpoint (),
+               upVector  = viewpoint .getUpVector (true);
 
-      viewpoint ._orientationOffset = this .getOrientationOffset (this .roll, value .getValue (), this .initialOrientationOffset);
-      viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
-   },
+            translation .set (x, y) .subtract (this .fromPointer);
+
+            const
+               pixelPerRevolutionX = this .getViewport () [2] * 2,
+               pixelPerRevolutionY = this .getViewport () [3] * 2,
+               startRoll           = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .zAxis)) .dot (upVector), -1, 1)),
+               roll                = Math .PI * 2 * +translation .y / pixelPerRevolutionY,
+               clampedRoll         = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
+
+            // Adjust fromPointer y.
+
+            if (this .lastRoll - Math .abs (roll) > 0)
+               this .fromPointer .y += (roll - clampedRoll) / (Math .PI * 2) * pixelPerRevolutionY;
+
+            this .lastRoll = Math .abs (roll);
+
+            // Check disk angle.
+
+            if (!this .negate)
+            {
+               if (Math .PI / 2 - Math .abs (startRoll - Math .PI / 2) < DISK_ANGLE)
+               {
+                  if (y - this .getViewport () [1] > this .getViewport () [3] / 2)
+                     this .negate = startRoll < Math .PI / 4 ? -1 : 1;
+                  else
+                     this .negate = startRoll > Math .PI / 4 ? -1 : 1;
+               }
+               else
+               {
+                  this .negate = 1;
+               }
+            }
+
+            // Determine roll and rotation.
+
+            this .deltaRotation .assign (this .rotation);
+            this .roll .set (1, 0, 0, clampedRoll);
+            this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolutionX * this .negate);
+            this .deltaRotation .inverse () .multRight (this .rotation);
+         }
+         else
+         {
+            const toVector = this .trackballProjectToSphere (x, y, this .toVector);
+
+            // Determine roll and rotation.
+
+            this .deltaRotation .assign (this .rotation);
+            this .roll .assign (Rotation4 .Identity);
+            this .rotation .setFromToVec (toVector, this .fromVector);
+            this .deltaRotation .inverse () .multRight (this .rotation);
+         }
+
+         this .addRotate (this .roll, this .rotation, this .deltaRotation);
+      };
+   })(),
    addRotate (roll, rotation, deltaRotation)
    {
       const viewpoint = this .getActiveViewpoint ();
@@ -880,6 +881,25 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          return r;
       };
    })(),
+   set_positionOffset__ (value)
+   {
+      const viewpoint = this .getActiveViewpoint ();
+
+      viewpoint ._positionOffset = value;
+   },
+   set_centerOfRotationOffset__ (value)
+   {
+      const viewpoint = this .getActiveViewpoint ();
+
+      viewpoint ._centerOfRotationOffset = value;
+   },
+   set_rotation__ (value)
+   {
+      const viewpoint = this .getActiveViewpoint ();
+
+      viewpoint ._orientationOffset = this .getOrientationOffset (this .roll, value .getValue (), this .initialOrientationOffset);
+      viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
+   },
    disconnect ()
    {
       const browser = this .getBrowser ();
