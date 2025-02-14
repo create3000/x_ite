@@ -670,6 +670,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          // console .warn ("start")
 
+         this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
+
          this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
          this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
@@ -678,9 +680,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .rotationChaser ._set_value       = Rotation4 .Identity;
          this .rotationChaser ._set_destination = rotation;
       }
-
-      this .disconnect ();
-      this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
    },
    addSpinning (deltaRotation)
    {
