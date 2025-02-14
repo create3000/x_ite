@@ -414,14 +414,28 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             return;
          }
 
-         axis
-            .set (gamepad .axes [2], 0, gamepad .axes [3])
-            .multVec (GAMEPAD_SPEED_FACTOR);
+         if (gamepad .buttons [1] ?.pressed)
+         {
+            axis
+               .set (gamepad .axes [2], 0, gamepad .axes [3])
+               .multVec (GAMEPAD_SPEED_FACTOR);
 
-         // Moving average.
-         this .direction .add (axis) .divide (2);
+            // Moving average.
+            this .direction .add (axis) .divide (2);
 
-         this .fly ();
+            this .pan ();
+         }
+         else // default
+         {
+            axis
+               .set (gamepad .axes [2], 0, gamepad .axes [3])
+               .multVec (GAMEPAD_SPEED_FACTOR);
+
+            // Moving average.
+            this .direction .add (axis) .divide (2);
+
+            this .fly ();
+         }
       };
    })(),
    fly: (() =>
