@@ -155,6 +155,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
              `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
              `      WebXR: ${"xr" in navigator}\n` +
              `   Rendering Properties\n` +
+             `      ContentScale: ${this .getRenderingProperty ("ContentScale")}\n` +
              `      Antialiased: ${this .getRenderingProperty ("Antialiased")}\n` +
              `      Max samples: ${this .getMaxSamples ()}\n` +
              `      Depth size: ${this .getDepthSize ()} bits\n` +
