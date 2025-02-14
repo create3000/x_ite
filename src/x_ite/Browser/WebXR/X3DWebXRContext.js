@@ -55,13 +55,13 @@ import Matrix4     from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock        from "../../../standard/Utility/Lock.js";
 
 const
-   _frame          = Symbol (),
    _referenceSpace = Symbol (),
    _baseLayer      = Symbol (),
    _pose           = Symbol (),
    _inputSources   = Symbol (),
    _inputRay       = Symbol (),
-   _inputPoint     = Symbol ();
+   _inputPoint     = Symbol (),
+   _frame          = Symbol ();
 
 function X3DWebXRContext () { }
 
@@ -84,25 +84,14 @@ Object .assign (X3DWebXRContext .prototype,
          // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
-         const baseLayer = new XRWebGLLayer (session, gl,
-         {
-            antialias: false,
-            alpha: true,
-            depth: false,
-            ignoreDepthValues: true,
-            framebufferScaleFactor: this .getRenderingProperty ("ContentScale"),
-         });
-
          this .cameraEvents ()   .addInterest ("updatePose",     this);
          this .finishedEvents () .addInterest ("updatePointers", this);
          this .endEvents ()      .addInterest ("endFrame",       this);
 
-         session .updateRenderState ({ baseLayer });
          session .addEventListener ("inputsourceschange", event => this .setInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
 
          this [_referenceSpace] = referenceSpace;
-         this [_baseLayer]      = baseLayer;
 
          this [_pose] = {
             cameraSpaceMatrix: new Matrix4 (),
@@ -115,7 +104,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]   = new ScreenPoint (this);
 
          this .setSession (session);
-         this .setDefaultFrameBuffer (baseLayer .framebuffer);
+         this .setFramebufferScaleFactor (this .getRenderingProperty ("ContentScale"));
          this .removeHit (this .getHit ());
 
          // session .addEventListener ("select", event =>
@@ -154,6 +143,30 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputRay]       = null;
          this [_inputPoint]     = null;
       });
+   },
+   setFramebufferScaleFactor (value)
+   {
+      const
+         gl      = this .getContext (),
+         session = this .getSession ();
+
+      if (session === window)
+         return;
+
+      const baseLayer = new XRWebGLLayer (session, gl,
+      {
+         antialias: false,
+         alpha: true,
+         depth: false,
+         ignoreDepthValues: true,
+         framebufferScaleFactor: value,
+      });
+
+      session .updateRenderState ({ baseLayer });
+
+      this .setDefaultFrameBuffer (baseLayer .framebuffer);
+
+      this [_baseLayer] = baseLayer;
    },
    getPose ()
    {

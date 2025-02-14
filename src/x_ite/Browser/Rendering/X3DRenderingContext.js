@@ -387,14 +387,16 @@ Object .assign (X3DRenderingContext .prototype,
          width        = Math .max (canvas .parent () .width ()  * contentScale, 1)|0,
          height       = Math .max (canvas .parent () .height () * contentScale, 1)|0;
 
+      this .addBrowserEvent ();
+
+      if (this .getSession () !== window)
+         return;
+
       canvas
          .prop ("width",  width)
          .prop ("height", height);
 
-      if (this [_frameBuffers] .length < 2)
-         this .reshapeFrameBuffer (0, 0, 0, width, height);
-
-      this .addBrowserEvent ();
+      this .reshapeFrameBuffer (0, 0, 0, width, height);
    },
    reshapeFrameBuffer (i, x, y, width, height)
    {
