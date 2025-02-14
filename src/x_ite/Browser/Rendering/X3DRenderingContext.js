@@ -381,22 +381,22 @@ Object .assign (X3DRenderingContext .prototype,
    },
    reshape ()
    {
+      if (this .getSession () !== window)
+         return;
+
       const
          canvas       = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
          width        = Math .max (canvas .parent () .width ()  * contentScale, 1)|0,
          height       = Math .max (canvas .parent () .height () * contentScale, 1)|0;
 
-      this .addBrowserEvent ();
-
-      if (this .getSession () !== window)
-         return;
-
       canvas
          .prop ("width",  width)
          .prop ("height", height);
 
       this .reshapeFrameBuffer (0, 0, 0, width, height);
+
+      this .addBrowserEvent ();
    },
    reshapeFrameBuffer (i, x, y, width, height)
    {
