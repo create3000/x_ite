@@ -211,7 +211,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                this .trackballProjectToSphere (x, y, this .fromVector);
             }
 
-            this .rotation .assign (Rotation4 .Identity);
+            this .rotation      .assign (Rotation4 .Identity);
             this .deltaRotation .assign (Rotation4 .Identity);
 
             this .motionTime = Date .now ();
@@ -613,6 +613,23 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
+   gamepad (gamepad)
+   {
+      if (!gamepad)
+         return;
+
+      if (gamepad .axes .length < 4)
+         return;
+
+      if (gamepad .buttons [1] .pressed)
+      {
+         // Zoom
+      }
+      else // default
+      {
+         // Rotate
+      }
+   },
    set_positionOffset__ (value)
    {
       const viewpoint = this .getActiveViewpoint ();
