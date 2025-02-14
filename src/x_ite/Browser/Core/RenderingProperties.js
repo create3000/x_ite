@@ -80,9 +80,7 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
    },
    set_ContentScale__ (contentScale)
    {
-      const browser = this .getBrowser ();
-
-      browser .setFramebufferScaleFactor ?.(contentScale .getValue ());
+      this .getBrowser () .setFramebufferScaleFactor ?.(contentScale .getValue ());
    }
 });
 
