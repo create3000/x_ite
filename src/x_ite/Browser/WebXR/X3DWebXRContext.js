@@ -154,15 +154,14 @@ Object .assign (X3DWebXRContext .prototype,
       if (session === window)
          return;
 
-      const baseLayer = new XRWebGLLayer (session, this .getContext (),
-      {
+      const baseLayer = new XRWebGLLayer (session, this .getContext (), Object .assign ({
          antialias: false,
          alpha: true,
          depth: false,
          ignoreDepthValues: true,
          framebufferScaleFactor: this .getRenderingProperty ("ContentScale"),
-         ... options,
-      });
+      },
+      options));
 
       this [_baseLayer] = baseLayer;
 
