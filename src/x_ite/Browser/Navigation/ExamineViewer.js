@@ -538,11 +538,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    })(),
    gamepads (gamepads)
    {
-      const gamepad = gamepads .find (({ axes }) => axes [2] || axes [3])
+      const gamepad = gamepads .find (({ axes }) => axes [2] || axes [3]);
 
       if (!gamepad)
       {
-         this .rotationChaser ._value_changed .removeInterest ("set_rotation__", this);
+         if (this .rotationChaser ._value_changed .hasInterest ("set_rotation__", this))
+            this .rotationChaser ._value_changed .removeInterest ("set_rotation__", this);
+
          return;
       }
 

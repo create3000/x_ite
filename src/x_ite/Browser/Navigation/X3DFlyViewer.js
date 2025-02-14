@@ -402,7 +402,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       return function (gamepads)
       {
-         const gamepad = gamepads .find (({ axes }) => axes [2] || axes [3])
+         const gamepad = gamepads .find (({ axes }) => axes [2] || axes [3]);
 
          if (!gamepad)
          {
