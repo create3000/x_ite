@@ -162,11 +162,11 @@ Object .assign (X3DWebXRContext .prototype,
          framebufferScaleFactor: value,
       });
 
+      this [_baseLayer] = baseLayer;
+
       session .updateRenderState ({ baseLayer });
 
       this .setDefaultFrameBuffer (baseLayer .framebuffer);
-
-      this [_baseLayer] = baseLayer;
    },
    getPose ()
    {
