@@ -144,7 +144,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]     = null;
       });
    },
-   setFramebufferScaleFactor (value)
+   setFramebufferScaleFactor (framebufferScaleFactor)
    {
       const
          gl      = this .getContext (),
@@ -159,7 +159,7 @@ Object .assign (X3DWebXRContext .prototype,
          alpha: true,
          depth: false,
          ignoreDepthValues: true,
-         framebufferScaleFactor: value,
+         framebufferScaleFactor,
       });
 
       this [_baseLayer] = baseLayer;
