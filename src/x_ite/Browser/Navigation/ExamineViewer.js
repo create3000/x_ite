@@ -538,7 +538,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    })(),
    gamepads (gamepads)
    {
-      const gamepad = gamepads .find (gamepad => gamepad .axes [2] !== 0 || gamepad .axes [3] !== 0)
+      const gamepad = gamepads .find (({ axes }) => axes [2] !== 0 || axes [3] !== 0)
 
       if (!gamepad)
       {
