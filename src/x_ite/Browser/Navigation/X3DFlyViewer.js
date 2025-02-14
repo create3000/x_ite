@@ -405,13 +405,13 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          if (!gamepads .length)
             return;
 
-         if (gamepads .every (gamepad => gamepad .axes [2] === 0 && gamepad .axes [3] === 0))
+         const gamepad = gamepads .find (gamepad => gamepad .axes [2] !== 0 || gamepad .axes [3] !== 0)
+
+         if (!gamepad)
          {
             this .startTime = Date .now ();
             return;
          }
-
-         const gamepad = gamepads .find (gamepad => gamepad .axes [2] !== 0 || gamepad .axes [3] !== 0)
 
          if (gamepad .buttons [1] .pressed)
          {

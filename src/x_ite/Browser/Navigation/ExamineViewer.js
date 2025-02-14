@@ -538,16 +538,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    })(),
    gamepads (gamepads)
    {
-      if (!gamepads .length)
-         return;
+      const gamepad = gamepads .find (gamepad => gamepad .axes [2] !== 0 || gamepad .axes [3] !== 0)
 
-      if (gamepads .every (gamepad => gamepad .axes [2] === 0 && gamepad .axes [3] === 0))
+      if (!gamepad)
       {
          this .rotationChaser ._set_value = Rotation4 .Identity;
          return;
       }
-
-      const gamepad = gamepads .find (gamepad => gamepad .axes [2] !== 0 || gamepad .axes [3] !== 0)
 
       if (gamepad .buttons [1] .pressed)
       {
