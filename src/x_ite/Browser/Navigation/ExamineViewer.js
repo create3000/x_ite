@@ -542,11 +542,17 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       if (!gamepad)
       {
-         if (this .rotationChaser ._value_changed .hasInterest ("set_rotation__", this))
+         if (gamepads .action)
+         {
+            gamepads .action = false;
+
             this .rotationChaser ._value_changed .removeInterest ("set_rotation__", this);
+         }
 
          return;
       }
+
+      gamepads .action = true;
 
       if (gamepad .buttons [1] .pressed)
       {
