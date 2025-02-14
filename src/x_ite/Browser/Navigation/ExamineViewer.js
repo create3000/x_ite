@@ -555,7 +555,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          // Rotate
 
          this .startRotate (0, 0);
-         this .rotate (gamepad .axes [2] * GAMEPAD_SPIN_FACTOR, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR / 2);
+         this .rotate (-gamepad .axes [2] * GAMEPAD_SPIN_FACTOR, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR);
       }
    },
    startRotate (x, y)
