@@ -542,7 +542,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       if (!gamepad)
       {
-         this .rotationChaser ._set_value = Rotation4 .Identity;
+         this .rotationChaser ._value_changed .removeInterest ("set_rotation__", this);
          return;
       }
 
