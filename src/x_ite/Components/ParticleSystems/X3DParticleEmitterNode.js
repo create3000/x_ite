@@ -69,7 +69,7 @@ function X3DParticleEmitterNode (executionContext)
    this ._surfaceArea .setUnit ("area");
 
    // Private properties
-   
+
    this .defines   = [ ];
    this .samplers  = [ ];
    this .uniforms  = new Map ();
@@ -248,7 +248,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Transform particles.
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, browser .getDefaultFrameBuffer ()); // Prevent texture feedback loop error, see NYC in Firefox.
+      gl .bindFramebuffer (gl .FRAMEBUFFER, browser .getDefaultFramebuffer ()); // Prevent texture feedback loop error, see NYC in Firefox.
       gl .bindBuffer (gl .ARRAY_BUFFER, null);
       gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
       gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);

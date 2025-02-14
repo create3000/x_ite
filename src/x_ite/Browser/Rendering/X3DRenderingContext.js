@@ -47,15 +47,15 @@
 
 import Fields                 from "../../Fields.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
-import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
+import MultiSampleFramebuffer from "../../Rendering/MultiSampleFramebuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
 
 const
    _session            = Symbol (),
-   _frameBuffers       = Symbol (),
-   _defaultFrameBuffer = Symbol (),
+   _framebuffers       = Symbol (),
+   _defaultFramebuffer = Symbol (),
    _transmissionBuffer = Symbol (),
    _observer           = Symbol (),
    _resizer            = Symbol (),
@@ -78,14 +78,14 @@ function X3DRenderingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .SFVec4f (0, 0, 300, 150));
 
-   this [_frameBuffers] = [ ];
+   this [_framebuffers] = [ ];
    this [_depthShaders] = new Map ();
    this [_localObjects] = [ ]; // shader objects dumpster
 
    // WebXR support
 
    this [_session]            = window;
-   this [_defaultFrameBuffer] = null;
+   this [_defaultFramebuffer] = null;
 }
 
 Object .assign (X3DRenderingContext .prototype,
@@ -197,22 +197,22 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_localObjects];
    },
-   getFrameBuffers ()
+   getFramebuffers ()
    {
-      return this [_frameBuffers];
+      return this [_framebuffers];
    },
-   getDefaultFrameBuffer ()
+   getDefaultFramebuffer ()
    {
-      return this [_defaultFrameBuffer];
+      return this [_defaultFramebuffer];
    },
-   setDefaultFrameBuffer (defaultFrameBuffer)
+   setDefaultFramebuffer (defaultFramebuffer)
    {
-      this [_defaultFrameBuffer] = defaultFrameBuffer;
+      this [_defaultFramebuffer] = defaultFramebuffer;
 
-      for (const frameBuffer of this [_frameBuffers])
+      for (const frameBuffer of this [_framebuffers])
          frameBuffer .dispose ();
 
-      this [_frameBuffers] = [ ];
+      this [_framebuffers] = [ ];
 
       this .reshape ();
    },
@@ -394,16 +394,16 @@ Object .assign (X3DRenderingContext .prototype,
          .prop ("width",  width)
          .prop ("height", height);
 
-      this .reshapeFrameBuffer (0, 0, 0, width, height);
+      this .reshapeFramebuffer (0, 0, 0, width, height);
 
       this .addBrowserEvent ();
    },
-   reshapeFrameBuffer (i, x, y, width, height)
+   reshapeFramebuffer (i, x, y, width, height)
    {
       const
          samples     = this .getRenderingProperty ("Multisampling"),
          oit         = this .getBrowserOption ("OrderIndependentTransparency"),
-         frameBuffer = this [_frameBuffers] [i];
+         frameBuffer = this [_framebuffers] [i];
 
       if (frameBuffer &&
           x       === frameBuffer .getX () &&
@@ -421,7 +421,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       frameBuffer ?.dispose ();
 
-      this [_frameBuffers] [i] = new MultiSampleFrameBuffer (this, x, y, width, height, samples, oit);
+      this [_framebuffers] [i] = new MultiSampleFramebuffer (this, x, y, width, height, samples, oit);
 
       this .reshapeTransmissionBuffer (width, height);
    },

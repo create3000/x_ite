@@ -213,9 +213,9 @@ Object .assign (X3DRenderObject .prototype,
          this .renderCount = ++ renderCount;
       }
    })(),
-   getFrameBuffers ()
+   getFramebuffers ()
    {
-      return this .getBrowser () .getFrameBuffers ();
+      return this .getBrowser () .getFramebuffers ();
    },
    getView ()
    {
@@ -1131,8 +1131,8 @@ Object .assign (X3DRenderObject .prototype,
          independent              = this .isIndependent (),
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
-         frameBuffers             = this .getFrameBuffers (),
-         numFrameBuffers          = frameBuffers .length,
+         framebuffers             = this .getFramebuffers (),
+         numFramebuffers          = framebuffers .length,
          viewport                 = this .viewVolumes .at (-1) .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
@@ -1163,9 +1163,9 @@ Object .assign (X3DRenderObject .prototype,
 
       this .viewportArray .set (viewport);
 
-      for (let i = 0; i < numFrameBuffers; ++ i)
+      for (let i = 0; i < numFramebuffers; ++ i)
       {
-         const frameBuffer = frameBuffers [i];
+         const frameBuffer = framebuffers [i];
 
          // XR support
 

@@ -131,7 +131,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .endEvents ()      .removeInterest ("endFrame",       this);
 
          this .setSession (window);
-         this .setDefaultFrameBuffer (null);
+         this .setDefaultFramebuffer (null);
 
          for (const { hit } of this [_inputSources] .values ())
             this .removeHit (hit);
@@ -166,7 +166,7 @@ Object .assign (X3DWebXRContext .prototype,
 
       session .updateRenderState ({ baseLayer });
 
-      this .setDefaultFrameBuffer (baseLayer .framebuffer);
+      this .setDefaultFramebuffer (baseLayer .framebuffer);
    },
    getPose ()
    {
@@ -254,7 +254,7 @@ Object .assign (X3DWebXRContext .prototype,
          if (!width)
             continue;
 
-         this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
+         this .reshapeFramebuffer (v, x|0, y|0, width|0, height|0);
 
          const view = pose .views [v] ??= {
             projectionMatrix: new Matrix4 (),
@@ -281,7 +281,7 @@ Object .assign (X3DWebXRContext .prototype,
       }
 
       pose .views .length              = v;
-      this .getFrameBuffers () .length = v;
+      this .getFramebuffers () .length = v;
    },
    updatePointers: (function ()
    {
@@ -400,7 +400,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
-            const frameBuffer = this .getFrameBuffers () [i];
+            const frameBuffer = this .getFramebuffers () [i];
 
             for (const [{ active, gamepad }, { matrix, hit }] of this [_inputSources])
             {

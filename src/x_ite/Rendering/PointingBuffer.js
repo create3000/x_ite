@@ -59,18 +59,18 @@ function PointingBuffer (browser)
    // Create color buffers.
 
    this .colorBuffers = [ ];
-   this .frameBuffers = [ ];
+   this .framebuffers = [ ];
 
    for (let i = 0; i < 3; ++ i)
    {
       this .colorBuffers [i] = gl .createRenderbuffer ();
-      this .frameBuffers [i] = gl .createFramebuffer ();
+      this .framebuffers [i] = gl .createFramebuffer ();
 
       gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffers [i]);
       gl .renderbufferStorage (gl .RENDERBUFFER, gl .RGBA32F, 1, 1);
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .RENDERBUFFER, this .colorBuffers [i]);
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [i]);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffers [i]);
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorBuffers [i]);
    }
 
@@ -136,7 +136,7 @@ Object .assign (PointingBuffer .prototype,
       // Id, point
 
       // gl .readBuffer (gl .COLOR_ATTACHMENT0); // WebGL 2
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [0]);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffers [0]);
       gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .id = array [3];
@@ -144,14 +144,14 @@ Object .assign (PointingBuffer .prototype,
 
       // Normal
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [1]);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffers [1]);
       gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .normal .set (array [0], array [1], array [2]);
 
       // TexCoord
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [2]);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffers [2]);
       gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .texCoord .set (array [0], array [1], array [2], array [3]);
@@ -166,7 +166,7 @@ Object .assign (PointingBuffer .prototype,
 
       gl .deleteFramebuffer (this .frameBuffer);
 
-      for (const framebuffer of this .frameBuffers)
+      for (const framebuffer of this .framebuffers)
          gl .deleteFramebuffer (framebuffer);
 
       for (const colorBuffer of this .colorBuffers)

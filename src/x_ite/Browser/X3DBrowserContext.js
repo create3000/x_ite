@@ -309,7 +309,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .addTaintedField (this ._displayEvents);
       this [_processEvents] ();
 
-      for (const frameBuffer of this .getFrameBuffers ())
+      for (const frameBuffer of this .getFramebuffers ())
          frameBuffer .clear ();
 
       this [_world] .traverse (TraverseType .DISPLAY);
@@ -317,7 +317,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .addTaintedField (this ._finishedEvents);
       this [_processEvents] ();
 
-      for (const frameBuffer of this .getFrameBuffers ())
+      for (const frameBuffer of this .getFramebuffers ())
          frameBuffer .blit ();
 
       this [_displayTime] .stop ();

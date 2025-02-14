@@ -670,7 +670,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             }
          }
 
-         for (const frameBuffer of browser .getFrameBuffers ())
+         for (const frameBuffer of browser .getFramebuffers ())
             this .rubberBand .display (fromPoint, toPoint, frameBuffer);
       };
    })(),
