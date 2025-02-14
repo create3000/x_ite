@@ -88,7 +88,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .finishedEvents () .addInterest ("updatePointers", this);
          this .endEvents ()      .addInterest ("endFrame",       this);
 
-         session .addEventListener ("inputsourceschange", event => this .setInputSources (event));
+         session .addEventListener ("inputsourceschange", event => this .updateInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
 
          this [_referenceSpace] = referenceSpace;
@@ -173,7 +173,7 @@ Object .assign (X3DWebXRContext .prototype,
 
       this .setDefaultFramebuffer (baseLayer .framebuffer);
    },
-   setInputSources (event)
+   updateInputSources (event)
    {
       for (const inputSource of event .added)
       {
@@ -402,13 +402,6 @@ Object .assign (X3DWebXRContext .prototype,
          }
 
          // Draw input source rays.
-
-         switch (this .getSession () .visibilityState)
-         {
-            case "visible-blurred":
-            case "hidden":
-               return;
-         }
 
          for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
