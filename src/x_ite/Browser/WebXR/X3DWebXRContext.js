@@ -93,18 +93,18 @@ Object .assign (X3DWebXRContext .prototype,
 
          this [_referenceSpace] = referenceSpace;
 
+         this [_inputSources] = new Map ();
+         this [_inputRay]     = new ScreenLine (this, 4, 2, 0.9);
+         this [_inputPoint]   = new ScreenPoint (this);
+
          this [_pose] = {
             cameraSpaceMatrix: new Matrix4 (),
             viewMatrix: new Matrix4 (),
             views: [ ],
          };
 
-         this [_inputSources] = new Map ();
-         this [_inputRay]     = new ScreenLine (this, 4, 2, 0.9);
-         this [_inputPoint]   = new ScreenPoint (this);
-
+         this .updateRenderState ({ }, session);
          this .setSession (session);
-         this .updateRenderState ();
          this .removeHit (this .getHit ());
 
          // session .addEventListener ("select", event =>
@@ -142,22 +142,19 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputSources]   = null;
          this [_inputRay]       = null;
          this [_inputPoint]     = null;
+         this [_frame]          = null;
       });
    },
    setFramebufferScaleFactor (framebufferScaleFactor)
    {
       this .updateRenderState ({ framebufferScaleFactor });
    },
-   updateRenderState (options = { })
+   updateRenderState (options = { }, session = this .getSession ())
    {
-      const
-         gl      = this .getContext (),
-         session = this .getSession ();
-
       if (session === window)
          return;
 
-      const baseLayer = new XRWebGLLayer (session, gl,
+      const baseLayer = new XRWebGLLayer (session, this .getContext (),
       {
          antialias: false,
          alpha: true,
