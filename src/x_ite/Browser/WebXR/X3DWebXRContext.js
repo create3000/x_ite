@@ -107,7 +107,7 @@ Object .assign (X3DWebXRContext .prototype,
             views: [ ],
          };
 
-         this .updateRenderState ({ }, session);
+         this .updateBaseLayer ({ }, session);
          this .setSession (session);
          this .removeHit (this .getHit ());
 
@@ -151,9 +151,9 @@ Object .assign (X3DWebXRContext .prototype,
    },
    setFramebufferScaleFactor (framebufferScaleFactor)
    {
-      this .updateRenderState ({ framebufferScaleFactor });
+      this .updateBaseLayer ({ framebufferScaleFactor });
    },
-   updateRenderState (options = { }, session = this .getSession ())
+   updateBaseLayer (options = { }, session = this .getSession ())
    {
       if (session === window)
          return;
