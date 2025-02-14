@@ -144,10 +144,6 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]     = null;
       });
    },
-   getPose ()
-   {
-      return this [_pose];
-   },
    setFramebufferScaleFactor (framebufferScaleFactor)
    {
       this .updateRenderState ({ framebufferScaleFactor });
@@ -230,6 +226,10 @@ Object .assign (X3DWebXRContext .prototype,
       // Trigger new frame.
 
       this .addBrowserEvent ();
+   },
+   getPose ()
+   {
+      return this [_pose];
    },
    updatePose ()
    {
