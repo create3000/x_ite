@@ -104,7 +104,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]   = new ScreenPoint (this);
 
          this .setSession (session);
-         this .setFramebufferScaleFactor (this .getRenderingProperty ("ContentScale"));
+         this .updateRenderState ();
          this .removeHit (this .getHit ());
 
          // session .addEventListener ("select", event =>
@@ -144,7 +144,15 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]     = null;
       });
    },
+   getPose ()
+   {
+      return this [_pose];
+   },
    setFramebufferScaleFactor (framebufferScaleFactor)
+   {
+      this .updateRenderState ({ framebufferScaleFactor });
+   },
+   updateRenderState (options = { })
    {
       const
          gl      = this .getContext (),
@@ -159,7 +167,8 @@ Object .assign (X3DWebXRContext .prototype,
          alpha: true,
          depth: false,
          ignoreDepthValues: true,
-         framebufferScaleFactor,
+         framebufferScaleFactor: this .getRenderingProperty ("ContentScale"),
+         ... options,
       });
 
       this [_baseLayer] = baseLayer;
@@ -167,10 +176,6 @@ Object .assign (X3DWebXRContext .prototype,
       session .updateRenderState ({ baseLayer });
 
       this .setDefaultFramebuffer (baseLayer .framebuffer);
-   },
-   getPose ()
-   {
-      return this [_pose];
    },
    setInputSources (event)
    {
