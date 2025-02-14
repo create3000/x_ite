@@ -125,9 +125,8 @@ Object .assign (ScreenPoint .prototype,
          // Apply screen scale to matrix.
 
          const
-            contentScale = browser .getRenderingProperty ("ContentScale"),
-            screenScale  = contentScale * Math .abs (modelViewMatrix .origin .z),
-            scale        = radius * screenScale;
+            screenScale = Math .abs (modelViewMatrix .origin .z),
+            scale       = radius * screenScale;
 
          const
             x = modelViewMatrix .xAxis .normalize () .multiply (scale),

@@ -90,6 +90,7 @@ Object .assign (X3DWebXRContext .prototype,
             alpha: true,
             depth: false,
             ignoreDepthValues: true,
+            framebufferScaleFactor: this .getRenderingProperty ("ContentScale"),
          });
 
          this .cameraEvents ()   .addInterest ("updatePose",     this);
@@ -97,7 +98,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .endEvents ()      .addInterest ("endFrame",       this);
 
          session .updateRenderState ({ baseLayer });
-         session .addEventListener( "inputsourceschange", event => this .setInputSources (event));
+         session .addEventListener ("inputsourceschange", event => this .setInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
 
          this [_referenceSpace] = referenceSpace;
@@ -110,7 +111,7 @@ Object .assign (X3DWebXRContext .prototype,
          };
 
          this [_inputSources] = new Map ();
-         this [_inputRay]     = new ScreenLine (this, 5, 3, 0.9);
+         this [_inputRay]     = new ScreenLine (this, 4, 2, 0.9);
          this [_inputPoint]   = new ScreenPoint (this);
 
          this .setSession (session);

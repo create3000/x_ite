@@ -268,13 +268,13 @@ Object .assign (Bookmarks .prototype,
 
       const contentScale = $("<span></span>")
          .text ("contentScale 1.0")
-         .attr ("index", { "0.1": 0, "1": 1, "2": 2, "-1": 3 } [this .browser .getBrowserOption ("ContentScale")])
-         .attr ("title", "Toggle contentScale between 0.1, 1.0, 2.0, auto.")
+         .attr ("index", { "0.5": 0, "1": 1, "2": 2, "-1": 3 } [this .browser .getBrowserOption ("ContentScale")])
+         .attr ("title", "Toggle contentScale between 0.5, 1.0, 2.0, auto.")
          .on ("click", () =>
          {
             const
                index = (parseInt (contentScale .attr ("index")) + 1) % 4,
-               value = [0.1, 1, 2, -1][index];
+               value = [0.5, 1, 2, -1][index];
 
             this .browser .setBrowserOption ("ContentScale", value);
 
