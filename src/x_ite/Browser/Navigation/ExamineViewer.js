@@ -536,19 +536,18 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
-   gamepad (gamepad)
+   gamepads (gamepads)
    {
-      if (!gamepad)
+      if (!gamepads .length)
          return;
 
-      if (gamepad .axes .length < 4)
-         return;
-
-      if (gamepad .axes [2] === 0 && gamepad .axes [3] === 0)
+      if (gamepads .every (gamepad => gamepad .axes [2] === 0 && gamepad .axes [3] === 0))
       {
          this .rotationChaser ._set_value = Rotation4 .Identity;
          return;
       }
+
+      const gamepad = gamepads .find (gamepad => gamepad .axes [2] !== 0 || gamepad .axes [3] !== 0)
 
       if (gamepad .buttons [1] .pressed)
       {

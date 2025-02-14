@@ -396,23 +396,22 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          }
       }
    },
-   gamepad: (function ()
+   gamepads: (function ()
    {
       const axis = new Vector3 ();
 
-      return function (gamepad)
+      return function (gamepads)
       {
-         if (!gamepad)
+         if (!gamepads .length)
             return;
 
-         if (gamepad .axes .length < 4)
-            return;
-
-         if (gamepad .axes [2] === 0 && gamepad .axes [3] === 0)
+         if (gamepads .every (gamepad => gamepad .axes [2] === 0 && gamepad .axes [3] === 0))
          {
             this .startTime = Date .now ();
             return;
          }
+
+         const gamepad = gamepads .find (gamepad => gamepad .axes [2] !== 0 || gamepad .axes [3] !== 0)
 
          if (gamepad .buttons [1] .pressed)
          {

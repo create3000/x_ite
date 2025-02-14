@@ -182,7 +182,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    {
       return this .getBrowser () .touch (x, y);
    },
-   gamepad ()
+   gamepads ()
    { },
 });
 

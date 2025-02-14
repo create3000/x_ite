@@ -61,9 +61,13 @@ const
    _inputSources   = Symbol (),
    _inputRay       = Symbol (),
    _inputPoint     = Symbol (),
+   _gamepads       = Symbol (),
    _frame          = Symbol ();
 
-function X3DWebXRContext () { }
+function X3DWebXRContext ()
+{
+   this [_gamepads] = [ ];
+}
 
 Object .assign (X3DWebXRContext .prototype,
 {
@@ -211,13 +215,20 @@ Object .assign (X3DWebXRContext .prototype,
 
       // Navigation
 
+      this [_gamepads] .length = 0;
+
       for (const { active, gamepad } of this [_inputSources] .keys ())
       {
          if (!active)
             continue;
 
-         this .getViewer () .gamepad (gamepad);
+         if (gamepad .axes .length < 4)
+            continue;
+
+         this [_gamepads] .push (gamepad);
       }
+
+      this .getViewer () .gamepads (this [_gamepads]);
 
       // Trigger new frame.
 
