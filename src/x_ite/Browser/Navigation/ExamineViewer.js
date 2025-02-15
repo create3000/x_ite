@@ -313,43 +313,29 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       }
    },
-   mousewheel: (() =>
+   mousewheel (event)
    {
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+
+      if (!this .isPointerInRectangle (x, y))
+         return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      // Change viewpoint position.
+
       const
-         step        = new Vector3 (),
-         translation = new Vector3 ();
+         browser   = this .getBrowser (),
+         viewpoint = this .getActiveViewpoint ();
 
-      return function (event)
-      {
-         const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      browser .prepareEvents () .removeInterest ("spin", this);
+      viewpoint .transitionStop ();
 
-         if (!this .isPointerInRectangle (x, y))
-            return;
-
-         // Stop event propagation.
-
-         event .preventDefault ();
-         event .stopImmediatePropagation ();
-
-         // Change viewpoint position.
-
-         const
-            browser   = this .getBrowser (),
-            viewpoint = this .getActiveViewpoint ();
-
-         browser .prepareEvents () .removeInterest ("spin", this);
-         viewpoint .transitionStop ();
-
-         this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR);
-         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
-
-         if (event .deltaY > 0)
-            this .addMove (translation .negate (), Vector3 .Zero);
-
-         else if (event .deltaY < 0)
-            this .addMove (translation, Vector3 .Zero);
-      };
-   })(),
+      this .zoom (event .zoomFactor || SCROLL_FACTOR, event .deltaY);
+   },
    touchstart (event)
    {
       const touches = event .originalEvent .touches;
@@ -726,6 +712,28 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .addMove (translation, translation);
 
          this .fromPoint .assign (toPoint);
+      };
+   })(),
+   zoom: (() =>
+   {
+      const
+         step        = new Vector3 (),
+         translation = new Vector3 ();
+
+      return function (zoomFactor, deltaY)
+      {
+         // Change viewpoint position.
+
+         const viewpoint = this .getActiveViewpoint ();
+
+         this .getDistanceToCenter (step) .multiply (zoomFactor);
+         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
+
+         if (deltaY > 0)
+            this .addMove (translation .negate (), Vector3 .Zero);
+
+         else if (deltaY < 0)
+            this .addMove (translation, Vector3 .Zero);
       };
    })(),
    addMove: (() =>

@@ -101,7 +101,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          this [_referenceSpace] = referenceSpace;
 
-         this [_inputSources] = new Map ();
+         this [_inputSources] = new Set ();
          this [_inputRay]     = new ScreenLine (this, 4, 2, 0.9);
          this [_inputPoint]   = new ScreenPoint (this);
 
@@ -143,7 +143,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .setSession (window);
          this .setDefaultFramebuffer (null);
 
-         for (const { hit } of this [_inputSources] .values ())
+         for (const { hit } of this [_inputSources])
             this .removeHit (hit);
 
          this [_referenceSpace] = null;
@@ -183,8 +183,9 @@ Object .assign (X3DWebXRContext .prototype,
    {
       for (const inputSource of event .added)
       {
-         this [_inputSources] .set (inputSource,
+         this [_inputSources] .add (Object .assign (inputSource,
          {
+            active: false,
             matrix: new Matrix4 (),
             inverse: new Matrix4 (),
             hit: Object .assign (this .getHit () .copy (),
@@ -195,13 +196,16 @@ Object .assign (X3DWebXRContext .prototype,
                originalPoint: new Vector3 (),
                originalNormal: new Vector3 (),
             }),
-         });
+         }));
+
+         if (inputSource .gamepad)
+            inputSource .gamepad .hit = inputSource .hit;
       }
 
-      for (const removed of event .removed)
+      for (const inputSource of event .removed)
       {
-         this .removeHit (this [_inputSources] .get (removed) .hit);
-         this [_inputSources] .delete (removed);
+         this .removeHit (inputSource .hit);
+         this [_inputSources] .delete (inputSource);
       }
    },
    setFrame (frame)
@@ -223,7 +227,7 @@ Object .assign (X3DWebXRContext .prototype,
 
       this [_gamepads] .length = 0;
 
-      for (const { active, gamepad } of this [_inputSources] .keys ())
+      for (const { active, gamepad } of this [_inputSources])
       {
          if (!active)
             continue;
@@ -323,13 +327,13 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Get target ray matrices from input sources.
 
-         for (const [original, { matrix, inverse }] of this [_inputSources])
+         for (const inputSource of this [_inputSources])
          {
-            const
-               targetRaySpace = original .targetRaySpace,
-               targetRayPose  = this [_frame] .getPose (targetRaySpace, this [_referenceSpace]);
+            const { targetRaySpace, matrix, inverse } = inputSource;
 
-            original .active = !! targetRayPose;
+            const targetRayPose = this [_frame] .getPose (targetRaySpace, this [_referenceSpace]);
+
+            inputSource .active = !! targetRayPose;
 
             if (!targetRayPose)
                continue;
@@ -346,18 +350,18 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Test for hits.
 
-         for (const [original, inputSource] of this [_inputSources])
+         for (const inputSource of this [_inputSources])
          {
-            if (!original .active)
-               continue;
+            const { active, gamepad, matrix, hit } = inputSource;
 
-            const { hit } = inputSource;
+            if (!active)
+               continue;
 
             this .touch (viewport [2] / 2, viewport [3] / 2, hit, inputSource);
 
             // Make a vibration puls if there is a sensor hit.
 
-            this .sensorHitPulse (hit, original .gamepad);
+            this .sensorHitPulse (hit, gamepad);
 
             // Update matrices and determine pointer position.
 
@@ -369,7 +373,7 @@ Object .assign (X3DWebXRContext .prototype,
             if (!hit .pressed)
                hit .poseViewMatrix .assign (pose .viewMatrix);
 
-            inputRayMatrix .assign (inputSource .matrix) .multRight (hit .poseViewMatrix);
+            inputRayMatrix .assign (matrix) .multRight (hit .poseViewMatrix);
 
             for (const sensor of hit .sensors .values ())
             {
@@ -389,7 +393,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Handle nodes of type X3DPointingDeviceSensorNodes.
 
-         for (const [{ active, gamepad }, { hit }] of this [_inputSources])
+         for (const { active, gamepad, hit } of this [_inputSources])
          {
             if (!active)
                continue;
@@ -420,7 +424,7 @@ Object .assign (X3DWebXRContext .prototype,
          {
             const frameBuffer = this .getFramebuffers () [i];
 
-            for (const [{ active, gamepad }, { matrix, hit }] of this [_inputSources])
+            for (const { active, gamepad, matrix, hit } of this [_inputSources])
             {
                if (!active)
                   continue;

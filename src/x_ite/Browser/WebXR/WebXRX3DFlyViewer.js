@@ -19,9 +19,9 @@ Object .assign (X3DFlyViewer .prototype,
             return;
          }
 
-         const button = gamepad .buttons [1] .pressed;
+         const button1 = gamepad .buttons [1] .pressed;
 
-         if (button)
+         if (button1)
          {
             axis
                .set (gamepad .axes [2], -gamepad .axes [3], 0)

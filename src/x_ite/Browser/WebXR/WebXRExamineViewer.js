@@ -1,4 +1,5 @@
 import ExamineViewer from "../Navigation/ExamineViewer.js";
+import Vector3       from "../../../standard/Math/Numbers/Vector3.js";
 
 const
    GAMEPAD_SPIN_FACTOR = 10,
@@ -12,7 +13,15 @@ Object .assign (ExamineViewer .prototype,
 
       if (!gamepad)
       {
-         if (gamepads .action)
+         const gamepad = gamepads .find (gamepad => gamepad .buttons [0] .pressed);
+
+         if (gamepad && !gamepad .hit .sensors .size)
+         {
+            gamepads .action = true;
+
+            this .zoom (1 / 200, gamepad .hit .id ? 1 : -1);
+         }
+         else if (gamepads .action)
          {
             gamepads .action = false;
 
@@ -22,11 +31,11 @@ Object .assign (ExamineViewer .prototype,
          return;
       }
 
-      const button = gamepad .buttons [1] .pressed;
+      const button1 = gamepad .buttons [1] .pressed;
 
-      if (gamepads .button !== button)
+      if (gamepads .button1 !== button1)
       {
-         gamepads .button = button;
+         gamepads .button1 = button1;
 
          this .disconnect ();
       }
@@ -35,7 +44,7 @@ Object .assign (ExamineViewer .prototype,
 
       gamepads .action = true;
 
-      if (button)
+      if (button1)
       {
          // Pan
          this .startPan (0, 0);
