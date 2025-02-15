@@ -510,8 +510,15 @@ Object .assign (X3DRenderObject .prototype,
 
          // Translate camera to user position and to look in the direction of the direction.
 
-         localOrientation .assign (viewpoint ._orientation .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
-         rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
+         localOrientation
+            .assign (viewpoint ._orientation .getValue ())
+            .inverse ()
+            .multRight (viewpoint .getOrientation ());
+
+         rotation
+            .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ())
+            .multRight (localOrientation);
+
          viewpoint .straightenHorizon (rotation);
 
          cameraSpaceProjectionMatrix
