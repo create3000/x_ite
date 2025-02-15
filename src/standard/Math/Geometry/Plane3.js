@@ -91,8 +91,8 @@ Object .assign (Plane3 .prototype,
       // to get the new normal. Use the inverse transpose
       // of the matrix so that normals are not scaled incorrectly.
       // n' = n * !~m = ~m * n
-      invMatrix .assign (matrix) .inverse ();
-      invMatrix .multMatrixDir (normal .assign (this .normal)) .normalize ();
+      invMatrix .assign (matrix) .submatrix .inverse ()
+         .multMatrixVec (normal .assign (this .normal)) .normalize ();
 
       // Transform the point by the matrix
       matrix .multVecMatrix (point);
@@ -116,8 +116,8 @@ Object .assign (Plane3 .prototype,
       // to get the new normal. Use the inverse transpose
       // of the matrix so that normals are not scaled incorrectly.
       // n' = !~m * n = n * ~m
-      invMatrix .assign (matrix) .inverse ();
-      invMatrix .multDirMatrix (normal .assign (this .normal)) .normalize ();
+      invMatrix .assign (matrix) .submatrix .inverse ()
+         .multVecMatrix (normal .assign (this .normal)) .normalize ();
 
       // Transform the point by the matrix
       matrix .multMatrixVec (point);
