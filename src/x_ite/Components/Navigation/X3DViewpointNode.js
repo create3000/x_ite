@@ -278,7 +278,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    getFarDistance (navigationInfoNode)
    {
-      return this .farDistance ?? (navigationInfoNode ?.getFarValue () || this .getMaxFarValue ());
+      return this .farDistance
+         ?? (navigationInfoNode ? navigationInfoNode .getFarValue () || this .getMaxFarValue () : undefined);
    },
    setFarDistance (value)
    {
