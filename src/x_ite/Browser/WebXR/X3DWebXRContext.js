@@ -224,6 +224,17 @@ Object .assign (X3DWebXRContext .prototype,
       if (emulator)
          this .getCanvas () .css (this .getXREmulatorCSS ());
 
+      // TODO: Clip planes
+
+      // const
+      //    navigationInfoNode = this .getActiveNavigationInfo (),
+      //    viewpointNode      = this .getActiveViewpoint ();
+
+      // this .getSession () .updateRenderState ({
+      //    depthNear: navigationInfoNode .getNearValue (viewpointNode),
+      //    depthFar: navigationInfoNode .getFarValue (viewpointNode),
+      // });
+
       // Navigation
 
       this [_gamepads] .length = 0;
