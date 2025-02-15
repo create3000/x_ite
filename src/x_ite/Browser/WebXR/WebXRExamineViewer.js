@@ -42,7 +42,7 @@ Object .assign (ExamineViewer .prototype,
 
       if (button0)
       {
-         this .zoom (gamepad .axes [3] * GAMEPAD_ZOOM_FACTOR * f, Math .sign (gamepad .axes [3]));
+         this .zoom (gamepad .axes [3] * GAMEPAD_ZOOM_FACTOR * f, Math .sign (-gamepad .axes [3]));
       }
       else if (button1)
       {
