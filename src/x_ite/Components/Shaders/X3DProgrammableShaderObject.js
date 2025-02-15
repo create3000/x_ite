@@ -1090,10 +1090,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             if (renderObject .getLogarithmicDepthBuffer ())
             {
                const
-                  viewpoint      = renderObject .getViewpoint (),
-                  navigationInfo = renderObject .getNavigationInfo ();
+                  navigationInfoNode = renderObject .getNavigationInfo (),
+                  viewpointNode      = renderObject .getViewpoint ();
 
-               gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
+               gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (viewpointNode .getFarDistance (navigationInfoNode) + 1));
             }
          }
 

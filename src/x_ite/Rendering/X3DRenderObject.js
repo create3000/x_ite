@@ -487,12 +487,12 @@ Object .assign (X3DRenderObject .prototype,
          this .collisionTime .start ();
 
          const
-            viewpoint       = this .getViewpoint (),
-            navigationInfo  = this .getNavigationInfo (),
-            collisionRadius = navigationInfo .getCollisionRadius (),
-            bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
-            nearValue       = navigationInfo .getNearValue (viewpoint),
-            avatarHeight    = navigationInfo .getAvatarHeight ();
+            navigationInfoNode = this .getNavigationInfo (),
+            viewpointNode      = this .getViewpoint (),
+            collisionRadius    = navigationInfoNode .getCollisionRadius (),
+            bottom             = navigationInfoNode .getStepHeight () - navigationInfoNode .getAvatarHeight (),
+            nearValue          = viewpointNode .getNearDistance (navigationInfoNode),
+            avatarHeight       = navigationInfoNode .getAvatarHeight ();
 
          // Determine width and height of camera
 
@@ -509,23 +509,23 @@ Object .assign (X3DRenderObject .prototype,
          // Translate camera to user position and to look in the direction of the direction.
 
          localOrientation
-            .assign (viewpoint ._orientation .getValue ())
+            .assign (viewpointNode ._orientation .getValue ())
             .inverse ()
-            .multRight (viewpoint .getOrientation ());
+            .multRight (viewpointNode .getOrientation ());
 
          rotation
             .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ())
             .multRight (localOrientation);
 
-         viewpoint .straightenHorizon (rotation);
+         viewpointNode .straightenHorizon (rotation);
 
          cameraSpaceProjectionMatrix
-            .assign (viewpoint .getModelMatrix ())
-            .translate (viewpoint .getUserPosition ())
+            .assign (viewpointNode .getModelMatrix ())
+            .translate (viewpointNode .getUserPosition ())
             .rotate (rotation)
             .inverse ()
             .multRight (projectionMatrix)
-            .multLeft (viewpoint .getCameraSpaceMatrix ());
+            .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
@@ -979,12 +979,12 @@ Object .assign (X3DRenderObject .prototype,
          // Get NavigationInfo values.
 
          const
-            navigationInfo  = this .getNavigationInfo (),
-            viewpoint       = this .getViewpoint (),
-            collisionRadius = navigationInfo .getCollisionRadius (),
-            nearValue       = navigationInfo .getNearValue (viewpoint),
-            avatarHeight    = navigationInfo .getAvatarHeight (),
-            stepHeight      = navigationInfo .getStepHeight ();
+            navigationInfoNode = this .getNavigationInfo (),
+            viewpointNode      = this .getViewpoint (),
+            collisionRadius    = navigationInfoNode .getCollisionRadius (),
+            avatarHeight       = navigationInfoNode .getAvatarHeight (),
+            stepHeight         = navigationInfoNode .getStepHeight (),
+            nearValue          = viewpointNode .getNearDistance (navigationInfoNode);
 
          // Reshape viewpoint for gravitate.
 
@@ -999,16 +999,16 @@ Object .assign (X3DRenderObject .prototype,
          // Transform viewpoint to look down the up vector.
 
          const
-            upVector = viewpoint .getUpVector (),
+            upVector = viewpointNode .getUpVector (),
             down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
 
-         cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-         cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-         cameraSpaceProjectionMatrix .rotate (down);
-         cameraSpaceProjectionMatrix .inverse ();
-
-         cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-         cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+         cameraSpaceProjectionMatrix
+            .assign (viewpointNode .getModelMatrix ())
+            .translate (viewpointNode .getUserPosition ())
+            .rotate (down)
+            .inverse ()
+            .multRight (projectionMatrix)
+            .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
@@ -1039,7 +1039,7 @@ Object .assign (X3DRenderObject .prototype,
                this .speed = 0;
             }
 
-            viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
+            viewpointNode ._positionOffset = viewpointNode ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
          }
          else
          {
@@ -1066,7 +1066,7 @@ Object .assign (X3DRenderObject .prototype,
                //   getViewpoint () -> positionOffset () += offset;
                //}
                //else
-                  viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
+                  viewpointNode ._positionOffset = translation .add (viewpointNode ._positionOffset .getValue ());
             }
          }
       };

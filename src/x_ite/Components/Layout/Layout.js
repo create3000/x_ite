@@ -430,13 +430,14 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          browser             = this .getBrowser (),
          contentScale        = browser .getRenderingProperty ("ContentScale"),
          matrix              = this .matrix,
-         viewpoint           = renderObject .getViewpoint (),
-         nearValue           = renderObject .getNavigationInfo () .getNearValue (viewpoint), // in meters
-         viewport            = renderObject .getViewVolume () .getScissor (),                // in pixels
-         viewportMeter       = viewpoint .getViewportSize (viewport, nearValue),             // in meters
-         viewportPixel       = this .viewportPixel,                                          // in pixels
-         pixelSize           = this .pixelSize,                                              // size of one pixel in meters
-         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter,         // in meters
+         navigationInfoNode  = renderObject .getNavigationInfo (),
+         viewpointNode       = renderObject .getViewpoint (),
+         nearValue           = viewpointNode .getNearDistance (navigationInfoNode),  // in meters
+         viewport            = renderObject .getViewVolume () .getScissor (),        // in pixels
+         viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue), // in meters
+         viewportPixel       = this .viewportPixel,                                  // in pixels
+         pixelSize           = this .pixelSize,                                      // size of one pixel in meters
+         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter, // in meters
          rectangleSize       = this .rectangleSize,
          rectangleCenter     = this .rectangleCenter;
 

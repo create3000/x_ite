@@ -231,8 +231,8 @@ Object .assign (X3DWebXRContext .prototype,
       //    viewpointNode      = this .getActiveViewpoint ();
 
       // this .getSession () .updateRenderState ({
-      //    depthNear: navigationInfoNode .getNearValue (viewpointNode), // 0.1
-      //    depthFar: navigationInfoNode .getFarValue (viewpointNode),   // 10_000
+      //    depthNear: viewpointNode .getNearDistance (navigationInfoNode), // 0.1
+      //    depthFar:  viewpointNode .getFarDistance  (navigationInfoNode), // 10_000
       // });
 
       // Navigation

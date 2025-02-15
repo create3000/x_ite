@@ -124,15 +124,15 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
 
       return 0.75;
    },
-   getNearValue (viewpoint)
+   getNearValue ()
    {
       const nearValue = this .getCollisionRadius ();
 
-      return viewpoint .getNearDistance () ?? (nearValue === 0 ? 1e-5 : nearValue / 2);
+      return nearValue === 0 ? 1e-5 : nearValue / 2;
    },
-   getFarValue (viewpoint)
+   getFarValue ()
    {
-      return viewpoint .getFarDistance () ?? (this .visibilityLimit || viewpoint .getMaxFarValue ());
+      return this .visibilityLimit;
    },
    getTransitionType: (function ()
    {

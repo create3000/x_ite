@@ -183,12 +183,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
             layer              = renderObject .getLayer (),
             gl                 = browser .getContext (),
             background         = dependentRenderer .getBackground (),
-            navigationInfo     = dependentRenderer .getNavigationInfo (),
-            viewpoint          = dependentRenderer .getViewpoint (),
+            navigationInfoNode = dependentRenderer .getNavigationInfo (),
+            viewpointNode      = dependentRenderer .getViewpoint (),
             headlightContainer = browser .getHeadlight (),
-            headlight          = navigationInfo ._headlight .getValue (),
-            nearValue          = navigationInfo .getNearValue (viewpoint),
-            farValue           = navigationInfo .getFarValue (viewpoint),
+            headlight          = navigationInfoNode ._headlight .getValue (),
+            nearValue          = viewpointNode .getNearDistance (navigationInfoNode),
+            farValue           = viewpointNode .getFarDistance (navigationInfoNode),
             projectionMatrix   = Camera .perspective (Algorithm .radians (90), nearValue, farValue, 1, 1, this .projectionMatrix),
             width              = this .frameBuffer .getWidth (),
             height             = this .frameBuffer .getHeight ();
@@ -219,7 +219,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
             if (headlight)
             {
                headlightContainer .modelViewMatrix .push (invCameraSpaceMatrix);
-               headlightContainer .modelViewMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+               headlightContainer .modelViewMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
             }
 
             // Render layer's children.

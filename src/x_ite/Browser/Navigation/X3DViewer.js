@@ -53,11 +53,11 @@ import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3           from "../../../standard/Math/Geometry/Box3.js";
 import ViewVolume     from "../../../standard/Math/Geometry/ViewVolume.js";
 
-function X3DViewer (executionContext, navigationInfo)
+function X3DViewer (executionContext, navigationInfoNode)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .navigationInfo = navigationInfo;
+   this .navigationInfoNode = navigationInfoNode;
 }
 
 Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .prototype),
@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    },
    getNavigationInfo ()
    {
-      return this .navigationInfo;
+      return this .navigationInfoNode;
    },
    getActiveViewpoint ()
    {
@@ -120,17 +120,17 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
       return function (x, y, result)
       {
          const
-            navigationInfo   = this .getNavigationInfo (),
-            viewpoint        = this .getActiveViewpoint (),
-            viewport         = this .getViewport (),
-            nearValue        = navigationInfo .getNearValue (viewpoint),
-            farValue         = navigationInfo .getFarValue (viewpoint),
-            projectionMatrix = viewpoint .getProjectionMatrixWithLimits (nearValue, farValue, viewport);
+            navigationInfoNode = this .getNavigationInfo (),
+            viewpointNode      = this .getActiveViewpoint (),
+            viewport           = this .getViewport (),
+            nearValue          = viewpointNode .getNearDistance (navigationInfoNode),
+            farValue           = viewpointNode .getFarDistance (navigationInfoNode),
+            projectionMatrix   = viewpointNode .getProjectionMatrixWithLimits (nearValue, farValue, viewport);
 
          // Far plane point
          ViewVolume .unProjectPoint (x, y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
 
-         if (viewpoint instanceof OrthoViewpoint)
+         if (viewpointNode instanceof OrthoViewpoint)
             return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .magnitude ());
 
          const direction = far .normalize ();
@@ -140,12 +140,12 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    })(),
    getDistanceToCenter (distance, positionOffset)
    {
-      const viewpoint = this .getActiveViewpoint ();
+      const viewpointNode = this .getActiveViewpoint ();
 
       return (distance
-         .assign (viewpoint .getPosition ())
-         .add (positionOffset || viewpoint ._positionOffset .getValue ())
-         .subtract (viewpoint .getUserCenterOfRotation ()));
+         .assign (viewpointNode .getPosition ())
+         .add (positionOffset || viewpointNode ._positionOffset .getValue ())
+         .subtract (viewpointNode .getUserCenterOfRotation ()));
    },
    trackballProjectToSphere (x, y, vector)
    {
@@ -162,10 +162,10 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          return;
 
       const
-         viewpoint = this .getActiveViewpoint (),
-         hit       = this .getBrowser () .getHit ();
+         viewpointNode = this .getActiveViewpoint (),
+         hit           = this .getBrowser () .getHit ();
 
-      viewpoint .lookAtPoint (this .getActiveLayer (), hit .point, 1, 2 - 1.618034, straightenHorizon);
+      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, 2 - 1.618034, straightenHorizon);
    },
    lookAtBBox (x, y, straightenHorizon)
    {
@@ -173,14 +173,14 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          return;
 
       const
-         viewpoint = this .getActiveViewpoint (),
-         hit       = this .getBrowser () .getHit ();
+         viewpointNode = this .getActiveViewpoint (),
+         hit           = this .getBrowser () .getHit ();
 
       const bbox = hit .shapeNode .getBBox (new Box3 ())
          .multRight (hit .modelViewMatrix)
-         .multRight (viewpoint .getCameraSpaceMatrix ());
+         .multRight (viewpointNode .getCameraSpaceMatrix ());
 
-      viewpoint .lookAtBBox (this .getActiveLayer (), bbox, 1, 2 - 1.618034, straightenHorizon);
+      viewpointNode .lookAtBBox (this .getActiveLayer (), bbox, 1, 2 - 1.618034, straightenHorizon);
    },
    touch (x, y)
    {
