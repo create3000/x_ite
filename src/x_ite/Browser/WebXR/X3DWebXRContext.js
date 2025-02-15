@@ -190,6 +190,7 @@ Object .assign (X3DWebXRContext .prototype,
             inverse: new Matrix4 (),
             hit: Object .assign (this .getHit () .copy (),
             {
+               button: false,
                pressed: false,
                pulse: true,
                poseViewMatrix: new Matrix4 (),
@@ -400,17 +401,26 @@ Object .assign (X3DWebXRContext .prototype,
 
             // Press & Release
 
-            const button = gamepad ?.buttons [0];
+            const button0 = gamepad ?.buttons [0];
 
-            if (button ?.pressed)
+            if (button0 ?.pressed)
             {
-               hit .pressed ||= this .buttonPressEvent (0, 0, hit);
+               if (!hit .button)
+               {
+                  hit .button    = true;
+                  hit .pressed ||= this .buttonPressEvent (0, 0, hit);
+               }
             }
-            else if (hit .pressed)
+            else
             {
-               hit .pressed = false;
+               hit .button = false;
 
-               this .buttonReleaseEvent (hit);
+               if (hit .pressed)
+               {
+                  hit .pressed = false;
+
+                  this .buttonReleaseEvent (hit);
+               }
             }
 
             // Motion
