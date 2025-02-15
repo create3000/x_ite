@@ -3,7 +3,8 @@ import Vector3       from "../../../standard/Math/Numbers/Vector3.js";
 
 const
    GAMEPAD_SPIN_FACTOR = 10,
-   GAMEPAD_PAN_FACTOR  = 5;
+   GAMEPAD_PAN_FACTOR  = 5,
+   GAMEPAD_ZOOM_FACTOR = 1 / 200;
 
 Object .assign (ExamineViewer .prototype,
 {
@@ -13,15 +14,7 @@ Object .assign (ExamineViewer .prototype,
 
       if (!gamepad)
       {
-         const gamepad = gamepads .find (gamepad => gamepad .buttons [0] .pressed);
-
-         if (gamepad && !gamepad .hit .sensors .size)
-         {
-            gamepads .action = true;
-
-            this .zoom (1 / 200, gamepad .hit .id && !gamepad .buttons [1] .pressed ? 1 : -1);
-         }
-         else if (gamepads .action)
+         if (gamepads .action)
          {
             gamepads .action = false;
 
@@ -31,10 +24,13 @@ Object .assign (ExamineViewer .prototype,
          return;
       }
 
-      const button1 = gamepad .buttons [1] .pressed;
+      const
+         button0 = gamepad .buttons [0] .pressed,
+         button1 = gamepad .buttons [1] .pressed;
 
-      if (gamepads .button1 !== button1)
+      if (gamepads .button0 !== button0 || gamepads .button1 !== button1)
       {
+         gamepads .button0 = button0;
          gamepads .button1 = button1;
 
          this .disconnect ();
@@ -44,7 +40,11 @@ Object .assign (ExamineViewer .prototype,
 
       gamepads .action = true;
 
-      if (button1)
+      if (button0)
+      {
+         this .zoom (gamepad .axes [3] * GAMEPAD_ZOOM_FACTOR * f, Math .sign (gamepad .axes [3]));
+      }
+      else if (button1)
       {
          // Pan
          this .startPan (0, 0);
