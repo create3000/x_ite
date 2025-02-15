@@ -98,6 +98,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
 
       this .proximitySensorNode ._size         = new Fields .SFVec3f (-1, -1, -1);
       this .transformNode ._children           = new Fields .MFNode (this .shapeNode);
+      this .shapeNode ._pointerEvents          = false;
+      this .shapeNode ._castShadow             = false;
       this .shapeNode ._appearance             = this .appearanceNode;
       this .shapeNode ._geometry               = this .geometryNode;
       this .appearanceNode ._alphaMode         = "BLEND";

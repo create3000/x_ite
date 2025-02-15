@@ -878,7 +878,7 @@ Object .assign (X3DRenderObject .prototype,
             // Draw shape.
 
             shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, clipPlanes);
+            shaderNode .setClipPlanes (gl, clipPlanes, this);
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
@@ -1113,7 +1113,7 @@ Object .assign (X3DRenderObject .prototype,
             // Draw
 
             shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, clipPlanes);
+            shaderNode .setClipPlanes (gl, clipPlanes, this);
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);

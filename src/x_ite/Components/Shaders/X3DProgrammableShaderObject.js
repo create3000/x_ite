@@ -1028,12 +1028,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       return false;
    },
-   setClipPlanes (gl, clipPlanes)
+   setClipPlanes (gl, clipPlanes, renderObject)
    {
       this .numClipPlanes = 0;
 
       for (const clipPlane of clipPlanes)
-         clipPlane .setShaderUniforms (gl, this);
+         clipPlane .setShaderUniforms (gl, this, renderObject);
    },
    setUniforms: (() =>
    {

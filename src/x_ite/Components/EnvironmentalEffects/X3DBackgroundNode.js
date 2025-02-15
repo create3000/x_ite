@@ -542,7 +542,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       const shaderNode = browser .getDefaultMaterial () .getShader (sphereContext);
 
       shaderNode .enable (gl);
-      shaderNode .setClipPlanes (gl, this .clipPlanes);
+      shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
 
       // Uniforms
 
@@ -597,7 +597,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             const shaderNode = browser .getDefaultMaterial () .getShader (texturesContext);
 
             shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, this .clipPlanes);
+            shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
 
             // Set uniforms.
 
