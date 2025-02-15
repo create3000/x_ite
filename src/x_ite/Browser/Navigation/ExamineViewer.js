@@ -70,9 +70,7 @@ const
    MOVE_TIME           = 0.2,
    ROTATE_TIME         = 0.2,
    DISK_ANGLE          = Algorithm .radians (15),
-   CRITICAL_ANGLE      = Algorithm .radians (0.1),
-   GAMEPAD_SPIN_FACTOR = 10,
-   GAMEPAD_PAN_FACTOR  = 5;
+   CRITICAL_ANGLE      = Algorithm .radians (0.1);
 
 function ExamineViewer (executionContext, navigationInfo)
 {
@@ -525,47 +523,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
-   gamepads (gamepads)
-   {
-      const gamepad = gamepads .find (({ axes }) => axes [2] || axes [3]);
-
-      if (!gamepad)
-      {
-         if (gamepads .action)
-         {
-            gamepads .action = false;
-
-            this .disconnect ();
-         }
-
-         return;
-      }
-
-      const button = gamepad .buttons [1] .pressed;
-
-      if (gamepads .button !== button)
-      {
-         gamepads .button = button;
-
-         this .disconnect ();
-      }
-
-      gamepads .action = true;
-
-      if (button)
-      {
-         // Pan
-         this .startPan (0, 0);
-         this .pan (-gamepad .axes [2] * GAMEPAD_PAN_FACTOR, gamepad .axes [3] * GAMEPAD_PAN_FACTOR);
-      }
-      else // default
-      {
-         // Rotate
-
-         this .startRotate (0, 0);
-         this .rotate (-gamepad .axes [2] * GAMEPAD_SPIN_FACTOR, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR);
-      }
-   },
    startRotate (x, y)
    {
       if (this .getStraightenHorizon ())

@@ -45,14 +45,17 @@
  *
  ******************************************************************************/
 
-import ScreenLine  from "../Rendering/ScreenLine.js";
-import ScreenPoint from "../Rendering/ScreenPoint.js";
-import ViewVolume  from "../../../standard/Math/Geometry/ViewVolume.js";
-import Color3      from "../../../standard/Math/Numbers/Color3.js";
-import Vector3     from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4   from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4     from "../../../standard/Math/Numbers/Matrix4.js";
-import Lock        from "../../../standard/Utility/Lock.js";
+import ScreenLine    from "../Rendering/ScreenLine.js";
+import ScreenPoint   from "../Rendering/ScreenPoint.js";
+import ExamineViewer from "../Navigation/ExamineViewer.js";
+import X3DFlyViewer  from "../Navigation/X3DFlyViewer.js";
+import X3DViewer     from "../Navigation/X3DViewer.js";
+import ViewVolume    from "../../../standard/Math/Geometry/ViewVolume.js";
+import Color3        from "../../../standard/Math/Numbers/Color3.js";
+import Vector3       from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4     from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4       from "../../../standard/Math/Numbers/Matrix4.js";
+import Lock          from "../../../standard/Utility/Lock.js";
 
 const
    _referenceSpace = Symbol (),
@@ -493,6 +496,107 @@ Object .assign (X3DWebXRContext .prototype,
          hit .pulse = true;
       }
    },
+});
+
+const
+   GAMEPAD_SPIN_FACTOR = 10,
+   GAMEPAD_PAN_FACTOR  = 5;
+
+Object .assign (ExamineViewer .prototype,
+{
+   gamepads (gamepads)
+   {
+      const gamepad = gamepads .find (({ axes }) => axes [2] || axes [3]);
+
+      if (!gamepad)
+      {
+         if (gamepads .action)
+         {
+            gamepads .action = false;
+
+            this .disconnect ();
+         }
+
+         return;
+      }
+
+      const button = gamepad .buttons [1] .pressed;
+
+      if (gamepads .button !== button)
+      {
+         gamepads .button = button;
+
+         this .disconnect ();
+      }
+
+      gamepads .action = true;
+
+      if (button)
+      {
+         // Pan
+         this .startPan (0, 0);
+         this .pan (-gamepad .axes [2] * GAMEPAD_PAN_FACTOR, gamepad .axes [3] * GAMEPAD_PAN_FACTOR);
+      }
+      else // default
+      {
+         // Rotate
+
+         this .startRotate (0, 0);
+         this .rotate (-gamepad .axes [2] * GAMEPAD_SPIN_FACTOR, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR);
+      }
+   },
+});
+
+const GAMEPAD_SPEED_FACTOR = new Vector3 (300, 300, 400);
+
+Object .assign (X3DFlyViewer .prototype,
+{
+   gamepads: (function ()
+   {
+      const axis = new Vector3 ();
+
+      return function (gamepads)
+      {
+         const gamepad = gamepads .find (({ axes }) => axes [2] || axes [3]);
+
+         if (!gamepad)
+         {
+            this .startTime = Date .now ();
+            return;
+         }
+
+         const button = gamepad .buttons [1] .pressed;
+
+         if (button)
+         {
+            axis
+               .set (gamepad .axes [2], -gamepad .axes [3], 0)
+               .multVec (GAMEPAD_SPEED_FACTOR);
+
+            // Moving average.
+            this .direction .add (axis) .divide (2);
+
+            this .pan ();
+         }
+         else // default
+         {
+            axis
+               .set (gamepad .axes [2], 0, gamepad .axes [3])
+               .multVec (GAMEPAD_SPEED_FACTOR);
+
+            // Moving average.
+            this .direction .add (axis) .divide (2);
+
+            this .fly ();
+         }
+      };
+   })(),
+});
+
+Object .assign (X3DViewer .prototype,
+{
+   gamepads ()
+   { },
 });
 
 export default X3DWebXRContext;
