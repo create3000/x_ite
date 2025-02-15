@@ -100,7 +100,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputSources] = new Map ();
          this [_inputRay]     = new ScreenLine (this, 4, 2, 0.9);
          this [_inputPoint]   = new ScreenPoint (this);
-         
+
          Object .assign (this [_gamepads], { action: true });
 
          this [_pose] = {
