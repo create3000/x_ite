@@ -82,7 +82,7 @@ Object .assign (ClipPlaneContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {
-      const view = renderObject .getView ();
+      const view = renderObject ?.getView ();
 
       const plane = view
          ? this .planeView .assign (this .plane) .multRight (view .matrix)
