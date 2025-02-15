@@ -19,7 +19,7 @@ Object .assign (ExamineViewer .prototype,
          {
             gamepads .action = true;
 
-            this .zoom (1 / 200, gamepad .hit .id ? 1 : -1);
+            this .zoom (1 / 200, gamepad .hit .id && !gamepad .buttons [1] .pressed ? 1 : -1);
          }
          else if (gamepads .action)
          {
