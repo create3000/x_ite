@@ -541,9 +541,18 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          return;
       }
 
+      const button = gamepad .buttons [1] .pressed;
+
+      if (gamepads .button !== button)
+      {
+         gamepads .button = button;
+
+         this .disconnect ();
+      }
+
       gamepads .action = true;
 
-      if (gamepad .buttons [1] .pressed)
+      if (button)
       {
          // Pan
          this .startPan (0, 0);

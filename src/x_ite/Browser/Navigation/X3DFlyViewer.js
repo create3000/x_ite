@@ -410,7 +410,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             return;
          }
 
-         if (gamepad .buttons [1] .pressed)
+         const button = gamepad .buttons [1] .pressed;
+
+         if (button)
          {
             axis
                .set (gamepad .axes [2], -gamepad .axes [3], 0)
