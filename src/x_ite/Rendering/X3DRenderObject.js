@@ -493,8 +493,7 @@ Object .assign (X3DRenderObject .prototype,
             collisionRadius = navigationInfo .getCollisionRadius (),
             bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
             nearValue       = navigationInfo .getNearValue (),
-            avatarHeight    = navigationInfo .getAvatarHeight (),
-            pose            = browser .getPose ();
+            avatarHeight    = navigationInfo .getAvatarHeight ();
 
          // Determine width and height of camera
 
@@ -527,7 +526,7 @@ Object .assign (X3DRenderObject .prototype,
             .rotate (rotation)
             .inverse ()
             .multRight (projectionMatrix)
-            .multLeft (pose ?.cameraSpaceMatrix ?? viewpoint .getCameraSpaceMatrix ());
+            .multLeft (viewpoint .getCameraSpaceMatrix ());
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 

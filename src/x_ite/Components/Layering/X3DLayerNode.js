@@ -297,28 +297,42 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
       if (pose ?.views .length)
       {
-         if (type === TraverseType .POINTER)
+         switch (type)
          {
-            const inputSource = browser .getPointingInputSource ();
-
-            this .getProjectionMatrix ()  .push (this .defaultViewpoint .getProjectionMatrix (this));
-            this .getCameraSpaceMatrix () .push (inputSource .matrix);
-            this .getViewMatrix ()        .push (inputSource .inverse);
-         }
-         else
-         {
-            // This matrix will change later before rendering.
-            this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
-
-            if (this === browser .getActiveLayer ())
+            case TraverseType .POINTER:
             {
-               this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
-               this .getViewMatrix ()        .push (pose .viewMatrix);
+               const inputSource = browser .getPointingInputSource ();
+
+               this .getProjectionMatrix ()  .push (this .defaultViewpoint .getProjectionMatrix (this));
+               this .getCameraSpaceMatrix () .push (inputSource .matrix);
+               this .getViewMatrix ()        .push (inputSource .inverse);
+               break;
             }
-            else
+            case TraverseType .COLLISION:
             {
+               // This projection matrix will change later before rendering.
+               this .getProjectionMatrix ()  .push (pose .views [0] .projectionMatrix);
                this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
                this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+               break;
+            }
+            default:
+            {
+               // This projection matrix will change later before rendering.
+               this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
+
+               if (this === browser .getActiveLayer ())
+               {
+                  this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
+                  this .getViewMatrix ()        .push (pose .viewMatrix);
+               }
+               else
+               {
+                  this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+                  this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+               }
+
+               break;
             }
          }
       }
