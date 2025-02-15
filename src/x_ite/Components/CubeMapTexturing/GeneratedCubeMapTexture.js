@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
             viewpoint          = dependentRenderer .getViewpoint (),
             headlightContainer = browser .getHeadlight (),
             headlight          = navigationInfo ._headlight .getValue (),
-            nearValue          = navigationInfo .getNearValue (),
+            nearValue          = navigationInfo .getNearValue (viewpoint),
             farValue           = navigationInfo .getFarValue (viewpoint),
             projectionMatrix   = Camera .perspective (Algorithm .radians (90), nearValue, farValue, 1, 1, this .projectionMatrix),
             width              = this .frameBuffer .getWidth (),

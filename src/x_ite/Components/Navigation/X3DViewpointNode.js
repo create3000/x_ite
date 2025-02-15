@@ -288,8 +288,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       const navigationInfo = renderObject .getNavigationInfo ();
 
-      return this .getProjectionMatrixWithLimits (this .nearDistance ?? navigationInfo .getNearValue (),
-                                                  this .farDistance ?? navigationInfo .getFarValue (this),
+      return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (this),
+                                                  navigationInfo .getFarValue (this),
                                                   renderObject .getLayer () .getViewport () .getRectangle ());
    },
    getCameraSpaceMatrix ()
@@ -494,7 +494,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+      const minDistance = layerNode .getNavigationInfo () .getNearValue (this) * 2;
 
       this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
    },

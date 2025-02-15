@@ -77,7 +77,7 @@ function Layout (executionContext)
    this .addType (X3DConstants .Layout);
 
    // Private properties
-   
+
    this .alignX          = CENTER;
    this .alignY          = CENTER;
    this .offsetUnitX     = WORLD;
@@ -431,17 +431,17 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          contentScale        = browser .getRenderingProperty ("ContentScale"),
          matrix              = this .matrix,
          viewpoint           = renderObject .getViewpoint (),
-         nearValue           = renderObject .getNavigationInfo () .getNearValue (),       // in meters
-         viewport            = renderObject .getViewVolume () .getScissor (),             // in pixels
-         viewportMeter       = viewpoint .getViewportSize (viewport, nearValue),          // in meters
-         viewportPixel       = this .viewportPixel,                                       // in pixels
-         pixelSize           = this .pixelSize,                                           // size of one pixel in meters
-         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter,      // in meters
+         nearValue           = renderObject .getNavigationInfo () .getNearValue (viewpoint), // in meters
+         viewport            = renderObject .getViewVolume () .getScissor (),                // in pixels
+         viewportMeter       = viewpoint .getViewportSize (viewport, nearValue),             // in meters
+         viewportPixel       = this .viewportPixel,                                          // in pixels
+         pixelSize           = this .pixelSize,                                              // size of one pixel in meters
+         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter,         // in meters
          rectangleSize       = this .rectangleSize,
          rectangleCenter     = this .rectangleCenter;
 
-      viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale);             // in pixel
-      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);                      // size of one pixel in meter
+      viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale); // in pixel
+      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);          // size of one pixel in meter
 
       switch (this .getSizeUnitX ())
       {

@@ -123,7 +123,9 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
             navigationInfo   = this .getNavigationInfo (),
             viewpoint        = this .getActiveViewpoint (),
             viewport         = this .getViewport (),
-            projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
+            nearValue        = navigationInfo .getNearValue (viewpoint),
+            farValue         = navigationInfo .getFarValue (viewpoint),
+            projectionMatrix = viewpoint .getProjectionMatrixWithLimits (nearValue, farValue, viewport);
 
          // Far plane point
          ViewVolume .unProjectPoint (x, y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
