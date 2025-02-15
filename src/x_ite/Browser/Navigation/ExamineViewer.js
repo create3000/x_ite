@@ -71,7 +71,8 @@ const
    ROTATE_TIME         = 0.2,
    DISK_ANGLE          = Algorithm .radians (15),
    CRITICAL_ANGLE      = Algorithm .radians (0.1),
-   GAMEPAD_SPIN_FACTOR = 10;
+   GAMEPAD_SPIN_FACTOR = 10,
+   GAMEPAD_PAN_FACTOR  = 5;
 
 function ExamineViewer (executionContext, navigationInfo)
 {
@@ -222,7 +223,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-            this .getPointOnCenterPlane (x, y, this .fromPoint);
+            this .startPan (x, y);
 
             this ._isActive = true;
             break;
@@ -282,50 +283,38 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       this .disconnect ();
       this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
-   mousemove: (() =>
+   mousemove (event)
    {
-      const fromPoint = new Vector3 ();
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      return function (event)
+      switch (this .getButton (this .button))
       {
-         const { x, y } = this .getBrowser () .getPointerFromEvent (event);
-
-         switch (this .getButton (this .button))
+         case 0:
          {
-            case 0:
-            {
-               // Rotate view around Viewpoint.centerOfRotation.
+            // Rotate view around Viewpoint.centerOfRotation.
 
-               // Stop event propagation.
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
+            // Stop event propagation.
+            event .preventDefault ();
+            event .stopImmediatePropagation ();
 
-               this .rotate (x, y);
+            this .rotate (x, y);
 
-               this .motionTime = Date .now ();
-               break;
-            }
-            case 1:
-            {
-               // Move view along center plane.
-
-               // Stop event propagation.
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
-
-               const
-                  viewpoint   = this .getActiveViewpoint (),
-                  toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
-                  translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
-
-               this .addMove (translation, translation);
-
-               this .fromPoint .assign (toPoint);
-               break;
-            }
+            this .motionTime = Date .now ();
+            break;
          }
-      };
-   })(),
+         case 1:
+         {
+            // Move view along center plane.
+
+            // Stop event propagation.
+            event .preventDefault ();
+            event .stopImmediatePropagation ();
+            this .pan (x, y);
+
+            break;
+         }
+      }
+   },
    mousewheel: (() =>
    {
       const
@@ -546,7 +535,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             gamepads .action = false;
 
-            this .rotationChaser ._value_changed .removeInterest ("set_rotation__", this);
+            this .disconnect ();
          }
 
          return;
@@ -556,7 +545,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       if (gamepad .buttons [1] .pressed)
       {
-         // Zoom
+         // Pan
+         this .startPan (0, 0);
+         this .pan (-gamepad .axes [2] * GAMEPAD_PAN_FACTOR, gamepad .axes [3] * GAMEPAD_PAN_FACTOR);
       }
       else // default
       {
@@ -581,9 +572,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          this .trackballProjectToSphere (x, y, this .fromVector);
       }
-
-      this .rotation      .assign (Rotation4 .Identity);
-      this .deltaRotation .assign (Rotation4 .Identity);
    },
    rotate: (() =>
    {
@@ -754,6 +742,26 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
+   startPan (x, y)
+   {
+      this .getPointOnCenterPlane (x, y, this .fromPoint);
+   },
+   pan: (function ()
+   {
+      const fromPoint = new Vector3 ();
+
+      return function  (x, y)
+      {
+         const
+            viewpoint   = this .getActiveViewpoint (),
+            toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
+            translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
+
+         this .addMove (translation, translation);
+
+         this .fromPoint .assign (toPoint);
+      };
+   })(),
    addMove: (() =>
    {
       const
@@ -764,7 +772,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          const viewpoint = this .getActiveViewpoint ();
 
-         if (this .positionChaser ._isActive .getValue () && this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
+         if (this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
          {
             positionOffset
                .assign (this .positionChaser ._set_destination .getValue ())
@@ -774,6 +782,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          else
          {
+            this .positionChaser ._value_changed .addInterest ("set_positionOffset__", this);
+
             positionOffset
                .assign (viewpoint ._positionOffset .getValue ())
                .add (positionOffsetChange);
@@ -782,7 +792,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .positionChaser ._set_destination = positionOffset;
          }
 
-         if (this .centerOfRotationChaser ._isActive .getValue () && this .centerOfRotationChaser ._value_changed .hasInterest ("set_centerOfRotationOffset__", this))
+         if (this .centerOfRotationChaser ._value_changed .hasInterest ("set_centerOfRotationOffset__", this))
          {
             centerOfRotationOffset
                .assign (this .centerOfRotationChaser ._set_destination .getValue ())
@@ -792,6 +802,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          else
          {
+            this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
+
             centerOfRotationOffset
                .assign (viewpoint ._centerOfRotationOffset .getValue ())
                .add (centerOfRotationOffsetChange);
@@ -799,10 +811,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .centerOfRotationChaser ._set_value       = viewpoint ._centerOfRotationOffset;
             this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
          }
-
-         this .disconnect ();
-         this .positionChaser         ._value_changed .addInterest ("set_positionOffset__",         this);
-         this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
       };
    })(),
    getPositionOffset: (() =>

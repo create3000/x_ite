@@ -80,7 +80,9 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    },
    getStraightenHorizon ()
    {
-      return this .getBrowser () .getBrowserOption ("StraightenHorizon");
+      const browser = this .getBrowser ();
+
+      return browser .getBrowserOption ("StraightenHorizon") || !! browser .getPose ();
    },
    getButton (button)
    {
