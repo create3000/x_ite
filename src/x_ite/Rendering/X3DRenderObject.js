@@ -519,12 +519,8 @@ Object .assign (X3DRenderObject .prototype,
             .translate (viewpoint .getUserPosition ())
             .rotate (rotation)
             .inverse ()
-            .multRight (projectionMatrix);
-
-         if (pose)
-            cameraSpaceProjectionMatrix .multLeft (pose .cameraSpaceMatrix);
-         else
-            cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+            .multRight (projectionMatrix)
+            .multLeft (pose ?.cameraSpaceMatrix ?? viewpoint .getCameraSpaceMatrix ());
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
