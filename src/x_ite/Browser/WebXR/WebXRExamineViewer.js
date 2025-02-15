@@ -31,20 +31,22 @@ Object .assign (ExamineViewer .prototype,
          this .disconnect ();
       }
 
+      const f = 60 / this .getBrowser () .currentFrameRate;
+
       gamepads .action = true;
 
       if (button)
       {
          // Pan
          this .startPan (0, 0);
-         this .pan (-gamepad .axes [2] * GAMEPAD_PAN_FACTOR, gamepad .axes [3] * GAMEPAD_PAN_FACTOR);
+         this .pan (-gamepad .axes [2] * GAMEPAD_PAN_FACTOR * f, gamepad .axes [3] * GAMEPAD_PAN_FACTOR * f);
       }
       else // default
       {
          // Rotate
 
          this .startRotate (0, 0);
-         this .rotate (-gamepad .axes [2] * GAMEPAD_SPIN_FACTOR, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR);
+         this .rotate (-gamepad .axes [2] * GAMEPAD_SPIN_FACTOR * f, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR * f);
       }
    },
 });
