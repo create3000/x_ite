@@ -1,5 +1,5 @@
-/* X_ITE v11.1.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.1")];
+/* X_ITE v11.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -191,9 +191,8 @@ Object .assign (ScreenPoint .prototype,
          // Apply screen scale to matrix.
 
          const
-            contentScale = browser .getRenderingProperty ("ContentScale"),
-            screenScale  = contentScale * Math .abs (modelViewMatrix .origin .z),
-            scale        = radius * screenScale;
+            screenScale = Math .abs (modelViewMatrix .origin .z),
+            scale       = radius * screenScale;
 
          const
             x = modelViewMatrix .xAxis .normalize () .multiply (scale),
@@ -292,6 +291,137 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
 ;// external "__X_ITE_X3D__ .Lock"
 const external_X_ITE_X3D_Lock_namespaceObject = __X_ITE_X3D__ .Lock;
 var external_X_ITE_X3D_Lock_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Lock_namespaceObject);
+;// external "__X_ITE_X3D__ .ExamineViewer"
+const external_X_ITE_X3D_ExamineViewer_namespaceObject = __X_ITE_X3D__ .ExamineViewer;
+var external_X_ITE_X3D_ExamineViewer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ExamineViewer_namespaceObject);
+;// ./src/x_ite/Browser/WebXR/WebXRExamineViewer.js
+
+
+
+const
+   GAMEPAD_SPIN_FACTOR = 10,
+   GAMEPAD_PAN_FACTOR  = 5,
+   GAMEPAD_ZOOM_FACTOR = 1 / 200;
+
+Object .assign ((external_X_ITE_X3D_ExamineViewer_default()).prototype,
+{
+   gamepads (gamepads)
+   {
+      const gamepad = gamepads .find (({ axes }) => axes [2] || axes [3]);
+
+      if (!gamepad)
+      {
+         if (gamepads .action)
+         {
+            gamepads .action = false;
+
+            this .disconnect ();
+         }
+
+         return;
+      }
+
+      const
+         button0 = gamepad .buttons [0] .pressed,
+         button1 = gamepad .buttons [1] .pressed;
+
+      if (gamepads .button0 !== button0 || gamepads .button1 !== button1)
+      {
+         gamepads .button0 = button0;
+         gamepads .button1 = button1;
+
+         this .disconnect ();
+      }
+
+      const f = 60 / this .getBrowser () .currentFrameRate;
+
+      gamepads .action = true;
+
+      if (button0)
+      {
+         this .zoom (gamepad .axes [3] * GAMEPAD_ZOOM_FACTOR * f, Math .sign (-gamepad .axes [3]));
+      }
+      else if (button1)
+      {
+         // Pan
+         this .startPan (0, 0);
+         this .pan (-gamepad .axes [2] * GAMEPAD_PAN_FACTOR * f, gamepad .axes [3] * GAMEPAD_PAN_FACTOR * f);
+      }
+      else // default
+      {
+         // Rotate
+
+         this .startRotate (0, 0);
+         this .rotate (-gamepad .axes [2] * GAMEPAD_SPIN_FACTOR * f, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR * f);
+      }
+   },
+});
+
+;// external "__X_ITE_X3D__ .X3DFlyViewer"
+const external_X_ITE_X3D_X3DFlyViewer_namespaceObject = __X_ITE_X3D__ .X3DFlyViewer;
+var external_X_ITE_X3D_X3DFlyViewer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFlyViewer_namespaceObject);
+;// ./src/x_ite/Browser/WebXR/WebXRX3DFlyViewer.js
+
+
+
+const GAMEPAD_SPEED_FACTOR = new (external_X_ITE_X3D_Vector3_default()) (300, 300, 400);
+
+Object .assign ((external_X_ITE_X3D_X3DFlyViewer_default()).prototype,
+{
+   gamepads: (function ()
+   {
+      const axis = new (external_X_ITE_X3D_Vector3_default()) ();
+
+      return function (gamepads)
+      {
+         const gamepad = gamepads .find (({ axes }) => axes [2] || axes [3]);
+
+         if (!gamepad)
+         {
+            this .startTime = Date .now ();
+            return;
+         }
+
+         const button1 = gamepad .buttons [1] .pressed;
+
+         if (button1)
+         {
+            axis
+               .set (gamepad .axes [2], -gamepad .axes [3], 0)
+               .multVec (GAMEPAD_SPEED_FACTOR);
+
+            // Moving average.
+            this .direction .add (axis) .divide (2);
+
+            this .pan ();
+         }
+         else // default
+         {
+            axis
+               .set (gamepad .axes [2], 0, gamepad .axes [3])
+               .multVec (GAMEPAD_SPEED_FACTOR);
+
+            // Moving average.
+            this .direction .add (axis) .divide (2);
+
+            this .fly ();
+         }
+      };
+   })(),
+});
+
+;// external "__X_ITE_X3D__ .X3DViewer"
+const external_X_ITE_X3D_X3DViewer_namespaceObject = __X_ITE_X3D__ .X3DViewer;
+var external_X_ITE_X3D_X3DViewer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DViewer_namespaceObject);
+;// ./src/x_ite/Browser/WebXR/WebXRX3DViewer.js
+
+
+Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
+{
+   gamepads ()
+   { },
+});
+
 ;// ./src/x_ite/Browser/WebXR/X3DWebXRContext.js
 /*******************************************************************************
  *
@@ -349,25 +479,27 @@ var external_X_ITE_X3D_Lock_default = /*#__PURE__*/__webpack_require__.n(externa
 
 
 
-const
-   _baseReferenceSpace = Symbol (),
-   _referenceSpace     = Symbol (),
-   _baseLayer          = Symbol (),
-   _pose               = Symbol (),
-   _inputSources       = Symbol (),
-   _inputRay           = Symbol (),
-   _inputPoint         = Symbol ();
 
-function X3DWebXRContext () { }
+
+
+
+const
+   _referenceSpace = Symbol (),
+   _baseLayer      = Symbol (),
+   _pose           = Symbol (),
+   _inputSources   = Symbol (),
+   _inputRay       = Symbol (),
+   _inputPoint     = Symbol (),
+   _gamepads       = Symbol (),
+   _frame          = Symbol ();
+
+function X3DWebXRContext ()
+{
+   this [_gamepads] = [ ];
+}
 
 Object .assign (X3DWebXRContext .prototype,
 {
-   initialize ()
-   {
-      // Events
-
-      this ._activeViewpoint .addInterest ("setReferenceSpace", this);
-   },
    async initXRSession ()
    {
       return external_X_ITE_X3D_Lock_default().acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
@@ -385,23 +517,20 @@ Object .assign (X3DWebXRContext .prototype,
          // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
-         const baseLayer = new XRWebGLLayer (session, gl,
-         {
-            antialias: false,
-            alpha: true,
-            depth: false,
-            ignoreDepthValues: true,
-         });
+         this .cameraEvents ()   .addInterest ("updatePose",     this);
+         this .finishedEvents () .addInterest ("updatePointers", this);
+         this .endEvents ()      .addInterest ("endFrame",       this);
 
-         this .finishedEvents () .addInterest ("finishedFrame", this);
-         this .endEvents ()      .addInterest ("endFrame",      this);
-
-         session .updateRenderState ({ baseLayer });
-         session .addEventListener( "inputsourceschange", event => this .setInputSources (event));
+         session .addEventListener ("inputsourceschange", event => this .updateInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
 
-         this [_baseReferenceSpace] = referenceSpace;
-         this [_baseLayer]          = baseLayer;
+         this [_referenceSpace] = referenceSpace;
+
+         this [_inputSources] = new Set ();
+         this [_inputRay]     = new (external_X_ITE_X3D_ScreenLine_default()) (this, 4, 2, 0.9);
+         this [_inputPoint]   = new Rendering_ScreenPoint (this);
+
+         Object .assign (this [_gamepads], { action: true });
 
          this [_pose] = {
             cameraSpaceMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
@@ -409,13 +538,8 @@ Object .assign (X3DWebXRContext .prototype,
             views: [ ],
          };
 
-         this [_inputSources] = new Map ();
-         this [_inputRay]     = new (external_X_ITE_X3D_ScreenLine_default()) (this, 5, 3, 0.9);
-         this [_inputPoint]   = new Rendering_ScreenPoint (this);
-
+         this .updateBaseLayer ({ }, session);
          this .setSession (session);
-         this .setDefaultFrameBuffer (baseLayer .framebuffer);
-         this .setReferenceSpace ();
          this .removeHit (this .getHit ());
 
          // session .addEventListener ("select", event =>
@@ -437,152 +561,244 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .finishedEvents () .removeInterest ("finishedFrame", this);
-         this .endEvents ()      .removeInterest ("endFrame",      this);
+         this .cameraEvents ()   .removeInterest ("updatePose",     this);
+         this .finishedEvents () .removeInterest ("updatePointers", this);
+         this .endEvents ()      .removeInterest ("endFrame",       this);
 
          this .setSession (window);
-         this .setDefaultFrameBuffer (null);
+         this .setDefaultFramebuffer (null);
 
-         for (const { hit } of this [_inputSources] .values ())
+         for (const { hit } of this [_inputSources])
             this .removeHit (hit);
 
-         this [_baseReferenceSpace] = null;
-         this [_referenceSpace]     = null;
-         this [_baseLayer]          = null;
-         this [_pose]               = null;
-         this [_inputSources]       = null;
-         this [_inputRay]           = null;
-         this [_inputPoint]         = null;
+         this [_referenceSpace] = null;
+         this [_baseLayer]      = null;
+         this [_pose]           = null;
+         this [_inputSources]   = null;
+         this [_inputRay]       = null;
+         this [_inputPoint]     = null;
+         this [_frame]          = null;
       });
    },
-   setReferenceSpace ()
+   setFramebufferScaleFactor (framebufferScaleFactor)
    {
-      if (!this [_baseReferenceSpace])
+      this .updateBaseLayer ({ framebufferScaleFactor });
+   },
+   updateBaseLayer (options = { }, session = this .getSession ())
+   {
+      if (session === window)
          return;
 
-      const
-         translation = new (external_X_ITE_X3D_Vector3_default()) (),
-         rotation    = new (external_X_ITE_X3D_Rotation4_default()) ();
+      const baseLayer = new XRWebGLLayer (session, this .getContext (), Object .assign ({
+         antialias: false,
+         alpha: true,
+         depth: false,
+         ignoreDepthValues: true,
+         framebufferScaleFactor: this .getRenderingProperty ("ContentScale"),
+      },
+      options));
 
-      this .getActiveViewpoint () ?.getViewMatrix () .get (translation, rotation)
+      this [_baseLayer] = baseLayer;
 
-      const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
+      session .updateRenderState ({ baseLayer });
 
-      this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
+      this .setDefaultFramebuffer (baseLayer .framebuffer);
    },
-   setInputSources (event)
+   updateInputSources (event)
    {
       for (const inputSource of event .added)
       {
-         this [_inputSources] .set (inputSource,
+         this [_inputSources] .add (Object .assign (inputSource,
          {
+            active: false,
             matrix: new (external_X_ITE_X3D_Matrix4_default()) (),
             inverse: new (external_X_ITE_X3D_Matrix4_default()) (),
             hit: Object .assign (this .getHit () .copy (),
             {
+               button: false,
                pressed: false,
                pulse: true,
                poseViewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
                originalPoint: new (external_X_ITE_X3D_Vector3_default()) (),
                originalNormal: new (external_X_ITE_X3D_Vector3_default()) (),
             }),
-         });
+         }));
+
+         if (inputSource .gamepad)
+            inputSource .gamepad .hit = inputSource .hit;
       }
 
-      for (const removed of event .removed)
+      for (const inputSource of event .removed)
       {
-         this .removeHit (this [_inputSources] .get (removed) .hit);
-         this [_inputSources] .delete (removed);
+         this .removeHit (inputSource .hit);
+         this [_inputSources] .delete (inputSource);
       }
    },
-   setFrame: (function ()
+   setFrame (frame)
    {
-      const inputRayMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+      if (!frame)
+         return;
 
-      return function (frame)
+      this [_frame] = frame;
+
+      // Emulator
+
+      const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
+
+      // WebXR Emulator or polyfill.
+      if (emulator)
+         this .getCanvas () .css (this .getXREmulatorCSS ());
+
+      // TODO: Clip planes
+
+      // const
+      //    navigationInfoNode = this .getActiveNavigationInfo (),
+      //    viewpointNode      = this .getActiveViewpoint ();
+
+      // this .getSession () .updateRenderState ({
+      //    depthNear: viewpointNode .getNearDistance (navigationInfoNode), // 0.1
+      //    depthFar:  viewpointNode .getFarDistance  (navigationInfoNode), // 10_000
+      // });
+
+      // Navigation
+
+      this [_gamepads] .length = 0;
+
+      for (const { active, gamepad } of this [_inputSources])
       {
-         if (!frame)
-            return;
+         if (!active)
+            continue;
 
-         const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
+         if (gamepad .axes .length < 4)
+            continue;
 
-         // WebXR Emulator or polyfill.
-         if (emulator)
-            this .getCanvas () .css (this .getXREmulatorCSS ());
+         this [_gamepads] .push (gamepad);
+      }
 
-         // Get matrices from views.
+      this .getViewer () .gamepads (this [_gamepads]);
 
-         const
-            viewport     = this .getViewport () .getValue (),
-            originalPose = frame .getViewerPose (this [_referenceSpace]),
-            pose         = this [_pose];
+      // Trigger new frame.
 
-         pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
-         pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
+      this .addBrowserEvent ();
+   },
+   getPose ()
+   {
+      return this [_pose];
+   },
+   updatePose ()
+   {
+      // Get matrices from views.
 
-         let v = 0;
+      const
+         originalPose  = this [_frame] .getViewerPose (this [_referenceSpace]),
+         pose          = this [_pose],
+         viewpointNode = this .getActiveViewpoint ();
 
-         for (const originalView of originalPose .views)
+      pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
+      pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
+
+      if (viewpointNode)
+      {
+         pose .cameraSpaceMatrix .multRight (viewpointNode .getCameraSpaceMatrix ());
+         pose .viewMatrix        .multLeft  (viewpointNode .getViewMatrix ());
+      }
+
+      let v = 0;
+
+      for (const originalView of originalPose .views)
+      {
+         const { x, y, width, height } = this [_baseLayer] .getViewport (originalView);
+
+         // WebXR Emulator: second view has width zero if in non-stereo mode.
+         if (!width)
+            continue;
+
+         this .reshapeFramebuffer (v, x|0, y|0, width|0, height|0);
+
+         const view = pose .views [v] ??= {
+            projectionMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+            cameraSpaceMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+            viewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+            matrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+            inverse: new (external_X_ITE_X3D_Matrix4_default()) (),
+         };
+
+         view .projectionMatrix  .assign (originalView .projectionMatrix);
+         view .cameraSpaceMatrix .assign (originalView .transform .matrix);
+         view .viewMatrix        .assign (originalView .transform .inverse .matrix);
+
+         if (viewpointNode)
          {
-            const { x, y, width, height } = this [_baseLayer] .getViewport (originalView);
-
-            // WebXR Emulator: second view has width zero if in non-stereo mode.
-            if (!width)
-               continue;
-
-            this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
-
-            const view = pose .views [v] ??= {
-               projectionMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
-               cameraSpaceMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
-               viewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
-               matrix: new (external_X_ITE_X3D_Matrix4_default()) (),
-               inverse: new (external_X_ITE_X3D_Matrix4_default()) (),
-            };
-
-            view .projectionMatrix .assign (originalView .projectionMatrix);
-            view .cameraSpaceMatrix .assign (originalView .transform .matrix);
-            view .viewMatrix .assign (originalView .transform .inverse .matrix);
-            view .matrix .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
-            view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
-
-            ++ v;
+            view .cameraSpaceMatrix .multRight (viewpointNode .getCameraSpaceMatrix ());
+            view .viewMatrix        .multLeft  (viewpointNode .getViewMatrix ());
          }
 
-         pose .views .length              = v;
-         this .getFrameBuffers () .length = v;
+         view .matrix  .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
+         view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
+
+         ++ v;
+      }
+
+      pose .views .length              = v;
+      this .getFramebuffers () .length = v;
+   },
+   updatePointers: (function ()
+   {
+      const
+         blue           = new (external_X_ITE_X3D_Color3_default()) (0.5, 0.75, 1),
+         inputRayMatrix = new (external_X_ITE_X3D_Matrix4_default()) (),
+         toVector       = new (external_X_ITE_X3D_Vector3_default()) (0, 0, -0.5),
+         fromPoint      = new (external_X_ITE_X3D_Vector3_default()) (),
+         toPoint        = new (external_X_ITE_X3D_Vector3_default()) (),
+         hitPoint       = new (external_X_ITE_X3D_Vector3_default()) (),
+         hitRotation    = new (external_X_ITE_X3D_Rotation4_default()) (),
+         hitSize        = 0.007,
+         hitPressedSize = 0.005;
+
+      return function ()
+      {
+         const
+            viewport      = this .getViewport () .getValue (),
+            pose          = this [_pose],
+            viewpointNode = this .getActiveViewpoint ();
 
          // Get target ray matrices from input sources.
 
-         for (const [original, { matrix, inverse }] of this [_inputSources])
+         for (const inputSource of this [_inputSources])
          {
-            const
-               targetRaySpace = original .targetRaySpace,
-               targetRayPose  = frame .getPose (targetRaySpace, this [_referenceSpace]);
+            const { targetRaySpace, matrix, inverse } = inputSource;
 
-            original .active = !! targetRayPose;
+            const targetRayPose = this [_frame] .getPose (targetRaySpace, this [_referenceSpace]);
+
+            inputSource .active = !! targetRayPose;
 
             if (!targetRayPose)
                continue;
 
             matrix  .assign (targetRayPose .transform .matrix);
             inverse .assign (targetRayPose .transform .inverse .matrix);
+
+            if (viewpointNode)
+            {
+               matrix  .multRight (viewpointNode .getCameraSpaceMatrix ());
+               inverse .multLeft  (viewpointNode .getViewMatrix ());
+            }
          }
 
          // Test for hits.
 
-         for (const [original, inputSource] of this [_inputSources])
+         for (const inputSource of this [_inputSources])
          {
-            if (!original .active)
-               continue;
+            const { active, gamepad, matrix, hit } = inputSource;
 
-            const { hit } = inputSource;
+            if (!active)
+               continue;
 
             this .touch (viewport [2] / 2, viewport [3] / 2, hit, inputSource);
 
             // Make a vibration puls if there is a sensor hit.
 
-            this .sensorHitPulse (hit, original .gamepad);
+            this .sensorHitPulse (hit, gamepad);
 
             // Update matrices and determine pointer position.
 
@@ -594,7 +810,7 @@ Object .assign (X3DWebXRContext .prototype,
             if (!hit .pressed)
                hit .poseViewMatrix .assign (pose .viewMatrix);
 
-            inputRayMatrix .assign (inputSource .matrix) .multRight (hit .poseViewMatrix);
+            inputRayMatrix .assign (matrix) .multRight (hit .poseViewMatrix);
 
             for (const sensor of hit .sensors .values ())
             {
@@ -614,24 +830,33 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Handle nodes of type X3DPointingDeviceSensorNodes.
 
-         for (const [{ active, gamepad }, { hit }] of this [_inputSources])
+         for (const { active, gamepad, hit } of this [_inputSources])
          {
             if (!active)
                continue;
 
             // Press & Release
 
-            const button = gamepad ?.buttons [0];
+            const button0 = gamepad ?.buttons [0];
 
-            if (button ?.pressed)
+            if (button0 ?.pressed)
             {
-               hit .pressed ||= this .buttonPressEvent (0, 0, hit);
+               if (!hit .button)
+               {
+                  hit .button    = true;
+                  hit .pressed ||= this .buttonPressEvent (0, 0, hit);
+               }
             }
-            else if (hit .pressed)
+            else
             {
-               hit .pressed = false;
+               hit .button = false;
 
-               this .buttonReleaseEvent (hit);
+               if (hit .pressed)
+               {
+                  hit .pressed = false;
+
+                  this .buttonReleaseEvent (hit);
+               }
             }
 
             // Motion
@@ -639,36 +864,13 @@ Object .assign (X3DWebXRContext .prototype,
             this .motionNotifyEvent (0, 0, hit);
          }
 
-         // Trigger new frame.
-
-         this .addBrowserEvent ();
-      };
-   })(),
-   finishedFrame: (function ()
-   {
-      const
-         blue           = new (external_X_ITE_X3D_Color3_default()) (0.5, 0.75, 1),
-         inputRayMatrix = new (external_X_ITE_X3D_Matrix4_default()) (),
-         toVector       = new (external_X_ITE_X3D_Vector3_default()) (0, 0, -0.5),
-         fromPoint      = new (external_X_ITE_X3D_Vector3_default()) (),
-         toPoint        = new (external_X_ITE_X3D_Vector3_default()) (),
-         hitRotation    = new (external_X_ITE_X3D_Rotation4_default()) (),
-         hitSize        = 0.007,
-         hitPressedSize = 0.005;
-
-      return function ()
-      {
-         const
-            viewport = this .getViewport () .getValue (),
-            pose     = this [_pose];
-
          // Draw input source rays.
 
          for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
-            const frameBuffer = this .getFrameBuffers () [i];
+            const frameBuffer = this .getFramebuffers () [i];
 
-            for (const [{ active, gamepad }, { matrix, hit }] of this [_inputSources])
+            for (const { active, gamepad, matrix, hit } of this [_inputSources])
             {
                if (!active)
                   continue;
@@ -685,6 +887,11 @@ Object .assign (X3DWebXRContext .prototype,
 
                inputRayMatrix .multVecMatrix (fromPoint .assign ((external_X_ITE_X3D_Vector3_default()).Zero));
                inputRayMatrix .multVecMatrix (toPoint   .assign (toVector));
+               inputRayMatrix .multVecMatrix (hitPoint  .assign (hit .originalPoint));
+
+               // Make ray shorter if track point is very close.
+               if (hitPoint .distance (fromPoint) < toPoint .distance (fromPoint))
+                  toPoint .assign (hitPoint);
 
                if (fromPoint .z > 0 || toPoint .z > 0)
                   continue;
@@ -724,17 +931,13 @@ Object .assign (X3DWebXRContext .prototype,
       // WebXR Emulator and polyfill: bind to null, to prevent changes.
       gl .bindVertexArray (null);
    },
-   getPose ()
-   {
-      return this [_pose];
-   },
    sensorHitPulse (hit, gamepad)
    {
       if (hit .sensors .size)
       {
          if (hit .pulse)
          {
-            gamepad ?.hapticActuators ?.[0] ?.pulse (0.2, 10);
+            gamepad ?.hapticActuators ?.[0] ?.pulse (0.25, 10);
 
             hit .pulse = false;
          }

@@ -1,5 +1,5 @@
-/* X_ITE v11.1.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.1")];
+/* X_ITE v11.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1932,6 +1932,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
 
       this .proximitySensorNode ._size         = new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1);
       this .transformNode ._children           = new (external_X_ITE_X3D_Fields_default()).MFNode (this .shapeNode);
+      this .shapeNode ._pointerEvents          = false;
+      this .shapeNode ._castShadow             = false;
       this .shapeNode ._appearance             = this .appearanceNode;
       this .shapeNode ._geometry               = this .geometryNode;
       this .appearanceNode ._alphaMode         = "BLEND";

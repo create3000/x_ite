@@ -1,5 +1,5 @@
-/* X_ITE v11.1.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.1")];
+/* X_ITE v11.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -656,7 +656,7 @@ function DependentRenderer (executionContext, renderObject, node)
 
    this .renderObject = renderObject;
    this .node         = node;
-   this .frameBuffers = [ ];
+   this .framebuffers = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
@@ -703,13 +703,13 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_
    {
       return this .renderObject .getLights () [this .lightIndex ++];
    },
-   getFrameBuffers ()
+   getFramebuffers ()
    {
-      return this .frameBuffers;
+      return this .framebuffers;
    },
-   setFrameBuffer (frameBuffer)
+   setFramebuffer (frameBuffer)
    {
-      this .frameBuffers [0] = frameBuffer;
+      this .framebuffers [0] = frameBuffer;
    },
    render (type, callback, group)
    {
@@ -957,19 +957,19 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
             layer              = renderObject .getLayer (),
             gl                 = browser .getContext (),
             background         = dependentRenderer .getBackground (),
-            navigationInfo     = dependentRenderer .getNavigationInfo (),
-            viewpoint          = dependentRenderer .getViewpoint (),
+            navigationInfoNode = dependentRenderer .getNavigationInfo (),
+            viewpointNode      = dependentRenderer .getViewpoint (),
             headlightContainer = browser .getHeadlight (),
-            headlight          = navigationInfo ._headlight .getValue (),
-            nearValue          = navigationInfo .getNearValue (),
-            farValue           = navigationInfo .getFarValue (viewpoint),
+            headlight          = navigationInfoNode ._headlight .getValue (),
+            nearValue          = viewpointNode .getNearDistance (navigationInfoNode),
+            farValue           = viewpointNode .getFarDistance (navigationInfoNode),
             projectionMatrix   = external_X_ITE_X3D_Camera_default().perspective (external_X_ITE_X3D_Algorithm_default().radians (90), nearValue, farValue, 1, 1, this .projectionMatrix),
             width              = this .frameBuffer .getWidth (),
             height             = this .frameBuffer .getHeight ();
 
          this .setTransparent (background .isTransparent ());
 
-         dependentRenderer .setFrameBuffer (this .frameBuffer);
+         dependentRenderer .setFramebuffer (this .frameBuffer);
          dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
@@ -993,7 +993,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
             if (headlight)
             {
                headlightContainer .modelViewMatrix .push (invCameraSpaceMatrix);
-               headlightContainer .modelViewMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+               headlightContainer .modelViewMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
             }
 
             // Render layer's children.

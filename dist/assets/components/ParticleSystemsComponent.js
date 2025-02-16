@@ -1,5 +1,5 @@
-/* X_ITE v11.1.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.1")];
+/* X_ITE v11.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -212,7 +212,7 @@ function X3DParticleEmitterNode (executionContext)
    this ._surfaceArea .setUnit ("area");
 
    // Private properties
-   
+
    this .defines   = [ ];
    this .samplers  = [ ];
    this .uniforms  = new Map ();
@@ -391,7 +391,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
 
       // Transform particles.
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, browser .getDefaultFrameBuffer ()); // Prevent texture feedback loop error, see NYC in Firefox.
+      gl .bindFramebuffer (gl .FRAMEBUFFER, browser .getDefaultFramebuffer ()); // Prevent texture feedback loop error, see NYC in Firefox.
       gl .bindBuffer (gl .ARRAY_BUFFER, null);
       gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
       gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);
