@@ -465,7 +465,7 @@ Object .assign (X3DWebXRContext .prototype,
                inputRayMatrix .multVecMatrix (hitPoint  .assign (hit .originalPoint));
 
                // Make ray shorter if track point is very close.
-               if (hitPoint .distance (fromPoint) < toPoint .distance (fromPoint))
+               if (hit .id && hitPoint .distance (fromPoint) < toPoint .distance (fromPoint))
                   toPoint .assign (hitPoint);
 
                if (fromPoint .z > 0 || toPoint .z > 0)
