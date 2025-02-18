@@ -862,7 +862,7 @@ Object .assign (X3DRenderObject .prototype,
          {
             const
                renderContext       = shapes [s],
-               { scissor, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
+               { clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                depthModeNode       = appearanceNode .getDepthMode (),
@@ -870,10 +870,8 @@ Object .assign (X3DRenderObject .prototype,
                shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, hAnimNode),
                id                  = browser .addPointingShape (renderContext);
 
-            gl .scissor (scissor .x - x,
-                         scissor .y - y,
-                         scissor .z,
-                         scissor .w);
+            // Don't need to set scissor, because there is already a
+            // isPointerInRectangle test in viewport and layer.
 
             // Draw shape.
 
