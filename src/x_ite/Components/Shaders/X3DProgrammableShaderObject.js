@@ -266,6 +266,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const name of commonUniforms)
          this [name] = gl .getUniformLocation (program, name);
 
+      const identity = new Float32Array (Matrix4 .Identity);
+
+      gl .uniformMatrix4fv (this .x3d_EyeMatrix, false, identity);
+
       for (const materialTexture of MaterialTextures .names)
       {
          this [materialTexture] = {
