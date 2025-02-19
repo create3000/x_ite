@@ -134,7 +134,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          maxLights            = browser .getMaxLights (),
          maxTextures          = browser .getMaxTextures (),
          maxTextureTransforms = browser .getMaxTextureTransforms (),
-         maxTexCoords         = browser .getMaxTexCoords ();
+         maxTexCoords         = browser .getMaxTexCoords (),
+         identity             = new Float32Array (Matrix4 .Identity);
 
       gl .useProgram (program);
 
@@ -265,8 +266,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (const name of commonUniforms)
          this [name] = gl .getUniformLocation (program, name);
-
-      const identity = new Float32Array (Matrix4 .Identity);
 
       gl .uniformMatrix4fv (this .x3d_EyeMatrix, false, identity);
 
