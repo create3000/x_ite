@@ -265,18 +265,11 @@ Object .assign (X3DWebXRContext .prototype,
       // Get matrices from views.
 
       const
-         originalPose  = this [_frame] .getViewerPose (this [_referenceSpace]),
-         pose          = this [_pose],
-         viewpointNode = this .getActiveViewpoint ();
+         originalPose = this [_frame] .getViewerPose (this [_referenceSpace]),
+         pose         = this [_pose];
 
       pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
       pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
-
-      if (viewpointNode)
-      {
-         pose .cameraSpaceMatrix .multRight (viewpointNode .getCameraSpaceMatrix ());
-         pose .viewMatrix        .multLeft  (viewpointNode .getViewMatrix ());
-      }
 
       let v = 0;
 
@@ -301,12 +294,6 @@ Object .assign (X3DWebXRContext .prototype,
          view .projectionMatrix  .assign (originalView .projectionMatrix);
          view .cameraSpaceMatrix .assign (originalView .transform .matrix);
          view .viewMatrix        .assign (originalView .transform .inverse .matrix);
-
-         if (viewpointNode)
-         {
-            view .cameraSpaceMatrix .multRight (viewpointNode .getCameraSpaceMatrix ());
-            view .viewMatrix        .multLeft  (viewpointNode .getViewMatrix ());
-         }
 
          view .matrix  .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
          view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
@@ -333,9 +320,8 @@ Object .assign (X3DWebXRContext .prototype,
       return function ()
       {
          const
-            viewport      = this .getViewport () .getValue (),
-            pose          = this [_pose],
-            viewpointNode = this .getActiveViewpoint ();
+            viewport = this .getViewport () .getValue (),
+            pose     = this [_pose];
 
          // Get target ray matrices from input sources.
 
@@ -352,12 +338,6 @@ Object .assign (X3DWebXRContext .prototype,
 
             matrix  .assign (targetRayPose .transform .matrix);
             inverse .assign (targetRayPose .transform .inverse .matrix);
-
-            if (viewpointNode)
-            {
-               matrix  .multRight (viewpointNode .getCameraSpaceMatrix ());
-               inverse .multLeft  (viewpointNode .getViewMatrix ());
-            }
          }
 
          // Test for hits.
