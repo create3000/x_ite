@@ -1264,8 +1264,8 @@ Object .assign (X3DRenderObject .prototype,
 
       this .getBackground () .display (gl, this);
 
-      // Sorted blend or order independent transparency
-      // Render opaque objects first
+      // Use sorted blend or order independent transparency.
+      // Render opaque objects first.
 
       for (let i = 0; i < numOpaqueShapes; ++ i)
       {
@@ -1277,7 +1277,7 @@ Object .assign (X3DRenderObject .prototype,
          browser .resetTextureUnits ();
       }
 
-      // Render transparent objects
+      // Render transparent objects.
 
       if (oit)
          frameBuffer .bindTransparency ();
