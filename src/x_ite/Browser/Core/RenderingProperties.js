@@ -106,6 +106,7 @@ Object .defineProperties (RenderingProperties,
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxAnisotropicDegree",   new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxSamples",             new Fields .SFInt32 (0)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "Multisampling",          new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "XRSessionMode",          new Fields .SFString ("NONE")),
       ]),
       enumerable: true,
    }

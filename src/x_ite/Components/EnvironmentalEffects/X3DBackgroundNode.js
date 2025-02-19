@@ -534,7 +534,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       const
          browser       = this .getBrowser (),
          gl            = browser .getContext (),
-         sphereContext = this .sphereContext;
+         sphereContext = this .sphereContext,
+         view          = renderObject .getView ();
 
       sphereContext .alphaMode    = transparency ? AlphaMode .BLEND : AlphaMode .OPAQUE;
       sphereContext .renderObject = renderObject;
@@ -548,6 +549,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+
+      if (view)
+         gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix, false, view .matrixArray);
 
       gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
       gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
@@ -582,7 +586,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          const
             browser         = this .getBrowser (),
             gl              = browser .getContext (),
-            texturesContext = this .texturesContext;
+            texturesContext = this .texturesContext,
+            view            = renderObject .getView ();
 
          // Draw all textures.
 
@@ -604,6 +609,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
+
+            if (view)
+               gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix, false, view .matrixArray);
 
             gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
             gl .uniform1f (shaderNode .x3d_Transparency,                       0);

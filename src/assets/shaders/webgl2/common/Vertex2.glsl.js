@@ -6,6 +6,10 @@ export default /* glsl */ `
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
+#if defined (X3D_XR_SESSION)
+   uniform mat4 x3d_EyeMatrix;
+#endif
+
 // Attributes
 
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
@@ -112,6 +116,10 @@ vertex_main ()
    #endif
 
    vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
+
+   #if defined (X3D_XR_SESSION)
+      position = x3d_EyeMatrix * position;
+   #endif
 
    vertex = position .xyz;
 

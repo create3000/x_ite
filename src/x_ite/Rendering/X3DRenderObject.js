@@ -120,6 +120,7 @@ Object .assign (X3DRenderObject .prototype,
       const browser = this .getBrowser ();
 
       browser .getRenderingProperties () ._LogarithmicDepthBuffer  .addInterest ("set_renderKey__", this);
+      browser .getRenderingProperties () ._XRSessionMode           .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._ColorSpace                   .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._OrderIndependentTransparency .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._ToneMapping                  .addInterest ("set_renderKey__", this);
@@ -146,6 +147,7 @@ Object .assign (X3DRenderObject .prototype,
 
       let renderKey = "";
 
+      renderKey += browser .getRenderingProperty ("XRSessionMode") !== "NONE" ? 1 : 0;
       renderKey += this .logarithmicDepthBuffer       ? 1 : 0;
       renderKey += this .orderIndependentTransparency ? 1 : 0;
 

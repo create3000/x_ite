@@ -158,6 +158,7 @@ Object .assign (ScreenLine .prototype,
          projectionMatrix      = new Matrix4 (),
          projectionMatrixArray = new Float32Array (Matrix4 .Identity),
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
+         identity              = new Float32Array (Matrix4 .Identity),
          clipPlanes            = [ ];
 
       return function (fromPoint, toPoint, frameBuffer)
@@ -199,6 +200,7 @@ Object .assign (ScreenLine .prototype,
 
          gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+         gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, identity);
          gl .uniform1f        (shaderNode .x3d_Transparency, 0);
 
          if (this .vertexArrayObject .enable (shaderNode .getProgram ()))

@@ -103,6 +103,7 @@ Object .assign (ScreenPoint .prototype,
       const
          projectionMatrixArray = new Float32Array (Matrix4 .Identity),
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
+         identity              = new Float32Array (Matrix4 .Identity),
          screenMatrix          = new Matrix4 (),
          clipPlanes            = [ ];
 
@@ -157,6 +158,7 @@ Object .assign (ScreenPoint .prototype,
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, identity);
             gl .uniform3f        (shaderNode .x3d_EmissiveColor, 0, 0, 0);
             gl .uniform1f        (shaderNode .x3d_Transparency, circle);
 
@@ -178,6 +180,7 @@ Object .assign (ScreenPoint .prototype,
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, identity);
             gl .uniform3f        (shaderNode .x3d_EmissiveColor, ... color);
             gl .uniform1f        (shaderNode .x3d_Transparency, transparency);
 

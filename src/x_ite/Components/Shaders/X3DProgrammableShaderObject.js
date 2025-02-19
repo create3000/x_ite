@@ -221,6 +221,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_Viewport",
          "x3d_ProjectionMatrix",
          "x3d_ModelViewMatrix",
+         "x3d_EyeMatrix",
          "x3d_NormalMatrix",
          "x3d_ViewMatrix",
          "x3d_CameraSpaceMatrix",
@@ -1037,15 +1038,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    },
    setUniforms: (() =>
    {
-      const
-         normalMatrix      = new Float32Array (9),
-         modelViewMatrixXR = new Float32Array (16);
+      const normalMatrix = new Float32Array (9);
 
       return function (gl, renderContext, geometryContext, front = true)
       {
-         const { renderObject, fogNode, appearanceNode, hAnimNode } = renderContext;
-
-         let { modelViewMatrix } = renderContext;
+         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix } = renderContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
@@ -1061,6 +1058,13 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             // Set viewport.
 
             gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
+
+            // Set XR eye matrix.
+
+            const view = renderObject .getView ();
+
+            if (view)
+               gl .uniformMatrix4fv (this .x3d_EyeMatrix, false, view .matrixArray);
 
             // Set projection matrix.
 
@@ -1098,15 +1102,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          }
 
          // Model view matrix
-
-         const view = renderObject .getView ();
-
-         if (view)
-         {
-            modelViewMatrixXR .set (modelViewMatrix);
-
-            modelViewMatrix = Matrix4 .prototype .multRight .call (modelViewMatrixXR, view .matrix);
-         }
 
          gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 

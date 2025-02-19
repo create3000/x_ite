@@ -117,6 +117,8 @@ Object .assign (X3DWebXRContext .prototype,
          this .setSession (session);
          this .removeHit (this .getHit ());
 
+         this .getRenderingProperties () ._XRSessionMode = mode .toUpperCase () .replaceAll ("-", "_");
+
          // session .addEventListener ("select", event =>
          // {
          //    const { inputSource, frame } = event;
@@ -153,6 +155,8 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputRay]       = null;
          this [_inputPoint]     = null;
          this [_frame]          = null;
+
+         this .getRenderingProperties () ._XRSessionMode = "NONE";
       });
    },
    setFramebufferScaleFactor (framebufferScaleFactor)
@@ -289,6 +293,7 @@ Object .assign (X3DWebXRContext .prototype,
             viewMatrix: new Matrix4 (),
             matrix: new Matrix4 (),
             inverse: new Matrix4 (),
+            matrixArray: new Float32Array (16),
          };
 
          view .projectionMatrix  .assign (originalView .projectionMatrix);
@@ -297,6 +302,8 @@ Object .assign (X3DWebXRContext .prototype,
 
          view .matrix  .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
          view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
+
+         view .matrixArray .set (view .matrix);
 
          ++ v;
       }
