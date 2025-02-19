@@ -1247,6 +1247,8 @@ Object .assign (X3DRenderObject .prototype,
    },
    drawShapes (gl, browser, frameBuffer, clearBits, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
    {
+      this .advanceRenderCount ();
+
       frameBuffer .bind ();
 
       // Configure viewport and background
@@ -1256,8 +1258,6 @@ Object .assign (X3DRenderObject .prototype,
 
       // Draw background.
 
-      this .advanceRenderCount ();
-
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .DEPTH_BUFFER_BIT | clearBits);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
@@ -1265,9 +1265,6 @@ Object .assign (X3DRenderObject .prototype,
       this .getBackground () .display (gl, this);
 
       // Sorted blend or order independent transparency
-
-      this .advanceRenderCount ();
-
       // Render opaque objects first
 
       for (let i = 0; i < numOpaqueShapes; ++ i)
