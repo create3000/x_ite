@@ -68,7 +68,6 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
       const browser = this .getBrowser ();
 
       this ._ContentScale .addInterest ("set_ContentScale__", this);
-      this ._XRSession    .addInterest ("set_XRSession__",    this);
 
       this ._MaxTextureSize       = browser .getMaxTextureSize ();
       this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
@@ -83,16 +82,6 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
    set_ContentScale__ (contentScale)
    {
       this .getBrowser () .setFramebufferScaleFactor ?.(contentScale .getValue ());
-   },
-   set_XRSession__ ()
-   {
-      const
-         browser  = this .getBrowser (),
-         gl       = browser .getContext (),
-         identity = new Float32Array (Matrix4 .Identity);
-
-      for (const shaderNode of this .getBrowser () .getShaders ())
-         gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix, false, identity);
    },
 });
 

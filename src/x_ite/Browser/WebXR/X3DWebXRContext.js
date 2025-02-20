@@ -293,7 +293,6 @@ Object .assign (X3DWebXRContext .prototype,
             viewMatrix: new Matrix4 (),
             matrix: new Matrix4 (),
             inverse: new Matrix4 (),
-            matrixArray: new Float32Array (16),
          };
 
          view .projectionMatrix  .assign (originalView .projectionMatrix);
@@ -302,8 +301,6 @@ Object .assign (X3DWebXRContext .prototype,
 
          view .matrix  .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
          view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
-
-         view .matrixArray .set (view .matrix);
 
          ++ v;
       }

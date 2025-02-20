@@ -76,6 +76,7 @@ function X3DRenderObject (executionContext)
    this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
    this .viewportArray            = new Int32Array (4);
    this .projectionMatrixArray    = new Float32Array (16);
+   this .eyeMatrixArray           = new Float32Array (16);
    this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
    this .hitRay                   = new Line3 ();
@@ -258,6 +259,10 @@ Object .assign (X3DRenderObject .prototype,
    getProjectionMatrixArray ()
    {
       return this .projectionMatrixArray;
+   },
+   getEyeMatrixArray ()
+   {
+      return this .eyeMatrixArray;
    },
    getViewMatrixArray ()
    {
@@ -1174,6 +1179,7 @@ Object .assign (X3DRenderObject .prototype,
          this .view = pose ?.views [i];
 
          this .projectionMatrixArray  .set (this .view ?.projectionMatrix ?? this .getProjectionMatrix () .get ());
+         this .eyeMatrixArray         .set (this .view ?.matrix ?? Matrix4 .Identity);
          this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
          this .viewMatrixArray        .set (this .getViewMatrix () .get ());
 

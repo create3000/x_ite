@@ -134,8 +134,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          maxLights            = browser .getMaxLights (),
          maxTextures          = browser .getMaxTextures (),
          maxTextureTransforms = browser .getMaxTextureTransforms (),
-         maxTexCoords         = browser .getMaxTexCoords (),
-         identity             = new Float32Array (Matrix4 .Identity);
+         maxTexCoords         = browser .getMaxTexCoords ();
 
       gl .useProgram (program);
 
@@ -266,8 +265,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (const name of commonUniforms)
          this [name] = gl .getUniformLocation (program, name);
-
-      gl .uniformMatrix4fv (this .x3d_EyeMatrix, false, identity);
 
       for (const materialTexture of MaterialTextures .names)
       {
@@ -1062,16 +1059,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
             gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
 
-            // Set XR eye matrix.
-
-            const view = renderObject .getView ();
-
-            if (view)
-               gl .uniformMatrix4fv (this .x3d_EyeMatrix, false, view .matrixArray);
-
             // Set projection matrix.
 
             gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
+            gl .uniformMatrix4fv (this .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
             gl .uniformMatrix4fv (this .x3d_ViewMatrix,        false, renderObject .getViewMatrixArray ());
             gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
 
