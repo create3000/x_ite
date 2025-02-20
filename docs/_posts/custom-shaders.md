@@ -712,6 +712,14 @@ If the shader node is part of a [InstancedShape](/x_ite/components/x-ite/instanc
 | in mat4   | x3d_InstanceMatrix       | instance matrix, should be multiplied with x3d_Vertex        |
 | in mat3   | x3d_InstanceNormalMatrix | instance normal matrix, should be multiplied with x3d_Normal |
 
+### WebXR
+
+If a WebXR session is active `x3d_EyeMatrix` contains the position of the current eye (left or right). Do `gl_Position = x3d_ProjectionMatrix * x3d_EyeMatrix * x3d_ModelViewMatrix * x3d_Vertex` to get the right `gl_Position` for each eye.
+
+| Type    | Name          | Comment                                          |
+|---------|---------------|--------------------------------------------------|
+| in mat4 | x3d_EyeMatrix | eye matrix, should be multiplied with x3d_Vertex |
+
 ## Built-in Constants
 
 Some built-in variables are enumerated and have special values and meanings. The following table list all of them and their corresponding values.
