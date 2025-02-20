@@ -1168,22 +1168,13 @@ Object .assign (X3DRenderObject .prototype,
       {
          const frameBuffer = framebuffers [i];
 
-         // XR support
+         // Set matrices with XR support.
 
          const view = this .view = browser .getPose () ?.views [i];
 
-         if (view)
-         {
-            this .projectionMatrixArray  .set (view .projectionMatrix);
-            this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-            this .viewMatrixArray        .set (this .getViewMatrix ()        .get ());
-         }
-         else
-         {
-            this .projectionMatrixArray  .set (this .getProjectionMatrix ()  .get ());
-            this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-            this .viewMatrixArray        .set (this .getViewMatrix ()        .get ());
-         }
+         this .projectionMatrixArray  .set (view ?.projectionMatrix ?? this .getProjectionMatrix () .get ());
+         this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+         this .viewMatrixArray        .set (this .getViewMatrix () .get ());
 
          // Set up shadow matrix for all lights, and matrix for all projective textures.
 
