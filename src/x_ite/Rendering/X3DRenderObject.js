@@ -1132,6 +1132,7 @@ Object .assign (X3DRenderObject .prototype,
          independent              = this .isIndependent (),
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
+         pose                     = browser .getPose (),
          framebuffers             = this .getFramebuffers (),
          numFramebuffers          = framebuffers .length,
          viewport                 = this .viewVolumes .at (-1) .getViewport (),
@@ -1170,9 +1171,9 @@ Object .assign (X3DRenderObject .prototype,
 
          // Set matrices with XR support.
 
-         const view = this .view = browser .getPose () ?.views [i];
+         this .view = pose ?.views [i];
 
-         this .projectionMatrixArray  .set (view ?.projectionMatrix ?? this .getProjectionMatrix () .get ());
+         this .projectionMatrixArray  .set (this .view ?.projectionMatrix ?? this .getProjectionMatrix () .get ());
          this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
          this .viewMatrixArray        .set (this .getViewMatrix () .get ());
 
