@@ -67,8 +67,8 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
 
       const browser = this .getBrowser ();
 
-      this ._ContentScale  .addInterest ("set_ContentScale__",  this);
-      this ._XRSessionMode .addInterest ("set_XRSessionMode__", this);
+      this ._ContentScale .addInterest ("set_ContentScale__", this);
+      this ._XRSession    .addInterest ("set_XRSession__",    this);
 
       this ._MaxTextureSize       = browser .getMaxTextureSize ();
       this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
    {
       this .getBrowser () .setFramebufferScaleFactor ?.(contentScale .getValue ());
    },
-   set_XRSessionMode__ ()
+   set_XRSession__ ()
    {
       const
          browser  = this .getBrowser (),
@@ -118,7 +118,7 @@ Object .defineProperties (RenderingProperties,
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxAnisotropicDegree",   new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxSamples",             new Fields .SFInt32 (0)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "Multisampling",          new Fields .SFInt32 (4)),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "XRSessionMode",          new Fields .SFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "XRSession",              new Fields .SFBool ()),
       ]),
       enumerable: true,
    }

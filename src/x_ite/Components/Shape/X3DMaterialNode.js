@@ -146,7 +146,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          browser = this .getBrowser (),
          options = [ ];
 
-      if (browser .getRenderingProperty ("XRSessionMode") !== "NONE")
+      if (browser .getRenderingProperty ("XRSession"))
          options .push ("X3D_XR_SESSION");
 
       switch (browser .getBrowserOption ("ColorSpace"))

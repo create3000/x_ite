@@ -117,7 +117,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .setSession (session);
          this .removeHit (this .getHit ());
 
-         this .getRenderingProperties () ._XRSessionMode = mode .toUpperCase () .replaceAll ("-", "_");
+         this .getRenderingProperties () ._XRSession = true;
 
          // session .addEventListener ("select", event =>
          // {
@@ -156,7 +156,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]     = null;
          this [_frame]          = null;
 
-         this .getRenderingProperties () ._XRSessionMode = "NONE";
+         this .getRenderingProperties () ._XRSession = false;
       });
    },
    setFramebufferScaleFactor (framebufferScaleFactor)
