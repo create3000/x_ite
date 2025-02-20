@@ -554,6 +554,11 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
          <td>this is the product of object's transformation matrix and the inverse x3d_CameraSpaceMatrix</td>
       </tr>
       <tr>
+         <td>uniform mat4</td>
+         <td>x3d_EyeMatrix</td>
+         <td>if a WebXR session is active it contains the position of the current eye. Do <code class="language-plaintext highlighter-rouge">x3d_EyeMatrix * x3d_ModelViewMatrix * x3d_Vertex</code></td>
+      </tr>
+      <tr>
          <td>uniform mat3</td>
          <td>x3d_NormalMatrix</td>
          <td>object's normal matrix; this is the inverse transpose of the 3×3 submatrix of x3d_ModelViewMatrix</td>
