@@ -397,6 +397,7 @@ const X_ITE_TESTS = [
    { path: "Shape/BackMaterial.x3d" },
    { path: "Shape/Coin.x3d" },
    { path: "Shape/ColorSpace.x3d" },
+   { path: "Shape/CompareEmissive.x3d" },
    { path: "Shape/Connectors.x3d" },
    { path: "Shape/CopperGold.x3d" },
    { path: "Shape/DepthMode.x3d" },
