@@ -1171,8 +1171,6 @@ Object .assign (X3DRenderObject .prototype,
       // Set matrices.
 
       this .viewportArray          .set (viewport);
-      this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
-      this .eyeMatrixArray         .set (Matrix4 .Identity);
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
       this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
@@ -1200,6 +1198,11 @@ Object .assign (X3DRenderObject .prototype,
          {
             this .projectionMatrixArray .set (view .projectionMatrix);
             this .eyeMatrixArray        .set (view .matrix);
+         }
+         else
+         {
+            this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+            this .eyeMatrixArray        .set (Matrix4 .Identity);
          }
 
          // Render to transmission buffer.
