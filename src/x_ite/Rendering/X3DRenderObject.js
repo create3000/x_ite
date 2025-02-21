@@ -1202,7 +1202,7 @@ Object .assign (X3DRenderObject .prototype,
             this .eyeMatrixArray        .set (Matrix4 .Identity);
          }
 
-         // Set up shadow matrix for all lights, and matrix for all projective textures.
+         // Set up shadow matrix for all lights, and matrices for all projective textures.
 
          if (headlight)
             browser .getHeadlight () .setGlobalVariables (this);
