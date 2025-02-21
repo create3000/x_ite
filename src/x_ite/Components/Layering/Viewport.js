@@ -136,8 +136,8 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
    {
       const
          viewVolumes = renderObject .getViewVolumes (),
-         rectangle   = this .getRectangle (viewVolumes .at (-1) ?.getViewport ()),
-         viewVolume  = ViewVolumes .pop ();
+         viewVolume  = ViewVolumes .pop (),
+         rectangle   = this .getRectangle (viewVolumes .at (-1) ?.getViewport ());
 
       viewVolume .set (renderObject .getProjectionMatrix () .get (), rectangle);
 
