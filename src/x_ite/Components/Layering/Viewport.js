@@ -55,6 +55,7 @@ import TraverseType         from "../../Rendering/TraverseType.js";
 import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
 import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 const ViewVolumes = ObjectCache (ViewVolume);
 
@@ -69,36 +70,35 @@ function Viewport (executionContext)
 
 Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .prototype),
 {
+   initialize ()
+   {
+      X3DViewportNode .prototype .initialize .call (this);
+
+      this ._clipBoundary .addInterest ("set_clipBoundary__", this)
+
+      this .set_clipBoundary__ ();
+   },
+   set_clipBoundary__ ()
+   {
+      this .left   = this ._clipBoundary .length > 0 ? Algorithm .clamp (this ._clipBoundary [0], 0, 1) : 0;
+      this .right  = this ._clipBoundary .length > 1 ? Algorithm .clamp (this ._clipBoundary [1], 0, 1) : 1;
+      this .bottom = this ._clipBoundary .length > 2 ? Algorithm .clamp (this ._clipBoundary [2], 0, 1) : 0;
+      this .top    = this ._clipBoundary .length > 3 ? Algorithm .clamp (this ._clipBoundary [3], 0, 1) : 1;
+   },
    getRectangle (viewport = this .getBrowser () .getViewport ())
    {
       const
-         left   = Math .floor (viewport [0] + viewport [2] * this .getLeft ()),
-         right  = Math .floor (viewport [0] + viewport [2] * this .getRight ()),
-         bottom = Math .floor (viewport [1] + viewport [3] * this .getBottom ()),
-         top    = Math .floor (viewport [1] + viewport [3] * this .getTop ());
+         left   = Math .floor (viewport [0] + viewport [2] * this .left),
+         right  = Math .floor (viewport [0] + viewport [2] * this .right),
+         bottom = Math .floor (viewport [1] + viewport [3] * this .bottom),
+         top    = Math .floor (viewport [1] + viewport [3] * this .top);
 
       this .rectangle .set (left,
                             bottom,
-                            Math .max (0, right - left),
-                            Math .max (0, top - bottom));
+                            Math .max (right - left, 0),
+                            Math .max (top - bottom, 0));
 
       return this .rectangle;
-   },
-   getLeft ()
-   {
-      return this ._clipBoundary .length > 0 ? this ._clipBoundary [0] : 0;
-   },
-   getRight ()
-   {
-      return this ._clipBoundary .length > 1 ? this ._clipBoundary [1] : 1;
-   },
-   getBottom ()
-   {
-      return this ._clipBoundary .length > 2 ? this ._clipBoundary [2] : 0;
-   },
-   getTop ()
-   {
-      return this ._clipBoundary .length > 3 ? this ._clipBoundary [3] : 1;
    },
    traverse (type, renderObject)
    {
