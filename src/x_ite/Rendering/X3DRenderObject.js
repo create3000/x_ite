@@ -1155,6 +1155,12 @@ Object .assign (X3DRenderObject .prototype,
 
       // PREPARATIONS
 
+      // Set matrices.
+
+      this .viewportArray          .set (viewport);
+      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+
       if (independent)
       {
          // Render shadow maps.
@@ -1172,12 +1178,6 @@ Object .assign (X3DRenderObject .prototype,
       this .globalShadow             = globalShadows .at (-1);
 
       // DRAW
-
-      // Set matrices.
-
-      this .viewportArray          .set (viewport);
-      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
-      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
       // Draw to all framebuffers.
 

@@ -85,11 +85,9 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .global    = lightNode .getGlobal ();
 
       this .modelViewMatrix .push (modelViewMatrix);
-      this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
+      this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
-   { },
-   setGlobalVariables (renderObject)
    {
       const
          lightNode             = this .lightNode,
@@ -140,18 +138,20 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .invTextureSpaceProjectionMatrix
          .assign (invTextureSpaceMatrix)
          .multRight (this .projectionMatrix)
-         .multRight (lightNode .getBiasMatrix ());
-
-      this .matrix
-         .assign (renderObject .getView () ?.inverse ?? Matrix4 .Identity)
-         .multRight (cameraSpaceMatrix)
-         .multRight (this .invTextureSpaceProjectionMatrix)
+         .multRight (lightNode .getBiasMatrix ())
          .multRight (this .textureMatrix);
-
-      this .matrixArray .set (this .matrix);
 
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
+   },
+   setGlobalVariables (renderObject)
+   {
+      this .matrix
+         .assign (renderObject .getView () ?.inverse ?? Matrix4 .Identity)
+         .multRight (renderObject .getCameraSpaceMatrixArray ())
+         .multRight (this .invTextureSpaceProjectionMatrix);
+
+      this .matrixArray .set (this .matrix);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {
