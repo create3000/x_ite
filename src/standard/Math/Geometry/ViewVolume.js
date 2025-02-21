@@ -68,7 +68,6 @@ import SAT       from "../Algorithms/SAT.js";
 function ViewVolume (... args)
 {
    this .viewport = new Vector4 ();
-   this .scissor  = new Vector4 ();
 
    this .points  = Array .from ({ length: 8 }, () => new Vector3 ());
    // front, left, right, top, bottom, back
@@ -87,18 +86,17 @@ Object .assign (ViewVolume .prototype,
    {
       const matrix = new Matrix4 ();
 
-      return function (projectionMatrix, viewport, scissor)
+      return function (projectionMatrix, viewport)
       {
          this .viewport .assign (viewport);
-         this .scissor  .assign (scissor);
 
          const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .points;
 
          const
-            x1 = scissor [0],
-            x2 = x1 + scissor [2],
-            y1 = scissor [1],
-            y2 = y1 + scissor [3];
+            x1 = viewport [0],
+            x2 = x1 + viewport [2],
+            y1 = viewport [1],
+            y2 = y1 + viewport [3];
 
          matrix .assign (projectionMatrix) .inverse ();
 
@@ -137,10 +135,6 @@ Object .assign (ViewVolume .prototype,
    getViewport ()
    {
       return this .viewport;
-   },
-   getScissor ()
-   {
-      return this .scissor;
    },
    getEdges ()
    {

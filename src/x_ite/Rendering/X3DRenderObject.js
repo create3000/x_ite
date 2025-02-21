@@ -642,6 +642,7 @@ Object .assign (X3DRenderObject .prototype,
                this .pointingShapes .push ({
                   renderObject: this,
                   modelViewMatrix: new Float32Array (16),
+                  viewport: new Vector4 (),
                   clipPlanes: [ ],
                   sensors: [ ],
                });
@@ -650,9 +651,9 @@ Object .assign (X3DRenderObject .prototype,
             const pointingContext = this .pointingShapes [num];
 
             pointingContext .modelViewMatrix .set (modelViewMatrix);
-            pointingContext .scissor      = viewVolume .getScissor ();
-            pointingContext .hAnimNode    = this .hAnimNode .at (-1);
-            pointingContext .shapeNode    = shapeNode;
+            pointingContext .viewport .assign (viewVolume .getViewport ());
+            pointingContext .hAnimNode = this .hAnimNode .at (-1);
+            pointingContext .shapeNode = shapeNode;
 
             // Clip planes & sensors
 
@@ -691,6 +692,7 @@ Object .assign (X3DRenderObject .prototype,
                this .collisionShapes .push ({
                   renderObject: this,
                   modelViewMatrix: new Float32Array (16),
+                  viewport: new Vector4 (),
                   collisions: [ ],
                   clipPlanes: [ ]
                });
@@ -699,8 +701,8 @@ Object .assign (X3DRenderObject .prototype,
             const collisionContext = this .collisionShapes [num];
 
             collisionContext .modelViewMatrix .set (modelViewMatrix);
+            collisionContext .viewport .assign (viewVolume .getViewport ());
             collisionContext .shapeNode = shapeNode;
-            collisionContext .scissor   = viewVolume .getScissor ();
 
             // Collisions
 
@@ -742,6 +744,7 @@ Object .assign (X3DRenderObject .prototype,
                this .shadowShapes .push ({
                   renderObject: this,
                   modelViewMatrix: new Float32Array (16),
+                  viewport: new Vector4 (),
                   clipPlanes: [ ]
                });
             }
@@ -749,9 +752,9 @@ Object .assign (X3DRenderObject .prototype,
             const depthContext = this .shadowShapes [num];
 
             depthContext .modelViewMatrix .set (modelViewMatrix);
-            depthContext .scissor      = viewVolume .getScissor ();
-            depthContext .hAnimNode    = this .hAnimNode .at (-1);
-            depthContext .shapeNode    = shapeNode;
+            depthContext .viewport .assign (viewVolume .getViewport ());
+            depthContext .hAnimNode = this .hAnimNode .at (-1);
+            depthContext .shapeNode = shapeNode;
 
             // Clip planes
 
@@ -806,7 +809,7 @@ Object .assign (X3DRenderObject .prototype,
             this .transmission ||= shapeNode .isTransmission ();
 
             renderContext .modelViewMatrix .set (modelViewMatrix);
-            renderContext .scissor .assign (viewVolume .getScissor ());
+            renderContext .viewport .assign (viewVolume .getViewport ());
             renderContext .shadows        = this .localShadows .at (-1);
             renderContext .fogNode        = this .localFogs .at (-1);
             renderContext .hAnimNode      = this .hAnimNode .at (-1);
@@ -830,7 +833,7 @@ Object .assign (X3DRenderObject .prototype,
          renderObject: this,
          transparent: transparent,
          modelViewMatrix: new Float32Array (16),
-         scissor: new Vector4 (),
+         viewport: new Vector4 (),
          localObjects: [ ],
          localObjectsKeys: [ ], // [clip planes, lights]
       };
@@ -869,7 +872,7 @@ Object .assign (X3DRenderObject .prototype,
          {
             const
                renderContext       = shapes [s],
-               { clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
+               { modelViewMatrix, viewport, shapeNode, hAnimNode, clipPlanes } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                depthModeNode       = appearanceNode .getDepthMode (),
@@ -877,8 +880,7 @@ Object .assign (X3DRenderObject .prototype,
                shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, hAnimNode),
                id                  = browser .addPointingShape (renderContext);
 
-            // Don't need to set scissor, because there is already a
-            // isPointerInRectangle test in viewport and layer.
+            gl .viewport (... viewport)
 
             // Draw shape.
 
@@ -1107,13 +1109,13 @@ Object .assign (X3DRenderObject .prototype,
          {
             const
                renderContext       = shapes [s],
-               { scissor, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
+               { viewport, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
                shaderNode          = browser .getDepthShader (clipPlanes .length, shapeNode, hAnimNode);
 
-            gl .scissor (... scissor);
+            gl .viewport (... viewport);
 
             // Draw
 
@@ -1281,7 +1283,7 @@ Object .assign (X3DRenderObject .prototype,
       {
          const renderContext = opaqueShapes [i];
 
-         gl .scissor (... renderContext .scissor);
+         gl .viewport (... renderContext .viewport);
 
          renderContext .shapeNode .display (gl, renderContext);
          browser .resetTextureUnits ();
@@ -1301,7 +1303,7 @@ Object .assign (X3DRenderObject .prototype,
       {
          const renderContext = transparentShapes [i];
 
-         gl .scissor (... renderContext .scissor);
+         gl .viewport (... renderContext .viewport);
 
          renderContext .shapeNode .display (gl, renderContext);
          browser .resetTextureUnits ();

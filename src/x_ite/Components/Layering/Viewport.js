@@ -69,14 +69,13 @@ function Viewport (executionContext)
 
 Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .prototype),
 {
-   getRectangle ()
+   getRectangle (viewport = this .getBrowser () .getViewport ())
    {
       const
-         viewport = this .getBrowser () .getViewport (),
-         left     = Math .floor (viewport [2] * this .getLeft ()),
-         right    = Math .floor (viewport [2] * this .getRight ()),
-         bottom   = Math .floor (viewport [3] * this .getBottom ()),
-         top      = Math .floor (viewport [3] * this .getTop ());
+         left   = Math .floor (viewport [0] + viewport [2] * this .getLeft ()),
+         right  = Math .floor (viewport [0] + viewport [2] * this .getRight ()),
+         bottom = Math .floor (viewport [1] + viewport [3] * this .getBottom ()),
+         top    = Math .floor (viewport [1] + viewport [3] * this .getTop ());
 
       this .rectangle .set (left,
                             bottom,
@@ -125,11 +124,10 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
    {
       const
          viewVolumes = renderObject .getViewVolumes (),
-         rectangle   = this .getRectangle (),
-         viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
+         rectangle   = this .getRectangle (viewVolumes .at (-1) ?.getViewport ()),
          viewVolume  = ViewVolumes .pop ();
 
-      viewVolume .set (renderObject .getProjectionMatrix () .get (), viewport, rectangle);
+      viewVolume .set (renderObject .getProjectionMatrix () .get (), rectangle);
 
       viewVolumes .push (viewVolume);
    },

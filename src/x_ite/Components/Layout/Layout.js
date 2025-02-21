@@ -433,7 +433,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          navigationInfoNode  = renderObject .getNavigationInfo (),
          viewpointNode       = renderObject .getViewpoint (),
          nearValue           = viewpointNode .getNearDistance (navigationInfoNode),  // in meters
-         viewport            = renderObject .getViewVolume () .getScissor (),        // in pixels
+         viewport            = renderObject .getViewVolume () .getViewport (),        // in pixels
          viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue), // in meters
          viewportPixel       = this .viewportPixel,                                  // in pixels
          pixelSize           = this .pixelSize,                                      // size of one pixel in meters
