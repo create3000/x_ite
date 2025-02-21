@@ -1174,6 +1174,30 @@ Object .assign (X3DRenderObject .prototype,
       this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
 
+      // Set up shadow matrix for all lights, and matrix for all projective textures.
+
+      if (headlight)
+         browser .getHeadlight () .setGlobalVariables (this);
+
+      for (const light of lights)
+         light .setGlobalVariables (this);
+
+      // Render to transmission buffer.
+
+      if (independent && this .transmission)
+      {
+         const transmissionBuffer = browser .getTransmissionBuffer ();
+
+         this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+
+         gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+         gl .generateMipmap (gl .TEXTURE_2D);
+
+         this .transmission = false;
+      }
+
+      // Draw to all framebuffers.
+
       for (let i = 0; i < numFramebuffers; ++ i)
       {
          const frameBuffer = framebuffers [i];
@@ -1191,30 +1215,6 @@ Object .assign (X3DRenderObject .prototype,
          {
             this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
             this .eyeMatrixArray        .set (Matrix4 .Identity);
-         }
-
-         // Set up shadow matrix for all lights, and matrix for all projective textures.
-
-         if (headlight)
-            browser .getHeadlight () .setGlobalVariables (this);
-
-         for (const light of lights)
-            light .setGlobalVariables (this);
-
-         // Draw shapes.
-
-         if (independent && this .transmission)
-         {
-            // Render to transmission buffer.
-
-            const transmissionBuffer = browser .getTransmissionBuffer ();
-
-            this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
-
-            gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
-            gl .generateMipmap (gl .TEXTURE_2D);
-
-            this .transmission = false;
          }
 
          // Draw with sorted blend or OIT.
