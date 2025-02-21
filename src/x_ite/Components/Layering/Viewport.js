@@ -102,23 +102,35 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
    },
    traverse (type, renderObject)
    {
-      this .push (renderObject);
-
-      switch (type)
+      try
       {
-         case TraverseType .POINTER:
+         this .push (renderObject);
+
+         switch (type)
          {
-            if (this .getBrowser () .isPointerInRectangle (this .rectangle))
+            case TraverseType .POINTER:
+            {
+               const
+                  browser  = this .getBrowser (),
+                  viewport = this .rectangle;
+
+               if (!browser .getPointingLayer ())
+               {
+                  if (!browser .isPointerInRectangle (viewport))
+                     return;
+               }
+
+               // Proceed with next case:
+            }
+            default:
                X3DViewportNode .prototype .traverse .call (this, type, renderObject);
-
-            break;
+               break;
          }
-         default:
-            X3DViewportNode .prototype .traverse .call (this, type, renderObject);
-            break;
       }
-
-      this .pop (renderObject);
+      finally
+      {
+         this .pop (renderObject);
+      }
    },
    push (renderObject)
    {
