@@ -1206,9 +1206,9 @@ Object .assign (X3DRenderObject .prototype,
 
          if (independent && transmission)
          {
-            const transmissionBuffer = browser .getTransmissionBuffer ();
-
             this .transmission = true;
+
+            const transmissionBuffer = browser .getTransmissionBuffer ();
 
             this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
 
