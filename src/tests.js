@@ -173,6 +173,7 @@ const X_ITE_TESTS = [
    { path: "Layering/Simple.x3d" },
    { path: "Layering/TouchLayers.x3d" },
    { path: "Layering/Viewport.x3d" },
+   { path: "Layering/ViewportBeethoven.x3d" },
    { path: "Layering/ViewportLayer.x3dv" },
    { component: "Layout" },
    { path: "Layout/info.x3d" },
