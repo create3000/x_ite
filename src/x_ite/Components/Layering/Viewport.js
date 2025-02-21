@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
    {
       X3DViewportNode .prototype .initialize .call (this);
 
-      this ._clipBoundary .addInterest ("set_clipBoundary__", this)
+      this ._clipBoundary .addInterest ("set_clipBoundary__", this);
 
       this .set_clipBoundary__ ();
    },
