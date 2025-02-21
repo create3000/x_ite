@@ -1171,8 +1171,10 @@ Object .assign (X3DRenderObject .prototype,
       // Set matrices.
 
       this .viewportArray          .set (viewport);
-      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+      this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+      this .eyeMatrixArray         .set (Matrix4 .Identity);
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
       // Set up shadow matrix for all lights, and matrix for all projective textures.
 
@@ -1211,16 +1213,13 @@ Object .assign (X3DRenderObject .prototype,
             this .projectionMatrixArray .set (view .projectionMatrix);
             this .eyeMatrixArray        .set (view .matrix);
          }
-         else
-         {
-            this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
-            this .eyeMatrixArray        .set (Matrix4 .Identity);
-         }
 
          // Draw with sorted blend or OIT.
 
          this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
       }
+
+      this .view = null;
 
       // POST DRAW
 
