@@ -1163,7 +1163,7 @@ Object .assign (X3DRenderObject .prototype,
 
       if (independent)
       {
-         // Render shadow maps.
+         // Render shadow maps and prepare texture projectors.
 
          for (const light of lights)
             light .renderShadowMap (this);
