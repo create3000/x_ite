@@ -880,7 +880,10 @@ Object .assign (X3DRenderObject .prototype,
                shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, hAnimNode),
                id                  = browser .addPointingShape (renderContext);
 
-            gl .viewport (... viewport)
+            gl .viewport (viewport .x - x,
+                          viewport .y - y,
+                          viewport .z,
+                          viewport .w);
 
             // Draw shape.
 
