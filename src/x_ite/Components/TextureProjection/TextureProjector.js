@@ -122,10 +122,11 @@ Object .assign (TextureProjectorContainer .prototype,
          .multRight (lightNode .getBiasMatrix ());
 
       this .matrix
-         .assign (cameraSpaceMatrix)
+         .assign (renderObject .getView () ?.inverse ?? Matrix4 .Identity)
+         .multRight (cameraSpaceMatrix)
          .multRight (this .invTextureSpaceProjectionMatrix)
          .multRight (this .textureMatrix);
-         
+
       this .matrixArray .set (this .matrix);
 
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
