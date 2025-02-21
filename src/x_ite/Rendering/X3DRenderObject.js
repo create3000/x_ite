@@ -1179,14 +1179,6 @@ Object .assign (X3DRenderObject .prototype,
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
       this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
-      // Set up shadow matrix for all lights, and matrix for all projective textures.
-
-      if (headlight)
-         browser .getHeadlight () .setGlobalVariables (this);
-
-      for (const light of lights)
-         light .setGlobalVariables (this);
-
       // Draw to all framebuffers.
 
       const transmission = this .transmission;
@@ -1209,6 +1201,14 @@ Object .assign (X3DRenderObject .prototype,
             this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
             this .eyeMatrixArray        .set (Matrix4 .Identity);
          }
+
+         // Set up shadow matrix for all lights, and matrix for all projective textures.
+
+         if (headlight)
+            browser .getHeadlight () .setGlobalVariables (this);
+
+         for (const light of lights)
+            light .setGlobalVariables (this);
 
          // Render to transmission buffer.
 
