@@ -425,6 +425,16 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Draw input source rays.
 
+         // switch (this .getSession () .visibilityState)
+         // {
+         //    case "visible-blurred":
+         //    case "hidden":
+         //       return;
+
+         //    default:
+         //       break;
+         // }
+
          for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
             const frameBuffer = this .getFramebuffers () [i];
