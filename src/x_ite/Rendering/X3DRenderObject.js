@@ -1168,7 +1168,11 @@ Object .assign (X3DRenderObject .prototype,
 
       // DRAW
 
-      this .viewportArray .set (viewport);
+      // Set matrices.
+
+      this .viewportArray          .set (viewport);
+      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
 
       for (let i = 0; i < numFramebuffers; ++ i)
       {
@@ -1176,12 +1180,18 @@ Object .assign (X3DRenderObject .prototype,
 
          // Set matrices with XR support.
 
-         this .view = pose ?.views [i];
+         const view = this .view = pose ?.views [i];
 
-         this .projectionMatrixArray  .set (this .view ?.projectionMatrix ?? this .getProjectionMatrix () .get ());
-         this .eyeMatrixArray         .set (this .view ?.matrix ?? Matrix4 .Identity);
-         this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-         this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+         if (view)
+         {
+            this .projectionMatrixArray .set (view .projectionMatrix);
+            this .eyeMatrixArray        .set (view .matrix);
+         }
+         else
+         {
+            this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+            this .eyeMatrixArray        .set (Matrix4 .Identity);
+         }
 
          // Set up shadow matrix for all lights, and matrix for all projective textures.
 
