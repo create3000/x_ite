@@ -142,7 +142,11 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          .multRight (this .projectionMatrix)
          .multRight (lightNode .getBiasMatrix ());
 
-      this .matrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
+      this .matrix
+         .assign (cameraSpaceMatrix)
+         .multRight (this .invTextureSpaceProjectionMatrix)
+         .multRight (this .textureMatrix);
+
       this .matrixArray .set (this .matrix);
 
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
