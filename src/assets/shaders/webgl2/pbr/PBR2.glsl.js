@@ -20,7 +20,7 @@ eye (const in mat4 modelViewMatrix)
    return x3d_EyeMatrix * modelViewMatrix;
 }
 #else
-#define eye(x) (x)
+   #define eye(x) (x)
 #endif
 
 #if defined (X3D_LIGHTING)
