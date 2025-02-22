@@ -1168,7 +1168,7 @@ Object .assign (X3DRenderObject .prototype,
          for (const light of lights)
             light .renderShadowMap (this);
 
-         // Render GeneratedCubeMapTextures.
+         // Render GeneratedCubeMapTexture nodes.
 
          for (const generatedCubeMapTexture of generatedCubeMapTextures)
             generatedCubeMapTexture .renderTexture (this);
