@@ -550,7 +550,7 @@ Object .assign (X3DRenderObject .prototype,
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
          depthBufferViewVolume = new ViewVolume ();
 
-      depthBufferViewVolume .set (Matrix4 .Identity, depthBufferViewport, depthBufferViewport);
+      depthBufferViewVolume .set (Matrix4 .Identity, depthBufferViewport);
 
       return function (projectionMatrix)
       {
@@ -692,7 +692,6 @@ Object .assign (X3DRenderObject .prototype,
                this .collisionShapes .push ({
                   renderObject: this,
                   modelViewMatrix: new Float32Array (16),
-                  viewport: new Vector4 (),
                   collisions: [ ],
                   clipPlanes: [ ]
                });
@@ -701,7 +700,6 @@ Object .assign (X3DRenderObject .prototype,
             const collisionContext = this .collisionShapes [num];
 
             collisionContext .modelViewMatrix .set (modelViewMatrix);
-            collisionContext .viewport .assign (viewVolume .getViewport ());
             collisionContext .shapeNode = shapeNode;
 
             // Collisions
@@ -1112,13 +1110,13 @@ Object .assign (X3DRenderObject .prototype,
          {
             const
                renderContext       = shapes [s],
-               { viewport, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
+               { clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
                shaderNode          = browser .getDepthShader (clipPlanes .length, shapeNode, hAnimNode);
 
-            gl .viewport (... viewport);
+            // Cannot change viewport here, because the viewport is special here.
 
             // Draw
 
