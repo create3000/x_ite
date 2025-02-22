@@ -19,7 +19,9 @@ Object .assign (X3DFlyViewer .prototype,
             return;
          }
 
-         const button1 = gamepad .buttons [1] .pressed;
+         const
+            button0 = gamepad .buttons [0] .pressed,
+            button1 = gamepad .buttons [1] .pressed;
 
          if (button1)
          {
@@ -36,7 +38,8 @@ Object .assign (X3DFlyViewer .prototype,
          {
             axis
                .set (gamepad .axes [2], 0, gamepad .axes [3])
-               .multVec (GAMEPAD_SPEED_FACTOR);
+               .multVec (GAMEPAD_SPEED_FACTOR)
+               .multiply (button0 ? 2 : 1);
 
             // Moving average.
             this .direction .add (axis) .divide (2);
