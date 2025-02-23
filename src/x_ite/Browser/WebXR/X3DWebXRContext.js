@@ -183,6 +183,22 @@ Object .assign (X3DWebXRContext .prototype,
 
       this .setDefaultFramebuffer (baseLayer .framebuffer);
    },
+   updateNearFarPlanes: (function ()
+   {
+      const nearFarPlanes = { };
+
+      return function ()
+      {
+         const
+            navigationInfoNode = this .getActiveNavigationInfo (),
+            viewpointNode      = this .getActiveViewpoint ();
+
+         nearFarPlanes .depthNear = viewpointNode .getNearDistance (navigationInfoNode);
+         nearFarPlanes .depthFar  = viewpointNode .getFarDistance  (navigationInfoNode);
+
+         this .getSession () .updateRenderState (nearFarPlanes);
+      };
+   })(),
    updateInputSources (event)
    {
       for (const inputSource of event .added)
@@ -228,16 +244,9 @@ Object .assign (X3DWebXRContext .prototype,
       if (emulator)
          this .getCanvas () .css (this .getXREmulatorCSS ());
 
-      // TODO: Clip planes
+      // Projection matrix
 
-      // const
-      //    navigationInfoNode = this .getActiveNavigationInfo (),
-      //    viewpointNode      = this .getActiveViewpoint ();
-
-      // this .getSession () .updateRenderState ({
-      //    depthNear: viewpointNode .getNearDistance (navigationInfoNode), // 0.1
-      //    depthFar:  viewpointNode .getFarDistance  (navigationInfoNode), // 10_000
-      // });
+      this .updateNearFarPlanes ();
 
       // Navigation
 
