@@ -193,8 +193,16 @@ Object .assign (X3DWebXRContext .prototype,
             navigationInfoNode = this .getActiveNavigationInfo (),
             viewpointNode      = this .getActiveViewpoint ();
 
-         nearFarPlanes .depthNear = viewpointNode .getNearDistance (navigationInfoNode);
-         nearFarPlanes .depthFar  = viewpointNode .getFarDistance  (navigationInfoNode);
+         if (viewpointNode)
+         {
+            nearFarPlanes .depthNear = viewpointNode .getNearDistance (navigationInfoNode);
+            nearFarPlanes .depthFar  = viewpointNode .getFarDistance  (navigationInfoNode);
+         }
+         else
+         {
+            nearFarPlanes .depthNear = 0.1;
+            nearFarPlanes .depthFar  = 10_000;
+         }
 
          this .getSession () .updateRenderState (nearFarPlanes);
       };
