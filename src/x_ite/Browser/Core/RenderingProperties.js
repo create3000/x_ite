@@ -67,8 +67,6 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
 
       const browser = this .getBrowser ();
 
-      this ._ContentScale .addInterest ("set_ContentScale__", this);
-
       this ._MaxTextureSize       = browser .getMaxTextureSize ();
       this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
       this ._MaxLights            = browser .getMaxLights ();
@@ -76,12 +74,6 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
       this ._TextureMemory        = browser .getTextureMemory ();
       this ._MaxAnisotropicDegree = browser .getMaxAnisotropicDegree ();
       this ._MaxSamples           = browser .getMaxSamples ();
-
-      this .set_ContentScale__ (this ._ContentScale);
-   },
-   set_ContentScale__ (contentScale)
-   {
-      this .getBrowser () .setFramebufferScaleFactor ?.(contentScale .getValue ());
    },
 });
 

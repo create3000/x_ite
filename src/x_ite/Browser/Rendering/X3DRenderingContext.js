@@ -516,7 +516,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return null;
    },
-   setFrame ()
+   xrFrame ()
    { },
    dispose ()
    {
