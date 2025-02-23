@@ -121,7 +121,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .setSession (session);
          this .removeHit (this .getHit ());
 
-         // Rendering properties
+         // Rendering Properties
 
          this .getRenderingProperties () ._ContentScale .addInterest ("xrContentScale", this);
 
@@ -164,7 +164,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]     = null;
          this [_frame]          = null;
 
-         // Rendering properties
+         // Rendering Properties
 
          this .getRenderingProperties () ._ContentScale .removeInterest ("xrContentScale", this);
 
