@@ -1,5 +1,5 @@
-/* X_ITE v11.2.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.0")];
+/* X_ITE v11.2.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -721,7 +721,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
          navigationInfoNode  = renderObject .getNavigationInfo (),
          viewpointNode       = renderObject .getViewpoint (),
          nearValue           = viewpointNode .getNearDistance (navigationInfoNode),  // in meters
-         viewport            = renderObject .getViewVolume () .getScissor (),        // in pixels
+         viewport            = renderObject .getViewVolume () .getViewport (),       // in pixels
          viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue), // in meters
          viewportPixel       = this .viewportPixel,                                  // in pixels
          pixelSize           = this .pixelSize,                                      // size of one pixel in meters

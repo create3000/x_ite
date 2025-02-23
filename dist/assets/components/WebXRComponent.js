@@ -1,5 +1,5 @@
-/* X_ITE v11.2.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.0")];
+/* X_ITE v11.2.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -169,6 +169,7 @@ Object .assign (ScreenPoint .prototype,
       const
          projectionMatrixArray = new Float32Array ((external_X_ITE_X3D_Matrix4_default()).Identity),
          modelViewMatrixArray  = new Float32Array ((external_X_ITE_X3D_Matrix4_default()).Identity),
+         identity              = new Float32Array ((external_X_ITE_X3D_Matrix4_default()).Identity),
          screenMatrix          = new (external_X_ITE_X3D_Matrix4_default()) (),
          clipPlanes            = [ ];
 
@@ -223,6 +224,7 @@ Object .assign (ScreenPoint .prototype,
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, identity);
             gl .uniform3f        (shaderNode .x3d_EmissiveColor, 0, 0, 0);
             gl .uniform1f        (shaderNode .x3d_Transparency, circle);
 
@@ -244,6 +246,7 @@ Object .assign (ScreenPoint .prototype,
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, identity);
             gl .uniform3f        (shaderNode .x3d_EmissiveColor, ... color);
             gl .uniform1f        (shaderNode .x3d_Transparency, transparency);
 
@@ -382,7 +385,9 @@ Object .assign ((external_X_ITE_X3D_X3DFlyViewer_default()).prototype,
             return;
          }
 
-         const button1 = gamepad .buttons [1] .pressed;
+         const
+            button0 = gamepad .buttons [0] .pressed,
+            button1 = gamepad .buttons [1] .pressed;
 
          if (button1)
          {
@@ -399,7 +404,8 @@ Object .assign ((external_X_ITE_X3D_X3DFlyViewer_default()).prototype,
          {
             axis
                .set (gamepad .axes [2], 0, gamepad .axes [3])
-               .multVec (GAMEPAD_SPEED_FACTOR);
+               .multVec (GAMEPAD_SPEED_FACTOR)
+               .multiply (button0 ? 2 : 1);
 
             // Moving average.
             this .direction .add (axis) .divide (2);
@@ -542,6 +548,8 @@ Object .assign (X3DWebXRContext .prototype,
          this .setSession (session);
          this .removeHit (this .getHit ());
 
+         this .getRenderingProperties () ._XRSession = true;
+
          // session .addEventListener ("select", event =>
          // {
          //    const { inputSource, frame } = event;
@@ -578,6 +586,8 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputRay]       = null;
          this [_inputPoint]     = null;
          this [_frame]          = null;
+
+         this .getRenderingProperties () ._XRSession = false;
       });
    },
    setFramebufferScaleFactor (framebufferScaleFactor)
@@ -690,18 +700,11 @@ Object .assign (X3DWebXRContext .prototype,
       // Get matrices from views.
 
       const
-         originalPose  = this [_frame] .getViewerPose (this [_referenceSpace]),
-         pose          = this [_pose],
-         viewpointNode = this .getActiveViewpoint ();
+         originalPose = this [_frame] .getViewerPose (this [_referenceSpace]),
+         pose         = this [_pose];
 
       pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
       pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
-
-      if (viewpointNode)
-      {
-         pose .cameraSpaceMatrix .multRight (viewpointNode .getCameraSpaceMatrix ());
-         pose .viewMatrix        .multLeft  (viewpointNode .getViewMatrix ());
-      }
 
       let v = 0;
 
@@ -726,12 +729,6 @@ Object .assign (X3DWebXRContext .prototype,
          view .projectionMatrix  .assign (originalView .projectionMatrix);
          view .cameraSpaceMatrix .assign (originalView .transform .matrix);
          view .viewMatrix        .assign (originalView .transform .inverse .matrix);
-
-         if (viewpointNode)
-         {
-            view .cameraSpaceMatrix .multRight (viewpointNode .getCameraSpaceMatrix ());
-            view .viewMatrix        .multLeft  (viewpointNode .getViewMatrix ());
-         }
 
          view .matrix  .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
          view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
@@ -758,9 +755,8 @@ Object .assign (X3DWebXRContext .prototype,
       return function ()
       {
          const
-            viewport      = this .getViewport () .getValue (),
-            pose          = this [_pose],
-            viewpointNode = this .getActiveViewpoint ();
+            viewport = this .getViewport () .getValue (),
+            pose     = this [_pose];
 
          // Get target ray matrices from input sources.
 
@@ -777,12 +773,6 @@ Object .assign (X3DWebXRContext .prototype,
 
             matrix  .assign (targetRayPose .transform .matrix);
             inverse .assign (targetRayPose .transform .inverse .matrix);
-
-            if (viewpointNode)
-            {
-               matrix  .multRight (viewpointNode .getCameraSpaceMatrix ());
-               inverse .multLeft  (viewpointNode .getViewMatrix ());
-            }
          }
 
          // Test for hits.
@@ -866,6 +856,16 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Draw input source rays.
 
+         // switch (this .getSession () .visibilityState)
+         // {
+         //    case "visible-blurred":
+         //    case "hidden":
+         //       return;
+
+         //    default:
+         //       break;
+         // }
+
          for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
             const frameBuffer = this .getFramebuffers () [i];
@@ -890,7 +890,7 @@ Object .assign (X3DWebXRContext .prototype,
                inputRayMatrix .multVecMatrix (hitPoint  .assign (hit .originalPoint));
 
                // Make ray shorter if track point is very close.
-               if (hitPoint .distance (fromPoint) < toPoint .distance (fromPoint))
+               if (hit .id && hitPoint .distance (fromPoint) < toPoint .distance (fromPoint))
                   toPoint .assign (hitPoint);
 
                if (fromPoint .z > 0 || toPoint .z > 0)
