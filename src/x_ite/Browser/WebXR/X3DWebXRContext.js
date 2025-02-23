@@ -121,7 +121,9 @@ Object .assign (X3DWebXRContext .prototype,
          this .setSession (session);
          this .removeHit (this .getHit ());
 
-         this .getRenderingProperties () ._ContentScale .addInterest ("xrFramebufferScaleFactor", this);
+         // Rendering properties
+
+         this .getRenderingProperties () ._ContentScale .addInterest ("xrContentScale", this);
 
          this .getRenderingProperties () ._XRSession = true;
 
@@ -162,12 +164,16 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]     = null;
          this [_frame]          = null;
 
+         // Rendering properties
+
+         this .getRenderingProperties () ._ContentScale .removeInterest ("xrContentScale", this);
+
          this .getRenderingProperties () ._XRSession = false;
       });
    },
-   xrFramebufferScaleFactor ()
+   xrContentScale ()
    {
-      this .xrUpdateBaseLayer ({ framebufferScaleFactor: this .getRenderingProperty ("ContentScale") });
+      this .xrUpdateBaseLayer ();
    },
    xrUpdateBaseLayer (options = { }, session = this .getSession ())
    {
