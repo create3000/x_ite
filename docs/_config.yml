@@ -16,7 +16,7 @@ timezone: Europe/Berlin
 
 title: X_ITE X3D Browser # the main title
 
-tagline: Ready for X3Dv4! # it will display as the sub-title
+tagline: Ready for X3Dv4, ready for WebXR! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser and VRML Viewer, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.
