@@ -383,7 +383,6 @@ declare namespace X3D
       Timings:                      boolean,
       ToneMapping:                  ToneMappingTypes,
       XRButton:                     boolean,
-      XRMovementControl:            "VIEWER_POSE" | "VIEWPOINT",
       XRSessionMode:                "NONE" | "IMMERSIVE_VR",
    };
 
@@ -8104,6 +8103,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       visibilityRange: number;
+      /**
+       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      visibilityStart: number;
    }
 
    /** FogCoordinate defines a set of explicit fog depths on a per-vertex basis, overriding Fog visibilityRange. */
@@ -11796,6 +11801,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       visibilityRange: number;
+      /**
+       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      visibilityStart: number;
    }
 
    /** LOD (Level Of Detail) uses camera-to-object distance to switch among contained child levels. */
@@ -21079,6 +21090,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       visibilityRange: number;
+      /**
+       * Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      visibilityStart: number;
    }
 
    /** X3DFollowerNode is the abstract base class for all nodes in the Followers component. */

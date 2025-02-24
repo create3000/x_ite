@@ -93,7 +93,9 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/screenshot.png" alt="StringSensor"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.x3d)

@@ -79,16 +79,7 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
    set_emissiveColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .emissiveColorArray .set (this ._emissiveColor .getValue ());
-
-      const
-         emissiveColorArray = this .emissiveColorArray,
-         emissiveColor      = this ._emissiveColor .getValue ();
-
-      emissiveColorArray [0] = emissiveColor .r;
-      emissiveColorArray [1] = emissiveColor .g;
-      emissiveColorArray [2] = emissiveColor .b;
+      this .emissiveColorArray .set (this ._emissiveColor .getValue ());
    },
    set_emissiveTexture__ ()
    {

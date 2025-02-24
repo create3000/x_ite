@@ -47,7 +47,7 @@
 
 import Vector2 from "../Numbers/Vector2.js";
 
-function Line2 (point, direction)
+function Line2 (point = Vector2 .Zero, direction = Vector2 .yAxis)
 {
    this .point     = point     .copy ();
    this .direction = direction .copy ();

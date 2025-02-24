@@ -118,16 +118,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_baseColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .baseColorArray .set (this ._baseColor .getValue ());
-
-      const
-         baseColorArray = this .baseColorArray,
-         baseColor      = this ._baseColor .getValue ();
-
-      baseColorArray [0] = baseColor .r;
-      baseColorArray [1] = baseColor .g;
-      baseColorArray [2] = baseColor .b;
+      this .baseColorArray .set (this ._baseColor .getValue ());
    },
    set_baseTexture__ ()
    {

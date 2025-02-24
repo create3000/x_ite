@@ -90,16 +90,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    },
    set_sheenColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .sheenColorArray .set (this ._sheenColor .getValue ());
-
-      const
-         sheenColorArray = this .sheenColorArray,
-         sheenColor      = this ._sheenColor .getValue ();
-
-      sheenColorArray [0] = sheenColor .r;
-      sheenColorArray [1] = sheenColor .g;
-      sheenColorArray [2] = sheenColor .b;
+      this .sheenColorArray .set (this ._sheenColor .getValue ());
    },
    set_sheenColorTexture__ ()
    {

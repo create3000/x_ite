@@ -95,16 +95,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
    set_specularColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .specularColorArray .set (this ._specularColor .getValue ());
-
-      const
-         specularColorArray = this .specularColorArray,
-         specularColor      = this ._specularColor .getValue ();
-
-      specularColorArray [0] = specularColor .r;
-      specularColorArray [1] = specularColor .g;
-      specularColorArray [2] = specularColor .b;
+      this .specularColorArray .set (this ._specularColor .getValue ());
    },
    set_specularColorTexture__ ()
    {

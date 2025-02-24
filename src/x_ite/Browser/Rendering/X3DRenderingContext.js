@@ -47,16 +47,15 @@
 
 import Fields                 from "../../Fields.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
-import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
+import MultiSampleFramebuffer from "../../Rendering/MultiSampleFramebuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
-import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
 
 const
-   _frameBuffers       = Symbol (),
+   _session            = Symbol (),
+   _framebuffers       = Symbol (),
+   _defaultFramebuffer = Symbol (),
    _transmissionBuffer = Symbol (),
    _observer           = Symbol (),
    _resizer            = Symbol (),
@@ -66,16 +65,8 @@ const
    _composeShader      = Symbol (),
    _depthShaders       = Symbol ();
 
-const
-   _session            = Symbol (),
-   _baseReferenceSpace = Symbol (),
-   _referenceSpace     = Symbol (),
-   _baseLayer          = Symbol (),
-   _defaultFrameBuffer = Symbol (),
-   _pose               = Symbol ();
-
 // WebXR Emulator and polyfill:
-const canvasCSS = {
+const xrEmulatorCSS = {
    position: "fixed",
    top: "0px",
    left: "0px",
@@ -85,18 +76,16 @@ const canvasCSS = {
 
 function X3DRenderingContext ()
 {
-   this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .MFInt32 (0, 0, 300, 150));
+   this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .SFVec4f (0, 0, 300, 150));
 
-   this [_frameBuffers] = [ ];
+   this [_framebuffers] = [ ];
    this [_depthShaders] = new Map ();
    this [_localObjects] = [ ]; // shader objects dumpster
 
-   // XR support
+   // WebXR support
 
    this [_session]            = window;
-   this [_defaultFrameBuffer] = null;
-
-   this .updateXRButton ();
+   this [_defaultFramebuffer] = null;
 }
 
 Object .assign (X3DRenderingContext .prototype,
@@ -114,10 +103,6 @@ Object .assign (X3DRenderingContext .prototype,
 
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
-
-      // Events
-
-      this ._activeViewpoint .addInterest ("setReferenceSpace", this);
 
       // Observe resize and parent changes of <canvas> and configure viewport.
 
@@ -138,6 +123,12 @@ Object .assign (X3DRenderingContext .prototype,
       ]
       .map (event => `${event}.X3DRenderingContext-${this .getInstanceId ()}`)
       .join (" "), () => this .onfullscreen ());
+
+      // Check for WebXR support.
+
+      navigator .xr ?.addEventListener ("devicechange", () => this .updateXRButton ());
+
+      this .updateXRButton ();
    },
    getRenderer ()
    {
@@ -206,9 +197,24 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_localObjects];
    },
-   getFrameBuffers ()
+   getFramebuffers ()
    {
-      return this [_frameBuffers];
+      return this [_framebuffers];
+   },
+   getDefaultFramebuffer ()
+   {
+      return this [_defaultFramebuffer];
+   },
+   setDefaultFramebuffer (defaultFramebuffer)
+   {
+      this [_defaultFramebuffer] = defaultFramebuffer;
+
+      for (const frameBuffer of this [_framebuffers])
+         frameBuffer .dispose ();
+
+      this [_framebuffers] = [ ];
+
+      this .reshape ();
    },
    getTransmissionBuffer ()
    {
@@ -315,6 +321,10 @@ Object .assign (X3DRenderingContext .prototype,
 
       return shaderNode;
    },
+   getXREmulatorCSS ()
+   {
+      return xrEmulatorCSS;
+   },
    setResizeTarget (element)
    {
       if (!element .length)
@@ -329,7 +339,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (element .is (this .getSurface ()))
          this .getCanvas () .removeAttr ("style");
       else // WebXR Emulator or polyfill.
-         this .getCanvas () .css (canvasCSS);
+         this .getCanvas () .css (xrEmulatorCSS);
 
       this [_observer] .disconnect ();
       this [_observer] .observe (element [0], { childList: true });
@@ -371,6 +381,9 @@ Object .assign (X3DRenderingContext .prototype,
    },
    reshape ()
    {
+      if (this .getSession () !== window)
+         return;
+
       const
          canvas       = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
@@ -381,17 +394,16 @@ Object .assign (X3DRenderingContext .prototype,
          .prop ("width",  width)
          .prop ("height", height);
 
-      if (this [_frameBuffers] .length < 2)
-         this .reshapeFrameBuffer (0, 0, 0, width, height);
+      this .reshapeFramebuffer (0, 0, 0, width, height);
 
       this .addBrowserEvent ();
    },
-   reshapeFrameBuffer (i, x, y, width, height)
+   reshapeFramebuffer (i, x, y, width, height)
    {
       const
          samples     = this .getRenderingProperty ("Multisampling"),
          oit         = this .getBrowserOption ("OrderIndependentTransparency"),
-         frameBuffer = this [_frameBuffers] [i];
+         frameBuffer = this [_framebuffers] [i];
 
       if (frameBuffer &&
           x       === frameBuffer .getX () &&
@@ -409,7 +421,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       frameBuffer ?.dispose ();
 
-      this [_frameBuffers] [i] = new MultiSampleFrameBuffer (this, x, y, width, height, samples, oit);
+      this [_framebuffers] [i] = new MultiSampleFramebuffer (this, x, y, width, height, samples, oit);
 
       this .reshapeTransmissionBuffer (width, height);
    },
@@ -453,7 +465,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    updateXRButton ()
    {
-      return Lock .acquire (`X3DRenderingContext.updateXRButton-${this .getId ()}`, async () =>
+      return Lock .acquire (`X3DWebXRContext.updateXRButton-${this .getId ()}`, async () =>
       {
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
@@ -465,185 +477,47 @@ Object .assign (X3DRenderingContext .prototype,
 
          $("<div></div>")
             .attr ("part", "xr-button")
+            .attr ("title", "Start WebXR session.")
             .addClass ("x_ite-private-xr-button")
             .on ("mousedown touchstart", false)
-            .on ("mouseup touchend", event => this .startXRSession (event))
+            .on ("mouseup touchend", event =>
+            {
+               event .preventDefault ();
+               event .stopImmediatePropagation ();
+               event .stopPropagation ();
+
+               this .startAudioElements ();
+
+               if (this [_session] === window)
+                  this .startXRSession ();
+               else
+                  this .stopXRSession ();
+            })
             .appendTo (this .getSurface ());
       });
    },
-   startXRSession (event)
+   async startXRSession ()
    {
-      event ?.preventDefault ();
-      event ?.stopImmediatePropagation ();
-      event ?.stopPropagation ();
+      if (!await this .checkXRSupport ())
+         return;
 
-      return Lock .acquire (`X3DRenderingContext.session-${this .getId ()}`, async () =>
-      {
-         if (!await this .checkXRSupport ())
-            return;
-
-         if (this [_session] !== window)
-            return;
-
-         const
-            gl             = this .getContext (),
-            mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-            compatible     = await gl .makeXRCompatible (),
-            session        = await navigator .xr .requestSession (mode),
-            referenceSpace = await session .requestReferenceSpace ("local");
-
-         // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-         const baseLayer = new XRWebGLLayer (session, gl,
-         {
-            antialias: false,
-            alpha: true,
-            depth: false,
-            ignoreDepthValues: true,
-         });
-
-         this .endEvents () .addInterest ("endFrame", this);
-
-         session .updateRenderState ({ baseLayer });
-         session .addEventListener ("end", () => this .stopXRSession ());
-
-         this [_session]            = session;
-         this [_baseReferenceSpace] = referenceSpace;
-         this [_baseLayer]          = baseLayer;
-         this [_defaultFrameBuffer] = baseLayer .framebuffer;
-
-         this [_pose] = {
-            cameraSpaceMatrix: new Matrix4 (),
-            viewMatrix: new Matrix4 (),
-            views: [ ],
-         };
-
-         this .setReferenceSpace ();
-         this .reshape ();
-      });
-   },
-   stopXRSession ()
-   {
-      return Lock .acquire (`X3DRenderingContext.session-${this .getId ()}`, async () =>
-      {
-         if (this [_session] === window)
-            return;
-
-         try
-         {
-            await this [_session] .end ();
-         }
-         catch
-         { }
-         finally
-         {
-            this .endEvents () .removeInterest ("endFrame", this);
-
-            for (const frameBuffer of this [_frameBuffers])
-               frameBuffer .dispose ();
-
-            this [_frameBuffers]       = [ ];
-            this [_session]            = window;
-            this [_baseReferenceSpace] = null;
-            this [_referenceSpace]     = null;
-            this [_baseLayer]          = null;
-            this [_defaultFrameBuffer] = null;
-            this [_pose]               = null;
-
-            this .reshape ();
-         }
-      });
+      await this .loadComponents (this .getComponent ("WebXR"), this .getComponent ("Geometry2D"));
+      await this .initXRSession ();
    },
    getSession ()
    {
       return this [_session];
    },
-   getReferenceSpace ()
+   setSession (session)
    {
-      return this [_referenceSpace];
-   },
-   setReferenceSpace ()
-   {
-      if (!this [_baseReferenceSpace])
-         return;
-
-      const
-         translation = new Vector3 (),
-         rotation    = new Rotation4 ();
-
-      this .getActiveViewpoint () ?.getViewMatrix () .get (translation, rotation)
-
-      const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
-
-      this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
-   },
-   getDefaultFrameBuffer ()
-   {
-      return this [_defaultFrameBuffer];
-   },
-   setFrame (frame)
-   {
-      if (!frame)
-         return;
-
-      const
-         pose     = frame .getViewerPose (this [_referenceSpace]),
-         numViews = pose .views .length;
-
-      this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
-      this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
-
-      let v = 0;
-
-      for (let i = 0; i < numViews; ++ i)
-      {
-         const
-            view                    = pose .views [i],
-            { x, y, width, height } = this [_baseLayer] .getViewport (view);
-
-         // WebXR Emulator: second view has width zero if in non-stereo mode.
-         if (!width)
-            continue;
-
-         this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
-
-         const pv = this [_pose] .views [v] ??= {
-            projectionMatrix: new Matrix4 (),
-            cameraSpaceMatrix: new Matrix4 (),
-            viewMatrix: new Matrix4 (),
-            matrix: new Matrix4 (),
-            inverse: new Matrix4 (),
-         };
-
-         pv .projectionMatrix .assign (view .projectionMatrix);
-         pv .cameraSpaceMatrix .assign (view .transform .matrix);
-         pv .viewMatrix .assign (view .transform .inverse .matrix);
-         pv .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
-         pv .inverse .assign (pv .matrix) .inverse ();
-
-         ++ v;
-      }
-
-      this [_frameBuffers] .length = v;
-
-      // WebXR Emulator or polyfill.
-      if (!this .getCanvas () .parent () .is (this .getSurface ()))
-         this .getCanvas () .css (canvasCSS);
-
-      this .addBrowserEvent ();
-   },
-   endFrame ()
-   {
-      const gl = this .getContext ();
-
-      // WebXR Emulator and polyfill: bind to null, to prevent changes.
-      gl .bindVertexArray (null);
+      this [_session] = session;
    },
    getPose ()
    {
-      return this [_pose];
+      return null;
    },
+   xrFrame ()
+   { },
    dispose ()
    {
       this [_session] = window;
@@ -651,7 +525,7 @@ Object .assign (X3DRenderingContext .prototype,
       this [_observer] .disconnect ();
       this [_resizer]  .disconnect ();
 
-      $(window) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
+      $(window)   .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
       $(document) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
    },
 });

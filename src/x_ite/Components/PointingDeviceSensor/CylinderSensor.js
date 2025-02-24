@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
       this .modelViewMatrix    = new Matrix4 ();
       this .invModelViewMatrix = new Matrix4 ();
 
-      this .cylinder    = new Cylinder3 (new Line3 (new Vector3 (), new Vector3 ()), 0);
+      this .cylinder    = new Cylinder3 (new Line3 (), 0);
       this .disk        = false;
       this .yPlane      = null;
       this .zPlane      = null;
@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    activate (hit)
    {
       const
-         hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay   = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
 
       const
@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
       const
-         axis   = new Line3 (new Vector3 (), yAxis),
+         axis   = new Line3 (Vector3 .Zero, yAxis),
          radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 ()) .magnitude ();
 
       this .cylinder = new Cylinder3 (axis, radius);
@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
       this .motionHit = hit .copy ();
 
       const
-         hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay     = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          trackPoint = new Vector3 ();
 
       if (this .disk)

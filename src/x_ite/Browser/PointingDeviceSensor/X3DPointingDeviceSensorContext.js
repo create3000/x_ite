@@ -51,6 +51,7 @@ import TraverseType   from "../../Rendering/TraverseType.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4        from "../../../standard/Math/Numbers/Vector4.js";
+import Line3          from "../../../standard/Math/Geometry/Line3.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 import StopWatch      from "../../../standard/Time/StopWatch.js";
 
@@ -60,12 +61,14 @@ const
    _cursorType                = Symbol (),
    _pointer                   = Symbol (),
    _hit                       = Symbol (),
+   _sensors                   = Symbol (),
    _overSensors               = Symbol (),
    _activeSensors             = Symbol (),
    _pointingLayer             = Symbol (),
    _pointingTime              = Symbol (),
    _pointingBuffer            = Symbol (),
    _pointingShaders           = Symbol (),
+   _inputSource               = Symbol (),
    _id                        = Symbol (),
    _pointingContexts          = Symbol (),
    _processEvents             = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
@@ -75,9 +78,9 @@ function X3DPointingDeviceSensorContext ()
    this [_pointingDevice]            = new PointingDevice (this .getPrivateScene ());
    this [_pointingDeviceSensorNodes] = new Set ();
    this [_pointer]                   = new Vector2 ();
-   this [_overSensors]               = [ ];
-   this [_activeSensors]             = [ ];
-   this [_pointingLayer]             = null;
+   this [_sensors]                   = [ ];
+   this [_overSensors]               = new Map ();
+   this [_activeSensors]             = new Map ();
    this [_pointingTime]              = new StopWatch ();
    this [_pointingBuffer]            = new PointingBuffer (this);
    this [_pointingShaders]           = new Map ();
@@ -85,29 +88,29 @@ function X3DPointingDeviceSensorContext ()
 
    this [_hit] = {
       id: 0,
-      pointer: this [_pointer],
-      hitRay: null,
-      sensors: [ ],
-      viewMatrix: new Matrix4 (),
+      pointer: new Vector2 (),
+      ray: new Line3 (),
+      sensors: new Map (),
       modelViewMatrix: new Matrix4 (),
       point: new Vector3 (),
-      normal: new Vector3 (),
+      normal: new Vector3 (), // Must be normalized if used.
       texCoord: new Vector4 (),
       layerNode: null,
+      pointingLayerNode: null,
       shapeNode: null,
       copy ()
       {
          return {
             id: this .id,
             pointer: this .pointer .copy (),
-            hitRay: this .hitRay .copy (),
-            sensors: this .sensors .slice (),
-            viewMatrix: this .viewMatrix .copy (),
+            ray: this .ray .copy (),
+            sensors: new Map (this .sensors),
             modelViewMatrix: this .modelViewMatrix .copy (),
             point: this .point .copy (),
             normal: this .normal .copy (),
             texCoord: this .texCoord .copy (),
             layerNode: this .layerNode,
+            pointingLayerNode: this .pointingLayerNode,
             shapeNode: this .shapeNode,
             copy: this .copy,
          };
@@ -190,6 +193,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
              pointer .y >= rectangle .y &&
              pointer .y <= rectangle .y + rectangle .w;
    },
+   getPointingInputSource ()
+   {
+      return this [_inputSource];
+   },
    getPointingLayer ()
    {
       return this [_pointingLayer];
@@ -197,6 +204,18 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    getHit ()
    {
       return this [_hit];
+   },
+   removeHit (hit)
+   {
+      hit .id = 0;
+      hit .sensors .clear ();
+
+      this .buttonReleaseEvent (hit);
+      this .motion (hit);
+   },
+   addSensor (sensor)
+   {
+      this [_sensors] .push (sensor);
    },
    addPointingShape (pointingContext)
    {
@@ -206,54 +225,76 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       return id;
    },
-   buttonPressEvent (x, y)
+   buttonPressEvent (x, y, hit = this [_hit])
    {
       if (!this [_pointingDeviceSensorNodes] .size)
          return false;
 
-      if (!this .touch (x, y))
+      if (hit === this [_hit])
+         this .touch (x, y);
+
+      if (!hit .id)
          return false;
 
-      const hit = this [_hit];
+      hit .pointingLayerNode = hit .layerNode;
 
-      this [_activeSensors] = hit .sensors;
-      this [_pointingLayer] = hit .layerNode;
+      for (const [node, sensor] of hit .sensors)
+      {
+         if (this [_activeSensors] .has (node))
+            continue;
 
-      for (const sensor of this [_activeSensors])
+         this [_overSensors]   .set (node, sensor);
+         this [_activeSensors] .set (node, sensor);
+
          sensor .set_active__ (true, hit);
+      }
 
+      // Immediately process events to be able
+      // to do audio and window.open stuff.
       this [_processEvents] ();
 
-      return !! hit .sensors .length;
+      return !! hit .sensors .size;
    },
-   buttonReleaseEvent ()
+   buttonReleaseEvent (hit = this [_hit])
    {
+      hit .pointingLayerNode = null;
+
       if (!this [_pointingDeviceSensorNodes] .size)
          return;
 
-      for (const sensor of this [_activeSensors])
-         sensor .set_active__ (false, null);
+      for (const [node, sensor] of this [_activeSensors])
+      {
+         if (sensor .hit !== hit)
+            continue;
 
-      this [_activeSensors] = Array .prototype;
-      this [_pointingLayer] = null;
+         this [_activeSensors] .delete (node);
 
+         sensor .set_active__ (false, hit);
+      }
+
+      // Immediately process events to be able
+      // to do audio and window.open stuff.
       this [_processEvents] ();
    },
-   motionNotifyEvent (x, y)
+   motionNotifyEvent (x, y, hit = this [_hit])
    {
       if (!this [_pointingDeviceSensorNodes] .size)
          return false;
 
-      this .touch (x, y);
-      this .motion ();
+      if (hit === this [_hit])
+         this .touch (x, y);
 
+      this .motion (hit);
+
+      // Immediately process events to be able
+      // to do audio and window.open stuff.
       this [_processEvents] ();
 
-      return !! this [_hit] .sensors .length;
+      return !! hit .sensors .size;
    },
    leaveNotifyEvent ()
    { },
-   touch (x, y)
+   touch (x, y, hit = this [_hit], inputSource = null)
    {
       this [_pointingTime] .start ();
 
@@ -263,55 +304,75 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          return false;
       }
 
+      if (Boolean (this .getPose ()) !== Boolean (inputSource))
+         return false;
+
       // Pick.
 
-      const hit = this [_hit];
+      this [_inputSource]   = inputSource;
+      this [_pointingLayer] = hit .pointingLayerNode;
+      this [_id]            = 0;
 
-      this [_id] = 0;
-
-      this [_pointer] .set (x, y);
+      this [_pointer] .assign (hit .pointer .set (x, y));
       this [_pointingBuffer] .bind ();
 
       this .getWorld () .traverse (TraverseType .POINTER);
 
       this [_pointingBuffer] .getHit (hit);
 
+      hit .sensors .clear ();
+
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {
          const
-            pointingContext = this [_pointingContexts] [hit .id],
-            shapeNode       = pointingContext .shapeNode,
-            appearanceNode  = shapeNode .getAppearance (),
+            { renderObject, sensors, modelViewMatrix, shapeNode } = this [_pointingContexts] [hit .id],
             geometryContext = shapeNode .getGeometryContext ();
 
-         hit .hitRay    = pointingContext .renderObject .getHitRay ();
-         hit .sensors   = pointingContext .sensors .slice ();
-         hit .layerNode = pointingContext .renderObject;
+         hit .ray .assign (renderObject .getHitRay ());
+
+         for (const sensor of sensors)
+         {
+            sensor .hit = hit;
+            hit .sensors .set (sensor .node, sensor);
+         }
+
+         hit .layerNode = renderObject;
          hit .shapeNode = shapeNode;
 
-         hit .viewMatrix      .assign (pointingContext .renderObject .getViewpoint () .getViewMatrix ());
-         hit .modelViewMatrix .assign (pointingContext .modelViewMatrix);
+         hit .modelViewMatrix .assign (modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
+         // Hit normal must be normalized if used.
 
          if (geometryContext .hasNormals)
-            hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
+            hit .modelViewMatrix .submatrix .inverse () .multMatrixVec (hit .normal);
          else
             hit .normal .assign (Vector3 .zAxis);
-
-         appearanceNode .getTextureTransform () .transformPoint (hit .texCoord);
       }
       else
       {
-         hit .id        = 0;
-         hit .hitRay    = this [_pointingLayer] ? this [_pointingLayer] .getHitRay () : null;
-         hit .sensors   = Array .prototype;
-         hit .layerNode = this [_pointingLayer];
+         hit .id = 0;
+
+         if (hit .pointingLayerNode)
+            hit .ray .assign (hit .pointingLayerNode .getHitRay ());
+
+         hit .layerNode = null;
          hit .shapeNode = null;
 
-         hit .viewMatrix      .assign (Matrix4 .Identity);
          hit .modelViewMatrix .assign (Matrix4 .Identity);
       }
+
+      // Dispose unused sensors.
+
+      for (const sensor of this [_sensors])
+      {
+         if (sensor .hit)
+            continue;
+
+         sensor .dispose ();
+      }
+
+      this [_sensors] .length = 0;
 
       // Picking end.
 
@@ -320,42 +381,46 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       return !! hit .id;
    },
-   motion ()
+   motion (hit = this [_hit])
    {
-      const hit = this [_hit];
-
       // Set isOver to FALSE for appropriate nodes
 
-      if (hit .id)
+      for (const [node, sensor] of this [_overSensors])
       {
-         var difference = this [_overSensors] .filter (a => !hit .sensors .find (b => a .node === b .node));
-      }
-      else
-      {
-         var difference = this [_overSensors];
-      }
+         if (sensor .hit !== hit)
+            continue;
 
-      for (const sensor of difference)
+         if (hit .id && hit .sensors .has (node))
+            continue;
+
+         this [_overSensors] .delete (node);
+
          sensor .set_over__ (false, hit);
+      }
 
       // Set isOver to TRUE for appropriate nodes
 
-      if (hit .id)
+      for (const [node, sensor] of hit .sensors)
       {
-         this [_overSensors] = hit .sensors;
+         const overSensor = this [_overSensors] .get (node);
 
-         for (const sensor of this [_overSensors])
-            sensor .set_over__ (true, hit);
-      }
-      else
-      {
-         this [_overSensors] = Array .prototype;
+         if (overSensor && overSensor .hit !== hit)
+            continue;
+
+         this [_overSensors] .set (node, sensor);
+
+         sensor .set_over__ (true, hit);
       }
 
       // Forward motion event to active drag sensor nodes
 
-      for (const sensor of this [_activeSensors])
+      for (const sensor of this [_activeSensors] .values ())
+      {
+         if (sensor .hit !== hit)
+            continue;
+
          sensor .set_motion__ (hit);
+      }
    },
    getPointingShader (numClipPlanes, shapeNode, hAnimNode)
    {

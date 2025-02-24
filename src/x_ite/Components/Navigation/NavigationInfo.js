@@ -130,9 +130,9 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
 
       return nearValue === 0 ? 1e-5 : nearValue / 2;
    },
-   getFarValue (viewpoint)
+   getFarValue ()
    {
-      return this .visibilityLimit || viewpoint .getMaxFarValue ();
+      return this .visibilityLimit;
    },
    getTransitionType: (function ()
    {

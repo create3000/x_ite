@@ -1,5 +1,5 @@
-/* X_ITE v11.1.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
+/* X_ITE v11.2.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -365,7 +365,7 @@ function Layout (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).Layout);
 
    // Private properties
-   
+
    this .alignX          = CENTER;
    this .alignY          = CENTER;
    this .offsetUnitX     = WORLD;
@@ -718,18 +718,19 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
          browser             = this .getBrowser (),
          contentScale        = browser .getRenderingProperty ("ContentScale"),
          matrix              = this .matrix,
-         viewpoint           = renderObject .getViewpoint (),
-         nearValue           = renderObject .getNavigationInfo () .getNearValue (),       // in meters
-         viewport            = renderObject .getViewVolume () .getScissor (),             // in pixels
-         viewportMeter       = viewpoint .getViewportSize (viewport, nearValue),          // in meters
-         viewportPixel       = this .viewportPixel,                                       // in pixels
-         pixelSize           = this .pixelSize,                                           // size of one pixel in meters
-         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter,      // in meters
+         navigationInfoNode  = renderObject .getNavigationInfo (),
+         viewpointNode       = renderObject .getViewpoint (),
+         nearValue           = viewpointNode .getNearDistance (navigationInfoNode),  // in meters
+         viewport            = renderObject .getViewVolume () .getViewport (),       // in pixels
+         viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue), // in meters
+         viewportPixel       = this .viewportPixel,                                  // in pixels
+         pixelSize           = this .pixelSize,                                      // size of one pixel in meters
+         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter, // in meters
          rectangleSize       = this .rectangleSize,
          rectangleCenter     = this .rectangleCenter;
 
-      viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale);             // in pixel
-      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);                      // size of one pixel in meter
+      viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale); // in pixel
+      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);          // size of one pixel in meter
 
       switch (this .getSizeUnitX ())
       {
@@ -1199,6 +1200,7 @@ Object .defineProperties (LayoutLayer,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "pickable",       new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "objectType",     new (external_X_ITE_X3D_Fields_default()).MFString ("ALL")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "pointerEvents",  new (external_X_ITE_X3D_Fields_default()).SFBool (true)), // skip test
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "visible",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "layout",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "viewport",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),

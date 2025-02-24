@@ -41,14 +41,12 @@ for (const row of table)
 			doc       = fs .existsSync (`${docs}/${component}/${basename}.md`),
 			size      = sh (`identify -format "%w %h" "${examples}/${component}/${basename}/screenshot-small.png"`) .trim () .split (" ");
 
-		const
-			xrButtonPosition  = tree [component] [basename] ?.["xrButtonPosition"] ?? "br",
-			xrMovementControl = tree [component] [basename] ?.["xrMovementControl"] ?? "VIEWER_POSE";
+		const xrButtonPosition  = tree [component] [basename] ?.["xrButtonPosition"] ?? "br";
 
 		folder = folder .replace (/^.*\/media\/docs\//, "");
 
 		output += `    <td>\n`;
-		output += `      <a href="https://create3000.github.io/media/${folder}/${basename}.x3d" title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" xrButtonPosition="${xrButtonPosition}" xrMovementControl="${xrMovementControl}">`;
+		output += `      <a href="https://create3000.github.io/media/${folder}/${basename}.x3d" title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" xrButtonPosition="${xrButtonPosition}">`;
 		output += `<img src="https://create3000.github.io/media/${folder}/screenshot-small.png" alt="${basename}" width="${size [0]}" height="${size [1]}"/>`;
 		output += `</a>\n`;
 		output += `    </td>\n`;

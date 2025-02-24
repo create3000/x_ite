@@ -66,8 +66,8 @@ function RigidBody (executionContext)
    this .addType (X3DConstants .RigidBody);
 
    this .addChildObjects (X3DConstants .inputOutput, "collection",    new Fields .SFNode (),
-                          X3DConstants .inputOutput, "transform",     new Fields .SFTime (),
-                          X3DConstants .inputOutput, "otherGeometry", new Fields .MFNode ());
+                          X3DConstants .outputOnly,  "transform",     new Fields .SFTime (),
+                          X3DConstants .outputOnly,  "otherGeometry", new Fields .MFNode ());
 
    // Units
 
@@ -81,7 +81,7 @@ function RigidBody (executionContext)
    this ._disableAngularSpeed .setUnit ("angularRate");
 
    // Private properties
-   
+
    this .compoundShape      = new Ammo .btCompoundShape ();
    this .motionState        = new Ammo .btDefaultMotionState ();
    this .constructionInfo   = new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
@@ -500,7 +500,7 @@ Object .defineProperties (RigidBody,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "torques",              new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "inertia",              new Fields .SFMatrix3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoDisable",          new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableLinearSpeed",   new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableAngularSpeed",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",             new Fields .MFNode ()),

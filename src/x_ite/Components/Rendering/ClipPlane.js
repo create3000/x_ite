@@ -59,7 +59,8 @@ const ClipPlanes = ObjectCache (ClipPlaneContainer);
 
 function ClipPlaneContainer ()
 {
-   this .plane = new Plane3 ();
+   this .plane     = new Plane3 ();
+   this .planeView = new Plane3 ();
 }
 
 Object .assign (ClipPlaneContainer .prototype,
@@ -79,13 +80,15 @@ Object .assign (ClipPlaneContainer .prototype,
 
       plane .multRight (modelViewMatrix);
    },
-   setShaderUniforms (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject, renderObject)
    {
-      const
-         plane  = this .plane,
-         normal = plane .normal;
+      const view = renderObject ?.getView ();
 
-      gl .uniform4f (shaderObject .x3d_ClipPlane [shaderObject .numClipPlanes ++], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
+      const plane = view
+         ? this .planeView .assign (this .plane) .multRight (view .matrix)
+         : this .plane;
+
+      gl .uniform4f (shaderObject .x3d_ClipPlane [shaderObject .numClipPlanes ++], ... plane .normal, plane .distanceFromOrigin);
    },
    dispose ()
    {

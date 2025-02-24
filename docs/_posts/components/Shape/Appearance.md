@@ -134,7 +134,9 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Shape/Appearance/screenshot.png" alt="Appearance"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shape/Appearance/Appearance.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d)

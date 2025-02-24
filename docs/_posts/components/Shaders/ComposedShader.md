@@ -78,7 +78,7 @@ ComposedShader can contain multiple [ShaderPart](/x_ite/components/shaders/shade
 
 ### Hints
 
-- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by \<[ShaderPart](/x_ite/components/shaders/shaderpart/) `containerField='parts'/>` nodes.
+- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by Metadata* nodes (if any), then \<[ShaderPart](/x_ite/components/shaders/shaderpart/) `containerField='parts'/>` nodes.
 - Apply default `containerField='shaders'` when parent node is [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
@@ -87,7 +87,9 @@ ComposedShader can contain multiple [ShaderPart](/x_ite/components/shaders/shade
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Shaders/ComposedShader/screenshot.png" alt="ComposedShader"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.x3d)

@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-function MultiSampleFrameBuffer (browser, x, y, width, height, samples, oit)
+function MultiSampleFramebuffer (browser, x, y, width, height, samples, oit)
 {
    const gl = browser .getContext ();
 
@@ -125,9 +125,9 @@ function MultiSampleFrameBuffer (browser, x, y, width, height, samples, oit)
 
    // Create oit frame buffer.
 
-   this .oitFrameBuffer = gl .createFramebuffer ();
+   this .oitFramebuffer = gl .createFramebuffer ();
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .oitFrameBuffer);
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .oitFramebuffer);
 
    // Set draw buffers.
 
@@ -249,7 +249,7 @@ function MultiSampleFrameBuffer (browser, x, y, width, height, samples, oit)
    gl .uniform1i (alphaTextureUnit,          1);
 }
 
-Object .assign (MultiSampleFrameBuffer .prototype,
+Object .assign (MultiSampleFramebuffer .prototype,
 {
    getX ()
    {
@@ -294,9 +294,9 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    bindTransparency ()
    {
-      const { context: gl, oitFrameBuffer } = this;
+      const { context: gl, oitFramebuffer } = this;
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, oitFrameBuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, oitFramebuffer);
 
       gl .clearColor (0, 0, 0, 1);
       gl .clear (gl .COLOR_BUFFER_BIT);
@@ -315,7 +315,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
 
       if (samples)
       {
-         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .oitFrameBuffer);
+         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .oitFramebuffer);
 
          gl .readBuffer (gl .COLOR_ATTACHMENT0);
          gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .accumRevealageTextureBuffer);
@@ -358,7 +358,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .scissor  (0, 0, x + width, y + height);
 
       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, frameBuffer);
-      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, auxBuffer ?? browser .getDefaultFrameBuffer ());
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, auxBuffer ?? browser .getDefaultFramebuffer ());
 
       gl .blitFramebuffer (0, 0, width, height,
                            0, 0, width, height,
@@ -368,7 +368,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
          return;
 
       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, auxBuffer);
-      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFrameBuffer ());
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFramebuffer ());
 
       gl .blitFramebuffer (0, 0, width, height,
                            x, y, x + width, y + height,
@@ -382,10 +382,10 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .deleteRenderbuffer (this .colorBuffer);
       gl .deleteRenderbuffer (this .depthBuffer);
 
-      gl .deleteFramebuffer (this .auxFrameBuffer);
+      gl .deleteFramebuffer (this .auxFramebuffer);
       gl .deleteRenderbuffer (this .auxColorBuffer);
 
-      gl .deleteFramebuffer (this .oitFrameBuffer);
+      gl .deleteFramebuffer (this .oitFramebuffer);
       gl .deleteFramebuffer (this .accumRevealageTextureBuffer);
       gl .deleteFramebuffer (this .alphaTextureBuffer);
       gl .deleteRenderbuffer (this .accumRevealageBuffer);
@@ -406,7 +406,7 @@ function Fallback (browser, x, y, width, height, samples)
    this .width       = width;
    this .height      = height;
    this .samples     = samples;
-   this .frameBuffer = browser .getDefaultFrameBuffer ();
+   this .frameBuffer = browser .getDefaultFramebuffer ();
 }
 
 Object .assign (Fallback .prototype,
@@ -442,4 +442,4 @@ Object .assign (Fallback .prototype,
    dispose: Function .prototype,
 });
 
-export default MultiSampleFrameBuffer;
+export default MultiSampleFramebuffer;

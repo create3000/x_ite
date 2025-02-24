@@ -106,16 +106,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    },
    set_attenuationColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .attenuationColorArray .set (this ._attenuationColor .getValue ());
-
-      const
-         attenuationColorArray = this .attenuationColorArray,
-         attenuationColor      = this ._attenuationColor .getValue ();
-
-      attenuationColorArray [0] = attenuationColor .r;
-      attenuationColorArray [1] = attenuationColor .g;
-      attenuationColorArray [2] = attenuationColor .b;
+      this .attenuationColorArray .set (this ._attenuationColor .getValue ());
    },
    getExtensionKey ()
    {

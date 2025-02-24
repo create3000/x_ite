@@ -125,16 +125,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    },
    set_diffuseColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
-
-      const
-         diffuseColorArray = this .diffuseColorArray,
-         diffuseColor      = this ._diffuseColor .getValue ();
-
-      diffuseColorArray [0] = diffuseColor .r;
-      diffuseColorArray [1] = diffuseColor .g;
-      diffuseColorArray [2] = diffuseColor .b;
+      this .diffuseColorArray .set (this ._diffuseColor .getValue ());
    },
    set_diffuseTexture__ ()
    {
@@ -158,16 +149,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    },
    set_specularColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .specularColorArray .set (this ._specularColor .getValue ());
-
-      const
-         specularColorArray = this .specularColorArray,
-         specularColor      = this ._specularColor .getValue ();
-
-      specularColorArray [0] = specularColor .r;
-      specularColorArray [1] = specularColor .g;
-      specularColorArray [2] = specularColor .b;
+      this .specularColorArray .set (this ._specularColor .getValue ());
    },
    set_glossiness__ ()
    {

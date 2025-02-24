@@ -1,9 +1,24 @@
-/* X_ITE v11.1.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
+/* X_ITE v11.2.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 787:
+/***/ 254:
+/***/ ((module) => {
+
+"use strict";
+module.exports = __X_ITE_X3D__ .jquery;
+
+/***/ }),
+
+/***/ 256:
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 828:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14484,21 +14499,6 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
 //# 
 
 
-/***/ }),
-
-/***/ 254:
-/***/ ((module) => {
-
-"use strict";
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ }),
-
-/***/ 256:
-/***/ (() => {
-
-/* (ignored) */
-
 /***/ })
 
 /******/ 	});
@@ -14747,7 +14747,7 @@ function X3DFontStyleNode (executionContext)
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",          new (external_X_ITE_X3D_Fields_default()).SFString (),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  this ._family,
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true),
-                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600));
 
    this ._family .setName ("family");
@@ -16083,7 +16083,7 @@ const FontStyle_default_ = FontStyle;
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
 ;// ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(787);
+/* provided dependency */ var opentype = __webpack_require__(828);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

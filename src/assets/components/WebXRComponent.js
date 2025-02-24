@@ -45,41 +45,18 @@
  *
  ******************************************************************************/
 
-import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Components      from "../../x_ite/Components.js";
+import X3DWebXRContext from "../../x_ite/Browser/WebXR/X3DWebXRContext.js";
 
-function PointingDeviceSensorContainer (node, modelViewMatrix, projectionMatrix, viewport)
-{
-   this .node             = null;
-   this .modelViewMatrix  = new Matrix4 ();
-   this .projectionMatrix = new Matrix4 ();
-   this .viewport         = new Vector4 ();
-
-   this .set (node, modelViewMatrix, projectionMatrix, viewport);
-}
-
-Object .assign (PointingDeviceSensorContainer .prototype,
-{
-   set (node, modelViewMatrix, projectionMatrix, viewport)
-   {
-      this .node = node;
-
-      this .modelViewMatrix  .assign (modelViewMatrix);
-      this .projectionMatrix .assign (projectionMatrix);
-      this .viewport         .assign (viewport);
-   },
-   set_over__ (over, hit)
-   {
-      this .node .set_over__ (over, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
-   },
-   set_active__ (active, hit)
-   {
-      this .node .set_active__ (active, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
-   },
-   set_motion__ (hit)
-   {
-      this .node .set_motion__ (hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
-   },
+Components .add ({
+   name: "WebXR",
+   concreteNodes:
+   [
+   ],
+   abstractNodes:
+   [
+   ],
+   browserContext: X3DWebXRContext,
 });
 
-export default PointingDeviceSensorContainer;
+export default undefined;

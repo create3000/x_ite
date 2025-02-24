@@ -63,9 +63,9 @@ import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js"
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 const
-   screenLine     = new Line2 (Vector2 .Zero, Vector2 .Zero),
+   screenLine     = new Line2 (),
    trackPoint1    = new Vector2 (),
-   trackPointLine = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   trackPointLine = new Line3 ();
 
 function PlaneSensor (executionContext)
 {
@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
    activate (hit)
    {
       const
-         hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay   = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
 
       const axisRotation = this ._axisRotation .getValue ();
@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
          if (this .planeSensor)
          {
             const
-               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+               hitRay   = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
                endPoint = new Vector3 ();
 
             if (this .plane .intersectsLine (hitRay, endPoint))

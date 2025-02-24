@@ -134,7 +134,9 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/screenshot.png" alt="CollisionCollection"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/CollisionCollection.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d)

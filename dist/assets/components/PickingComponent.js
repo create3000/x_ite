@@ -1,5 +1,5 @@
-/* X_ITE v11.1.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
+/* X_ITE v11.2.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -817,7 +817,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
          matrix                  = new (external_X_ITE_X3D_Matrix4_default()) (),
          point1                  = new (external_X_ITE_X3D_Vector3_default()) (),
          point2                  = new (external_X_ITE_X3D_Vector3_default()) (),
-         line                    = new (external_X_ITE_X3D_Line3_default()) ((external_X_ITE_X3D_Vector3_default()).Zero, (external_X_ITE_X3D_Vector3_default()).zAxis),
+         line                    = new (external_X_ITE_X3D_Line3_default()) (),
          a                       = new (external_X_ITE_X3D_Vector3_default()) (),
          b                       = new (external_X_ITE_X3D_Vector3_default()) (),
          clipPlanes              = [ ],

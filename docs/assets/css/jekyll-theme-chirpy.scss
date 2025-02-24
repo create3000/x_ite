@@ -211,6 +211,15 @@ html {
   margin-bottom: .5rem;
 }
 
+.content a:has(> .example-icon),
+.content a:has(> .example-icon):hover {
+  border-bottom: none;
+}
+
+.content .example-icon {
+  margin: 0 0.2rem;
+}
+
 .post-tail-wrapper .nav-wrapper {
   border: 1px solid var(--nav-border-color);
   border-radius: 10px;
@@ -514,6 +523,10 @@ select.select option {
 
 .table-wrapper > table.examples a.img-link {
   display: block;
+}
+
+.table-wrapper > table.examples a.img-link:hover {
+  outline: 1px solid #d2603a;
 }
 
 .table-wrapper > table.examples a.popup {

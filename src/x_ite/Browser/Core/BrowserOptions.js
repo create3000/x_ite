@@ -133,15 +133,13 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "TextCompression",
          "ToneMapping",
          "XRButton",
-         "XRMovementControl",
          "XRSessionMode",
       ]);
 
       const mappings = new Map ([
-         ["AutoUpdate",        "update"],
-         ["XRButton",          "xrButton"],
-         ["XRMovementControl", "xrMovementControl"],
-         ["XRSessionMode",     "xrSessionMode"],
+         ["AutoUpdate",    "update"],
+         ["XRButton",      "xrButton"],
+         ["XRSessionMode", "xrSessionMode"],
       ]);
 
       const restorable = new Set ([
@@ -290,6 +288,12 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
          .join (" ");
 
+      $(window)   .off (windowEvents);
+      $(document) .off (documentEvents);
+
+      if (!autoUpdate .getValue ())
+         return;
+
       const
          browser = this .getBrowser (),
          element = browser .getElement ();
@@ -308,8 +312,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          }
       };
 
-      $(window)   .off (windowEvents)   .on (windowEvents,   checkUpdate);
-      $(document) .off (documentEvents) .on (documentEvents, checkUpdate);
+      $(window)   .on (windowEvents,   checkUpdate);
+      $(document) .on (documentEvents, checkUpdate);
 
       checkUpdate ();
    },
@@ -420,7 +424,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "ContentScale",                 new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ContextMenu",                  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Debug",                        new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "Exposure",                     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Exposure",                     new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                      new Fields .SFDouble (9.80665)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "LoadUrlObjects",               new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer",       new Fields .SFBool ()),
@@ -434,7 +438,6 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ToneMapping",                  new Fields .SFString ("NONE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "XRButton",                     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "XRMovementControl",            new Fields .SFString ("VIEWER_POSE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "XRSessionMode",                new Fields .SFString ("IMMERSIVE_VR")),
       ]),
       enumerable: true,

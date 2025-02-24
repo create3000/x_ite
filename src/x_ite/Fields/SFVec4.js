@@ -56,7 +56,7 @@ function SFVec4Template (TypeName, double)
       switch (arguments .length)
       {
          case 0:
-            X3DField .call (this, new Vector4 ());
+            X3DField .call (this, new Vector4 (0, 0, 0, 1));
             break;
 
          case 1:
@@ -72,7 +72,13 @@ function SFVec4Template (TypeName, double)
       }
    }
 
-   return SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double);
+   return SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double,
+   {
+      isDefaultValue ()
+      {
+         return this .getValue () .equals (Vector4 .wAxis);
+      },
+   });
 }
 
 const SFVec4 = {

@@ -153,14 +153,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       return this .groupNodes .getBBox (bbox, shadows);
    },
-   isActive ()
-   {
-      return this .active;
-   },
-   setActive (value)
-   {
-      this .active = value;
-   },
    isLayer0 ()
    {
       return this .layer0;
@@ -296,61 +288,113 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       if (viewpointNode ._viewAll .getValue ())
          viewpointNode .viewAll (this .getBBox (new Box3 ()));
    },
-   traverse (type, renderObject = this)
+   traverse: (function ()
    {
-      const
-         browser       = this .getBrowser (),
-         viewpointNode = this .getViewpoint (),
-         pose          = browser .getPose ();
+      const projectionMatrix = new Matrix4 ();
 
-      if (pose && this .active)
+      return function (type, renderObject = this)
       {
-         this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
+         const
+            browser       = this .getBrowser (),
+            viewpointNode = this .getViewpoint (),
+            pose          = browser .getPose ();
 
-         if (browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
+         if (pose ?.views .length)
          {
-            this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
-            this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+            switch (type)
+            {
+               case TraverseType .POINTER:
+               {
+                  const
+                     navigationInfoNode = this .getNavigationInfo (),
+                     farValue           = viewpointNode .getFarDistance (navigationInfoNode),
+                     inputSource        = browser .getPointingInputSource ();
+
+                  Camera .ortho (-1, 1, -1, 1, 0, farValue, projectionMatrix);
+
+                  this .getProjectionMatrix ()  .push (projectionMatrix);
+                  this .getCameraSpaceMatrix () .push (inputSource .matrix);
+                  this .getViewMatrix ()        .push (inputSource .inverse);
+
+                  if (this !== browser .getActiveLayer ())
+                  {
+                     // Remove pose effect from matrices here.
+                     this .getCameraSpaceMatrix () .multRight (pose .viewMatrix);
+                     this .getViewMatrix ()        .multLeft  (pose .cameraSpaceMatrix);
+                  }
+
+                  this .getCameraSpaceMatrix () .multRight (viewpointNode .getCameraSpaceMatrix ());
+                  this .getViewMatrix ()        .multLeft  (viewpointNode .getViewMatrix ());
+                  break;
+               }
+               case TraverseType .COLLISION:
+               {
+                  // This projection matrix will change later before rendering.
+                  this .getProjectionMatrix ()  .push (pose .views [0] .projectionMatrix);
+                  this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+                  this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+                  break;
+               }
+               default:
+               {
+                  // This projection matrix will change later before rendering.
+                  this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
+
+                  if (this === browser .getActiveLayer ())
+                  {
+                     this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
+                     this .getViewMatrix ()        .push (pose .viewMatrix);
+
+                     this .getCameraSpaceMatrix () .multRight (viewpointNode .getCameraSpaceMatrix ());
+                     this .getViewMatrix ()        .multLeft  (viewpointNode .getViewMatrix ());
+                  }
+                  else
+                  {
+                     this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+                     this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+                  }
+
+                  break;
+               }
+            }
          }
          else
          {
-            this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
-            this .getViewMatrix ()        .push (pose .viewMatrix);
+            this .getProjectionMatrix ()  .push (viewpointNode .getProjectionMatrix (this));
+            this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+            this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
          }
-      }
-      else
-      {
-         this .getProjectionMatrix ()  .push (viewpointNode .getProjectionMatrix (this));
-         this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
-         this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
-      }
 
-      switch (type)
-      {
-         case TraverseType .POINTER:
-            this .pointer (type, renderObject);
-            break;
-         case TraverseType .CAMERA:
-            this .camera (type, renderObject);
-            break;
-         case TraverseType .PICKING:
-            this .picking (type, renderObject);
-            break;
-         case TraverseType .COLLISION:
-            this .collision (type, renderObject);
-            break;
-         case TraverseType .SHADOW:
-         case TraverseType .DISPLAY:
-            this .display (type, renderObject);
-            break;
-      }
+         switch (type)
+         {
+            case TraverseType .POINTER:
+               this .pointer (type, renderObject);
+               break;
+            case TraverseType .CAMERA:
+               this .camera (type, renderObject);
+               break;
+            case TraverseType .PICKING:
+               this .picking (type, renderObject);
+               break;
+            case TraverseType .COLLISION:
+               this .collision (type, renderObject);
+               break;
+            case TraverseType .SHADOW:
+            case TraverseType .DISPLAY:
+               this .display (type, renderObject);
+               break;
+         }
 
-      this .getViewMatrix ()        .pop ();
-      this .getCameraSpaceMatrix () .pop ();
-      this .getProjectionMatrix ()  .pop ();
-   },
+         this .getViewMatrix ()        .pop ();
+         this .getCameraSpaceMatrix () .pop ();
+         this .getProjectionMatrix ()  .pop ();
+      };
+   })(),
    pointer (type, renderObject)
    {
+      if (!this ._pointerEvents .getValue ())
+         return;
+
       const
          browser  = this .getBrowser (),
          viewport = this .viewportNode .getRectangle ();
@@ -412,14 +456,14 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
       return function (type, renderObject)
       {
-         const navigationInfo = this .getNavigationInfo ();
+         const navigationInfoNode = this .getNavigationInfo ();
 
-         if (navigationInfo ._transitionActive .getValue ())
+         if (navigationInfoNode ._transitionActive .getValue ())
             return;
 
          const
-            collisionRadius = navigationInfo .getCollisionRadius (),
-            avatarHeight    = navigationInfo .getAvatarHeight (),
+            collisionRadius = navigationInfoNode .getCollisionRadius (),
+            avatarHeight    = navigationInfoNode .getAvatarHeight (),
             size            = Math .max (collisionRadius * 2, avatarHeight * 2);
 
          Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);

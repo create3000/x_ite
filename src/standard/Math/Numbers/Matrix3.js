@@ -345,6 +345,8 @@ Object .assign (Matrix3 .prototype,
    },
    inverse ()
    {
+      // Complexity 2 +, 16 -, 33 *, 1 /.
+
       const
          { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this,
          t4  = m0 * m4,
@@ -382,6 +384,8 @@ Object .assign (Matrix3 .prototype,
    },
    multLeft (matrix)
    {
+      // Complexity 18 +, 27 *.
+
       const
          { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
          { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
@@ -400,6 +404,8 @@ Object .assign (Matrix3 .prototype,
    },
    multRight (matrix)
    {
+      // Complexity 18 +, 27 *.
+
       const
          { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
          { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;

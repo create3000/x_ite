@@ -63,8 +63,6 @@ function NurbsOrientationInterpolator (executionContext)
 
    this .addType (X3DConstants .NurbsOrientationInterpolator);
 
-   this .addChildObjects (X3DConstants .inputOutput, "rebuild", new Fields .SFTime ());
-
    this .geometry = new NurbsCurve (executionContext);
 }
 

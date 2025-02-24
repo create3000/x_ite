@@ -76,9 +76,10 @@ function X3DRenderObject (executionContext)
    this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
    this .viewportArray            = new Int32Array (4);
    this .projectionMatrixArray    = new Float32Array (16);
+   this .eyeMatrixArray           = new Float32Array (16);
    this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
-   this .hitRay                   = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   this .hitRay                   = new Line3 ();
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
    this .lights                   = [ ];
@@ -120,6 +121,7 @@ Object .assign (X3DRenderObject .prototype,
       const browser = this .getBrowser ();
 
       browser .getRenderingProperties () ._LogarithmicDepthBuffer  .addInterest ("set_renderKey__", this);
+      browser .getRenderingProperties () ._XRSession               .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._ColorSpace                   .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._OrderIndependentTransparency .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._ToneMapping                  .addInterest ("set_renderKey__", this);
@@ -146,8 +148,9 @@ Object .assign (X3DRenderObject .prototype,
 
       let renderKey = "";
 
-      renderKey += this .logarithmicDepthBuffer       ? 1 : 0;
-      renderKey += this .orderIndependentTransparency ? 1 : 0;
+      renderKey += browser .getRenderingProperty ("XRSession") ? 1 : 0;
+      renderKey += this .logarithmicDepthBuffer                ? 1 : 0;
+      renderKey += this .orderIndependentTransparency          ? 1 : 0;
 
       switch (browser .getBrowserOption ("ColorSpace"))
       {
@@ -213,9 +216,9 @@ Object .assign (X3DRenderObject .prototype,
          this .renderCount = ++ renderCount;
       }
    })(),
-   getFrameBuffers ()
+   getFramebuffers ()
    {
-      return this .getBrowser () .getFrameBuffers ();
+      return this .getBrowser () .getFramebuffers ();
    },
    getView ()
    {
@@ -256,6 +259,10 @@ Object .assign (X3DRenderObject .prototype,
    getProjectionMatrixArray ()
    {
       return this .projectionMatrixArray;
+   },
+   getEyeMatrixArray ()
+   {
+      return this .eyeMatrixArray;
    },
    getViewMatrixArray ()
    {
@@ -487,12 +494,12 @@ Object .assign (X3DRenderObject .prototype,
          this .collisionTime .start ();
 
          const
-            viewpoint       = this .getViewpoint (),
-            navigationInfo  = this .getNavigationInfo (),
-            collisionRadius = navigationInfo .getCollisionRadius (),
-            bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
-            nearValue       = navigationInfo .getNearValue (),
-            avatarHeight    = navigationInfo .getAvatarHeight ();
+            navigationInfoNode = this .getNavigationInfo (),
+            viewpointNode      = this .getViewpoint (),
+            collisionRadius    = navigationInfoNode .getCollisionRadius (),
+            bottom             = navigationInfoNode .getStepHeight () - navigationInfoNode .getAvatarHeight (),
+            nearValue          = viewpointNode .getNearDistance (navigationInfoNode),
+            avatarHeight       = navigationInfoNode .getAvatarHeight ();
 
          // Determine width and height of camera
 
@@ -508,17 +515,24 @@ Object .assign (X3DRenderObject .prototype,
 
          // Translate camera to user position and to look in the direction of the direction.
 
-         localOrientation .assign (viewpoint ._orientation .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
-         rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
-         viewpoint .straightenHorizon (rotation);
+         localOrientation
+            .assign (viewpointNode ._orientation .getValue ())
+            .inverse ()
+            .multRight (viewpointNode .getOrientation ());
 
-         cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-         cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-         cameraSpaceProjectionMatrix .rotate (rotation);
-         cameraSpaceProjectionMatrix .inverse ();
+         rotation
+            .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ())
+            .multRight (localOrientation);
 
-         cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-         cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+         viewpointNode .straightenHorizon (rotation);
+
+         cameraSpaceProjectionMatrix
+            .assign (viewpointNode .getModelMatrix ())
+            .translate (viewpointNode .getUserPosition ())
+            .rotate (rotation)
+            .inverse ()
+            .multRight (projectionMatrix)
+            .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
@@ -536,7 +550,7 @@ Object .assign (X3DRenderObject .prototype,
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
          depthBufferViewVolume = new ViewVolume ();
 
-      depthBufferViewVolume .set (Matrix4 .Identity, depthBufferViewport, depthBufferViewport);
+      depthBufferViewVolume .set (Matrix4 .Identity, depthBufferViewport);
 
       return function (projectionMatrix)
       {
@@ -628,6 +642,7 @@ Object .assign (X3DRenderObject .prototype,
                this .pointingShapes .push ({
                   renderObject: this,
                   modelViewMatrix: new Float32Array (16),
+                  viewport: new Vector4 (),
                   clipPlanes: [ ],
                   sensors: [ ],
                });
@@ -636,9 +651,9 @@ Object .assign (X3DRenderObject .prototype,
             const pointingContext = this .pointingShapes [num];
 
             pointingContext .modelViewMatrix .set (modelViewMatrix);
-            pointingContext .scissor      = viewVolume .getScissor ();
-            pointingContext .hAnimNode    = this .hAnimNode .at (-1);
-            pointingContext .shapeNode    = shapeNode;
+            pointingContext .viewport .assign (viewVolume .getViewport ());
+            pointingContext .hAnimNode = this .hAnimNode .at (-1);
+            pointingContext .shapeNode = shapeNode;
 
             // Clip planes & sensors
 
@@ -686,7 +701,6 @@ Object .assign (X3DRenderObject .prototype,
 
             collisionContext .modelViewMatrix .set (modelViewMatrix);
             collisionContext .shapeNode = shapeNode;
-            collisionContext .scissor   = viewVolume .getScissor ();
 
             // Collisions
 
@@ -728,6 +742,7 @@ Object .assign (X3DRenderObject .prototype,
                this .shadowShapes .push ({
                   renderObject: this,
                   modelViewMatrix: new Float32Array (16),
+                  viewport: new Vector4 (),
                   clipPlanes: [ ]
                });
             }
@@ -735,9 +750,9 @@ Object .assign (X3DRenderObject .prototype,
             const depthContext = this .shadowShapes [num];
 
             depthContext .modelViewMatrix .set (modelViewMatrix);
-            depthContext .scissor      = viewVolume .getScissor ();
-            depthContext .hAnimNode    = this .hAnimNode .at (-1);
-            depthContext .shapeNode    = shapeNode;
+            depthContext .viewport .assign (viewVolume .getViewport ());
+            depthContext .hAnimNode = this .hAnimNode .at (-1);
+            depthContext .shapeNode = shapeNode;
 
             // Clip planes
 
@@ -792,7 +807,7 @@ Object .assign (X3DRenderObject .prototype,
             this .transmission ||= shapeNode .isTransmission ();
 
             renderContext .modelViewMatrix .set (modelViewMatrix);
-            renderContext .scissor .assign (viewVolume .getScissor ());
+            renderContext .viewport .assign (viewVolume .getViewport ());
             renderContext .shadows        = this .localShadows .at (-1);
             renderContext .fogNode        = this .localFogs .at (-1);
             renderContext .hAnimNode      = this .hAnimNode .at (-1);
@@ -816,7 +831,7 @@ Object .assign (X3DRenderObject .prototype,
          renderObject: this,
          transparent: transparent,
          modelViewMatrix: new Float32Array (16),
-         scissor: new Vector4 (),
+         viewport: new Vector4 (),
          localObjects: [ ],
          localObjectsKeys: [ ], // [clip planes, lights]
       };
@@ -837,17 +852,17 @@ Object .assign (X3DRenderObject .prototype,
 
          projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
-         // Configure viewport and background
+         // Configure viewport and background.
 
-         gl .viewport (viewport [0] - x,
-                       viewport [1] - y,
-                       viewport [2],
-                       viewport [3]);
+         gl .viewport (viewport .x - x,
+                       viewport .y - y,
+                       viewport .z,
+                       viewport .w);
 
          gl .scissor (0, 0, 1, 1);
          gl .clear (gl .DEPTH_BUFFER_BIT);
 
-         // Render all objects
+         // Render all objects.
 
          gl .disable (gl .CULL_FACE);
 
@@ -855,7 +870,7 @@ Object .assign (X3DRenderObject .prototype,
          {
             const
                renderContext       = shapes [s],
-               { scissor, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
+               { modelViewMatrix, viewport, shapeNode, hAnimNode, clipPlanes } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                depthModeNode       = appearanceNode .getDepthMode (),
@@ -863,12 +878,12 @@ Object .assign (X3DRenderObject .prototype,
                shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, hAnimNode),
                id                  = browser .addPointingShape (renderContext);
 
-            gl .scissor (scissor .x - x,
-                         scissor .y - y,
-                         scissor .z,
-                         scissor .w);
+            gl .viewport (viewport .x - x,
+                          viewport .y - y,
+                          viewport .z,
+                          viewport .w);
 
-            // Draw
+            // Draw shape.
 
             shaderNode .enable (gl);
             shaderNode .setClipPlanes (gl, clipPlanes);
@@ -972,12 +987,12 @@ Object .assign (X3DRenderObject .prototype,
          // Get NavigationInfo values.
 
          const
-            navigationInfo  = this .getNavigationInfo (),
-            viewpoint       = this .getViewpoint (),
-            collisionRadius = navigationInfo .getCollisionRadius (),
-            nearValue       = navigationInfo .getNearValue (),
-            avatarHeight    = navigationInfo .getAvatarHeight (),
-            stepHeight      = navigationInfo .getStepHeight ();
+            navigationInfoNode = this .getNavigationInfo (),
+            viewpointNode      = this .getViewpoint (),
+            collisionRadius    = navigationInfoNode .getCollisionRadius (),
+            avatarHeight       = navigationInfoNode .getAvatarHeight (),
+            stepHeight         = navigationInfoNode .getStepHeight (),
+            nearValue          = viewpointNode .getNearDistance (navigationInfoNode);
 
          // Reshape viewpoint for gravitate.
 
@@ -992,16 +1007,16 @@ Object .assign (X3DRenderObject .prototype,
          // Transform viewpoint to look down the up vector.
 
          const
-            upVector = viewpoint .getUpVector (),
+            upVector = viewpointNode .getUpVector (),
             down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
 
-         cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-         cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-         cameraSpaceProjectionMatrix .rotate (down);
-         cameraSpaceProjectionMatrix .inverse ();
-
-         cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-         cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+         cameraSpaceProjectionMatrix
+            .assign (viewpointNode .getModelMatrix ())
+            .translate (viewpointNode .getUserPosition ())
+            .rotate (down)
+            .inverse ()
+            .multRight (projectionMatrix)
+            .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
@@ -1032,7 +1047,7 @@ Object .assign (X3DRenderObject .prototype,
                this .speed = 0;
             }
 
-            viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
+            viewpointNode ._positionOffset = viewpointNode ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
          }
          else
          {
@@ -1059,7 +1074,7 @@ Object .assign (X3DRenderObject .prototype,
                //   getViewpoint () -> positionOffset () += offset;
                //}
                //else
-                  viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
+                  viewpointNode ._positionOffset = translation .add (viewpointNode ._positionOffset .getValue ());
             }
          }
       };
@@ -1095,13 +1110,13 @@ Object .assign (X3DRenderObject .prototype,
          {
             const
                renderContext       = shapes [s],
-               { scissor, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
+               { clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
                shaderNode          = browser .getDepthShader (clipPlanes .length, shapeNode, hAnimNode);
 
-            gl .scissor (... scissor);
+            // Cannot change viewport here, because the viewport is special here.
 
             // Draw
 
@@ -1125,8 +1140,9 @@ Object .assign (X3DRenderObject .prototype,
          independent              = this .isIndependent (),
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
-         frameBuffers             = this .getFrameBuffers (),
-         numFrameBuffers          = frameBuffers .length,
+         pose                     = browser .getPose (),
+         framebuffers             = this .getFramebuffers (),
+         numFramebuffers          = framebuffers .length,
          viewport                 = this .viewVolumes .at (-1) .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
@@ -1137,14 +1153,20 @@ Object .assign (X3DRenderObject .prototype,
 
       // PREPARATIONS
 
+      // Set matrices.
+
+      this .viewportArray          .set (viewport);
+      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+
       if (independent)
       {
-         // Render shadow maps.
+         // Render shadow maps and prepare texture projectors.
 
          for (const light of lights)
             light .renderShadowMap (this);
 
-         // Render GeneratedCubeMapTextures.
+         // Render GeneratedCubeMapTexture nodes.
 
          for (const generatedCubeMapTexture of generatedCubeMapTextures)
             generatedCubeMapTexture .renderTexture (this);
@@ -1155,44 +1177,30 @@ Object .assign (X3DRenderObject .prototype,
 
       // DRAW
 
-      for (let i = 0; i < numFrameBuffers; ++ i)
+      // Draw to all framebuffers.
+
+      const transmission = this .transmission;
+
+      for (let i = 0; i < numFramebuffers; ++ i)
       {
-         const frameBuffer = frameBuffers [i];
+         const frameBuffer = framebuffers [i];
 
-         // XR support
+         // Set matrices with XR support.
 
-         this .view = browser .getPose () ?.views [i];
+         const view = this .view = pose ?.views [i];
 
-         // Set global uniforms.
-
-         this .viewportArray .set (viewport);
-
-         if (this .view && this .isActive ())
+         if (view)
          {
-            this .projectionMatrixArray  .set (this .view .projectionMatrix);
-
-            if (browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
-            {
-               this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-               this .viewMatrixArray        .set (this .getViewMatrix () .get ());
-
-               Matrix4 .prototype .multLeft  (this .cameraSpaceMatrixArray, this .view .inverse);
-               Matrix4 .prototype .multRight (this .viewMatrixArray,        this .view .matrix);
-            }
-            else
-            {
-               this .cameraSpaceMatrixArray .set (this .view .cameraSpaceMatrix);
-               this .viewMatrixArray        .set (this .view .viewMatrix);
-            }
+            this .projectionMatrixArray .set (view .projectionMatrix);
+            this .eyeMatrixArray        .set (view .matrix);
          }
          else
          {
-            this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
-            this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-            this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+            this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+            this .eyeMatrixArray        .set (Matrix4 .Identity);
          }
 
-         // Set up shadow matrix for all lights, and matrix for all projective textures.
+         // Set up shadow matrix for all lights, and matrices for all projective textures.
 
          if (headlight)
             browser .getHeadlight () .setGlobalVariables (this);
@@ -1200,11 +1208,11 @@ Object .assign (X3DRenderObject .prototype,
          for (const light of lights)
             light .setGlobalVariables (this);
 
-         // Draw shapes.
+         // Render to transmission buffer.
 
-         if (independent && this .transmission)
+         if (independent && transmission)
          {
-            // Render to transmission buffer.
+            this .transmission = true;
 
             const transmissionBuffer = browser .getTransmissionBuffer ();
 
@@ -1220,6 +1228,8 @@ Object .assign (X3DRenderObject .prototype,
 
          this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
       }
+
+      this .view = null;
 
       // POST DRAW
 
@@ -1250,6 +1260,8 @@ Object .assign (X3DRenderObject .prototype,
    },
    drawShapes (gl, browser, frameBuffer, clearBits, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
    {
+      this .advanceRenderCount ();
+
       frameBuffer .bind ();
 
       // Configure viewport and background
@@ -1259,31 +1271,26 @@ Object .assign (X3DRenderObject .prototype,
 
       // Draw background.
 
-      this .advanceRenderCount ();
-
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .DEPTH_BUFFER_BIT | clearBits);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
       this .getBackground () .display (gl, this);
 
-      // Sorted blend or order independent transparency
-
-      this .advanceRenderCount ();
-
-      // Render opaque objects first
+      // Use sorted blend or order independent transparency.
+      // Render opaque objects first.
 
       for (let i = 0; i < numOpaqueShapes; ++ i)
       {
          const renderContext = opaqueShapes [i];
 
-         gl .scissor (... renderContext .scissor);
+         gl .viewport (... renderContext .viewport);
 
          renderContext .shapeNode .display (gl, renderContext);
          browser .resetTextureUnits ();
       }
 
-      // Render transparent objects
+      // Render transparent objects.
 
       if (oit)
          frameBuffer .bindTransparency ();
@@ -1297,7 +1304,7 @@ Object .assign (X3DRenderObject .prototype,
       {
          const renderContext = transparentShapes [i];
 
-         gl .scissor (... renderContext .scissor);
+         gl .viewport (... renderContext .viewport);
 
          renderContext .shapeNode .display (gl, renderContext);
          browser .resetTextureUnits ();

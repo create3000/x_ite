@@ -146,19 +146,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          browser = this .getBrowser (),
          options = [ ];
 
-      options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
-
-      if (geometryContext .hasFogCoords)
-         options .push ("X3D_FOG_COORDS");
-
-      if (geometryContext .colorMaterial)
-         options .push ("X3D_COLOR_MATERIAL");
-
-      if (geometryContext .hasNormals)
-         options .push ("X3D_NORMALS");
-
-      if (geometryContext .hasTangents)
-         options .push ("X3D_TANGENTS");
+      if (browser .getRenderingProperty ("XRSession"))
+         options .push ("X3D_XR_SESSION");
 
       switch (browser .getBrowserOption ("ColorSpace"))
       {
@@ -184,6 +173,20 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
             break;
       }
+
+      options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
+
+      if (geometryContext .hasFogCoords)
+         options .push ("X3D_FOG_COORDS");
+
+      if (geometryContext .colorMaterial)
+         options .push ("X3D_COLOR_MATERIAL");
+
+      if (geometryContext .hasNormals)
+         options .push ("X3D_NORMALS");
+
+      if (geometryContext .hasTangents)
+         options .push ("X3D_TANGENTS");
 
       if (renderContext)
       {

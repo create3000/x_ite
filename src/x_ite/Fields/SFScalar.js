@@ -79,13 +79,13 @@ function SFBoolTemplate (TypeName)
    });
 }
 
-function SFNumberTemplate (TypeName, double)
+function SFNumberTemplate (TypeName, double, defaultValue)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
    function SFNumber (value)
    {
-      X3DField .call (this, arguments .length ? +value : 0);
+      X3DField .call (this, arguments .length ? +value : defaultValue);
    }
 
    return SFScalarPrototypeTemplate (SFNumber, TypeName,
@@ -246,11 +246,11 @@ function SFScalarPrototypeTemplate (Constructor, TypeName, properties = { })
 
 const SFScalar = {
    SFBool:   SFBoolTemplate   ("SFBool"),
-   SFDouble: SFNumberTemplate ("SFDouble", true),
-   SFFloat:  SFNumberTemplate ("SFFloat",  false),
+   SFDouble: SFNumberTemplate ("SFDouble", true,  0),
+   SFFloat:  SFNumberTemplate ("SFFloat",  false, 0),
    SFInt32:  SFInt32Template  ("SFInt32"),
    SFString: SFStringTemplate ("SFString"),
-   SFTime:   SFNumberTemplate ("SFTime",   true),
+   SFTime:   SFNumberTemplate ("SFTime",   true, -1),
 };
 
 export default SFScalar;

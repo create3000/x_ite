@@ -62,8 +62,8 @@ function HAnimSegment (executionContext)
 
    this .addType (X3DConstants .HAnimSegment);
 
-   this .addChildObjects (X3DConstants .inputOutput, "displacementsTexture",       new Fields .SFTime (),
-                          X3DConstants .inputOutput, "displacementWeightsTexture", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "displacementsTexture",       new Fields .SFTime (),
+                          X3DConstants .outputOnly, "displacementWeightsTexture", new Fields .SFTime ());
 
    // Units
 

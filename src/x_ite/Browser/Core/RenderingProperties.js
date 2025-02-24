@@ -50,6 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DBaseNode          from "../../Base/X3DBaseNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function RenderingProperties (executionContext)
 {
@@ -98,6 +99,7 @@ Object .defineProperties (RenderingProperties,
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxAnisotropicDegree",   new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxSamples",             new Fields .SFInt32 (0)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "Multisampling",          new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "XRSession",              new Fields .SFBool ()),
       ]),
       enumerable: true,
    }

@@ -62,7 +62,7 @@ Specifies algorithm for rate of increasing [Fog](/x_ite/components/environmental
 - Match [Background](/x_ite/components/environmentaleffects/background/) *color* to make objects fade away.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
-### SFFloat [in, out] **visibilityOffset** 0 <small>[0,∞)</small> <small class="blue">non standard</small>
+### SFFloat [in, out] **visibilityStart** 0 <small>[0,∞)</small> <small class="blue">non standard</small>
 
 Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
 
@@ -88,7 +88,9 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 ## Example
 
-<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/LocalFog.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/LocalFog.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/screenshot.png" alt="LocalFog"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/LocalFog.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/LocalFog.x3d)

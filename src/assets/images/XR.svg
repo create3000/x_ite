@@ -58,6 +58,24 @@
        gridanglez="30"
        visible="true" />
   </sodipodi:namedview>
+  <style>
+#path3 {
+  fill: #FF0000;
+  animation: fill 12s alternate infinite linear;
+}
+
+@keyframes fill {
+   0% {
+      fill: #ffe32d;
+   }
+   50% {
+      fill: #ff9f2e;
+   }
+   100% {
+      fill: #d71f1f;
+   }
+}
+  </style>
   <defs
      id="defs1" />
   <g

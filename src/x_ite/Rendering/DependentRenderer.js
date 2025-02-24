@@ -56,7 +56,7 @@ function DependentRenderer (executionContext, renderObject, node)
 
    this .renderObject = renderObject;
    this .node         = node;
-   this .frameBuffers = [ ];
+   this .framebuffers = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNode .prototype),
@@ -68,10 +68,6 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
       X3DRenderObject .prototype .initialize .call (this);
    },
    isIndependent ()
-   {
-      return false;
-   },
-   isActive ()
    {
       return false;
    },
@@ -107,13 +103,13 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    {
       return this .renderObject .getLights () [this .lightIndex ++];
    },
-   getFrameBuffers ()
+   getFramebuffers ()
    {
-      return this .frameBuffers;
+      return this .framebuffers;
    },
-   setFrameBuffer (frameBuffer)
+   setFramebuffer (frameBuffer)
    {
-      this .frameBuffers [0] = frameBuffer;
+      this .framebuffers [0] = frameBuffer;
    },
    render (type, callback, group)
    {

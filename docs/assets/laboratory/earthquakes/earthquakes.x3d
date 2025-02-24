@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='EnvironmentalSensor' level='3'/>
     <component name='Geometry2D' level='2'/>
@@ -9,8 +9,8 @@
     <component name='Layout' level='2'/>
     <meta name='created' content='Tue, 09 Jul 2019 09:37:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 23 Jun 2024 22:36:23 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.49, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Tue, 04 Feb 2025 15:19:17 GMT'/>
   </head>
   <Scene>
     <WorldInfo/>
@@ -26,7 +26,7 @@
               <UnlitMaterial
                   emissiveColor='0.7372549 0.7372549 0.7372549'/>
               <ImageTexture
-                  url='"assets/17345.jpg"'/>
+                  url='"assets/17345.avif", "assets/17345.jpg"'/>
             </Appearance>
             <Rectangle2D
                 size='2 1'/>
@@ -55,7 +55,7 @@
                   roughness='0.5107484'
                   normalScale='0.7'>
                 <ImageTexture containerField='baseTexture'
-                    url='"assets/Surface.mat_baseColor.jpeg"'
+                    url='"assets/Surface.mat_baseColor.avif", "assets/Surface.mat_baseColor.jpeg"'
                     colorSpaceConversion='false'>
                   <TextureProperties DEF='_1'
                       anisotropicDegree='16'
@@ -64,7 +64,7 @@
                       magnificationFilter='AVG_PIXEL'/>
                 </ImageTexture>
                 <ImageTexture containerField='normalTexture'
-                    url='"assets/Surface.mat_normal.jpeg"'
+                    url='"assets/Surface.mat_normal.avif", "assets/Surface.mat_normal.jpeg"'
                     colorSpaceConversion='false'>
                   <TextureProperties USE='_1'/>
                 </ImageTexture>
@@ -232,7 +232,7 @@
               <Shape>
                 <Appearance>
                   <ImageTexture
-                      url='"assets/loading.png"'>
+                      url='"assets/loading.avif", "assets/loading.png"'>
                     <TextureProperties
                         generateMipMaps='true'
                         minificationFilter='NICEST'

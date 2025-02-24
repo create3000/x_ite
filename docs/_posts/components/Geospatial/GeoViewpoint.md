@@ -207,7 +207,9 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/GeoViewpoint.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/GeoViewpoint.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/screenshot.png" alt="GeoViewpoint"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/GeoViewpoint.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/GeoViewpoint.x3d)

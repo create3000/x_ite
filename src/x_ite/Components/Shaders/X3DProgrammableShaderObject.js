@@ -148,10 +148,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (let i = 0; i < maxClipPlanes; ++ i)
          this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
 
-      this .x3d_FogColor            = this .getUniformLocation (gl, program, "x3d_Fog.color",            "x3d_FogColor");
-      this .x3d_FogVisibilityOffset = this .getUniformLocation (gl, program, "x3d_Fog.visibilityOffset", "x3d_FogVisibilityOffset");
-      this .x3d_FogVisibilityRange  = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange",  "x3d_FogVisibilityRange");
-      this .x3d_FogMatrix           = this .getUniformLocation (gl, program, "x3d_Fog.matrix",           "x3d_FogMatrix");
+      this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
+      this .x3d_FogVisibilityStart = this .getUniformLocation (gl, program, "x3d_Fog.visibilityStart", "x3d_FogVisibilityStart");
+      this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
+      this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
 
       this .x3d_PointPropertiesPointSizeScaleFactor = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeScaleFactor");
       this .x3d_PointPropertiesPointSizeMinValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMinValue");
@@ -221,6 +221,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_Viewport",
          "x3d_ProjectionMatrix",
          "x3d_ModelViewMatrix",
+         "x3d_EyeMatrix",
          "x3d_NormalMatrix",
          "x3d_ViewMatrix",
          "x3d_CameraSpaceMatrix",
@@ -1028,18 +1029,16 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       return false;
    },
-   setClipPlanes (gl, clipPlanes)
+   setClipPlanes (gl, clipPlanes, renderObject)
    {
       this .numClipPlanes = 0;
 
       for (const clipPlane of clipPlanes)
-         clipPlane .setShaderUniforms (gl, this);
+         clipPlane .setShaderUniforms (gl, this, renderObject);
    },
    setUniforms: (() =>
    {
-      const
-         xrModelViewMatrix = new Float32Array (16),
-         normalMatrix      = new Float32Array (9);
+      const normalMatrix = new Float32Array (9);
 
       return function (gl, renderContext, geometryContext, front = true)
       {
@@ -1063,6 +1062,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             // Set projection matrix.
 
             gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
+            gl .uniformMatrix4fv (this .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
             gl .uniformMatrix4fv (this .x3d_ViewMatrix,        false, renderObject .getViewMatrixArray ());
             gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
 
@@ -1088,28 +1088,16 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             if (renderObject .getLogarithmicDepthBuffer ())
             {
                const
-                  viewpoint      = renderObject .getViewpoint (),
-                  navigationInfo = renderObject .getNavigationInfo ();
+                  navigationInfoNode = renderObject .getNavigationInfo (),
+                  viewpointNode      = renderObject .getViewpoint ();
 
-               gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
+               gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (viewpointNode .getFarDistance (navigationInfoNode) + 1));
             }
          }
 
          // Model view matrix
 
-         const view = renderObject .getView ();
-
-         if (view)
-         {
-            xrModelViewMatrix .set (modelViewMatrix);
-            Matrix4 .prototype .multRight .call (xrModelViewMatrix, view .matrix);
-
-            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, xrModelViewMatrix);
-         }
-         else
-         {
-            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
-         }
+         gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 
          // Normal matrix
 

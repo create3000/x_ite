@@ -46,13 +46,10 @@
  ******************************************************************************/
 
 import X3DViewer         from "./X3DViewer.js";
+import ScreenLine        from "../Rendering/ScreenLine.js";
 import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
-import GeometryContext   from "../Rendering/GeometryContext.js";
-import VertexArray       from "../../Rendering/VertexArray.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4           from "../../../standard/Math/Numbers/Matrix4.js";
-import Camera            from "../../../standard/Math/Geometry/Camera.js";
 
 typeof jquery_mousewheel; // import plugin
 
@@ -76,34 +73,17 @@ function X3DFlyViewer (executionContext, navigationInfo)
 {
    X3DViewer .call (this, executionContext, navigationInfo);
 
-   const
-      browser = this .getBrowser (),
-      gl      = browser .getContext ();
+   const browser = this .getBrowser ();
 
-   this .button                = -1;
-   this .fromVector            = new Vector3 ();
-   this .toVector              = new Vector3 ();
-   this .direction             = new Vector3 ();
-   this .startTime             = 0;
-   this .event                 = null;
-   this .lookAround            = false;
-   this .orientationChaser     = new OrientationChaser (executionContext);
-   this .lineIndexBuffer       = gl .createBuffer ();
-   this .lineColorBuffer       = gl .createBuffer ();
-   this .lineVertexBuffer      = gl .createBuffer ();
-   this .lineVertexArrayObject = new VertexArray (gl);
-   this .lineVertexArray       = new Float32Array (8 * 4) .fill (1);
-
-   this .geometryContext = new GeometryContext ({
-      renderObject: this .getActiveLayer (),
-      geometryType: 2,
-      colorMaterial: true,
-   });
-
-   gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
-   gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
-   gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
-   gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]), gl .STATIC_DRAW);
+   this .button            = -1;
+   this .fromVector        = new Vector3 ();
+   this .toVector          = new Vector3 ();
+   this .direction         = new Vector3 ();
+   this .startTime         = 0;
+   this .event             = null;
+   this .lookAround        = false;
+   this .orientationChaser = new OrientationChaser (executionContext);
+   this .rubberBand        = new ScreenLine (browser, 1, 1, 0.4);
 }
 
 Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prototype),
@@ -240,6 +220,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .event  = null;
       this .button = -1;
+
+      this .direction .set (0, 0, 0);
 
       $(document) .off (".X3DFlyViewer" + this .getId ());
 
@@ -440,7 +422,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          else
             rubberBandRotation .setFromToVec (axis .set (0, 0, -1), this .direction);
 
-            const rubberBandLength = this .direction .magnitude ();
+         const rubberBandLength = this .direction .magnitude ();
 
          // Determine positionOffset.
 
@@ -632,113 +614,35 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    display: (() =>
    {
       const
-         fromPoint             = new Vector3 (),
-         toPoint               = new Vector3 (),
-         normal                = new Vector3 (),
-         vertex                = new Vector3 (),
-         projectionMatrix      = new Matrix4 (),
-         projectionMatrixArray = new Float32Array (Matrix4 .Identity),
-         modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
-         clipPlanes            = [ ];
+         fromPoint = new Vector3 (),
+         toPoint   = new Vector3 ();
 
       return function (type)
       {
          // Configure HUD
 
-         const
-            browser      = this .getBrowser (),
-            gl           = browser .getContext (),
-            viewport     = browser .getViewport (),
-            width        = viewport [2],
-            height       = viewport [3],
-            contentScale = browser .getRenderingProperty ("ContentScale");
+         const browser = this .getBrowser ();
 
-         for (const frameBuffer of browser .getFrameBuffers ())
+         // Display Rubberband.
+
+         switch (type)
          {
-            frameBuffer .bind ();
-
-            gl .viewport (... viewport);
-            gl .scissor (... viewport);
-
-            projectionMatrixArray .set (Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
-
-            // Display Rubberband.
-
-            switch (type)
+            case MOVE:
             {
-               case MOVE:
-               {
-                  fromPoint .set (this .fromVector .x, -this .fromVector .z, 0);
-                  toPoint   .set (this .toVector   .x, -this .toVector   .z, 0);
-                  break;
-               }
-               case PAN:
-               {
-                  fromPoint .set (this .fromVector .x, this .fromVector .y, 0);
-                  toPoint   .set (this .toVector   .x, this .toVector   .y, 0);
-                  break;
-               }
+               fromPoint .set (this .fromVector .x, -this .fromVector .z, 0);
+               toPoint   .set (this .toVector   .x, -this .toVector   .z, 0);
+               break;
             }
-
-            // Set black line quad vertices.
-
-            normal .assign (toPoint)
-               .subtract (fromPoint)
-               .normalize ()
-               .multiply (contentScale)
-               .set (-normal .y, normal .x, 0);
-
-            this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      0);
-            this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 4);
-            this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 8);
-            this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      12);
-
-            // Set white line quad vertices.
-
-            normal .assign (toPoint)
-               .subtract (fromPoint)
-               .normalize ()
-               .multiply (contentScale / 2)
-               .set (-normal .y, normal .x, 0);
-
-            this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      16);
-            this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 20);
-            this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 24);
-            this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      28);
-
-            // Transfer line.
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, this .lineVertexArray, gl .DYNAMIC_DRAW);
-
-            // Set uniforms and attributes.
-
-            const shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext);
-
-            shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, clipPlanes);
-
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-            gl .uniform3f        (shaderNode .x3d_EmissiveColor, 1, 1, 1);
-            gl .uniform1f        (shaderNode .x3d_Transparency,  0);
-
-            if (this .lineVertexArrayObject .enable (shaderNode .getProgram ()))
+            case PAN:
             {
-               gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
-
-               shaderNode .enableColorAttribute  (gl, this .lineColorBuffer,  0, 0);
-               shaderNode .enableVertexAttribute (gl, this .lineVertexBuffer, 0, 0);
+               fromPoint .set (this .fromVector .x, this .fromVector .y, 0);
+               toPoint   .set (this .toVector   .x, this .toVector   .y, 0);
+               break;
             }
-
-            // Draw a black and a white line.
-
-            gl .disable (gl .DEPTH_TEST);
-            gl .enable (gl .CULL_FACE);
-            gl .frontFace (gl .CCW);
-            gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
-            gl .enable (gl .DEPTH_TEST);
          }
+
+         for (const frameBuffer of browser .getFramebuffers ())
+            this .rubberBand .display (fromPoint, toPoint, frameBuffer);
       };
    })(),
    disconnect ()
@@ -757,10 +661,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    dispose ()
    {
-      const gl = this .getBrowser () .getContext ();
-
-      gl .deleteBuffer (this .lineVertexBuffer);
-      this .lineVertexArrayObject .dispose (gl);
+      this .rubberBand .dispose ();
 
       this .disconnect ();
       this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);

@@ -1,9 +1,16 @@
-/* X_ITE v11.1.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
+/* X_ITE v11.2.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 247:
+/***/ 13:
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 96:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +47,15 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 217:
+/***/ 254:
+/***/ ((module) => {
+
+"use strict";
+module.exports = __X_ITE_X3D__ .jquery;
+
+/***/ }),
+
+/***/ 410:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -74,7 +89,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 429:
+/***/ 434:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4030,7 +4045,28 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 9:
+/***/ 497:
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 559:
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 722:
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 810:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5185,43 +5221,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 254:
-/***/ ((module) => {
-
-"use strict";
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ }),
-
-/***/ 497:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 13:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 722:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
 /***/ 978:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 559:
 /***/ (() => {
 
 /* (ignored) */
@@ -5554,7 +5554,7 @@ function ComposedTexture3D (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ComposedTexture3D);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "update",    new (external_X_ITE_X3D_Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "update", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    this .textureNodes = [ ];
 }
@@ -5575,7 +5575,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
       const textureNodes = this .textureNodes;
 
       for (const textureNode of textureNodes)
-         textureNode .removeInterest ("set_update__", this);
+         textureNode .removeInterest ("addEvent", this ._update);
 
       textureNodes .length = 0;
 
@@ -5588,12 +5588,8 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
       }
 
       for (const textureNode of textureNodes)
-         textureNode .addInterest ("set_update__", this);
+         textureNode .addInterest ("addEvent", this ._update);
 
-      this .set_update__ ();
-   },
-   set_update__ ()
-   {
       this ._update .addEvent ();
    },
    isComplete ()
@@ -7314,10 +7310,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(429);
-/* provided dependency */ var JpegImage = __webpack_require__(9);
-/* provided dependency */ var CharLS = __webpack_require__(247);
-/* provided dependency */ var OpenJPEG = __webpack_require__(217);
+/* provided dependency */ var dicomParser = __webpack_require__(434);
+/* provided dependency */ var JpegImage = __webpack_require__(810);
+/* provided dependency */ var CharLS = __webpack_require__(96);
+/* provided dependency */ var OpenJPEG = __webpack_require__(410);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8615,7 +8611,7 @@ Object .defineProperties (ImageTexture3D,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatS",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatT",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
@@ -8857,7 +8853,7 @@ Object .defineProperties (ImageTextureAtlas,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "slicesOverX",          new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "slicesOverY",          new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),

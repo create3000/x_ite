@@ -184,7 +184,8 @@ Object .assign (PointLightContainer .prototype,
          return;
 
       this .shadowMatrix
-         .assign (renderObject .getCameraSpaceMatrixArray ())
+         .assign (renderObject .getView () ?.inverse ?? Matrix4 .Identity)
+         .multRight (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invLightSpaceProjectionMatrix);
 
       this .shadowMatrixArray .set (this .shadowMatrix);

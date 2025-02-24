@@ -542,11 +542,12 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       const shaderNode = browser .getDefaultMaterial () .getShader (sphereContext);
 
       shaderNode .enable (gl);
-      shaderNode .setClipPlanes (gl, this .clipPlanes);
+      shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
 
       // Uniforms
 
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+      gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
       gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
@@ -597,11 +598,12 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             const shaderNode = browser .getDefaultMaterial () .getShader (texturesContext);
 
             shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, this .clipPlanes);
+            shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
 
             // Set uniforms.
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 

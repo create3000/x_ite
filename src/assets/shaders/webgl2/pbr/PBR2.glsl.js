@@ -11,6 +11,18 @@ export default /* glsl */ `
    uniform mat4 x3d_ModelViewMatrix;
 #endif
 
+#if defined (X3D_XR_SESSION)
+uniform mat4 x3d_EyeMatrix;
+
+mat4
+eye (const in mat4 modelViewMatrix)
+{
+   return x3d_EyeMatrix * modelViewMatrix;
+}
+#else
+   #define eye(x) (x)
+#endif
+
 #if defined (X3D_LIGHTING)
    uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
 #endif
@@ -169,7 +181,7 @@ getMaterialColor ()
             materialInfo .f0_dielectric,
             materialInfo .f90,
             vertex,
-            x3d_ModelViewMatrix, // x3d_ModelMatrix
+            eye (x3d_ModelViewMatrix), // x3d_ModelMatrix
             x3d_ProjectionMatrix,
             materialInfo .ior,
             materialInfo .thickness,
@@ -294,7 +306,7 @@ getMaterialColor ()
          #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
             // If the light ray travels through the geometry, use the point it exits the geometry again.
             // That will change the angle to the light source, if the material refracts the light ray.
-            vec3 transmissionRay = getVolumeTransmissionRay (n, v, materialInfo .thickness, materialInfo .ior, x3d_ModelViewMatrix); // x3d_ModelMatrix
+            vec3 transmissionRay = getVolumeTransmissionRay (n, v, materialInfo .thickness, materialInfo .ior, eye (x3d_ModelViewMatrix)); // x3d_ModelMatrix
 
             pointToLight -= transmissionRay;
             l             = normalize (pointToLight);

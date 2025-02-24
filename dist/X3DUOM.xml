@@ -42,6 +42,18 @@
 			</InterfaceDefinition>
 		</AbstractNodeType>
 
+		<AbstractNodeType name="X3DFogObject">
+			<InterfaceDefinition>
+				<field name="visibilityStart"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."
+				/>
+			</InterfaceDefinition>
+		</AbstractNodeType>
+
 	</AbstractNodeTypes>
 	<ConcreteNodes>
 
@@ -1427,6 +1439,30 @@
 					default="1"
 					minInclusive="0"
 					description="Damping that particles experience in the event of a collision."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="Fog">
+			<InterfaceDefinition>
+				<field name="visibilityStart"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."
+				/>
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+		<ConcreteNode name="LocalFog">
+			<InterfaceDefinition>
+				<field name="visibilityStart"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."
 				/>
 			</InterfaceDefinition>
 		</ConcreteNode>

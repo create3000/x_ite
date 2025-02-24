@@ -646,9 +646,15 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   width: 32px;
   height: 18px;
   background: url("assets/images/XR.svg");
-  opacity: 0.6;
   cursor: pointer;
+  transition: transform .2s ease-in-out;
 }
+
+.x_ite-private-xr-button:hover {
+  transform: scale(1.2);
+}
+
+/* Animations */
 
 .x_ite-private-hidden {
   visibility: hidden;

@@ -554,6 +554,11 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
          <td>this is the product of object's transformation matrix and the inverse x3d_CameraSpaceMatrix</td>
       </tr>
       <tr>
+         <td>uniform mat4</td>
+         <td>x3d_EyeMatrix</td>
+         <td>if a WebXR session is active it contains the position of the current eye. Do <code class="language-plaintext highlighter-rouge">x3d_EyeMatrix * x3d_ModelViewMatrix * x3d_Vertex</code></td>
+      </tr>
+      <tr>
          <td>uniform mat3</td>
          <td>x3d_NormalMatrix</td>
          <td>object's normal matrix; this is the inverse transpose of the 3×3 submatrix of x3d_ModelViewMatrix</td>
@@ -706,6 +711,14 @@ If the shader node is part of a [InstancedShape](/x_ite/components/x-ite/instanc
 | build-in  | gl_InstanceId            | available                                                    |
 | in mat4   | x3d_InstanceMatrix       | instance matrix, should be multiplied with x3d_Vertex        |
 | in mat3   | x3d_InstanceNormalMatrix | instance normal matrix, should be multiplied with x3d_Normal |
+
+### WebXR
+
+If a WebXR session is active `x3d_EyeMatrix` contains the position of the current eye (left or right). Do `gl_Position = x3d_ProjectionMatrix * x3d_EyeMatrix * x3d_ModelViewMatrix * x3d_Vertex` to get the right `gl_Position` for each eye.
+
+| Type    | Name          | Comment                                          |
+|---------|---------------|--------------------------------------------------|
+| in mat4 | x3d_EyeMatrix | eye matrix, should be multiplied with x3d_Vertex |
 
 ## Built-in Constants
 

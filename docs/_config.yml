@@ -16,21 +16,20 @@ timezone: Europe/Berlin
 
 title: X_ITE X3D Browser # the main title
 
-tagline: Ready for X3Dv4! # it will display as the sub-title
+tagline: Ready for X3Dv4 and WebXR! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser and VRML Viewer, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.
 
-x_ite_latest_version: 11.0.7 # x_ite latest version
-x_ite_compressed_size: 274 # size in kb
 x3d_latest_version: 4.1 # x3d latest version
-x_ite_latest_version: 11.1.0 # x_ite latest version
-x_ite_compressed_size: 267 # size in kb
-x_ite_js_integrity: sha384-wSMWmkN+EDltIjnSqO4qPcTOja/+DEk2hkAxat2xlqNENoyU7tguRZm3H3Ou7RVc
-x_ite_min_js_integrity: sha384-WqZ7v0+bZxDIvIAcEqatS8M7iFcaYqhUhU8CioY2mgQl9dJ7lDJs2bjUPTKr4V0V
-x_ite_mjs_integrity: sha384-LvHJScBahL6pX6dcH1tPRvLNocZ57IWZOrUImyEpmQIrKBxjV/Dh1tYoakxt759Y
-x_ite_min_mjs_integrity: sha384-zjbFn+gXldRBheb2X7rAxuxFjwuODnBeSiMfMqY+6bBSnTVIWGtNJjy6vupItRZQ
-x_ite_css_integrity: sha384-FwE1j4Psje2HWlZUYlT3EnLDQHO9opLtrgOectdgmhOl4qA/+qHqB8SCMCWoDYVv
+x_ite_latest_version: 11.2.1 # x_ite latest version
+x_ite_compressed_size: 270 # size in kb
+x_ite_js_integrity: sha384-i/IVkBFIYoXnAvlzeSGVX6Won1Hwbpa7UOptVjta+CPzF0IA7nqent4PxUT6PvUJ
+x_ite_min_js_integrity: sha384-eXnaPJqS2sLGheDvgctCVYAZb6wOS7gODSwAzhUfTIm/Z2BdrKkLiXXX6t/lIi4Y
+x_ite_mjs_integrity: sha384-aX68jko7WImvE9qq1RWyGBDPdxVA5Yj88GRNc7KM4vy3BxrkVOsL2aKTk8Gw/es9
+x_ite_min_mjs_integrity: sha384-TkBvKWJsFB0TuaZoyUdkyHg81fyd5erR0jOPE5nERfZFI63Ht3zSg30CqP9/ZVKj
+x_ite_css_integrity: sha384-D7OAu7vevx4muGlKdNZmy8AefVEA4SbV9Eck94AIocP2DWPnzyDV/STLLW2MYVdZ
+
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://create3000.github.io"

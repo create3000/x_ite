@@ -66,7 +66,7 @@ function X3DExternProtoDeclaration (executionContext, url)
 
    this .addChildObjects (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
                           X3DConstants .inputOutput, "url",                  url .copy (), // Must be of type MFString.
-                          X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (),
+                          X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
                           X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
    this .getBrowser () [_cache] ??= new Map ();

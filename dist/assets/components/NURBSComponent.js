@@ -1,5 +1,5 @@
-/* X_ITE v11.1.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
+/* X_ITE v11.2.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -3031,8 +3031,6 @@ function NurbsOrientationInterpolator (executionContext)
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsOrientationInterpolator);
-
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    this .geometry = new NURBS_NurbsCurve (executionContext);
 }

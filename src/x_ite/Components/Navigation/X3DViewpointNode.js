@@ -268,17 +268,18 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       this ._fieldOfViewScale = value;
    },
-   getNearDistance ()
+   getNearDistance (navigationInfoNode)
    {
-      return this .nearDistance;
+      return this .nearDistance ?? navigationInfoNode ?.getNearValue ();
    },
    setNearDistance (value)
    {
       this .nearDistance = value;
    },
-   getFarDistance ()
+   getFarDistance (navigationInfoNode)
    {
-      return this .farDistance;
+      return this .farDistance
+         ?? (navigationInfoNode ? navigationInfoNode .getFarValue () || this .getMaxFarValue () : undefined);
    },
    setFarDistance (value)
    {
@@ -286,10 +287,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    getProjectionMatrix (renderObject)
    {
-      const navigationInfo = renderObject .getNavigationInfo ();
+      const navigationInfoNode = renderObject .getNavigationInfo ();
 
-      return this .getProjectionMatrixWithLimits (this .nearDistance ?? navigationInfo .getNearValue (),
-                                                  this .farDistance ?? navigationInfo .getFarValue (this),
+      return this .getProjectionMatrixWithLimits (this .getNearDistance (navigationInfoNode),
+                                                  this .getFarDistance (navigationInfoNode),
                                                   renderObject .getLayer () .getViewport () .getRectangle ());
    },
    getCameraSpaceMatrix ()
@@ -494,7 +495,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+      const minDistance = this .getNearDistance (layerNode .getNavigationInfo ()) * 2;
 
       this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
    },

@@ -1,5 +1,5 @@
-/* X_ITE v11.1.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.1.0")];
+/* X_ITE v11.2.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -350,11 +350,9 @@ Object .assign (TextureProjectorContainer .prototype,
       this .global    = lightNode .getGlobal ();
 
       this .modelViewMatrix .push (modelViewMatrix);
-      this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
+      this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
-   { },
-   setGlobalVariables (renderObject)
    {
       const
          lightNode             = this .lightNode,
@@ -384,13 +382,20 @@ Object .assign (TextureProjectorContainer .prototype,
       this .invTextureSpaceProjectionMatrix
          .assign (invTextureSpaceMatrix)
          .multRight (this .projectionMatrix)
-         .multRight (lightNode .getBiasMatrix ());
-
-      this .matrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
-      this .matrixArray .set (this .matrix);
+         .multRight (lightNode .getBiasMatrix ())
+         .multRight (this .textureMatrix);
 
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
+   },
+   setGlobalVariables (renderObject)
+   {
+      this .matrix
+         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).Identity)
+         .multRight (renderObject .getCameraSpaceMatrixArray ())
+         .multRight (this .invTextureSpaceProjectionMatrix);
+
+      this .matrixArray .set (this .matrix);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {
@@ -586,11 +591,9 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .global    = lightNode .getGlobal ();
 
       this .modelViewMatrix .push (modelViewMatrix);
-      this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
+      this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
-   { },
-   setGlobalVariables (renderObject)
    {
       const
          lightNode             = this .lightNode,
@@ -641,13 +644,20 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .invTextureSpaceProjectionMatrix
          .assign (invTextureSpaceMatrix)
          .multRight (this .projectionMatrix)
-         .multRight (lightNode .getBiasMatrix ());
-
-      this .matrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
-      this .matrixArray .set (this .matrix);
+         .multRight (lightNode .getBiasMatrix ())
+         .multRight (this .textureMatrix);
 
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
+   },
+   setGlobalVariables (renderObject)
+   {
+      this .matrix
+         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).Identity)
+         .multRight (renderObject .getCameraSpaceMatrixArray ())
+         .multRight (this .invTextureSpaceProjectionMatrix);
+
+      this .matrixArray .set (this .matrix);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {

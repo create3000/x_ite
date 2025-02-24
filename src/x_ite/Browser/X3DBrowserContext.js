@@ -124,6 +124,7 @@ function X3DBrowserContext (element)
                           X3DConstants .outputOnly, "shutdown",       new Fields .SFTime (),
                           X3DConstants .outputOnly, "prepareEvents",  new Fields .SFTime (),
                           X3DConstants .outputOnly, "timeEvents",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "cameraEvents",   new Fields .SFTime (),
                           X3DConstants .outputOnly, "sensorEvents",   new Fields .SFTime (),
                           X3DConstants .outputOnly, "displayEvents",  new Fields .SFTime (),
                           X3DConstants .outputOnly, "finishedEvents", new Fields .SFTime (),
@@ -165,6 +166,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this ._timeEvents;
    },
+   cameraEvents ()
+   {
+      return this ._cameraEvents;
+   },
    sensorEvents ()
    {
       return this ._sensorEvents;
@@ -200,6 +205,16 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_world] = new X3DWorld (executionContext);
       this [_world] .setup ();
       this [_world] .bindBindables ();
+   },
+   setSession (session)
+   {
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
+
+      X3DRenderingContext .prototype .setSession .call (this, session);
+
+      this [_tainted] = false;
+
+      this .addBrowserEvent ();
    },
    addBrowserEvent ()
    {
@@ -254,8 +269,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       // Time
 
-      this .setFrame (frame);
       this .advanceTime ();
+      this .xrFrame (frame);
 
       // Events
 
@@ -270,6 +285,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_cameraTime] .start ();
       this [_world] .traverse (TraverseType .CAMERA);
       this [_cameraTime] .stop ();
+
+      this .addTaintedField (this ._cameraEvents);
+      this [_processEvents] ();
 
       // Collision
 
@@ -291,7 +309,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .addTaintedField (this ._displayEvents);
       this [_processEvents] ();
 
-      for (const frameBuffer of this .getFrameBuffers ())
+      for (const frameBuffer of this .getFramebuffers ())
          frameBuffer .clear ();
 
       this [_world] .traverse (TraverseType .DISPLAY);
@@ -299,7 +317,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .addTaintedField (this ._finishedEvents);
       this [_processEvents] ();
 
-      for (const frameBuffer of this .getFrameBuffers ())
+      for (const frameBuffer of this .getFramebuffers ())
          frameBuffer .blit ();
 
       this [_displayTime] .stop ();
@@ -331,28 +349,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    getDisplayTime ()
    {
       return this [_displayTime];
-   },
-   async startXRSession (event)
-   {
-      const session = this .getSession ();
-
-      await X3DRenderingContext .prototype .startXRSession .call (this, event);
-
-      this [_tainted] = false;
-
-      session .cancelAnimationFrame (this [_animFrame]);
-      this .addBrowserEvent ();
-   },
-   async stopXRSession ()
-   {
-      const session = this .getSession ();
-
-      await X3DRenderingContext .prototype .stopXRSession .call (this);
-
-      this [_tainted] = false;
-
-      session .cancelAnimationFrame (this [_animFrame]);
-      this .addBrowserEvent ();
    },
    dispose ()
    {

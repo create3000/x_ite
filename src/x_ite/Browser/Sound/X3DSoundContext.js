@@ -49,13 +49,41 @@ import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
 import X3DObject    from "../../Base/X3DObject.js";
 
 const
+   _audioElements       = Symbol (),
    _audioContext        = Symbol (),
    _defaultPeriodicWave = Symbol ();
 
-function X3DSoundContext () { }
+function X3DSoundContext ()
+{
+   this [_audioElements] = new Map ();
+}
 
 Object .assign (X3DSoundContext .prototype,
 {
+   initialize ()
+   {
+      const id = `X3DSoundContext-${this .getId ()}`;
+
+      const events = [
+         "blur",
+         "click",
+         "contextmenu",
+         "dblclick",
+         "focus",
+         "keydown",
+         "keyup",
+         "mousedown",
+         "mouseup",
+         "mousewheel",
+         "pointerup",
+         "touchend",
+         "touchmove",
+         "touchstart",
+      ]
+      .map (event => `${event}.${id}`);
+
+      this .getCanvas () .on (events .join (" "), () => this .startAudioElements ());
+   },
    getAudioContext ()
    {
       this [_audioContext] = new AudioContext ();
@@ -80,49 +108,32 @@ Object .assign (X3DSoundContext .prototype,
 
       return this [_defaultPeriodicWave];
    },
+   startAudioElements ()
+   {
+      for (const [audioElement, functionName] of this [_audioElements])
+      {
+         audioElement [functionName] ()
+            .then (() => this [_audioElements] .delete (audioElement))
+            .catch (Function .prototype);
+      }
+   },
    startAudioElement (audioElement, functionName = "play")
    {
       if (!audioElement)
          return;
 
-      const id = `X3DSoundContext-${X3DObject .getId (audioElement)}`;
+      this [_audioElements] .set (audioElement, functionName);
 
-      const disconnect = () => this .getCanvas () .off (`.${id}`);
+      this .startAudioElements ();
+   },
+   stopAudioElement (audioElement, functionName = "pause")
+   {
+      if (!audioElement)
+         return;
 
-      const connect = () =>
-      {
-         const events = [
-            "blur",
-            "click",
-            "contextmenu",
-            "dblclick",
-            "focus",
-            "keydown",
-            "keyup",
-            "mousedown",
-            "mouseup",
-            "mousewheel",
-            "pointerup",
-            "touchend",
-            "touchmove",
-            "touchstart",
-         ]
-         .map (event => `${event}.${id}`);
+      this [_audioElements] .delete (audioElement);
 
-         this .getCanvas () .on (events .join (" "), () =>
-         {
-            audioElement [functionName] ()
-               .then (disconnect)
-               .catch (Function .prototype);
-         });
-      };
-
-      audioElement [functionName] ()
-         .then (disconnect)
-         .catch (connect);
-
-      if (audioElement === this [_audioContext])
-         connect ();
+      audioElement [functionName] ();
    },
 });
 

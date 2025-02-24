@@ -149,7 +149,6 @@ Object .assign (X3DNavigationContext .prototype,
 
          if (activeLayer)
          {
-            activeLayer .setActive (false);
             activeLayer .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
             activeLayer .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
          }
@@ -161,7 +160,6 @@ Object .assign (X3DNavigationContext .prototype,
 
          if (activeLayer)
          {
-            activeLayer .setActive (true);
             activeLayer .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
             activeLayer .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
          }

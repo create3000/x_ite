@@ -87,6 +87,9 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
 
       const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
 
+      if (browser .getRenderingProperty ("XRSession"))
+         options .push ("X3D_XR_SESSION");
+
       if (renderObject .getLogarithmicDepthBuffer ())
          options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 

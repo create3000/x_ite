@@ -298,6 +298,13 @@ SupportedComponents .add ("VolumeRendering",
    dependencies: ["CADGeometry", "Texturing3D"],
 });
 
+SupportedComponents .add ("WebXR",
+{
+   title: "WebXR",
+   level: 1,
+   external: true,
+});
+
 SupportedComponents .add ("X_ITE",
 {
    title: "X_ITE",
