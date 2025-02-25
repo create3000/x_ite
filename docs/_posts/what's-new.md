@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v11.2 Series
 
-*Leipzig, 15th February 2024:* With this series there is now extended WebXR support. Use your VR glasses with X_ITE and get immersive.
+*Leipzig, 16th February 2024:* With this series there is now extended WebXR support. Use your VR glasses with X_ITE and get immersive.
 
 * Basic visualization of the controller (input ray and tracking point)
 * X3DPointingDeviceSensorNode support
