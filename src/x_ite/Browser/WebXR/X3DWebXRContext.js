@@ -291,7 +291,7 @@ Object .assign (X3DWebXRContext .prototype,
       pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
       pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
 
-      let v = 0;
+      let i = 0;
 
       for (const originalView of originalPose .views)
       {
@@ -301,9 +301,9 @@ Object .assign (X3DWebXRContext .prototype,
          if (!width)
             continue;
 
-         this .reshapeFramebuffer (v, x|0, y|0, width|0, height|0);
+         this .reshapeFramebuffer (i, x, y, width, height);
 
-         const view = pose .views [v] ??= {
+         const view = pose .views [i] ??= {
             projectionMatrix: new Matrix4 (),
             cameraSpaceMatrix: new Matrix4 (),
             viewMatrix: new Matrix4 (),
@@ -318,11 +318,11 @@ Object .assign (X3DWebXRContext .prototype,
          view .matrix  .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
          view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
 
-         ++ v;
+         ++ i;
       }
 
-      pose .views .length              = v;
-      this .getFramebuffers () .length = v;
+      pose .views .length              = i;
+      this .getFramebuffers () .length = i;
    },
    xrUpdatePointers: (function ()
    {
