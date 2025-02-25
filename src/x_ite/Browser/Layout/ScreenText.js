@@ -59,9 +59,10 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .textureNode = new PixelTexture (text .getExecutionContext ());
-   this .context     = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
-   this .matrix      = new Matrix4 ();
+   this .textureNode     = new PixelTexture (text .getExecutionContext ());
+   this .context         = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
+   this .modelViewMatrix = new Matrix4 ();
+   this .matrix          = new Matrix4 ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
@@ -385,6 +386,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
       {
          this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
+         this .modelViewMatrix
+            .assign (renderObject .getModelViewMatrix () .get ())
+            .multLeft (this .matrix);
+
          // Update Text bbox.
 
          bbox .assign (this .getBBox ()) .multRight (this .matrix);
@@ -394,7 +399,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    })(),
    display (gl, renderContext)
    {
-      Matrix4 .prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
+      renderContext .modelViewMatrix .set (this .modelViewMatrix);
 
       renderContext .textureNode = this .textureNode;
    },
