@@ -1,5 +1,5 @@
-/* X_ITE v11.2.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.1")];
+/* X_ITE v11.2.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -506,6 +506,10 @@ function X3DWebXRContext ()
 
 Object .assign (X3DWebXRContext .prototype,
 {
+   getPose ()
+   {
+      return this [_pose];
+   },
    async initXRSession ()
    {
       return external_X_ITE_X3D_Lock_default().acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
@@ -523,11 +527,11 @@ Object .assign (X3DWebXRContext .prototype,
          // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
-         this .cameraEvents ()   .addInterest ("updatePose",     this);
-         this .finishedEvents () .addInterest ("updatePointers", this);
-         this .endEvents ()      .addInterest ("endFrame",       this);
+         this .cameraEvents ()   .addInterest ("xrUpdatePose",     this);
+         this .finishedEvents () .addInterest ("xrUpdatePointers", this);
+         this .endEvents ()      .addInterest ("xrEndFrame",       this);
 
-         session .addEventListener ("inputsourceschange", event => this .updateInputSources (event));
+         session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
 
          this [_referenceSpace] = referenceSpace;
@@ -544,9 +548,13 @@ Object .assign (X3DWebXRContext .prototype,
             views: [ ],
          };
 
-         this .updateBaseLayer ({ }, session);
+         this .xrUpdateBaseLayer ({ }, session);
          this .setSession (session);
          this .removeHit (this .getHit ());
+
+         // Rendering Properties
+
+         this .getRenderingProperties () ._ContentScale .addInterest ("xrContentScale", this);
 
          this .getRenderingProperties () ._XRSession = true;
 
@@ -569,9 +577,9 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .cameraEvents ()   .removeInterest ("updatePose",     this);
-         this .finishedEvents () .removeInterest ("updatePointers", this);
-         this .endEvents ()      .removeInterest ("endFrame",       this);
+         this .cameraEvents ()   .removeInterest ("xrUpdatePose",     this);
+         this .finishedEvents () .removeInterest ("xrUpdatePointers", this);
+         this .endEvents ()      .removeInterest ("xrEndFrame",       this);
 
          this .setSession (window);
          this .setDefaultFramebuffer (null);
@@ -587,14 +595,18 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputPoint]     = null;
          this [_frame]          = null;
 
+         // Rendering Properties
+
+         this .getRenderingProperties () ._ContentScale .removeInterest ("xrContentScale", this);
+
          this .getRenderingProperties () ._XRSession = false;
       });
    },
-   setFramebufferScaleFactor (framebufferScaleFactor)
+   xrContentScale ()
    {
-      this .updateBaseLayer ({ framebufferScaleFactor });
+      this .xrUpdateBaseLayer ();
    },
-   updateBaseLayer (options = { }, session = this .getSession ())
+   xrUpdateBaseLayer (options = { }, session = this .getSession ())
    {
       if (session === window)
          return;
@@ -614,7 +626,31 @@ Object .assign (X3DWebXRContext .prototype,
 
       this .setDefaultFramebuffer (baseLayer .framebuffer);
    },
-   updateInputSources (event)
+   xrUpdateNearFarPlanes: (function ()
+   {
+      const nearFarPlanes = { };
+
+      return function ()
+      {
+         const
+            navigationInfoNode = this .getActiveNavigationInfo (),
+            viewpointNode      = this .getActiveViewpoint ();
+
+         if (viewpointNode)
+         {
+            nearFarPlanes .depthNear = viewpointNode .getNearDistance (navigationInfoNode);
+            nearFarPlanes .depthFar  = viewpointNode .getFarDistance  (navigationInfoNode);
+         }
+         else
+         {
+            nearFarPlanes .depthNear = 0.1;
+            nearFarPlanes .depthFar  = 10_000;
+         }
+
+         this .getSession () .updateRenderState (nearFarPlanes);
+      };
+   })(),
+   xrUpdateInputSources (event)
    {
       for (const inputSource of event .added)
       {
@@ -644,7 +680,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_inputSources] .delete (inputSource);
       }
    },
-   setFrame (frame)
+   xrFrame (frame)
    {
       if (!frame)
          return;
@@ -659,16 +695,9 @@ Object .assign (X3DWebXRContext .prototype,
       if (emulator)
          this .getCanvas () .css (this .getXREmulatorCSS ());
 
-      // TODO: Clip planes
+      // Projection matrix
 
-      // const
-      //    navigationInfoNode = this .getActiveNavigationInfo (),
-      //    viewpointNode      = this .getActiveViewpoint ();
-
-      // this .getSession () .updateRenderState ({
-      //    depthNear: viewpointNode .getNearDistance (navigationInfoNode), // 0.1
-      //    depthFar:  viewpointNode .getFarDistance  (navigationInfoNode), // 10_000
-      // });
+      this .xrUpdateNearFarPlanes ();
 
       // Navigation
 
@@ -677,6 +706,9 @@ Object .assign (X3DWebXRContext .prototype,
       for (const { active, gamepad } of this [_inputSources])
       {
          if (!active)
+            continue;
+
+         if (!gamepad)
             continue;
 
          if (gamepad .axes .length < 4)
@@ -691,11 +723,7 @@ Object .assign (X3DWebXRContext .prototype,
 
       this .addBrowserEvent ();
    },
-   getPose ()
-   {
-      return this [_pose];
-   },
-   updatePose ()
+   xrUpdatePose ()
    {
       // Get matrices from views.
 
@@ -739,7 +767,7 @@ Object .assign (X3DWebXRContext .prototype,
       pose .views .length              = v;
       this .getFramebuffers () .length = v;
    },
-   updatePointers: (function ()
+   xrUpdatePointers: (function ()
    {
       const
          blue           = new (external_X_ITE_X3D_Color3_default()) (0.5, 0.75, 1),
@@ -788,7 +816,7 @@ Object .assign (X3DWebXRContext .prototype,
 
             // Make a vibration puls if there is a sensor hit.
 
-            this .sensorHitPulse (hit, gamepad);
+            this .xrSensorHitPulse (hit, gamepad);
 
             // Update matrices and determine pointer position.
 
@@ -924,14 +952,14 @@ Object .assign (X3DWebXRContext .prototype,
          }
       };
    })(),
-   endFrame ()
+   xrEndFrame ()
    {
       const gl = this .getContext ();
 
       // WebXR Emulator and polyfill: bind to null, to prevent changes.
       gl .bindVertexArray (null);
    },
-   sensorHitPulse (hit, gamepad)
+   xrSensorHitPulse (hit, gamepad)
    {
       if (hit .sensors .size)
       {
