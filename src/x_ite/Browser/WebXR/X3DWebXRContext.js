@@ -277,6 +277,9 @@ Object .assign (X3DWebXRContext .prototype,
          if (!active)
             continue;
 
+         if (!gamepad)
+            continue;
+
          if (gamepad .axes .length < 4)
             continue;
 
