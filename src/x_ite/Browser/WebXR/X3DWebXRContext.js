@@ -93,12 +93,8 @@ Object .assign (X3DWebXRContext .prototype,
             session        = await navigator .xr .requestSession (mode),
             referenceSpace = await session .requestReferenceSpace ("local");
 
-         // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
          this .cameraEvents ()   .addInterest ("xrUpdatePose",     this);
          this .finishedEvents () .addInterest ("xrUpdatePointers", this);
-         this .endEvents ()      .addInterest ("xrEndFrame",       this);
 
          session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
@@ -148,7 +144,6 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .cameraEvents ()   .removeInterest ("xrUpdatePose",     this);
          this .finishedEvents () .removeInterest ("xrUpdatePointers", this);
-         this .endEvents ()      .removeInterest ("xrEndFrame",       this);
 
          this .setSession (window);
          this .setDefaultFramebuffer (null);
@@ -514,13 +509,6 @@ Object .assign (X3DWebXRContext .prototype,
          }
       };
    })(),
-   xrEndFrame ()
-   {
-      const gl = this .getContext ();
-
-      // WebXR Emulator and polyfill: bind to null, to prevent changes.
-      gl .bindVertexArray (null);
-   },
    xrSensorHitPulse (hit, gamepad)
    {
       if (hit .sensors .size)
