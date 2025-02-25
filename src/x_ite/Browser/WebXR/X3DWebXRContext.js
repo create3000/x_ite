@@ -248,6 +248,23 @@ Object .assign (X3DWebXRContext .prototype,
          this .removeHit (inputSource .hit);
          this [_inputSources] .delete (inputSource);
       }
+
+      this .xrUpdateGamepads ();
+   },
+   xrUpdateGamepads ()
+   {
+      this [_gamepads] .length = 0;
+
+      for (const { gamepad } of this [_inputSources])
+      {
+         if (!gamepad)
+            continue;
+
+         if (gamepad .axes .length < 4)
+            continue;
+
+         this [_gamepads] .push (gamepad);
+      }
    },
    xrFrame (frame)
    {
@@ -269,22 +286,6 @@ Object .assign (X3DWebXRContext .prototype,
       this .xrUpdateNearFarPlanes ();
 
       // Navigation
-
-      this [_gamepads] .length = 0;
-
-      for (const { active, gamepad } of this [_inputSources])
-      {
-         if (!active)
-            continue;
-
-         if (!gamepad)
-            continue;
-
-         if (gamepad .axes .length < 4)
-            continue;
-
-         this [_gamepads] .push (gamepad);
-      }
 
       this .getViewer () .gamepads (this [_gamepads]);
 
