@@ -321,8 +321,8 @@ Object .assign (X3DWebXRContext .prototype,
          ++ i;
       }
 
-      pose .views .length              = i;
       this .getFramebuffers () .length = i;
+      pose .views .length              = i;
    },
    xrUpdatePointers: (function ()
    {
