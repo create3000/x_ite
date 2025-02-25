@@ -65,15 +65,6 @@ const
    _composeShader      = Symbol (),
    _depthShaders       = Symbol ();
 
-// WebXR Emulator and polyfill:
-const xrEmulatorCSS = {
-   position: "fixed",
-   top: "0px",
-   left: "0px",
-   width: "100vw",
-   height: "100vh",
-};
-
 function X3DRenderingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .SFVec4f (0, 0, 300, 150));
@@ -321,10 +312,6 @@ Object .assign (X3DRenderingContext .prototype,
 
       return shaderNode;
    },
-   getXREmulatorCSS ()
-   {
-      return xrEmulatorCSS;
-   },
    setResizeTarget (element)
    {
       if (!element .length)
@@ -335,11 +322,6 @@ Object .assign (X3DRenderingContext .prototype,
          this .setResizeTarget (this .getSurface ());
          return;
       }
-
-      if (element .is (this .getSurface ()))
-         this .getCanvas () .removeAttr ("style");
-      else // WebXR Emulator or polyfill.
-         this .getCanvas () .css (xrEmulatorCSS);
 
       this [_observer] .disconnect ();
       this [_observer] .observe (element [0], { childList: true });

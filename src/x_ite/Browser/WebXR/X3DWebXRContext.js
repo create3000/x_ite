@@ -273,14 +273,6 @@ Object .assign (X3DWebXRContext .prototype,
 
       this [_frame] = frame;
 
-      // Emulator
-
-      const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
-
-      // WebXR Emulator or polyfill.
-      if (emulator)
-         this .getCanvas () .css (this .getXREmulatorCSS ());
-
       // Projection matrix
 
       this .xrUpdateNearFarPlanes ();
