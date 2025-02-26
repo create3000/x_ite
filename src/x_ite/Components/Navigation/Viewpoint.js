@@ -68,7 +68,7 @@ function Viewpoint (executionContext)
    this ._fieldOfView      .setUnit ("angle");
 
    // Private properties
-   
+
    this .projectionMatrix = new Matrix4 ();
 }
 
@@ -126,9 +126,16 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
 
       const
          width  = viewport [2],
-         height = viewport [3];
+         height = viewport [3],
+         pose   = this .getBrowser () .getPose ();
 
-      let size = Math .abs (point .z) * Math .tan (this .getUserFieldOfView () / 2) * 2;
+      // MDN say fov can be determined from projectionMatrix.
+      // https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API/Perspective
+      const fov1_2 = pose
+         ? Math .atan (1 / pose .views [0] .projectionMatrix [5])
+         : this .getUserFieldOfView () / 2;
+
+      let size = Math .abs (point .z) * Math .tan (fov1_2) * 2;
 
       if (width > height)
          size /= height;
