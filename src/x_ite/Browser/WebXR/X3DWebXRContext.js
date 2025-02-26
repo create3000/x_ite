@@ -93,7 +93,6 @@ Object .assign (X3DWebXRContext .prototype,
             session        = await navigator .xr .requestSession (mode),
             referenceSpace = await session .requestReferenceSpace ("local");
 
-         this .cameraEvents ()   .addInterest ("xrUpdatePose",     this);
          this .finishedEvents () .addInterest ("xrUpdatePointers", this);
 
          session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
@@ -142,7 +141,6 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .cameraEvents ()   .removeInterest ("xrUpdatePose",     this);
          this .finishedEvents () .removeInterest ("xrUpdatePointers", this);
 
          this .setSession (window);
@@ -275,6 +273,7 @@ Object .assign (X3DWebXRContext .prototype,
       // Navigation
 
       this .getViewer () .gamepads (this [_gamepads]);
+      this .xrUpdatePose ();
 
       // Trigger new frame.
 
