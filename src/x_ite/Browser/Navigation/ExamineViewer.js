@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-            this .startRotate (x, y);
+            this .startRotate (x, y, 0);
 
             this .motionTime = Date .now ();
 
@@ -509,7 +509,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
-   startRotate (x, y)
+   startRotate (x, y, negate)
    {
       if (this .getStraightenHorizon ())
       {
@@ -518,7 +518,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .fromPointer .set (x, y);
          this .startOrientation .assign (viewpoint .getUserOrientation ());
          this .lastRoll = 0;
-         this .negate   = 0;
+         this .negate   = negate;
       }
       else
       {
@@ -559,11 +559,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             if (!this .negate)
             {
-               const
-                  browser = this .getBrowser (),
-                  pose    = browser .getPose ();
-
-               if (!pose && Math .PI / 2 - Math .abs (startRoll - Math .PI / 2) < DISK_ANGLE)
+               if (Math .PI / 2 - Math .abs (startRoll - Math .PI / 2) < DISK_ANGLE)
                {
                   if (y - this .getViewport () [1] > this .getViewport () [3] / 2)
                      this .negate = startRoll < Math .PI / 4 ? -1 : 1;

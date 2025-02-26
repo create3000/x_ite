@@ -54,7 +54,7 @@ Object .assign (ExamineViewer .prototype,
       {
          // Rotate
 
-         this .startRotate (0, 0);
+         this .startRotate (0, 0, 1);
          this .rotate (-gamepad .axes [2] * GAMEPAD_SPIN_FACTOR * f, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR * f);
       }
    },
