@@ -134,11 +134,9 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    },
    displaySimple (gl, renderContext, shaderNode)
    {
-      this .textGeometry .display (gl, renderContext);
+      this .textGeometry .displaySimple (gl, renderContext, shaderNode);
 
       X3DGeometryNode .prototype .displaySimple .call (this, gl, renderContext, shaderNode);
-
-      renderContext .textureNode = null;
    },
    display (gl, renderContext)
    {

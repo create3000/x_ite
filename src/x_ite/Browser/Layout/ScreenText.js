@@ -397,6 +397,12 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          this .getText () .setBBox (bbox);
       };
    })(),
+   displaySimple (gl, renderContext, shaderNode)
+   {
+      renderContext .modelViewMatrix .set (this .modelViewMatrix);
+
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, renderContext .modelViewMatrix);
+   },
    display (gl, renderContext)
    {
       renderContext .modelViewMatrix .set (this .modelViewMatrix);
