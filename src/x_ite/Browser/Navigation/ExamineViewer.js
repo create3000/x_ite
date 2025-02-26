@@ -559,7 +559,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             if (!this .negate)
             {
-               if (Math .PI / 2 - Math .abs (startRoll - Math .PI / 2) < DISK_ANGLE)
+               const
+                  browser = this .getBrowser (),
+                  pose    = browser .getPose ();
+
+               if (!pose && Math .PI / 2 - Math .abs (startRoll - Math .PI / 2) < DISK_ANGLE)
                {
                   if (y - this .getViewport () [1] > this .getViewport () [3] / 2)
                      this .negate = startRoll < Math .PI / 4 ? -1 : 1;
