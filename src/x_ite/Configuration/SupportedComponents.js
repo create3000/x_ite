@@ -267,7 +267,7 @@ SupportedComponents .add ("Sound",
 SupportedComponents .add ("Text",
 {
    title: "Text",
-   level: 1,
+   level: 2,
    external: true,
 });
 
