@@ -61,48 +61,18 @@
   <style>
 #path3 {
   fill: #FF0000;
-  animation: fill 12s infinite linear;
+  animation: fill 12s alternate infinite linear;
 }
 
 @keyframes fill {
    0% {
-      fill: #ff0000;
-   }
-   8.3333333333% {
-      fill: #ff8000;
-   }
-   16.6666666667% {
-      fill: #ffff00;
-   }
-   25% {
-      fill: #80ff00;
-   }
-   33.3333333333% {
-      fill: #00ff00;
-   }
-   41.6666666667% {
-      fill: #00ff80;
+      fill: #ffe32d;
    }
    50% {
-      fill: #00ffff;
-   }
-   58.3333333333% {
-      fill: #0080ff;
-   }
-   66.6666666667% {
-      fill: #0000ff;
-   }
-   75% {
-      fill: #8000ff;
-   }
-   83.3333333333% {
-      fill: #ff00ff;
-   }
-   91.6666666667% {
-      fill: #ff0080;
+      fill: #ff9f2e;
    }
    100% {
-      fill: #ff0000;
+      fill: #d71f1f;
    }
 }
   </style>

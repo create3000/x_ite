@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-            this .startRotate (x, y);
+            this .startRotate (x, y, 0);
 
             this .motionTime = Date .now ();
 
@@ -509,7 +509,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
-   startRotate (x, y)
+   startRotate (x, y, negate)
    {
       if (this .getStraightenHorizon ())
       {
@@ -518,7 +518,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .fromPointer .set (x, y);
          this .startOrientation .assign (viewpoint .getUserOrientation ());
          this .lastRoll = 0;
-         this .negate   = 0;
+         this .negate   = negate;
       }
       else
       {

@@ -346,6 +346,8 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
          return triangles;
       };
    })(),
+   displaySimple (gl, renderContext)
+   { },
    display (gl, renderContext)
    { },
    transformLine (line)

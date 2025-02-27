@@ -57,22 +57,12 @@ const
    _framebuffers       = Symbol (),
    _defaultFramebuffer = Symbol (),
    _transmissionBuffer = Symbol (),
-   _observer           = Symbol (),
    _resizer            = Symbol (),
    _localObjects       = Symbol (),
    _fullscreenArray    = Symbol (),
    _fullscreenBuffer   = Symbol (),
    _composeShader      = Symbol (),
    _depthShaders       = Symbol ();
-
-// WebXR Emulator and polyfill:
-const xrEmulatorCSS = {
-   position: "fixed",
-   top: "0px",
-   left: "0px",
-   width: "100vw",
-   height: "100vh",
-};
 
 function X3DRenderingContext ()
 {
@@ -106,12 +96,12 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Observe resize and parent changes of <canvas> and configure viewport.
 
-      this [_observer] = new MutationObserver (() => this .setResizeTarget (this .getCanvas () .parent ()));
-      this [_resizer]  = new ResizeObserver (() => this .reshape ());
-
-      this .setResizeTarget (this .getCanvas () .parent ());
+      this [_resizer] = new ResizeObserver (() => this .reshape ());
+      this [_resizer] .observe (this .getSurface () [0]);
 
       $(window) .on (`orientationchange.X3DRenderingContext-${this .getInstanceId ()}`, () => this .reshape ());
+
+      this .reshape ();
 
       // Observe fullscreen changes of <x3d-canvas>.
 
@@ -321,34 +311,6 @@ Object .assign (X3DRenderingContext .prototype,
 
       return shaderNode;
    },
-   getXREmulatorCSS ()
-   {
-      return xrEmulatorCSS;
-   },
-   setResizeTarget (element)
-   {
-      if (!element .length)
-      {
-         // WebXR polyfill: parent can be null.
-         this .stopXRSession ();
-         this .getCanvas () .prependTo (this .getSurface ());
-         this .setResizeTarget (this .getSurface ());
-         return;
-      }
-
-      if (element .is (this .getSurface ()))
-         this .getCanvas () .removeAttr ("style");
-      else // WebXR Emulator or polyfill.
-         this .getCanvas () .css (xrEmulatorCSS);
-
-      this [_observer] .disconnect ();
-      this [_observer] .observe (element [0], { childList: true });
-
-      this [_resizer] .disconnect ();
-      this [_resizer] .observe (element [0]);
-
-      this .reshape ();
-   },
    resize (width, height)
    {
       return new Promise (resolve =>
@@ -522,8 +484,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       this [_session] = window;
 
-      this [_observer] .disconnect ();
-      this [_resizer]  .disconnect ();
+      this [_resizer] .disconnect ();
 
       $(window)   .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
       $(document) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);

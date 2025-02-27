@@ -7,6 +7,18 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v11.2 Series
+
+*Leipzig, 16th February 2024:* With this series there is now extended WebXR support. Use your VR glasses with X_ITE and get immersive.
+
+* Basic visualization of the controller (input ray and tracking point)
+* X3DPointingDeviceSensorNode support
+* Support for WALK, FLY and EXAMINE viewer via controllers and buttons
+
+You can now click and drag [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) and [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) etc. and also get feedback on your controller.
+
+The WALK, FLY and EXAMINE viewer can now be controlled via the buttons and the thumbstick of the controller(s), conveniently when sitting on the couch. Use a [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node to choose a viewer.
+
 ## X_ITE v11.0 Series
 
 *Leipzig, 12th December 2024:* Again, these series fixes some long standing issues. There are also some breaking changes.

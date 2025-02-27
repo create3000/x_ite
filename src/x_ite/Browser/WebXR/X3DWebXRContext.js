@@ -93,12 +93,7 @@ Object .assign (X3DWebXRContext .prototype,
             session        = await navigator .xr .requestSession (mode),
             referenceSpace = await session .requestReferenceSpace ("local");
 
-         // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-         this .cameraEvents ()   .addInterest ("xrUpdatePose",     this);
          this .finishedEvents () .addInterest ("xrUpdatePointers", this);
-         this .endEvents ()      .addInterest ("xrEndFrame",       this);
 
          session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
@@ -146,9 +141,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .cameraEvents ()   .removeInterest ("xrUpdatePose",     this);
          this .finishedEvents () .removeInterest ("xrUpdatePointers", this);
-         this .endEvents ()      .removeInterest ("xrEndFrame",       this);
 
          this .setSession (window);
          this .setDefaultFramebuffer (null);
@@ -248,6 +241,23 @@ Object .assign (X3DWebXRContext .prototype,
          this .removeHit (inputSource .hit);
          this [_inputSources] .delete (inputSource);
       }
+
+      this .xrUpdateGamepads ();
+   },
+   xrUpdateGamepads ()
+   {
+      this [_gamepads] .length = 0;
+
+      for (const { gamepad } of this [_inputSources])
+      {
+         if (!gamepad)
+            continue;
+
+         if (gamepad .axes .length < 4)
+            continue;
+
+         this [_gamepads] .push (gamepad);
+      }
    },
    xrFrame (frame)
    {
@@ -256,34 +266,14 @@ Object .assign (X3DWebXRContext .prototype,
 
       this [_frame] = frame;
 
-      // Emulator
-
-      const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
-
-      // WebXR Emulator or polyfill.
-      if (emulator)
-         this .getCanvas () .css (this .getXREmulatorCSS ());
-
       // Projection matrix
 
       this .xrUpdateNearFarPlanes ();
 
       // Navigation
 
-      this [_gamepads] .length = 0;
-
-      for (const { active, gamepad } of this [_inputSources])
-      {
-         if (!active)
-            continue;
-
-         if (gamepad .axes .length < 4)
-            continue;
-
-         this [_gamepads] .push (gamepad);
-      }
-
       this .getViewer () .gamepads (this [_gamepads]);
+      this .xrUpdatePose ();
 
       // Trigger new frame.
 
@@ -300,7 +290,7 @@ Object .assign (X3DWebXRContext .prototype,
       pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
       pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
 
-      let v = 0;
+      let i = 0;
 
       for (const originalView of originalPose .views)
       {
@@ -310,9 +300,9 @@ Object .assign (X3DWebXRContext .prototype,
          if (!width)
             continue;
 
-         this .reshapeFramebuffer (v, x|0, y|0, width|0, height|0);
+         this .reshapeFramebuffer (i, x, y, width, height);
 
-         const view = pose .views [v] ??= {
+         const view = pose .views [i] ??= {
             projectionMatrix: new Matrix4 (),
             cameraSpaceMatrix: new Matrix4 (),
             viewMatrix: new Matrix4 (),
@@ -327,11 +317,11 @@ Object .assign (X3DWebXRContext .prototype,
          view .matrix  .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
          view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
 
-         ++ v;
+         ++ i;
       }
 
-      pose .views .length              = v;
-      this .getFramebuffers () .length = v;
+      this .getFramebuffers () .length = i;
+      pose .views .length              = i;
    },
    xrUpdatePointers: (function ()
    {
@@ -518,13 +508,6 @@ Object .assign (X3DWebXRContext .prototype,
          }
       };
    })(),
-   xrEndFrame ()
-   {
-      const gl = this .getContext ();
-
-      // WebXR Emulator and polyfill: bind to null, to prevent changes.
-      gl .bindVertexArray (null);
-   },
    xrSensorHitPulse (hit, gamepad)
    {
       if (hit .sensors .size)

@@ -82,16 +82,16 @@ Object .assign (X3DTimeContext .prototype,
       return function ()
       {
          const
-            time        = Date .now () / 1000,
-            interval    = time - this [_currentTime],
-            activeLayer = this .getActiveLayer ();
+            time          = Date .now () / 1000,
+            interval      = time - this [_currentTime],
+            viewpointNode = this .getActiveViewpoint ();
 
          this [_currentTime]      = time;
          this [_currentFrameRate] = interval ? 1 / interval : 60;
 
-         if (activeLayer)
+         if (viewpointNode)
          {
-            const cameraSpaceMatrix = activeLayer .getViewpoint () .getCameraSpaceMatrix ();
+            const cameraSpaceMatrix = viewpointNode .getCameraSpaceMatrix ();
 
             lastPosition .assign (this [_currentPosition]);
             this [_currentPosition] .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
