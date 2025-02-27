@@ -58,7 +58,6 @@ import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js"
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
