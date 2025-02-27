@@ -54,6 +54,7 @@ const X_ITE_EXAMPLES = [
    { component: "KeyDeviceSensor", test: "StringSensor" },
    { component: "Layering", test: "LayerSet" },
    { component: "Layering", test: "Viewport" },
+   { component: "Layout", test: "ScreenFontStyle" },
    { component: "Lighting", test: "DirectionalLight", xrButtonPosition: "bl" },
    { component: "Lighting", test: "PointLight" },
    { component: "Lighting", test: "Shadows" },
