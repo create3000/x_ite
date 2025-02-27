@@ -206,7 +206,7 @@ Missing Nodes:
 - [Layout](/x_ite/components/layout/layout/)
 - [LayoutGroup](/x_ite/components/layout/layoutgroup/)
 - [LayoutLayer](/x_ite/components/layout/layoutlayer/)
-- [ScreenFontStyle](/x_ite/components/layout/screenfontstyle/)
+- [ScreenFontStyle](/x_ite/components/layout/screenfontstyle/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/layout/screenfontstyle/#example)
 - [ScreenGroup](/x_ite/components/layout/screengroup/)
 
 ### Lighting

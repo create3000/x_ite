@@ -170,6 +170,16 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 - [Wikipedia](https://en.wikipedia.org/wiki/Font)
 - [Wikipedia](https://en.wikipedia.org/wiki/Typeface)
 
+## Example
+
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/screenshot.png" alt="ScreenFontStyle"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d)
+{: .example-links }
+
 ## See Also
 
 - [X3D Specification of ScreenFontStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#ScreenFontStyle)
