@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-import FontStyle from "../../Components/Text/FontStyle.js";
+import FontStyle     from "../../Components/Text/FontStyle.js";
+import * as OpenType from "../../../lib/opentype/opentype.mjs";
 
 const
    _defaultFontStyle = Symbol (),
@@ -92,7 +93,7 @@ Object .assign (X3DTextContext .prototype,
                {
                   const
                      buffer = await response .arrayBuffer (),
-                     font   = opentype .parse (buffer);
+                     font   = OpenType .parse (buffer);
 
                   deferred .resolve (font);
                }
