@@ -441,6 +441,7 @@ const X_ITE_TESTS = [
    { path: "Text/test.x3d" },
    { path: "Text/Text.x3d" },
    { path: "Text/vertical.x3d" },
+   { path: "Text/WOFF2.x3dv" },
    { component: "TextureProjection" },
    { path: "TextureProjection/apple.x3d" },
    { path: "TextureProjection/Local.x3d" },
