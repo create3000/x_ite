@@ -86,7 +86,7 @@ Object .assign (X3DTextContext .prototype,
             {
                this [_fontCache] .set (url, deferred = $.Deferred ());
 
-               const response = await fetch (url, { cache: cache ? "default" : "reload"});
+               const response = await fetch (url, { cache: cache ? "default" : "reload" });
 
                if (response .ok)
                {
