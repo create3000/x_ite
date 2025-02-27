@@ -85,6 +85,7 @@ function X3DFontStyleNode (executionContext)
 
    this .addType (X3DConstants .X3DFontStyleNode);
 
+   this .font        = null;
    this .familyStack = [ ];
    this .alignments  = [ ];
 }
@@ -100,9 +101,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       this ._family  .addInterest ("set_url__",     this);
       this ._style   .addInterest ("set_url__",     this);
       this ._justify .addInterest ("set_justify__", this);
-
-      this .font        = null;
-      this .familyIndex = 0;
 
       this .set_justify__ ();
 
