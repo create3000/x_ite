@@ -66,7 +66,7 @@ function FontStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (FontStyle .prototype, X3DFontStyleNode .prototype),
 {
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new PolygonText (text, this);
    },

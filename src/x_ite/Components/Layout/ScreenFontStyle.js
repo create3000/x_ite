@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyle
 
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new ScreenText (text, this);
    },
@@ -92,7 +92,7 @@ Object .defineProperties (ScreenFontStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-         
+
          new X3DFieldDefinition (X3DConstants .inputOutput, "family",               new Fields .MFString ("SERIF")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "style",                new Fields .SFString ("PLAIN")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSize",            new Fields .SFFloat (12)),
