@@ -87,10 +87,12 @@ Object .defineProperties (ScreenFontStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "language",             new Fields .SFString ()),
+
          new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         
          new X3DFieldDefinition (X3DConstants .inputOutput, "family",               new Fields .MFString ("SERIF")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "style",                new Fields .SFString ("PLAIN")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSize",            new Fields .SFFloat (12)),
