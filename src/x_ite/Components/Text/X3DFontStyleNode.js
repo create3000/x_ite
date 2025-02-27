@@ -85,14 +85,6 @@ function X3DFontStyleNode (executionContext)
 
    this .addType (X3DConstants .X3DFontStyleNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "description",          new Fields .SFString (),
-                          X3DConstants .inputOutput, "url",                  this ._family,
-                          X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
-                          X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
-                          X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
-
-   this ._family .setName ("family");
-
    this .familyStack = [ ];
    this .alignments  = [ ];
 }
@@ -105,23 +97,14 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
 
-      this ._style   .addInterest ("set_style__",   this);
+      this ._family  .addInterest ("set_url__",     this);
+      this ._style   .addInterest ("set_url__",     this);
       this ._justify .addInterest ("set_justify__", this);
 
       this .font        = null;
       this .familyIndex = 0;
 
-      // Don't call set_style__.
       this .set_justify__ ();
-
-      this .requestImmediateLoad () .catch (Function .prototype);
-   },
-   set_style__ ()
-   {
-      if (!this ._load .getValue ())
-         return;
-
-      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -176,6 +159,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
    },
+   getNumberOfURLs ()
+   {
+      return this ._url .length + this ._family .length;
+   },
    getDefaultFont (familyName)
    {
       const family = Fonts .get (familyName);
@@ -187,18 +174,19 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    loadData ()
    {
-      // Add default font to family array.
-
-      const family = this ._url .copy ();
-
-      family .push ("SERIF");
+      this .familyStack .length = 0;
 
       // Build family stack.
 
-      this .familyStack .length = 0;
+      for (const fileURL of this ._url)
+         this .familyStack .push (fileURL);
 
-      for (const familyName of family)
+      for (const familyName of this ._family)
          this .familyStack .push (this .getDefaultFont (familyName) ?? familyName);
+
+      // Add default font to family array.
+
+      this .familyStack .push (this .getDefaultFont ("SERIF"));
 
       this .loadNext ();
    },
