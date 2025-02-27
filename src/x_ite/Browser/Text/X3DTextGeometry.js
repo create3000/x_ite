@@ -639,7 +639,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          this .getGlyphExtents (font, glyph, primitiveQuality, glyphMin, glyphMax);
 
-         xMax += glyph .advanceWidth + kerning;
+         xMax += g < numGlyphs - 1 ? glyph .advanceWidth + kerning : glyphMax .x * font .unitsPerEm;
          yMin  = Math .min (yMin, glyphMin .y);
          yMax  = Math .max (yMax, glyphMax .y);
       }
