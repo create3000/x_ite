@@ -1,5 +1,4 @@
 import ExamineViewer from "../Navigation/ExamineViewer.js";
-import Vector3       from "../../../standard/Math/Numbers/Vector3.js";
 
 const
    GAMEPAD_SPIN_FACTOR = 10,
