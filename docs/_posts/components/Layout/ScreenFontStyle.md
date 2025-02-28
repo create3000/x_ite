@@ -213,11 +213,12 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 
 It is possible to specify in the *url* field one or more URLs of a custom font file of the following types:
 
-| Encoding  | File Extension | MIME Type                   |
-|-----------|----------------|-----------------------------|
-| Open Type | .otf           | application/x-font-opentype |
-| True Type | .ttf           | application/x-font-truetype |
-| WOFF      | .woff          | application/x-font-woff     |
+| Encoding  | File Extension | MIME Type  |
+|-----------|----------------|------------|
+| Open Type | .otf           | font/otf   |
+| True Type | .ttf           | font/ttf   |
+| WOFF      | .woff          | font/woff  |
+| WOFF2     | .woff2         | font/woff2 |
 
 ## Advice
 
@@ -226,6 +227,16 @@ It is possible to specify in the *url* field one or more URLs of a custom font f
 - First add a [Text](/x_ite/components/text/text/) node as a parent.
 - [Wikipedia](https://en.wikipedia.org/wiki/Font)
 - [Wikipedia](https://en.wikipedia.org/wiki/Typeface)
+
+## Example
+
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/screenshot.png" alt="ScreenFontStyle"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d)
+{: .example-links }
 
 ## See Also
 

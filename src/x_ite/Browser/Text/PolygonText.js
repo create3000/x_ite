@@ -243,14 +243,17 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
       // Get contours for the current glyph.
 
       const
-         steps = this .getBezierSteps (primitiveQuality),
-         path  = glyph .getPath (0, 0, 1);
+         steps    = this .getBezierSteps (primitiveQuality),
+         path     = glyph .getPath (0, 0, 1),
+         contours = [ ];
 
       let
-         contours = [ ],
-         points   = [ ],
-         x        = 0,
-         y        = 0;
+         points = [ ],
+         x      = 0,
+         y      = 0;
+
+      // Fix add missing Z command, to make sure the last contour is added.
+      path .commands .push ({ type: "Z" });
 
       for (const { type, x1, y1, x2, y2, x: cx, y: cy } of path .commands)
       {

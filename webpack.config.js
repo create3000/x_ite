@@ -436,9 +436,6 @@ export default Namespace .add ("${base}", __default__);`;
                jQuery: path .resolve (__dirname, "src/lib/jquery.js"),
                // Per component
                ... {
-                  Text: {
-                     opentype: "opentype.js/dist/opentype.js",
-                  },
                   Texturing3D: {
                      CharLS: "CharLS.js/dist/charLS-DynamicMemory-browser.js",
                      dicomParser: "dicom-parser/dist/dicomParser.js",

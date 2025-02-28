@@ -43,6 +43,10 @@ Object .assign ($,
       if (object .hasOwnProperty (property))
          return object [property];
    },
+   sleep (milliseconds)
+   {
+      return new Promise (resolve => setTimeout (resolve, milliseconds));
+   },
 });
 
 // // decorator: @iffe fn (... args) { return function () { }; }
