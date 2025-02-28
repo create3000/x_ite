@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
 
       inches .remove ();
 
-      return this ._PixelsPerPoint = pixelsPerPoint * this ._ContentScale .getValue ();
+      this ._PixelsPerPoint = pixelsPerPoint * this ._ContentScale .getValue ();
    }
 });
 
