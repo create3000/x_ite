@@ -158,10 +158,10 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 
 | Encoding  | File Extension | MIME Type  |
 |-----------|----------------|------------|
+| WOFF2     | .woff2         | font/woff2 |
+| WOFF      | .woff          | font/woff  |
 | Open Type | .otf           | font/otf   |
 | True Type | .ttf           | font/ttf   |
-| WOFF      | .woff          | font/woff  |
-| WOFF2     | .woff2         | font/woff2 |
 
 ## Advice
 
