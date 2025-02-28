@@ -148,7 +148,7 @@ Object .assign (X3DTextContext .prototype,
 
       const
          text    = await response .text (),
-         wawoff2 = (new Function (text))();
+         wawoff2 = (new Function (text)) ();
 
       await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
 
