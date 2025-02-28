@@ -50,7 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DBaseNode          from "../../Base/X3DBaseNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+
 
 function RenderingProperties (executionContext)
 {
@@ -67,6 +67,8 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
 
       const browser = this .getBrowser ();
 
+      this ._ContentScale .addInterest ("set_contentScale__", this);
+
       this ._MaxTextureSize       = browser .getMaxTextureSize ();
       this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
       this ._MaxLights            = browser .getMaxLights ();
@@ -74,7 +76,19 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
       this ._TextureMemory        = browser .getTextureMemory ();
       this ._MaxAnisotropicDegree = browser .getMaxAnisotropicDegree ();
       this ._MaxSamples           = browser .getMaxSamples ();
+
+      this .set_contentScale__ ();
    },
+   set_contentScale__ ()
+   {
+      const
+         inches         = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body")),
+         pixelsPerPoint = inches .height () / 720 || 1;
+
+      inches .remove ();
+
+      return this ._PixelsPerPoint = pixelsPerPoint * this ._ContentScale .getValue ();
+   }
 });
 
 Object .defineProperties (RenderingProperties,
@@ -99,6 +113,7 @@ Object .defineProperties (RenderingProperties,
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxAnisotropicDegree",   new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxSamples",             new Fields .SFInt32 (0)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "Multisampling",          new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "PixelsPerPoint",         new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "XRSession",              new Fields .SFBool ()),
       ]),
       enumerable: true,

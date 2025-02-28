@@ -81,8 +81,7 @@ const
    _contextMenu         = Symbol (),
    _privateScene        = Symbol (),
    _keydown             = Symbol (),
-   _keyup               = Symbol (),
-   _pixelsPerPoint      = Symbol ();
+   _keyup               = Symbol ();
 
 let instanceId = 0;
 
@@ -143,10 +142,6 @@ function X3DCoreContext (element)
    this [_browserTimings]      = new BrowserTimings      (this .getPrivateScene ());
    this [_notification]        = new Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
-
-   const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
-   this [_pixelsPerPoint] = inches .height () / 720 || 1;
-   inches .remove ();
 }
 
 Object .assign (X3DCoreContext .prototype,
@@ -281,10 +276,6 @@ Object .assign (X3DCoreContext .prototype,
       this [_privateScene] .setup ();
 
       return this [_privateScene];
-   },
-   getPixelsPerPoint ()
-   {
-      return this [_pixelsPerPoint] * this .getRenderingProperty ("ContentScale");
    },
    connectedCallback ()
    { },
