@@ -423,7 +423,14 @@ Object .assign (X3DRenderingContext .prototype,
       if (!mode .match (/^(?:immersive-vr|immersive-ar)$/))
          return false;
 
-      return await $.try (() => navigator .xr .isSessionSupported (mode)) ?? false;
+      try
+      {
+         return await navigator .xr .isSessionSupported (mode);
+      }
+      catch
+      {
+         return false;
+      }
    },
    xrUpdateButton ()
    {
