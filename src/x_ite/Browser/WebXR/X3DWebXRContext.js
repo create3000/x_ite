@@ -62,6 +62,7 @@ const
    _referenceSpace = Symbol (),
    _baseLayer      = Symbol (),
    _pose           = Symbol (),
+   _visible        = Symbol (),
    _inputSources   = Symbol (),
    _inputRay       = Symbol (),
    _inputPoint     = Symbol (),
@@ -95,14 +96,15 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .finishedEvents () .addInterest ("xrUpdatePointers", this);
 
+         session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
          session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
          session .addEventListener ("end", () => this .stopXRSession ());
 
          this [_referenceSpace] = referenceSpace;
-
-         this [_inputSources] = new Set ();
-         this [_inputRay]     = new ScreenLine (this, 4, 2, 0.9);
-         this [_inputPoint]   = new ScreenPoint (this);
+         this [_visible]        = true;
+         this [_inputSources]   = new Set ();
+         this [_inputRay]       = new ScreenLine (this, 4, 2, 0.9);
+         this [_inputPoint]     = new ScreenPoint (this);
 
          Object .assign (this [_gamepads], { action: true });
 
@@ -152,6 +154,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_referenceSpace] = null;
          this [_baseLayer]      = null;
          this [_pose]           = null;
+         this [_visible]        = true;
          this [_inputSources]   = null;
          this [_inputRay]       = null;
          this [_inputPoint]     = null;
@@ -212,6 +215,20 @@ Object .assign (X3DWebXRContext .prototype,
          this .getSession () .updateRenderState (nearFarPlanes);
       };
    })(),
+   xrUpdateVisibility (event)
+   {
+      switch (this .getSession () .visibilityState)
+      {
+         case "visible-blurred":
+         case "hidden":
+            this [_visible] = false;
+            break;
+
+         default:
+            this [_visible] = true;
+            break;
+      }
+   },
    xrUpdateInputSources (event)
    {
       for (const inputSource of event .added)
@@ -440,15 +457,8 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Draw input source rays.
 
-         // switch (this .getSession () .visibilityState)
-         // {
-         //    case "visible-blurred":
-         //    case "hidden":
-         //       return;
-
-         //    default:
-         //       break;
-         // }
+         if (!this [_visible])
+            return;
 
          for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
