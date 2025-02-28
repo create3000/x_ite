@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
    set_contentScale__ ()
    {
       const
-         inches         = $("<div></div>") .hide () .css ("height", "10in") .appendTo (this .getBrowser () .getShadow ()),
+         inches         = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body")),
          pixelsPerPoint = inches .height () / 720 || 1;
 
       inches .remove ();
