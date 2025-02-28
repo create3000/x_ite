@@ -437,6 +437,8 @@ Object .assign (X3DRenderingContext .prototype,
          if (!await this .checkXRSupport ())
             return;
 
+         await this .loadComponents (this .getComponent ("WebXR"), this .getComponent ("Geometry2D"));
+
          $("<div></div>")
             .attr ("part", "xr-button")
             .attr ("title", "Start WebXR session.")
@@ -460,10 +462,6 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async startXRSession ()
    {
-      if (!await this .checkXRSupport ())
-         return;
-
-      await this .loadComponents (this .getComponent ("WebXR"), this .getComponent ("Geometry2D"));
       await this .initXRSession ();
    },
    getSession ()

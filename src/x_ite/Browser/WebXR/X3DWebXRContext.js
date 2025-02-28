@@ -90,9 +90,9 @@ Object .assign (X3DWebXRContext .prototype,
          const
             gl             = this .getContext (),
             mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-            compatible     = await gl .makeXRCompatible (),
             session        = await navigator .xr .requestSession (mode),
-            referenceSpace = await session .requestReferenceSpace ("local");
+            referenceSpace = await session .requestReferenceSpace ("local"),
+            compatible     = await gl .makeXRCompatible ();
 
          this .finishedEvents () .addInterest ("xrUpdatePointers", this);
 
