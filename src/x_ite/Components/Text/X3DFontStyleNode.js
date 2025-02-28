@@ -49,7 +49,6 @@ import Fields        from "../../Fields.js";
 import X3DNode       from "../Core/X3DNode.js";
 import X3DUrlObject  from "../Networking/X3DUrlObject.js";
 import TextAlignment from "../../Browser/Text/TextAlignment.js";
-import FileLoader    from "../../InputOutput/FileLoader.js";
 import X3DConstants  from "../../Base/X3DConstants.js";
 import URLs          from "../../Browser/Networking/URLs.js";
 
@@ -59,22 +58,22 @@ import URLs          from "../../Browser/Networking/URLs.js";
 
 const Fonts = new Map ([
    ["SERIF", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Droid/DroidSerif-Regular.ttf")],
-      ["ITALIC",     URLs .getFontsURL ("Droid/DroidSerif-Italic.ttf")],
-      ["BOLD",       URLs .getFontsURL ("Droid/DroidSerif-Bold.ttf")],
-      ["BOLDITALIC", URLs .getFontsURL ("Droid/DroidSerif-BoldItalic.ttf")],
+      ["PLAIN",      URLs .getFontsURL ("Droid/DroidSerif-Regular.woff2")],
+      ["ITALIC",     URLs .getFontsURL ("Droid/DroidSerif-Italic.woff2")],
+      ["BOLD",       URLs .getFontsURL ("Droid/DroidSerif-Bold.woff2")],
+      ["BOLDITALIC", URLs .getFontsURL ("Droid/DroidSerif-BoldItalic.woff2")],
    ])],
    ["SANS", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Ubuntu/Ubuntu-R.ttf")],
-      ["ITALIC",     URLs .getFontsURL ("Ubuntu/Ubuntu-RI.ttf")],
-      ["BOLD",       URLs .getFontsURL ("Ubuntu/Ubuntu-B.ttf")],
-      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/Ubuntu-BI.ttf")],
+      ["PLAIN",      URLs .getFontsURL ("Ubuntu/Ubuntu-R.woff2")],
+      ["ITALIC",     URLs .getFontsURL ("Ubuntu/Ubuntu-RI.woff2")],
+      ["BOLD",       URLs .getFontsURL ("Ubuntu/Ubuntu-B.woff2")],
+      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/Ubuntu-BI.woff2")],
    ])],
    ["TYPEWRITER", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Ubuntu/UbuntuMono-R.ttf")],
-      ["ITALIC",     URLs .getFontsURL ("Ubuntu/UbuntuMono-RI.ttf")],
-      ["BOLD",       URLs .getFontsURL ("Ubuntu/UbuntuMono-B.ttf")],
-      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/UbuntuMono-BI.ttf")],
+      ["PLAIN",      URLs .getFontsURL ("Ubuntu/UbuntuMono-R.woff2")],
+      ["ITALIC",     URLs .getFontsURL ("Ubuntu/UbuntuMono-RI.woff2")],
+      ["BOLD",       URLs .getFontsURL ("Ubuntu/UbuntuMono-B.woff2")],
+      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/UbuntuMono-BI.woff2")],
    ])],
 ]);
 
