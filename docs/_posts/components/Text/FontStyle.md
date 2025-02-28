@@ -156,11 +156,12 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 
 It is possible to specify in the *family* field a URL of a custom font file of the following types:
 
-| Encoding  | File Extension | MIME Type                   |
-|-----------|----------------|-----------------------------|
-| Open Type | .otf           | application/x-font-opentype |
-| True Type | .ttf           | application/x-font-truetype |
-| WOFF      | .woff          | application/x-font-woff     |
+| Encoding  | File Extension | MIME Type  |
+|-----------|----------------|------------|
+| Open Type | .otf           | font/otf   |
+| True Type | .ttf           | font/ttf   |
+| WOFF      | .woff          | font/woff  |
+| WOFF2     | .woff2         | font/woff2 |
 
 ## Advice
 

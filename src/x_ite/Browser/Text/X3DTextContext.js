@@ -46,12 +46,14 @@
  ******************************************************************************/
 
 import FontStyle     from "../../Components/Text/FontStyle.js";
+import URLs          from "../Networking/URLs.js";
 import * as OpenType from "../../../lib/opentype/opentype.mjs";
 
 const
    _defaultFontStyle = Symbol (),
    _fontCache        = Symbol (),
-   _glyphCache       = Symbol ();
+   _glyphCache       = Symbol (),
+   _wawoff2          = Symbol ();
 
 function X3DTextContext ()
 {
@@ -89,18 +91,19 @@ Object .assign (X3DTextContext .prototype,
 
                const response = await fetch (url, { cache: cache ? "default" : "reload" });
 
-               if (response .ok)
-               {
-                  const
-                     buffer = await response .arrayBuffer (),
-                     font   = OpenType .parse (buffer);
-
-                  deferred .resolve (font);
-               }
-               else
-               {
+               if (!response .ok)
                   throw new Error (response .statusText || response .status);
-               }
+
+               const decompress = url .includes (".woff2")
+                  ? await this .getWaWoff2 ()
+                  : buffer => buffer;
+
+               const
+                  buffer       = await response .arrayBuffer (),
+                  decompressed = decompress (buffer),
+                  font         = OpenType .parse (decompressed);
+
+               deferred .resolve (font);
             }
             catch (error)
             {
@@ -130,6 +133,28 @@ Object .assign (X3DTextContext .prototype,
 
       return cachedGlyph;
    },
+   async getWaWoff2 ()
+   {
+      return await (this [_wawoff2] ??= this .loadWaWoff2 ());
+   },
+   async loadWaWoff2 ()
+   {
+      const
+         url      = URLs .getLibraryURL ("decompress_binding.js"),
+         response = await fetch (url);
+
+      if (!response .ok)
+         throw new Error (response .statusText || response .status);
+
+      const
+         text    = await response .text (),
+         wawoff2 = (new Function (text))();
+
+      while (!wawoff2 .decompress)
+         await $.sleep (10);
+
+      return buffer => wawoff2 .decompress (buffer);
+   }
 });
 
 export default X3DTextContext;
