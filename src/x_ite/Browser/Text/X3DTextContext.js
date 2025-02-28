@@ -133,9 +133,9 @@ Object .assign (X3DTextContext .prototype,
 
       return cachedGlyph;
    },
-   async getWaWoff2 ()
+   getWaWoff2 ()
    {
-      return await (this [_wawoff2] ??= this .loadWaWoff2 ());
+      return this [_wawoff2] ??= this .loadWaWoff2 ();
    },
    async loadWaWoff2 ()
    {
