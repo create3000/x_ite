@@ -80,7 +80,32 @@ Object .assign (X3DWebXRContext .prototype,
    {
       return this [_pose];
    },
-   async startXRSession ()
+   xrAddButton ()
+   {
+      if (!this .getBrowserOption ("XRButton"))
+         return;
+
+      $("<div></div>")
+         .attr ("part", "xr-button")
+         .attr ("title", "Start WebXR session.")
+         .addClass ("x_ite-private-xr-button")
+         .on ("mousedown touchstart", false)
+         .on ("mouseup touchend", event =>
+         {
+            event .preventDefault ();
+            event .stopImmediatePropagation ();
+            event .stopPropagation ();
+
+            this .startAudioElements ();
+
+            if (this .getSession () === window)
+               this .xrStartSession ();
+            else
+               this .xrStopSession ();
+         })
+         .appendTo (this .getSurface ());
+   },
+   async xrStartSession ()
    {
       return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
       {
@@ -98,7 +123,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
          session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
-         session .addEventListener ("end", () => this .stopXRSession ());
+         session .addEventListener ("end", () => this .xrStopSession ());
 
          this [_referenceSpace] = referenceSpace;
          this [_visible]        = true;
@@ -134,7 +159,7 @@ Object .assign (X3DWebXRContext .prototype,
          // });
       });
    },
-   stopXRSession ()
+   xrStopSession ()
    {
       return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
       {

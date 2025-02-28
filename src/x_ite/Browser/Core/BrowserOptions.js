@@ -391,7 +391,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_XRButton__ (mode)
    {
-      this .getBrowser () .updateXRButton ();
+      this .getBrowser () .xrUpdateButton ();
    },
 });
 

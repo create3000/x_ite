@@ -116,9 +116,9 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Check for WebXR support.
 
-      navigator .xr ?.addEventListener ("devicechange", () => this .updateXRButton ());
+      navigator .xr ?.addEventListener ("devicechange", () => this .xrUpdateButton ());
 
-      this .updateXRButton ();
+      this .xrUpdateButton ();
    },
    getRenderer ()
    {
@@ -410,7 +410,7 @@ Object .assign (X3DRenderingContext .prototype,
       else
          element .removeClass ("x_ite-fullscreen");
    },
-   async checkXRSupport ()
+   async xrCheckSupport ()
    {
       if (this .getContext () .getVersion () <= 1)
          return false;
@@ -425,41 +425,22 @@ Object .assign (X3DRenderingContext .prototype,
 
       return await $.try (() => navigator .xr .isSessionSupported (mode)) ?? false;
    },
-   updateXRButton ()
+   xrUpdateButton ()
    {
-      return Lock .acquire (`X3DWebXRContext.updateXRButton-${this .getId ()}`, async () =>
+      return Lock .acquire (`X3DWebXRContext.xrUpdateButton-${this .getId ()}`, async () =>
       {
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
-         if (!this .getBrowserOption ("XRButton"))
-            return;
-
-         if (!await this .checkXRSupport ())
+         if (!await this .xrCheckSupport ())
             return;
 
          await this .loadComponents (this .getComponent ("WebXR"), this .getComponent ("Geometry2D"));
 
-         $("<div></div>")
-            .attr ("part", "xr-button")
-            .attr ("title", "Start WebXR session.")
-            .addClass ("x_ite-private-xr-button")
-            .on ("mousedown touchstart", false)
-            .on ("mouseup touchend", event =>
-            {
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
-               event .stopPropagation ();
-
-               this .startAudioElements ();
-
-               if (this [_session] === window)
-                  this .startXRSession ();
-               else
-                  this .stopXRSession ();
-            })
-            .appendTo (this .getSurface ());
+         this .xrAddButton ();
       });
    },
+   xrFrame ()
+   { },
    getSession ()
    {
       return this [_session];
@@ -472,8 +453,6 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return null;
    },
-   xrFrame ()
-   { },
    dispose ()
    {
       this [_session] = window;
