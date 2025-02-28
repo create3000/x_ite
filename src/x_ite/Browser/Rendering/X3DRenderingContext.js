@@ -460,10 +460,6 @@ Object .assign (X3DRenderingContext .prototype,
             .appendTo (this .getSurface ());
       });
    },
-   async startXRSession ()
-   {
-      await this .initXRSession ();
-   },
    getSession ()
    {
       return this [_session];

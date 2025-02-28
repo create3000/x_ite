@@ -80,7 +80,7 @@ Object .assign (X3DWebXRContext .prototype,
    {
       return this [_pose];
    },
-   async initXRSession ()
+   async startXRSession ()
    {
       return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
       {
