@@ -51,7 +51,6 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DBaseNode          from "../../Base/X3DBaseNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
-
 function RenderingProperties (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
