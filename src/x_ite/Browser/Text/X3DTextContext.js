@@ -150,8 +150,7 @@ Object .assign (X3DTextContext .prototype,
          text    = await response .text (),
          wawoff2 = (new Function (text))();
 
-      while (!wawoff2 .decompress)
-         await $.sleep (10);
+      await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
 
       return buffer => wawoff2 .decompress (buffer);
    }
