@@ -734,7 +734,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          {
             const [key] = args;
 
-            for (const [event, map] of this [_browserCallbacks])
+            for (const map of this [_browserCallbacks] .values ())
                map .delete (key);
 
             break;
