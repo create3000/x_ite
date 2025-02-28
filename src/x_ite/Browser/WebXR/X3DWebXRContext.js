@@ -54,9 +54,9 @@ import Rotation4   from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4     from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock        from "../../../standard/Utility/Lock.js";
 
-import "./WebXRExamineViewer.js";
-import "./WebXRX3DFlyViewer.js";
-import "./WebXRX3DViewer.js";
+import "./xrExamineViewer.js";
+import "./xrX3DFlyViewer.js";
+import "./xrX3DViewer.js";
 
 const
    _referenceSpace = Symbol (),
