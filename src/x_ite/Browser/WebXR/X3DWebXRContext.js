@@ -154,7 +154,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_referenceSpace] = null;
          this [_baseLayer]      = null;
          this [_pose]           = null;
-         this [_visible]        = true;
+         this [_visible]        = false;
          this [_inputSources]   = null;
          this [_inputRay]       = null;
          this [_inputPoint]     = null;
