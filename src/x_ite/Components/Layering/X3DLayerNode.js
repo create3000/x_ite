@@ -392,6 +392,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    })(),
    pointer (type, renderObject)
    {
+      if (!this ._pointerEvents .getValue ())
+         return;
+
       const
          browser  = this .getBrowser (),
          viewport = this .viewportNode .getRectangle ();
