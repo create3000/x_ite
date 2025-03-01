@@ -82,11 +82,7 @@ import QuickSort                   from "../standard/Math/Algorithms/QuickSort.j
 import jQuery                      from "../lib/jquery.js";
 import libtess                     from "../lib/libtess.js";
 
-const
-   callbacks = $.Deferred (),
-   fallbacks = $.Deferred ();
-
-let initialized = false;
+let promise;
 
 /**
 *
@@ -96,40 +92,28 @@ let initialized = false;
 */
 const X3D = Object .assign (function (callback, fallback)
 {
-   return new Promise ((resolve, reject) =>
+   promise ??= new Promise (resolve =>
    {
-      if (typeof callback === "function")
-         callbacks .done (callback);
-
-      if (typeof fallback === "function")
-         fallbacks .done (fallback);
-
-      callbacks .done (resolve);
-      fallbacks .done (reject);
-
-      if (initialized)
-         return;
-
-      initialized = true;
-
       $(() =>
       {
          try
          {
             Legacy .elements ($("X3DCanvas"), X3DBrowser);
 
-            if ([... $("x3d-canvas")] .every (canvas => canvas .browser))
-               callbacks .resolve ();
+            if (Array .from ($("x3d-canvas")) .every (canvas => canvas .browser))
+               resolve ();
             else
-               fallbacks .resolve (new Error ("Couldn't create browser."));
+               throw new Error ("Couldn't create browser.");
          }
          catch (error)
          {
             Legacy .error ($("X3DCanvas"), error);
-            fallbacks .resolve (error);
+            throw error;
          }
       });
    });
+
+   return promise .then (callback) .catch (fallback);
 },
 Namespace, Namespace .Fields,
 {
