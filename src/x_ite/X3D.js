@@ -94,7 +94,7 @@ let promise; // Declare return value of X3D function.
 */
 const X3D = Object .assign (function (onfulfilled, onrejected)
 {
-   promise ??= new Promise (resolve =>
+   promise ??= new Promise ((resolve, reject) =>
    {
       $(() =>
       {
@@ -110,7 +110,7 @@ const X3D = Object .assign (function (onfulfilled, onrejected)
          catch (error)
          {
             Legacy .error ($("X3DCanvas"), error);
-            throw error;
+            reject (error);
          }
       });
    });

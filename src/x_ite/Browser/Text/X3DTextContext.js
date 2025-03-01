@@ -83,23 +83,30 @@ Object .assign (X3DTextContext .prototype,
 
       if (!promise)
       {
-         this [_fontCache] .set (url, promise = new Promise (async resolve =>
+         this [_fontCache] .set (url, promise = new Promise (async (resolve, reject) =>
          {
-            const response = await fetch (url, { cache: cache ? "default" : "reload" });
+            try
+            {
+               const response = await fetch (url, { cache: cache ? "default" : "reload" });
 
-            if (!response .ok)
-               throw new Error (response .statusText || response .status);
+               if (!response .ok)
+                  throw new Error (response .statusText || response .status);
 
-            const decompress = url .includes (".woff2")
-               ? await this .getWaWoff2 ()
-               : buffer => buffer;
+               const decompress = url .includes (".woff2")
+                  ? await this .getWaWoff2 ()
+                  : buffer => buffer;
 
-            const
-               buffer       = await response .arrayBuffer (),
-               decompressed = decompress (buffer),
-               font         = OpenType .parse (decompressed);
+               const
+                  buffer       = await response .arrayBuffer (),
+                  decompressed = decompress (buffer),
+                  font         = OpenType .parse (decompressed);
 
-            resolve (font);
+               resolve (font);
+            }
+            catch (error)
+            {
+               reject (error);
+            }
          }));
       }
 
