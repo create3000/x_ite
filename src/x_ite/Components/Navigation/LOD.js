@@ -150,6 +150,8 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
             }
             else
             {
+               this .visibleNode = childNode;
+
                if (childNode .isPickableObject ())
                   this .pickableObject = childNode;
             }

@@ -292,6 +292,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   }
                   else
                   {
+                     this .visibleNodes .add (childNode);
+
                      if (childNode .isPickableObject ())
                         this .pickableObject .add (childNode);
                   }

@@ -139,6 +139,8 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
             }
             else
             {
+               this .visibleNode = childNode;
+
                if (childNode .isPickableObject ())
                   this .pickableObject = childNode;
             }

@@ -138,6 +138,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                   }
                   else
                   {
+                     this .visibleNode = childNode;
+
                      if (childNode .isPickableObject ())
                         this .pickableObject = childNode;
                   }
