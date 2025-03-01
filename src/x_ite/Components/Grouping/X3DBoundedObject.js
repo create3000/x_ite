@@ -73,7 +73,7 @@ function X3DBoundedObject (executionContext)
 
 Object .assign (X3DBoundedObject .prototype,
 {
-   childBBox: new Box3 (),
+   childBBox: new Box3 (), // X3DExecutionContext needs this.
    initialize ()
    {
       this ._hidden  .addInterest ("set_visible_and_hidden__", this);
