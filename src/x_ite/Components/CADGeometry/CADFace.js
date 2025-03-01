@@ -168,11 +168,11 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_cameraObjects__ ()
    {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
+      this .setCameraObject (this .cameraObject ?.isCameraObject ());
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (this .visibleNode ?.isPickableObject () || this .pickableObject);
+      this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
    },
    traverse (type, renderObject)
    {

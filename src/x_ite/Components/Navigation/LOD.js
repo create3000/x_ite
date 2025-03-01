@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    },
    set_cameraObjects__ ()
    {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
+      this .setCameraObject (this .cameraObject ?.isCameraObject ());
    },
    set_transformSensors__ ()
    {
