@@ -54,6 +54,7 @@ import Lock                   from "../../../standard/Utility/Lock.js";
 
 const
    _session            = Symbol (),
+   _sessionLock        = Symbol (),
    _framebuffers       = Symbol (),
    _defaultFramebuffer = Symbol (),
    _transmissionBuffer = Symbol (),
@@ -75,6 +76,7 @@ function X3DRenderingContext ()
    // WebXR support
 
    this [_session]            = window;
+   this [_sessionLock]        = Symbol ();
    this [_defaultFramebuffer] = null;
 }
 
@@ -434,7 +436,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    xrUpdateButton ()
    {
-      return Lock .acquire (`X3DWebXRContext.xrUpdateButton-${this .getId ()}`, async () =>
+      return Lock .acquire (this [_sessionLock], async () =>
       {
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 

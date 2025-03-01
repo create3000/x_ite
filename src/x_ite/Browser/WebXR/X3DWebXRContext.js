@@ -59,6 +59,7 @@ import "./xrX3DFlyViewer.js";
 import "./xrX3DViewer.js";
 
 const
+   _sessionLock    = Symbol (),
    _referenceSpace = Symbol (),
    _baseLayer      = Symbol (),
    _pose           = Symbol (),
@@ -107,7 +108,7 @@ Object .assign (X3DWebXRContext .prototype,
    },
    async xrStartSession ()
    {
-      return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
+      return Lock .acquire (_sessionLock, async () =>
       {
          if (this .getSession () !== window)
             return;
@@ -161,7 +162,7 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrStopSession ()
    {
-      return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
+      return Lock .acquire (_sessionLock, async () =>
       {
          if (this .getSession () === window)
             return;
