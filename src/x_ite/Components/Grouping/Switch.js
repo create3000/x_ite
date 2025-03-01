@@ -207,7 +207,6 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
                this .pickableObject ?.traverse (type, renderObject);
 
             pickingHierarchy .pop ();
-
             return;
          }
          case TraverseType .COLLISION:
