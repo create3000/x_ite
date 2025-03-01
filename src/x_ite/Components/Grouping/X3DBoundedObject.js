@@ -96,19 +96,19 @@ Object .assign (X3DBoundedObject .prototype,
 
       this ._hidden = value;
    },
-   isBBoxVisible ()
-   {
-      return this ._bboxDisplay .getValue ();
-   },
-   getDefaultBBoxSize: (() =>
+   isDefaultBBoxSize: (() =>
    {
       const defaultBBoxSize = new Vector3 (-1, -1, -1);
 
       return function ()
       {
-         return defaultBBoxSize;
+         return this ._bboxSize .getValue () .equals (defaultBBoxSize);
       };
    })(),
+   isBBoxVisible ()
+   {
+      return this ._bboxDisplay .getValue ();
+   },
    getBBox (nodes, bbox, shadows)
    {
       // Must be unique for each X3DBoundedObject.
@@ -141,6 +141,9 @@ Object .assign (X3DBoundedObject .prototype,
             modelViewMatrix = renderObject .getModelViewMatrix ();
 
          this .getBBox (bbox);
+
+         console .log ("bbox", bbox .toString (), ... this ._bboxSize)
+
          matrix .set (bbox .center, null, bbox .size .max (m));
 
          modelViewMatrix .push ();

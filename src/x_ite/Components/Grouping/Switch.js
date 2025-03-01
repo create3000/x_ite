@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    },
    getSubBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
       {
          const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 

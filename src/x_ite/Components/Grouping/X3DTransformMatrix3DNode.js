@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
 {
    getBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
          return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
@@ -80,7 +80,11 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
       {
          this .matrix .identity ();
 
-         this .getBBox  = this .getSubBBox;
+         if (this .isDefaultBBoxSize ())
+            this .getBBox  = this .getSubBBox;
+         else
+            delete this .getBBox;
+
          this .traverse = this .groupTraverse;
       }
       else
@@ -97,7 +101,11 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
       {
          this .matrix .identity ();
 
-         this .getBBox  = this .getSubBBox;
+         if (this .isDefaultBBoxSize ())
+            this .getBBox  = this .getSubBBox;
+         else
+            delete this .getBBox;
+
          this .traverse = this .groupTraverse;
       }
       else
