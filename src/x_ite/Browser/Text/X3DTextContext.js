@@ -144,7 +144,7 @@ Object .assign (X3DTextContext .prototype,
       await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
 
       return buffer => wawoff2 .decompress (buffer);
-   }
+   },
 });
 
 export default X3DTextContext;
