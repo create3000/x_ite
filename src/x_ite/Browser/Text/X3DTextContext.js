@@ -77,42 +77,33 @@ Object .assign (X3DTextContext .prototype,
    },
    getFont (url, cache = true)
    {
-      return new Promise (async (resolve, reject) =>
+      url = String (url);
+
+      let promise = this [_fontCache] .get (url);
+
+      if (!promise)
       {
-         url = url .toString ();
-
-         let deferred = this [_fontCache] .get (url);
-
-         if (!deferred)
+         this [_fontCache] .set (url, promise = new Promise (async resolve =>
          {
-            try
-            {
-               this [_fontCache] .set (url, deferred = $.Deferred ());
+            const response = await fetch (url, { cache: cache ? "default" : "reload" });
 
-               const response = await fetch (url, { cache: cache ? "default" : "reload" });
+            if (!response .ok)
+               throw new Error (response .statusText || response .status);
 
-               if (!response .ok)
-                  throw new Error (response .statusText || response .status);
+            const decompress = url .includes (".woff2")
+               ? await this .getWaWoff2 ()
+               : buffer => buffer;
 
-               const decompress = url .includes (".woff2")
-                  ? await this .getWaWoff2 ()
-                  : buffer => buffer;
+            const
+               buffer       = await response .arrayBuffer (),
+               decompressed = decompress (buffer),
+               font         = OpenType .parse (decompressed);
 
-               const
-                  buffer       = await response .arrayBuffer (),
-                  decompressed = decompress (buffer),
-                  font         = OpenType .parse (decompressed);
+            resolve (font);
+         }));
+      }
 
-               deferred .resolve (font);
-            }
-            catch (error)
-            {
-               deferred .reject (error);
-            }
-         }
-
-         deferred .done (resolve) .fail (reject);
-      });
+      return promise;
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {
