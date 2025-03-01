@@ -158,11 +158,6 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
       }
 
-      if (this .childNode)
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
-
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
    },

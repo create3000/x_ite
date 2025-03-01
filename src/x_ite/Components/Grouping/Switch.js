@@ -153,11 +153,6 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
          }
       }
 
-      if (this .childNode)
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
-
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
    },
