@@ -71,9 +71,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       X3DProductStructureChildNode .prototype .initialize .call (this);
       X3DBoundedObject             .prototype .initialize .call (this);
 
-      this ._shape .addInterest ("set_shape__", this);
+      this ._shape .addInterest ("set_child__", this);
 
-      this .set_shape__ ();
+      this .set_child__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -82,15 +82,18 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_shape__ ()
+   set_child__ ()
    {
       if (this .childNode)
       {
-         this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
-         this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
+         this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
+         this .childNode ._isPickableObject .removeInterest ("set_child__", this);
+      }
 
-         this .childNode ._display     .removeInterest ("set_display__",     this);
-         this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
+      if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+      {
+         this .childNode ._display     .removeInterest ("set_child__", this);
+         this .childNode ._bboxDisplay .removeInterest ("set_child__", this);
       }
 
       this .childNode = null;
@@ -109,13 +112,36 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                case X3DConstants .Transform:
                case X3DConstants .X3DShapeNode:
                {
-                  childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
-                  childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
-
-                  childNode ._display     .addInterest ("set_display__",     this);
-                  childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+                  childNode ._isCameraObject   .addInterest ("set_child__", this);
+                  childNode ._isPickableObject .addInterest ("set_child__", this);
 
                   this .childNode = childNode;
+
+                  if (childNode .isCameraObject ())
+                     this .cameraObject = childNode;
+
+                  if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+                  {
+                     childNode ._display     .addInterest ("set_child__", this);
+                     childNode ._bboxDisplay .addInterest ("set_child__", this);
+
+                     if (this .childNode .isVisible ())
+                     {
+                        this .visibleNode = childNode;
+
+                        if (childNode .isPickableObject ())
+                           this .pickableObject = childNode;
+                     }
+
+                     if (childNode .isBBoxVisible ())
+                        this .boundedObject = childNode;
+                  }
+                  else
+                  {
+                     if (childNode .isPickableObject ())
+                        this .pickableObject = childNode;
+                  }
+
                   break;
                }
                default:
@@ -127,62 +153,56 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       }
 
       if (this .childNode)
-      {
          delete this .traverse;
-      }
       else
-      {
          this .traverse = Function .prototype;
-      }
 
-      this .set_display__ ();
-      this .set_bboxDisplay__ ();
+      this .set_cameraObjects__ ();
+      this .set_transformSensors__ ();
    },
-   set_cameraObject__ ()
+   set_cameraObjects__ ()
    {
       this .setCameraObject (this .visibleNode ?.isCameraObject ());
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (this .visibleNode ?.isPickableObject ());
-   },
-   set_display__ ()
-   {
-      if (this .childNode)
-         this .visibleNode = this .childNode ._display .getValue () ? this .childNode : null;
-      else
-         this .visibleNode = null;
-
-      this .set_cameraObject__ ();
-      this .set_transformSensors__ ();
-   },
-   set_bboxDisplay__ ()
-   {
-      if (this .childNode)
-         this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
-      else
-         this .boundedObject = null;
+      this .setPickableObject (this .visibleNode ?.isPickableObject () || this ?.pickableObject);
    },
    traverse (type, renderObject)
    {
       switch (type)
       {
          case TraverseType .POINTER:
-         case TraverseType .CAMERA:
          case TraverseType .SHADOW:
          {
             this .visibleNode ?.traverse (type, renderObject);
             return;
          }
+         case TraverseType .CAMERA:
+         {
+            this .cameraObject ?.traverse (type, renderObject);
+            return;
+         }
          case TraverseType .PICKING:
          {
+            if (this .getTransformSensors () .size)
+            {
+               const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+               for (const transformSensorNode of this .getTransformSensors ())
+                  transformSensorNode .collect (modelMatrix);
+            }
+
             const
                browser          = this .getBrowser (),
                pickingHierarchy = browser .getPickingHierarchy ();
 
             pickingHierarchy .push (this);
 
-            this .visibleNode ?.traverse (type, renderObject);
+            if (browser .getPickable () .at (-1))
+               this .visibleNode ?.traverse (type, renderObject);
+            else
+               this .pickableObject ?.traverse (type, renderObject);
 
             pickingHierarchy .pop ();
             return;
@@ -194,8 +214,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleNode ?.traverse (type, renderObject);
-
+            this .visibleNode   ?.traverse    (type, renderObject);
             this .boundedObject ?.displayBBox (type, renderObject);
             return;
          }
