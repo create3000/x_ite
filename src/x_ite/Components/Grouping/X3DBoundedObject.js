@@ -66,7 +66,7 @@ function X3DBoundedObject (executionContext)
    this ._bboxCenter .setUnit ("length");
 
    // Private properties
-   
+
    this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
    this .transformSensorNodes = new Set ();
 }
@@ -81,6 +81,10 @@ Object .assign (X3DBoundedObject .prototype,
 
       this .set_visible_and_hidden__ ();
    },
+   isVisible ()
+   {
+      return this ._display .getValue ();
+   },
    isHidden ()
    {
       return this ._hidden .getValue ();
@@ -91,6 +95,10 @@ Object .assign (X3DBoundedObject .prototype,
          return;
 
       this ._hidden = value;
+   },
+   isBBoxVisible ()
+   {
+      return this ._bboxDisplay .getValue ();
    },
    getDefaultBBoxSize: (() =>
    {
