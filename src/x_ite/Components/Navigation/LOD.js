@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (this .getTransformSensors () .size || this ?.pickableObject);
+      this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
    },
    getLevel: (() =>
    {

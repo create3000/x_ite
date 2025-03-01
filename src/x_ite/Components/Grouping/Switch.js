@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (this .getTransformSensors () .size || this ?.pickableObject);
+      this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
    },
    traverse (type, renderObject)
    {

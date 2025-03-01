@@ -172,7 +172,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (this .visibleNode ?.isPickableObject () || this ?.pickableObject);
+      this .setPickableObject (this .visibleNode ?.isPickableObject () || this .pickableObject);
    },
    traverse (type, renderObject)
    {
