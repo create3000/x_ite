@@ -150,12 +150,12 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
                if (childNode .isPickableObject ())
                   this .pickableObject = childNode;
             }
-
-            delete this .traverse;
          }
       }
 
-      if (!this .childNode)
+      if (this .childNode)
+         delete this .traverse;
+      else
          this .traverse = Function .prototype;
 
       this .set_cameraObjects__ ();

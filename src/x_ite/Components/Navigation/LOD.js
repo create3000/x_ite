@@ -164,6 +164,8 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          }
       }
 
+      // Don't do add/remove .traverse, because it is always needed.
+
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
    },
