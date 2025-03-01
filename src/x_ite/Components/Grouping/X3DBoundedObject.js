@@ -142,8 +142,6 @@ Object .assign (X3DBoundedObject .prototype,
 
          this .getBBox (bbox);
 
-         console .log ("bbox", bbox .toString (), ... this ._bboxSize)
-
          matrix .set (bbox .center, null, bbox .size .max (m));
 
          modelViewMatrix .push ();
