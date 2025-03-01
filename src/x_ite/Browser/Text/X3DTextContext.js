@@ -101,6 +101,17 @@ Object .assign (X3DTextContext .prototype,
                   decompressed = decompress (buffer),
                   font         = OpenType .parse (decompressed);
 
+               // for (const name of Object .values (font .names))
+               // {
+               //    console .log (name);
+
+               //    // Properties can be undefined.
+               //    console .log (... Object .values (name .fullName));
+               //    console .log (... Object .values (name .fontFamily));
+               //    console .log (name .preferredFamily);
+               //    console .log (name .preferredSubfamily);
+               // }
+
                resolve (font);
             }
             catch (error)
