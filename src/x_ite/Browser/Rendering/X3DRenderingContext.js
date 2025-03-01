@@ -422,9 +422,6 @@ Object .assign (X3DRenderingContext .prototype,
 
       const mode = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-");
 
-      if (!mode .match (/^(?:immersive-vr|immersive-ar)$/))
-         return false;
-
       try
       {
          return await navigator .xr .isSessionSupported (mode);
