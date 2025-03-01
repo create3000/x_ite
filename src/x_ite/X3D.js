@@ -86,11 +86,11 @@ let promise; // Declare return value of X3D function.
 
 /**
 *
-* @param {function?} callback
-* @param {function?} fallback
+* @param {function?} onfulfilled
+* @param {function?} onrejected
 * @returns {Promise<void>} Promise
 */
-const X3D = Object .assign (function (callback, fallback)
+const X3D = Object .assign (function (onfulfilled, onrejected)
 {
    promise ??= new Promise (resolve =>
    {
@@ -113,7 +113,7 @@ const X3D = Object .assign (function (callback, fallback)
       });
    });
 
-   return promise .then (callback) .catch (fallback);
+   return promise .then (onfulfilled) .catch (onrejected);
 },
 Namespace, Namespace .Fields,
 {
