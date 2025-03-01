@@ -258,7 +258,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   if (childNode .isPickableObject ())
                      this .pickableSensorNodes .add (childNode);
 
-                  this .addPickableSensorNode (childNode);
                   break;
                }
                case X3DConstants .ListenerPointSource:
@@ -270,13 +269,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   childNode ._isCameraObject   .addInterest ("set_children__", this);
                   childNode ._isPickableObject .addInterest ("set_children__", this);
 
+                  this .childNodes .add (childNode);
+
                   if (childNode .isCameraObject ())
                      this .cameraObjects .add (childNode);
-
-                  if (childNode .isPickableObject ())
-                     this .pickableObject .add (childNode);
-
-                  this .childNodes .add (childNode);
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                   {
@@ -284,10 +280,20 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                      childNode ._bboxDisplay .addInterest ("set_children__", this);
 
                      if (childNode .isVisible ())
+                     {
                         this .visibleNodes .add (childNode);
+
+                        if (childNode .isPickableObject ())
+                           this .pickableObjects .add (childNode);
+                     }
 
                      if (childNode .isBBoxVisible ())
                         this .boundedObjects .add (childNode);
+                  }
+                  else
+                  {
+                     if (childNode .isPickableObject ())
+                        this .pickableObject .add (childNode);
                   }
 
                   break;
