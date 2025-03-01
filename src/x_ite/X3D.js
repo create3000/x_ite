@@ -82,7 +82,7 @@ import QuickSort                   from "../standard/Math/Algorithms/QuickSort.j
 import jQuery                      from "../lib/jquery.js";
 import libtess                     from "../lib/libtess.js";
 
-let promise;
+let promise; // Declare return value of X3D function.
 
 /**
 *
