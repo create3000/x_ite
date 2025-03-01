@@ -84,6 +84,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_child__ ()
    {
+      // Remove node.
+
       if (this .childNode)
       {
          this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
@@ -97,6 +99,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       }
 
       this .childNode = null;
+
+      // Add node.
 
       const childNode = X3DCast (X3DConstants .X3DChildNode, this ._shape);
 

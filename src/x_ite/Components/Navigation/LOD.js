@@ -106,6 +106,8 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    },
    set_level__ (level)
    {
+      // Remove node.
+
       if (this .childNode)
       {
          this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
@@ -117,6 +119,10 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          this .childNode ._display     .removeInterest ("set_child__", this);
          this .childNode ._bboxDisplay .removeInterest ("set_child__", this);
       }
+
+      this .childNode = null;
+
+      // Add node.
 
       if (level >= 0 && level < this ._children .length)
       {
@@ -156,14 +162,6 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
                   this .pickableObject = childNode;
             }
          }
-         else
-         {
-            this .childNode = null;
-         }
-      }
-      else
-      {
-         this .childNode = null;
       }
 
       this .set_cameraObjects__ ();

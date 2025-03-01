@@ -93,6 +93,8 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    remove () { },
    set_child__ ()
    {
+      // Remove node.
+
       if (this .childNode)
       {
          this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
@@ -104,6 +106,10 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
          this .childNode ._display     .removeInterest ("set_child__", this);
          this .childNode ._bboxDisplay .removeInterest ("set_child__", this);
       }
+
+      this .childNode = null;
+
+      // Add node.
 
       const whichChoice = this ._whichChoice .getValue ();
 
@@ -147,19 +153,10 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
 
             delete this .traverse;
          }
-         else
-         {
-            this .childNode = null;
-
-            this .traverse = Function .prototype;
-         }
       }
-      else
-      {
-         this .childNode = null;
 
+      if (!this .childNode)
          this .traverse = Function .prototype;
-      }
 
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
