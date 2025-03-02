@@ -83,10 +83,13 @@ Object .assign (X3DTextContext .prototype,
    },
    async getFont (familyName, style)
    {
+      familyName = familyName .toLowerCase ();
+      style      = style .toLowerCase () .replaceAll (" ", "");
+
       await Promise .allSettled (this [_loadingFonts]);
 
-      return this [_familyCache] .get (familyName .toLowerCase ()) ?.get (style .toLowerCase () .replaceAll (" ", ""))
-         ?? this [_fullNameCache] .get (familyName .toLowerCase ())
+      return this [_familyCache] .get (familyName) ?.get (style)
+         ?? this [_fullNameCache] .get (familyName)
          ?? null;
    },
    registerFont (font)
