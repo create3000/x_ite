@@ -1992,7 +1992,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
    },
    getBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
          return bbox .set (this ._dimensions .getValue (), (external_X_ITE_X3D_Vector3_default()).Zero);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());

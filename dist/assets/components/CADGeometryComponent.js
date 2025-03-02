@@ -197,10 +197,7 @@ function CADAssembly (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CADAssembly);
 }
 
-Object .assign (Object .setPrototypeOf (CADAssembly .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
-   //X3DProductStructureChildNode .prototype,
-{
-});
+Object .setPrototypeOf (CADAssembly .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype);
 
 Object .defineProperties (CADAssembly,
 {
@@ -309,29 +306,36 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
       CADGeometry_X3DProductStructureChildNode .prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
-      this ._shape .addInterest ("set_shape__", this);
+      this ._shape .addInterest ("set_child__", this);
 
-      this .set_shape__ ();
+      this .set_child__ ();
    },
    getBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
          return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_shape__ ()
+   set_child__ ()
    {
+      // Remove node.
+
       if (this .childNode)
       {
-         this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
-         this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
+         this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
+         this .childNode ._isPickableObject .removeInterest ("set_child__", this);
+      }
 
-         this .childNode ._display     .removeInterest ("set_display__",     this);
-         this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
+      if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, this .childNode))
+      {
+         this .childNode ._display     .removeInterest ("set_child__", this);
+         this .childNode ._bboxDisplay .removeInterest ("set_child__", this);
       }
 
       this .childNode = null;
+
+      // Add node.
 
       const childNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DChildNode, this ._shape);
 
@@ -347,13 +351,38 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
                case (external_X_ITE_X3D_X3DConstants_default()).Transform:
                case (external_X_ITE_X3D_X3DConstants_default()).X3DShapeNode:
                {
-                  childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
-                  childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
-
-                  childNode ._display     .addInterest ("set_display__",     this);
-                  childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+                  childNode ._isCameraObject   .addInterest ("set_child__", this);
+                  childNode ._isPickableObject .addInterest ("set_child__", this);
 
                   this .childNode = childNode;
+
+                  if (childNode .isCameraObject ())
+                     this .cameraObject = childNode;
+
+                  if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, this .childNode))
+                  {
+                     childNode ._display     .addInterest ("set_child__", this);
+                     childNode ._bboxDisplay .addInterest ("set_child__", this);
+
+                     if (this .childNode .isVisible ())
+                     {
+                        this .visibleNode = childNode;
+
+                        if (childNode .isPickableObject ())
+                           this .pickableObject = childNode;
+                     }
+
+                     if (childNode .isBBoxVisible ())
+                        this .boundedObject = childNode;
+                  }
+                  else
+                  {
+                     this .visibleNode = childNode;
+
+                     if (childNode .isPickableObject ())
+                        this .pickableObject = childNode;
+                  }
+
                   break;
                }
                default:
@@ -364,63 +393,52 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
       }
 
-      if (this .childNode)
-      {
-         delete this .traverse;
-      }
-      else
-      {
-         this .traverse = Function .prototype;
-      }
-
-      this .set_display__ ();
-      this .set_bboxDisplay__ ();
+      this .set_cameraObjects__ ();
+      this .set_transformSensors__ ();
    },
-   set_cameraObject__ ()
+   set_cameraObjects__ ()
    {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
+      this .setCameraObject (this .cameraObject ?.isCameraObject ());
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (this .visibleNode ?.isPickableObject ());
-   },
-   set_display__ ()
-   {
-      if (this .childNode)
-         this .visibleNode = this .childNode ._display .getValue () ? this .childNode : null;
-      else
-         this .visibleNode = null;
-
-      this .set_cameraObject__ ();
-      this .set_transformSensors__ ();
-   },
-   set_bboxDisplay__ ()
-   {
-      if (this .childNode)
-         this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
-      else
-         this .boundedObject = null;
+      this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
    },
    traverse (type, renderObject)
    {
       switch (type)
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
-         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
          case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
             this .visibleNode ?.traverse (type, renderObject);
             return;
          }
+         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
+         {
+            this .cameraObject ?.traverse (type, renderObject);
+            return;
+         }
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
+            if (this .getTransformSensors () .size)
+            {
+               const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+               for (const transformSensorNode of this .getTransformSensors ())
+                  transformSensorNode .collect (modelMatrix);
+            }
+
             const
                browser          = this .getBrowser (),
                pickingHierarchy = browser .getPickingHierarchy ();
 
             pickingHierarchy .push (this);
 
-            this .visibleNode ?.traverse (type, renderObject);
+            if (browser .getPickable () .at (-1))
+               this .visibleNode ?.traverse (type, renderObject);
+            else
+               this .pickableObject ?.traverse (type, renderObject);
 
             pickingHierarchy .pop ();
             return;
@@ -432,8 +450,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            this .visibleNode ?.traverse (type, renderObject);
-
+            this .visibleNode   ?.traverse    (type, renderObject);
             this .boundedObject ?.displayBBox (type, renderObject);
             return;
          }
@@ -623,10 +640,7 @@ function CADPart (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CADPart);
 }
 
-Object .assign (Object .setPrototypeOf (CADPart .prototype, (external_X_ITE_X3D_X3DTransformNode_default()).prototype),
-   //X3DProductStructureChildNode .prototype,
-{
-});
+Object .setPrototypeOf (CADPart .prototype, (external_X_ITE_X3D_X3DTransformNode_default()).prototype);
 
 Object .defineProperties (CADPart,
 {

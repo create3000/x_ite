@@ -1951,7 +1951,7 @@ function GeoLOD (executionContext)
    this ._range .setUnit ("length");
 
    // Private properties
-   
+
    this .unload           = false;
    this .rootGroup        = new (external_X_ITE_X3D_Group_default()) (this .getBrowser () .getPrivateScene ());
    this .rootInline       = new (external_X_ITE_X3D_Inline_default()) (executionContext);
@@ -2013,7 +2013,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
    },
    getBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
       {
          switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
          {

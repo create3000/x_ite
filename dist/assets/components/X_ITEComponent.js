@@ -1444,7 +1444,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
 
       return function ()
       {
-         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this .isDefaultBBoxSize ())
          {
             if (this .getGeometry ())
             {

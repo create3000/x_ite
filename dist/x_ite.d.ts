@@ -12,7 +12,7 @@ type X3D = typeof X3D;
 /**
  * There is the X3D object which is globally available, it expects one function handler that is called when the browsers (\<x3d-canvas\> elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
  */
-declare function X3D(callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
+declare function X3D(onfulfilled?: () => void, onrejected?: (error: Error) => void): Promise <void>;
 
 /**
  * Namespace for all X3D objects.

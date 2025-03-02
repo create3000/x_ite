@@ -80,7 +80,7 @@ const Fonts = new Map ([
 function X3DFontStyleNode (executionContext)
 {
    // To be of type X3DUrlObject ensures that it will work inside StaticGroup.
-   
+
    X3DNode      .call (this, executionContext);
    X3DUrlObject .call (this, executionContext);
 

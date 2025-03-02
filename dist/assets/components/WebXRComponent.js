@@ -2,8 +2,40 @@
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 254:
+/***/ ((module) => {
+
+module.exports = __X_ITE_X3D__ .jquery;
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
@@ -297,8 +329,7 @@ var external_X_ITE_X3D_Lock_default = /*#__PURE__*/__webpack_require__.n(externa
 ;// external "__X_ITE_X3D__ .ExamineViewer"
 const external_X_ITE_X3D_ExamineViewer_namespaceObject = __X_ITE_X3D__ .ExamineViewer;
 var external_X_ITE_X3D_ExamineViewer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ExamineViewer_namespaceObject);
-;// ./src/x_ite/Browser/WebXR/WebXRExamineViewer.js
-
+;// ./src/x_ite/Browser/WebXR/xrExamineViewer.js
 
 
 const
@@ -354,7 +385,7 @@ Object .assign ((external_X_ITE_X3D_ExamineViewer_default()).prototype,
       {
          // Rotate
 
-         this .startRotate (0, 0);
+         this .startRotate (0, 0, 1);
          this .rotate (-gamepad .axes [2] * GAMEPAD_SPIN_FACTOR * f, gamepad .axes [3] * GAMEPAD_SPIN_FACTOR * f);
       }
    },
@@ -363,7 +394,7 @@ Object .assign ((external_X_ITE_X3D_ExamineViewer_default()).prototype,
 ;// external "__X_ITE_X3D__ .X3DFlyViewer"
 const external_X_ITE_X3D_X3DFlyViewer_namespaceObject = __X_ITE_X3D__ .X3DFlyViewer;
 var external_X_ITE_X3D_X3DFlyViewer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFlyViewer_namespaceObject);
-;// ./src/x_ite/Browser/WebXR/WebXRX3DFlyViewer.js
+;// ./src/x_ite/Browser/WebXR/xrX3DFlyViewer.js
 
 
 
@@ -419,7 +450,7 @@ Object .assign ((external_X_ITE_X3D_X3DFlyViewer_default()).prototype,
 ;// external "__X_ITE_X3D__ .X3DViewer"
 const external_X_ITE_X3D_X3DViewer_namespaceObject = __X_ITE_X3D__ .X3DViewer;
 var external_X_ITE_X3D_X3DViewer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DViewer_namespaceObject);
-;// ./src/x_ite/Browser/WebXR/WebXRX3DViewer.js
+;// ./src/x_ite/Browser/WebXR/xrX3DViewer.js
 
 
 Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
@@ -429,6 +460,7 @@ Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
 });
 
 ;// ./src/x_ite/Browser/WebXR/X3DWebXRContext.js
+/* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -490,9 +522,11 @@ Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
 
 
 const
+   _sessionLock    = Symbol (),
    _referenceSpace = Symbol (),
    _baseLayer      = Symbol (),
    _pose           = Symbol (),
+   _visible        = Symbol (),
    _inputSources   = Symbol (),
    _inputRay       = Symbol (),
    _inputPoint     = Symbol (),
@@ -510,9 +544,34 @@ Object .assign (X3DWebXRContext .prototype,
    {
       return this [_pose];
    },
-   async initXRSession ()
+   xrAddButton ()
    {
-      return external_X_ITE_X3D_Lock_default().acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
+      if (!this .getBrowserOption ("XRButton"))
+         return;
+
+      $("<div></div>")
+         .attr ("part", "xr-button")
+         .attr ("title", "Start WebXR session.")
+         .addClass ("x_ite-private-xr-button")
+         .on ("mousedown touchstart", false)
+         .on ("mouseup touchend", event =>
+         {
+            event .preventDefault ();
+            event .stopImmediatePropagation ();
+            event .stopPropagation ();
+
+            this .startAudioElements ();
+
+            if (this .getSession () === window)
+               this .xrStartSession ();
+            else
+               this .xrStopSession ();
+         })
+         .appendTo (this .getSurface ());
+   },
+   async xrStartSession ()
+   {
+      return external_X_ITE_X3D_Lock_default().acquire (_sessionLock, async () =>
       {
          if (this .getSession () !== window)
             return;
@@ -520,25 +579,21 @@ Object .assign (X3DWebXRContext .prototype,
          const
             gl             = this .getContext (),
             mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-            compatible     = await gl .makeXRCompatible (),
             session        = await navigator .xr .requestSession (mode),
-            referenceSpace = await session .requestReferenceSpace ("local");
+            referenceSpace = await session .requestReferenceSpace ("local"),
+            compatible     = await gl .makeXRCompatible ();
 
-         // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-         this .cameraEvents ()   .addInterest ("xrUpdatePose",     this);
          this .finishedEvents () .addInterest ("xrUpdatePointers", this);
-         this .endEvents ()      .addInterest ("xrEndFrame",       this);
 
+         session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
          session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
-         session .addEventListener ("end", () => this .stopXRSession ());
+         session .addEventListener ("end", () => this .xrStopSession ());
 
          this [_referenceSpace] = referenceSpace;
-
-         this [_inputSources] = new Set ();
-         this [_inputRay]     = new (external_X_ITE_X3D_ScreenLine_default()) (this, 4, 2, 0.9);
-         this [_inputPoint]   = new Rendering_ScreenPoint (this);
+         this [_visible]        = true;
+         this [_inputSources]   = new Set ();
+         this [_inputRay]       = new (external_X_ITE_X3D_ScreenLine_default()) (this, 4, 2, 0.9);
+         this [_inputPoint]     = new Rendering_ScreenPoint (this);
 
          Object .assign (this [_gamepads], { action: true });
 
@@ -568,18 +623,16 @@ Object .assign (X3DWebXRContext .prototype,
          // });
       });
    },
-   stopXRSession ()
+   xrStopSession ()
    {
-      return external_X_ITE_X3D_Lock_default().acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
+      return external_X_ITE_X3D_Lock_default().acquire (_sessionLock, async () =>
       {
          if (this .getSession () === window)
             return;
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .cameraEvents ()   .removeInterest ("xrUpdatePose",     this);
          this .finishedEvents () .removeInterest ("xrUpdatePointers", this);
-         this .endEvents ()      .removeInterest ("xrEndFrame",       this);
 
          this .setSession (window);
          this .setDefaultFramebuffer (null);
@@ -590,6 +643,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_referenceSpace] = null;
          this [_baseLayer]      = null;
          this [_pose]           = null;
+         this [_visible]        = false;
          this [_inputSources]   = null;
          this [_inputRay]       = null;
          this [_inputPoint]     = null;
@@ -650,6 +704,20 @@ Object .assign (X3DWebXRContext .prototype,
          this .getSession () .updateRenderState (nearFarPlanes);
       };
    })(),
+   xrUpdateVisibility (event)
+   {
+      switch (this .getSession () .visibilityState)
+      {
+         case "visible-blurred":
+         case "hidden":
+            this [_visible] = false;
+            break;
+
+         default:
+            this [_visible] = true;
+            break;
+      }
+   },
    xrUpdateInputSources (event)
    {
       for (const inputSource of event .added)
@@ -679,35 +747,15 @@ Object .assign (X3DWebXRContext .prototype,
          this .removeHit (inputSource .hit);
          this [_inputSources] .delete (inputSource);
       }
+
+      this .xrUpdateGamepads ();
    },
-   xrFrame (frame)
+   xrUpdateGamepads ()
    {
-      if (!frame)
-         return;
-
-      this [_frame] = frame;
-
-      // Emulator
-
-      const emulator = !this .getCanvas () .parent () .is (this .getSurface ());
-
-      // WebXR Emulator or polyfill.
-      if (emulator)
-         this .getCanvas () .css (this .getXREmulatorCSS ());
-
-      // Projection matrix
-
-      this .xrUpdateNearFarPlanes ();
-
-      // Navigation
-
       this [_gamepads] .length = 0;
 
-      for (const { active, gamepad } of this [_inputSources])
+      for (const { gamepad } of this [_inputSources])
       {
-         if (!active)
-            continue;
-
          if (!gamepad)
             continue;
 
@@ -716,8 +764,22 @@ Object .assign (X3DWebXRContext .prototype,
 
          this [_gamepads] .push (gamepad);
       }
+   },
+   xrFrame (frame)
+   {
+      if (!frame)
+         return;
+
+      this [_frame] = frame;
+
+      // Projection matrix
+
+      this .xrUpdateNearFarPlanes ();
+
+      // Navigation
 
       this .getViewer () .gamepads (this [_gamepads]);
+      this .xrUpdatePose ();
 
       // Trigger new frame.
 
@@ -734,7 +796,7 @@ Object .assign (X3DWebXRContext .prototype,
       pose .cameraSpaceMatrix .assign (originalPose .transform .matrix);
       pose .viewMatrix        .assign (originalPose .transform .inverse .matrix);
 
-      let v = 0;
+      let i = 0;
 
       for (const originalView of originalPose .views)
       {
@@ -744,9 +806,9 @@ Object .assign (X3DWebXRContext .prototype,
          if (!width)
             continue;
 
-         this .reshapeFramebuffer (v, x|0, y|0, width|0, height|0);
+         this .reshapeFramebuffer (i, x, y, width, height);
 
-         const view = pose .views [v] ??= {
+         const view = pose .views [i] ??= {
             projectionMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
             cameraSpaceMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
             viewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
@@ -761,11 +823,11 @@ Object .assign (X3DWebXRContext .prototype,
          view .matrix  .assign (pose .cameraSpaceMatrix) .multRight (view .viewMatrix);
          view .inverse .assign (view .cameraSpaceMatrix) .multRight (pose .viewMatrix);
 
-         ++ v;
+         ++ i;
       }
 
-      pose .views .length              = v;
-      this .getFramebuffers () .length = v;
+      this .getFramebuffers () .length = i;
+      pose .views .length              = i;
    },
    xrUpdatePointers: (function ()
    {
@@ -884,15 +946,8 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Draw input source rays.
 
-         // switch (this .getSession () .visibilityState)
-         // {
-         //    case "visible-blurred":
-         //    case "hidden":
-         //       return;
-
-         //    default:
-         //       break;
-         // }
+         if (!this [_visible])
+            return;
 
          for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
@@ -952,13 +1007,6 @@ Object .assign (X3DWebXRContext .prototype,
          }
       };
    })(),
-   xrEndFrame ()
-   {
-      const gl = this .getContext ();
-
-      // WebXR Emulator and polyfill: bind to null, to prevent changes.
-      gl .bindVertexArray (null);
-   },
    xrSensorHitPulse (hit, gamepad)
    {
       if (hit .sensors .size)
