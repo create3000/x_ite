@@ -89,15 +89,10 @@ Object .assign (X3DTextContext .prototype,
 
       if (subfamilies)
       {
-         const styles = [style .toLowerCase () .replaceAll (" ", ""), ... subfamilies .keys ()];
+         const font = subfamilies .get (style .toLowerCase () .replaceAll (" ", ""));
 
-         for (const style of styles)
-         {
-            const font = subfamilies .get (style);
-
-            if (font)
-               return font;
-         }
+         if (font)
+            return font;
       }
 
       const font = this [_fullNameCache] .get (familyName .toLowerCase ());
