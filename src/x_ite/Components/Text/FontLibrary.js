@@ -52,6 +52,10 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function FontLibrary (executionContext)
 {
    X3DNode       .call (this, executionContext);
