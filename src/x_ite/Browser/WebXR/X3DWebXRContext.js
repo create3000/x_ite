@@ -54,14 +54,16 @@ import Rotation4   from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4     from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock        from "../../../standard/Utility/Lock.js";
 
-import "./WebXRExamineViewer.js";
-import "./WebXRX3DFlyViewer.js";
-import "./WebXRX3DViewer.js";
+import "./xrExamineViewer.js";
+import "./xrX3DFlyViewer.js";
+import "./xrX3DViewer.js";
 
 const
+   _sessionLock    = Symbol (),
    _referenceSpace = Symbol (),
    _baseLayer      = Symbol (),
    _pose           = Symbol (),
+   _visible        = Symbol (),
    _inputSources   = Symbol (),
    _inputRay       = Symbol (),
    _inputPoint     = Symbol (),
@@ -79,9 +81,34 @@ Object .assign (X3DWebXRContext .prototype,
    {
       return this [_pose];
    },
-   async initXRSession ()
+   xrAddButton ()
    {
-      return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
+      if (!this .getBrowserOption ("XRButton"))
+         return;
+
+      $("<div></div>")
+         .attr ("part", "xr-button")
+         .attr ("title", "Start WebXR session.")
+         .addClass ("x_ite-private-xr-button")
+         .on ("mousedown touchstart", false)
+         .on ("mouseup touchend", event =>
+         {
+            event .preventDefault ();
+            event .stopImmediatePropagation ();
+            event .stopPropagation ();
+
+            this .startAudioElements ();
+
+            if (this .getSession () === window)
+               this .xrStartSession ();
+            else
+               this .xrStopSession ();
+         })
+         .appendTo (this .getSurface ());
+   },
+   async xrStartSession ()
+   {
+      return Lock .acquire (_sessionLock, async () =>
       {
          if (this .getSession () !== window)
             return;
@@ -89,20 +116,21 @@ Object .assign (X3DWebXRContext .prototype,
          const
             gl             = this .getContext (),
             mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-            compatible     = await gl .makeXRCompatible (),
             session        = await navigator .xr .requestSession (mode),
-            referenceSpace = await session .requestReferenceSpace ("local");
+            referenceSpace = await session .requestReferenceSpace ("local"),
+            compatible     = await gl .makeXRCompatible ();
 
          this .finishedEvents () .addInterest ("xrUpdatePointers", this);
 
+         session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
          session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
-         session .addEventListener ("end", () => this .stopXRSession ());
+         session .addEventListener ("end", () => this .xrStopSession ());
 
          this [_referenceSpace] = referenceSpace;
-
-         this [_inputSources] = new Set ();
-         this [_inputRay]     = new ScreenLine (this, 4, 2, 0.9);
-         this [_inputPoint]   = new ScreenPoint (this);
+         this [_visible]        = true;
+         this [_inputSources]   = new Set ();
+         this [_inputRay]       = new ScreenLine (this, 4, 2, 0.9);
+         this [_inputPoint]     = new ScreenPoint (this);
 
          Object .assign (this [_gamepads], { action: true });
 
@@ -132,9 +160,9 @@ Object .assign (X3DWebXRContext .prototype,
          // });
       });
    },
-   stopXRSession ()
+   xrStopSession ()
    {
-      return Lock .acquire (`X3DWebXRContext.session-${this .getId ()}`, async () =>
+      return Lock .acquire (_sessionLock, async () =>
       {
          if (this .getSession () === window)
             return;
@@ -152,6 +180,7 @@ Object .assign (X3DWebXRContext .prototype,
          this [_referenceSpace] = null;
          this [_baseLayer]      = null;
          this [_pose]           = null;
+         this [_visible]        = false;
          this [_inputSources]   = null;
          this [_inputRay]       = null;
          this [_inputPoint]     = null;
@@ -212,6 +241,20 @@ Object .assign (X3DWebXRContext .prototype,
          this .getSession () .updateRenderState (nearFarPlanes);
       };
    })(),
+   xrUpdateVisibility (event)
+   {
+      switch (this .getSession () .visibilityState)
+      {
+         case "visible-blurred":
+         case "hidden":
+            this [_visible] = false;
+            break;
+
+         default:
+            this [_visible] = true;
+            break;
+      }
+   },
    xrUpdateInputSources (event)
    {
       for (const inputSource of event .added)
@@ -440,15 +483,8 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Draw input source rays.
 
-         // switch (this .getSession () .visibilityState)
-         // {
-         //    case "visible-blurred":
-         //    case "hidden":
-         //       return;
-
-         //    default:
-         //       break;
-         // }
+         if (!this [_visible])
+            return;
 
          for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {

@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    },
    getBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
          return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());

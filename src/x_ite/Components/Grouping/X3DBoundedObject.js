@@ -66,20 +66,24 @@ function X3DBoundedObject (executionContext)
    this ._bboxCenter .setUnit ("length");
 
    // Private properties
-   
+
    this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
    this .transformSensorNodes = new Set ();
 }
 
 Object .assign (X3DBoundedObject .prototype,
 {
-   childBBox: new Box3 (),
+   childBBox: new Box3 (), // X3DExecutionContext needs this.
    initialize ()
    {
       this ._hidden  .addInterest ("set_visible_and_hidden__", this);
       this ._visible .addInterest ("set_visible_and_hidden__", this);
 
       this .set_visible_and_hidden__ ();
+   },
+   isVisible ()
+   {
+      return this ._display .getValue ();
    },
    isHidden ()
    {
@@ -92,15 +96,19 @@ Object .assign (X3DBoundedObject .prototype,
 
       this ._hidden = value;
    },
-   getDefaultBBoxSize: (() =>
+   isDefaultBBoxSize: (() =>
    {
       const defaultBBoxSize = new Vector3 (-1, -1, -1);
 
       return function ()
       {
-         return defaultBBoxSize;
+         return this ._bboxSize .getValue () .equals (defaultBBoxSize);
       };
    })(),
+   isBBoxVisible ()
+   {
+      return this ._bboxDisplay .getValue ();
+   },
    getBBox (nodes, bbox, shadows)
    {
       // Must be unique for each X3DBoundedObject.
@@ -133,6 +141,7 @@ Object .assign (X3DBoundedObject .prototype,
             modelViewMatrix = renderObject .getModelViewMatrix ();
 
          this .getBBox (bbox);
+
          matrix .set (bbox .center, null, bbox .size .max (m));
 
          modelViewMatrix .push ();

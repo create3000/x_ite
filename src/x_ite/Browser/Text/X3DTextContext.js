@@ -77,18 +77,16 @@ Object .assign (X3DTextContext .prototype,
    },
    getFont (url, cache = true)
    {
-      return new Promise (async (resolve, reject) =>
+      url = String (url);
+
+      let promise = this [_fontCache] .get (url);
+
+      if (!promise)
       {
-         url = url .toString ();
-
-         let deferred = this [_fontCache] .get (url);
-
-         if (!deferred)
+         this [_fontCache] .set (url, promise = new Promise (async (resolve, reject) =>
          {
             try
             {
-               this [_fontCache] .set (url, deferred = $.Deferred ());
-
                const response = await fetch (url, { cache: cache ? "default" : "reload" });
 
                if (!response .ok)
@@ -103,16 +101,27 @@ Object .assign (X3DTextContext .prototype,
                   decompressed = decompress (buffer),
                   font         = OpenType .parse (decompressed);
 
-               deferred .resolve (font);
+               // for (const name of Object .values (font .names))
+               // {
+               //    console .log (name);
+
+               //    // Properties can be undefined.
+               //    console .log (... Object .values (name .fullName));
+               //    console .log (... Object .values (name .fontFamily));
+               //    console .log (name .preferredFamily);
+               //    console .log (name .preferredSubfamily);
+               // }
+
+               resolve (font);
             }
             catch (error)
             {
-               deferred .reject (error);
+               reject (error);
             }
-         }
+         }));
+      }
 
-         deferred .done (resolve) .fail (reject);
-      });
+      return promise;
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {
@@ -148,13 +157,12 @@ Object .assign (X3DTextContext .prototype,
 
       const
          text    = await response .text (),
-         wawoff2 = (new Function (text))();
+         wawoff2 = (new Function (text)) ();
 
-      while (!wawoff2 .decompress)
-         await $.sleep (10);
+      await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
 
       return buffer => wawoff2 .decompress (buffer);
-   }
+   },
 });
 
 export default X3DTextContext;

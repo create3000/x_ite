@@ -107,9 +107,6 @@ Object .assign (X3DObject .prototype,
    },
    removeInterest (callbackName, object)
    {
-      // Copy interests in case of this function is called during a `processInterests` call.
-      this [_interests] = new Map (this [_interests]);
-
       this [_interests] .delete (X3DObject .getInterestId (callbackName, object));
       this [_registry] .unregister (object);
    },

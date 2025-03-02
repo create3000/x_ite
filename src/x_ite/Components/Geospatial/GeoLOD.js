@@ -75,7 +75,7 @@ function GeoLOD (executionContext)
    this ._range .setUnit ("length");
 
    // Private properties
-   
+
    this .unload           = false;
    this .rootGroup        = new Group (this .getBrowser () .getPrivateScene ());
    this .rootInline       = new Inline (executionContext);
@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    },
    getBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
       {
          switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
          {

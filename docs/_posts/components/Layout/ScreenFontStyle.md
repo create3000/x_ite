@@ -215,10 +215,10 @@ It is possible to specify in the *url* field one or more URLs of a custom font f
 
 | Encoding  | File Extension | MIME Type  |
 |-----------|----------------|------------|
+| WOFF2     | .woff2         | font/woff2 |
+| WOFF      | .woff          | font/woff  |
 | Open Type | .otf           | font/otf   |
 | True Type | .ttf           | font/ttf   |
-| WOFF      | .woff          | font/woff  |
-| WOFF2     | .woff2         | font/woff2 |
 
 ## Advice
 

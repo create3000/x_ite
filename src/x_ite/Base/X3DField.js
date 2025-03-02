@@ -226,8 +226,6 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeReferencesCallback (key)
    {
-      this [_referencesCallbacks] = new Map (this [_referencesCallbacks]);
-
       this [_referencesCallbacks] .delete (key);
    },
    getReferencesCallbacks ()
@@ -262,8 +260,6 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeFieldCallback (key)
    {
-      this [_fieldCallbacks] = new Map (this [_fieldCallbacks]);
-
       this [_fieldCallbacks] .delete (key);
    },
    getFieldCallbacks ()
@@ -318,8 +314,6 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeRouteCallback (key)
    {
-      this [_routeCallbacks] = new Map (this [_routeCallbacks]);
-
       this [_routeCallbacks] .delete (key);
    },
    getRouteCallbacks ()

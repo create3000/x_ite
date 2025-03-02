@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
    getBBox (bbox, shadows)
    {
       // TODO: add space node.
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
          return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadows);
 
       return bbox;

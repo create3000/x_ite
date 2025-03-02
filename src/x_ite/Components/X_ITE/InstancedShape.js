@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
       return function ()
       {
-         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this .isDefaultBBoxSize ())
          {
             if (this .getGeometry ())
             {

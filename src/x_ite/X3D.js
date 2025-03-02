@@ -77,59 +77,45 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
-import X3DCanvasElement            from "./X3DCanvasElement.js";
-import QuickSort                   from "../standard/Math/Algorithms/QuickSort.js";
-import jQuery                      from "../lib/jquery.js";
-import libtess                     from "../lib/libtess.js";
 
-const
-   callbacks = $.Deferred (),
-   fallbacks = $.Deferred ();
+import "./Features.js";
+import "./X3DCanvasElement.js";
+import "../standard/Math/Algorithms/QuickSort.js";
+import "../lib/jquery.js";
+import "../lib/libtess.js";
 
-let initialized = false;
+let promise; // Declare return value of X3D function.
 
 /**
 *
-* @param {function?} callback
-* @param {function?} fallback
+* @param {function?} onfulfilled
+* @param {function?} onrejected
 * @returns {Promise<void>} Promise
 */
-const X3D = Object .assign (function (callback, fallback)
+const X3D = Object .assign (function (onfulfilled, onrejected)
 {
-   return new Promise ((resolve, reject) =>
+   promise ??= new Promise ((resolve, reject) =>
    {
-      if (typeof callback === "function")
-         callbacks .done (callback);
-
-      if (typeof fallback === "function")
-         fallbacks .done (fallback);
-
-      callbacks .done (resolve);
-      fallbacks .done (reject);
-
-      if (initialized)
-         return;
-
-      initialized = true;
-
       $(() =>
       {
          try
          {
             Legacy .elements ($("X3DCanvas"), X3DBrowser);
 
-            if ([... $("x3d-canvas")] .every (canvas => canvas .browser))
-               callbacks .resolve ();
+            if (Array .from ($("x3d-canvas")) .every (canvas => canvas .browser))
+               resolve ();
             else
-               fallbacks .resolve (new Error ("Couldn't create browser."));
+               throw new Error ("Couldn't create browser.");
          }
          catch (error)
          {
             Legacy .error ($("X3DCanvas"), error);
-            fallbacks .resolve (error);
+            reject (error);
          }
       });
    });
+
+   return promise .then (onfulfilled) .catch (onrejected);
 },
 Namespace, Namespace .Fields,
 {

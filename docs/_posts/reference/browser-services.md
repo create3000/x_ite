@@ -465,6 +465,11 @@ Returns a rendering property with the corresponding *name*.
          <td>Number of samples currently used by multisampling. <small class="blue">non standard</small></td>
       </tr>
       <tr>
+         <td>PixelsPerPoint</td>
+         <td>Float</td>
+         <td>Number of pixels per point. <small class="blue">non standard</small></td>
+      </tr>
+      <tr>
          <td>LogarithmicDepthBuffer</td>
          <td>Boolean</td>
          <td>True or false if the logarithmic depth buffer is currently enabled or not. <small class="blue">non standard</small></td>

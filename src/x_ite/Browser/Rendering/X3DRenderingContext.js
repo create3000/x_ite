@@ -62,7 +62,8 @@ const
    _fullscreenArray    = Symbol (),
    _fullscreenBuffer   = Symbol (),
    _composeShader      = Symbol (),
-   _depthShaders       = Symbol ();
+   _depthShaders       = Symbol (),
+   _buttonLock         = Symbol ();
 
 function X3DRenderingContext ()
 {
@@ -76,6 +77,7 @@ function X3DRenderingContext ()
 
    this [_session]            = window;
    this [_defaultFramebuffer] = null;
+   this [_buttonLock]         = Symbol ();
 }
 
 Object .assign (X3DRenderingContext .prototype,
@@ -116,9 +118,9 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Check for WebXR support.
 
-      navigator .xr ?.addEventListener ("devicechange", () => this .updateXRButton ());
+      navigator .xr ?.addEventListener ("devicechange", () => this .xrUpdateButton ());
 
-      this .updateXRButton ();
+      this .xrUpdateButton ();
    },
    getRenderer ()
    {
@@ -410,7 +412,7 @@ Object .assign (X3DRenderingContext .prototype,
       else
          element .removeClass ("x_ite-fullscreen");
    },
-   async checkXRSupport ()
+   async xrCheckSupport ()
    {
       if (this .getContext () .getVersion () <= 1)
          return false;
@@ -420,52 +422,31 @@ Object .assign (X3DRenderingContext .prototype,
 
       const mode = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-");
 
-      if (!mode .match (/^(?:immersive-vr|immersive-ar)$/))
+      try
+      {
+         return await navigator .xr .isSessionSupported (mode);
+      }
+      catch
+      {
          return false;
-
-      return await $.try (() => navigator .xr .isSessionSupported (mode)) ?? false;
+      }
    },
-   updateXRButton ()
+   xrUpdateButton ()
    {
-      return Lock .acquire (`X3DWebXRContext.updateXRButton-${this .getId ()}`, async () =>
+      return Lock .acquire (this [_buttonLock], async () =>
       {
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
-         if (!this .getBrowserOption ("XRButton"))
+         if (!await this .xrCheckSupport ())
             return;
 
-         if (!await this .checkXRSupport ())
-            return;
+         await this .loadComponents (this .getComponent ("WebXR"), this .getComponent ("Geometry2D"));
 
-         $("<div></div>")
-            .attr ("part", "xr-button")
-            .attr ("title", "Start WebXR session.")
-            .addClass ("x_ite-private-xr-button")
-            .on ("mousedown touchstart", false)
-            .on ("mouseup touchend", event =>
-            {
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
-               event .stopPropagation ();
-
-               this .startAudioElements ();
-
-               if (this [_session] === window)
-                  this .startXRSession ();
-               else
-                  this .stopXRSession ();
-            })
-            .appendTo (this .getSurface ());
+         this .xrAddButton ();
       });
    },
-   async startXRSession ()
-   {
-      if (!await this .checkXRSupport ())
-         return;
-
-      await this .loadComponents (this .getComponent ("WebXR"), this .getComponent ("Geometry2D"));
-      await this .initXRSession ();
-   },
+   xrFrame ()
+   { },
    getSession ()
    {
       return this [_session];
@@ -478,8 +459,6 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return null;
    },
-   xrFrame ()
-   { },
    dispose ()
    {
       this [_session] = window;
