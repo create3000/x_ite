@@ -253,8 +253,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       {
          if (fileURL .protocol !== "data:")
             console .warn (`Error loading font '${decodeURI (fileURL .href)}':`, error);
-
-         return false;
       }
    },
    dispose ()
