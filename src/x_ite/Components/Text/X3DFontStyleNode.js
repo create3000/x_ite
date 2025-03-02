@@ -180,7 +180,9 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    async loadData ()
    {
-      await new Promise (resolve => setTimeout (resolve, 0));
+      // Wait for FontLibraries to be setuped or changed.
+
+      await $.sleep (0);
 
       // Add default font to family array.
 
