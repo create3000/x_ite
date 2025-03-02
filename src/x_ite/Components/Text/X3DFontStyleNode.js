@@ -79,7 +79,8 @@ const Fonts = new Map ([
 
 function X3DFontStyleNode (executionContext)
 {
-   // To be of type X3DUrlObject ensures that it will work inside StaticGroup.
+   // To be of type X3DUrlObject ensures that it will work inside StaticGroup
+   // and legacy implementation of load URLs over family field.
 
    X3DNode      .call (this, executionContext);
    X3DUrlObject .call (this, executionContext);
