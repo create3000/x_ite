@@ -197,6 +197,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       family .push ("SERIF");
 
+      this .font = null;
+
       for (const familyName of family)
       {
          const defaultFont = this .getDefaultFont (familyName);
@@ -236,7 +238,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          }
       }
 
-      this .setLoadState (X3DConstants .COMPLETE_STATE);
+      this .setLoadState (this .font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
       this .addNodeEvent ();
    },
    async loadFont (fontPath)
