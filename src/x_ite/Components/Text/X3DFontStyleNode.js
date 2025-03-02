@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    async loadData ()
    {
-      // Wait for FontLibraries to be setuped or changed.
+      // Wait for FontLibrary nodes to be setuped or changed.
 
       await $.sleep (0);
 
