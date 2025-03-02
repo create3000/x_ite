@@ -72,9 +72,11 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
    },
    async loadData ()
    {
-      const browser = this .getBrowser ();
+      const
+         browser  = this .getBrowser (),
+         fileURLs = this ._url .map (fileURL => new URL (fileURL, this .getExecutionContext () .getBaseURL ()));
 
-      for (const fileURL of this ._url .map (fileURL => new URL (fileURL, this .getExecutionContext () .getBaseURL ())))
+      for (const fileURL of fileURLs)
       {
          try
          {
