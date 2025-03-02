@@ -94,29 +94,32 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFont (font)
    {
-      for (const name of Object .values (font .names))
+      const fullNames = new Set (Object .values (font .names)
+         .flatMap (name => Object .values (name .fullName ?? { })));
+
+      for (const fullName of fullNames)
       {
-         for (const fullName of Object .values (name .fullName ?? { }))
-         {
-            if (this .getBrowserOption ("Debug"))
-               console .info (`Registering font ${fullName}.`);
+         if (this .getBrowserOption ("Debug"))
+            console .info (`Registering font ${fullName}.`);
 
-            this [_fullNameCache] .set (fullName .toLowerCase (), font);
-         }
-
-         for (const fontFamily of Object .values (name .fontFamily ?? { }))
-         {
-            const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
-
-            this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
-
-            for (const subfamily of Object .values (name .fontSubfamily ?? { }))
-               subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
-         }
-
-         // console .log (name .preferredFamily);
-         // console .log (name .preferredSubfamily);
+         this [_fullNameCache] .set (fullName .toLowerCase (), font);
       }
+
+      const fontFamilies = new Set (Object .values (font .names)
+         .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [name, fontFamily])));
+
+      for (const [name, fontFamily] of fontFamilies)
+      {
+         const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
+
+         this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
+
+         for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
+            subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
+      }
+
+      // console .log (name .preferredFamily);
+      // console .log (name .preferredSubfamily);
    },
    loadFont (url, cache = true)
    {
