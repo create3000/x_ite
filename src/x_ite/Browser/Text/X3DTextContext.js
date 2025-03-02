@@ -99,7 +99,7 @@ Object .assign (X3DTextContext .prototype,
          for (const fullName of Object .values (name .fullName ?? { }))
          {
             if (this .getBrowserOption ("Debug"))
-               console .info (`Registering font ${fullName}`);
+               console .info (`Registering font ${fullName}.`);
 
             this [_fullNameCache] .set (fullName .toLowerCase (), font);
          }
