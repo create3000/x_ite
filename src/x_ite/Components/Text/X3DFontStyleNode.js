@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import Fields        from "../../Fields.js";
 import X3DNode       from "../Core/X3DNode.js";
 import X3DUrlObject  from "../Networking/X3DUrlObject.js";
 import TextAlignment from "../../Browser/Text/TextAlignment.js";
@@ -83,7 +84,14 @@ function X3DFontStyleNode (executionContext)
 
    this .addType (X3DConstants .X3DFontStyleNode);
 
-   this .font        = null;
+   this .addChildObjects (X3DConstants .inputOutput, "description",          new Fields .SFString (),
+                          X3DConstants .inputOutput, "url",                  this ._family,
+                          X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
+                          X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
+                          X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
+
+   this ._family .setName ("family");
+
    this .familyStack = [ ];
    this .alignments  = [ ];
 }
@@ -96,7 +104,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
 
-      this ._family  .addInterest ("set_url__",     this);
       this ._style   .addInterest ("set_url__",     this);
       this ._justify .addInterest ("set_justify__", this);
 
