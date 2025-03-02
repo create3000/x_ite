@@ -122,7 +122,7 @@ Object .assign (X3DTextContext .prototype,
    {
       url = String (url);
 
-      let promise = this [_fontCache] .get (url);
+      let promise = cache ? this [_fontCache] .get (url) : null;
 
       if (!promise)
       {
