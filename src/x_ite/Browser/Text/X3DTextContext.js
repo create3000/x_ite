@@ -111,7 +111,7 @@ Object .assign (X3DTextContext .prototype,
    {
       for (const name of Object .values (font .names))
       {
-         for (const fullName of Object .values (name .fullName))
+         for (const fullName of Object .values (name .fullName ?? { }))
          {
             if (this .getBrowserOption ("Debug"))
                console .info (`Register font ${fullName}`);
@@ -119,13 +119,13 @@ Object .assign (X3DTextContext .prototype,
             this [_fullNameCache] .set (fullName .toLowerCase (), font);
          }
 
-         for (const fontFamily of Object .values (name .fontFamily))
+         for (const fontFamily of Object .values (name .fontFamily ?? { }))
          {
             const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
 
             this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
 
-            for (const subfamily of Object .values (name .fontSubfamily))
+            for (const subfamily of Object .values (name .fontSubfamily ?? { }))
                subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
          }
 
