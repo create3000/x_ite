@@ -107,9 +107,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       this ._style   .addInterest ("set_style__",   this);
       this ._justify .addInterest ("set_justify__", this);
 
-      this .font        = null;
-      this .familyIndex = 0;
-
       // Don't call set_style__.
       this .set_justify__ ();
 
@@ -137,6 +134,19 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       this .alignments [1] = this ._justify .length > 1
                              ? this .getAlignment (1, minorNormal)
                              : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
+   },
+   getFont ()
+   {
+      return this .font;
+   },
+   getDefaultFont (familyName)
+   {
+      const family = Fonts .get (familyName);
+
+      if (family)
+         return family .get (this ._style .getValue ()) ?? family .get ("PLAIN");
+
+      return;
    },
    getMajorAlignment ()
    {
@@ -175,65 +185,75 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
    },
-   getDefaultFont (familyName)
+   async loadData ()
    {
-      const family = Fonts .get (familyName);
+      await new Promise (resolve => setTimeout (resolve, 0));
 
-      if (family)
-         return family .get (this ._style .getValue ()) ?? family .get ("PLAIN");
-
-      return;
-   },
-   loadData ()
-   {
       // Add default font to family array.
 
-      const family = this ._url .copy ();
+      const
+         browser = this .getBrowser (),
+         family  = this ._family .copy ();
 
       family .push ("SERIF");
 
-      // Build family stack.
-
-      this .familyStack .length = 0;
-
       for (const familyName of family)
-         this .familyStack .push (this .getDefaultFont (familyName) ?? familyName);
-
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      if (this .familyStack .length === 0)
       {
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         this .font = null;
-         return;
+         const defaultFont = this .getDefaultFont (familyName);
+
+         if (defaultFont)
+         {
+            const font = await this .loadFont (defaultFont);
+
+            if (font)
+            {
+               this .font = font;
+               break;
+            }
+         }
+
+         const font = await browser .getFont (familyName, this ._style .getValue ());
+
+         if (font)
+         {
+            this .font = font;
+            break;
+         }
+
+         if (familyName .match (/\.(?:woff2|woff|otf|ttf)/))
+         {
+            console .warn (`Loading font file via family field is depreciated, please use new FontLibrary node instead.`);
+
+            const
+               fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ()),
+               font    = await this .loadFont (fileURL);
+
+            if (font)
+            {
+               this .font = font;
+               break;
+            }
+         }
       }
-
-      this .family = this .familyStack .shift ();
-      this .URL    = new URL (this .family, this .getExecutionContext () .getBaseURL ());
-
-      this .getBrowser () .getFont (this .URL, this .getCache ())
-         .then (this .setFont .bind (this))
-         .catch (this .setError .bind (this));
-   },
-   setError (error)
-   {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading font '${decodeURI (this .URL .href)}':`, error);
-
-      this .loadNext ();
-   },
-   setFont (font)
-   {
-      this .font = font;
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
       this .addNodeEvent ();
    },
-   getFont ()
+   async loadFont (fontPath)
    {
-      return this .font;
+      const fileURL = new URL (fontPath, this .getExecutionContext () .getBaseURL ());
+
+      try
+      {
+         return await this .getBrowser () .loadFont (fileURL, true);
+      }
+      catch (error)
+      {
+         if (fileURL .protocol !== "data:")
+            console .warn (`Error loading font '${decodeURI (fileURL .href)}':`, error);
+
+         return false;
+      }
    },
    dispose ()
    {

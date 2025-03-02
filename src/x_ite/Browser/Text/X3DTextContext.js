@@ -51,14 +51,18 @@ import * as OpenType from "../../../lib/opentype/opentype.mjs";
 
 const
    _defaultFontStyle = Symbol (),
+   _fullNameCache    = Symbol (),
+   _familyCache      = Symbol (),
    _fontCache        = Symbol (),
    _glyphCache       = Symbol (),
    _wawoff2          = Symbol ();
 
 function X3DTextContext ()
 {
-   this [_fontCache]  = new Map ();
-   this [_glyphCache] = new Map (); // [font] [primitiveQuality] [glyphIndex]
+   this [_fullNameCache] = new Map ();
+   this [_familyCache]   = new Map ();
+   this [_fontCache]     = new Map ();
+   this [_glyphCache]    = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
 Object .assign (X3DTextContext .prototype,
@@ -75,7 +79,47 @@ Object .assign (X3DTextContext .prototype,
 
       return this [_defaultFontStyle];
    },
-   getFont (url, cache = true)
+   async getFont (familyName, style)
+   {
+      await Promise .allSettled (this [_fontCache] .values ());
+
+      return this [_fullNameCache] .get (familyName .toLowerCase ())
+         ?? this [_familyCache] .get (familyName .toLowerCase ()) ?.get (style .toLowerCase ())
+         ?? null;
+   },
+   registerFont (font)
+   {
+      for (const name of Object .values (font .names))
+      {
+         if (name .fullName)
+         {
+            for (const fullName of Object .values (name .fullName))
+            {
+               if (this .getBrowserOption ("Debug"))
+                  console .info (`Register font ${fullName}`);
+
+               this [_fullNameCache] .set (fullName .toLowerCase (), font);
+            }
+         }
+
+         if (name .fontFamily)
+         {
+            for (const fontFamily of Object .values (name .fontFamily))
+            {
+               const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
+
+               this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
+
+               for (const subfamily of Object .values (name .fontSubfamily))
+                  subfamilies .set (subfamily .toLowerCase (), font);
+            }
+         }
+
+         // console .log (name .preferredFamily);
+         // console .log (name .preferredSubfamily);
+      }
+   },
+   loadFont (url, cache = true)
    {
       url = String (url);
 
@@ -101,16 +145,7 @@ Object .assign (X3DTextContext .prototype,
                   decompressed = decompress (buffer),
                   font         = OpenType .parse (decompressed);
 
-               // for (const name of Object .values (font .names))
-               // {
-               //    console .log (name);
-
-               //    // Properties can be undefined.
-               //    console .log (... Object .values (name .fullName));
-               //    console .log (... Object .values (name .fontFamily));
-               //    console .log (name .preferredFamily);
-               //    console .log (name .preferredSubfamily);
-               // }
+               this .registerFont (font);
 
                resolve (font);
             }
