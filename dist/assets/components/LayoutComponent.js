@@ -1,5 +1,5 @@
-/* X_ITE v11.2.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.2")];
+/* X_ITE v11.2.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1296,9 +1296,10 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .textureNode = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
-   this .context     = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
-   this .matrix      = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .textureNode     = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
+   this .context         = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
+   this .modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .matrix          = new (external_X_ITE_X3D_Matrix4_default()) ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
@@ -1622,6 +1623,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
       {
          this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
+         this .modelViewMatrix
+            .assign (renderObject .getModelViewMatrix () .get ())
+            .multLeft (this .matrix);
+
          // Update Text bbox.
 
          bbox .assign (this .getBBox ()) .multRight (this .matrix);
@@ -1629,9 +1634,15 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
          this .getText () .setBBox (bbox);
       };
    })(),
+   displaySimple (gl, renderContext, shaderNode)
+   {
+      renderContext .modelViewMatrix .set (this .modelViewMatrix);
+
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, renderContext .modelViewMatrix);
+   },
    display (gl, renderContext)
    {
-      external_X_ITE_X3D_Matrix4_default().prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
+      renderContext .modelViewMatrix .set (this .modelViewMatrix);
 
       renderContext .textureNode = this .textureNode;
    },
@@ -1733,7 +1744,11 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (external_X_
    },
    getScale ()
    {
-      return this ._pointSize .getValue () * this .getBrowser () .getPixelsPerPoint ();
+      return this ._pointSize .getValue () * this .getBrowser () .getRenderingProperty ("PixelsPerPoint");
+   },
+   getContentScale ()
+   {
+      return this .getBrowser () .getRenderingProperty ("ContentScale");
    },
 });
 

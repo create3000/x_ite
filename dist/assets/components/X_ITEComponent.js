@@ -1,5 +1,5 @@
-/* X_ITE v11.2.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.2")];
+/* X_ITE v11.2.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1444,7 +1444,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
 
       return function ()
       {
-         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this .isDefaultBBoxSize ())
          {
             if (this .getGeometry ())
             {

@@ -1,5 +1,5 @@
-/* X_ITE v11.2.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.2")];
+/* X_ITE v11.2.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -858,7 +858,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
    },
    getBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
          return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
@@ -1106,7 +1106,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    },
    getBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
          return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
@@ -2220,7 +2220,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
    getBBox (bbox, shadows)
    {
       // TODO: add space node.
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
          return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadows);
 
       return bbox;
