@@ -220,7 +220,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
             break;
          }
 
-         if (familyName .match (/\.(?:woff2|woff|otf|ttf)/))
+         if (familyName .match (/\.(?:woff2|woff|otf|ttf)/i))
          {
             console .warn (`Loading font file via family field is depreciated, please use new FontLibrary node instead.`);
 
