@@ -237,6 +237,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
                break;
             }
          }
+         else
+         {
+            console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
+         }
       }
 
       this .setLoadState (this .font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
