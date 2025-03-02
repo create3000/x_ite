@@ -51,6 +51,7 @@ import * as OpenType from "../../../lib/opentype/opentype.mjs";
 
 const
    _defaultFontStyle = Symbol (),
+   _loadingFonts     = Symbol (),
    _fullNameCache    = Symbol (),
    _familyCache      = Symbol (),
    _fontCache        = Symbol (),
@@ -59,6 +60,7 @@ const
 
 function X3DTextContext ()
 {
+   this [_loadingFonts]  = new Set ();
    this [_fullNameCache] = new Map ();
    this [_familyCache]   = new Map ();
    this [_fontCache]     = new Map ();
@@ -81,38 +83,50 @@ Object .assign (X3DTextContext .prototype,
    },
    async getFont (familyName, style)
    {
-      await Promise .allSettled (this [_fontCache] .values ());
+      await Promise .allSettled (this [_loadingFonts]);
 
-      return this [_fullNameCache] .get (familyName .toLowerCase ())
-         ?? this [_familyCache] .get (familyName .toLowerCase ()) ?.get (style .toLowerCase ())
-         ?? null;
+      const subfamilies = this [_familyCache] .get (familyName .toLowerCase ());
+
+      if (subfamilies)
+      {
+         const styles = [style .toLowerCase () .replaceAll (" ", ""), ... subfamilies .keys ()];
+
+         for (const style of styles)
+         {
+            const font = subfamilies .get (style);
+
+            if (font)
+               return font;
+         }
+      }
+
+      const font = this [_fullNameCache] .get (familyName .toLowerCase ());
+
+      if (font)
+         return font;
+
+      return null;
    },
    registerFont (font)
    {
       for (const name of Object .values (font .names))
       {
-         if (name .fullName)
+         for (const fullName of Object .values (name .fullName))
          {
-            for (const fullName of Object .values (name .fullName))
-            {
-               if (this .getBrowserOption ("Debug"))
-                  console .info (`Register font ${fullName}`);
+            if (this .getBrowserOption ("Debug"))
+               console .info (`Register font ${fullName}`);
 
-               this [_fullNameCache] .set (fullName .toLowerCase (), font);
-            }
+            this [_fullNameCache] .set (fullName .toLowerCase (), font);
          }
 
-         if (name .fontFamily)
+         for (const fontFamily of Object .values (name .fontFamily))
          {
-            for (const fontFamily of Object .values (name .fontFamily))
-            {
-               const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
+            const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
 
-               this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
+            this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
 
-               for (const subfamily of Object .values (name .fontSubfamily))
-                  subfamilies .set (subfamily .toLowerCase (), font);
-            }
+            for (const subfamily of Object .values (name .fontSubfamily))
+               subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
          }
 
          // console .log (name .preferredFamily);
@@ -127,7 +141,7 @@ Object .assign (X3DTextContext .prototype,
 
       if (!promise)
       {
-         this [_fontCache] .set (url, promise = new Promise (async (resolve, reject) =>
+         promise = new Promise (async (resolve, reject) =>
          {
             try
             {
@@ -153,7 +167,14 @@ Object .assign (X3DTextContext .prototype,
             {
                reject (error);
             }
-         }));
+            finally
+            {
+               this [_loadingFonts] .delete (promise);
+            }
+         });
+
+         this [_loadingFonts] .add (promise);
+         this [_fontCache] .set (url, promise);
       }
 
       return promise;

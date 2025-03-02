@@ -241,11 +241,13 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    async loadFont (fontPath)
    {
-      const fileURL = new URL (fontPath, this .getExecutionContext () .getBaseURL ());
+      const
+         browser = this .getBrowser (),
+         fileURL = new URL (fontPath, this .getExecutionContext () .getBaseURL ());
 
       try
       {
-         return await this .getBrowser () .loadFont (fileURL, true);
+         return await browser .loadFont (fileURL, true);
       }
       catch (error)
       {
