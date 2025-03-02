@@ -13,7 +13,7 @@ tags: [FontLibrary, Text]
 
 ## Overview
 
-FontLibrary specifies a collection of one or more font family definitions. A font family may include one or more related font style definitions. FontLibrary provides the ability to selectively load font files for use by FontStyle and ScreenFontStyle nodes.
+FontLibrary specifies a collection of one or more font family definitions. A font family may include one or more related font style definitions. FontLibrary provides the ability to selectively load font files for use by [FontStyle](/x_ite/components/text/fontstyle/) and [ScreenFontStyle](/x_ite/components/layout/screenfontstyle/) nodes.
 
 The FontLibrary node belongs to the **Text** component and requires at least level **2,** its default container field is *rootNode.* It is available from X3D version 4.1 or higher.
 
