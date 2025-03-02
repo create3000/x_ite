@@ -85,22 +85,9 @@ Object .assign (X3DTextContext .prototype,
    {
       await Promise .allSettled (this [_loadingFonts]);
 
-      const subfamilies = this [_familyCache] .get (familyName .toLowerCase ());
-
-      if (subfamilies)
-      {
-         const font = subfamilies .get (style .toLowerCase () .replaceAll (" ", ""));
-
-         if (font)
-            return font;
-      }
-
-      const font = this [_fullNameCache] .get (familyName .toLowerCase ());
-
-      if (font)
-         return font;
-
-      return null;
+      return this [_familyCache] .get (familyName .toLowerCase ()) ?.get (style .toLowerCase () .replaceAll (" ", ""))
+         ?? this [_fullNameCache] .get (familyName .toLowerCase ())
+         ?? null;
    },
    registerFont (font)
    {
