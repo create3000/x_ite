@@ -131,10 +131,10 @@ Object .assign (X3DTextContext .prototype,
    {
       // fontFamily - subfamily
 
-      const fontFamilies = new Set (Object .values (font .names)
-         .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [name, fontFamily])));
+      const fontFamilies = new Map (Object .values (font .names)
+         .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [fontFamily, name])));
 
-      for (const [name, fontFamily] of fontFamilies)
+      for (const [fontFamily, name] of fontFamilies)
       {
          const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
 
