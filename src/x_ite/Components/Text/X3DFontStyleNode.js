@@ -220,7 +220,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
-            console .warn (`Loading font file via family field is depreciated, please use new FontLibrary node instead.`);
+            console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
 
             const font = await this .loadFont (fileURL);
 
