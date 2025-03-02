@@ -57,10 +57,6 @@ import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
 import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
 
-/**
- * THIS NODE IS STILL EXPERIMENTAL.
- */
-
 const EnvironmentLights = ObjectCache (EnvironmentLightContainer);
 
 function EnvironmentLightContainer ()

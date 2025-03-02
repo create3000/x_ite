@@ -66,7 +66,7 @@ function FontStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (FontStyle .prototype, X3DFontStyleNode .prototype),
 {
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new PolygonText (text, this);
    },
@@ -86,16 +86,23 @@ Object .defineProperties (FontStyle,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "size",        new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "language",             new Fields .SFString ()),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput, "family",               new Fields .MFString ("SERIF")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "style",                new Fields .SFString ("PLAIN")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "size",                 new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",              new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "justify",              new Fields .MFString ("BEGIN")),
       ]),
       enumerable: true,
    },

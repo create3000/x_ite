@@ -84,14 +84,7 @@ function X3DFontStyleNode (executionContext)
 
    this .addType (X3DConstants .X3DFontStyleNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "description",          new Fields .SFString (),
-                          X3DConstants .inputOutput, "url",                  this ._family,
-                          X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
-                          X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
-                          X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
-
-   this ._family .setName ("family");
-
+   this .font        = null;
    this .familyStack = [ ];
    this .alignments  = [ ];
 }
@@ -104,20 +97,12 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
 
-      this ._style   .addInterest ("set_style__",   this);
+      this ._family  .addInterest ("set_url__",     this);
+      this ._style   .addInterest ("set_url__",     this);
       this ._justify .addInterest ("set_justify__", this);
 
       // Don't call set_style__.
       this .set_justify__ ();
-
-      this .requestImmediateLoad () .catch (Function .prototype);
-   },
-   set_style__ ()
-   {
-      if (!this ._load .getValue ())
-         return;
-
-      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },

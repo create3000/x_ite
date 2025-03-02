@@ -81,7 +81,7 @@ Position of center of texture projection relative to local coordinate system.
 
 Direction for projection.
 
-### SFVec3f [in, out] **upVector** 0 0 1 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **upVector** 0 1 0 <small>(-∞,∞)</small>
 
 *upVector* describes the roll of the camera by defining which direction is up for camera orientation.
 
