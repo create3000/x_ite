@@ -58,7 +58,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
-Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
+Location and filename of font. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
 
 #### Hints
 
