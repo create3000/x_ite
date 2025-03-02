@@ -99,8 +99,8 @@ Object .assign (X3DTextContext .prototype,
 
       for (const fullName of fullNames)
       {
-         if (this .getBrowserOption ("Debug"))
-            console .info (`Registering font ${fullName}.`);
+         // if (this .getBrowserOption ("Debug"))
+         //    console .info (`Registering font named ${fullName}.`);
 
          this [_fullNameCache] .set (fullName .toLowerCase (), font);
       }
@@ -115,7 +115,12 @@ Object .assign (X3DTextContext .prototype,
          this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
 
          for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
+         {
+            if (this .getBrowserOption ("Debug"))
+               console .info (`Registering font family ${fontFamily} - ${subfamily}.`);
+
             subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
+         }
       }
 
       // console .log (name .preferredFamily);
