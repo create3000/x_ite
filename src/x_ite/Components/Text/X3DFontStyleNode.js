@@ -79,6 +79,8 @@ const Fonts = new Map ([
 
 function X3DFontStyleNode (executionContext)
 {
+   // To be of type X3DUrlObject ensures that it will work inside StaticGroup.
+   
    X3DNode      .call (this, executionContext);
    X3DUrlObject .call (this, executionContext);
 
@@ -92,8 +94,7 @@ function X3DFontStyleNode (executionContext)
 
    this ._family .setName ("family");
 
-   this .familyStack = [ ];
-   this .alignments  = [ ];
+   this .alignments = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .prototype),
