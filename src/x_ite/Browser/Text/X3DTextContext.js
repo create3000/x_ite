@@ -51,19 +51,19 @@ import * as OpenType from "../../../lib/opentype/opentype.mjs";
 
 const
    _defaultFontStyle = Symbol (),
-   _loadingFonts     = Symbol (),
-   _fullNameCache    = Symbol (),
-   _familyCache      = Symbol (),
    _fontCache        = Symbol (),
+   _loadingFonts     = Symbol (),
+   _familyCache      = Symbol (),
+   _fullNameCache    = Symbol (),
    _glyphCache       = Symbol (),
    _wawoff2          = Symbol ();
 
 function X3DTextContext ()
 {
-   this [_loadingFonts]  = new Set ();
-   this [_fullNameCache] = new Map ();
-   this [_familyCache]   = new Map ();
    this [_fontCache]     = new Map ();
+   this [_loadingFonts]  = new Set ();
+   this [_familyCache]   = new Map ();
+   this [_fullNameCache] = new Map ();
    this [_glyphCache]    = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
@@ -80,51 +80,6 @@ Object .assign (X3DTextContext .prototype,
       Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
 
       return this [_defaultFontStyle];
-   },
-   async getFont (familyName, style)
-   {
-      familyName = familyName .toLowerCase ();
-      style      = style .toLowerCase () .replaceAll (" ", "");
-
-      await Promise .allSettled (this [_loadingFonts]);
-
-      return this [_familyCache] .get (familyName) ?.get (style)
-         ?? this [_fullNameCache] .get (familyName)
-         ?? null;
-   },
-   registerFont (font)
-   {
-      const fullNames = new Set (Object .values (font .names)
-         .flatMap (name => Object .values (name .fullName ?? { })));
-
-      for (const fullName of fullNames)
-      {
-         // if (this .getBrowserOption ("Debug"))
-         //    console .info (`Registering font named ${fullName}.`);
-
-         this [_fullNameCache] .set (fullName .toLowerCase (), font);
-      }
-
-      const fontFamilies = new Set (Object .values (font .names)
-         .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [name, fontFamily])));
-
-      for (const [name, fontFamily] of fontFamilies)
-      {
-         const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
-
-         this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
-
-         for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
-         {
-            if (this .getBrowserOption ("Debug"))
-               console .info (`Registering font family ${fontFamily} - ${subfamily}.`);
-
-            subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
-         }
-      }
-
-      // console .log (name .preferredFamily);
-      // console .log (name .preferredSubfamily);
    },
    loadFont (url, cache = true)
    {
@@ -171,6 +126,55 @@ Object .assign (X3DTextContext .prototype,
       }
 
       return promise;
+   },
+   registerFont (font)
+   {
+      // fontFamily - subfamily
+
+      const fontFamilies = new Set (Object .values (font .names)
+         .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [name, fontFamily])));
+
+      for (const [name, fontFamily] of fontFamilies)
+      {
+         const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
+
+         this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
+
+         for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
+         {
+            if (this .getBrowserOption ("Debug"))
+               console .info (`Registering font family ${fontFamily} - ${subfamily}.`);
+
+            subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
+         }
+      }
+
+      // fullName
+
+      const fullNames = new Set (Object .values (font .names)
+         .flatMap (name => Object .values (name .fullName ?? { })));
+
+      for (const fullName of fullNames)
+      {
+         // if (this .getBrowserOption ("Debug"))
+         //    console .info (`Registering font named ${fullName}.`);
+
+         this [_fullNameCache] .set (fullName .toLowerCase (), font);
+      }
+
+      // console .log (name .preferredFamily);
+      // console .log (name .preferredSubfamily);
+   },
+   async getFont (familyName, style)
+   {
+      familyName = familyName .toLowerCase ();
+      style      = style .toLowerCase () .replaceAll (" ", "");
+
+      await Promise .allSettled (this [_loadingFonts]);
+
+      return this [_familyCache] .get (familyName) ?.get (style)
+         ?? this [_fullNameCache] .get (familyName)
+         ?? null;
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {
