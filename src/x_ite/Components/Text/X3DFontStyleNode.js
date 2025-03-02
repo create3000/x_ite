@@ -139,12 +139,12 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    {
       return this .font;
    },
-   getDefaultFont (familyName)
+   getDefaultFont (familyName, style)
    {
       const family = Fonts .get (familyName);
 
       if (family)
-         return family .get (this ._style .getValue ()) ?? family .get ("PLAIN");
+         return family .get (style) ?? family .get ("PLAIN");
 
       return;
    },
@@ -193,7 +193,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       const
          browser = this .getBrowser (),
-         family  = this ._family .copy ();
+         family  = this ._family .copy (),
+         style   = this ._style .getValue ();
 
       family .push ("SERIF");
 
@@ -201,7 +202,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       for (const familyName of family)
       {
-         const defaultFont = this .getDefaultFont (familyName);
+         const defaultFont = this .getDefaultFont (familyName, style);
 
          if (defaultFont)
          {
@@ -214,7 +215,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
             }
          }
 
-         const font = await browser .getFont (familyName, this ._style .getValue ());
+         const font = await browser .getFont (familyName, style);
 
          if (font)
          {
@@ -222,13 +223,13 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
             break;
          }
 
-         if (familyName .match (/\.(?:woff2|woff|otf|ttf)/i))
+         const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
+
+         if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
             console .warn (`Loading font file via family field is depreciated, please use new FontLibrary node instead.`);
 
-            const
-               fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ()),
-               font    = await this .loadFont (fileURL);
+            const font = await this .loadFont (fileURL);
 
             if (font)
             {
