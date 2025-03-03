@@ -444,7 +444,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
 
+      this .set_geometry__ ()
       this .set_transparent__ ();
+   },
+   set_geometry__ ()
+   {
+      if (this .geometryType == GeometryTypes .GEOMETRY)
+         X3DShapeNode .prototype .set_geometry__ .call (this);
+      else
+         this .setVisibleObject (true);
    },
    set_maxParticles__ ()
    {
