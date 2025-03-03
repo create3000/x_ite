@@ -63,6 +63,7 @@ function ViewpointGroup (executionContext)
    this .addType (X3DConstants .ViewpointGroup);
 
    this .setCameraObject (true);
+   this .setVisibleObject (true);
 
    // Units
 
@@ -70,7 +71,7 @@ function ViewpointGroup (executionContext)
    this ._center .setUnit ("length");
 
    // Private properties
-   
+
    this .proximitySensor  = new ProximitySensor (executionContext);
    this .cameraObjects    = [ ];
    this .viewpointGroups  = [ ];

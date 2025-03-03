@@ -72,9 +72,6 @@ function GeoProximitySensor (executionContext)
    // Private properties
 
    this .proximitySensor = new ProximitySensor (executionContext);
-
-   this .setCameraObject   (this .proximitySensor .isCameraObject ());
-   this .setPickableObject (this .proximitySensor .isPickableObject ());
 }
 
 Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnvironmentalSensorNode .prototype),
@@ -93,6 +90,7 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnviro
 
       this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .proximitySensor ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
 
       this .proximitySensor ._isActive                 .addFieldInterest (this ._isActive);
       this .proximitySensor ._enterTime                .addFieldInterest (this ._enterTime);
@@ -108,6 +106,10 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnviro
       this .proximitySensor ._center  = this ._center;
 
       this .proximitySensor .setup ();
+
+      this .setCameraObject   (this .proximitySensor .isCameraObject ());
+      this .setPickableObject (this .proximitySensor .isPickableObject ());
+      this .setVisibleObject  (this .proximitySensor .isVisibleObject ());
    },
    set_position__ (position)
    {

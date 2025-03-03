@@ -146,6 +146,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this .transformNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .transformNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .transformNode ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
 
       // Setup
 
@@ -156,6 +157,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this .setCameraObject   (this .transformNode .isCameraObject ());
       this .setPickableObject (this .transformNode .isPickableObject ());
+      this .setVisibleObject  (this .transformNode .isVisibleObject ());
 
       // Check WebGL version.
 

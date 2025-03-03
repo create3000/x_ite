@@ -62,6 +62,8 @@ function LOD (executionContext)
 
    this .addType (X3DConstants .LOD);
 
+   this .setVisibleObject (true);
+
    // Units
 
    this ._center .setUnit ("length");
@@ -110,14 +112,17 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
       if (this .childNode)
       {
-         this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
-         this .childNode ._isPickableObject .removeInterest ("set_child__", this);
-      }
+         const childNode = this .childNode;
 
-      if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-      {
-         this .childNode ._display     .removeInterest ("set_child__", this);
-         this .childNode ._bboxDisplay .removeInterest ("set_child__", this);
+         childNode ._isCameraObject   .removeInterest ("set_child__", this);
+         childNode ._isPickableObject .removeInterest ("set_child__", this);
+         childNode ._isVisibleObject  .removeInterest ("set_child__", this);
+
+         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+         {
+            childNode ._display     .removeInterest ("set_child__", this);
+            childNode ._bboxDisplay .removeInterest ("set_child__", this);
+         }
       }
 
       this .childNode = null;
@@ -132,34 +137,28 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          {
             childNode ._isCameraObject   .addInterest ("set_child__", this);
             childNode ._isPickableObject .addInterest ("set_child__", this);
+            childNode ._isVisibleObject  .addInterest ("set_child__", this);
 
             this .childNode = childNode;
 
             if (childNode .isCameraObject ())
                this .cameraObject = childNode;
 
-            if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-            {
-               childNode ._display     .addInterest ("set_child__", this);
-               childNode ._bboxDisplay .addInterest ("set_child__", this);
-
-               if (this .childNode .isVisible ())
-               {
-                  this .visibleNode = childNode;
-
-                  if (childNode .isPickableObject ())
-                     this .pickableObject = childNode;
-               }
-
-               if (childNode .isBBoxVisible ())
-                  this .boundedObject = childNode;
-            }
-            else
+            if (childNode .isVisibleObject ())
             {
                this .visibleNode = childNode;
 
                if (childNode .isPickableObject ())
                   this .pickableObject = childNode;
+            }
+
+            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+            {
+               childNode ._display     .addInterest ("set_child__", this);
+               childNode ._bboxDisplay .addInterest ("set_child__", this);
+
+               if (childNode .isBBoxVisible ())
+                  this .boundedObject = childNode;
             }
          }
       }
@@ -262,7 +261,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
             }
             case TraverseType .DISPLAY:
             {
-               if (! this .keepCurrentLevel)
+               if (!this .keepCurrentLevel)
                {
                   let
                      level        = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),

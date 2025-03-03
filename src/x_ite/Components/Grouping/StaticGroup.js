@@ -105,13 +105,21 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
       this ._children   .addFieldInterest (this .groupNode ._children);
 
+      this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .groupNode ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
+
+      this .groupNode ._children .addInterest ("set_children__", this);
+
       this .groupNode ._bboxSize   = this ._bboxSize;
       this .groupNode ._bboxCenter = this ._bboxCenter;
       this .groupNode ._children   = this ._children;
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
-      this .groupNode ._children .addInterest ("set_children__", this);
+      this .setCameraObject   (this .groupNode .isCameraObject ());
+      this .setPickableObject (this .groupNode .isPickableObject ());
+      this .setVisibleObject  (this .groupNode .isVisibleObject ());
 
       this .set_children__ ();
    },

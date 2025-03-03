@@ -97,14 +97,17 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
 
       if (this .childNode)
       {
-         this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
-         this .childNode ._isPickableObject .removeInterest ("set_child__", this);
-      }
+         const childNode = this .childNode;
 
-      if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-      {
-         this .childNode ._display     .removeInterest ("set_child__", this);
-         this .childNode ._bboxDisplay .removeInterest ("set_child__", this);
+         childNode ._isCameraObject   .removeInterest ("set_child__", this);
+         childNode ._isPickableObject .removeInterest ("set_child__", this);
+         childNode ._isVisibleObject  .removeInterest ("set_child__", this);
+
+         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+         {
+            childNode ._display     .removeInterest ("set_child__", this);
+            childNode ._bboxDisplay .removeInterest ("set_child__", this);
+         }
       }
 
       this .childNode = null;
@@ -121,40 +124,35 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
          {
             childNode ._isCameraObject   .addInterest ("set_child__", this);
             childNode ._isPickableObject .addInterest ("set_child__", this);
+            childNode ._isVisibleObject  .addInterest ("set_child__", this);
 
             this .childNode = childNode;
 
             if (childNode .isCameraObject ())
                this .cameraObject = childNode;
 
-            if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-            {
-               childNode ._display     .addInterest ("set_child__", this);
-               childNode ._bboxDisplay .addInterest ("set_child__", this);
-
-               if (this .childNode .isVisible ())
-               {
-                  this .visibleNode = childNode;
-
-                  if (childNode .isPickableObject ())
-                     this .pickableObject = childNode;
-               }
-
-               if (childNode .isBBoxVisible ())
-                  this .boundedObject = childNode;
-            }
-            else
+            if (childNode .isVisibleObject ())
             {
                this .visibleNode = childNode;
 
                if (childNode .isPickableObject ())
                   this .pickableObject = childNode;
             }
+
+            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+            {
+               childNode ._display     .addInterest ("set_child__", this);
+               childNode ._bboxDisplay .addInterest ("set_child__", this);
+
+               if (childNode .isBBoxVisible ())
+                  this .boundedObject = childNode;
+            }
          }
       }
 
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
+      this .set_visibleObjects__ ();
    },
    set_cameraObjects__ ()
    {
@@ -163,6 +161,10 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    set_transformSensors__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleNode ?.isVisibleObject ());
    },
    traverse (type, renderObject)
    {

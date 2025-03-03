@@ -70,6 +70,7 @@ function X3DVolumeDataNode (executionContext)
       browser      = this .getBrowser (),
       privateScene = browser .getPrivateScene ();
 
+   this .groupNode                = privateScene .createNode ("Group",               false);
    this .proximitySensorNode      = privateScene .createNode ("ProximitySensor",     false);
    this .transformNode            = privateScene .createNode ("Transform",           false);
    this .shapeNode                = privateScene .createNode ("Shape",               false);
@@ -94,10 +95,18 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      this ._bboxDisplay .addFieldInterest (this .transformNode ._bboxDisplay);
+      this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .groupNode ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
 
+      this ._bboxDisplay .addFieldInterest (this .groupNode ._bboxDisplay);
+
+      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
+      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
+
+      this .groupNode ._children               = [this .proximitySensorNode, this .transformNode];
       this .proximitySensorNode ._size         = new Fields .SFVec3f (-1, -1, -1);
-      this .transformNode ._children           = new Fields .MFNode (this .shapeNode);
+      this .transformNode ._children           = [this .shapeNode];
       this .shapeNode ._pointerEvents          = false;
       this .shapeNode ._castShadow             = false;
       this .shapeNode ._appearance             = this .appearanceNode;
@@ -119,6 +128,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .shapeNode             .setPrivate (true);
       this .transformNode         .setPrivate (true);
       this .proximitySensorNode   .setPrivate (true);
+      this .groupNode             .setPrivate (true);
 
       this .coordinateNode        .setup ();
       this .textureCoordinateNode .setup ();
@@ -129,9 +139,11 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .shapeNode             .setup ();
       this .transformNode         .setup ();
       this .proximitySensorNode   .setup ();
+      this .groupNode             .setup ();
 
-      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
-      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
+      this .setCameraObject   (this .groupNode .isCameraObject ());
+      this .setPickableObject (this .groupNode .isPickableObject ());
+      this .setVisibleObject  (this .groupNode .isVisibleObject ());
 
       if (gl .getVersion () < 2)
          return;
@@ -227,8 +239,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    },
    traverse (type, renderObject)
    {
-      this .proximitySensorNode .traverse (type, renderObject);
-      this .transformNode       .traverse (type, renderObject);
+      this .groupNode .traverse (type, renderObject);
    },
    setShaderUniforms (gl, shaderObject)
    {

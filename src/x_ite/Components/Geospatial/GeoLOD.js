@@ -99,11 +99,18 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       X3DBoundedObject    .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
 
+      this .rootGroup ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .rootGroup ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .rootGroup ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
+
       this ._rootNode .addFieldInterest (this .rootGroup ._children);
 
       this .rootGroup ._children = this ._rootNode;
       this .rootGroup .setPrivate (true);
-      this .rootGroup .setup ();
+
+      this .setCameraObject   (this .rootGroup .isCameraObject ());
+      this .setPickableObject (this .rootGroup .isPickableObject ());
+      this .setVisibleObject  (this .rootGroup .isVisibleObject ());
 
       this .rootInline   ._loadState .addInterest ("set_rootLoadState__", this);
       this .child1Inline ._loadState .addInterest ("set_childLoadState__", this);
