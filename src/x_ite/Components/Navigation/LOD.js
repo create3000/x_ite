@@ -82,12 +82,6 @@ function LOD (executionContext)
 
 Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototype),
 {
-   initialize ()
-   {
-      X3DGroupingNode .prototype .initialize .call (this);
-
-      this ._children .addInterest ("set_child__", this);
-   },
    getSubBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
@@ -102,7 +96,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    clear () { },
    add () { },
    remove () { },
-   set_child__ ()
+   set_children__ ()
    {
       this .set_level__ (Math .min (this ._level_changed .getValue (), this ._children .length - 1));
    },
@@ -114,14 +108,14 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
       {
          const childNode = this .childNode;
 
-         childNode ._isCameraObject   .removeInterest ("set_child__", this);
-         childNode ._isPickableObject .removeInterest ("set_child__", this);
-         childNode ._isVisibleObject  .removeInterest ("set_child__", this);
+         childNode ._isCameraObject   .removeFieldInterest (this ._rebuild);
+         childNode ._isPickableObject .removeFieldInterest (this ._rebuild);
+         childNode ._isVisibleObject  .removeFieldInterest (this ._rebuild);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
-            childNode ._display     .removeInterest ("set_child__", this);
-            childNode ._bboxDisplay .removeInterest ("set_child__", this);
+            childNode ._display     .removeFieldInterest (this ._rebuild);
+            childNode ._bboxDisplay .removeFieldInterest (this ._rebuild);
          }
       }
 
@@ -135,16 +129,16 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
          if (childNode)
          {
-            childNode ._isCameraObject   .addInterest ("set_child__", this);
-            childNode ._isPickableObject .addInterest ("set_child__", this);
-            childNode ._isVisibleObject  .addInterest ("set_child__", this);
+            childNode ._isCameraObject   .addFieldInterest (this ._rebuild);
+            childNode ._isPickableObject .addFieldInterest (this ._rebuild);
+            childNode ._isVisibleObject  .addFieldInterest (this ._rebuild);
 
             this .childNode = childNode;
 
             if (childNode .isCameraObject ())
                this .cameraObject = childNode;
 
-            if (childNode .isVisibleObject ())
+            if (childNode .isVisibleObject () && childNode .isVisible ())
             {
                this .visibleNode = childNode;
 
@@ -154,8 +148,8 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
-               childNode ._display     .addInterest ("set_child__", this);
-               childNode ._bboxDisplay .addInterest ("set_child__", this);
+               childNode ._display     .addFieldInterest (this ._rebuild);
+               childNode ._bboxDisplay .addFieldInterest (this ._rebuild);
 
                if (childNode .isBBoxVisible ())
                   this .boundedObject = childNode;

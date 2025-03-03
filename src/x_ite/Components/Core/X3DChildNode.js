@@ -92,6 +92,10 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    {
       return this ._isVisibleObject .getValue ();
    },
+   isVisible ()
+   {
+      return true;
+   },
 });
 
 Object .defineProperties (X3DChildNode, X3DNode .getStaticProperties ("X3DChildNode", "Core", 1));

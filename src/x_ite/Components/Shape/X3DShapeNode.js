@@ -74,8 +74,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._display .addFieldInterest (this ._isVisibleObject);
-
       this ._bboxSize   .addInterest ("set_bbox__",       this);
       this ._bboxCenter .addInterest ("set_bbox__",       this);
       this ._appearance .addInterest ("set_appearance__", this);
@@ -83,8 +81,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
 
       this ._appearance .addInterest ("set_transparent__", this);
       this ._geometry   .addInterest ("set_transparent__", this);
-
-      this .setVisibleObject (this .isVisible ());
 
       this .set_appearance__ ();
       this .set_geometry__ ();
@@ -185,6 +181,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .geometryNode ._transparent  .addInterest ("set_transparent__", this);
          this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
       }
+
+      this .setVisibleObject (this .geometryNode);
 
       this .set_transparent__ ();
       this .set_bbox__ ();

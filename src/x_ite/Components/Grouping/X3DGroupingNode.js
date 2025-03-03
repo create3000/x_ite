@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import Fields           from "../../Fields.js";
 import X3DNode          from "../Core/X3DNode.js";
 import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "./X3DBoundedObject.js";
@@ -58,6 +59,8 @@ function X3DGroupingNode (executionContext)
    X3DBoundedObject .call (this, executionContext);
 
    this .addType (X3DConstants .X3DGroupingNode);
+
+   this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFBool ());
 
    this .allowedTypes              = new Set ();
    this .children                  = new Set ();
@@ -85,7 +88,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       this ._addChildren    .addInterest ("set_addChildren__",    this);
       this ._removeChildren .addInterest ("set_removeChildren__", this);
-      this ._children       .addInterest ("set_children__",       this);
+
+      this ._children .addFieldInterest (this ._rebuild);
+
+      this ._rebuild .addInterest ("set_children__", this);
 
       this .set_children__ ();
    },
@@ -123,7 +129,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       if (!this ._children .isTainted ())
       {
-         this ._children .removeInterest ("set_children__", this);
+         this ._children .removeFieldInterest (this ._rebuild);
          this ._children .addInterest ("connectChildren", this);
       }
 
@@ -146,7 +152,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
          if (!this ._children .isTainted ())
          {
-            this ._children .removeInterest ("set_children__", this);
+            this ._children .removeFieldInterest (this ._rebuild)
             this ._children .addInterest ("connectChildren", this);
          }
 
@@ -164,25 +170,25 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    connectChildren ()
    {
       this ._children .removeInterest ("connectChildren", this);
-      this ._children .addInterest ("set_children__", this);
+      this ._children .addFieldInterest (this ._rebuild);
    },
    clear ()
    {
       for (const childNode of this .cameraObjects)
-         childNode ._isCameraObject .removeInterest ("set_children__", this);
+         childNode ._isCameraObject .removeFieldInterest (this ._rebuild);
 
       for (const childNode of this .pickableSensorNodes)
-         childNode ._isPickableObject .removeInterest ("set_children__", this);
+         childNode ._isPickableObject .removeFieldInterest (this ._rebuild);
 
       for (const childNode of this .childNodes)
       {
-         childNode ._isCameraObject   .removeInterest ("set_children__", this);
-         childNode ._isPickableObject .removeInterest ("set_children__", this);
+         childNode ._isCameraObject   .removeFieldInterest (this ._rebuild);
+         childNode ._isPickableObject .removeFieldInterest (this ._rebuild);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
-            childNode ._display     .removeInterest ("set_children__", this);
-            childNode ._bboxDisplay .removeInterest ("set_children__", this);
+            childNode ._display     .removeFieldInterest (this ._rebuild);
+            childNode ._bboxDisplay .removeFieldInterest (this ._rebuild);
          }
       }
 
@@ -243,7 +249,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                }
                case X3DConstants .X3DBindableNode:
                {
-                  childNode ._isCameraObject .addInterest ("set_children__", this);
+                  childNode ._isCameraObject .addFieldInterest (this ._rebuild);
 
                   if (childNode .isCameraObject ())
                      this .cameraObjects .add (childNode);
@@ -253,7 +259,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .TransformSensor:
                case X3DConstants .X3DPickSensorNode:
                {
-                  childNode ._isPickableObject .addInterest ("set_children__", this);
+                  childNode ._isPickableObject .addFieldInterest (this ._rebuild);
 
                   if (childNode .isPickableObject ())
                      this .pickableSensorNodes .add (childNode);
@@ -262,16 +268,16 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                }
                case X3DConstants .X3DChildNode:
                {
-                  childNode ._isCameraObject   .addInterest ("set_children__", this);
-                  childNode ._isPickableObject .addInterest ("set_children__", this);
-                  childNode ._isVisibleObject  .addInterest ("set_children__", this);
+                  childNode ._isCameraObject   .addFieldInterest (this ._rebuild);
+                  childNode ._isPickableObject .addFieldInterest (this ._rebuild);
+                  childNode ._isVisibleObject  .addFieldInterest (this ._rebuild);
 
                   this .childNodes .add (childNode);
 
                   if (childNode .isCameraObject ())
                      this .cameraObjects .add (childNode);
 
-                  if (childNode .isVisibleObject ())
+                  if (childNode .isVisibleObject () && childNode .isVisible ())
                   {
                      this .visibleNodes .add (childNode);
 
@@ -281,8 +287,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                   {
-                     childNode ._display     .addInterest ("set_children__", this);
-                     childNode ._bboxDisplay .addInterest ("set_children__", this);
+                     childNode ._display     .addFieldInterest (this ._rebuild);
+                     childNode ._bboxDisplay .addFieldInterest (this ._rebuild);
 
                      if (childNode .isBBoxVisible ())
                         this .boundedObjects .add (childNode);
@@ -297,6 +303,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             break;
          }
       }
+
+      if (this .getName () === "Visibles")
+         console .warn ("*****\n" .repeat (10));
 
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
@@ -342,7 +351,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                }
                case X3DConstants .X3DBindableNode:
                {
-                  childNode ._isCameraObject .removeInterest ("set_children__", this);
+                  childNode ._isCameraObject .removeFieldInterest (this ._rebuild);
 
                   this .cameraObjects .delete (childNode);
                   continue;
@@ -350,21 +359,21 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .TransformSensor:
                case X3DConstants .X3DPickSensorNode:
                {
-                  childNode ._isPickableObject .removeInterest ("set_children__", this);
+                  childNode ._isPickableObject .removeFieldInterest (this ._rebuild);
 
                   this .pickableSensorNodes .delete (childNode);
                   continue;
                }
                case X3DConstants .X3DChildNode:
                {
-                  childNode ._isCameraObject   .removeInterest ("set_children__", this);
-                  childNode ._isPickableObject .removeInterest ("set_children__", this);
-                  childNode ._isVisibleObject  .removeInterest ("set_children__", this);
+                  childNode ._isCameraObject   .removeFieldInterest (this ._rebuild);
+                  childNode ._isPickableObject .removeFieldInterest (this ._rebuild);
+                  childNode ._isVisibleObject  .removeFieldInterest (this ._rebuild);
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                   {
-                     childNode ._display     .removeInterest ("set_children__", this);
-                     childNode ._bboxDisplay .removeInterest ("set_children__", this);
+                     childNode ._display     .removeFieldInterest (this ._rebuild);
+                     childNode ._bboxDisplay .removeFieldInterest (this ._rebuild);
                   }
 
                   this .cameraObjects   .delete (childNode);
