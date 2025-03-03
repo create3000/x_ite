@@ -304,8 +304,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .BooleanToggle:
                case X3DConstants .CollisionCollection:
                case X3DConstants .HAnimMotion:
+               case X3DConstants .LoadSensor:
                case X3DConstants .NurbsOrientationInterpolator:
                case X3DConstants .NurbsPositionInterpolator:
+               case X3DConstants .NurbsSet:
                case X3DConstants .NurbsSurfaceInterpolator:
                case X3DConstants .RigidBodyCollection:
                case X3DConstants .X3DFollowerNode:
@@ -412,8 +414,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .BooleanToggle:
                case X3DConstants .CollisionCollection:
                case X3DConstants .HAnimMotion:
+               case X3DConstants .LoadSensor:
                case X3DConstants .NurbsOrientationInterpolator:
                case X3DConstants .NurbsPositionInterpolator:
+               case X3DConstants .NurbsSet:
                case X3DConstants .NurbsSurfaceInterpolator:
                case X3DConstants .RigidBodyCollection:
                case X3DConstants .X3DFollowerNode:
