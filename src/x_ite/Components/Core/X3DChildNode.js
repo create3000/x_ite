@@ -94,6 +94,7 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    },
    isVisible ()
    {
+      // This function will be overloaded by X3DBoundedObject.
       return true;
    },
 });
