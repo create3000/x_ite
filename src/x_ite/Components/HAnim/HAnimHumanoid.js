@@ -134,6 +134,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._bboxSize         .addFieldInterest (this .transformNode ._bboxSize);
       this ._bboxCenter       .addFieldInterest (this .transformNode ._bboxCenter);
 
+      this .transformNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .transformNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .transformNode ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
+
       this .transformNode ._translation      = this ._translation;
       this .transformNode ._rotation         = this ._rotation;
       this .transformNode ._scale            = this ._scale;
@@ -143,10 +147,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this .transformNode ._bboxSize         = this ._bboxSize;
       this .transformNode ._bboxCenter       = this ._bboxCenter;
       this .transformNode ._children         = [ this .skeletonNode, this .viewpointsNode, this .skinNode ];
-
-      this .transformNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .transformNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-      this .transformNode ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
 
       // Setup
 
