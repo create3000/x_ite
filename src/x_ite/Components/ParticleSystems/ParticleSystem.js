@@ -281,6 +281,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
+   set_visibleObject__ ()
+   {
+      if (this .geometryType == GeometryTypes .GEOMETRY)
+         X3DShapeNode .prototype .set_visibleObject__ .call (this);
+      else
+         this .setVisibleObject (true);
+   },
    set_transparent__ ()
    {
       const alphaMode = this .appearanceNode .getAlphaMode ();
@@ -444,15 +451,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
 
-      this .set_geometry__ ()
+      this .set_visibleObject__ ()
       this .set_transparent__ ();
-   },
-   set_geometry__ ()
-   {
-      if (this .geometryType == GeometryTypes .GEOMETRY)
-         X3DShapeNode .prototype .set_geometry__ .call (this);
-      else
-         this .setVisibleObject (true);
    },
    set_maxParticles__ ()
    {

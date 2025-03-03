@@ -182,10 +182,13 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
       }
 
-      this .setVisibleObject (this .geometryNode);
-
+      this .set_visibleObject__ ();
       this .set_transparent__ ();
       this .set_bbox__ ();
+   },
+   set_visibleObject__ ()
+   {
+      this .setVisibleObject (this .geometryNode);
    },
    set_transparent__ ()
    {
