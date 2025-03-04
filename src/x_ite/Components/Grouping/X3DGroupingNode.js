@@ -229,16 +229,16 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       if (!childNode)
          return;
 
+      // if (this .allowedTypes .size)
+      // {
+      //    if (!childNode .getType () .some (Set .prototype .has, this .allowedTypes))
+      //       return;
+      // }
+
       const type = childNode .getType ();
 
       for (let t = type .length - 1; t >= 0; -- t)
       {
-         // if (this .allowedTypes .size)
-         // {
-         //    if (!childNode .getType () .some (Set .prototype .has, this .allowedTypes))
-         //       continue;
-         // }
-
          switch (type [t])
          {
             case X3DConstants .X3DPointingDeviceSensorNode:
