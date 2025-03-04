@@ -59,8 +59,6 @@ function CollidableOffset (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableOffset);
-
-   this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCollidableNode .prototype),
@@ -69,11 +67,8 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-      this ._enabled .addInterest ("set_collidableGeometry__", this);
-
-      this ._collidable .addFieldInterest (this ._rebuild);
-
-      this ._rebuild .addInterest ("set_collidable__", this);
+      this ._enabled    .addInterest ("set_collidableGeometry__", this);
+      this ._collidable .addInterest ("set_collidable__",         this);
 
       this .set_collidable__ ();
    },
@@ -95,15 +90,15 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          collidableNode .removeInterest ("addNodeEvent", this);
          collidableNode ._compoundShape_changed .removeFieldInterest (this ._compoundShape_changed);
 
-         collidableNode ._isPointingObject .removeFieldInterest (this ._rebuild);
-         collidableNode ._isCameraObject   .removeFieldInterest (this ._rebuild);
-         collidableNode ._isPickableObject .removeFieldInterest (this ._rebuild);
-         collidableNode ._isVisibleObject  .removeFieldInterest (this ._rebuild);
+         collidableNode ._isPointingObject .removeInterest ("set_collidable__", this);
+         collidableNode ._isCameraObject   .removeInterest ("set_collidable__", this);
+         collidableNode ._isPickableObject .removeInterest ("set_collidable__", this);
+         collidableNode ._isVisibleObject  .removeInterest ("set_collidable__", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, collidableNode))
          {
-            collidableNode ._display     .removeFieldInterest (this ._rebuild);
-            collidableNode ._bboxDisplay .removeFieldInterest (this ._rebuild);
+            collidableNode ._display     .removeInterest ("set_collidable__", this);
+            collidableNode ._bboxDisplay .removeInterest ("set_collidable__", this);
          }
       }
 
@@ -125,10 +120,10 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          collidableNode .addInterest ("addNodeEvent", this);
          collidableNode ._compoundShape_changed .addFieldInterest (this ._compoundShape_changed);
 
-         collidableNode ._isPointingObject .addFieldInterest (this ._rebuild);
-         collidableNode ._isCameraObject   .addFieldInterest (this ._rebuild);
-         collidableNode ._isPickableObject .addFieldInterest (this ._rebuild);
-         collidableNode ._isVisibleObject  .addFieldInterest (this ._rebuild);
+         collidableNode ._isPointingObject .addInterest ("set_collidable__", this);
+         collidableNode ._isCameraObject   .addInterest ("set_collidable__", this);
+         collidableNode ._isPickableObject .addInterest ("set_collidable__", this);
+         collidableNode ._isVisibleObject  .addInterest ("set_collidable__", this);
 
          this .collidableNode = collidableNode;
 
@@ -149,8 +144,8 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
          if (X3DCast (X3DConstants .X3DBoundedObject, collidableNode))
          {
-            collidableNode ._display     .addFieldInterest (this ._rebuild);
-            collidableNode ._bboxDisplay .addFieldInterest (this ._rebuild);
+            collidableNode ._display     .addInterest ("set_collidable__", this);
+            collidableNode ._bboxDisplay .addInterest ("set_collidable__", this);
 
             if (collidableNode .isBBoxVisible ())
                this .boundedObject = collidableNode;

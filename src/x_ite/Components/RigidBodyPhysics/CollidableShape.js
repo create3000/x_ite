@@ -61,8 +61,6 @@ function CollidableShape (executionContext)
 
    this .addType (X3DConstants .CollidableShape);
 
-   this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFBool ());
-
    this .convex = false;
 }
 
@@ -73,10 +71,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       X3DNBodyCollidableNode .prototype .initialize .call (this);
 
       this ._enabled .addInterest ("set_collidableGeometry__", this);
-
-      this ._shape .addFieldInterest (this ._rebuild);
-
-      this ._rebuild .addInterest ("set_shape__", this);
+      this ._shape   .addInterest ("set_shape__",              this);
 
       this .set_shape__ ();
    },
@@ -157,15 +152,15 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
          shapeNode ._geometry .removeInterest ("set_geometry__", this);
 
-         shapeNode ._isPointingObject .removeFieldInterest (this ._rebuild);
-         shapeNode ._isCameraObject   .removeFieldInterest (this ._rebuild);
-         shapeNode ._isPickableObject .removeFieldInterest (this ._rebuild);
-         shapeNode ._isVisibleObject  .removeFieldInterest (this ._rebuild);
+         shapeNode ._isPointingObject .removeInterest ("set_shape__", this);
+         shapeNode ._isCameraObject   .removeInterest ("set_shape__", this);
+         shapeNode ._isPickableObject .removeInterest ("set_shape__", this);
+         shapeNode ._isVisibleObject  .removeInterest ("set_shape__", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, shapeNode))
          {
-            shapeNode ._display     .removeFieldInterest (this ._rebuild);
-            shapeNode ._bboxDisplay .removeFieldInterest (this ._rebuild);
+            shapeNode ._display     .removeInterest ("set_shape__", this);
+            shapeNode ._bboxDisplay .removeInterest ("set_shape__", this);
          }
       }
 
@@ -186,10 +181,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       {
          shapeNode ._geometry .addInterest ("set_geometry__", this);
 
-         shapeNode ._isPointingObject .addFieldInterest (this ._rebuild);
-         shapeNode ._isCameraObject   .addFieldInterest (this ._rebuild);
-         shapeNode ._isPickableObject .addFieldInterest (this ._rebuild);
-         shapeNode ._isVisibleObject  .addFieldInterest (this ._rebuild);
+         shapeNode ._isPointingObject .addInterest ("set_shape__", this);
+         shapeNode ._isCameraObject   .addInterest ("set_shape__", this);
+         shapeNode ._isPickableObject .addInterest ("set_shape__", this);
+         shapeNode ._isVisibleObject  .addInterest ("set_shape__", this);
 
          this .shapeNode = shapeNode;
 
@@ -210,8 +205,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
          if (X3DCast (X3DConstants .X3DBoundedObject, shapeNode))
          {
-            shapeNode ._display     .addFieldInterest (this ._rebuild);
-            shapeNode ._bboxDisplay .addFieldInterest (this ._rebuild);
+            shapeNode ._display     .addInterest ("set_shape__", this);
+            shapeNode ._bboxDisplay .addInterest ("set_shape__", this);
 
             if (shapeNode .isBBoxVisible ())
                this .boundedObject = shapeNode;
