@@ -104,7 +104,13 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
       }
 
-      this .childNode = null;
+      // Clear node.
+
+      this .childNode      = null;
+      this .cameraObject   = null;
+      this .pickableObject = null;
+      this .visibleNode    = null;
+      this .boundedObject  = null;
 
       // Add node.
 

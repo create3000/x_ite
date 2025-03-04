@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
-      this ._whichChoice .addInterest ("set_children__", this);
+      this ._whichChoice .addFieldInterest (this ._rebuild);
    },
    getSubBBox (bbox, shadows)
    {
@@ -107,7 +107,13 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
          }
       }
 
-      this .childNode = null;
+      // Clear node.
+
+      this .childNode      = null;
+      this .cameraObject   = null;
+      this .pickableObject = null;
+      this .visibleNode    = null;
+      this .boundedObject  = null;
 
       // Add node.
 
