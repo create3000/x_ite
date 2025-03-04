@@ -58,13 +58,23 @@ function X3DChildNode (executionContext)
 
    this .addType (X3DConstants .X3DChildNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "isCameraObject",   new Fields .SFBool (),
+   this .addChildObjects (X3DConstants .outputOnly, "isPointingObject", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isCameraObject",   new Fields .SFBool (),
                           X3DConstants .outputOnly, "isPickableObject", new Fields .SFBool (),
                           X3DConstants .outputOnly, "isVisibleObject",  new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .prototype),
 {
+   setPointingObject (value)
+   {
+      if (!!value !== this ._isPointingObject .getValue ())
+         this ._isPointingObject = value;
+   },
+   isPointingObject ()
+   {
+      return this ._isPointingObject .getValue ();
+   },
    setCameraObject (value)
    {
       if (!!value !== this ._isCameraObject .getValue ())

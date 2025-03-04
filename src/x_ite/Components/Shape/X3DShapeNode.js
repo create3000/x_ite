@@ -74,13 +74,14 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
+      this ._pointerEvents .addFieldInterest (this ._isPointingObject);
+
+      this .setPointingObject (this ._pointerEvents .getValue ());
+
       this ._bboxSize   .addInterest ("set_bbox__",       this);
       this ._bboxCenter .addInterest ("set_bbox__",       this);
       this ._appearance .addInterest ("set_appearance__", this);
       this ._geometry   .addInterest ("set_geometry__",   this);
-
-      this ._appearance .addInterest ("set_transparent__", this);
-      this ._geometry   .addInterest ("set_transparent__", this);
 
       this .set_appearance__ ();
       this .set_geometry__ ();

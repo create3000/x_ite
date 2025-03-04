@@ -93,6 +93,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       {
          const childNode = this .childNode;
 
+         childNode ._isPointingObject .removeFieldInterest (this ._rebuild);
          childNode ._isCameraObject   .removeFieldInterest (this ._rebuild);
          childNode ._isPickableObject .removeFieldInterest (this ._rebuild);
          childNode ._isVisibleObject  .removeFieldInterest (this ._rebuild);
@@ -107,6 +108,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       // Clear node.
 
       this .childNode      = null;
+      this .pointingNode   = null;
       this .cameraObject   = null;
       this .pickableObject = null;
       this .visibleNode    = null;
@@ -128,6 +130,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                case X3DConstants .Transform:
                case X3DConstants .X3DShapeNode:
                {
+                  childNode ._isPointingObject .addFieldInterest (this ._rebuild);
                   childNode ._isCameraObject   .addFieldInterest (this ._rebuild);
                   childNode ._isPickableObject .addFieldInterest (this ._rebuild);
                   childNode ._isVisibleObject  .addFieldInterest (this ._rebuild);
@@ -136,6 +139,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
                   if (childNode .isVisible ())
                   {
+                     if (childNode .isPointingObject ())
+                        this .pointingNode = childNode;
+
                      if (childNode .isCameraObject ())
                         this .cameraObject = childNode;
 
@@ -165,9 +171,14 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
       }
 
+      this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
       this .set_visibleObjects__ ();
+   },
+   set_pointingObjects__ ()
+   {
+      this .setPointingObject (this .pointingNode);
    },
    set_cameraObjects__ ()
    {

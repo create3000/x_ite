@@ -103,9 +103,7 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
       {
          case TraverseType .POINTER:
          {
-            if (this ._pointerEvents .getValue ())
-               renderObject .addPointingShape (this);
-
+            renderObject .addPointingShape (this);
             break;
          }
          case TraverseType .PICKING:

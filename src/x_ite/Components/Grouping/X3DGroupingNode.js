@@ -65,6 +65,7 @@ function X3DGroupingNode (executionContext)
    this .allowedTypes              = new Set ();
    this .children                  = new Set ();
    this .pointingDeviceSensorNodes = new Set ();
+   this .pointingNodes             = new Set ();
    this .clipPlaneNodes            = new Set ();
    this .displayNodes              = new Set ();
    this .cameraObjects             = new Set ();
@@ -174,16 +175,12 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    clear ()
    {
-      for (const childNode of this .cameraObjects)
-         childNode ._isCameraObject .removeFieldInterest (this ._rebuild);
-
-      for (const childNode of this .pickableSensorNodes)
-         childNode ._isPickableObject .removeFieldInterest (this ._rebuild);
-
       for (const childNode of this .childNodes)
       {
+         childNode ._isPointingObject .removeFieldInterest (this ._rebuild);
          childNode ._isCameraObject   .removeFieldInterest (this ._rebuild);
          childNode ._isPickableObject .removeFieldInterest (this ._rebuild);
+         childNode ._isVisibleObject  .removeFieldInterest (this ._rebuild);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
@@ -194,6 +191,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       this .children                  .clear ();
       this .pointingDeviceSensorNodes .clear ();
+      this .pointingNodes             .clear ();
       this .clipPlaneNodes            .clear ();
       this .displayNodes              .clear ();
       this .cameraObjects             .clear ();
@@ -259,6 +257,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                }
                case X3DConstants .X3DChildNode:
                {
+                  childNode ._isPointingObject .addFieldInterest (this ._rebuild);
                   childNode ._isCameraObject   .addFieldInterest (this ._rebuild);
                   childNode ._isPickableObject .addFieldInterest (this ._rebuild);
                   childNode ._isVisibleObject  .addFieldInterest (this ._rebuild);
@@ -267,6 +266,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                   if (childNode .isVisible ())
                   {
+                     if (childNode .isPointingObject ())
+                        this .pointingNodes .add (childNode);
+
                      if (childNode .isCameraObject ())
                         this .cameraObjects .add (childNode);
 
@@ -298,12 +300,14 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       if (this .getName () === "VisibleNodes")
       {
-         console .warn ("Visible Nodes", this .visibleNodes .size);
+         console .warn ("Visible Nodes",  this .visibleNodes .size);
+         console .warn ("Pointing Nodes", this .pointingNodes .size);
 
          // for (const node of this .visibleNodes)
          //    console .log (node .getTypeName ());
       }
 
+      this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
       this .set_visibleObjects__ ();
@@ -356,6 +360,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                }
                case X3DConstants .X3DChildNode:
                {
+                  childNode ._isPointingObject .removeFieldInterest (this ._rebuild);
                   childNode ._isCameraObject   .removeFieldInterest (this ._rebuild);
                   childNode ._isPickableObject .removeFieldInterest (this ._rebuild);
                   childNode ._isVisibleObject  .removeFieldInterest (this ._rebuild);
@@ -366,6 +371,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                      childNode ._bboxDisplay .removeFieldInterest (this ._rebuild);
                   }
 
+                  this .pointingNodes   .delete (childNode);
                   this .cameraObjects   .delete (childNode);
                   this .pickableObjects .delete (childNode);
                   this .childNodes      .delete (childNode);
@@ -381,9 +387,14 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
       }
 
+      this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
       this .set_visibleObjects__ ();
+   },
+   set_pointingObjects__ ()
+   {
+      this .setPointingObject (this .pointingNodes .size);
    },
    set_cameraObjects__ ()
    {
@@ -422,8 +433,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
 
-            for (const visibleNode of this .visibleNodes)
-               visibleNode .traverse (type, renderObject);
+            for (const pointingNode of this .pointingNodes)
+               pointingNode .traverse (type, renderObject);
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .pop (renderObject);
