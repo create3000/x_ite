@@ -247,15 +247,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   this .displayNodes .add (childNode);
                   continue;
                }
-               case X3DConstants .X3DBindableNode:
-               {
-                  childNode ._isCameraObject .addFieldInterest (this ._rebuild);
-
-                  if (childNode .isCameraObject ())
-                     this .cameraObjects .add (childNode);
-
-                  continue;
-               }
                case X3DConstants .TransformSensor:
                case X3DConstants .X3DPickSensorNode:
                {
@@ -347,13 +338,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .X3DLightNode:
                {
                   this .displayNodes .delete (childNode);
-                  continue;
-               }
-               case X3DConstants .X3DBindableNode:
-               {
-                  childNode ._isCameraObject .removeFieldInterest (this ._rebuild);
-
-                  this .cameraObjects .delete (childNode);
                   continue;
                }
                case X3DConstants .TransformSensor:
