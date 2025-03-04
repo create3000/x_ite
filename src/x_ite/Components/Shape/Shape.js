@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    {
       X3DShapeNode .prototype .initialize .call (this);
 
-      this ._transformSensors_changed .addInterest ("set_pickableObject__", this);
+      this ._transformSensors .addInterest ("set_pickableObject__", this);
 
       this .set_pickableObject__ ();
    },

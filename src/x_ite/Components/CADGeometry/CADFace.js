@@ -61,6 +61,8 @@ function CADFace (executionContext)
    X3DBoundedObject             .call (this, executionContext);
 
    this .addType (X3DConstants .CADFace);
+
+   this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureChildNode .prototype),
@@ -71,7 +73,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       X3DProductStructureChildNode .prototype .initialize .call (this);
       X3DBoundedObject             .prototype .initialize .call (this);
 
-      this ._shape .addInterest ("set_children__", this);
+      this ._rebuild .addInterest ("set_children__", this);
+      this ._shape   .addInterest ("requestRebuild", this);
 
       this .set_children__ ();
    },
@@ -82,6 +85,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   requestRebuild ()
+   {
+      this ._rebuild .addEvent ();
+   },
    set_children__ ()
    {
       // Remove node.
@@ -90,15 +97,15 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       {
          const childNode = this .childNode;
 
-         childNode ._isPointingObject .removeInterest ("set_children__", this);
-         childNode ._isCameraObject   .removeInterest ("set_children__", this);
-         childNode ._isPickableObject .removeInterest ("set_children__", this);
-         childNode ._isVisibleObject  .removeInterest ("set_children__", this);
+         childNode ._isPointingObject .removeInterest ("requestRebuild", this);
+         childNode ._isCameraObject   .removeInterest ("requestRebuild", this);
+         childNode ._isPickableObject .removeInterest ("requestRebuild", this);
+         childNode ._isVisibleObject  .removeInterest ("requestRebuild", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
-            childNode ._display     .removeInterest ("set_children__", this);
-            childNode ._bboxDisplay .removeInterest ("set_children__", this);
+            childNode ._display     .removeInterest ("requestRebuild", this);
+            childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
          }
       }
 
@@ -127,10 +134,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                case X3DConstants .Transform:
                case X3DConstants .X3DShapeNode:
                {
-                  childNode ._isPointingObject .addInterest ("set_children__", this);
-                  childNode ._isCameraObject   .addInterest ("set_children__", this);
-                  childNode ._isPickableObject .addInterest ("set_children__", this);
-                  childNode ._isVisibleObject  .addInterest ("set_children__", this);
+                  childNode ._isPointingObject .addInterest ("requestRebuild", this);
+                  childNode ._isCameraObject   .addInterest ("requestRebuild", this);
+                  childNode ._isPickableObject .addInterest ("requestRebuild", this);
+                  childNode ._isVisibleObject  .addInterest ("requestRebuild", this);
 
                   this .childNode = childNode;
 
@@ -151,8 +158,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                   {
-                     childNode ._display     .addInterest ("set_children__", this);
-                     childNode ._bboxDisplay .addInterest ("set_children__", this);
+                     childNode ._display     .addInterest ("requestRebuild", this);
+                     childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                      if (childNode .isBBoxVisible ())
                         this .boundedObject = childNode;
