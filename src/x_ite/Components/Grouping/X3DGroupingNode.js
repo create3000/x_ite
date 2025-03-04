@@ -265,15 +265,16 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                   this .childNodes .add (childNode);
 
-                  if (childNode .isCameraObject ())
-                     this .cameraObjects .add (childNode);
-
-                  if (childNode .isVisibleObject () && childNode .isVisible ())
+                  if (childNode .isVisible ())
                   {
-                     this .visibleNodes .add (childNode);
+                     if (childNode .isCameraObject ())
+                        this .cameraObjects .add (childNode);
 
                      if (childNode .isPickableObject ())
                         this .pickableObjects .add (childNode);
+
+                     if (childNode .isVisibleObject ())
+                        this .visibleNodes .add (childNode);
                   }
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
