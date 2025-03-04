@@ -61,8 +61,6 @@ function X3DShapeNode (executionContext)
 
    this .addType (X3DConstants .X3DShapeNode);
 
-   this .setVisibleObject (true);
-
    this .bbox       = new Box3 ();
    this .bboxSize   = new Vector3 ();
    this .bboxCenter = new Vector3 ();
