@@ -114,6 +114,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       for (const type of types)
          this .allowedTypes .add (type);
    },
+   requestRebuild ()
+   {
+      this ._rebuild .addEvent ();
+   },
    set_addChildren__ ()
    {
       if (this ._addChildren .length === 0)
@@ -172,10 +176,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       this ._children .removeInterest ("connectChildren", this);
       this ._children .addInterest ("requestRebuild", this);
-   },
-   requestRebuild ()
-   {
-      this ._rebuild .addEvent ();
    },
    clearChildren ()
    {
