@@ -97,18 +97,18 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    },
    createConvexGeometry: (() =>
    {
-      var p = new Ammo .btVector3 ();
+      const p = new Ammo .btVector3 ();
 
       return function ()
       {
-         var vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices () .getValue ();
 
          if (vertices .length === 0)
             return null;
 
-         var convexHull = new Ammo .btConvexHullShape ();
+         const convexHull = new Ammo .btConvexHullShape ();
 
-         for (var i = 0, length = vertices .length; i < length; i += 4)
+         for (let i = 0, length = vertices .length; i < length; i += 4)
          {
             p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
             convexHull .addPoint (p, false);
@@ -121,21 +121,21 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    })(),
    createConcaveGeometry: (() =>
    {
-      var
+      const
          p1 = new Ammo .btVector3 (),
          p2 = new Ammo .btVector3 (),
          p3 = new Ammo .btVector3 ();
 
       return function ()
       {
-         var vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices () .getValue ();
 
          if (vertices .length === 0)
             return null;
 
          this .triangleMesh = new Ammo .btTriangleMesh ();
 
-         for (var i = 0, length = vertices .length; i < length; i += 12)
+         for (let i = 0, length = vertices .length; i < length; i += 12)
          {
             p1 .setValue (vertices [i],     vertices [i + 1], vertices [i + 2]);
             p2 .setValue (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
@@ -149,7 +149,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    })(),
    set_shape__ ()
    {
-      // Remove
+      // Remove node.
 
       if (this .shapeNode)
       {
@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          }
       }
 
-      // Clear
+      // Clear node.
 
       this .shapeNode      = null;
       this .pointingNode   = null;
@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .visibleNode    = null;
       this .boundedObject  = null;
 
-      // Add
+      // Add node.
 
       const shapeNode = X3DCast (X3DConstants .Shape, this ._shape);
 
@@ -235,10 +235,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       this .geometryNode ?._rebuild .removeInterest ("set_collidableGeometry__", this);
 
-      if (this .shapeNode)
-         this .geometryNode = this .shapeNode .getGeometry ();
-      else
-         this .geometryNode = null;
+      this .geometryNode = this .shapeNode ?.getGeometry () ?? null;
 
       this .geometryNode ?._rebuild .addInterest ("set_collidableGeometry__", this);
 
@@ -246,13 +243,13 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    },
    set_collidableGeometry__: (() =>
    {
-      var
+      const
          localScaling   = new Ammo .btVector3 (),
          defaultScaling = new Ammo .btVector3 (1, 1, 1);
 
       return function ()
       {
-         var ls = this .getCompoundShape () .getLocalScaling ();
+         const ls = this .getCompoundShape () .getLocalScaling ();
          localScaling .setValue (ls .x (), ls .y (), ls .z ());
 
          this .removeCollidableGeometry ();
@@ -261,15 +258,15 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
          if (this ._enabled .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
          {
-            var type = this .geometryNode .getType ();
+            const type = this .geometryNode .getType ();
 
-            for (var t = type .length - 1; t >= 0; -- t)
+            for (let t = type .length - 1; t >= 0; -- t)
             {
                switch (type [t])
                {
                   case X3DConstants .Box:
                   {
-                     var
+                     const
                         box  = this .geometryNode,
                         size = box ._size .getValue ();
 
@@ -278,7 +275,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   }
                   case X3DConstants .Cone:
                   {
-                     var cone = this .geometryNode;
+                     const cone = this .geometryNode;
 
                      if (cone ._side .getValue () && cone ._bottom .getValue ())
                         this .collisionShape = new Ammo .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
@@ -289,7 +286,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   }
                   case X3DConstants .Cylinder:
                   {
-                     var
+                     const
                         cylinder  = this .geometryNode,
                         radius    = cylinder ._radius .getValue (),
                         height1_2 = cylinder ._height .getValue () * 0.5;
@@ -303,19 +300,19 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   }
                   case X3DConstants .ElevationGrid:
                   {
-                     var elevationGrid = this .geometryNode;
+                     const elevationGrid = this .geometryNode;
 
                      if (elevationGrid ._xDimension .getValue () > 1 && elevationGrid ._zDimension .getValue () > 1)
                      {
-                        var
-                           min         = Number .POSITIVE_INFINITY,
-                           max         = Number .NEGATIVE_INFINITY,
-                           heightField = this .heightField = Ammo ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ()),
-                           i4          = 0;
+                        const heightField = this .heightField = Ammo ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ());
 
-                        for (var i = 0, length = elevationGrid ._height .length; i < length; ++ i)
+                        let
+                           min = Number .POSITIVE_INFINITY,
+                           max = Number .NEGATIVE_INFINITY;
+
+                        for (let i = 0, i4 = 0, length = elevationGrid ._height .length; i < length; ++ i)
                         {
-                           var value = elevationGrid ._height [i];
+                           const value = elevationGrid ._height [i];
 
                            min = Math .min (min, value);
                            max = Math .max (max, value);
@@ -346,7 +343,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   }
                   case X3DConstants .Sphere:
                   {
-                     var sphere = this .geometryNode;
+                     const sphere = this .geometryNode;
 
                      this .collisionShape = new Ammo .btSphereShape (sphere ._radius .getValue ());
                      break;

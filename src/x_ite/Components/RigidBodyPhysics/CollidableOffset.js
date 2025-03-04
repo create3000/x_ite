@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    },
    set_collidable__ ()
    {
-      // Remove
+      // Remove node.
 
       if (this .collidableNode)
       {
@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          }
       }
 
-      // Clear
+      // Clear node.
 
       this .collidableNode = null;
       this .pointingNode   = null;
@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       this .visibleNode    = null;
       this .boundedObject  = null;
 
-      // Add
+      // Add node.
 
       const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidable);
 
