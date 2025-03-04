@@ -390,7 +390,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNodes .size);
+      this .setVisibleObject (this .visibleNodes .size || this .boundedObjects .size);
    },
    traverse (type, renderObject)
    {

@@ -135,15 +135,16 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
             this .childNode = childNode;
 
-            if (childNode .isCameraObject ())
-               this .cameraObject = childNode;
-
-            if (childNode .isVisibleObject () && childNode .isVisible ())
+            if (childNode .isVisible ())
             {
-               this .visibleNode = childNode;
+               if (childNode .isCameraObject ())
+                  this .cameraObject = childNode;
 
                if (childNode .isPickableObject ())
                   this .pickableObject = childNode;
+
+               if (childNode .isVisibleObject ())
+                  this .visibleNode = childNode;
             }
 
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -162,7 +163,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    },
    set_cameraObjects__ ()
    {
-      this .setCameraObject (this .cameraObject ?.isCameraObject ());
+      this .setCameraObject (this .cameraObject);
    },
    set_transformSensors__ ()
    {

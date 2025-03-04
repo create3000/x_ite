@@ -128,15 +128,16 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
                   this .childNode = childNode;
 
-                  if (childNode .isCameraObject ())
-                     this .cameraObject = childNode;
-
-                  if (childNode .isVisibleObject () && childNode .isVisible ())
+                  if (childNode .isVisible ())
                   {
-                     this .visibleNode = childNode;
+                     if (childNode .isCameraObject ())
+                        this .cameraObject = childNode;
 
                      if (childNode .isPickableObject ())
                         this .pickableObject = childNode;
+
+                     if (childNode .isVisibleObject ())
+                        this .visibleNode = childNode;
                   }
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -164,7 +165,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_cameraObjects__ ()
    {
-      this .setCameraObject (this .cameraObject ?.isCameraObject ());
+      this .setCameraObject (this .cameraObject);
    },
    set_transformSensors__ ()
    {
@@ -172,7 +173,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNode ?.isVisibleObject ());
+      this .setVisibleObject (this .visibleNode || this .boundedObject);
    },
    traverse (type, renderObject)
    {
