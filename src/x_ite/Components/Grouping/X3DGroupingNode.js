@@ -296,8 +296,13 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
       }
 
-      if (this .getName () === "Visibles")
-         console .warn ("*****\n" .repeat (10));
+      if (this .getName () === "VisibleNodes")
+      {
+         console .warn ("Visible Nodes", this .visibleNodes .size);
+
+         for (const node of this .visibleNodes)
+            console .log (node .getTypeName ());
+      }
 
       this .set_cameraObjects__ ();
       this .set_transformSensors__ ();
