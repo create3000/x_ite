@@ -87,13 +87,13 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   isConvex ()
+   {
+      return this .convex;
+   },
    setConvex (value)
    {
       this .convex = value;
-   },
-   getConvex ()
-   {
-      return this .convex;
    },
    createConvexGeometry: (() =>
    {
