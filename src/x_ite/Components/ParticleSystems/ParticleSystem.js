@@ -284,9 +284,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_pointingObject__ ()
    {
       if (this .geometryType == GeometryTypes .GEOMETRY)
-         X3DShapeNode .prototype .set_visibleObject__ .call (this);
+         X3DShapeNode .prototype .set_pointingObject__ .call (this);
       else
-         this .setVisibleObject (this ._pointerEvents .getValue ());
+         this .setPointingObject (this ._pointerEvents .getValue ());
    },
    set_visibleObject__ ()
    {

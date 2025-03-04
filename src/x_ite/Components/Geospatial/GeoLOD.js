@@ -70,6 +70,8 @@ function GeoLOD (executionContext)
 
    this .addType (X3DConstants .GeoLOD);
 
+   this .setVisibleObject (true);
+
    // Units
 
    this ._range .setUnit ("length");
@@ -99,18 +101,10 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       X3DBoundedObject    .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
 
-      this .rootGroup ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .rootGroup ._isPickableObject .addFieldInterest (this ._isPickableObject);
-      this .rootGroup ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
-
       this ._rootNode .addFieldInterest (this .rootGroup ._children);
 
       this .rootGroup ._children = this ._rootNode;
       this .rootGroup .setPrivate (true);
-
-      this .setCameraObject   (this .rootGroup .isCameraObject ());
-      this .setPickableObject (this .rootGroup .isPickableObject ());
-      this .setVisibleObject  (this .rootGroup .isVisibleObject ());
 
       this .rootInline   ._loadState .addInterest ("set_rootLoadState__", this);
       this .child1Inline ._loadState .addInterest ("set_childLoadState__", this);
@@ -242,6 +236,13 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
             children .push (rootNodes [i]);
       }
    },
+   set_childPointingObject__ ()
+   {
+      this .setCameraObject (this .child1Inline .isPointingObject () ||
+                             this .child2Inline .isPointingObject () ||
+                             this .child3Inline .isPointingObject () ||
+                             this .child4Inline .isPointingObject ());
+   },
    set_childCameraObject__ ()
    {
       this .setCameraObject (this .child1Inline .isCameraObject () ||
@@ -300,10 +301,16 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                {
                   case 0:
                   {
-                     this .child1Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
-                     this .child2Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
-                     this .child3Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
-                     this .child4Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
+                     this .child1Inline ._isPointingObject .removeInterest ("set_childPointingObject__", this);
+                     this .child2Inline ._isPointingObject .removeInterest ("set_childPointingObject__", this);
+                     this .child3Inline ._isPointingObject .removeInterest ("set_childPointingObject__", this);
+                     this .child4Inline ._isPointingObject .removeInterest ("set_childPointingObject__", this);
+
+                     this .child1Inline ._isCameraObject .removeInterest ("set_childCameraObject__", this);
+                     this .child2Inline ._isCameraObject .removeInterest ("set_childCameraObject__", this);
+                     this .child3Inline ._isCameraObject .removeInterest ("set_childCameraObject__", this);
+                     this .child4Inline ._isCameraObject .removeInterest ("set_childCameraObject__", this);
+
                      this .child1Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
                      this .child2Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
                      this .child3Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
@@ -311,9 +318,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
 
                      if (this ._rootNode .length)
                      {
+                        this .rootGroup ._isPointingObject .addFieldInterest (this ._isPointingObject);
                         this .rootGroup ._isCameraObject   .addFieldInterest (this ._isCameraObject);
                         this .rootGroup ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
+                        this .setPointingObject (this .rootGroup .isPointingObject ());
                         this .setCameraObject   (this .rootGroup .isCameraObject ());
                         this .setPickableObject (this .rootGroup .isPickableObject ());
 
@@ -324,9 +333,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                      {
                         if (this .rootInline .checkLoadState () == X3DConstants .COMPLETE_STATE)
                         {
+                           this .rootInline ._isPointingObject .addFieldInterest (this ._isPointingObject);
                            this .rootInline ._isCameraObject   .addFieldInterest (this ._isCameraObject);
                            this .rootInline ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
+                           this .setPointingObject (this .rootInline .isPointingObject ());
                            this .setCameraObject   (this .rootInline .isCameraObject ());
                            this .setPickableObject (this .rootInline .isPickableObject ());
 
@@ -349,24 +360,33 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                   {
                      if (this ._rootNode .length)
                      {
+                        this .rootGroup ._isPointingObject .removeFieldInterest (this ._isPointingObject);
                         this .rootGroup ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
                         this .rootGroup ._isPickableObject .removeFieldInterest (this ._isPickableObject);
                      }
                      else
                      {
+                        this .rootInline ._isPointingObject .removeFieldInterest (this ._isPointingObject);
                         this .rootInline ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
                         this .rootInline ._isPickableObject .removeFieldInterest (this ._isPickableObject);
                      }
 
-                     this .child1Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
-                     this .child2Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
-                     this .child3Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
-                     this .child4Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
+                     this .child1Inline ._isPointingObject .addInterest ("set_childPointingObject__", this);
+                     this .child2Inline ._isPointingObject .addInterest ("set_childPointingObject__", this);
+                     this .child3Inline ._isPointingObject .addInterest ("set_childPointingObject__", this);
+                     this .child4Inline ._isPointingObject .addInterest ("set_childPointingObject__", this);
+
+                     this .child1Inline ._isCameraObject .addInterest ("set_childCameraObject__", this);
+                     this .child2Inline ._isCameraObject .addInterest ("set_childCameraObject__", this);
+                     this .child3Inline ._isCameraObject .addInterest ("set_childCameraObject__", this);
+                     this .child4Inline ._isCameraObject .addInterest ("set_childCameraObject__", this);
+
                      this .child1Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
                      this .child2Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
                      this .child3Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
                      this .child4Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
 
+                     this .set_childPointingObject__ ();
                      this .set_childCameraObject__ ();
                      this .set_childPickableObject__ ();
 

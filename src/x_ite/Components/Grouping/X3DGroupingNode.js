@@ -298,13 +298,14 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
       }
 
-      if (this .getName () === "VisibleNodes")
+      if (this .getName () === "PointSet")
       {
-         console .warn ("Visible Nodes",  this .visibleNodes .size);
-         console .warn ("Pointing Nodes", this .pointingNodes .size);
+         // console .warn ("Visible Nodes",  this .visibleNodes .size);
+         // console .warn ("Pointing Nodes", this .pointingNodes .size);
+         console .warn ("pickableObjects", this .pickableObjects .size);
 
-         // for (const node of this .visibleNodes)
-         //    console .log (node .getTypeName ());
+         for (const node of this .pickableObjects)
+            console .log (node .getTypeName (), node .getName ());
       }
 
       this .set_pointingObjects__ ();
