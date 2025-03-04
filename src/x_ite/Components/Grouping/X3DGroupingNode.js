@@ -300,8 +300,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       {
          console .warn ("Visible Nodes", this .visibleNodes .size);
 
-         for (const node of this .visibleNodes)
-            console .log (node .getTypeName ());
+         // for (const node of this .visibleNodes)
+         //    console .log (node .getTypeName ());
       }
 
       this .set_cameraObjects__ ();
