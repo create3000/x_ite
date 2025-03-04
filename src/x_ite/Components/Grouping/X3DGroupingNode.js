@@ -520,7 +520,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                visibleNode .traverse (type, renderObject);
 
             for (const clipPlaneNode of clipPlaneNodes)
-               clipPlaneNode .push (renderObject);
+               clipPlaneNode .pop (renderObject);
 
             return;
          }
