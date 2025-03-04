@@ -163,13 +163,13 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .clearChildren ();
       this .addChildren (this ._children);
    },
-   set_child__ (childNode)
-   {
-      this .removeChild (childNode);
-      this .addChild (childNode);
+   // set_child__ (childNode)
+   // {
+   //    this .removeChild (childNode);
+   //    this .addChild (childNode);
 
-      this .set_objects__ ();
-   },
+   //    this .set_objects__ ();
+   // },
    connectChildren ()
    {
       this ._children .removeInterest ("connectChildren", this);
@@ -179,15 +179,15 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       for (const childNode of this .childNodes)
       {
-         childNode ._isPointingObject .removeInterest ("set_child__", this);
-         childNode ._isCameraObject   .removeInterest ("set_child__", this);
-         childNode ._isPickableObject .removeInterest ("set_child__", this);
-         childNode ._isVisibleObject  .removeInterest ("set_child__", this);
+         childNode ._isPointingObject .removeInterest ("set_children__", this);
+         childNode ._isCameraObject   .removeInterest ("set_children__", this);
+         childNode ._isPickableObject .removeInterest ("set_children__", this);
+         childNode ._isVisibleObject  .removeInterest ("set_children__", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
-            childNode ._display     .removeInterest ("set_child__", this);
-            childNode ._bboxDisplay .removeInterest ("set_child__", this);
+            childNode ._display     .removeInterest ("set_children__", this);
+            childNode ._bboxDisplay .removeInterest ("set_children__", this);
          }
       }
 
@@ -208,14 +208,14 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       for (const child of children)
          this .addChild (child);
 
-      if (this .getName () === "PointSet")
+      if (this .getName () === "VisibleNodes")
       {
-         // console .warn ("visibleNodes",    this .visibleNodes    .size);
+         console .warn ("visibleNodes",    this .visibleNodes    .size);
          // console .warn ("pointingNodes",   this .pointingNodes   .size);
          // console .warn ("pickableObjects", this .pickableObjects .size);
 
-         for (const node of this .pickableObjects)
-            console .log (node .getTypeName (), node .getName ());
+         // for (const node of this .pickableObjects)
+         //    console .log (node .getTypeName (), node .getName ());
       }
 
       this .set_objects__ ();
@@ -265,7 +265,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             case X3DConstants .TransformSensor:
             case X3DConstants .X3DPickSensorNode:
             {
-               childNode ._isPickableObject .addInterest ("set_child__", this, childNode);
+               childNode ._isPickableObject .addInterest ("set_children__", this);
 
                if (childNode .isPickableObject ())
                   this .pickableSensorNodes .add (childNode);
@@ -274,10 +274,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             }
             case X3DConstants .X3DChildNode:
             {
-               childNode ._isPointingObject .addInterest ("set_child__", this, childNode);
-               childNode ._isCameraObject   .addInterest ("set_child__", this, childNode);
-               childNode ._isPickableObject .addInterest ("set_child__", this, childNode);
-               childNode ._isVisibleObject  .addInterest ("set_child__", this, childNode);
+               childNode ._isPointingObject .addInterest ("set_children__", this);
+               childNode ._isCameraObject   .addInterest ("set_children__", this);
+               childNode ._isPickableObject .addInterest ("set_children__", this);
+               childNode ._isVisibleObject  .addInterest ("set_children__", this);
 
                this .childNodes .add (childNode);
 
@@ -298,8 +298,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                {
-                  childNode ._display     .addInterest ("set_child__", this, childNode);
-                  childNode ._bboxDisplay .addInterest ("set_child__", this, childNode);
+                  childNode ._display     .addInterest ("set_children__", this);
+                  childNode ._bboxDisplay .addInterest ("set_children__", this);
 
                   if (childNode .isBBoxVisible ())
                      this .boundedObjects .add (childNode);
@@ -360,22 +360,22 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             case X3DConstants .TransformSensor:
             case X3DConstants .X3DPickSensorNode:
             {
-               childNode ._isPickableObject .removeInterest ("set_child__", this);
+               childNode ._isPickableObject .removeInterest ("set_children__", this);
 
                this .pickableSensorNodes .delete (childNode);
                continue;
             }
             case X3DConstants .X3DChildNode:
             {
-               childNode ._isPointingObject .removeInterest ("set_child__", this);
-               childNode ._isCameraObject   .removeInterest ("set_child__", this);
-               childNode ._isPickableObject .removeInterest ("set_child__", this);
-               childNode ._isVisibleObject  .removeInterest ("set_child__", this);
+               childNode ._isPointingObject .removeInterest ("set_children__", this);
+               childNode ._isCameraObject   .removeInterest ("set_children__", this);
+               childNode ._isPickableObject .removeInterest ("set_children__", this);
+               childNode ._isVisibleObject  .removeInterest ("set_children__", this);
 
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                {
-                  childNode ._display     .removeInterest ("set_child__", this);
-                  childNode ._bboxDisplay .removeInterest ("set_child__", this);
+                  childNode ._display     .removeInterest ("set_children__", this);
+                  childNode ._bboxDisplay .removeInterest ("set_children__", this);
                }
 
                this .pointingNodes   .delete (childNode);
