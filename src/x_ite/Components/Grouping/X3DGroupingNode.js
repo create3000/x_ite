@@ -168,10 +168,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .removeChild (childNode);
       this .addChild (childNode);
 
-      this .set_pointingObjects__ ();
-      this .set_cameraObjects__ ();
-      this .set_pickableObjects__ ();
-      this .set_visibleObjects__ ();
+      this .set_objects__ ();
    },
    connectChildren ()
    {
@@ -221,10 +218,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             console .log (node .getTypeName (), node .getName ());
       }
 
-      this .set_pointingObjects__ ();
-      this .set_cameraObjects__ ();
-      this .set_pickableObjects__ ();
-      this .set_visibleObjects__ ();
+      this .set_objects__ ();
    },
    addChild (child)
    {
@@ -325,10 +319,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       for (const child of children)
          this .removeChild (child);
 
-      this .set_pointingObjects__ ();
-      this .set_cameraObjects__ ();
-      this .set_pickableObjects__ ();
-      this .set_visibleObjects__ ();
+      this .set_objects__ ();
    },
    removeChild (child)
    {
@@ -401,6 +392,13 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
          break;
       }
+   },
+   set_objects__ ()
+   {
+      this .set_pointingObjects__ ();
+      this .set_cameraObjects__ ();
+      this .set_pickableObjects__ ();
+      this .set_visibleObjects__ ();
    },
    set_pointingObjects__ ()
    {
