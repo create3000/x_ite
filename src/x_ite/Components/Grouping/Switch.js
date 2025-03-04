@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
 
       this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
-      this .set_transformSensors__ ();
+      this .set_pickableObjects__ ();
       this .set_visibleObjects__ ();
    },
    set_pointingObjects__ ()
@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    {
       this .setCameraObject (this .cameraObject);
    },
-   set_transformSensors__ ()
+   set_pickableObjects__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
    },

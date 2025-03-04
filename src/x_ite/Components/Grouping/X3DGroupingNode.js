@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._transformSensors_changed .addInterest ("set_transformSensors__", this);
+      this ._transformSensors_changed .addInterest ("set_pickableObjects__", this);
 
       this ._addChildren    .addInterest ("set_addChildren__",    this);
       this ._removeChildren .addInterest ("set_removeChildren__", this);
@@ -310,7 +310,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
-      this .set_transformSensors__ ();
+      this .set_pickableObjects__ ();
       this .set_visibleObjects__ ();
    },
    remove (children)
@@ -390,7 +390,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
-      this .set_transformSensors__ ();
+      this .set_pickableObjects__ ();
       this .set_visibleObjects__ ();
    },
    set_pointingObjects__ ()
@@ -401,7 +401,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       this .setCameraObject (this .cameraObjects .size);
    },
-   set_transformSensors__ ()
+   set_pickableObjects__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size || this .pickableSensorNodes .size || this .pickableObjects .size);
    },
