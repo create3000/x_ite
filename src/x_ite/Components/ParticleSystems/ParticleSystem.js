@@ -281,6 +281,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
+   set_pointingObject__ ()
+   {
+      if (this .geometryType == GeometryTypes .GEOMETRY)
+         X3DShapeNode .prototype .set_visibleObject__ .call (this);
+      else
+         this .setVisibleObject (this ._pointerEvents .getValue ());
+   },
    set_visibleObject__ ()
    {
       if (this .geometryType == GeometryTypes .GEOMETRY)
