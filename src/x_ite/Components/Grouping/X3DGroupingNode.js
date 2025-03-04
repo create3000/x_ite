@@ -163,13 +163,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .clearChildren ();
       this .addChildren (this ._children);
    },
-   // set_child__ (childNode)
-   // {
-   //    this .removeChild (childNode);
-   //    this .addChild (childNode);
-
-   //    this .set_objects__ ();
-   // },
    connectChildren ()
    {
       this ._children .removeInterest ("connectChildren", this);
@@ -205,6 +198,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    addChildren (children)
    {
+      // Order of children must be preserved.
+      
       for (const child of children)
          this .addChild (child);
 
