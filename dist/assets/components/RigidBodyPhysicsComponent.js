@@ -843,6 +843,8 @@ function CollidableOffset (executionContext)
    RigidBodyPhysics_X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollidableOffset);
+
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPhysics_X3DNBodyCollidableNode .prototype),
@@ -851,8 +853,10 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
    {
       RigidBodyPhysics_X3DNBodyCollidableNode .prototype .initialize .call (this);
 
+      this ._rebuild .addInterest ("set_collidable__", this);
+
       this ._enabled    .addInterest ("set_collidableGeometry__", this);
-      this ._collidable .addInterest ("set_collidable__",         this);
+      this ._collidable .addInterest ("requestRebuild",           this);
 
       this .set_collidable__ ();
    },
@@ -863,69 +867,109 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   requestRebuild ()
+   {
+      this ._rebuild .addEvent ();
+   },
    set_collidable__ ()
    {
+      // Remove node.
+
       if (this .collidableNode)
       {
-         this .collidableNode .removeInterest ("addNodeEvent", this);
-         this .collidableNode ._compoundShape_changed .removeFieldInterest (this ._compoundShape_changed);
+         const collidableNode = this .collidableNode;
 
-         this .collidableNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
-         this .collidableNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
+         collidableNode .removeInterest ("addNodeEvent", this);
+         collidableNode ._compoundShape_changed .removeFieldInterest (this ._compoundShape_changed);
 
-         this .collidableNode ._display     .removeInterest ("set_display__",     this);
-         this .collidableNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
+         collidableNode ._isPointingObject  .removeInterest ("requestRebuild", this);
+         collidableNode ._isCameraObject    .removeInterest ("requestRebuild", this);
+         collidableNode ._isPickableObject  .removeInterest ("requestRebuild", this);
+         collidableNode ._isCollisionObject .removeInterest ("requestRebuild", this);
+         collidableNode ._isShadowObject    .removeInterest ("requestRebuild", this);
+         collidableNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+
+         if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, collidableNode))
+         {
+            collidableNode ._display     .removeInterest ("requestRebuild", this);
+            collidableNode ._bboxDisplay .removeInterest ("requestRebuild", this);
+         }
       }
 
-      this .collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._collidable);
+      // Clear node.
 
-      if (this .collidableNode)
+      this .collidableNode  = null;
+      this .pointingNode    = null;
+      this .cameraObject    = null;
+      this .pickableObject  = null;
+      this .collisionObject = null;
+      this .shadowObject    = null;
+      this .visibleNode     = null;
+      this .boundedObject   = null;
+
+      // Add node.
+
+      const collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._collidable);
+
+      if (collidableNode)
       {
-         this .collidableNode .addInterest ("addNodeEvent", this);
-         this .collidableNode ._compoundShape_changed .addFieldInterest (this ._compoundShape_changed);
+         collidableNode .addInterest ("addNodeEvent", this);
+         collidableNode ._compoundShape_changed .addFieldInterest (this ._compoundShape_changed);
 
-         this .collidableNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-         this .collidableNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
+         collidableNode ._isPointingObject  .addInterest ("requestRebuild", this);
+         collidableNode ._isCameraObject    .addInterest ("requestRebuild", this);
+         collidableNode ._isPickableObject  .addInterest ("requestRebuild", this);
+         collidableNode ._isCollisionObject .addInterest ("requestRebuild", this);
+         collidableNode ._isShadowObject    .addInterest ("requestRebuild", this);
+         collidableNode ._isVisibleObject   .addInterest ("requestRebuild", this);
 
-         this .collidableNode ._display     .addInterest ("set_display__",     this);
-         this .collidableNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+         this .collidableNode = collidableNode;
 
-         this .setCameraObject   (this .collidableNode .isCameraObject ());
-         this .setPickableObject (this .collidableNode .isPickableObject ());
+         if (collidableNode .isVisible ())
+         {
+            if (collidableNode .isPointingObject ())
+               this .pointingNode = collidableNode;
+
+            if (collidableNode .isCameraObject ())
+               this .cameraObject = collidableNode;
+
+            if (collidableNode .isPickableObject ())
+               this .pickableObject = collidableNode;
+
+            if (collidableNode .isCollisionObject ())
+               this .collisionObject = collidableNode;
+
+            if (collidableNode .isShadowObject ())
+               this .shadowObject = collidableNode;
+
+            if (collidableNode .isVisibleObject ())
+               this .visibleNode = collidableNode;
+         }
+
+         if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, collidableNode))
+         {
+            collidableNode ._display     .addInterest ("requestRebuild", this);
+            collidableNode ._bboxDisplay .addInterest ("requestRebuild", this);
+
+            if (collidableNode .isBBoxVisible ())
+               this .boundedObject = collidableNode;
+         }
 
          delete this .traverse;
       }
       else
       {
-         this .setCameraObject   (false);
-         this .setPickableObject (false);
-
          this .traverse = Function .prototype;
       }
 
-      this .set_display__ ();
-      this .set_bboxDisplay__ ();
-      this .set_collidableGeometry__ ();
-   },
-   set_cameraObject__ ()
-   {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
-   },
-   set_display__ ()
-   {
-      if (this .collidableNode)
-         this .visibleNode = this .collidableNode ._display .getValue () ? this .collidableNode : null;
-      else
-         this .visibleNode = this .collidableNode;
+      this .setPointingObject  (this .pointingNode);
+      this .setCameraObject    (this .cameraObject);
+      this .setPickableObject  (this .pickableObject);
+      this .setCollisionObject (this .collisionObject);
+      this .setShadowObject    (this .shadowObject);
+      this .setVisibleObject   (this .visibleNode);
 
-      this .set_cameraObject__ ();
-   },
-   set_bboxDisplay__ ()
-   {
-      if (this .collidableNode)
-         this .boundedObject = this .collidableNode ._bboxDisplay .getValue () ? this .collidableNode : null;
-      else
-         this .boundedObject = null;
+      this .set_collidableGeometry__ ();
    },
    set_collidableGeometry__ ()
    {
@@ -939,66 +983,58 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
    },
    traverse (type, renderObject)
    {
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .getMatrix ());
+
       switch (type)
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
-         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
+            this .pointingNode ?.traverse (type, renderObject);
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
+         {
+            this .cameraObject ?.traverse (type, renderObject);
+            break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
             const
                browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy (),
-               modelViewMatrix  = renderObject .getModelViewMatrix ();
+               pickingHierarchy = browser .getPickingHierarchy ();
 
             pickingHierarchy .push (this);
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
 
-            this .visibleNode ?.traverse (type, renderObject);
+            if (browser .getPickable () .at (-1))
+               this .visibleNode ?.traverse (type, renderObject);
+            else
+               this .pickableObject ?.traverse (type, renderObject);
 
-            modelViewMatrix .pop ();
             pickingHierarchy .pop ();
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
+            this .collisionObject ?.traverse (type, renderObject);
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
+         {
+            this .shadowObject ?.traverse (type, renderObject);
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
+            this .visibleNode   ?.traverse    (type, renderObject);
             this .boundedObject ?.displayBBox (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
+            break;
          }
       }
+
+      modelViewMatrix .pop ();
    },
 });
 
@@ -1090,6 +1126,8 @@ function CollidableShape (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollidableShape);
 
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+
    this .convex = false;
 }
 
@@ -1099,8 +1137,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    {
       RigidBodyPhysics_X3DNBodyCollidableNode .prototype .initialize .call (this);
 
+      this ._rebuild .addInterest ("set_shape__", this);
+
       this ._enabled .addInterest ("set_collidableGeometry__", this);
-      this ._shape   .addInterest ("set_shape__",              this);
+      this ._shape   .addInterest ("requestRebuild",           this);
 
       this .set_shape__ ();
    },
@@ -1111,28 +1151,28 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   isConvex ()
+   {
+      return this .convex;
+   },
    setConvex (value)
    {
       this .convex = value;
    },
-   getConvex ()
-   {
-      return this .convex;
-   },
    createConvexGeometry: (() =>
    {
-      var p = new AmmoClass .btVector3 ();
+      const p = new AmmoClass .btVector3 ();
 
       return function ()
       {
-         var vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices () .getValue ();
 
          if (vertices .length === 0)
             return null;
 
-         var convexHull = new AmmoClass .btConvexHullShape ();
+         const convexHull = new AmmoClass .btConvexHullShape ();
 
-         for (var i = 0, length = vertices .length; i < length; i += 4)
+         for (let i = 0, length = vertices .length; i < length; i += 4)
          {
             p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
             convexHull .addPoint (p, false);
@@ -1145,21 +1185,21 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    })(),
    createConcaveGeometry: (() =>
    {
-      var
+      const
          p1 = new AmmoClass .btVector3 (),
          p2 = new AmmoClass .btVector3 (),
          p3 = new AmmoClass .btVector3 ();
 
       return function ()
       {
-         var vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices () .getValue ();
 
          if (vertices .length === 0)
             return null;
 
          this .triangleMesh = new AmmoClass .btTriangleMesh ();
 
-         for (var i = 0, length = vertices .length; i < length; i += 12)
+         for (let i = 0, length = vertices .length; i < length; i += 12)
          {
             p1 .setValue (vertices [i],     vertices [i + 1], vertices [i + 2]);
             p2 .setValue (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
@@ -1171,76 +1211,113 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          return new AmmoClass .btBvhTriangleMeshShape (this .triangleMesh, false);
       };
    })(),
+   requestRebuild ()
+   {
+      this ._rebuild .addEvent ();
+   },
    set_shape__ ()
    {
+      // Remove node.
+
       if (this .shapeNode)
       {
-         this .shapeNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
-         this .shapeNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
+         const shapeNode = this .shapeNode;
 
-         this .shapeNode ._display     .removeInterest ("set_display__",     this);
-         this .shapeNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
+         shapeNode ._geometry .removeInterest ("set_geometry__", this);
 
-         this .shapeNode ._geometry .removeInterest ("set_geometry__", this);
+         shapeNode ._isPointingObject  .removeInterest ("requestRebuild", this);
+         shapeNode ._isCameraObject    .removeInterest ("requestRebuild", this);
+         shapeNode ._isPickableObject  .removeInterest ("requestRebuild", this);
+         shapeNode ._isCollisionObject .removeInterest ("requestRebuild", this);
+         shapeNode ._isShadowObject    .removeInterest ("requestRebuild", this);
+         shapeNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+
+         if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, shapeNode))
+         {
+            shapeNode ._display     .removeInterest ("requestRebuild", this);
+            shapeNode ._bboxDisplay .removeInterest ("requestRebuild", this);
+         }
       }
 
-      this .shapeNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Shape, this ._shape);
+      // Clear node.
 
-      if (this .shapeNode)
+      this .shapeNode       = null;
+      this .pointingNode    = null;
+      this .cameraObject    = null;
+      this .pickableObject  = null;
+      this .collisionObject = null;
+      this .shadowObject    = null;
+      this .visibleNode     = null;
+      this .boundedObject   = null;
+
+      // Add node.
+
+      const shapeNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Shape, this ._shape);
+
+      if (shapeNode)
       {
-         this .shapeNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-         this .shapeNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
+         shapeNode ._geometry .addInterest ("set_geometry__", this);
 
-         this .shapeNode ._display     .addInterest ("set_display__",     this);
-         this .shapeNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+         shapeNode ._isPointingObject  .addInterest ("requestRebuild", this);
+         shapeNode ._isCameraObject    .addInterest ("requestRebuild", this);
+         shapeNode ._isPickableObject  .addInterest ("requestRebuild", this);
+         shapeNode ._isCollisionObject .addInterest ("requestRebuild", this);
+         shapeNode ._isShadowObject    .addInterest ("requestRebuild", this);
+         shapeNode ._isVisibleObject   .addInterest ("requestRebuild", this);
 
-         this .shapeNode ._geometry .addInterest ("set_geometry__", this);
+         this .shapeNode = shapeNode;
 
-         this .setCameraObject   (this .shapeNode .isCameraObject ());
-         this .setPickableObject (this .shapeNode .isPickableObject ());
+         if (shapeNode .isVisible ())
+         {
+            if (shapeNode .isPointingObject ())
+               this .pointingNode = shapeNode;
+
+            if (shapeNode .isCameraObject ())
+               this .cameraObject = shapeNode;
+
+            if (shapeNode .isPickableObject ())
+               this .pickableObject = shapeNode;
+
+            if (shapeNode .isCollisionObject ())
+               this .collisionObject = shapeNode;
+
+            if (shapeNode .isShadowObject ())
+               this .shadowObject = shapeNode;
+
+            if (shapeNode .isVisibleObject ())
+               this .visibleNode = shapeNode;
+         }
+
+         if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, shapeNode))
+         {
+            shapeNode ._display     .addInterest ("requestRebuild", this);
+            shapeNode ._bboxDisplay .addInterest ("requestRebuild", this);
+
+            if (shapeNode .isBBoxVisible ())
+               this .boundedObject = shapeNode;
+         }
 
          delete this .traverse;
       }
       else
       {
-         this .setCameraObject   (false);
-         this .setPickableObject (false);
-
          this .traverse = Function .prototype;
       }
 
-      this .set_display__ ();
-      this .set_bboxDisplay__ ();
-      this .set_geometry__ ();
-   },
-   set_cameraObject__ ()
-   {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
-   },
-   set_display__ ()
-   {
-      if (this .shapeNode)
-         this .visibleNode = this .shapeNode ._display .getValue () ? this .shapeNode : null;
-      else
-         this .visibleNode = this .shapeNode;
+      this .setPointingObject  (this .pointingNode);
+      this .setCameraObject    (this .cameraObject);
+      this .setPickableObject  (this .pickableObject);
+      this .setCollisionObject (this .collisionObject);
+      this .setShadowObject    (this .shadowObject);
+      this .setVisibleObject   (this .visibleNode);
 
-      this .set_cameraObject__ ();
-   },
-   set_bboxDisplay__ ()
-   {
-      if (this .shapeNode)
-         this .boundedObject = this .shapeNode ._bboxDisplay .getValue () ? this .shapeNode : null;
-      else
-         this .boundedObject = null;
+      this .set_geometry__ ();
    },
    set_geometry__ ()
    {
       this .geometryNode ?._rebuild .removeInterest ("set_collidableGeometry__", this);
 
-      if (this .shapeNode)
-         this .geometryNode = this .shapeNode .getGeometry ();
-      else
-         this .geometryNode = null;
+      this .geometryNode = this .shapeNode ?.getGeometry () ?? null;
 
       this .geometryNode ?._rebuild .addInterest ("set_collidableGeometry__", this);
 
@@ -1248,13 +1325,13 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    },
    set_collidableGeometry__: (() =>
    {
-      var
+      const
          localScaling   = new AmmoClass .btVector3 (),
          defaultScaling = new AmmoClass .btVector3 (1, 1, 1);
 
       return function ()
       {
-         var ls = this .getCompoundShape () .getLocalScaling ();
+         const ls = this .getCompoundShape () .getLocalScaling ();
          localScaling .setValue (ls .x (), ls .y (), ls .z ());
 
          this .removeCollidableGeometry ();
@@ -1263,15 +1340,15 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
          if (this ._enabled .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
          {
-            var type = this .geometryNode .getType ();
+            const type = this .geometryNode .getType ();
 
-            for (var t = type .length - 1; t >= 0; -- t)
+            for (let t = type .length - 1; t >= 0; -- t)
             {
                switch (type [t])
                {
                   case (external_X_ITE_X3D_X3DConstants_default()).Box:
                   {
-                     var
+                     const
                         box  = this .geometryNode,
                         size = box ._size .getValue ();
 
@@ -1280,7 +1357,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                   }
                   case (external_X_ITE_X3D_X3DConstants_default()).Cone:
                   {
-                     var cone = this .geometryNode;
+                     const cone = this .geometryNode;
 
                      if (cone ._side .getValue () && cone ._bottom .getValue ())
                         this .collisionShape = new AmmoClass .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
@@ -1291,7 +1368,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                   }
                   case (external_X_ITE_X3D_X3DConstants_default()).Cylinder:
                   {
-                     var
+                     const
                         cylinder  = this .geometryNode,
                         radius    = cylinder ._radius .getValue (),
                         height1_2 = cylinder ._height .getValue () * 0.5;
@@ -1305,19 +1382,19 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                   }
                   case (external_X_ITE_X3D_X3DConstants_default()).ElevationGrid:
                   {
-                     var elevationGrid = this .geometryNode;
+                     const elevationGrid = this .geometryNode;
 
                      if (elevationGrid ._xDimension .getValue () > 1 && elevationGrid ._zDimension .getValue () > 1)
                      {
-                        var
-                           min         = Number .POSITIVE_INFINITY,
-                           max         = Number .NEGATIVE_INFINITY,
-                           heightField = this .heightField = AmmoClass ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ()),
-                           i4          = 0;
+                        const heightField = this .heightField = AmmoClass ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ());
 
-                        for (var i = 0, length = elevationGrid ._height .length; i < length; ++ i)
+                        let
+                           min = Number .POSITIVE_INFINITY,
+                           max = Number .NEGATIVE_INFINITY;
+
+                        for (let i = 0, i4 = 0, length = elevationGrid ._height .length; i < length; ++ i)
                         {
-                           var value = elevationGrid ._height [i];
+                           const value = elevationGrid ._height [i];
 
                            min = Math .min (min, value);
                            max = Math .max (max, value);
@@ -1348,7 +1425,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                   }
                   case (external_X_ITE_X3D_X3DConstants_default()).Sphere:
                   {
-                     var sphere = this .geometryNode;
+                     const sphere = this .geometryNode;
 
                      this .collisionShape = new AmmoClass .btSphereShape (sphere ._radius .getValue ());
                      break;
@@ -1408,66 +1485,58 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    },
    traverse (type, renderObject)
    {
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .getMatrix ());
+
       switch (type)
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
-         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
+            this .pointingNode ?.traverse (type, renderObject);
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
+         {
+            this .cameraObject ?.traverse (type, renderObject);
+            break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
             const
                browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy (),
-               modelViewMatrix  = renderObject .getModelViewMatrix ();
+               pickingHierarchy = browser .getPickingHierarchy ();
 
             pickingHierarchy .push (this);
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
 
-            this .visibleNode ?.traverse (type, renderObject);
+            if (browser .getPickable () .at (-1))
+               this .visibleNode ?.traverse (type, renderObject);
+            else
+               this .pickableObject ?.traverse (type, renderObject);
 
-            modelViewMatrix .pop ();
             pickingHierarchy .pop ();
-            return;
+            break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
+            this .collisionObject ?.traverse (type, renderObject);
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
+         {
+            this .shadowObject ?.traverse (type, renderObject);
+            break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
+            this .visibleNode   ?.traverse (type, renderObject);
             this .boundedObject ?.displayBBox (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
+            break;
          }
       }
+
+      modelViewMatrix .pop ();
    },
    dispose ()
    {

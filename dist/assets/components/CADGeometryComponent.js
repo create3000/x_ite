@@ -296,6 +296,8 @@ function CADFace (executionContext)
    external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CADFace);
+
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProductStructureChildNode .prototype),
@@ -306,9 +308,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
       CADGeometry_X3DProductStructureChildNode .prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
-      this ._shape .addInterest ("set_child__", this);
+      this ._rebuild .addInterest ("set_children__", this);
+      this ._shape   .addInterest ("requestRebuild", this);
 
-      this .set_child__ ();
+      this .set_children__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -317,23 +320,42 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_child__ ()
+   requestRebuild ()
+   {
+      this ._rebuild .addEvent ();
+   },
+   set_children__ ()
    {
       // Remove node.
 
       if (this .childNode)
       {
-         this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
-         this .childNode ._isPickableObject .removeInterest ("set_child__", this);
+         const childNode = this .childNode;
+
+         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
+         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
+         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
+         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+
+         if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
+         {
+            childNode ._display     .removeInterest ("requestRebuild", this);
+            childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
+         }
       }
 
-      if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, this .childNode))
-      {
-         this .childNode ._display     .removeInterest ("set_child__", this);
-         this .childNode ._bboxDisplay .removeInterest ("set_child__", this);
-      }
+      // Clear node.
 
-      this .childNode = null;
+      this .childNode       = null;
+      this .pointingNode    = null;
+      this .cameraObject    = null;
+      this .pickableObject  = null;
+      this .collisionObject = null;
+      this .shadowObject    = null;
+      this .visibleNode     = null;
+      this .boundedObject   = null;
 
       // Add node.
 
@@ -351,36 +373,43 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
                case (external_X_ITE_X3D_X3DConstants_default()).Transform:
                case (external_X_ITE_X3D_X3DConstants_default()).X3DShapeNode:
                {
-                  childNode ._isCameraObject   .addInterest ("set_child__", this);
-                  childNode ._isPickableObject .addInterest ("set_child__", this);
+                  childNode ._isPointingObject  .addInterest ("requestRebuild", this);
+                  childNode ._isCameraObject    .addInterest ("requestRebuild", this);
+                  childNode ._isPickableObject  .addInterest ("requestRebuild", this);
+                  childNode ._isCollisionObject .addInterest ("requestRebuild", this);
+                  childNode ._isShadowObject    .addInterest ("requestRebuild", this);
+                  childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
 
                   this .childNode = childNode;
 
-                  if (childNode .isCameraObject ())
-                     this .cameraObject = childNode;
-
-                  if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, this .childNode))
+                  if (childNode .isVisible ())
                   {
-                     childNode ._display     .addInterest ("set_child__", this);
-                     childNode ._bboxDisplay .addInterest ("set_child__", this);
+                     if (childNode .isPointingObject ())
+                        this .pointingNode = childNode;
 
-                     if (this .childNode .isVisible ())
-                     {
-                        this .visibleNode = childNode;
-
-                        if (childNode .isPickableObject ())
-                           this .pickableObject = childNode;
-                     }
-
-                     if (childNode .isBBoxVisible ())
-                        this .boundedObject = childNode;
-                  }
-                  else
-                  {
-                     this .visibleNode = childNode;
+                     if (childNode .isCameraObject ())
+                        this .cameraObject = childNode;
 
                      if (childNode .isPickableObject ())
                         this .pickableObject = childNode;
+
+                     if (childNode .isCollisionObject ())
+                        this .collisionObject = childNode;
+
+                     if (childNode .isShadowObject ())
+                        this .shadowObject = childNode;
+
+                     if (childNode .isVisibleObject ())
+                        this .visibleNode = childNode;
+                  }
+
+                  if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
+                  {
+                     childNode ._display     .addInterest ("requestRebuild", this);
+                     childNode ._bboxDisplay .addInterest ("requestRebuild", this);
+
+                     if (childNode .isBBoxVisible ())
+                        this .boundedObject = childNode;
                   }
 
                   break;
@@ -393,25 +422,44 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
       }
 
+      this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
-      this .set_transformSensors__ ();
+      this .set_pickableObjects__ ();
+      this .set_collisionObjects__ ();
+      this .set_shadowObjects__ ();
+      this .set_visibleObjects__ ();
+   },
+   set_pointingObjects__ ()
+   {
+      this .setPointingObject (this .pointingNode);
    },
    set_cameraObjects__ ()
    {
-      this .setCameraObject (this .cameraObject ?.isCameraObject ());
+      this .setCameraObject (this .cameraObject);
    },
-   set_transformSensors__ ()
+   set_pickableObjects__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
+   },
+   set_collisionObjects__ ()
+   {
+      this .setCollisionObject (this .collisionObject);
+   },
+   set_shadowObjects__ ()
+   {
+      this .setShadowObject (this .shadowObject);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleNode || this .boundedObject);
    },
    traverse (type, renderObject)
    {
       switch (type)
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
-            this .visibleNode ?.traverse (type, renderObject);
+            this .pointingNode ?.traverse (type, renderObject);
             return;
          }
          case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
@@ -445,7 +493,12 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
          case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
-            this .visibleNode ?.traverse (type, renderObject);
+            this .collisionObject ?.traverse (type, renderObject);
+            return;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
+         {
+            this .shadowObject ?.traverse (type, renderObject);
             return;
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:

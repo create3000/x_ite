@@ -513,7 +513,7 @@ Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, Annotation_X3
       Annotation_X3DAnnotationNode .prototype .initialize .call (this);
       external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
    },
-   requestImmediateLoad (cache = true)
+   async requestImmediateLoad (cache = true)
    { },
    dispose ()
    {

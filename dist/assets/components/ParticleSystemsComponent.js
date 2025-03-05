@@ -2222,6 +2222,27 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
+   set_pointingObject__ ()
+   {
+      if (this .geometryType == (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
+         external_X_ITE_X3D_X3DShapeNode_default().prototype .set_pointingObject__ .call (this);
+      else
+         this .setPointingObject (this ._pointerEvents .getValue ());
+   },
+   set_shadowObject__ ()
+   {
+      if (this .geometryType == (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
+         external_X_ITE_X3D_X3DShapeNode_default().prototype .set_shadowObject__ .call (this);
+      else
+         this .setShadowObject (this ._castShadow .getValue ());
+   },
+   set_visibleObject__ ()
+   {
+      if (this .geometryType == (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
+         external_X_ITE_X3D_X3DShapeNode_default().prototype .set_visibleObject__ .call (this);
+      else
+         this .setVisibleObject (true);
+   },
    set_transparent__ ()
    {
       const alphaMode = this .appearanceNode .getAlphaMode ();
@@ -2385,6 +2406,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
 
+      this .set_pointingObject__ ();
+      this .set_shadowObject__ ();
+      this .set_visibleObject__ ()
       this .set_transparent__ ();
    },
    set_maxParticles__ ()
@@ -2838,9 +2862,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
          {
-            if (this ._pointerEvents .getValue ())
-               renderObject .addPointingShape (this);
-
+            renderObject .addPointingShape (this);
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
@@ -2850,9 +2872,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          }
          case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
-            if (this ._castShadow .getValue ())
-               renderObject .addShadowShape (this);
-
+            renderObject .addShadowShape (this);
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
