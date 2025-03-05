@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    },
    set_collisionObjects__ ()
    {
-      this .setCollisionObject (this ._enabled .getValue () && (this .collisionObjects .size || this .proxyNode));
+      this .setCollisionObject (this ._enabled .getValue () && (this .collisionObjects .size || this .proxyNode ?.isCollisionObject ()));
    },
    traverse (type, renderObject)
    {
