@@ -118,9 +118,7 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
          }
          case TraverseType .SHADOW:
          {
-            if (this ._castShadow .getValue ())
-               renderObject .addShadowShape (this);
-
+            renderObject .addShadowShape (this);
             break;
          }
          case TraverseType .DISPLAY:

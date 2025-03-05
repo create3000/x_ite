@@ -73,6 +73,7 @@ function X3DGroupingNode (executionContext)
    this .cameraObjects             = new Set ();
    this .pickableSensorNodes       = new Set ();
    this .pickableObjects           = new Set ();
+   this .shadowObjects             = new Set ();
    this .childNodes                = new Set ();
    this .visibleNodes              = new Set ();
    this .boundedObjects            = new Set ();
@@ -184,6 +185,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          childNode ._isPointingObject .removeInterest ("requestRebuild", this);
          childNode ._isCameraObject   .removeInterest ("requestRebuild", this);
          childNode ._isPickableObject .removeInterest ("requestRebuild", this);
+         childNode ._isShadowObject   .removeInterest ("requestRebuild", this);
          childNode ._isVisibleObject  .removeInterest ("requestRebuild", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -201,6 +203,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .cameraObjects             .clear ();
       this .pickableSensorNodes       .clear ();
       this .pickableObjects           .clear ();
+      this .shadowObjects             .clear ();
       this .childNodes                .clear ();
       this .visibleNodes              .clear ();
       this .boundedObjects            .clear ();
@@ -212,11 +215,12 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       for (const child of children)
          this .addChild (child);
 
-      if (this .getName () === "VisibleNodes")
+      // if (this .getName () === "VisibleNodes")
       {
-         console .warn ("visibleNodes",    this .visibleNodes    .size);
+         // console .warn ("visibleNodes",    this .visibleNodes    .size);
          // console .warn ("pointingNodes",   this .pointingNodes   .size);
          // console .warn ("pickableObjects", this .pickableObjects .size);
+         // console .warn ("shadowObjects",   this .shadowObjects   .size);
 
          // for (const node of this .pickableObjects)
          //    console .log (node .getTypeName (), node .getName ());
@@ -281,6 +285,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                childNode ._isPointingObject .addInterest ("requestRebuild", this);
                childNode ._isCameraObject   .addInterest ("requestRebuild", this);
                childNode ._isPickableObject .addInterest ("requestRebuild", this);
+               childNode ._isShadowObject   .addInterest ("requestRebuild", this);
                childNode ._isVisibleObject  .addInterest ("requestRebuild", this);
 
                this .childNodes .add (childNode);
@@ -295,6 +300,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                   if (childNode .isPickableObject ())
                      this .pickableObjects .add (childNode);
+
+                  if (childNode .isShadowObject ())
+                     this .shadowObjects .add (childNode);
 
                   if (childNode .isVisibleObject ())
                      this .visibleNodes .add (childNode);
@@ -374,6 +382,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                childNode ._isPointingObject .removeInterest ("requestRebuild", this);
                childNode ._isCameraObject   .removeInterest ("requestRebuild", this);
                childNode ._isPickableObject .removeInterest ("requestRebuild", this);
+               childNode ._isShadowObject   .removeInterest ("requestRebuild", this);
                childNode ._isVisibleObject  .removeInterest ("requestRebuild", this);
 
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -385,6 +394,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                this .pointingNodes   .delete (childNode);
                this .cameraObjects   .delete (childNode);
                this .pickableObjects .delete (childNode);
+               this .shadowObjects   .delete (childNode);
                this .childNodes      .delete (childNode);
                this .visibleNodes    .delete (childNode);
                this .boundedObjects  .delete (childNode);
@@ -402,6 +412,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
       this .set_pickableObjects__ ();
+      this .set_shadowObjects__ ();
       this .set_visibleObjects__ ();
    },
    set_pointingObjects__ ()
@@ -415,6 +426,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    set_pickableObjects__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size || this .pickableSensorNodes .size || this .pickableObjects .size);
+   },
+   set_shadowObjects__ ()
+   {
+      this .setShadowObject (this .shadowObjects .size);
    },
    set_visibleObjects__ ()
    {
@@ -520,8 +535,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
 
-            for (const visibleNode of this .visibleNodes)
-               visibleNode .traverse (type, renderObject);
+            for (const shadowObject of this .shadowObjects)
+               shadowObject .traverse (type, renderObject);
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .pop (renderObject);

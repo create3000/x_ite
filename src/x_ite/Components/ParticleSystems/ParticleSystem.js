@@ -288,6 +288,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       else
          this .setPointingObject (this ._pointerEvents .getValue ());
    },
+   set_shadowObject__ ()
+   {
+      if (this .geometryType == GeometryTypes .GEOMETRY)
+         X3DShapeNode .prototype .set_shadowObject__ .call (this);
+      else
+         this .setShadowObject (this ._castShadow .getValue ());
+   },
    set_visibleObject__ ()
    {
       if (this .geometryType == GeometryTypes .GEOMETRY)
@@ -922,9 +929,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          }
          case TraverseType .SHADOW:
          {
-            if (this ._castShadow .getValue ())
-               renderObject .addShadowShape (this);
-
+            renderObject .addShadowShape (this);
             break;
          }
          case TraverseType .DISPLAY:

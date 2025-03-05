@@ -61,6 +61,7 @@ function X3DChildNode (executionContext)
    this .addChildObjects (X3DConstants .outputOnly, "isPointingObject", new Fields .SFBool (),
                           X3DConstants .outputOnly, "isCameraObject",   new Fields .SFBool (),
                           X3DConstants .outputOnly, "isPickableObject", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isShadowObject",   new Fields .SFBool (),
                           X3DConstants .outputOnly, "isVisibleObject",  new Fields .SFBool ());
 }
 
@@ -92,6 +93,15 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    isPickableObject ()
    {
       return this ._isPickableObject .getValue ();
+   },
+   setShadowObject (value)
+   {
+      if (!!value !== this ._isShadowObject .getValue ())
+         this ._isShadowObject = value;
+   },
+   isShadowObject ()
+   {
+      return this ._isShadowObject .getValue ();
    },
    setVisibleObject (value)
    {
