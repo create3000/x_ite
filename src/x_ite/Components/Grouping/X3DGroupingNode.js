@@ -235,11 +235,11 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       const type = childNode .getType ();
 
-      // if (this .allowedTypes .size)
-      // {
-      //    if (!type .some (Set .prototype .has, this .allowedTypes))
-      //       return;
-      // }
+      if (this .allowedTypes .size)
+      {
+         if (!type .some (Set .prototype .has, this .allowedTypes))
+            return;
+      }
 
       for (let t = type .length - 1; t >= 0; -- t)
       {
