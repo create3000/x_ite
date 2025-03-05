@@ -110,10 +110,12 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    set_proxy__ ()
    {
       this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this ._proxy);
+
+      this .set_collisionObjects__ ();
    },
    set_collisionObjects__ ()
    {
-      this .setCollisionObject (this ._enabled .getValue () && this .collisionObjects .size);
+      this .setCollisionObject (this ._enabled .getValue () && (this .collisionObjects .size || this .proxyNode));
    },
    traverse (type, renderObject)
    {
