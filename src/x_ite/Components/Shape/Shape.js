@@ -66,9 +66,9 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    {
       X3DShapeNode .prototype .initialize .call (this);
 
-      this ._transformSensors_changed .addInterest ("set_transformSensors__", this);
+      this ._transformSensors .addInterest ("set_pickableObject__", this);
 
-      this .set_transformSensors__ ();
+      this .set_pickableObject__ ();
    },
    getShapeKey ()
    {
@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
       else
          this .traverse = Function .prototype;
    },
-   set_transformSensors__ ()
+   set_pickableObject__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size);
    },
@@ -103,9 +103,7 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
       {
          case TraverseType .POINTER:
          {
-            if (this ._pointerEvents .getValue ())
-               renderObject .addPointingShape (this);
-
+            renderObject .addPointingShape (this);
             break;
          }
          case TraverseType .PICKING:
@@ -120,9 +118,7 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
          }
          case TraverseType .SHADOW:
          {
-            if (this ._castShadow .getValue ())
-               renderObject .addShadowShape (this);
-
+            renderObject .addShadowShape (this);
             break;
          }
          case TraverseType .DISPLAY:

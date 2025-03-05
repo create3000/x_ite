@@ -1,10 +1,10 @@
-/* X_ITE v11.2.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.2")];
+/* X_ITE v11.2.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -17,7 +17,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.2")];
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -29,12 +29,12 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.2")];
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 
 // UNUSED EXPORTS: default
@@ -11800,8 +11800,8 @@ var PaletteManager = class {
    */
   // defaultValue = 0x000000FF;
   /**
-   * 
-   * @param {opentype.Font} font 
+   *
+   * @param {opentype.Font} font
    */
   constructor(font) {
     this.defaultValue = 255;
@@ -11819,7 +11819,7 @@ var PaletteManager = class {
   }
   /**
    * Returns an array of arrays of color values for each palette, optionally in a specified color format
-   * @param {string} colorFormat 
+   * @param {string} colorFormat
    * @returns {Array<Array>}
    */
   getAll(colorFormat) {
@@ -11838,7 +11838,7 @@ var PaletteManager = class {
   }
   /**
    * Converts a color value string or array of color value strings to CPAL integer color value(s)
-   * @param {string|Array<string></string>} color 
+   * @param {string|Array<string></string>} color
    * @returns {integer}
    */
   toCPALcolor(color) {
@@ -11852,7 +11852,7 @@ var PaletteManager = class {
    * @param {Array<string>|integer} palette Palette index integer or Array of colors to be filled
    * @param {Array<string|integer>} colors Colors to fill the palette with
    * @param {integer} _colorCount Number of colors to fill the palette with, defaults to the value of the numPaletteEntries field. Used internally by extend() and shouldn't be set manually
-   * @returns 
+   * @returns
    */
   fillPalette(palette, colors = [], _colorCount = this.cpal().numPaletteEntries) {
     palette = Number.isInteger(palette) ? this.get(palette, "raw") : palette;
@@ -11875,7 +11875,7 @@ var PaletteManager = class {
   }
   /**
    * Get a specific palette by its zero-based index
-   * @param {integer} paletteIndex 
+   * @param {integer} paletteIndex
    * @param {string} [colorFormat='hexa']
    * @returns {Array}
    */
@@ -11884,10 +11884,10 @@ var PaletteManager = class {
   }
   /**
    * Get a color from a specific palette by its zero-based index
-   * @param {integer} index 
+   * @param {integer} index
    * @param {integer} paletteIndex
    * @param {string} [colorFormat ='hexa']
-   * @returns 
+   * @returns
    */
   getColor(index, paletteIndex = 0, colorFormat = "hexa") {
     return getPaletteColor(this.font, index, paletteIndex, colorFormat);
@@ -11897,7 +11897,7 @@ var PaletteManager = class {
    * @param {integer} index zero-based color index to start filling from
    * @param {string|integer|Array<string|integer>} color color value or array of color values
    * @param {integer} paletteIndex
-   * @returns 
+   * @returns
    */
   setColor(index, colors, paletteIndex = 0) {
     index = parseInt(index);
@@ -11924,9 +11924,9 @@ var PaletteManager = class {
     this.updateIndices();
   }
   /**
-   * Add a new palette. 
+   * Add a new palette.
    * @param {Array} colors (optional) colors to add to the palette, differences to existing palettes will be filled with the defaultValue.
-   * @returns 
+   * @returns
    */
   add(colors) {
     if (this.ensureCPAL(colors)) {
@@ -11950,7 +11950,7 @@ var PaletteManager = class {
   }
   /**
    * deletes a palette by its zero-based index
-   * @param {integer} paletteIndex 
+   * @param {integer} paletteIndex
    */
   delete(paletteIndex) {
     const palettes = this.getAll("raw");
@@ -12173,7 +12173,7 @@ var LayerManager = class {
    * Mainly used internally. Mainly used internally. Updates the colr table, adding a baseGlyphRecord if needed,
    * ensuring that it's inserted at the correct position, updating numLayers, and adjusting firstLayerIndex values
    * for all baseGlyphRecords according to any deletions or insertions.
-   * @param {integer} glyphIndex 
+   * @param {integer} glyphIndex
    * @param {Array<Object>} layers array of layer objects {glyphID, paletteIndex}
    */
   updateColrTable(glyphIndex, layers) {
@@ -17816,50 +17816,13 @@ Object .assign (X3DTextContext .prototype,
    },
    async getFont (familyName, style)
    {
-      familyName = familyName .toLowerCase ();
-      style      = style .toLowerCase () .replaceAll (" ", "");
-
-      await Promise .allSettled (this [_loadingFonts]);
-
-      return this [_familyCache] .get (familyName) ?.get (style)
-         ?? this [_fullNameCache] .get (familyName)
-         ?? null;
-   },
-   registerFont (font)
-   {
-      for (const name of Object .values (font .names))
-      {
-         for (const fullName of Object .values (name .fullName ?? { }))
-         {
-            if (this .getBrowserOption ("Debug"))
-               console .info (`Registering font ${fullName}.`);
-
-            this [_fullNameCache] .set (fullName .toLowerCase (), font);
-         }
-
-         for (const fontFamily of Object .values (name .fontFamily ?? { }))
-         {
-            const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
-
-            this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
-
-            for (const subfamily of Object .values (name .fontSubfamily ?? { }))
-               subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
-         }
-
-         // console .log (name .preferredFamily);
-         // console .log (name .preferredSubfamily);
-      }
-   },
-   loadFont (url, cache = true)
-   {
       url = String (url);
 
-      let promise = cache ? this [_fontCache] .get (url) : null;
+      let promise = this [_fontCache] .get (url);
 
       if (!promise)
       {
-         promise = new Promise (async (resolve, reject) =>
+         this [_fontCache] .set (url, promise = new Promise (async (resolve, reject) =>
          {
             try
             {
@@ -17877,7 +17840,16 @@ Object .assign (X3DTextContext .prototype,
                   decompressed = decompress (buffer),
                   font         = parseBuffer (decompressed);
 
-               this .registerFont (font);
+               // for (const name of Object .values (font .names))
+               // {
+               //    console .log (name);
+
+               //    // Properties can be undefined.
+               //    console .log (... Object .values (name .fullName));
+               //    console .log (... Object .values (name .fontFamily));
+               //    console .log (name .preferredFamily);
+               //    console .log (name .preferredSubfamily);
+               // }
 
                resolve (font);
             }
@@ -17885,14 +17857,7 @@ Object .assign (X3DTextContext .prototype,
             {
                reject (error);
             }
-            finally
-            {
-               this [_loadingFonts] .delete (promise);
-            }
-         });
-
-         this [_loadingFonts] .add (promise);
-         this [_fontCache] .set (url, promise);
+         }));
       }
 
       return promise;

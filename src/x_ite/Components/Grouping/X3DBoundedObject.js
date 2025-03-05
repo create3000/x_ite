@@ -56,9 +56,9 @@ function X3DBoundedObject (executionContext)
 {
    this .addType (X3DConstants .X3DBoundedObject);
 
-   this .addChildObjects (X3DConstants .inputOutput, "hidden",                   new Fields .SFBool (),
-                          X3DConstants .outputOnly,  "display",                  new Fields .SFBool (true),
-                          X3DConstants .outputOnly,  "transformSensors_changed", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "hidden",           new Fields .SFBool (),
+                          X3DConstants .outputOnly, "display",          new Fields .SFBool (true),
+                          X3DConstants .outputOnly, "transformSensors", new Fields .SFTime ());
 
    // Units
 
@@ -156,13 +156,13 @@ Object .assign (X3DBoundedObject .prototype,
    {
       this .transformSensorNodes .add (transformSensorNode);
 
-      this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
+      this ._transformSensors = this .getBrowser () .getCurrentTime ();
    },
    removeTransformSensor (transformSensorNode)
    {
       this .transformSensorNodes .delete (transformSensorNode);
 
-      this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
+      this ._transformSensors = this .getBrowser () .getCurrentTime ();
    },
    getTransformSensors ()
    {

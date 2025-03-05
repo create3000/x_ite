@@ -76,9 +76,9 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
       X3DGroupingNode .prototype .initialize .call (this);
       // X3DSensorNode .prototype .initialize .call (this); // We can only call the base of a *Objects.
 
-      this .getLive () .addInterest ("set_live__", this);
-      this ._enabled  .addInterest ("set_live__", this);
-      this ._proxy    .addInterest ("set_proxy__", this);
+      this .getLive () .addInterest ("set_live__",    this);
+      this ._enabled   .addInterest ("set_enabled__", this);
+      this ._proxy     .addInterest ("set_proxy__",   this);
 
       this .set_live__ ();
       this .set_proxy__ ();
@@ -90,6 +90,12 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
 
       else
          this .getBrowser () .removeCollision (this);
+
+   },
+   set_enabled__ ()
+   {
+      this .set_live__ ();
+      this .set_collisionObjects__ ();
    },
    set_active (value)
    {
@@ -104,6 +110,12 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    set_proxy__ ()
    {
       this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this ._proxy);
+
+      this .set_collisionObjects__ ();
+   },
+   set_collisionObjects__ ()
+   {
+      this .setCollisionObject (this ._enabled .getValue () && (this .collisionObjects .size || this .proxyNode ?.isCollisionObject ()));
    },
    traverse (type, renderObject)
    {
@@ -111,21 +123,17 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
       {
          case TraverseType .COLLISION:
          {
-            if (this ._enabled .getValue ())
-            {
-               const collisions = renderObject .getCollisions ();
+            const collisions = renderObject .getCollisions ();
 
-               collisions .push (this);
+            collisions .push (this);
 
-               if (this .proxyNode)
-                  this .proxyNode .traverse (type, renderObject);
+            if (this .proxyNode)
+               this .proxyNode .traverse (type, renderObject);
 
-               else
-                  X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            else
+               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-               collisions .pop ();
-            }
-
+            collisions .pop ();
             return;
          }
          default:

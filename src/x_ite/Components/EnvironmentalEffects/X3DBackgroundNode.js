@@ -68,6 +68,8 @@ function X3DBackgroundNode (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "hidden", new Fields .SFBool ());
 
+   this .setVisibleObject (true);
+
    // Units
 
    this ._skyAngle    .setUnit ("angle");

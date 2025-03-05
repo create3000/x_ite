@@ -281,6 +281,27 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
+   set_pointingObject__ ()
+   {
+      if (this .geometryType == GeometryTypes .GEOMETRY)
+         X3DShapeNode .prototype .set_pointingObject__ .call (this);
+      else
+         this .setPointingObject (this ._pointerEvents .getValue ());
+   },
+   set_shadowObject__ ()
+   {
+      if (this .geometryType == GeometryTypes .GEOMETRY)
+         X3DShapeNode .prototype .set_shadowObject__ .call (this);
+      else
+         this .setShadowObject (this ._castShadow .getValue ());
+   },
+   set_visibleObject__ ()
+   {
+      if (this .geometryType == GeometryTypes .GEOMETRY)
+         X3DShapeNode .prototype .set_visibleObject__ .call (this);
+      else
+         this .setVisibleObject (true);
+   },
    set_transparent__ ()
    {
       const alphaMode = this .appearanceNode .getAlphaMode ();
@@ -444,6 +465,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
 
+      this .set_pointingObject__ ();
+      this .set_shadowObject__ ();
+      this .set_visibleObject__ ()
       this .set_transparent__ ();
    },
    set_maxParticles__ ()
@@ -897,9 +921,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       {
          case TraverseType .POINTER:
          {
-            if (this ._pointerEvents .getValue ())
-               renderObject .addPointingShape (this);
-
+            renderObject .addPointingShape (this);
             break;
          }
          case TraverseType .PICKING:
@@ -909,9 +931,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          }
          case TraverseType .SHADOW:
          {
-            if (this ._castShadow .getValue ())
-               renderObject .addShadowShape (this);
-
+            renderObject .addShadowShape (this);
             break;
          }
          case TraverseType .DISPLAY:

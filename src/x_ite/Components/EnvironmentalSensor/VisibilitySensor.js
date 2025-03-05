@@ -61,6 +61,7 @@ function VisibilitySensor (executionContext)
 
    this .addType (X3DConstants .VisibilitySensor);
 
+   this .setVisibleObject (true);
    this .setZeroTest (false);
 
    this .visible = false;

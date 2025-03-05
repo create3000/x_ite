@@ -61,6 +61,10 @@ function X3DShapeNode (executionContext)
 
    this .addType (X3DConstants .X3DShapeNode);
 
+   this .setCollisionObject (true);
+
+   // Private properties
+
    this .bbox       = new Box3 ();
    this .bboxSize   = new Vector3 ();
    this .bboxCenter = new Vector3 ();
@@ -74,13 +78,12 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._bboxSize   .addInterest ("set_bbox__",       this);
-      this ._bboxCenter .addInterest ("set_bbox__",       this);
-      this ._appearance .addInterest ("set_appearance__", this);
-      this ._geometry   .addInterest ("set_geometry__",   this);
-
-      this ._appearance .addInterest ("set_transparent__", this);
-      this ._geometry   .addInterest ("set_transparent__", this);
+      this ._pointerEvents .addInterest ("set_pointingObject__", this);
+      this ._castShadow    .addInterest ("set_shadowObject__",   this);
+      this ._bboxSize      .addInterest ("set_bbox__",           this);
+      this ._bboxCenter    .addInterest ("set_bbox__",           this);
+      this ._appearance    .addInterest ("set_appearance__",     this);
+      this ._geometry      .addInterest ("set_geometry__",       this);
 
       this .set_appearance__ ();
       this .set_geometry__ ();
@@ -182,8 +185,23 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
       }
 
+      this .set_pointingObject__ ();
+      this .set_shadowObject__ ();
+      this .set_visibleObject__ ();
       this .set_transparent__ ();
       this .set_bbox__ ();
+   },
+   set_pointingObject__ ()
+   {
+      this .setPointingObject (this .geometryNode && this ._pointerEvents .getValue ());
+   },
+   set_shadowObject__ ()
+   {
+      this .setShadowObject (this .geometryNode && this ._castShadow .getValue ());
+   },
+   set_visibleObject__ ()
+   {
+      this .setVisibleObject (this .geometryNode);
    },
    set_transparent__ ()
    {
