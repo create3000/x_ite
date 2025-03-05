@@ -211,7 +211,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    addChildren (children)
    {
-      // Order of children must be preserved.
+      // Make sure that the order of children is preserved,
+      // otherwise flickering of transparent objects may occur.
 
       for (const child of children)
          this .addChild (child);
