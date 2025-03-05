@@ -327,7 +327,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          var geometryNode = geometryNodes [i];
 
          geometryNode .removeInterest ("addEvent", this ._transform);
-         geometryNode ._compoundShape_changed .removeInterest ("set_compoundShape__", this);
+         geometryNode ._compoundShape .removeInterest ("set_compoundShape__", this);
 
          geometryNode .setBody (null);
 
@@ -367,7 +367,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          var geometryNode = geometryNodes [i];
 
          geometryNode .addInterest ("addEvent", this ._transform);
-         geometryNode ._compoundShape_changed .addInterest ("set_compoundShape__", this);
+         geometryNode ._compoundShape .addInterest ("set_compoundShape__", this);
 
          geometryNode ._translation .addFieldInterest (this ._position);
          geometryNode ._rotation    .addFieldInterest (this ._orientation);

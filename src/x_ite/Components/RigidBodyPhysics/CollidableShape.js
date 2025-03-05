@@ -306,7 +306,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .getCompoundShape () .setLocalScaling (localScaling);
 
          this .addNodeEvent ();
-         this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
+         this ._compoundShape = this .getBrowser () .getCurrentTime ();
       };
    })(),
    removeCollidableGeometry ()

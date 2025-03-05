@@ -63,9 +63,9 @@ function X3DNBodyCollidableNode (executionContext)
 
    this .addType (X3DConstants .X3DNBodyCollidableNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "body",                  new Fields .SFNode (),
-                          X3DConstants .outputOnly, "compoundShape_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "rebuild",               new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "body",          new Fields .SFNode (),
+                          X3DConstants .outputOnly, "compoundShape", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "rebuild",       new Fields .SFTime ());
 
    this .setPointingObject (true);
    this .setCollisionObject (true);

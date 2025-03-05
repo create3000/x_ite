@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          const collidableNode = this .getChild ();
 
          collidableNode .removeInterest ("addNodeEvent", this);
-         collidableNode ._compoundShape_changed .removeFieldInterest (this ._compoundShape_changed);
+         collidableNode ._compoundShape .removeFieldInterest (this ._compoundShape);
       }
 
       // Add node.
@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       if (collidableNode)
       {
          collidableNode .addInterest ("addNodeEvent", this);
-         collidableNode ._compoundShape_changed .addFieldInterest (this ._compoundShape_changed);
+         collidableNode ._compoundShape .addFieldInterest (this ._compoundShape);
       }
 
       this .set_collidableGeometry__ ();
@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       if (this .getChild () && this ._enabled .getValue ())
          this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .getChild () .getCompoundShape ());
 
-      this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
+      this ._compoundShape = this .getBrowser () .getCurrentTime ();
    },
 });
 
