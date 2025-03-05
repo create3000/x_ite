@@ -939,6 +939,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          }
          case TraverseType .COLLISION:
          {
+            renderObject .addCollisionShape (this);
             break;
          }
          case TraverseType .SHADOW:
