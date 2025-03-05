@@ -226,9 +226,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       {
          case TraverseType .POINTER:
          {
-            if (this ._pointerEvents .getValue ())
-               renderObject .addPointingShape (this);
-
+            renderObject .addPointingShape (this);
             break;
          }
          case TraverseType .PICKING:
@@ -242,9 +240,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          }
          case TraverseType .SHADOW:
          {
-            if (this ._castShadow .getValue ())
-               renderObject .addShadowShape (this);
-
+            renderObject .addShadowShape (this);
             break;
          }
          case TraverseType .DISPLAY:
