@@ -295,9 +295,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                         this .rootGroup ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
                         this .rootGroup ._isShadowObject    .addFieldInterest (this ._isShadowObject);
 
-                        this .setPointingObject (this .rootGroup .isPointingObject ());
-                        this .setCameraObject   (this .rootGroup .isCameraObject ());
-                        this .setPickableObject (this .rootGroup .isPickableObject ());
+                        this .setPointingObject  (this .rootGroup .isPointingObject ());
+                        this .setCameraObject    (this .rootGroup .isCameraObject ());
+                        this .setPickableObject  (this .rootGroup .isPickableObject ());
+                        this .setCollisionObject (this .rootGroup .isCollisionObject ());
+                        this .setShadowObject    (this .rootGroup .isShadowObject ());
 
                         this ._children      = this ._rootNode;
                         this .childrenLoaded = false;
@@ -312,9 +314,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                            this .rootInline ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
                            this .rootInline ._isShadowObject    .addFieldInterest (this ._isShadowObject);
 
-                           this .setPointingObject (this .rootInline .isPointingObject ());
-                           this .setCameraObject   (this .rootInline .isCameraObject ());
-                           this .setPickableObject (this .rootInline .isPickableObject ());
+                           this .setPointingObject  (this .rootInline .isPointingObject ());
+                           this .setCameraObject    (this .rootInline .isCameraObject ());
+                           this .setPickableObject  (this .rootInline .isPickableObject ());
+                           this .setCollisionObject (this .rootInline .isCollisionObject ());
+                           this .setShadowObject    (this .rootInline .isShadowObject ());
 
                            this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
                            this .childrenLoaded = false;
@@ -360,6 +364,8 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                      this .set_childPointingObject__ ();
                      this .set_childCameraObject__ ();
                      this .set_childPickableObject__ ();
+                     this .set_childCollisionObject__ ();
+                     this .set_childShadowObject__ ();
 
                      if (this .child1Inline ._load .getValue ())
                      {
