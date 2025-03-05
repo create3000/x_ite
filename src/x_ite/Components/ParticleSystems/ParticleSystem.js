@@ -288,6 +288,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       else
          this .setPointingObject (this ._pointerEvents .getValue ());
    },
+   set_collisionObject__ ()
+   {
+      if (this .geometryType == GeometryTypes .GEOMETRY)
+         X3DShapeNode .prototype .set_collisionObject__ .call (this);
+      else
+         this .setCollisionObject (true);
+   },
    set_shadowObject__ ()
    {
       if (this .geometryType == GeometryTypes .GEOMETRY)
@@ -466,6 +473,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .updateVertexArrays ();
 
       this .set_pointingObject__ ();
+      this .set_collisionObject__ ();
       this .set_shadowObject__ ();
       this .set_visibleObject__ ()
       this .set_transparent__ ();

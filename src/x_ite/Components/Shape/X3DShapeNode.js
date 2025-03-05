@@ -61,8 +61,7 @@ function X3DShapeNode (executionContext)
 
    this .addType (X3DConstants .X3DShapeNode);
 
-   // Set default values which are almost right in most cases,
-   // except isCollisionObject which has to be set to `true` here.
+   // Set default values which are almost right in most cases.
 
    this .setPointingObject (true);
    this .setCollisionObject (true);
@@ -192,6 +191,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       }
 
       this .set_pointingObject__ ();
+      this .set_collisionObject__ ();
       this .set_shadowObject__ ();
       this .set_visibleObject__ ();
       this .set_transparent__ ();
@@ -200,6 +200,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    set_pointingObject__ ()
    {
       this .setPointingObject (this .geometryNode && this ._pointerEvents .getValue ());
+   },
+   set_collisionObject__ ()
+   {
+      this .setCollisionObject (this .geometryNode);
    },
    set_shadowObject__ ()
    {

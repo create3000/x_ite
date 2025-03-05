@@ -211,7 +211,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    },
    set_childPointingObject__ ()
    {
-      this .setCameraObject (this .childInlines .some (childInline => childInline .isPointingObject ()));
+      this .setPointingObject (this .childInlines .some (childInline => childInline .isPointingObject ()));
    },
    set_childCameraObject__ ()
    {

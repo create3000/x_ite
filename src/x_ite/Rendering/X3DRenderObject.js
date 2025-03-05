@@ -693,7 +693,7 @@ Object .assign (X3DRenderObject .prototype,
                   renderObject: this,
                   modelViewMatrix: new Float32Array (16),
                   collisions: [ ],
-                  clipPlanes: [ ]
+                  clipPlanes: [ ],
                });
             }
 

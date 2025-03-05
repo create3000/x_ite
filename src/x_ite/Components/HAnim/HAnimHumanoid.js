@@ -158,10 +158,12 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this .skinNode       .setup ();
       this .transformNode  .setup ();
 
-      this .setPointingObject (this .transformNode .isPointingObject ());
-      this .setCameraObject   (this .transformNode .isCameraObject ());
-      this .setPickableObject (this .transformNode .isPickableObject ());
-      this .setVisibleObject  (this .transformNode .isVisibleObject ());
+      this .setPointingObject  (this .transformNode .isPointingObject ());
+      this .setCameraObject    (this .transformNode .isCameraObject ());
+      this .setPickableObject  (this .transformNode .isPickableObject ());
+      this .setCollisionObject (this .transformNode .isCollisionObject ());
+      this .setShadowObject    (this .transformNode .isShadowObject ());
+      this .setVisibleObject   (this .transformNode .isVisibleObject ());
 
       // Check WebGL version.
 

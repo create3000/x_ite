@@ -144,10 +144,12 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .proximitySensorNode   .setup ();
       this .groupNode             .setup ();
 
-      this .setPointingObject (this .groupNode .isPointingObject ());
-      this .setCameraObject   (this .groupNode .isCameraObject ());
-      this .setPickableObject (this .groupNode .isPickableObject ());
-      this .setVisibleObject  (this .groupNode .isVisibleObject ());
+      this .setPointingObject  (this .groupNode .isPointingObject ());
+      this .setCameraObject    (this .groupNode .isCameraObject ());
+      this .setPickableObject  (this .groupNode .isPickableObject ());
+      this .setCollisionObject (this .groupNode .isCollisionObject ());
+      this .setShadowObject    (this .groupNode .isShadowObject ());
+      this .setVisibleObject   (this .groupNode .isVisibleObject ());
 
       if (gl .getVersion () < 2)
          return;

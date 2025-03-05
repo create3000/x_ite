@@ -110,10 +110,12 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnviro
 
       this .proximitySensor .setup ();
 
-      this .setPointingObject (this .proximitySensor .isPointingObject ());
-      this .setCameraObject   (this .proximitySensor .isCameraObject ());
-      this .setPickableObject (this .proximitySensor .isPickableObject ());
-      this .setVisibleObject  (this .proximitySensor .isVisibleObject ());
+      this .setPointingObject  (this .proximitySensor .isPointingObject ());
+      this .setCameraObject    (this .proximitySensor .isCameraObject ());
+      this .setPickableObject  (this .proximitySensor .isPickableObject ());
+      this .setCollisionObject (this .proximitySensor .isCollisionObject ());
+      this .setShadowObject    (this .proximitySensor .isShadowObject ());
+      this .setVisibleObject   (this .proximitySensor .isVisibleObject ());
    },
    set_position__ (position)
    {

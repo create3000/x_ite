@@ -120,10 +120,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
-      this .setPointingObject (this .groupNode .isPointingObject ());
-      this .setCameraObject   (this .groupNode .isCameraObject ());
-      this .setPickableObject (this .groupNode .isPickableObject ());
-      this .setVisibleObject  (this .groupNode .isVisibleObject ());
+      this .setPointingObject  (this .groupNode .isPointingObject ());
+      this .setCameraObject    (this .groupNode .isCameraObject ());
+      this .setPickableObject  (this .groupNode .isPickableObject ());
+      this .setCollisionObject (this .groupNode .isCollisionObject ());
+      this .setShadowObject    (this .groupNode .isShadowObject ());
+      this .setVisibleObject   (this .groupNode .isVisibleObject ());
 
       this .set_children__ ();
    },
