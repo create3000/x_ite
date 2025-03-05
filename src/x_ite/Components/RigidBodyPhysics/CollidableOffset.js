@@ -101,6 +101,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          collidableNode ._isPointingObject .removeInterest ("requestRebuild", this);
          collidableNode ._isCameraObject   .removeInterest ("requestRebuild", this);
          collidableNode ._isPickableObject .removeInterest ("requestRebuild", this);
+         collidableNode ._isShadowObject   .removeInterest ("requestRebuild", this);
          collidableNode ._isVisibleObject  .removeInterest ("requestRebuild", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, collidableNode))
@@ -116,6 +117,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       this .pointingNode   = null;
       this .cameraObject   = null;
       this .pickableObject = null;
+      this .shadowObject   = null;
       this .visibleNode    = null;
       this .boundedObject  = null;
 
@@ -131,6 +133,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          collidableNode ._isPointingObject .addInterest ("requestRebuild", this);
          collidableNode ._isCameraObject   .addInterest ("requestRebuild", this);
          collidableNode ._isPickableObject .addInterest ("requestRebuild", this);
+         collidableNode ._isShadowObject   .addInterest ("requestRebuild", this);
          collidableNode ._isVisibleObject  .addInterest ("requestRebuild", this);
 
          this .collidableNode = collidableNode;
@@ -145,6 +148,9 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
             if (collidableNode .isPickableObject ())
                this .pickableObject = collidableNode;
+
+            if (collidableNode .isShadowObject ())
+               this .shadowObject = collidableNode;
 
             if (collidableNode .isVisibleObject ())
                this .visibleNode = collidableNode;
@@ -169,6 +175,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       this .setPointingObject (this .pointingNode);
       this .setCameraObject   (this .cameraObject);
       this .setPickableObject (this .pickableObject);
+      this .setShadowObject   (this .shadowObject);
       this .setVisibleObject  (this .visibleNode);
 
       this .set_collidableGeometry__ ();
@@ -202,11 +209,6 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
             this .cameraObject ?.traverse (type, renderObject);
             break;
          }
-         case TraverseType .SHADOW:
-         {
-            this .visibleNode ?.traverse (type, renderObject);
-            break;
-         }
          case TraverseType .PICKING:
          {
             const
@@ -226,6 +228,11 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          case TraverseType .COLLISION:
          {
             this .visibleNode ?.traverse (type, renderObject);
+            break;
+         }
+         case TraverseType .SHADOW:
+         {
+            this .shadowObject ?.traverse (type, renderObject);
             break;
          }
          case TraverseType .DISPLAY:

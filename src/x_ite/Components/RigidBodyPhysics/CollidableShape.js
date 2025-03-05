@@ -163,6 +163,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          shapeNode ._isPointingObject .removeInterest ("requestRebuild", this);
          shapeNode ._isCameraObject   .removeInterest ("requestRebuild", this);
          shapeNode ._isPickableObject .removeInterest ("requestRebuild", this);
+         shapeNode ._isShadowObject   .removeInterest ("requestRebuild", this);
          shapeNode ._isVisibleObject  .removeInterest ("requestRebuild", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, shapeNode))
@@ -178,6 +179,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .pointingNode   = null;
       this .cameraObject   = null;
       this .pickableObject = null;
+      this .shadowObject   = null;
       this .visibleNode    = null;
       this .boundedObject  = null;
 
@@ -192,6 +194,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          shapeNode ._isPointingObject .addInterest ("requestRebuild", this);
          shapeNode ._isCameraObject   .addInterest ("requestRebuild", this);
          shapeNode ._isPickableObject .addInterest ("requestRebuild", this);
+         shapeNode ._isShadowObject   .addInterest ("requestRebuild", this);
          shapeNode ._isVisibleObject  .addInterest ("requestRebuild", this);
 
          this .shapeNode = shapeNode;
@@ -206,6 +209,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
             if (shapeNode .isPickableObject ())
                this .pickableObject = shapeNode;
+
+            if (shapeNode .isShadowObject ())
+               this .shadowObject = shapeNode;
 
             if (shapeNode .isVisibleObject ())
                this .visibleNode = shapeNode;
@@ -230,6 +236,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .setPointingObject (this .pointingNode);
       this .setCameraObject   (this .cameraObject);
       this .setPickableObject (this .pickableObject);
+      this .setShadowObject   (this .shadowObject);
       this .setVisibleObject  (this .visibleNode);
 
       this .set_geometry__ ();
@@ -423,11 +430,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             this .cameraObject ?.traverse (type, renderObject);
             break;
          }
-         case TraverseType .SHADOW:
-         {
-            this .visibleNode ?.traverse (type, renderObject);
-            break;
-         }
          case TraverseType .PICKING:
          {
             const
@@ -447,6 +449,11 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          case TraverseType .COLLISION:
          {
             this .visibleNode ?.traverse (type, renderObject);
+            break;
+         }
+         case TraverseType .SHADOW:
+         {
+            this .shadowObject ?.traverse (type, renderObject);
             break;
          }
          case TraverseType .DISPLAY:
