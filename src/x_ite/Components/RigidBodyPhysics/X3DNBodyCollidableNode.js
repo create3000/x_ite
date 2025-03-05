@@ -64,15 +64,20 @@ function X3DNBodyCollidableNode (executionContext)
    this .addChildObjects (X3DConstants .inputOutput, "body",                  new Fields .SFNode (),
                           X3DConstants .outputOnly,  "compoundShape_changed", new Fields .SFTime ());
 
+   this .setPointingObject (true);
+   this .setCollisionObject (true);
+   this .setShadowObject (true);
+   this .setVisibleObject (true);
+
    // Units
 
    this ._translation .setUnit ("length");
 
    // Members
 
-   this .compoundShape  = new Ammo .btCompoundShape ()
-   this .offset         = new Vector3 ();
-   this .matrix         = new Matrix4 ();
+   this .compoundShape = new Ammo .btCompoundShape ()
+   this .offset        = new Vector3 ();
+   this .matrix        = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DChildNode .prototype),

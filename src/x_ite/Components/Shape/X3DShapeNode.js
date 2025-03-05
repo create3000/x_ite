@@ -61,7 +61,10 @@ function X3DShapeNode (executionContext)
 
    this .addType (X3DConstants .X3DShapeNode);
 
+   this .setPointingObject (true);
    this .setCollisionObject (true);
+   this .setShadowObject (true);
+   this .setVisibleObject (true);
 
    // Private properties
 
