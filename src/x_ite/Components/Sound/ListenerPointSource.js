@@ -62,6 +62,8 @@ function ListenerPointSource (executionContext)
 
    this .addType (X3DConstants .ListenerPointSource);
 
+   this .setVisibleObject (true);
+
    // Units
 
    this ._position .setUnit ("length");

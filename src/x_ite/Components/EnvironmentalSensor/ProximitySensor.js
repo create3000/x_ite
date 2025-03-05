@@ -63,6 +63,7 @@ function ProximitySensor (executionContext)
    this .addType (X3DConstants .ProximitySensor);
 
    this .setCameraObject (true);
+   this .setVisibleObject (true);
    this .setZeroTest (true);
 
    // Units

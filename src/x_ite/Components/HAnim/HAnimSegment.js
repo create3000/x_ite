@@ -54,7 +54,6 @@ import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
-import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function HAnimSegment (executionContext)
 {

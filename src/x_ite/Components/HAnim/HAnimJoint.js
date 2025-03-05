@@ -64,9 +64,15 @@ function HAnimJoint (executionContext)
    this .addChildObjects (X3DConstants .outputOnly, "displacements",       new Fields .SFTime (),
                           X3DConstants .outputOnly, "displacementWeights", new Fields .SFTime ());
 
-   this .setAllowedTypes (X3DConstants .HAnimJoint,
-                          X3DConstants .HAnimSegment,
-                          X3DConstants .HAnimSite);
+   this .setVisibleObject (true);
+   this .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSegment);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+      this .addAllowedTypes (X3DConstants .HAnimSite);
+
+   // Private properties
 
    this .displacerNodes  = [ ];
    this .modelViewMatrix = new Matrix4 ();
@@ -90,6 +96,8 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
    {
       return this .displacerNodes;
    },
+   set_visibleObjects__ ()
+   { },
    set_displacers__ ()
    {
       const displacerNodes = this .displacerNodes;

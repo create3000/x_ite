@@ -282,7 +282,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       return null;
    },
-   traverse () { },
+   traverse ()
+   { },
    hasMetaData (path)
    {
       const names = path .split ("/");
