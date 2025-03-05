@@ -123,21 +123,17 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
       {
          case TraverseType .COLLISION:
          {
-            if (this ._enabled .getValue ())
-            {
-               const collisions = renderObject .getCollisions ();
+            const collisions = renderObject .getCollisions ();
 
-               collisions .push (this);
+            collisions .push (this);
 
-               if (this .proxyNode)
-                  this .proxyNode .traverse (type, renderObject);
+            if (this .proxyNode)
+               this .proxyNode .traverse (type, renderObject);
 
-               else
-                  X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            else
+               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-               collisions .pop ();
-            }
-
+            collisions .pop ();
             return;
          }
          default:
