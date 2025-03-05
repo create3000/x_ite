@@ -108,8 +108,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Groups
 
-      this .skeletonNode   .setAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSite);
-      this .viewpointsNode .setAllowedTypes (X3DConstants .HAnimSite);
+      this .skeletonNode   .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSite);
+      this .viewpointsNode .addAllowedTypes (X3DConstants .HAnimSite);
 
       this ._skeleton   .addFieldInterest (this .skeletonNode   ._children);
       this ._viewpoints .addFieldInterest (this .viewpointsNode ._children);

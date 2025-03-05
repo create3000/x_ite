@@ -108,10 +108,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
    },
-   setAllowedTypes (... types)
+   addAllowedTypes (... types)
    {
-      this .allowedTypes .clear ();
-
       for (const type of types)
          this .allowedTypes .add (type);
    },
