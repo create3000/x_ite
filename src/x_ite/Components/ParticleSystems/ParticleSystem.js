@@ -933,6 +933,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             break;
          }
          case TraverseType .PICKING:
+         {
+            this .picking (renderObject);
+            break;
+         }
          case TraverseType .COLLISION:
          {
             break;

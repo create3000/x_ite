@@ -231,6 +231,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          }
          case TraverseType .PICKING:
          {
+            this .picking (renderObject);
             break;
          }
          case TraverseType .COLLISION:

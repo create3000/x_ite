@@ -136,30 +136,6 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
       // Currently used for ScreenText and Tools.
       this .getGeometry () .traverse (type, renderObject);
    },
-   picking (renderObject)
-   {
-      const modelMatrix = renderObject .getModelViewMatrix () .get ();
-
-      if (this .getTransformSensors () .size)
-      {
-         for (const transformSensorNode of this .getTransformSensors ())
-            transformSensorNode .collect (modelMatrix);
-      }
-
-      const
-         browser          = this .getBrowser (),
-         pickSensorStack  = browser .getPickSensors (),
-         pickingHierarchy = browser .getPickingHierarchy ();
-
-      pickingHierarchy .push (this);
-
-      for (const pickSensor of pickSensorStack .at (-1))
-      {
-         pickSensor .collect (this .getGeometry (), modelMatrix, pickingHierarchy);
-      }
-
-      pickingHierarchy .pop ();
-   },
    displaySimple (gl, renderContext, shaderNode)
    {
       this .getGeometry () .displaySimple (gl, renderContext, shaderNode);
