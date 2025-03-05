@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, X3DAnnotation
       X3DAnnotationNode .prototype .initialize .call (this);
       X3DUrlObject      .prototype .initialize .call (this);
    },
-   requestImmediateLoad (cache = true)
+   async requestImmediateLoad (cache = true)
    { },
    dispose ()
    {

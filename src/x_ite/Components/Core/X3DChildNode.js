@@ -58,12 +58,25 @@ function X3DChildNode (executionContext)
 
    this .addType (X3DConstants .X3DChildNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "isCameraObject",   new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isPickableObject", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "isPointingObject",  new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isCameraObject",    new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isPickableObject",  new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isCollisionObject", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isShadowObject",    new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isVisibleObject",   new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .prototype),
 {
+   setPointingObject (value)
+   {
+      if (!!value !== this ._isPointingObject .getValue ())
+         this ._isPointingObject = value;
+   },
+   isPointingObject ()
+   {
+      return this ._isPointingObject .getValue ();
+   },
    setCameraObject (value)
    {
       if (!!value !== this ._isCameraObject .getValue ())
@@ -82,14 +95,37 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    {
       return this ._isPickableObject .getValue ();
    },
-   /**
-    * You will normally overload this function in your derived classes.
-    * @returns {boolean} A boolean value indicating, whether this node
-    * can be visually displayed and therefor should render.
-    */
-   isRenderingRequired ()
+   setShadowObject (value)
    {
-      return false;
+      if (!!value !== this ._isShadowObject .getValue ())
+         this ._isShadowObject = value;
+   },
+   isShadowObject ()
+   {
+      return this ._isShadowObject .getValue ();
+   },
+   setCollisionObject (value)
+   {
+      if (!!value !== this ._isCollisionObject .getValue ())
+         this ._isCollisionObject = value;
+   },
+   isCollisionObject ()
+   {
+      return this ._isCollisionObject .getValue ();
+   },
+   setVisibleObject (value)
+   {
+      if (!!value !== this ._isVisibleObject .getValue ())
+         this ._isVisibleObject = value;
+   },
+   isVisibleObject ()
+   {
+      return this ._isVisibleObject .getValue ();
+   },
+   isVisible ()
+   {
+      // This function will be overloaded by X3DBoundedObject.
+      return true;
    },
 });
 

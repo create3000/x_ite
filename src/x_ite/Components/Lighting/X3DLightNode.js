@@ -66,10 +66,16 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this ._on        .addInterest ("set_on__", this);
-      this ._intensity .addInterest ("set_on__", this);
+      this ._global    .addInterest ("set_global__", this);
+      this ._on        .addInterest ("set_on__",     this);
+      this ._intensity .addInterest ("set_on__",     this);
 
+      this .set_global__ ();
       this .set_on__ ();
+   },
+   set_global__ ()
+   {
+      this .setVisibleObject (this ._global .getValue ());
    },
    set_on__ ()
    {

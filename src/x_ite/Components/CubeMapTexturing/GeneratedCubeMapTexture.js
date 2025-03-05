@@ -130,10 +130,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       if (this ._update .getValue () === "NONE")
          return;
 
-      if (! renderObject .isIndependent ())
+      if (!renderObject .isIndependent ())
          return;
 
-      if (! this .frameBuffer)
+      if (!this .frameBuffer)
          return;
 
       renderObject .getGeneratedCubeMapTextures () .push (this);

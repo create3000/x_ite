@@ -57,7 +57,7 @@ import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
 import QuickSort        from "../../../standard/Math/Algorithms/QuickSort.js";
 import ObjectCache      from "../../../standard/Utility/ObjectCache.js";
 
-var ModelMatrixCache = ObjectCache (Matrix4);
+const ModelMatrixCache = ObjectCache (Matrix4);
 
 function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
 
@@ -154,104 +154,101 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          return collidableShapeNode;
       };
    })(),
-   getPickedGeometries: (() =>
+   getPickedGeometries ()
    {
-      return function ()
+      const
+         targets          = this .targets,
+         numTargets       = targets .size,
+         pickedTargets    = this .pickedTargets,
+         pickedGeometries = this .pickedGeometries;
+
+      // Filter intersecting targets.
+
+      pickedTargets .length = 0;
+
+      for (let i = 0; i < numTargets; ++ i)
       {
-         var
-            targets          = this .targets,
-            numTargets       = targets .size,
-            pickedTargets    = this .pickedTargets,
-            pickedGeometries = this .pickedGeometries;
+         const target = targets [i];
 
-         // Filter intersecting targets.
+         if (target .intersected)
+            pickedTargets .push (target);
+      }
 
-         pickedTargets .length = 0;
+      // No pickedTargets, return.
 
-         for (var i = 0; i < numTargets; ++ i)
-         {
-            var target = targets [i];
-
-            if (target .intersected)
-               pickedTargets .push (target);
-         }
-
-         // No pickedTargets, return.
-
-         if (pickedTargets .length === 0)
-         {
-            pickedGeometries .length = 0;
-
-            return pickedGeometries;
-         }
-
-         // Return sorted pickedTargets.
-
-         switch (this .sortOrder)
-         {
-            case SortOrder .ANY:
-            {
-               pickedTargets .length    = 1;
-               pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-               pickedGeometries .length = 1;
-               break;
-            }
-            case SortOrder .CLOSEST:
-            {
-               this .pickedTargetsSorter .sort (0, pickedTargets .length);
-
-               pickedTargets .length    = 1;
-               pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-               pickedGeometries .length = 1;
-               break;
-            }
-            case SortOrder .ALL:
-            {
-               for (var i = 0, length = pickedTargets .length; i < length; ++ i)
-                  pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
-
-               pickedGeometries .length = length;
-               break;
-            }
-            case SortOrder .ALL_SORTED:
-            {
-               this .pickedTargetsSorter .sort (0, pickedTargets .length);
-
-               for (var i = 0, length = pickedTargets .length; i < length; ++ i)
-                  pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
-
-               pickedGeometries .length = length;
-               break;
-            }
-         }
+      if (pickedTargets .length === 0)
+      {
+         pickedGeometries .length = 0;
 
          return pickedGeometries;
-      };
-   })(),
+      }
+
+      // Return sorted pickedTargets.
+
+      switch (this .sortOrder)
+      {
+         case SortOrder .ANY:
+         {
+            pickedTargets .length    = 1;
+            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
+            pickedGeometries .length = 1;
+            break;
+         }
+         case SortOrder .CLOSEST:
+         {
+            this .pickedTargetsSorter .sort (0, pickedTargets .length);
+
+            pickedTargets .length    = 1;
+            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
+            pickedGeometries .length = 1;
+            break;
+         }
+         case SortOrder .ALL:
+         {
+            for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+               pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
+
+            pickedGeometries .length = length;
+            break;
+         }
+         case SortOrder .ALL_SORTED:
+         {
+            this .pickedTargetsSorter .sort (0, pickedTargets .length);
+
+            for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+               pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
+
+            pickedGeometries .length = length;
+            break;
+         }
+      }
+
+      return pickedGeometries;
+   },
    getPickedGeometry (target)
    {
-      var
+      const
          executionContext = this .getExecutionContext (),
          geometryNode     = target .geometryNode;
 
       if (geometryNode .getExecutionContext () === executionContext)
          return geometryNode;
 
-      var instance = geometryNode .getExecutionContext ();
+      const instance = geometryNode .getExecutionContext ();
 
       if (instance .getType () .includes (X3DConstants .X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
          return instance;
 
-      var pickingHierarchy = target .pickingHierarchy;
+      const pickingHierarchy = target .pickingHierarchy;
 
-      for (var i = pickingHierarchy .length - 1; i >= 0; -- i)
+      for (let i = pickingHierarchy .length - 1; i >= 0; -- i)
       {
-         var node = pickingHierarchy [i];
+         const node = pickingHierarchy [i];
 
          if (node .getExecutionContext () === executionContext)
             return node;
 
-         var instance = node .getExecutionContext ();
+         const instance = node .getExecutionContext ();
 
          if (instance .getType () .includes (X3DConstants .X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
             return instance;
@@ -280,7 +277,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    {
       this .objectType .clear ();
 
-      for (var i = 0, length = this ._objectType .length; i < length; ++ i)
+      for (let i = 0, length = this ._objectType .length; i < length; ++ i)
       {
          this .objectType .add (this ._objectType [i]);
       }
@@ -289,7 +286,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
    set_matchCriterion__: (() =>
    {
-      var matchCriterions = new Map ([
+      const matchCriterions = new Map ([
          ["MATCH_ANY",      MatchCriterion .MATCH_ANY],
          ["MATCH_EVERY",    MatchCriterion .MATCH_EVERY],
          ["MATCH_ONLY_ONE", MatchCriterion .MATCH_ONLY_ONE],
@@ -305,7 +302,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    })(),
    set_intersectionType__: (() =>
    {
-      var intersectionTypes = new Map ([
+      const intersectionTypes = new Map ([
          ["BOUNDS",   IntersectionType .BOUNDS],
          ["GEOMETRY", IntersectionType .GEOMETRY],
       ]);
@@ -320,7 +317,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    })(),
    set_sortOrder__: (() =>
    {
-      var sortOrders = new Map ([
+      const sortOrders = new Map ([
          ["ANY",        SortOrder .ANY],
          ["CLOSEST",    SortOrder .CLOSEST],
          ["ALL",        SortOrder .ALL],
@@ -339,15 +336,15 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    {
       this .pickTargetNodes .clear ();
 
-      for (var i = 0, length = this ._pickTarget .length; i < length; ++ i)
+      for (let i = 0, length = this ._pickTarget .length; i < length; ++ i)
       {
          try
          {
-            var
+            const
                node = this ._pickTarget [i] .getValue () .getInnerNode (),
                type = node .getType ();
 
-            for (var t = type .length - 1; t >= 0; -- t)
+            for (let t = type .length - 1; t >= 0; -- t)
             {
                switch (type [t])
                {
@@ -379,13 +376,13 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
    collect (geometryNode, modelMatrix, pickingHierarchy)
    {
-      var pickTargetNodes = this .pickTargetNodes;
-
-      var haveTarget = pickingHierarchy .some (node => pickTargetNodes .has (node));
+      const
+         pickTargetNodes = this .pickTargetNodes,
+         haveTarget      = pickingHierarchy .some (node => pickTargetNodes .has (node));
 
       if (haveTarget)
       {
-         var targets = this .targets;
+         const targets = this .targets;
 
          if (targets .size < targets .length)
          {
@@ -406,9 +403,9 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          target .intersections .length = 0;
          target .modelMatrix .assign (modelMatrix);
 
-         var destPickingHierarchy = target .pickingHierarchy;
+         const destPickingHierarchy = target .pickingHierarchy;
 
-         for (var i = 0, length = pickingHierarchy .length; i < length; ++ i)
+         for (let i = 0, length = pickingHierarchy .length; i < length; ++ i)
             destPickingHierarchy [i] = pickingHierarchy [i];
 
          destPickingHierarchy .length = length;
@@ -416,9 +413,9 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
    process ()
    {
-      var modelMatrices = this .modelMatrices;
+      const modelMatrices = this .modelMatrices;
 
-      for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+      for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
          ModelMatrixCache .push (modelMatrices [m]);
 
       this .modelMatrices .length = 0;

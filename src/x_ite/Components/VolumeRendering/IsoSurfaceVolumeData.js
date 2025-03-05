@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
          styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
 
       styleUniforms  += "\n";
-      styleUniforms  += "uniform float surfaceValues [" + this ._surfaceValues .length + "];\n";
+      styleUniforms  += "uniform float surfaceValues [" + Math .max (this ._surfaceValues .length, 1)+ "];\n";
       styleUniforms  += "uniform float surfaceTolerance;\n";
 
       for (const renderStyleNode of this .renderStyleNodes)

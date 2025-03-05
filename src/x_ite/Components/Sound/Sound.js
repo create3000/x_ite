@@ -68,6 +68,8 @@ function Sound (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
 
+   this .setVisibleObject (true);
+   
    // Units
 
    this ._location .setUnit ("length");

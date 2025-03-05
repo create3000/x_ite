@@ -72,10 +72,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
-      this ._whichChoice .addInterest ("set_child__", this);
-      this ._children    .addInterest ("set_child__", this);
-
-      this .set_child__ ();
+      this ._whichChoice .addInterest ("requestRebuild", this);
    },
    getSubBBox (bbox, shadows)
    {
@@ -88,26 +85,44 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   clear () { },
-   add () { },
-   remove () { },
-   set_child__ ()
+   clearChildren ()
+   { },
+   addChildren ()
+   { },
+   removeChildren ()
+   { },
+   set_children__ ()
    {
       // Remove node.
 
       if (this .childNode)
       {
-         this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
-         this .childNode ._isPickableObject .removeInterest ("set_child__", this);
+         const childNode = this .childNode;
+
+         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
+         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
+         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
+         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+
+         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+         {
+            childNode ._display     .removeInterest ("requestRebuild", this);
+            childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
+         }
       }
 
-      if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-      {
-         this .childNode ._display     .removeInterest ("set_child__", this);
-         this .childNode ._bboxDisplay .removeInterest ("set_child__", this);
-      }
+      // Clear node.
 
-      this .childNode = null;
+      this .childNode       = null;
+      this .pointingNode    = null;
+      this .cameraObject    = null;
+      this .pickableObject  = null;
+      this .collisionObject = null;
+      this .shadowObject    = null;
+      this .visibleNode     = null;
+      this .boundedObject   = null;
 
       // Add node.
 
@@ -119,59 +134,85 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
 
          if (childNode)
          {
-            childNode ._isCameraObject   .addInterest ("set_child__", this);
-            childNode ._isPickableObject .addInterest ("set_child__", this);
+            childNode ._isPointingObject  .addInterest ("requestRebuild", this);
+            childNode ._isCameraObject    .addInterest ("requestRebuild", this);
+            childNode ._isPickableObject  .addInterest ("requestRebuild", this);
+            childNode ._isCollisionObject .addInterest ("requestRebuild", this);
+            childNode ._isShadowObject    .addInterest ("requestRebuild", this);
+            childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
 
             this .childNode = childNode;
 
-            if (childNode .isCameraObject ())
-               this .cameraObject = childNode;
-
-            if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+            if (childNode .isVisible ())
             {
-               childNode ._display     .addInterest ("set_child__", this);
-               childNode ._bboxDisplay .addInterest ("set_child__", this);
+               if (childNode .isPointingObject ())
+                  this .pointingNode = childNode;
 
-               if (this .childNode .isVisible ())
-               {
+               if (childNode .isCameraObject ())
+                  this .cameraObject = childNode;
+
+               if (childNode .isPickableObject ())
+                  this .pickableObject = childNode;
+
+               if (childNode .isCollisionObject ())
+                  this .collisionObject = childNode;
+
+               if (childNode .isShadowObject ())
+                  this .shadowObject = childNode;
+
+               if (childNode .isVisibleObject ())
                   this .visibleNode = childNode;
+            }
 
-                  if (childNode .isPickableObject ())
-                     this .pickableObject = childNode;
-               }
+            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+            {
+               childNode ._display     .addInterest ("requestRebuild", this);
+               childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                if (childNode .isBBoxVisible ())
                   this .boundedObject = childNode;
             }
-            else
-            {
-               this .visibleNode = childNode;
-
-               if (childNode .isPickableObject ())
-                  this .pickableObject = childNode;
-            }
          }
       }
 
+      this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
-      this .set_transformSensors__ ();
+      this .set_pickableObjects__ ();
+      this .set_collisionObjects__ ();
+      this .set_shadowObjects__ ();
+      this .set_visibleObjects__ ();
+   },
+   set_pointingObjects__ ()
+   {
+      this .setPointingObject (this .pointingNode);
    },
    set_cameraObjects__ ()
    {
-      this .setCameraObject (this .cameraObject ?.isCameraObject ());
+      this .setCameraObject (this .cameraObject);
    },
-   set_transformSensors__ ()
+   set_pickableObjects__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
+   },
+   set_collisionObjects__ ()
+   {
+      this .setCollisionObject (this .collisionObject);
+   },
+   set_shadowObjects__ ()
+   {
+      this .setShadowObject (this .shadowObject);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleNode || this .boundedObject);
    },
    traverse (type, renderObject)
    {
       switch (type)
       {
          case TraverseType .POINTER:
-         case TraverseType .SHADOW:
          {
-            this .visibleNode ?.traverse (type, renderObject);
+            this .pointingNode ?.traverse (type, renderObject);
             return;
          }
          case TraverseType .CAMERA:
@@ -205,7 +246,12 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
          }
          case TraverseType .COLLISION:
          {
-            this .visibleNode ?.traverse (type, renderObject);
+            this .collisionObject ?.traverse (type, renderObject);
+            return;
+         }
+         case TraverseType .SHADOW:
+         {
+            this .shadowObject ?.traverse (type, renderObject);
             return;
          }
          case TraverseType .DISPLAY:
