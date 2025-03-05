@@ -88,16 +88,10 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
       X3DUrlObject     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this .groupNode ._isPointingObject  .addFieldInterest (this ._isPointingObject);
-      this .groupNode ._isCameraObject    .addFieldInterest (this ._isCameraObject);
-      this .groupNode ._isPickableObject  .addFieldInterest (this ._isPickableObject);
-      this .groupNode ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-      this .groupNode ._isShadowObject    .addFieldInterest (this ._isShadowObject);
-      this .groupNode ._isVisibleObject   .addFieldInterest (this ._isVisibleObject);
-
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
+      this .connectChildNode (this .groupNode);
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    getBBox (bbox, shadows)

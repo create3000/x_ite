@@ -289,17 +289,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
 
                      if (this ._rootNode .length)
                      {
-                        this .rootGroup ._isPointingObject  .addFieldInterest (this ._isPointingObject);
-                        this .rootGroup ._isCameraObject    .addFieldInterest (this ._isCameraObject);
-                        this .rootGroup ._isPickableObject  .addFieldInterest (this ._isPickableObject);
-                        this .rootGroup ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-                        this .rootGroup ._isShadowObject    .addFieldInterest (this ._isShadowObject);
-
-                        this .setPointingObject  (this .rootGroup .isPointingObject ());
-                        this .setCameraObject    (this .rootGroup .isCameraObject ());
-                        this .setPickableObject  (this .rootGroup .isPickableObject ());
-                        this .setCollisionObject (this .rootGroup .isCollisionObject ());
-                        this .setShadowObject    (this .rootGroup .isShadowObject ());
+                        this .connectChildNode (this .rootGroup, [TraverseType .DISPLAY]);
 
                         this ._children      = this ._rootNode;
                         this .childrenLoaded = false;
@@ -308,17 +298,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                      {
                         if (this .rootInline .checkLoadState () == X3DConstants .COMPLETE_STATE)
                         {
-                           this .rootInline ._isPointingObject  .addFieldInterest (this ._isPointingObject);
-                           this .rootInline ._isCameraObject    .addFieldInterest (this ._isCameraObject);
-                           this .rootInline ._isPickableObject  .addFieldInterest (this ._isPickableObject);
-                           this .rootInline ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-                           this .rootInline ._isShadowObject    .addFieldInterest (this ._isShadowObject);
-
-                           this .setPointingObject  (this .rootInline .isPointingObject ());
-                           this .setCameraObject    (this .rootInline .isCameraObject ());
-                           this .setPickableObject  (this .rootInline .isPickableObject ());
-                           this .setCollisionObject (this .rootInline .isCollisionObject ());
-                           this .setShadowObject    (this .rootInline .isShadowObject ());
+                           this .connectChildNode (this .rootInline, [TraverseType .DISPLAY]);
 
                            this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
                            this .childrenLoaded = false;
@@ -336,21 +316,9 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                   case 1:
                   {
                      if (this ._rootNode .length)
-                     {
-                        this .rootGroup ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
-                        this .rootGroup ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
-                        this .rootGroup ._isPickableObject  .removeFieldInterest (this ._isPickableObject);
-                        this .rootGroup ._isCollisionObject .removeFieldInterest (this ._isCollisionObject);
-                        this .rootGroup ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
-                     }
+                        this .disconnectChildNode (this .rootGroup);
                      else
-                     {
-                        this .rootInline ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
-                        this .rootInline ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
-                        this .rootInline ._isPickableObject  .removeFieldInterest (this ._isPickableObject);
-                        this .rootInline ._isCollisionObject .removeFieldInterest (this ._isCollisionObject);
-                        this .rootInline ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
-                     }
+                        this .disconnectChildNode (this .rootInline);
 
                      for (const childInline of this .childInlines)
                      {
