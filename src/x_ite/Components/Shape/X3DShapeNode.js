@@ -61,6 +61,9 @@ function X3DShapeNode (executionContext)
 
    this .addType (X3DConstants .X3DShapeNode);
 
+   // Set default values which are almost right in most cases,
+   // except isCollisionObject which has to be set to `true` here.
+
    this .setPointingObject (true);
    this .setCollisionObject (true);
    this .setShadowObject (true);

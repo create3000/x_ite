@@ -222,17 +222,17 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       for (const child of children)
          this .addChild (child);
 
-      if (this .getName () === "VisibleNodes")
-      {
-         console .warn ("visibleNodes",     this .visibleNodes     .size);
-         // console .warn ("pointingNodes",    this .pointingNodes    .size);
-         // console .warn ("pickableObjects",  this .pickableObjects  .size);
-         // console .warn ("collisionObjects", this .collisionObjects .size);
-         // console .warn ("shadowObjects",    this .shadowObjects    .size);
+      // if (this .getName () === "VisibleNodes")
+      // {
+      //    // console .warn ("visibleNodes",     this .visibleNodes     .size);
+      //    // console .warn ("pointingNodes",    this .pointingNodes    .size);
+      //    // console .warn ("pickableObjects",  this .pickableObjects  .size);
+      //    // console .warn ("collisionObjects", this .collisionObjects .size);
+      //    // console .warn ("shadowObjects",    this .shadowObjects    .size);
 
-         // for (const node of this .pickableObjects)
-         //    console .log (node .getTypeName (), node .getName ());
-      }
+      //    // for (const node of this .pickableObjects)
+      //    //    console .log (node .getTypeName (), node .getName ());
+      // }
 
       this .set_objects__ ();
    },
