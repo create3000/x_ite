@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidable);
 
-      X3DNBodyCollidableNode .prototype .set_child__ .call (this, collidableNode);
+      this .setChild (collidableNode);
 
       if (collidableNode)
       {

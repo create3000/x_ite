@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       const shapeNode = X3DCast (X3DConstants .Shape, this ._shape);
 
-      X3DNBodyCollidableNode .prototype .set_child__ .call (this, shapeNode);
+      this .setChild (shapeNode);
 
       if (shapeNode)
       {

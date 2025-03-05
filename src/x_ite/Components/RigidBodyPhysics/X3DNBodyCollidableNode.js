@@ -157,11 +157,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    {
       return this .childNode;
    },
-   requestRebuild ()
-   {
-      this ._rebuild .addEvent ();
-   },
-   set_child__ (childNode)
+   setChild (childNode)
    {
       // Remove node.
 
@@ -251,6 +247,12 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       this .setShadowObject    (this .shadowObject);
       this .setVisibleObject   (this .visibleNode);
    },
+   requestRebuild ()
+   {
+      this ._rebuild .addEvent ();
+   },
+   set_child__ ()
+   { },
    eventsProcessed ()
    {
       this .matrix .set (this ._translation .getValue (),
