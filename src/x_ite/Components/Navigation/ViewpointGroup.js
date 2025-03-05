@@ -83,7 +83,8 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this .proximitySensor .setup ();
+      this ._size      .addInterest ("set_size__",     this);
+      this ._children  .addInterest ("set_children__", this);
 
       this ._size   .addFieldInterest (this .proximitySensor ._size);
       this ._center .addFieldInterest (this .proximitySensor ._center);
@@ -91,8 +92,7 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
       this .proximitySensor ._size   = this ._size;
       this .proximitySensor ._center = this ._center;
 
-      this ._size      .addInterest ("set_size__",     this);
-      this ._children  .addInterest ("set_children__", this);
+      this .proximitySensor .setup ();
 
       this .set_size__ ();
       this .set_children__ ();
