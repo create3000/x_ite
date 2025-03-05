@@ -58,11 +58,12 @@ function X3DChildNode (executionContext)
 
    this .addType (X3DConstants .X3DChildNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "isPointingObject", new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isCameraObject",   new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isPickableObject", new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isShadowObject",   new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isVisibleObject",  new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "isPointingObject",  new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isCameraObject",    new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isPickableObject",  new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isCollisionObject", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isShadowObject",    new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isVisibleObject",   new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .prototype),
@@ -102,6 +103,15 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    isShadowObject ()
    {
       return this ._isShadowObject .getValue ();
+   },
+   setCollisionObject (value)
+   {
+      if (!!value !== this ._isCollisionObject .getValue ())
+         this ._isCollisionObject = value;
+   },
+   isCollisionObject ()
+   {
+      return this ._isCollisionObject .getValue ();
    },
    setVisibleObject (value)
    {

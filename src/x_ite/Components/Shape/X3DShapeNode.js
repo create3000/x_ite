@@ -61,6 +61,8 @@ function X3DShapeNode (executionContext)
 
    this .addType (X3DConstants .X3DShapeNode);
 
+   this .setCollisionObject (true);
+
    // Private properties
 
    this .bbox       = new Box3 ();

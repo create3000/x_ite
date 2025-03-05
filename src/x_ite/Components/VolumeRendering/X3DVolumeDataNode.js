@@ -95,11 +95,12 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      this .groupNode ._isPointingObject .addFieldInterest (this ._isPointingObject);
-      this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-      this .groupNode ._isShadowObject   .addFieldInterest (this ._isShadowObject);
-      this .groupNode ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
+      this .groupNode ._isPointingObject  .addFieldInterest (this ._isPointingObject);
+      this .groupNode ._isCameraObject    .addFieldInterest (this ._isCameraObject);
+      this .groupNode ._isPickableObject  .addFieldInterest (this ._isPickableObject);
+      this .groupNode ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
+      this .groupNode ._isShadowObject    .addFieldInterest (this ._isShadowObject);
+      this .groupNode ._isVisibleObject   .addFieldInterest (this ._isVisibleObject);
 
       this ._bboxDisplay .addFieldInterest (this .groupNode ._bboxDisplay);
 

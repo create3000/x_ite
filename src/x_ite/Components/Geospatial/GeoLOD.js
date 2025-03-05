@@ -221,6 +221,10 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    {
       this .setPickableObject (this .childInlines .some (childInline => childInline .isPickableObject ()));
    },
+   set_childCollisionObject__ ()
+   {
+      this .setCollisionObject (this .childInlines .some (childInline => childInline .isCollisionObject ()));
+   },
    set_childShadowObject__ ()
    {
       this .setShadowObject (this .childInlines .some (childInline => childInline .isShadowObject ()));
@@ -276,18 +280,20 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                   {
                      for (const childInline of this .childInlines)
                      {
-                        childInline ._isPointingObject .removeInterest ("set_childPointingObject__", this);
-                        childInline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
-                        childInline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
-                        childInline ._isShadowObject   .removeInterest ("set_childShadowObject__",   this);
+                        childInline ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
+                        childInline ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
+                        childInline ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
+                        childInline ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
+                        childInline ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
                      }
 
                      if (this ._rootNode .length)
                      {
-                        this .rootGroup ._isPointingObject .addFieldInterest (this ._isPointingObject);
-                        this .rootGroup ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-                        this .rootGroup ._isPickableObject .addFieldInterest (this ._isPickableObject);
-                        this .rootGroup ._isShadowObject   .addFieldInterest (this ._isShadowObject);
+                        this .rootGroup ._isPointingObject  .addFieldInterest (this ._isPointingObject);
+                        this .rootGroup ._isCameraObject    .addFieldInterest (this ._isCameraObject);
+                        this .rootGroup ._isPickableObject  .addFieldInterest (this ._isPickableObject);
+                        this .rootGroup ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
+                        this .rootGroup ._isShadowObject    .addFieldInterest (this ._isShadowObject);
 
                         this .setPointingObject (this .rootGroup .isPointingObject ());
                         this .setCameraObject   (this .rootGroup .isCameraObject ());
@@ -300,10 +306,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                      {
                         if (this .rootInline .checkLoadState () == X3DConstants .COMPLETE_STATE)
                         {
-                           this .rootInline ._isPointingObject .addFieldInterest (this ._isPointingObject);
-                           this .rootInline ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-                           this .rootInline ._isPickableObject .addFieldInterest (this ._isPickableObject);
-                           this .rootInline ._isShadowObject   .addFieldInterest (this ._isShadowObject);
+                           this .rootInline ._isPointingObject  .addFieldInterest (this ._isPointingObject);
+                           this .rootInline ._isCameraObject    .addFieldInterest (this ._isCameraObject);
+                           this .rootInline ._isPickableObject  .addFieldInterest (this ._isPickableObject);
+                           this .rootInline ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
+                           this .rootInline ._isShadowObject    .addFieldInterest (this ._isShadowObject);
 
                            this .setPointingObject (this .rootInline .isPointingObject ());
                            this .setCameraObject   (this .rootInline .isCameraObject ());
@@ -326,25 +333,28 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                   {
                      if (this ._rootNode .length)
                      {
-                        this .rootGroup ._isPointingObject .removeFieldInterest (this ._isPointingObject);
-                        this .rootGroup ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
-                        this .rootGroup ._isPickableObject .removeFieldInterest (this ._isPickableObject);
-                        this .rootGroup ._isShadowObject   .removeFieldInterest (this ._isShadowObject);
+                        this .rootGroup ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
+                        this .rootGroup ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
+                        this .rootGroup ._isPickableObject  .removeFieldInterest (this ._isPickableObject);
+                        this .rootGroup ._isCollisionObject .removeFieldInterest (this ._isCollisionObject);
+                        this .rootGroup ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
                      }
                      else
                      {
-                        this .rootInline ._isPointingObject .removeFieldInterest (this ._isPointingObject);
-                        this .rootInline ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
-                        this .rootInline ._isPickableObject .removeFieldInterest (this ._isPickableObject);
-                        this .rootInline ._isShadowObject   .removeFieldInterest (this ._isShadowObject);
+                        this .rootInline ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
+                        this .rootInline ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
+                        this .rootInline ._isPickableObject  .removeFieldInterest (this ._isPickableObject);
+                        this .rootInline ._isCollisionObject .removeFieldInterest (this ._isCollisionObject);
+                        this .rootInline ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
                      }
 
                      for (const childInline of this .childInlines)
                      {
-                        childInline ._isPointingObject .addInterest ("set_childPointingObject__", this);
-                        childInline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
-                        childInline ._isPickableObject .addInterest ("set_childPickableObject__", this);
-                        childInline ._isShadowObject   .addInterest ("set_childShadowObject__",   this);
+                        childInline ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
+                        childInline ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
+                        childInline ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
+                        childInline ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
+                        childInline ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
                      }
 
                      this .set_childPointingObject__ ();

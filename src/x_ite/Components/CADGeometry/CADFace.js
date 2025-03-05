@@ -97,11 +97,12 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       {
          const childNode = this .childNode;
 
-         childNode ._isPointingObject .removeInterest ("requestRebuild", this);
-         childNode ._isCameraObject   .removeInterest ("requestRebuild", this);
-         childNode ._isPickableObject .removeInterest ("requestRebuild", this);
-         childNode ._isShadowObject   .removeInterest ("requestRebuild", this);
-         childNode ._isVisibleObject  .removeInterest ("requestRebuild", this);
+         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
+         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
+         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
+         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
@@ -112,13 +113,14 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       // Clear node.
 
-      this .childNode      = null;
-      this .pointingNode   = null;
-      this .cameraObject   = null;
-      this .pickableObject = null;
-      this .shadowObject   = null;
-      this .visibleNode    = null;
-      this .boundedObject  = null;
+      this .childNode       = null;
+      this .pointingNode    = null;
+      this .cameraObject    = null;
+      this .pickableObject  = null;
+      this .collisionObject = null;
+      this .shadowObject    = null;
+      this .visibleNode     = null;
+      this .boundedObject   = null;
 
       // Add node.
 
@@ -136,11 +138,12 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                case X3DConstants .Transform:
                case X3DConstants .X3DShapeNode:
                {
-                  childNode ._isPointingObject .addInterest ("requestRebuild", this);
-                  childNode ._isCameraObject   .addInterest ("requestRebuild", this);
-                  childNode ._isPickableObject .addInterest ("requestRebuild", this);
-                  childNode ._isShadowObject   .addInterest ("requestRebuild", this);
-                  childNode ._isVisibleObject  .addInterest ("requestRebuild", this);
+                  childNode ._isPointingObject  .addInterest ("requestRebuild", this);
+                  childNode ._isCameraObject    .addInterest ("requestRebuild", this);
+                  childNode ._isPickableObject  .addInterest ("requestRebuild", this);
+                  childNode ._isCollisionObject .addInterest ("requestRebuild", this);
+                  childNode ._isShadowObject    .addInterest ("requestRebuild", this);
+                  childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
 
                   this .childNode = childNode;
 
@@ -154,6 +157,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
                      if (childNode .isPickableObject ())
                         this .pickableObject = childNode;
+
+                     if (childNode .isCollisionObject ())
+                        this .collisionObject = childNode;
 
                      if (childNode .isShadowObject ())
                         this .shadowObject = childNode;
@@ -184,6 +190,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
       this .set_pickableObjects__ ();
+      this .set_collisionObjects__ ();
       this .set_shadowObjects__ ();
       this .set_visibleObjects__ ();
    },
@@ -198,6 +205,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    set_pickableObjects__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
+   },
+   set_collisionObjects__ ()
+   {
+      this .setCollisionObject (this .collisionObject);
    },
    set_shadowObjects__ ()
    {
@@ -247,7 +258,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
          case TraverseType .COLLISION:
          {
-            this .visibleNode ?.traverse (type, renderObject);
+            this .collisionObject ?.traverse (type, renderObject);
             return;
          }
          case TraverseType .SHADOW:
