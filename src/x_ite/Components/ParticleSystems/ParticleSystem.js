@@ -465,6 +465,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
 
+      this .set_pointingObject__ ();
+      this .set_shadowObject__ ();
       this .set_visibleObject__ ()
       this .set_transparent__ ();
    },
