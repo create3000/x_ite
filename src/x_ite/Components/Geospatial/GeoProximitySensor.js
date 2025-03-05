@@ -91,6 +91,7 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnviro
       this .proximitySensor ._isPointingObject .addFieldInterest (this ._isPointingObject);
       this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .proximitySensor ._isShadowObject   .addFieldInterest (this ._isShadowObject);
       this .proximitySensor ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
 
       this .proximitySensor ._isActive                 .addFieldInterest (this ._isActive);

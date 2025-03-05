@@ -137,6 +137,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this .transformNode ._isPointingObject .addFieldInterest (this ._isPointingObject);
       this .transformNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .transformNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .transformNode ._isShadowObject   .addFieldInterest (this ._isShadowObject);
       this .transformNode ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
 
       this .transformNode ._translation      = this ._translation;

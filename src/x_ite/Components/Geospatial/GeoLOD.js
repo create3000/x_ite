@@ -221,6 +221,10 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    {
       this .setPickableObject (this .childInlines .some (childInline => childInline .isPickableObject ()));
    },
+   set_childShadowObject__ ()
+   {
+      this .setShadowObject (this .childInlines .some (childInline => childInline .isShadowObject ()));
+   },
    getLevel (modelViewMatrix)
    {
       const distance = this .getDistance (modelViewMatrix);
@@ -275,6 +279,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                         childInline ._isPointingObject .removeInterest ("set_childPointingObject__", this);
                         childInline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
                         childInline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
+                        childInline ._isShadowObject   .removeInterest ("set_childShadowObject__",   this);
                      }
 
                      if (this ._rootNode .length)
@@ -282,6 +287,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                         this .rootGroup ._isPointingObject .addFieldInterest (this ._isPointingObject);
                         this .rootGroup ._isCameraObject   .addFieldInterest (this ._isCameraObject);
                         this .rootGroup ._isPickableObject .addFieldInterest (this ._isPickableObject);
+                        this .rootGroup ._isShadowObject   .addFieldInterest (this ._isShadowObject);
 
                         this .setPointingObject (this .rootGroup .isPointingObject ());
                         this .setCameraObject   (this .rootGroup .isCameraObject ());
@@ -297,6 +303,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                            this .rootInline ._isPointingObject .addFieldInterest (this ._isPointingObject);
                            this .rootInline ._isCameraObject   .addFieldInterest (this ._isCameraObject);
                            this .rootInline ._isPickableObject .addFieldInterest (this ._isPickableObject);
+                           this .rootInline ._isShadowObject   .addFieldInterest (this ._isShadowObject);
 
                            this .setPointingObject (this .rootInline .isPointingObject ());
                            this .setCameraObject   (this .rootInline .isCameraObject ());
@@ -322,12 +329,14 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                         this .rootGroup ._isPointingObject .removeFieldInterest (this ._isPointingObject);
                         this .rootGroup ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
                         this .rootGroup ._isPickableObject .removeFieldInterest (this ._isPickableObject);
+                        this .rootGroup ._isShadowObject   .removeFieldInterest (this ._isShadowObject);
                      }
                      else
                      {
                         this .rootInline ._isPointingObject .removeFieldInterest (this ._isPointingObject);
                         this .rootInline ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
                         this .rootInline ._isPickableObject .removeFieldInterest (this ._isPickableObject);
+                        this .rootInline ._isShadowObject   .removeFieldInterest (this ._isShadowObject);
                      }
 
                      for (const childInline of this .childInlines)
@@ -335,6 +344,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                         childInline ._isPointingObject .addInterest ("set_childPointingObject__", this);
                         childInline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
                         childInline ._isPickableObject .addInterest ("set_childPickableObject__", this);
+                        childInline ._isShadowObject   .addInterest ("set_childShadowObject__",   this);
                      }
 
                      this .set_childPointingObject__ ();
