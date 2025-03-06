@@ -152,7 +152,7 @@ Object .assign (X3DTextContext .prototype,
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
    },
-   registerFontFamily (font, fullName)
+   registerFontFamily (fullName, font)
    {
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fullName}.`);

@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
       if (!familyName)
          return;
 
-      this .getBrowser () .registerFontFamily (this .font, familyName);
+      this .getBrowser () .registerFontFamily (familyName, this .font);
    },
    async loadData ()
    {
