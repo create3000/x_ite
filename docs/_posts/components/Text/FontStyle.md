@@ -154,7 +154,7 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 
 ## Supported File Formats
 
-It is possible to specify in the *family* field a URL of a custom font file of the following types:
+It is possible to specify in the *url* of a [FontLibrary](/x_ite/components/text/fontlibrary/) node one or more URLs of a custom font file of the following types:
 
 | Encoding  | File Extension | MIME Type  |
 |-----------|----------------|------------|

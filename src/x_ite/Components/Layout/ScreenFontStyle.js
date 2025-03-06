@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyle
 
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new ScreenText (text, this);
    },
@@ -98,6 +98,7 @@ Object .defineProperties (ScreenFontStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fontLibrary", new Fields .SFNode ()),
       ]),
       enumerable: true,
    },

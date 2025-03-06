@@ -1540,9 +1540,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
          {
-            if (this ._pointerEvents .getValue ())
-               renderObject .addPointingShape (this);
-
+            renderObject .addPointingShape (this);
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
@@ -1556,9 +1554,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
          }
          case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
-            if (this ._castShadow .getValue ())
-               renderObject .addShadowShape (this);
-
+            renderObject .addShadowShape (this);
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:

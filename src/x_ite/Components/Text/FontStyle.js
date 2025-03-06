@@ -66,7 +66,7 @@ function FontStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (FontStyle .prototype, X3DFontStyleNode .prototype),
 {
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new PolygonText (text, this);
    },
@@ -96,6 +96,7 @@ Object .defineProperties (FontStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fontLibrary", new Fields .SFNode ()),
       ]),
       enumerable: true,
    },

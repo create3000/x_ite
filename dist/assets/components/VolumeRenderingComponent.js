@@ -1915,6 +1915,7 @@ function X3DVolumeDataNode (executionContext)
       browser      = this .getBrowser (),
       privateScene = browser .getPrivateScene ();
 
+   this .groupNode                = privateScene .createNode ("Group",               false);
    this .proximitySensorNode      = privateScene .createNode ("ProximitySensor",     false);
    this .transformNode            = privateScene .createNode ("Transform",           false);
    this .shapeNode                = privateScene .createNode ("Shape",               false);
@@ -1939,10 +1940,21 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      this ._bboxDisplay .addFieldInterest (this .transformNode ._bboxDisplay);
+      this .groupNode ._isPointingObject  .addFieldInterest (this ._isPointingObject);
+      this .groupNode ._isCameraObject    .addFieldInterest (this ._isCameraObject);
+      this .groupNode ._isPickableObject  .addFieldInterest (this ._isPickableObject);
+      this .groupNode ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
+      this .groupNode ._isShadowObject    .addFieldInterest (this ._isShadowObject);
+      this .groupNode ._isVisibleObject   .addFieldInterest (this ._isVisibleObject);
 
+      this ._bboxDisplay .addFieldInterest (this .groupNode ._bboxDisplay);
+
+      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
+      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
+
+      this .groupNode ._children               = [this .proximitySensorNode, this .transformNode];
       this .proximitySensorNode ._size         = new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1);
-      this .transformNode ._children           = new (external_X_ITE_X3D_Fields_default()).MFNode (this .shapeNode);
+      this .transformNode ._children           = [this .shapeNode];
       this .shapeNode ._pointerEvents          = false;
       this .shapeNode ._castShadow             = false;
       this .shapeNode ._appearance             = this .appearanceNode;
@@ -1964,6 +1976,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
       this .shapeNode             .setPrivate (true);
       this .transformNode         .setPrivate (true);
       this .proximitySensorNode   .setPrivate (true);
+      this .groupNode             .setPrivate (true);
 
       this .coordinateNode        .setup ();
       this .textureCoordinateNode .setup ();
@@ -1974,9 +1987,12 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
       this .shapeNode             .setup ();
       this .transformNode         .setup ();
       this .proximitySensorNode   .setup ();
+      this .groupNode             .setup ();
 
-      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
-      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
+      this .setPointingObject (this .groupNode .isPointingObject ());
+      this .setCameraObject   (this .groupNode .isCameraObject ());
+      this .setPickableObject (this .groupNode .isPickableObject ());
+      this .setVisibleObject  (this .groupNode .isVisibleObject ());
 
       if (gl .getVersion () < 2)
          return;
@@ -2072,8 +2088,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
    },
    traverse (type, renderObject)
    {
-      this .proximitySensorNode .traverse (type, renderObject);
-      this .transformNode       .traverse (type, renderObject);
+      this .groupNode .traverse (type, renderObject);
    },
    setShaderUniforms (gl, shaderObject)
    {
@@ -2245,7 +2260,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
          styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
 
       styleUniforms  += "\n";
-      styleUniforms  += "uniform float surfaceValues [" + this ._surfaceValues .length + "];\n";
+      styleUniforms  += "uniform float surfaceValues [" + Math .max (this ._surfaceValues .length, 1)+ "];\n";
       styleUniforms  += "uniform float surfaceTolerance;\n";
 
       for (const renderStyleNode of this .renderStyleNodes)

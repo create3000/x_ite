@@ -173,7 +173,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 ## Lighting
 
 - [DirectionalLight](/x_ite/components/lighting/directionallight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/directionallight/#example)
-- [EnvironmentLight](/x_ite/components/lighting/environmentlight/) <small class="blue">experimental</small>
+- [EnvironmentLight](/x_ite/components/lighting/environmentlight/)
 - [PointLight](/x_ite/components/lighting/pointlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/pointlight/#example)
 - [SpotLight](/x_ite/components/lighting/spotlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/spotlight/#example)
 
@@ -327,6 +327,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 
 ## Text
 
+- [FontLibrary](/x_ite/components/text/fontlibrary/) <small class="blue">experimental</small>
 - [FontStyle](/x_ite/components/text/fontstyle/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/fontstyle/#example)
 - [Text](/x_ite/components/text/text/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/text/#example)
 

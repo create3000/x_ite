@@ -1738,7 +1738,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (external_X_
 
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new Layout_ScreenText (text, this);
    },

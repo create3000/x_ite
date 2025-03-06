@@ -79,6 +79,9 @@ const Fonts = new Map ([
 
 function X3DFontStyleNode (executionContext)
 {
+   // To be of type X3DUrlObject ensures that it will work inside StaticGroup
+   // and legacy implementation of load URLs over family field.
+
    X3DNode      .call (this, executionContext);
    X3DUrlObject .call (this, executionContext);
 
@@ -92,8 +95,7 @@ function X3DFontStyleNode (executionContext)
 
    this ._family .setName ("family");
 
-   this .familyStack = [ ];
-   this .alignments  = [ ];
+   this .alignments = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .prototype),
@@ -104,23 +106,11 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
 
-      this ._style   .addInterest ("set_style__",   this);
+      this ._style   .addInterest ("set_url__",     this);
       this ._justify .addInterest ("set_justify__", this);
-
-      this .font        = null;
-      this .familyIndex = 0;
 
       // Don't call set_style__.
       this .set_justify__ ();
-
-      this .requestImmediateLoad () .catch (Function .prototype);
-   },
-   set_style__ ()
-   {
-      if (!this ._load .getValue ())
-         return;
-
-      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -137,6 +127,19 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       this .alignments [1] = this ._justify .length > 1
                              ? this .getAlignment (1, minorNormal)
                              : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
+   },
+   getFont ()
+   {
+      return this .font;
+   },
+   getDefaultFont (familyName, style)
+   {
+      const family = Fonts .get (familyName);
+
+      if (family)
+         return family .get (style) ?? family .get ("PLAIN");
+
+      return;
    },
    getMajorAlignment ()
    {
@@ -175,65 +178,84 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
    },
-   getDefaultFont (familyName)
+   async loadData ()
    {
-      const family = Fonts .get (familyName);
+      // Wait for FontLibrary nodes to be setuped or changed.
 
-      if (family)
-         return family .get (this ._style .getValue ()) ?? family .get ("PLAIN");
+      await $.sleep (0);
 
-      return;
-   },
-   loadData ()
-   {
       // Add default font to family array.
 
-      const family = this ._url .copy ();
+      const
+         browser = this .getBrowser (),
+         family  = this ._family .copy (),
+         style   = this ._style .getValue ();
 
       family .push ("SERIF");
 
-      // Build family stack.
-
-      this .familyStack .length = 0;
+      this .font = null;
 
       for (const familyName of family)
-         this .familyStack .push (this .getDefaultFont (familyName) ?? familyName);
-
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      if (this .familyStack .length === 0)
       {
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         this .font = null;
-         return;
+         const defaultFont = this .getDefaultFont (familyName, style);
+
+         if (defaultFont)
+         {
+            const font = await this .loadFont (defaultFont);
+
+            if (font)
+            {
+               this .font = font;
+               break;
+            }
+         }
+
+         const font = await browser .getFont (familyName, style);
+
+         if (font)
+         {
+            this .font = font;
+            break;
+         }
+
+         const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
+
+         if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
+         {
+            console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+
+            const font = await this .loadFont (fileURL);
+
+            if (font)
+            {
+               this .font = font;
+               break;
+            }
+         }
+         else
+         {
+            console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
+         }
       }
 
-      this .family = this .familyStack .shift ();
-      this .URL    = new URL (this .family, this .getExecutionContext () .getBaseURL ());
-
-      this .getBrowser () .getFont (this .URL, this .getCache ())
-         .then (this .setFont .bind (this))
-         .catch (this .setError .bind (this));
-   },
-   setError (error)
-   {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading font '${decodeURI (this .URL .href)}':`, error);
-
-      this .loadNext ();
-   },
-   setFont (font)
-   {
-      this .font = font;
-
-      this .setLoadState (X3DConstants .COMPLETE_STATE);
+      this .setLoadState (this .font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
       this .addNodeEvent ();
    },
-   getFont ()
+   async loadFont (fontPath)
    {
-      return this .font;
+      const
+         browser = this .getBrowser (),
+         fileURL = new URL (fontPath, this .getExecutionContext () .getBaseURL ());
+
+      try
+      {
+         return await browser .loadFont (fileURL, true);
+      }
+      catch (error)
+      {
+         if (fileURL .protocol !== "data:")
+            console .warn (`Error loading font '${decodeURI (fileURL .href)}':`, error);
+      }
    },
    dispose ()
    {

@@ -7,16 +7,14 @@ Object .assign ($,
 
       return new TextDecoder () .decode (input);
    },
-   ungzip (arrayBuffer)
+   enum (object, property)
    {
-      try
-      {
-         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
-      }
-      catch (exception)
-      {
-         return arrayBuffer;
-      }
+      if (object .hasOwnProperty (property))
+         return object [property];
+   },
+   sleep (ms)
+   {
+      return new Promise (resolve => setTimeout (resolve, ms));
    },
    toLowerCaseFirst (string)
    {
@@ -35,13 +33,19 @@ Object .assign ($,
       catch (error)
       {
          if (logError)
-            console .error (error .message);
+            console .error (error);
       }
    },
-   enum (object, property)
+   ungzip (arrayBuffer)
    {
-      if (object .hasOwnProperty (property))
-         return object [property];
+      try
+      {
+         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
+      }
+      catch (exception)
+      {
+         return arrayBuffer;
+      }
    },
 });
 
