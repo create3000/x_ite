@@ -71,8 +71,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-      this ._rebuild .addInterest ("set_shape__", this);
-
       this ._enabled .addInterest ("set_collidableGeometry__", this);
       this ._shape   .addInterest ("requestRebuild",           this);
 
