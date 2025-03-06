@@ -53,18 +53,18 @@ const
    _defaultFontStyle = Symbol (),
    _fontCache        = Symbol (),
    _loadingFonts     = Symbol (),
-   _familyCache      = Symbol (),
-   _fullNameCache    = Symbol (),
+   _families         = Symbol (),
+   _fullNames        = Symbol (),
    _glyphCache       = Symbol (),
    _wawoff2          = Symbol ();
 
 function X3DTextContext ()
 {
-   this [_fontCache]     = new Map ();
-   this [_loadingFonts]  = new Set ();
-   this [_familyCache]   = new Map ();
-   this [_fullNameCache] = new Map ();
-   this [_glyphCache]    = new Map (); // [font] [primitiveQuality] [glyphIndex]
+   this [_loadingFonts] = new Set ();
+   this [_fontCache]    = new Map ();
+   this [_families]     = new Map ();
+   this [_fullNames]    = new Map ();
+   this [_glyphCache]   = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
 Object .assign (X3DTextContext .prototype,
@@ -136,9 +136,9 @@ Object .assign (X3DTextContext .prototype,
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
+         const subfamilies = this [_families] .get (fontFamily .toLowerCase ()) ?? new Map ();
 
-         this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
+         this [_families] .set (fontFamily .toLowerCase (), subfamilies);
 
          for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
          {
@@ -157,7 +157,7 @@ Object .assign (X3DTextContext .prototype,
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fullName}.`);
 
-      this [_fullNameCache] .set (fullName .toLowerCase (), font);
+      this [_fullNames] .set (fullName .toLowerCase (), font);
    },
    async getFont (familyName, style)
    {
@@ -166,8 +166,8 @@ Object .assign (X3DTextContext .prototype,
 
       await Promise .allSettled (this [_loadingFonts]);
 
-      return this [_fullNameCache] .get (familyName)
-         ?? this [_familyCache] .get (familyName) ?.get (style)
+      return this [_fullNames] .get (familyName)
+         ?? this [_families] .get (familyName) ?.get (style)
          ?? null;
    },
    getGlyph (font, primitiveQuality, glyphIndex)
