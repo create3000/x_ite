@@ -78,9 +78,6 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
    },
    set_family__ ()
    {
-      if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-         return;
-
       if (!this .font)
          return;
 
@@ -88,7 +85,7 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
 
       if (!familyName)
          return;
-      
+
       this .getBrowser () .registerFontFamily (this .font, familyName);
    },
    async loadData ()
