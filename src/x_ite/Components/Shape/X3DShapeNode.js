@@ -84,6 +84,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
+      this ._transformSensors .addInterest ("set_pickableObject__", this);
+
       this ._pointerEvents .addInterest ("set_pointingObject__", this);
       this ._castShadow    .addInterest ("set_shadowObject__",   this);
       this ._bboxSize      .addInterest ("set_bbox__",           this);
@@ -198,6 +200,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    set_objects__ ()
    {
       this .set_pointingObject__ ();
+      this .set_pickableObject__ ();
       this .set_collisionObject__ ();
       this .set_shadowObject__ ();
       this .set_visibleObject__ ();
@@ -205,6 +208,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    set_pointingObject__ ()
    {
       this .setPointingObject (this .geometryNode && this .getNumInstances () && this ._pointerEvents .getValue ());
+   },
+   set_pickableObject__ ()
+   {
+      this .setPickableObject (this .getTransformSensors () .size);
    },
    set_collisionObject__ ()
    {

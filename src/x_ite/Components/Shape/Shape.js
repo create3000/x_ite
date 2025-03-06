@@ -61,14 +61,6 @@ function Shape (executionContext)
 
 Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototype),
 {
-   initialize ()
-   {
-      X3DShapeNode .prototype .initialize .call (this);
-
-      this ._transformSensors .addInterest ("set_pickableObject__", this);
-
-      this .set_pickableObject__ ();
-   },
    getShapeKey ()
    {
       return 0;
@@ -76,10 +68,6 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    getNumInstances ()
    {
       return 1;
-   },
-   set_pickableObject__ ()
-   {
-      this .setPickableObject (this .getTransformSensors () .size);
    },
    intersectsBox (box, clipPlanes, modelViewMatrix)
    {
