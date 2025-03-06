@@ -163,6 +163,23 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .getGeometry ();
    },
+   set_bbox__ ()
+   {
+      if (this .isDefaultBBoxSize ())
+      {
+         if (this .getGeometry ())
+            this .bbox .assign (this .getGeometry () .getBBox ());
+         else
+            this .bbox .set ();
+      }
+      else
+      {
+         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
+
+      this .bboxSize   .assign (this .bbox .size);
+      this .bboxCenter .assign (this .bbox .center);
+   },
    set_appearance__ ()
    {
       if (this .appearanceNode)
@@ -198,14 +215,31 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
       }
 
-      if (this .geometryNode || this .getGeometryType () !== GeometryType .GEOMETRY)
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
-
-      this .set_objects__ ();
-      this .set_transparent__ ();
       this .set_bbox__ ();
+      this .set_transparent__ ();
+      this .set_objects__ ();
+      this .set_traverse__ ();
+   },
+   set_transparent__ ()
+   {
+      // This function is overloaded in ParticleSystem!
+
+      const alphaMode = this .appearanceNode .getAlphaMode ();
+
+      if (alphaMode === AlphaMode .AUTO)
+      {
+         this .transparent = !!(this .appearanceNode .isTransparent () || this .geometryNode ?.isTransparent ());
+         this .alphaMode   = this .transparent ? AlphaMode .BLEND : AlphaMode .OPAQUE;
+      }
+      else
+      {
+         this .transparent = alphaMode === AlphaMode .BLEND;
+         this .alphaMode   = alphaMode;
+      }
+   },
+   set_transmission__ ()
+   {
+      this .transmission = this .appearanceNode .isTransmission ();
    },
    set_objects__ ()
    {
@@ -235,43 +269,12 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       this .setVisibleObject (this .getNumInstances () && (this .geometryNode || this .getGeometryType !== GeometryType .GEOMETRY));
    },
-   set_transparent__ ()
+   set_traverse__ ()
    {
-      // This function is overloaded in ParticleSystem!
-
-      const alphaMode = this .appearanceNode .getAlphaMode ();
-
-      if (alphaMode === AlphaMode .AUTO)
-      {
-         this .transparent = !!(this .appearanceNode .isTransparent () || this .geometryNode ?.isTransparent ());
-         this .alphaMode   = this .transparent ? AlphaMode .BLEND : AlphaMode .OPAQUE;
-      }
+      if (this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== GeometryType .GEOMETRY))
+         delete this .traverse;
       else
-      {
-         this .transparent = alphaMode === AlphaMode .BLEND;
-         this .alphaMode   = alphaMode;
-      }
-   },
-   set_transmission__ ()
-   {
-      this .transmission = this .appearanceNode .isTransmission ();
-   },
-   set_bbox__ ()
-   {
-      if (this .isDefaultBBoxSize ())
-      {
-         if (this .getGeometry ())
-            this .bbox .assign (this .getGeometry () .getBBox ());
-         else
-            this .bbox .set ();
-      }
-      else
-      {
-         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-      }
-
-      this .bboxSize   .assign (this .bbox .size);
-      this .bboxCenter .assign (this .bbox .center);
+         this .traverse = Function .prototype;
    },
    traverse (type, renderObject)
    {
