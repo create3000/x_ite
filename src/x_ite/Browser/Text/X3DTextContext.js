@@ -127,7 +127,7 @@ Object .assign (X3DTextContext .prototype,
 
       return promise;
    },
-   registerFont (font, familyName)
+   registerFont (font)
    {
       // fontFamily - subfamily
 
@@ -154,19 +154,18 @@ Object .assign (X3DTextContext .prototype,
       const fullNames = new Set (Object .values (font .names)
          .flatMap (name => Object .values (name .fullName ?? { })));
 
-      if (familyName)
-         fullNames .add (familyName);
-
       for (const fullName of fullNames)
-      {
-         // if (this .getBrowserOption ("Debug"))
-         //    console .info (`Registering font named ${fullName}.`);
-
-         this [_fullNameCache] .set (fullName .toLowerCase (), font);
-      }
+         this .registerFontFamily (font, fullName);
 
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
+   },
+   registerFontFamily (font, fullName)
+   {
+      // if (this .getBrowserOption ("Debug"))
+      //    console .info (`Registering font named ${fullName}.`);
+
+      this [_fullNameCache] .set (fullName .toLowerCase (), font);
    },
    async getFont (familyName, style)
    {

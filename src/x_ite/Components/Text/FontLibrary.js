@@ -84,7 +84,12 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
       if (!this .font)
          return;
 
-      this .getBrowser () .registerFont (this .font, this ._family .getValue ());
+      const familyName = this ._family .getValue ();
+
+      if (!familyName)
+         return;
+      
+      this .getBrowser () .registerFontFamily (this .font, familyName);
    },
    async loadData ()
    {
