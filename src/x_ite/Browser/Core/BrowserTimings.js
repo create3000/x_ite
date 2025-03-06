@@ -45,11 +45,11 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode   from "../../Base/X3DBaseNode.js";
-import StopWatch     from "../../../standard/Time/StopWatch.js";
-import X3DConstants  from "../../Base/X3DConstants.js";
-import GeometryTypes from "../ParticleSystems/GeometryTypes.js";
-import _             from "../../../locale/gettext.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import StopWatch    from "../../../standard/Time/StopWatch.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import GeometryType from "../Shape/GeometryType.js";
+import _            from "../../../locale/gettext.js";
 
 function BrowserTimings (executionContext)
 {
@@ -335,24 +335,24 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          {
             switch (shapeNode .getGeometryType ())
             {
-               case GeometryTypes .POINT:
+               case GeometryType .POINT:
                {
                   this .primitives .points += numInstances;
                   continue;
                }
-               case GeometryTypes .LINE:
+               case GeometryType .LINE:
                {
                   this .primitives .lines += numInstances;
                   continue;
                }
-               case GeometryTypes .TRIANGLE:
-               case GeometryTypes .QUAD:
-               case GeometryTypes .SPRITE:
+               case GeometryType .TRIANGLE:
+               case GeometryType .QUAD:
+               case GeometryType .SPRITE:
                {
                   this .primitives .triangles += numInstances * 2;
                   continue;
                }
-               case GeometryTypes .GEOMETRY:
+               case GeometryType .GEOMETRY:
                {
                   break;
                }

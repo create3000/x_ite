@@ -51,6 +51,7 @@ import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
 import X3DCast          from "../../Base/X3DCast.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
 import TraverseType     from "../../Rendering/TraverseType.js";
+import GeometryType     from "../../Browser/Shape/GeometryType.js";
 import AlphaMode        from "../../Browser/Shape/AlphaMode.js";
 import Box3             from "../../../standard/Math/Geometry/Box3.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
@@ -99,6 +100,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    getNumInstances ()
    {
       return 1;
+   },
+   getGeometryType ()
+   {
+      return GeometryType .GEOMETRY;
    },
    getBBox (bbox, shadows)
    {
@@ -193,6 +198,11 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
       }
 
+      if (this .geometryNode || this .getGeometryType () !== GeometryType .GEOMETRY)
+         delete this .traverse;
+      else
+         this .traverse = Function .prototype;
+
       this .set_objects__ ();
       this .set_transparent__ ();
       this .set_bbox__ ();
@@ -207,7 +217,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_pointingObject__ ()
    {
-      this .setPointingObject (this .geometryNode && this .getNumInstances () && this ._pointerEvents .getValue ());
+      this .setPointingObject (this .getNumInstances () && (this .geometryNode || this .getGeometryType !== GeometryType .GEOMETRY) && this ._pointerEvents .getValue ());
    },
    set_pickableObject__ ()
    {
@@ -215,15 +225,15 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_collisionObject__ ()
    {
-      this .setCollisionObject (this .geometryNode && this .getNumInstances ());
+      this .setCollisionObject (this .getNumInstances () && (this .geometryNode || this .getGeometryType !== GeometryType .GEOMETRY));
    },
    set_shadowObject__ ()
    {
-      this .setShadowObject (this .geometryNode && this .getNumInstances () && this ._castShadow .getValue ());
+      this .setShadowObject (this .getNumInstances () && (this .geometryNode || this .getGeometryType !== GeometryType .GEOMETRY) && this ._castShadow .getValue ());
    },
    set_visibleObject__ ()
    {
-      this .setVisibleObject (this .geometryNode && this .getNumInstances ());
+      this .setVisibleObject (this .getNumInstances () && (this .geometryNode || this .getGeometryType !== GeometryType .GEOMETRY));
    },
    set_transparent__ ()
    {
