@@ -200,10 +200,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          const specificationRange = ConcreteNode .specificationRange;
 
          if (this .getSpecificationVersion () < specificationRange .from)
-            return null;
+            console .warn (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (this .getSpecificationVersion () > specificationRange .to)
-            return null;
+            console .warn (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
@@ -220,10 +220,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          const specificationRange = ConcreteNode .specificationRange;
 
          if (this .getSpecificationVersion () < specificationRange .from)
-            throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
+            console .warn (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (this .getSpecificationVersion () > specificationRange .to)
-            throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
+            console .warn (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
