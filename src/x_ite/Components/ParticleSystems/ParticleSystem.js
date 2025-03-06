@@ -280,27 +280,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
-   set_pointingObject__ ()
-   {
-      if (this .geometryType == GeometryTypes .GEOMETRY)
-         X3DShapeNode .prototype .set_pointingObject__ .call (this);
-      else
-         this .setPointingObject (this ._pointerEvents .getValue ());
-   },
-   set_shadowObject__ ()
-   {
-      if (this .geometryType == GeometryTypes .GEOMETRY)
-         X3DShapeNode .prototype .set_shadowObject__ .call (this);
-      else
-         this .setShadowObject (this ._castShadow .getValue ());
-   },
-   set_visibleObject__ ()
-   {
-      if (this .geometryType == GeometryTypes .GEOMETRY)
-         X3DShapeNode .prototype .set_visibleObject__ .call (this);
-      else
-         this .setVisibleObject (true);
-   },
    set_transparent__ ()
    {
       const alphaMode = this .appearanceNode .getAlphaMode ();
