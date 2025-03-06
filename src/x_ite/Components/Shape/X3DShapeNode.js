@@ -281,7 +281,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
             if (renderObject .addDisplayShape (this))
             {
                // Currently used for GeneratedCubeMapTexture.
-               this .getAppearance () .traverse (type, renderObject);
+               this .appearanceNode .traverse (type, renderObject);
             }
 
             break;
@@ -289,7 +289,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       }
 
       // Currently used for ScreenText and Tools.
-      this .getGeometry () ?.traverse (type, renderObject);
+      this .geometryNode ?.traverse (type, renderObject);
    },
    picking (renderObject)
    {
@@ -310,7 +310,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
 
       for (const pickSensor of pickSensorStack .at (-1))
       {
-         pickSensor .collect (this .getGeometry (), modelMatrix, pickingHierarchy);
+         pickSensor .collect (this .geometryNode, modelMatrix, pickingHierarchy);
       }
 
       pickingHierarchy .pop ();
