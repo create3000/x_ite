@@ -97,13 +97,13 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       this .set_appearance__ ();
       this .set_geometry__ ();
    },
-   getNumInstances ()
-   {
-      return 1;
-   },
    getGeometryType ()
    {
       return GeometryType .GEOMETRY;
+   },
+   getNumInstances ()
+   {
+      return 1;
    },
    getBBox (bbox, shadows)
    {
