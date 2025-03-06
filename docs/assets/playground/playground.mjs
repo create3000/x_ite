@@ -62,8 +62,6 @@ class Playground
 
       browser .baseURL = url;
 
-      browser .endUpdate ();
-
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
       const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
@@ -74,8 +72,6 @@ class Playground
 
       model .setValue (browser .currentScene [`to${encoding}String`] ());
       model .onDidChangeContent (event => this .onDidChangeContent (event));
-
-      browser .beginUpdate ();
 
       // Keyboard shortcuts.
 
