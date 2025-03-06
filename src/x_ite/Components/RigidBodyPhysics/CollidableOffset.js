@@ -58,8 +58,6 @@ function CollidableOffset (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableOffset);
-
-   this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCollidableNode .prototype),
@@ -67,8 +65,6 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    initialize ()
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);
-
-      this ._rebuild .addInterest ("set_collidable__", this);
 
       this ._enabled    .addInterest ("set_collidableGeometry__", this);
       this ._collidable .addInterest ("requestRebuild",           this);
