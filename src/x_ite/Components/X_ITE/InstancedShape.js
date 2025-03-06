@@ -109,7 +109,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       this ._centers           .addInterest ("set_transform__", this);
       this ._matrices          .addInterest ("set_matrices__",  this);
 
-      this .set_transform__ ();
+      this .set_matrices__ ();
    },
    getShapeKey ()
    {
@@ -199,14 +199,9 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
 
-      this .set_objects__ ();
       this .set_bbox__ ();
-   },
-   set_geometry__ ()
-   {
-      X3DShapeNode .prototype .set_geometry__ .call (this);
-
-      this .set_transform__ ();
+      this .set_objects__ ();
+      this .set_traverse__ ();
    },
    intersectsBox (box, clipPlanes, modelViewMatrix)
    { },
