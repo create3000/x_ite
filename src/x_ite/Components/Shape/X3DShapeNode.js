@@ -306,7 +306,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          }
          case TraverseType .DISPLAY:
          {
-            // X3DAppearanceNode node traverse is needed for GeneratedCubeMapTexture.
+            // X3DAppearanceNode traverse is needed for GeneratedCubeMapTexture.
 
             if (renderObject .addDisplayShape (this))
                this .appearanceNode .traverse (type, renderObject);
