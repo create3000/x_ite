@@ -105,6 +105,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return 1;
    },
+   isEnabled ()
+   {
+      return this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== GeometryType .GEOMETRY);
+   },
    getBBox (bbox, shadows)
    {
       if (shadows)
@@ -251,7 +255,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_pointingObject__ ()
    {
-      this .setPointingObject (this .getNumInstances () && (this .geometryNode || this .getGeometryType !== GeometryType .GEOMETRY) && this ._pointerEvents .getValue ());
+      this .setPointingObject (this .isEnabled () && this ._pointerEvents .getValue ());
    },
    set_pickableObject__ ()
    {
@@ -259,19 +263,19 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_collisionObject__ ()
    {
-      this .setCollisionObject (this .getNumInstances () && (this .geometryNode || this .getGeometryType !== GeometryType .GEOMETRY));
+      this .setCollisionObject (this .isEnabled ());
    },
    set_shadowObject__ ()
    {
-      this .setShadowObject (this .getNumInstances () && (this .geometryNode || this .getGeometryType !== GeometryType .GEOMETRY) && this ._castShadow .getValue ());
+      this .setShadowObject (this .isEnabled () && this ._castShadow .getValue ());
    },
    set_visibleObject__ ()
    {
-      this .setVisibleObject (this .getNumInstances () && (this .geometryNode || this .getGeometryType !== GeometryType .GEOMETRY));
+      this .setVisibleObject (this .isEnabled ());
    },
    set_traverse__ ()
    {
-      if (this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== GeometryType .GEOMETRY))
+      if (this .isEnabled ())
          delete this .traverse;
       else
          this .traverse = Function .prototype;
