@@ -72,7 +72,19 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
 
+      this ._family .addInterest ("set_family__", this);
+
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_family__ ()
+   {
+      if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+         return;
+
+      if (!this .font)
+         return;
+
+      this .getBrowser () .registerFont (this .font, this ._family .getValue ());
    },
    async loadData ()
    {
@@ -80,13 +92,17 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
          browser  = this .getBrowser (),
          fileURLs = this ._url .map (fileURL => new URL (fileURL, this .getExecutionContext () .getBaseURL ()));
 
+      this .font = null;
+
       for (const fileURL of fileURLs)
       {
          try
          {
-            await browser .loadFont (fileURL, this .getCache ());
+            this .font = await browser .loadFont (fileURL, this .getCache ());
 
             this .setLoadState (X3DConstants .COMPLETE_STATE);
+
+            this .set_family__ ();
             return;
          }
          catch (error)
@@ -113,6 +129,7 @@ Object .defineProperties (FontLibrary,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "family",               new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0)),

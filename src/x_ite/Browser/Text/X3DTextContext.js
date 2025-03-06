@@ -127,7 +127,7 @@ Object .assign (X3DTextContext .prototype,
 
       return promise;
    },
-   registerFont (font)
+   registerFont (font, familyName)
    {
       // fontFamily - subfamily
 
@@ -153,6 +153,9 @@ Object .assign (X3DTextContext .prototype,
 
       const fullNames = new Set (Object .values (font .names)
          .flatMap (name => Object .values (name .fullName ?? { })));
+
+      if (familyName)
+         fullNames .add (familyName);
 
       for (const fullName of fullNames)
       {
