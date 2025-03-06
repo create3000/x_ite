@@ -78,10 +78,6 @@ Object .assign (X3DUrlObject .prototype,
       this ._autoRefresh          .addInterest ("set_autoRefresh__", this);
       this ._autoRefreshTimeLimit .addInterest ("set_autoRefresh__", this);
    },
-   getNumberOfURLs ()
-   {
-      return this ._url .length;
-   },
    setLoadState (value, notify = true)
    {
       this ._loadState = value;
@@ -160,7 +156,7 @@ Object .assign (X3DUrlObject .prototype,
       if (!this ._load .getValue ())
          throw new Error (`${this .getTypeName ()}.load is false.`);
 
-      if (this .getNumberOfURLs () === 0)
+      if (this ._url .length === 0)
       {
          this .unloadData ();
          return;
