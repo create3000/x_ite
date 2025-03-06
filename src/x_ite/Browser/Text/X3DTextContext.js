@@ -149,14 +149,6 @@ Object .assign (X3DTextContext .prototype,
          }
       }
 
-      // fullName
-
-      const fullNames = new Set (Object .values (font .names)
-         .flatMap (name => Object .values (name .fullName ?? { })));
-
-      for (const fullName of fullNames)
-         this .registerFontFamily (font, fullName);
-
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
    },
@@ -174,8 +166,8 @@ Object .assign (X3DTextContext .prototype,
 
       await Promise .allSettled (this [_loadingFonts]);
 
-      return this [_familyCache] .get (familyName) ?.get (style)
-         ?? this [_fullNameCache] .get (familyName)
+      return this [_fullNameCache] .get (familyName)
+         ?? this [_familyCache] .get (familyName) ?.get (style)
          ?? null;
    },
    getGlyph (font, primitiveQuality, glyphIndex)
