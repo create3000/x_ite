@@ -50,7 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DShapeNode         from "./X3DShapeNode.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 function Shape (executionContext)
@@ -78,15 +77,6 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    {
       return 1;
    },
-   set_geometry__ ()
-   {
-      X3DShapeNode .prototype .set_geometry__ .call (this);
-
-      if (this .getGeometry ())
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
-   },
    set_pickableObject__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size);
@@ -94,47 +84,6 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    intersectsBox (box, clipPlanes, modelViewMatrix)
    {
       return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
-   },
-   traverse (type, renderObject)
-   {
-      // Always look at ParticleSystem if you do modify something here and there.
-
-      switch (type)
-      {
-         case TraverseType .POINTER:
-         {
-            renderObject .addPointingShape (this);
-            break;
-         }
-         case TraverseType .PICKING:
-         {
-            this .picking (renderObject);
-            break;
-         }
-         case TraverseType .COLLISION:
-         {
-            renderObject .addCollisionShape (this);
-            break;
-         }
-         case TraverseType .SHADOW:
-         {
-            renderObject .addShadowShape (this);
-            break;
-         }
-         case TraverseType .DISPLAY:
-         {
-            if (renderObject .addDisplayShape (this))
-            {
-               // Currently used for GeneratedCubeMapTexture.
-               this .getAppearance () .traverse (type, renderObject);
-            }
-
-            break;
-         }
-      }
-
-      // Currently used for ScreenText and Tools.
-      this .getGeometry () .traverse (type, renderObject);
    },
    displaySimple (gl, renderContext, shaderNode)
    {

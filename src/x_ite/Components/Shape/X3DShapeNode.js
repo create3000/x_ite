@@ -50,6 +50,7 @@ import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
 import X3DCast          from "../../Base/X3DCast.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
+import TraverseType     from "../../Rendering/TraverseType.js";
 import AlphaMode        from "../../Browser/Shape/AlphaMode.js";
 import Box3             from "../../../standard/Math/Geometry/Box3.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
@@ -199,19 +200,19 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_pointingObject__ ()
    {
-      this .setPointingObject (this .geometryNode && this ._pointerEvents .getValue ());
+      this .setPointingObject (this .geometryNode && this .getNumInstances () && this ._pointerEvents .getValue ());
    },
    set_collisionObject__ ()
    {
-      this .setCollisionObject (this .geometryNode);
+      this .setCollisionObject (this .geometryNode && this .getNumInstances ());
    },
    set_shadowObject__ ()
    {
-      this .setShadowObject (this .geometryNode && this ._castShadow .getValue ());
+      this .setShadowObject (this .geometryNode && this .getNumInstances () && this ._castShadow .getValue ());
    },
    set_visibleObject__ ()
    {
-      this .setVisibleObject (this .geometryNode);
+      this .setVisibleObject (this .geometryNode && this .getNumInstances ());
    },
    set_transparent__ ()
    {
@@ -250,6 +251,45 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
+   },
+   traverse (type, renderObject)
+   {
+      switch (type)
+      {
+         case TraverseType .POINTER:
+         {
+            renderObject .addPointingShape (this);
+            break;
+         }
+         case TraverseType .PICKING:
+         {
+            this .picking (renderObject);
+            break;
+         }
+         case TraverseType .COLLISION:
+         {
+            renderObject .addCollisionShape (this);
+            break;
+         }
+         case TraverseType .SHADOW:
+         {
+            renderObject .addShadowShape (this);
+            break;
+         }
+         case TraverseType .DISPLAY:
+         {
+            if (renderObject .addDisplayShape (this))
+            {
+               // Currently used for GeneratedCubeMapTexture.
+               this .getAppearance () .traverse (type, renderObject);
+            }
+
+            break;
+         }
+      }
+
+      // Currently used for ScreenText and Tools.
+      this .getGeometry () ?.traverse (type, renderObject);
    },
    picking (renderObject)
    {
