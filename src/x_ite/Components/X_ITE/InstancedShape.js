@@ -199,10 +199,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
 
-      this .set_pointingObject__ ();
-      this .set_collisionObject__ ();
-      this .set_shadowObject__ ();
-      this .set_visibleObject__ ();
+      this .set_objects__ ();
       this .set_bbox__ ();
    },
    set_geometry__ ()

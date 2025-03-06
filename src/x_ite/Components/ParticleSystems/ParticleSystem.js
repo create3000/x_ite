@@ -471,10 +471,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
 
-      this .set_pointingObject__ ();
-      this .set_collisionObject__ ();
-      this .set_shadowObject__ ();
-      this .set_visibleObject__ ();
+      this .set_objects__ ();
       this .set_transparent__ ();
    },
    set_maxParticles__ ()
@@ -491,6 +488,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       this .resizeBuffers (lastNumParticles);
       this .updateVertexArrays ();
+
+      this .set_objects__ ();
    },
    set_particleLifetime__ ()
    {
@@ -800,6 +799,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .createParticles = this ._createParticles .getValue ();
 
             deltaTime = Number .POSITIVE_INFINITY;
+
+            this .set_objects__ ();
          }
          else
          {
@@ -820,6 +821,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                this .creationTime = now;
 
             this .numParticles = Math .min (this .maxParticles, this .numParticles + newParticles);
+
+            this .set_objects__ ();
          }
       }
 
@@ -918,9 +921,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    { },
    displaySimple (gl, renderContext, shaderNode)
    {
-      if (!this .numParticles)
-         return;
-
       // Display geometry.
 
       switch (this .geometryType)
@@ -960,9 +960,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    display (gl, renderContext)
    {
-      if (!this .numParticles)
-         return;
-
       // Display geometry.
 
       switch (this .geometryType)
