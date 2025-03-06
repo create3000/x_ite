@@ -51,9 +51,8 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
-import GeometryTypes        from "../../Browser/ParticleSystems/GeometryTypes.js";
+import GeometryType         from "../../Browser/Shape/GeometryType.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
@@ -234,7 +233,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       switch (this .geometryType)
       {
-         case GeometryTypes .GEOMETRY:
+         case GeometryType .GEOMETRY:
             return this .getGeometry ();
          default:
             return this .geometryContext;
@@ -308,22 +307,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       if (alphaMode === AlphaMode .AUTO)
       {
-         switch (this .geometryType)
-         {
-            case GeometryTypes .POINT:
-            {
-               this .setTransparent (true);
-               break;
-            }
-            default:
-            {
-               this .setTransparent (this .getAppearance () .isTransparent () ||
-                                     this .colorRampNode ?.isTransparent () ||
-                                     (this .geometryType === GeometryTypes .GEOMETRY &&
-                                      this .geometryNode ?.isTransparent ()));
-               break;
-            }
-         }
+         this .setTransparent (this .getAppearance () .isTransparent () ||
+                               this .colorRampNode ?.isTransparent () ||
+                               (this .geometryType === GeometryType .GEOMETRY &&
+                                this .geometryNode ?.isTransparent ()));
 
          this .setAlphaMode (this .isTransparent () ? AlphaMode .BLEND : AlphaMode .OPAQUE);
       }
@@ -405,13 +392,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       // Get geometryType.
 
-      this .geometryType = $.enum (GeometryTypes, this ._geometryType .getValue ()) ?? GeometryTypes .QUAD;
+      this .geometryType = $.enum (GeometryType, this ._geometryType .getValue ()) ?? GeometryType .QUAD;
 
       // Create buffers.
 
       switch (this .geometryType)
       {
-         case GeometryTypes .POINT:
+         case GeometryType .POINT:
          {
             this .geometryContext .geometryType = 0;
             this .geometryContext .hasNormals   = false;
@@ -427,7 +414,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             break;
          }
-         case GeometryTypes .LINE:
+         case GeometryType .LINE:
          {
             this .geometryContext .geometryType = 1;
             this .geometryContext .hasNormals   = false;
@@ -435,9 +422,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .texCoordCount = 0;
             break;
          }
-         case GeometryTypes .TRIANGLE:
-         case GeometryTypes .QUAD:
-         case GeometryTypes .SPRITE:
+         case GeometryType .TRIANGLE:
+         case GeometryType .QUAD:
+         case GeometryType .SPRITE:
          {
             this .geometryContext .geometryType = 2;
             this .geometryContext .hasNormals   = true;
@@ -455,7 +442,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             break;
          }
-         case GeometryTypes .GEOMETRY:
+         case GeometryType .GEOMETRY:
          {
             this .texCoordCount = 0;
             break;
@@ -465,10 +452,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
 
-      this .set_pointingObject__ ();
-      this .set_shadowObject__ ();
-      this .set_visibleObject__ ()
-      this .set_transparent__ ();
+      this .set_objects__ ();
+      this .set_traverse__ ();
    },
    set_maxParticles__ ()
    {
@@ -484,6 +469,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       this .resizeBuffers (lastNumParticles);
       this .updateVertexArrays ();
+
+      this .set_objects__ ();
+      this .set_traverse__ ();
    },
    set_particleLifetime__ ()
    {
@@ -793,6 +781,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .createParticles = this ._createParticles .getValue ();
 
             deltaTime = Number .POSITIVE_INFINITY;
+
+            this .set_objects__ ();
+            this .set_traverse__ ();
          }
          else
          {
@@ -813,6 +804,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                this .creationTime = now;
 
             this .numParticles = Math .min (this .maxParticles, this .numParticles + newParticles);
+
+            this .set_objects__ ();
+            this .set_traverse__ ();
          }
       }
 
@@ -909,69 +903,23 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    })(),
    intersectsBox (box, clipPlanes)
    { },
-   traverse (type, renderObject)
-   {
-      if (this .geometryType === GeometryTypes .GEOMETRY)
-      {
-         if (!this .getGeometry ())
-            return;
-      }
-
-      switch (type)
-      {
-         case TraverseType .POINTER:
-         {
-            renderObject .addPointingShape (this);
-            break;
-         }
-         case TraverseType .PICKING:
-         case TraverseType .COLLISION:
-         {
-            break;
-         }
-         case TraverseType .SHADOW:
-         {
-            renderObject .addShadowShape (this);
-            break;
-         }
-         case TraverseType .DISPLAY:
-         {
-            if (renderObject .addDisplayShape (this))
-            {
-               // Currently used for GeneratedCubeMapTexture.
-               this .getAppearance () .traverse (type, renderObject);
-            }
-
-            break;
-         }
-      }
-
-      if (this .geometryType === GeometryTypes .GEOMETRY)
-      {
-         // Currently used for ScreenText and Tools.
-         this .getGeometry () .traverse (type, renderObject);
-      }
-   },
    displaySimple (gl, renderContext, shaderNode)
    {
-      if (!this .numParticles)
-         return;
-
       // Display geometry.
 
       switch (this .geometryType)
       {
-         case GeometryTypes .LINE:
+         case GeometryType .LINE:
          {
             this .lineGeometryNode .displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
-         case GeometryTypes .GEOMETRY:
+         case GeometryType .GEOMETRY:
          {
             this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
-         case GeometryTypes .SPRITE:
+         case GeometryType .SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
             // [fall trough]
@@ -996,30 +944,27 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    display (gl, renderContext)
    {
-      if (!this .numParticles)
-         return;
-
       // Display geometry.
 
       switch (this .geometryType)
       {
-         case GeometryTypes .LINE:
+         case GeometryType .LINE:
          {
             this .lineGeometryNode .displayInstanced (gl, renderContext, this);
             break;
          }
-         case GeometryTypes .GEOMETRY:
+         case GeometryType .GEOMETRY:
          {
             this .getGeometry () .displayInstanced (gl, renderContext, this);
             break;
          }
-         case GeometryTypes .SPRITE:
+         case GeometryType .SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
             // [fall trough]
          }
-         case GeometryTypes .QUAD:
-         case GeometryTypes .TRIANGLE:
+         case GeometryType .QUAD:
+         case GeometryType .TRIANGLE:
          {
             const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 

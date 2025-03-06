@@ -2,6 +2,7 @@
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
+<<<<<<< HEAD
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 254:
@@ -36,6 +37,10 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
+=======
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+>>>>>>> X3D4.1
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
@@ -17819,9 +17824,12 @@ function loadSync() {
 const
    _defaultFontStyle = Symbol (),
    _fontCache        = Symbol (),
+<<<<<<< HEAD
    _loadingFonts     = Symbol (),
    _familyCache      = Symbol (),
    _fullNameCache    = Symbol (),
+=======
+>>>>>>> X3D4.1
    _glyphCache       = Symbol (),
    _wawoff2          = Symbol ();
 
@@ -17852,11 +17860,19 @@ Object .assign (X3DTextContext .prototype,
    {
       url = String (url);
 
+<<<<<<< HEAD
       let promise = cache ? this [_fontCache] .get (url) : null;
 
       if (!promise)
       {
          promise = new Promise (async (resolve, reject) =>
+=======
+      let promise = this [_fontCache] .get (url);
+
+      if (!promise)
+      {
+         this [_fontCache] .set (url, promise = new Promise (async (resolve, reject) =>
+>>>>>>> X3D4.1
          {
             try
             {
@@ -17874,7 +17890,20 @@ Object .assign (X3DTextContext .prototype,
                   decompressed = decompress (buffer),
                   font         = parseBuffer (decompressed);
 
+<<<<<<< HEAD
                this .registerFont (font);
+=======
+               // for (const name of Object .values (font .names))
+               // {
+               //    console .log (name);
+
+               //    // Properties can be undefined.
+               //    console .log (... Object .values (name .fullName));
+               //    console .log (... Object .values (name .fontFamily));
+               //    console .log (name .preferredFamily);
+               //    console .log (name .preferredSubfamily);
+               // }
+>>>>>>> X3D4.1
 
                resolve (font);
             }
@@ -17882,6 +17911,7 @@ Object .assign (X3DTextContext .prototype,
             {
                reject (error);
             }
+<<<<<<< HEAD
             finally
             {
                this [_loadingFonts] .delete (promise);
@@ -17942,6 +17972,12 @@ Object .assign (X3DTextContext .prototype,
       return this [_familyCache] .get (familyName) ?.get (style)
          ?? this [_fullNameCache] .get (familyName)
          ?? null;
+=======
+         }));
+      }
+
+      return promise;
+>>>>>>> X3D4.1
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {

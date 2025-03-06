@@ -98,6 +98,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
+      this .connectChildNode (this .groupNode);
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    getBBox (bbox, shadows)

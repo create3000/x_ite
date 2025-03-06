@@ -52,7 +52,6 @@ import X3DNode                from "../Core/X3DNode.js";
 import X3DNBodyCollidableNode from "./X3DNBodyCollidableNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import X3DCast                from "../../Base/X3DCast.js";
-import TraverseType           from "../../Rendering/TraverseType.js";
 
 function CollidableOffset (executionContext)
 {
@@ -74,116 +73,31 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       this ._enabled    .addInterest ("set_collidableGeometry__", this);
       this ._collidable .addInterest ("requestRebuild",           this);
 
-      this .set_collidable__ ();
+      this .set_child__ ();
    },
-   getBBox (bbox, shadows)
-   {
-      if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
-
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-   },
-   requestRebuild ()
-   {
-      this ._rebuild .addEvent ();
-   },
-   set_collidable__ ()
+   set_child__ ()
    {
       // Remove node.
 
-      if (this .collidableNode)
+      if (this .getChild ())
       {
-         const collidableNode = this .collidableNode;
+         const collidableNode = this .getChild ();
 
          collidableNode .removeInterest ("addNodeEvent", this);
-         collidableNode ._compoundShape_changed .removeFieldInterest (this ._compoundShape_changed);
-
-         collidableNode ._isPointingObject  .removeInterest ("requestRebuild", this);
-         collidableNode ._isCameraObject    .removeInterest ("requestRebuild", this);
-         collidableNode ._isPickableObject  .removeInterest ("requestRebuild", this);
-         collidableNode ._isCollisionObject .removeInterest ("requestRebuild", this);
-         collidableNode ._isShadowObject    .removeInterest ("requestRebuild", this);
-         collidableNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
-
-         if (X3DCast (X3DConstants .X3DBoundedObject, collidableNode))
-         {
-            collidableNode ._display     .removeInterest ("requestRebuild", this);
-            collidableNode ._bboxDisplay .removeInterest ("requestRebuild", this);
-         }
+         collidableNode ._compoundShape .removeFieldInterest (this ._compoundShape);
       }
-
-      // Clear node.
-
-      this .collidableNode  = null;
-      this .pointingNode    = null;
-      this .cameraObject    = null;
-      this .pickableObject  = null;
-      this .collisionObject = null;
-      this .shadowObject    = null;
-      this .visibleNode     = null;
-      this .boundedObject   = null;
 
       // Add node.
 
       const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidable);
 
+      this .setChild (collidableNode);
+
       if (collidableNode)
       {
          collidableNode .addInterest ("addNodeEvent", this);
-         collidableNode ._compoundShape_changed .addFieldInterest (this ._compoundShape_changed);
-
-         collidableNode ._isPointingObject  .addInterest ("requestRebuild", this);
-         collidableNode ._isCameraObject    .addInterest ("requestRebuild", this);
-         collidableNode ._isPickableObject  .addInterest ("requestRebuild", this);
-         collidableNode ._isCollisionObject .addInterest ("requestRebuild", this);
-         collidableNode ._isShadowObject    .addInterest ("requestRebuild", this);
-         collidableNode ._isVisibleObject   .addInterest ("requestRebuild", this);
-
-         this .collidableNode = collidableNode;
-
-         if (collidableNode .isVisible ())
-         {
-            if (collidableNode .isPointingObject ())
-               this .pointingNode = collidableNode;
-
-            if (collidableNode .isCameraObject ())
-               this .cameraObject = collidableNode;
-
-            if (collidableNode .isPickableObject ())
-               this .pickableObject = collidableNode;
-
-            if (collidableNode .isCollisionObject ())
-               this .collisionObject = collidableNode;
-
-            if (collidableNode .isShadowObject ())
-               this .shadowObject = collidableNode;
-
-            if (collidableNode .isVisibleObject ())
-               this .visibleNode = collidableNode;
-         }
-
-         if (X3DCast (X3DConstants .X3DBoundedObject, collidableNode))
-         {
-            collidableNode ._display     .addInterest ("requestRebuild", this);
-            collidableNode ._bboxDisplay .addInterest ("requestRebuild", this);
-
-            if (collidableNode .isBBoxVisible ())
-               this .boundedObject = collidableNode;
-         }
-
-         delete this .traverse;
+         collidableNode ._compoundShape .addFieldInterest (this ._compoundShape);
       }
-      else
-      {
-         this .traverse = Function .prototype;
-      }
-
-      this .setPointingObject  (this .pointingNode);
-      this .setCameraObject    (this .cameraObject);
-      this .setPickableObject  (this .pickableObject);
-      this .setCollisionObject (this .collisionObject);
-      this .setShadowObject    (this .shadowObject);
-      this .setVisibleObject   (this .visibleNode);
 
       this .set_collidableGeometry__ ();
    },
@@ -192,65 +106,10 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       if (this .getCompoundShape () .getNumChildShapes ())
          this .getCompoundShape () .removeChildShapeByIndex (0);
 
-      if (this .collidableNode && this ._enabled .getValue ())
-         this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
+      if (this .getChild () && this ._enabled .getValue ())
+         this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .getChild () .getCompoundShape ());
 
-      this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
-   },
-   traverse (type, renderObject)
-   {
-      const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-      modelViewMatrix .push ();
-      modelViewMatrix .multLeft (this .getMatrix ());
-
-      switch (type)
-      {
-         case TraverseType .POINTER:
-         {
-            this .pointingNode ?.traverse (type, renderObject);
-            break;
-         }
-         case TraverseType .CAMERA:
-         {
-            this .cameraObject ?.traverse (type, renderObject);
-            break;
-         }
-         case TraverseType .PICKING:
-         {
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy ();
-
-            pickingHierarchy .push (this);
-
-            if (browser .getPickable () .at (-1))
-               this .visibleNode ?.traverse (type, renderObject);
-            else
-               this .pickableObject ?.traverse (type, renderObject);
-
-            pickingHierarchy .pop ();
-            break;
-         }
-         case TraverseType .COLLISION:
-         {
-            this .collisionObject ?.traverse (type, renderObject);
-            break;
-         }
-         case TraverseType .SHADOW:
-         {
-            this .shadowObject ?.traverse (type, renderObject);
-            break;
-         }
-         case TraverseType .DISPLAY:
-         {
-            this .visibleNode   ?.traverse    (type, renderObject);
-            this .boundedObject ?.displayBBox (type, renderObject);
-            break;
-         }
-      }
-
-      modelViewMatrix .pop ();
+      this ._compoundShape = this .getBrowser () .getCurrentTime ();
    },
 });
 

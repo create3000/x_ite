@@ -45,14 +45,14 @@
  *
  ******************************************************************************/
 
-import Fields        from "../../Fields.js";
-import X3DNode       from "../Core/X3DNode.js";
-import GeometryTypes from "../../Browser/ParticleSystems/GeometryTypes.js";
-import X3DConstants  from "../../Base/X3DConstants.js";
-import Line3Source   from "../../Browser/ParticleSystems/Line3.glsl.js";
-import Plane3Source  from "../../Browser/ParticleSystems/Plane3.glsl.js";
-import Box3Source    from "../../Browser/ParticleSystems/Box3.glsl.js";
-import BVHSource     from "../../Browser/ParticleSystems/BVH.glsl.js";
+import Fields       from "../../Fields.js";
+import X3DNode      from "../Core/X3DNode.js";
+import GeometryType from "../../Browser/Shape/GeometryType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Line3Source  from "../../Browser/ParticleSystems/Line3.glsl.js";
+import Plane3Source from "../../Browser/ParticleSystems/Plane3.glsl.js";
+import Box3Source   from "../../Browser/ParticleSystems/Box3.glsl.js";
+import BVHSource    from "../../Browser/ParticleSystems/BVH.glsl.js";
 
 function X3DParticleEmitterNode (executionContext)
 {
@@ -382,7 +382,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Constants
 
-      ${Object .entries (GeometryTypes) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
+      ${Object .entries (GeometryType) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
 
       const int   ARRAY_SIZE = 32;
       const float M_PI       = 3.14159265359;

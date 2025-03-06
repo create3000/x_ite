@@ -63,6 +63,11 @@ function CADFace (executionContext)
    this .addType (X3DConstants .CADFace);
 
    this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFTime ());
+
+   this .setPointingObject (true);
+   this .setCollisionObject (true);
+   this .setShadowObject (true);
+   this .setVisibleObject (true);
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureChildNode .prototype),

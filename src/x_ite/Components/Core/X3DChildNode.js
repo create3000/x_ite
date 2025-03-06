@@ -48,6 +48,7 @@
 import Fields       from "../../Fields.js";
 import X3DNode      from "./X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import TraverseType from "../../Rendering/TraverseType.js";
 
 function X3DChildNode (executionContext)
 {
@@ -126,6 +127,53 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    {
       // This function will be overloaded by X3DBoundedObject.
       return true;
+   },
+   connectChildNode (childNode, exclude)
+   {
+      if (!exclude ?.includes (TraverseType .POINTER))
+      {
+         childNode ._isPointingObject .addFieldInterest (this ._isPointingObject);
+         this .setPointingObject (childNode .isPointingObject ());
+      }
+
+      if (!exclude ?.includes (TraverseType .CAMERA))
+      {
+         childNode ._isCameraObject .addFieldInterest (this ._isCameraObject);
+         this .setCameraObject (childNode .isCameraObject ());
+      }
+
+      if (!exclude ?.includes (TraverseType .PICKING))
+      {
+         childNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
+         this .setPickableObject (childNode .isPickableObject ());
+      }
+
+      if (!exclude ?.includes (TraverseType .COLLISION))
+      {
+         childNode ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
+         this .setCollisionObject (childNode .isCollisionObject ());
+      }
+
+      if (!exclude ?.includes (TraverseType .SHADOW))
+      {
+         childNode ._isShadowObject .addFieldInterest (this ._isShadowObject);
+         this .setShadowObject (childNode .isShadowObject ());
+      }
+
+      if (!exclude ?.includes (TraverseType .DISPLAY))
+      {
+         childNode ._isVisibleObject .addFieldInterest (this ._isVisibleObject);
+         this .setVisibleObject (childNode .isVisibleObject ());
+      }
+   },
+   disconnectChildNode (childNode)
+   {
+      childNode ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
+      childNode ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
+      childNode ._isPickableObject  .removeFieldInterest (this ._isPickableObject);
+      childNode ._isCollisionObject .removeFieldInterest (this ._isCollisionObject);
+      childNode ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
+      childNode ._isVisibleObject   .removeFieldInterest (this ._isVisibleObject);
    },
 });
 
