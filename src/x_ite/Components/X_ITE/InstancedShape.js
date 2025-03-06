@@ -50,7 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DShapeNode         from "../Shape/X3DShapeNode.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
@@ -110,7 +109,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       this ._centers           .addInterest ("set_transform__", this);
       this ._matrices          .addInterest ("set_matrices__",  this);
 
-      this .set_transform__ ();
+      this .set_matrices__ ();
    },
    getShapeKey ()
    {
@@ -201,63 +200,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
 
       this .set_bbox__ ();
-   },
-   set_geometry__ ()
-   {
-      X3DShapeNode .prototype .set_geometry__ .call (this);
-
-      if (this .getGeometry ())
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
-
-      this .set_transform__ ();
+      this .set_objects__ ();
+      this .set_traverse__ ();
    },
    intersectsBox (box, clipPlanes, modelViewMatrix)
    { },
-   traverse (type, renderObject)
-   {
-      if (!this .numInstances)
-         return;
-
-      // Always look at ParticleSystem if you do modify something here and there.
-
-      switch (type)
-      {
-         case TraverseType .POINTER:
-         {
-            renderObject .addPointingShape (this);
-            break;
-         }
-         case TraverseType .PICKING:
-         {
-            break;
-         }
-         case TraverseType .COLLISION:
-         {
-            renderObject .addCollisionShape (this);
-            break;
-         }
-         case TraverseType .SHADOW:
-         {
-            renderObject .addShadowShape (this);
-            break;
-         }
-         case TraverseType .DISPLAY:
-         {
-            if (renderObject .addDisplayShape (this))
-            {
-               // Currently used for GeneratedCubeMapTexture.
-               this .getAppearance () .traverse (type, renderObject);
-            }
-
-            break;
-         }
-      }
-
-      // Currently used for ScreenText and Tools.
-      this .getGeometry () .traverse (type, renderObject);
-   },
    displaySimple (gl, renderContext, shaderNode)
    {
       this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);

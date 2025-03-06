@@ -47,7 +47,7 @@
 
  let i = 0;
 
-const GeometryTypes = {
+const GeometryType = {
    POINT:    i ++,
    LINE:     i ++,
    TRIANGLE: i ++,
@@ -56,4 +56,4 @@ const GeometryTypes = {
    GEOMETRY: i ++,
 };
 
-export default GeometryTypes;
+export default GeometryType;

@@ -50,6 +50,8 @@ import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
 import X3DCast          from "../../Base/X3DCast.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
+import TraverseType     from "../../Rendering/TraverseType.js";
+import GeometryType     from "../../Browser/Shape/GeometryType.js";
 import AlphaMode        from "../../Browser/Shape/AlphaMode.js";
 import Box3             from "../../../standard/Math/Geometry/Box3.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
@@ -61,7 +63,12 @@ function X3DShapeNode (executionContext)
 
    this .addType (X3DConstants .X3DShapeNode);
 
+   // Set default values which are almost right in most cases.
+
+   this .setPointingObject (true);
    this .setCollisionObject (true);
+   this .setShadowObject (true);
+   this .setVisibleObject (true);
 
    // Private properties
 
@@ -78,6 +85,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
+      this ._transformSensors .addInterest ("set_pickableObject__", this);
+
       this ._pointerEvents .addInterest ("set_pointingObject__", this);
       this ._castShadow    .addInterest ("set_shadowObject__",   this);
       this ._bboxSize      .addInterest ("set_bbox__",           this);
@@ -88,9 +97,17 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       this .set_appearance__ ();
       this .set_geometry__ ();
    },
+   getGeometryType ()
+   {
+      return GeometryType .GEOMETRY;
+   },
    getNumInstances ()
    {
       return 1;
+   },
+   isEnabled ()
+   {
+      return this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== GeometryType .GEOMETRY);
    },
    getBBox (bbox, shadows)
    {
@@ -150,6 +167,23 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .getGeometry ();
    },
+   set_bbox__ ()
+   {
+      if (this .isDefaultBBoxSize ())
+      {
+         if (this .getGeometry ())
+            this .bbox .assign (this .getGeometry () .getBBox ());
+         else
+            this .bbox .set ();
+      }
+      else
+      {
+         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
+
+      this .bboxSize   .assign (this .bbox .size);
+      this .bboxCenter .assign (this .bbox .center);
+   },
    set_appearance__ ()
    {
       if (this .appearanceNode)
@@ -185,23 +219,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
       }
 
-      this .set_pointingObject__ ();
-      this .set_shadowObject__ ();
-      this .set_visibleObject__ ();
-      this .set_transparent__ ();
       this .set_bbox__ ();
-   },
-   set_pointingObject__ ()
-   {
-      this .setPointingObject (this .geometryNode && this ._pointerEvents .getValue ());
-   },
-   set_shadowObject__ ()
-   {
-      this .setShadowObject (this .geometryNode && this ._castShadow .getValue ());
-   },
-   set_visibleObject__ ()
-   {
-      this .setVisibleObject (this .geometryNode);
+      this .set_transparent__ ();
+      this .set_objects__ ();
+      this .set_traverse__ ();
    },
    set_transparent__ ()
    {
@@ -224,22 +245,102 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       this .transmission = this .appearanceNode .isTransmission ();
    },
-   set_bbox__ ()
+   set_objects__ ()
    {
-      if (this .isDefaultBBoxSize ())
-      {
-         if (this .getGeometry ())
-            this .bbox .assign (this .getGeometry () .getBBox ());
-         else
-            this .bbox .set ();
-      }
+      this .set_pointingObject__ ();
+      this .set_pickableObject__ ();
+      this .set_collisionObject__ ();
+      this .set_shadowObject__ ();
+      this .set_visibleObject__ ();
+   },
+   set_pointingObject__ ()
+   {
+      this .setPointingObject (this .isEnabled () && this ._pointerEvents .getValue ());
+   },
+   set_pickableObject__ ()
+   {
+      this .setPickableObject (this .getTransformSensors () .size);
+   },
+   set_collisionObject__ ()
+   {
+      this .setCollisionObject (this .isEnabled ());
+   },
+   set_shadowObject__ ()
+   {
+      this .setShadowObject (this .isEnabled () && this ._castShadow .getValue ());
+   },
+   set_visibleObject__ ()
+   {
+      this .setVisibleObject (this .isEnabled ());
+   },
+   set_traverse__ ()
+   {
+      if (this .isEnabled ())
+         delete this .traverse;
       else
+         this .traverse = Function .prototype;
+   },
+   traverse (type, renderObject)
+   {
+      switch (type)
       {
-         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+         case TraverseType .POINTER:
+         {
+            renderObject .addPointingShape (this);
+            break;
+         }
+         case TraverseType .PICKING:
+         {
+            this .picking (renderObject);
+            break;
+         }
+         case TraverseType .COLLISION:
+         {
+            renderObject .addCollisionShape (this);
+            break;
+         }
+         case TraverseType .SHADOW:
+         {
+            renderObject .addShadowShape (this);
+            break;
+         }
+         case TraverseType .DISPLAY:
+         {
+            // X3DAppearanceNode traverse is needed for GeneratedCubeMapTexture.
+
+            if (renderObject .addDisplayShape (this))
+               this .appearanceNode .traverse (type, renderObject);
+
+            break;
+         }
       }
 
-      this .bboxSize   .assign (this .bbox .size);
-      this .bboxCenter .assign (this .bbox .center);
+      // Needed for ScreenText and Tools.
+      this .geometryNode ?.traverse (type, renderObject);
+   },
+   picking (renderObject)
+   {
+      const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+      if (this .getTransformSensors () .size)
+      {
+         for (const transformSensorNode of this .getTransformSensors ())
+            transformSensorNode .collect (modelMatrix);
+      }
+
+      const
+         browser          = this .getBrowser (),
+         pickSensorStack  = browser .getPickSensors (),
+         pickingHierarchy = browser .getPickingHierarchy ();
+
+      pickingHierarchy .push (this);
+
+      for (const pickSensor of pickSensorStack .at (-1))
+      {
+         pickSensor .collect (this .geometryNode, modelMatrix, pickingHierarchy);
+      }
+
+      pickingHierarchy .pop ();
    },
    dispose ()
    {

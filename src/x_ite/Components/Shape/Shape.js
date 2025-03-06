@@ -50,7 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DShapeNode         from "./X3DShapeNode.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 function Shape (executionContext)
@@ -62,14 +61,6 @@ function Shape (executionContext)
 
 Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototype),
 {
-   initialize ()
-   {
-      X3DShapeNode .prototype .initialize .call (this);
-
-      this ._transformSensors .addInterest ("set_pickableObject__", this);
-
-      this .set_pickableObject__ ();
-   },
    getShapeKey ()
    {
       return 0;
@@ -78,87 +69,9 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    {
       return 1;
    },
-   set_geometry__ ()
-   {
-      X3DShapeNode .prototype .set_geometry__ .call (this);
-
-      if (this .getGeometry ())
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
-   },
-   set_pickableObject__ ()
-   {
-      this .setPickableObject (this .getTransformSensors () .size);
-   },
    intersectsBox (box, clipPlanes, modelViewMatrix)
    {
       return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
-   },
-   traverse (type, renderObject)
-   {
-      // Always look at ParticleSystem if you do modify something here and there.
-
-      switch (type)
-      {
-         case TraverseType .POINTER:
-         {
-            renderObject .addPointingShape (this);
-            break;
-         }
-         case TraverseType .PICKING:
-         {
-            this .picking (renderObject);
-            break;
-         }
-         case TraverseType .COLLISION:
-         {
-            renderObject .addCollisionShape (this);
-            break;
-         }
-         case TraverseType .SHADOW:
-         {
-            renderObject .addShadowShape (this);
-            break;
-         }
-         case TraverseType .DISPLAY:
-         {
-            if (renderObject .addDisplayShape (this))
-            {
-               // Currently used for GeneratedCubeMapTexture.
-               this .getAppearance () .traverse (type, renderObject);
-            }
-
-            break;
-         }
-      }
-
-      // Currently used for ScreenText and Tools.
-      this .getGeometry () .traverse (type, renderObject);
-   },
-   picking (renderObject)
-   {
-      const modelMatrix = renderObject .getModelViewMatrix () .get ();
-
-      if (this .getTransformSensors () .size)
-      {
-         for (const transformSensorNode of this .getTransformSensors ())
-            transformSensorNode .collect (modelMatrix);
-      }
-
-      const
-         browser          = this .getBrowser (),
-         pickSensorStack  = browser .getPickSensors (),
-         pickingHierarchy = browser .getPickingHierarchy ();
-
-      pickingHierarchy .push (this);
-
-      for (const pickSensor of pickSensorStack .at (-1))
-      {
-         pickSensor .collect (this .getGeometry (), modelMatrix, pickingHierarchy);
-      }
-
-      pickingHierarchy .pop ();
    },
    displaySimple (gl, renderContext, shaderNode)
    {
