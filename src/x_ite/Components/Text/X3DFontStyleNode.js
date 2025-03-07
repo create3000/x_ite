@@ -195,46 +195,47 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       this .font = null;
 
-      for (const familyName of family)
+      const font = await browser .getFont (family, style);
+
+      if (font)
       {
-         const defaultFont = this .getDefaultFont (familyName, style);
-
-         if (defaultFont)
+         this .font = font;
+      }
+      else
+      {
+         for (const familyName of family)
          {
-            const font = await this .loadFont (defaultFont);
+            const defaultFont = this .getDefaultFont (familyName, style);
 
-            if (font)
+            if (defaultFont)
             {
-               this .font = font;
-               break;
+               const font = await this .loadFont (defaultFont);
+
+               if (font)
+               {
+                  this .font = font;
+                  break;
+               }
             }
-         }
 
-         const font = await browser .getFont (familyName, style);
+            const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
 
-         if (font)
-         {
-            this .font = font;
-            break;
-         }
-
-         const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
-
-         if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
-         {
-            console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
-
-            const font = await this .loadFont (fileURL);
-
-            if (font)
+            if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
             {
-               this .font = font;
-               break;
+               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+
+               const font = await this .loadFont (fileURL);
+
+               if (font)
+               {
+                  this .font = font;
+                  break;
+               }
             }
-         }
-         else
-         {
-            console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
+            else
+            {
+               console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
+            }
          }
       }
 
