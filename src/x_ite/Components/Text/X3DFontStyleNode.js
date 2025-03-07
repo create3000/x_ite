@@ -197,7 +197,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       this .font = null;
 
-      // Try to get font by family names.
+      // Try to get font from family names.
 
       const font = await browser .getFont (family, style);
 
