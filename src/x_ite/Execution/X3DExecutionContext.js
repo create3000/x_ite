@@ -106,6 +106,10 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
 
 Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseNode .prototype),
 {
+   isScene ()
+   {
+      return false;
+   },
    setExecutionContext (executionContext)
    {
       if (this .getExecutionContext ())
@@ -121,10 +125,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          this ._countPrimitives .addReference (executionContext ._countPrimitives);
          this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
       }
-   },
-   isScene ()
-   {
-      return false;
    },
    getOuterNode ()
    {
