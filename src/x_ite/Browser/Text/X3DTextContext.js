@@ -181,8 +181,8 @@ Object .assign (X3DTextContext .prototype,
          for (;;)
          {
             const
-               library  = this [_library] .get (scene),
-               families = this [_families]  .get (scene);
+               library  = this [_library]  .get (scene),
+               families = this [_families] .get (scene);
 
             const font = library ?.get (familyName)
                ?? families ?.get (familyName) ?.get (style);
