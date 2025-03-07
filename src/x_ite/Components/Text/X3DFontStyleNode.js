@@ -207,10 +207,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       }
       else
       {
-         // Try to get default font.
-
          for (const familyName of family)
          {
+            // Try to get default font.
+
             const defaultFont = this .getDefaultFont (familyName, style);
 
             if (defaultFont)
