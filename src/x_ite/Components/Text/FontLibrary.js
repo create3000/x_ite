@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
       const
          browser          = this .getBrowser (),
          executionContext = this .getExecutionContext (),
-         fileURLs         = this ._url .map (fileURL => new URL (fileURL, this .getExecutionContext () .getBaseURL ()));
+         fileURLs         = this ._url .map (fileURL => new URL (fileURL, executionContext .getBaseURL ()));
 
       this .font = null;
 
