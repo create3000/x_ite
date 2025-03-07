@@ -107,8 +107,6 @@ Object .assign (X3DTextContext .prototype,
                   decompressed = decompress (buffer),
                   font         = OpenType .parse (decompressed);
 
-               this .registerFont (font);
-
                resolve (font);
             }
             catch (error)

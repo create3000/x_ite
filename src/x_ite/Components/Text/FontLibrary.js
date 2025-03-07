@@ -102,9 +102,11 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
          {
             this .font = await browser .loadFont (fileURL, this .getCache ());
 
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
+            this .registerFont (this .font);
 
             this .set_family__ ();
+
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
             return;
          }
          catch (error)
