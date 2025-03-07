@@ -50,32 +50,6 @@ import X3DNode       from "../Core/X3DNode.js";
 import X3DUrlObject  from "../Networking/X3DUrlObject.js";
 import TextAlignment from "../../Browser/Text/TextAlignment.js";
 import X3DConstants  from "../../Base/X3DConstants.js";
-import URLs          from "../../Browser/Networking/URLs.js";
-
-/*
- * Font paths for default SERIF, SANS and TYPEWRITER families.
- */
-
-const Fonts = new Map ([
-   ["SERIF", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Droid/DroidSerif-Regular.woff2")],
-      ["ITALIC",     URLs .getFontsURL ("Droid/DroidSerif-Italic.woff2")],
-      ["BOLD",       URLs .getFontsURL ("Droid/DroidSerif-Bold.woff2")],
-      ["BOLDITALIC", URLs .getFontsURL ("Droid/DroidSerif-BoldItalic.woff2")],
-   ])],
-   ["SANS", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Ubuntu/Ubuntu-R.woff2")],
-      ["ITALIC",     URLs .getFontsURL ("Ubuntu/Ubuntu-RI.woff2")],
-      ["BOLD",       URLs .getFontsURL ("Ubuntu/Ubuntu-B.woff2")],
-      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/Ubuntu-BI.woff2")],
-   ])],
-   ["TYPEWRITER", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Ubuntu/UbuntuMono-R.woff2")],
-      ["ITALIC",     URLs .getFontsURL ("Ubuntu/UbuntuMono-RI.woff2")],
-      ["BOLD",       URLs .getFontsURL ("Ubuntu/UbuntuMono-B.woff2")],
-      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/UbuntuMono-BI.woff2")],
-   ])],
-]);
 
 function X3DFontStyleNode (executionContext)
 {
@@ -132,15 +106,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    {
       return this .font;
    },
-   getDefaultFont (familyName, style)
-   {
-      const family = Fonts .get (familyName);
-
-      if (family)
-         return family .get (style) ?? family .get ("PLAIN");
-
-      return;
-   },
    getMajorAlignment ()
    {
       return this .alignments [0];
@@ -193,59 +158,9 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       family .push ("SERIF");
 
-      // Clear font.
-
-      this .font = null;
-
       // Try to get font from family names.
 
-      const font = await browser .getFont (family, style);
-
-      if (font)
-      {
-         this .font = font;
-      }
-      else
-      {
-         for (const familyName of family)
-         {
-            // Try to get default font.
-
-            const defaultFont = this .getDefaultFont (familyName, style);
-
-            if (defaultFont)
-            {
-               const font = await this .loadFont (defaultFont);
-
-               if (font)
-               {
-                  this .font = font;
-                  break;
-               }
-            }
-
-            // DEPRECIATED: Try to get font by URL.
-
-            const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
-
-            if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
-            {
-               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
-
-               const font = await this .loadFont (fileURL);
-
-               if (font)
-               {
-                  this .font = font;
-                  break;
-               }
-            }
-            else
-            {
-               console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
-            }
-         }
-      }
+      this .font = await browser .getFont (this .getExecutionContext (), family, style);
 
       this .setLoadState (this .font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
       this .addNodeEvent ();
