@@ -163,28 +163,39 @@ Object .assign (X3DTextContext .prototype,
    {
       try
       {
-         style = style .toLowerCase () .replaceAll (" ", "");
-
-         for (;;)
+         while (this [_loadingFonts] .size)
          {
             await Promise .any (this [_loadingFonts]);
 
-            for (let familyName of familyNames)
-            {
-               familyName = familyName .toLowerCase ();
+            const font = this .findFont (familyNames, style);
 
-               const font = this [_fullNames] .get (familyName)
-                  ?? this [_families] .get (familyName) ?.get (style);
-
-               if (font)
-                  return font;
-            }
+            if (font)
+               return font;
          }
+
+         return this .findFont (familyNames, style);
       }
       catch
       {
          return null;
       }
+   },
+   findFont (familyNames, style)
+   {
+      style = style .toLowerCase () .replaceAll (" ", "");
+
+      for (let familyName of familyNames)
+      {
+         familyName = familyName .toLowerCase ();
+
+         const font = this [_fullNames] .get (familyName)
+            ?? this [_families] .get (familyName) ?.get (style);
+
+         if (font)
+            return font;
+      }
+
+      return null;
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {
