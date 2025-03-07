@@ -193,49 +193,54 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       family .push ("SERIF");
 
-      // Try to get font from family names.
+      this .font = null;
 
-      this .font = await browser .getFont (family, style);
-
-      if (!this .font)
+      for (const familyName of family)
       {
-         for (const familyName of family)
+         // Try to get default font.
+
+         const defaultFont = this .getDefaultFont (familyName, style);
+
+         if (defaultFont)
          {
-            // Try to get default font.
+            const font = await this .loadFont (defaultFont);
 
-            const defaultFont = this .getDefaultFont (familyName, style);
-
-            if (defaultFont)
+            if (font)
             {
-               const font = await this .loadFont (defaultFont);
-
-               if (font)
-               {
-                  this .font = font;
-                  break;
-               }
+               this .font = font;
+               break;
             }
+         }
 
-            // DEPRECIATED: Try to get font by URL.
+         // Try to get font from family names
 
-            const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
+         const font = await browser .getFont (familyName, style);
 
-            if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
+         if (font)
+         {
+            this .font = font;
+            break;
+         }
+
+         // DEPRECIATED: Try to get font by URL.
+
+         const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
+
+         if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
+         {
+            console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+
+            const font = await this .loadFont (fileURL);
+
+            if (font)
             {
-               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
-
-               const font = await this .loadFont (fileURL);
-
-               if (font)
-               {
-                  this .font = font;
-                  break;
-               }
+               this .font = font;
+               break;
             }
-            else
-            {
-               console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
-            }
+         }
+         else
+         {
+            console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
          }
       }
 
