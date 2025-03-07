@@ -49,31 +49,6 @@ import FontStyle     from "../../Components/Text/FontStyle.js";
 import URLs          from "../Networking/URLs.js";
 import * as OpenType from "../../../lib/opentype/opentype.mjs";
 
-/*
- * Font paths for default SERIF, SANS and TYPEWRITER families.
- */
-
-const Fonts = new Map ([
-   ["SERIF", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Droid/DroidSerif-Regular.woff2")],
-      ["ITALIC",     URLs .getFontsURL ("Droid/DroidSerif-Italic.woff2")],
-      ["BOLD",       URLs .getFontsURL ("Droid/DroidSerif-Bold.woff2")],
-      ["BOLDITALIC", URLs .getFontsURL ("Droid/DroidSerif-BoldItalic.woff2")],
-   ])],
-   ["SANS", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Ubuntu/Ubuntu-R.woff2")],
-      ["ITALIC",     URLs .getFontsURL ("Ubuntu/Ubuntu-RI.woff2")],
-      ["BOLD",       URLs .getFontsURL ("Ubuntu/Ubuntu-B.woff2")],
-      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/Ubuntu-BI.woff2")],
-   ])],
-   ["TYPEWRITER", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Ubuntu/UbuntuMono-R.woff2")],
-      ["ITALIC",     URLs .getFontsURL ("Ubuntu/UbuntuMono-RI.woff2")],
-      ["BOLD",       URLs .getFontsURL ("Ubuntu/UbuntuMono-B.woff2")],
-      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/UbuntuMono-BI.woff2")],
-   ])],
-]);
-
 const
    _defaultFontStyle = Symbol (),
    _fontCache        = Symbol (),
@@ -105,15 +80,6 @@ Object .assign (X3DTextContext .prototype,
       Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
 
       return this [_defaultFontStyle];
-   },
-   getDefaultFont (familyName, style)
-   {
-      const family = Fonts .get (familyName);
-
-      if (family)
-         return family .get (style) ?? family .get ("PLAIN");
-
-      return;
    },
    loadFont (url, cache = true)
    {
@@ -193,7 +159,7 @@ Object .assign (X3DTextContext .prototype,
 
       this [_fullNames] .set (fullName .toLowerCase (), font);
    },
-   async getFont (executionContext, familyNames, style)
+   async getFont (familyNames, style)
    {
       try
       {
@@ -201,62 +167,32 @@ Object .assign (X3DTextContext .prototype,
          {
             await Promise .any (this [_loadingFonts]);
 
-            const font = await this .findFont (executionContext, familyNames, style);
+            const font = this .findFont (familyNames, style);
 
             if (font)
                return font;
          }
 
-         return await this .findFont (executionContext, familyNames, style);
+         return this .findFont (familyNames, style);
       }
       catch
       {
          return null;
       }
    },
-   async findFont (executionContext, familyNames, style)
+   findFont (familyNames, style)
    {
-      const styleNormalized = style .toLowerCase () .replaceAll (" ", "");
+      style = style .toLowerCase () .replaceAll (" ", "");
 
-      for (const familyName of familyNames)
+      for (let familyName of familyNames)
       {
-         // Try to get default font.
+         familyName = familyName .toLowerCase ();
 
-         const defaultFont = this .getDefaultFont (familyName, style);
-
-         if (defaultFont)
-         {
-            const font = await this .loadFont (defaultFont);
-
-            if (font)
-               return font;
-         }
-
-         const familyNameNormalized = familyName .toLowerCase ();
-
-         const font = this [_fullNames] .get (familyNameNormalized)
-            ?? this [_families] .get (familyNameNormalized) ?.get (styleNormalized);
+         const font = this [_fullNames] .get (familyName)
+            ?? this [_families] .get (familyName) ?.get (style);
 
          if (font)
             return font;
-
-         // DEPRECIATED: Try to get font by URL.
-
-         const fileURL = new URL (familyName, executionContext .getBaseURL ());
-
-         if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
-         {
-            console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
-
-            const font = await this .loadFont (fileURL);
-
-            if (font)
-               return font;
-         }
-         else
-         {
-            console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
-         }
       }
 
       return null;
