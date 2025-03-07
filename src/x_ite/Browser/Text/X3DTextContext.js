@@ -54,7 +54,7 @@ const
    _fontCache        = Symbol (),
    _loadingFonts     = Symbol (),
    _families         = Symbol (),
-   _fullNames        = Symbol (),
+   _library          = Symbol (),
    _glyphCache       = Symbol (),
    _wawoff2          = Symbol ();
 
@@ -63,7 +63,7 @@ function X3DTextContext ()
    this [_loadingFonts] = new Set ();
    this [_fontCache]    = new Map ();
    this [_families]     = new WeakMap ();
-   this [_fullNames]    = new WeakMap ();
+   this [_library]      = new WeakMap ();
    this [_glyphCache]   = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
@@ -156,18 +156,18 @@ Object .assign (X3DTextContext .prototype,
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
    },
-   registerFontFamily (executionContext, fullName, font)
+   registerFontLibrary (executionContext, fullName, font)
    {
       const
-         scene     = executionContext .isScene () ? executionContext : executionContext .getScene (),
-         fullNames = this [_fullNames] .get (scene) ?? new Map ();
+         scene   = executionContext .isScene () ? executionContext : executionContext .getScene (),
+         library = this [_library] .get (scene) ?? new Map ();
 
-      this [_fullNames] .set (scene, fullNames);
+      this [_library] .set (scene, library);
 
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fullName}.`);
 
-      fullNames .set (fullName .toLowerCase (), font);
+      library .set (fullName .toLowerCase (), font);
    },
    async getFont (executionContext, familyName, style)
    {
@@ -181,10 +181,10 @@ Object .assign (X3DTextContext .prototype,
          for (;;)
          {
             const
-               fullNames = this [_fullNames] .get (scene),
-               families  = this [_families] .get (scene);
+               library  = this [_library] .get (scene),
+               families = this [_families]  .get (scene);
 
-            const font = fullNames ?.get (familyName)
+            const font = library ?.get (familyName)
                ?? families ?.get (familyName) ?.get (style);
 
             if (font)
