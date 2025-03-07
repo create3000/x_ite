@@ -227,7 +227,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
 
-         if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
+         if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
             console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
 
