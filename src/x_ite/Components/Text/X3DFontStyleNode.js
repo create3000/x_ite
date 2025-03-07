@@ -187,9 +187,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       // Add default font to family array.
 
       const
-         browser = this .getBrowser (),
-         family  = this ._family .copy (),
-         style   = this ._style .getValue ();
+         browser          = this .getBrowser (),
+         executionContext = this .getExecutionContext (),
+         family           = this ._family .copy (),
+         style            = this ._style .getValue ();
 
       family .push ("SERIF");
 
@@ -214,7 +215,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          // Try to get font from family names
 
-         const font = await browser .getFont (familyName, style);
+         const font = await browser .getFont (executionContext, familyName, style);
 
          if (font)
          {

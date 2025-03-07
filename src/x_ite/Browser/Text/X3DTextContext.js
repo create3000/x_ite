@@ -62,8 +62,8 @@ function X3DTextContext ()
 {
    this [_loadingFonts] = new Set ();
    this [_fontCache]    = new Map ();
-   this [_families]     = new Map ();
-   this [_fullNames]    = new Map ();
+   this [_families]     = new WeakMap ();
+   this [_fullNames]    = new WeakMap ();
    this [_glyphCache]   = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
@@ -125,8 +125,14 @@ Object .assign (X3DTextContext .prototype,
 
       return promise;
    },
-   registerFont (font)
+   registerFont (executionContext, font)
    {
+      const
+         scene    = executionContext .isScene () ? executionContext : executionContext .getScene (),
+         families = this [_families] .get (scene) ?? new Map ();
+
+      this [_families] .set (scene, families);
+
       // fontFamily - subfamily
 
       const fontFamilies = new Map (Object .values (font .names)
@@ -134,9 +140,9 @@ Object .assign (X3DTextContext .prototype,
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         const subfamilies = this [_families] .get (fontFamily .toLowerCase ()) ?? new Map ();
+         const subfamilies = families .get (fontFamily .toLowerCase ()) ?? new Map ();
 
-         this [_families] .set (fontFamily .toLowerCase (), subfamilies);
+         families .set (fontFamily .toLowerCase (), subfamilies);
 
          for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
          {
@@ -150,24 +156,36 @@ Object .assign (X3DTextContext .prototype,
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
    },
-   registerFontFamily (fullName, font)
+   registerFontFamily (executionContext, fullName, font)
    {
+      const
+         scene     = executionContext .isScene () ? executionContext : executionContext .getScene (),
+         fullNames = this [_fullNames] .get (scene) ?? new Map ();
+
+      this [_fullNames] .set (scene, fullNames);
+
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fullName}.`);
 
-      this [_fullNames] .set (fullName .toLowerCase (), font);
+      fullNames .set (fullName .toLowerCase (), font);
    },
-   async getFont (familyName, style)
+   async getFont (executionContext, familyName, style)
    {
       try
       {
          familyName = familyName .toLowerCase ();
          style      = style .toLowerCase () .replaceAll (" ", "");
 
+         const scene = executionContext .isScene () ? executionContext : executionContext .getScene ();
+
          for (;;)
          {
-            const font = this [_fullNames] .get (familyName)
-               ?? this [_families] .get (familyName) ?.get (style);
+            const
+               fullNames = this [_fullNames] .get (scene),
+               families  = this [_families] .get (scene);
+
+            const font = fullNames ?.get (familyName)
+               ?? families ?.get (familyName) ?.get (style);
 
             if (font)
                return font;

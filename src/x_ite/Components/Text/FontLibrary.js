@@ -86,13 +86,14 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
       if (!familyName)
          return;
 
-      this .getBrowser () .registerFontFamily (familyName, this .font);
+      this .getBrowser () .registerFontFamily (this .getExecutionContext (), familyName, this .font);
    },
    async loadData ()
    {
       const
-         browser  = this .getBrowser (),
-         fileURLs = this ._url .map (fileURL => new URL (fileURL, this .getExecutionContext () .getBaseURL ()));
+         browser          = this .getBrowser (),
+         executionContext = this .getExecutionContext (),
+         fileURLs         = this ._url .map (fileURL => new URL (fileURL, this .getExecutionContext () .getBaseURL ()));
 
       this .font = null;
 
@@ -102,7 +103,7 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
          {
             this .font = await browser .loadFont (fileURL, this .getCache ());
 
-            browser .registerFont (this .font);
+            browser .registerFont (executionContext, this .font);
 
             this .set_family__ ();
 
