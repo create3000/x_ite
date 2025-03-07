@@ -156,7 +156,7 @@ Object .assign (X3DUrlObject .prototype,
       if (!this ._load .getValue ())
          throw new Error (`${this .getTypeName ()}.load is false.`);
 
-      if (this ._url .length === 0)
+      if (this ._url .length === 0 && !this ._family)
       {
          this .unloadData ();
          return;
