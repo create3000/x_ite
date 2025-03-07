@@ -193,7 +193,11 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       family .push ("SERIF");
 
+      // Clear font.
+
       this .font = null;
+
+      // Try to get font by family names.
 
       const font = await browser .getFont (family, style);
 
@@ -203,6 +207,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       }
       else
       {
+         // Try to get default font.
+
          for (const familyName of family)
          {
             const defaultFont = this .getDefaultFont (familyName, style);
@@ -217,6 +223,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
                   break;
                }
             }
+
+            // DEPRECIATED: Try to get font by URL.
 
             const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
 
