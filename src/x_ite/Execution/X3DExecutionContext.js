@@ -197,13 +197,16 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (!ConcreteNode)
             return null;
 
+         // There must be an error if the specification range does not match,
+         // otherwise protos with the same name will be overwritten, e.g. Delay.
+
          const specificationRange = ConcreteNode .specificationRange;
 
          if (this .getSpecificationVersion () < specificationRange .from)
-            console .warn (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
+            return null;
 
          if (this .getSpecificationVersion () > specificationRange .to)
-            console .warn (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
+            return null;
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
@@ -217,13 +220,16 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (!ConcreteNode)
             throw new Error (`Unknown node type '${typeName}'.`);
 
+         // There must be an error if the specification range does not match,
+         // otherwise protos with the same name will be overwritten, e.g. Delay.
+
          const specificationRange = ConcreteNode .specificationRange;
 
          if (this .getSpecificationVersion () < specificationRange .from)
-            console .warn (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
+            throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (this .getSpecificationVersion () > specificationRange .to)
-            console .warn (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
+            throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
