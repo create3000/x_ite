@@ -302,11 +302,11 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
       switch (primitiveQuality)
       {
          case PrimitiveQuality .LOW:
-            return 4;
+            return 3;
          case PrimitiveQuality .HIGH:
-            return 8;
+            return 7;
          default:
-            return 6;
+            return 5;
       }
    },
    triangulatePolygon: (() =>
