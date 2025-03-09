@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1936,8 +1936,6 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
 
 
 
-var center = new (external_X_ITE_X3D_Vector3_default()) ();
-
 function GeoLOD (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -1945,6 +1943,8 @@ function GeoLOD (executionContext)
    Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeoLOD);
+
+   this .setVisibleObject (true);
 
    // Units
 
@@ -1959,6 +1959,7 @@ function GeoLOD (executionContext)
    this .child2Inline     = new (external_X_ITE_X3D_Inline_default()) (executionContext);
    this .child3Inline     = new (external_X_ITE_X3D_Inline_default()) (executionContext);
    this .child4Inline     = new (external_X_ITE_X3D_Inline_default()) (executionContext);
+   this .childInlines     = [this .child1Inline, this .child2Inline, this .child3Inline, this .child4Inline];
    this .childrenLoaded   = false;
    this .childBBox        = new (external_X_ITE_X3D_Box3_default()) ();
    this .keepCurrentLevel = false;
@@ -1979,13 +1980,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
       this .rootGroup ._children = this ._rootNode;
       this .rootGroup .setPrivate (true);
-      this .rootGroup .setup ();
 
-      this .rootInline   ._loadState .addInterest ("set_rootLoadState__", this);
-      this .child1Inline ._loadState .addInterest ("set_childLoadState__", this);
-      this .child2Inline ._loadState .addInterest ("set_childLoadState__", this);
-      this .child3Inline ._loadState .addInterest ("set_childLoadState__", this);
-      this .child4Inline ._loadState .addInterest ("set_childLoadState__", this);
+      this .rootInline ._loadState .addInterest ("set_rootLoadState__", this);
+
+      for (const childInline of this .childInlines)
+         childInline ._loadState .addInterest ("set_childLoadState__", this);
 
       this ._rootUrl   .addFieldInterest (this .rootInline   ._url);
       this ._child1Url .addFieldInterest (this .child1Inline ._url);
@@ -1993,11 +1992,10 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       this ._child3Url .addFieldInterest (this .child3Inline ._url);
       this ._child4Url .addFieldInterest (this .child4Inline ._url);
 
-      this .rootInline   ._load = true;
-      this .child1Inline ._load = false;
-      this .child2Inline ._load = false;
-      this .child3Inline ._load = false;
-      this .child4Inline ._load = false;
+      this .rootInline ._load = true;
+
+      for (const childInline of this .childInlines)
+         childInline ._load = false;
 
       this .rootInline   ._url = this ._rootUrl;
       this .child1Inline ._url = this ._child1Url;
@@ -2006,10 +2004,9 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       this .child4Inline ._url = this ._child4Url;
 
       this .rootInline   .setup ();
-      this .child1Inline .setup ();
-      this .child2Inline .setup ();
-      this .child3Inline .setup ();
-      this .child4Inline .setup ();
+
+      for (const childInline of this .childInlines)
+         childInline .setup ();
    },
    getBBox (bbox, shadows)
    {
@@ -2031,10 +2028,8 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
                bbox .set ();
 
-               bbox .add (this .child1Inline .getBBox (childBBox, shadows));
-               bbox .add (this .child2Inline .getBBox (childBBox, shadows));
-               bbox .add (this .child3Inline .getBBox (childBBox, shadows));
-               bbox .add (this .child4Inline .getBBox (childBBox, shadows));
+               for (const childInline of this .childInlines)
+                  bbox .add (childInline .getBBox (childBBox, shadows));
 
                return bbox;
             }
@@ -2064,89 +2059,79 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       if (this ._level_changed .getValue () !== 1)
          return;
 
-      var loaded = 0;
+      let loaded = 0;
 
-      if (this .child1Inline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE ||
-          this .child1Inline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE)
-         ++ loaded;
-
-      if (this .child2Inline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE ||
-          this .child2Inline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE)
-         ++ loaded;
-
-      if (this .child3Inline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE ||
-          this .child3Inline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE)
-         ++ loaded;
-
-      if (this .child4Inline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE ||
-          this .child4Inline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE)
-         ++ loaded;
+      for (const childInline of this .childInlines)
+      {
+         if (childInline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE ||
+             childInline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE)
+            ++ loaded;
+      }
 
       if (loaded === 4)
       {
          this .childrenLoaded = true;
 
-         var children = this ._children;
+         const children = this ._children;
 
          children .length = 0;
 
-         var rootNodes = this .child1Inline .getInternalScene () .getRootNodes ();
+         for (const childInline of this .childInlines)
+         {
+            const rootNodes = childInline .getInternalScene () .getRootNodes ();
 
-         for (var i = 0, length = rootNodes .length; i < length; ++ i)
-            children .push (rootNodes [i]);
-
-         var rootNodes = this .child2Inline .getInternalScene () .getRootNodes ();
-
-         for (var i = 0, length = rootNodes .length; i < length; ++ i)
-            children .push (rootNodes [i]);
-
-         var rootNodes = this .child3Inline .getInternalScene () .getRootNodes ();
-
-         for (var i = 0, length = rootNodes .length; i < length; ++ i)
-            children .push (rootNodes [i]);
-
-         var rootNodes = this .child4Inline .getInternalScene () .getRootNodes ();
-
-         for (var i = 0, length = rootNodes .length; i < length; ++ i)
-            children .push (rootNodes [i]);
+            for (const rootNode of rootNodes)
+               children .push (rootNode);
+         }
       }
+   },
+   set_childPointingObject__ ()
+   {
+      this .setPointingObject (this .childInlines .some (childInline => childInline .isPointingObject ()));
    },
    set_childCameraObject__ ()
    {
-      this .setCameraObject (this .child1Inline .isCameraObject () ||
-                             this .child2Inline .isCameraObject () ||
-                             this .child3Inline .isCameraObject () ||
-                             this .child4Inline .isCameraObject ());
+      this .setCameraObject (this .childInlines .some (childInline => childInline .isCameraObject ()));
    },
    set_childPickableObject__ ()
    {
-      this .setPickableObject (this .child1Inline .isPickableObject () ||
-                               this .child2Inline .isPickableObject () ||
-                               this .child3Inline .isPickableObject () ||
-                               this .child4Inline .isPickableObject ());
+      this .setPickableObject (this .childInlines .some (childInline => childInline .isPickableObject ()));
+   },
+   set_childCollisionObject__ ()
+   {
+      this .setCollisionObject (this .childInlines .some (childInline => childInline .isCollisionObject ()));
+   },
+   set_childShadowObject__ ()
+   {
+      this .setShadowObject (this .childInlines .some (childInline => childInline .isShadowObject ()));
    },
    getLevel (modelViewMatrix)
    {
-      var distance = this .getDistance (modelViewMatrix);
+      const distance = this .getDistance (modelViewMatrix);
 
       if (distance < this ._range .getValue ())
          return 1;
 
       return 0;
    },
-   getDistance (modelViewMatrix)
+   getDistance: (function ()
    {
-      modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
+      const center = new (external_X_ITE_X3D_Vector3_default()) ();
 
-      return modelViewMatrix .origin .magnitude ();
-   },
+      return function (modelViewMatrix)
+      {
+         modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
+
+         return modelViewMatrix .origin .magnitude ();
+      };
+   })(),
    traverse (type, renderObject)
    {
       switch (type)
       {
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
-            var
+            const
                browser          = this .getBrowser (),
                pickingHierarchy = browser .getPickingHierarchy ();
 
@@ -2159,7 +2144,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            var level = this .getLevel (this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+            const level = this .getLevel (this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
 
             if (level !== this ._level_changed .getValue ())
             {
@@ -2169,22 +2154,18 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
                {
                   case 0:
                   {
-                     this .child1Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
-                     this .child2Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
-                     this .child3Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
-                     this .child4Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
-                     this .child1Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
-                     this .child2Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
-                     this .child3Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
-                     this .child4Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
+                     for (const childInline of this .childInlines)
+                     {
+                        childInline ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
+                        childInline ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
+                        childInline ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
+                        childInline ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
+                        childInline ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
+                     }
 
                      if (this ._rootNode .length)
                      {
-                        this .rootGroup ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-                        this .rootGroup ._isPickableObject .addFieldInterest (this ._isPickableObject);
-
-                        this .setCameraObject   (this .rootGroup .isCameraObject ());
-                        this .setPickableObject (this .rootGroup .isPickableObject ());
+                        this .connectChildNode (this .rootGroup, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
 
                         this ._children      = this ._rootNode;
                         this .childrenLoaded = false;
@@ -2193,11 +2174,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
                      {
                         if (this .rootInline .checkLoadState () == (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
                         {
-                           this .rootInline ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-                           this .rootInline ._isPickableObject .addFieldInterest (this ._isPickableObject);
-
-                           this .setCameraObject   (this .rootInline .isCameraObject ());
-                           this .setPickableObject (this .rootInline .isPickableObject ());
+                           this .connectChildNode (this .rootInline, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
 
                            this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
                            this .childrenLoaded = false;
@@ -2206,10 +2183,8 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
                      if (this .unload)
                      {
-                        this .child1Inline ._load = false;
-                        this .child2Inline ._load = false;
-                        this .child3Inline ._load = false;
-                        this .child4Inline ._load = false;
+                        for (const childInline of this .childInlines)
+                           childInline ._load = false;
                      }
 
                      break;
@@ -2217,27 +2192,24 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
                   case 1:
                   {
                      if (this ._rootNode .length)
-                     {
-                        this .rootGroup ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
-                        this .rootGroup ._isPickableObject .removeFieldInterest (this ._isPickableObject);
-                     }
+                        this .disconnectChildNode (this .rootGroup);
                      else
+                        this .disconnectChildNode (this .rootInline);
+
+                     for (const childInline of this .childInlines)
                      {
-                        this .rootInline ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
-                        this .rootInline ._isPickableObject .removeFieldInterest (this ._isPickableObject);
+                        childInline ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
+                        childInline ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
+                        childInline ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
+                        childInline ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
+                        childInline ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
                      }
 
-                     this .child1Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
-                     this .child2Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
-                     this .child3Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
-                     this .child4Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
-                     this .child1Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
-                     this .child2Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
-                     this .child3Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
-                     this .child4Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
-
+                     this .set_childPointingObject__ ();
                      this .set_childCameraObject__ ();
                      this .set_childPickableObject__ ();
+                     this .set_childCollisionObject__ ();
+                     this .set_childShadowObject__ ();
 
                      if (this .child1Inline ._load .getValue ())
                      {
@@ -2245,10 +2217,8 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
                      }
                      else
                      {
-                        this .child1Inline ._load = true;
-                        this .child2Inline ._load = true;
-                        this .child3Inline ._load = true;
-                        this .child4Inline ._load = true;
+                        for (const childInline of this .childInlines)
+                           childInline ._load = true;
                      }
 
                      break;
@@ -2281,10 +2251,9 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
          }
          case 1:
          {
-            this .child1Inline .traverse (type, renderObject);
-            this .child2Inline .traverse (type, renderObject);
-            this .child3Inline .traverse (type, renderObject);
-            this .child4Inline .traverse (type, renderObject);
+            for (const childInline of this .childInlines)
+               childInline .traverse (type, renderObject);
+
             break;
          }
       }
@@ -2526,7 +2495,7 @@ Object .assign (Object .setPrototypeOf (GeoMetadata .prototype, (external_X_ITE_
       external_X_ITE_X3D_X3DInfoNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
    },
-   requestImmediateLoad (cache = true)
+   async requestImmediateLoad (cache = true)
    { },
    dispose ()
    {
@@ -2891,9 +2860,6 @@ function GeoProximitySensor (executionContext)
    // Private properties
 
    this .proximitySensor = new (external_X_ITE_X3D_ProximitySensor_default()) (executionContext);
-
-   this .setCameraObject   (this .proximitySensor .isCameraObject ());
-   this .setPickableObject (this .proximitySensor .isPickableObject ());
 }
 
 Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (external_X_ITE_X3D_X3DEnvironmentalSensorNode_default()).prototype),
@@ -2910,9 +2876,6 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (external
 
       this ._geoCenter .addFieldInterest (this ._center);
 
-      this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
-
       this .proximitySensor ._isActive                 .addFieldInterest (this ._isActive);
       this .proximitySensor ._enterTime                .addFieldInterest (this ._enterTime);
       this .proximitySensor ._exitTime                 .addFieldInterest (this ._exitTime);
@@ -2927,6 +2890,8 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (external
       this .proximitySensor ._center  = this ._center;
 
       this .proximitySensor .setup ();
+
+      this .connectChildNode (this .proximitySensor);
    },
    set_position__ (position)
    {

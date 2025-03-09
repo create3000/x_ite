@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -287,8 +287,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       // Groups
 
-      this .skeletonNode   .setAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
-      this .viewpointsNode .setAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
+      this .skeletonNode   .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
+      this .viewpointsNode .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
 
       this ._skeleton   .addFieldInterest (this .skeletonNode   ._children);
       this ._viewpoints .addFieldInterest (this .viewpointsNode ._children);
@@ -323,9 +323,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this .transformNode ._bboxCenter       = this ._bboxCenter;
       this .transformNode ._children         = [ this .skeletonNode, this .viewpointsNode, this .skinNode ];
 
-      this .transformNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .transformNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-
       // Setup
 
       this .skeletonNode   .setup ();
@@ -333,8 +330,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this .skinNode       .setup ();
       this .transformNode  .setup ();
 
-      this .setCameraObject   (this .transformNode .isCameraObject ());
-      this .setPickableObject (this .transformNode .isPickableObject ());
+      this .connectChildNode (this .transformNode);
 
       // Check WebGL version.
 
@@ -909,9 +905,15 @@ function HAnimJoint (executionContext)
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacements",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
                           (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeights", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
-   this .setAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint,
-                          (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment,
-                          (external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
+   this .setVisibleObject (true);
+   this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
+
+   // Private properties
 
    this .displacerNodes  = [ ];
    this .modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
@@ -935,6 +937,8 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (external_X_ITE_X
    {
       return this .displacerNodes;
    },
+   set_visibleObjects__ ()
+   { },
    set_displacers__ ()
    {
       const displacerNodes = this .displacerNodes;
@@ -1502,7 +1506,6 @@ var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require_
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

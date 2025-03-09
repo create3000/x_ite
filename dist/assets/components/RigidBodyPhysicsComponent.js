@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -618,6 +618,9 @@ var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .X3DBoundedObject"
 const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
 var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
+;// external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// ./src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode.js
 /*******************************************************************************
  *
@@ -675,6 +678,8 @@ var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require
 
 
 
+
+
 function X3DNBodyCollidableNode (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -682,8 +687,14 @@ function X3DNBodyCollidableNode (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body",                  new (external_X_ITE_X3D_Fields_default()).SFNode (),
-                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "compoundShape_changed", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "body",          new (external_X_ITE_X3D_Fields_default()).SFNode (),
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "compoundShape", new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "rebuild",       new (external_X_ITE_X3D_Fields_default()).SFTime ());
+
+   this .setPointingObject (true);
+   this .setCollisionObject (true);
+   this .setShadowObject (true);
+   this .setVisibleObject (true);
 
    // Units
 
@@ -691,9 +702,9 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Members
 
-   this .compoundShape  = new AmmoClass .btCompoundShape ()
-   this .offset         = new (external_X_ITE_X3D_Vector3_default()) ();
-   this .matrix         = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .compoundShape = new AmmoClass .btCompoundShape ()
+   this .offset        = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .matrix        = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
@@ -704,9 +715,18 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
+      this ._rebuild .addInterest ("set_child__", this);
+
       this .addInterest ("eventsProcessed", this);
 
       this .eventsProcessed ();
+   },
+   getBBox (bbox, shadows)
+   {
+      if (this .isDefaultBBoxSize ())
+         return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getLocalTransform: (() =>
    {
@@ -717,7 +737,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
 
       return function ()
       {
-         m .assign (this .getMatrix ());
+         m .assign (this .matrix);
          m .translate (this .offset);
 
          //this .localTransform .setFromOpenGLMatrix (m);
@@ -757,6 +777,106 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
    {
       return this .matrix;
    },
+   getChild ()
+   {
+      return this .childNode;
+   },
+   setChild (childNode)
+   {
+      // Remove node.
+
+      if (this .childNode)
+      {
+         const childNode = this .childNode;
+
+         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
+         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
+         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
+         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+
+         if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
+         {
+            childNode ._display     .removeInterest ("requestRebuild", this);
+            childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
+         }
+      }
+
+      // Clear node.
+
+      this .childNode  = null;
+      this .pointingNode    = null;
+      this .cameraObject    = null;
+      this .pickableObject  = null;
+      this .collisionObject = null;
+      this .shadowObject    = null;
+      this .visibleNode     = null;
+      this .boundedObject   = null;
+
+      // Add node.
+
+      if (childNode)
+      {
+         childNode ._isPointingObject  .addInterest ("requestRebuild", this);
+         childNode ._isCameraObject    .addInterest ("requestRebuild", this);
+         childNode ._isPickableObject  .addInterest ("requestRebuild", this);
+         childNode ._isCollisionObject .addInterest ("requestRebuild", this);
+         childNode ._isShadowObject    .addInterest ("requestRebuild", this);
+         childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
+
+         this .childNode = childNode;
+
+         if (childNode .isVisible ())
+         {
+            if (childNode .isPointingObject ())
+               this .pointingNode = childNode;
+
+            if (childNode .isCameraObject ())
+               this .cameraObject = childNode;
+
+            if (childNode .isPickableObject ())
+               this .pickableObject = childNode;
+
+            if (childNode .isCollisionObject ())
+               this .collisionObject = childNode;
+
+            if (childNode .isShadowObject ())
+               this .shadowObject = childNode;
+
+            if (childNode .isVisibleObject ())
+               this .visibleNode = childNode;
+         }
+
+         if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
+         {
+            childNode ._display     .addInterest ("requestRebuild", this);
+            childNode ._bboxDisplay .addInterest ("requestRebuild", this);
+
+            if (childNode .isBBoxVisible ())
+               this .boundedObject = childNode;
+         }
+
+         delete this .traverse;
+      }
+      else
+      {
+         this .traverse = Function .prototype;
+      }
+
+      this .setPointingObject  (this .pointingNode);
+      this .setCameraObject    (this .cameraObject);
+      this .setPickableObject  (this .pickableObject);
+      this .setCollisionObject (this .collisionObject);
+      this .setShadowObject    (this .shadowObject);
+      this .setVisibleObject   (this .visibleNode);
+   },
+   requestRebuild ()
+   {
+      this ._rebuild .addEvent ();
+   },
+   set_child__ ()
+   { },
    eventsProcessed ()
    {
       this .matrix .set (this ._translation .getValue (),
@@ -764,6 +884,61 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
 
       if (this .compoundShape .getNumChildShapes ())
          this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
+   },
+   traverse (type, renderObject)
+   {
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .matrix);
+
+      switch (type)
+      {
+         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
+         {
+            this .pointingNode ?.traverse (type, renderObject);
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
+         {
+            this .cameraObject ?.traverse (type, renderObject);
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
+         {
+            const
+               browser          = this .getBrowser (),
+               pickingHierarchy = browser .getPickingHierarchy ();
+
+            pickingHierarchy .push (this);
+
+            if (browser .getPickable () .at (-1))
+               this .visibleNode ?.traverse (type, renderObject);
+            else
+               this .pickableObject ?.traverse (type, renderObject);
+
+            pickingHierarchy .pop ();
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
+         {
+            this .collisionObject ?.traverse (type, renderObject);
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
+         {
+            this .shadowObject ?.traverse (type, renderObject);
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
+         {
+            this .visibleNode   ?.traverse (type, renderObject);
+            this .boundedObject ?.displayBBox (type, renderObject);
+            break;
+         }
+      }
+
+      modelViewMatrix .pop ();
    },
    dispose ()
    {
@@ -778,9 +953,6 @@ const X3DNBodyCollidableNode_default_ = X3DNBodyCollidableNode;
 ;
 
 /* harmony default export */ const RigidBodyPhysics_X3DNBodyCollidableNode = (external_X_ITE_X3D_Namespace_default().add ("X3DNBodyCollidableNode", X3DNBodyCollidableNode_default_));
-;// external "__X_ITE_X3D__ .TraverseType"
-const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
-var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// ./src/x_ite/Components/RigidBodyPhysics/CollidableOffset.js
 /*******************************************************************************
  *
@@ -837,7 +1009,6 @@ var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n
 
 
 
-
 function CollidableOffset (executionContext)
 {
    RigidBodyPhysics_X3DNBodyCollidableNode .call (this, executionContext);
@@ -852,153 +1023,45 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
       RigidBodyPhysics_X3DNBodyCollidableNode .prototype .initialize .call (this);
 
       this ._enabled    .addInterest ("set_collidableGeometry__", this);
-      this ._collidable .addInterest ("set_collidable__",         this);
+      this ._collidable .addInterest ("requestRebuild",           this);
 
-      this .set_collidable__ ();
+      this .set_child__ ();
    },
-   getBBox (bbox, shadows)
+   set_child__ ()
    {
-      if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
+      // Remove node.
 
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-   },
-   set_collidable__ ()
-   {
-      if (this .collidableNode)
+      if (this .getChild ())
       {
-         this .collidableNode .removeInterest ("addNodeEvent", this);
-         this .collidableNode ._compoundShape_changed .removeFieldInterest (this ._compoundShape_changed);
+         const collidableNode = this .getChild ();
 
-         this .collidableNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
-         this .collidableNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
-
-         this .collidableNode ._display     .removeInterest ("set_display__",     this);
-         this .collidableNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
+         collidableNode .removeInterest ("addNodeEvent", this);
+         collidableNode ._compoundShape .removeFieldInterest (this ._compoundShape);
       }
 
-      this .collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._collidable);
+      // Add node.
 
-      if (this .collidableNode)
+      const collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._collidable);
+
+      this .setChild (collidableNode);
+
+      if (collidableNode)
       {
-         this .collidableNode .addInterest ("addNodeEvent", this);
-         this .collidableNode ._compoundShape_changed .addFieldInterest (this ._compoundShape_changed);
-
-         this .collidableNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-         this .collidableNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-
-         this .collidableNode ._display     .addInterest ("set_display__",     this);
-         this .collidableNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
-
-         this .setCameraObject   (this .collidableNode .isCameraObject ());
-         this .setPickableObject (this .collidableNode .isPickableObject ());
-
-         delete this .traverse;
-      }
-      else
-      {
-         this .setCameraObject   (false);
-         this .setPickableObject (false);
-
-         this .traverse = Function .prototype;
+         collidableNode .addInterest ("addNodeEvent", this);
+         collidableNode ._compoundShape .addFieldInterest (this ._compoundShape);
       }
 
-      this .set_display__ ();
-      this .set_bboxDisplay__ ();
       this .set_collidableGeometry__ ();
-   },
-   set_cameraObject__ ()
-   {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
-   },
-   set_display__ ()
-   {
-      if (this .collidableNode)
-         this .visibleNode = this .collidableNode ._display .getValue () ? this .collidableNode : null;
-      else
-         this .visibleNode = this .collidableNode;
-
-      this .set_cameraObject__ ();
-   },
-   set_bboxDisplay__ ()
-   {
-      if (this .collidableNode)
-         this .boundedObject = this .collidableNode ._bboxDisplay .getValue () ? this .collidableNode : null;
-      else
-         this .boundedObject = null;
    },
    set_collidableGeometry__ ()
    {
       if (this .getCompoundShape () .getNumChildShapes ())
          this .getCompoundShape () .removeChildShapeByIndex (0);
 
-      if (this .collidableNode && this ._enabled .getValue ())
-         this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
+      if (this .getChild () && this ._enabled .getValue ())
+         this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .getChild () .getCompoundShape ());
 
-      this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
-   },
-   traverse (type, renderObject)
-   {
-      switch (type)
-      {
-         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
-         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
-         {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
-         {
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy (),
-               modelViewMatrix  = renderObject .getModelViewMatrix ();
-
-            pickingHierarchy .push (this);
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            pickingHierarchy .pop ();
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
-         {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
-         {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            this .boundedObject ?.displayBBox (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
-         }
-      }
+      this ._compoundShape = this .getBrowser () .getCurrentTime ();
    },
 });
 
@@ -1083,12 +1146,13 @@ const CollidableOffset_default_ = CollidableOffset;
 
 
 
-
 function CollidableShape (executionContext)
 {
    RigidBodyPhysics_X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollidableShape);
+
+   // Private properties
 
    this .convex = false;
 }
@@ -1100,39 +1164,32 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
       RigidBodyPhysics_X3DNBodyCollidableNode .prototype .initialize .call (this);
 
       this ._enabled .addInterest ("set_collidableGeometry__", this);
-      this ._shape   .addInterest ("set_shape__",              this);
+      this ._shape   .addInterest ("requestRebuild",           this);
 
-      this .set_shape__ ();
+      this .set_child__ ();
    },
-   getBBox (bbox, shadows)
+   isConvex ()
    {
-      if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
-
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      return this .convex;
    },
    setConvex (value)
    {
       this .convex = value;
    },
-   getConvex ()
-   {
-      return this .convex;
-   },
    createConvexGeometry: (() =>
    {
-      var p = new AmmoClass .btVector3 ();
+      const p = new AmmoClass .btVector3 ();
 
       return function ()
       {
-         var vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices () .getValue ();
 
          if (vertices .length === 0)
             return null;
 
-         var convexHull = new AmmoClass .btConvexHullShape ();
+         const convexHull = new AmmoClass .btConvexHullShape ();
 
-         for (var i = 0, length = vertices .length; i < length; i += 4)
+         for (let i = 0, length = vertices .length; i < length; i += 4)
          {
             p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
             convexHull .addPoint (p, false);
@@ -1145,21 +1202,21 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    })(),
    createConcaveGeometry: (() =>
    {
-      var
+      const
          p1 = new AmmoClass .btVector3 (),
          p2 = new AmmoClass .btVector3 (),
          p3 = new AmmoClass .btVector3 ();
 
       return function ()
       {
-         var vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices () .getValue ();
 
          if (vertices .length === 0)
             return null;
 
          this .triangleMesh = new AmmoClass .btTriangleMesh ();
 
-         for (var i = 0, length = vertices .length; i < length; i += 12)
+         for (let i = 0, length = vertices .length; i < length; i += 12)
          {
             p1 .setValue (vertices [i],     vertices [i + 1], vertices [i + 2]);
             p2 .setValue (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
@@ -1171,76 +1228,35 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          return new AmmoClass .btBvhTriangleMeshShape (this .triangleMesh, false);
       };
    })(),
-   set_shape__ ()
+   set_child__ ()
    {
-      if (this .shapeNode)
+      // Remove node.
+
+      if (this .getChild ())
       {
-         this .shapeNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
-         this .shapeNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
+         const shapeNode = this .getChild ();
 
-         this .shapeNode ._display     .removeInterest ("set_display__",     this);
-         this .shapeNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
-
-         this .shapeNode ._geometry .removeInterest ("set_geometry__", this);
+         shapeNode ._geometry .removeInterest ("set_geometry__", this);
       }
 
-      this .shapeNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Shape, this ._shape);
+      // Add node.
 
-      if (this .shapeNode)
+      const shapeNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Shape, this ._shape);
+
+      this .setChild (shapeNode);
+
+      if (shapeNode)
       {
-         this .shapeNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-         this .shapeNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-
-         this .shapeNode ._display     .addInterest ("set_display__",     this);
-         this .shapeNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
-
-         this .shapeNode ._geometry .addInterest ("set_geometry__", this);
-
-         this .setCameraObject   (this .shapeNode .isCameraObject ());
-         this .setPickableObject (this .shapeNode .isPickableObject ());
-
-         delete this .traverse;
-      }
-      else
-      {
-         this .setCameraObject   (false);
-         this .setPickableObject (false);
-
-         this .traverse = Function .prototype;
+         shapeNode ._geometry .addInterest ("set_geometry__", this);
       }
 
-      this .set_display__ ();
-      this .set_bboxDisplay__ ();
       this .set_geometry__ ();
-   },
-   set_cameraObject__ ()
-   {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
-   },
-   set_display__ ()
-   {
-      if (this .shapeNode)
-         this .visibleNode = this .shapeNode ._display .getValue () ? this .shapeNode : null;
-      else
-         this .visibleNode = this .shapeNode;
-
-      this .set_cameraObject__ ();
-   },
-   set_bboxDisplay__ ()
-   {
-      if (this .shapeNode)
-         this .boundedObject = this .shapeNode ._bboxDisplay .getValue () ? this .shapeNode : null;
-      else
-         this .boundedObject = null;
    },
    set_geometry__ ()
    {
       this .geometryNode ?._rebuild .removeInterest ("set_collidableGeometry__", this);
 
-      if (this .shapeNode)
-         this .geometryNode = this .shapeNode .getGeometry ();
-      else
-         this .geometryNode = null;
+      this .geometryNode = this .getChild () ?.getGeometry () ?? null;
 
       this .geometryNode ?._rebuild .addInterest ("set_collidableGeometry__", this);
 
@@ -1248,13 +1264,13 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    },
    set_collidableGeometry__: (() =>
    {
-      var
+      const
          localScaling   = new AmmoClass .btVector3 (),
          defaultScaling = new AmmoClass .btVector3 (1, 1, 1);
 
       return function ()
       {
-         var ls = this .getCompoundShape () .getLocalScaling ();
+         const ls = this .getCompoundShape () .getLocalScaling ();
          localScaling .setValue (ls .x (), ls .y (), ls .z ());
 
          this .removeCollidableGeometry ();
@@ -1263,15 +1279,15 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
          if (this ._enabled .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
          {
-            var type = this .geometryNode .getType ();
+            const type = this .geometryNode .getType ();
 
-            for (var t = type .length - 1; t >= 0; -- t)
+            for (let t = type .length - 1; t >= 0; -- t)
             {
                switch (type [t])
                {
                   case (external_X_ITE_X3D_X3DConstants_default()).Box:
                   {
-                     var
+                     const
                         box  = this .geometryNode,
                         size = box ._size .getValue ();
 
@@ -1280,7 +1296,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                   }
                   case (external_X_ITE_X3D_X3DConstants_default()).Cone:
                   {
-                     var cone = this .geometryNode;
+                     const cone = this .geometryNode;
 
                      if (cone ._side .getValue () && cone ._bottom .getValue ())
                         this .collisionShape = new AmmoClass .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
@@ -1291,7 +1307,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                   }
                   case (external_X_ITE_X3D_X3DConstants_default()).Cylinder:
                   {
-                     var
+                     const
                         cylinder  = this .geometryNode,
                         radius    = cylinder ._radius .getValue (),
                         height1_2 = cylinder ._height .getValue () * 0.5;
@@ -1305,19 +1321,19 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                   }
                   case (external_X_ITE_X3D_X3DConstants_default()).ElevationGrid:
                   {
-                     var elevationGrid = this .geometryNode;
+                     const elevationGrid = this .geometryNode;
 
                      if (elevationGrid ._xDimension .getValue () > 1 && elevationGrid ._zDimension .getValue () > 1)
                      {
-                        var
-                           min         = Number .POSITIVE_INFINITY,
-                           max         = Number .NEGATIVE_INFINITY,
-                           heightField = this .heightField = AmmoClass ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ()),
-                           i4          = 0;
+                        const heightField = this .heightField = AmmoClass ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ());
 
-                        for (var i = 0, length = elevationGrid ._height .length; i < length; ++ i)
+                        let
+                           min = Number .POSITIVE_INFINITY,
+                           max = Number .NEGATIVE_INFINITY;
+
+                        for (let i = 0, i4 = 0, length = elevationGrid ._height .length; i < length; ++ i)
                         {
-                           var value = elevationGrid ._height [i];
+                           const value = elevationGrid ._height [i];
 
                            min = Math .min (min, value);
                            max = Math .max (max, value);
@@ -1348,7 +1364,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                   }
                   case (external_X_ITE_X3D_X3DConstants_default()).Sphere:
                   {
-                     var sphere = this .geometryNode;
+                     const sphere = this .geometryNode;
 
                      this .collisionShape = new AmmoClass .btSphereShape (sphere ._radius .getValue ());
                      break;
@@ -1382,7 +1398,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          this .getCompoundShape () .setLocalScaling (localScaling);
 
          this .addNodeEvent ();
-         this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
+         this ._compoundShape = this .getBrowser () .getCurrentTime ();
       };
    })(),
    removeCollidableGeometry ()
@@ -1404,69 +1420,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
       {
          AmmoClass .destroy (this .triangleMesh);
          this .triangleMesh = null;
-      }
-   },
-   traverse (type, renderObject)
-   {
-      switch (type)
-      {
-         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
-         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
-         {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
-         {
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy (),
-               modelViewMatrix  = renderObject .getModelViewMatrix ();
-
-            pickingHierarchy .push (this);
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            pickingHierarchy .pop ();
-            return;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
-         {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
-         {
-            const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .getMatrix ());
-
-            this .visibleNode ?.traverse (type, renderObject);
-
-            this .boundedObject ?.displayBBox (type, renderObject);
-
-            modelViewMatrix .pop ();
-            return;
-         }
       }
    },
    dispose ()
@@ -3171,7 +3124,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
          var geometryNode = geometryNodes [i];
 
          geometryNode .removeInterest ("addEvent", this ._transform);
-         geometryNode ._compoundShape_changed .removeInterest ("set_compoundShape__", this);
+         geometryNode ._compoundShape .removeInterest ("set_compoundShape__", this);
 
          geometryNode .setBody (null);
 
@@ -3211,7 +3164,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
          var geometryNode = geometryNodes [i];
 
          geometryNode .addInterest ("addEvent", this ._transform);
-         geometryNode ._compoundShape_changed .addInterest ("set_compoundShape__", this);
+         geometryNode ._compoundShape .addInterest ("set_compoundShape__", this);
 
          geometryNode ._translation .addFieldInterest (this ._position);
          geometryNode ._rotation    .addFieldInterest (this ._orientation);
