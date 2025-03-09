@@ -7,9 +7,15 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v11.3 Series
+
+*Leipzig, 9th March 2025:*
+
+* Optimized Scene Graph Traversal: Improved performance and efficiency in processing scene graphs, resulting in faster rendering and reduced computation overhead.
+
 ## X_ITE v11.2 Series
 
-*Leipzig, 16th February 2024:* With this series there is now extended WebXR support. Use your VR glasses with X_ITE and get immersive.
+*Leipzig, 16th February 2025:* With this series there is now extended WebXR support. Use your VR glasses with X_ITE and get immersive.
 
 * Basic visualization of the controller (input ray and tracking point)
 * X3DPointingDeviceSensorNode support
