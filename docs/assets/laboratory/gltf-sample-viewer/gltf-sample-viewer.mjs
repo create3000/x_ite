@@ -21,6 +21,7 @@ const ibl_files = [
    "ChairDamaskPurplegold",
    "Clearcoat",
    "ClearCoat",
+   "CommercialRefrigerator",
    "Compare",
    "Corset",
    "Cube",
