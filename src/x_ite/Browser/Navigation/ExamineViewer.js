@@ -327,11 +327,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       // Change viewpoint position.
 
-      const
-         browser   = this .getBrowser (),
-         viewpoint = this .getActiveViewpoint ();
+      const viewpoint = this .getActiveViewpoint ();
 
-      browser .prepareEvents () .removeInterest ("spin", this);
+      this .removeSpinning ();
       viewpoint .transitionStop ();
 
       this .zoom (event .zoomFactor || SCROLL_FACTOR, event .deltaY);
@@ -654,6 +652,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .rotation .assign (deltaRotation);
       }
    },
+   removeSpinning ()
+   {
+      const browser = this .getBrowser ();
+
+      this .timeSensor ._stopTime = browser .getCurrentTime ();
+      browser .prepareEvents () .removeInterest ("spin", this);
+   },
    spin: (() =>
    {
       const
@@ -893,8 +898,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
       this .rotationChaser         ._value_changed .removeInterest ("set_rotation__",               this);
 
-      this .timeSensor ._stopTime = browser .getCurrentTime ();
-      browser .prepareEvents () .removeInterest ("spin", this);
+      this .removeSpinning ();
    },
    dispose ()
    {
