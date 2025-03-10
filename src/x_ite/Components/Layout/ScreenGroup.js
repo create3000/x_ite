@@ -71,6 +71,12 @@ function ScreenGroup (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode .prototype),
 {
+   initialize ()
+   {
+      X3DGroupingNode .prototype .initialize .call (this);
+
+      this ._bboxSize .addInterest ("set_visibleObjects__", this);
+   },
    set_visibleObjects__ ()
    {
       this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());

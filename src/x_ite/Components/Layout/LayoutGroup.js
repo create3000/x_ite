@@ -74,8 +74,9 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
-      this ._viewport .addInterest ("set_viewport__", this);
-      this ._layout   .addInterest ("set_layout__", this);
+      this ._viewport .addInterest ("set_viewport__",       this);
+      this ._layout   .addInterest ("set_layout__",         this);
+      this ._bboxSize .addInterest ("set_visibleObjects__", this);
 
       this .set_viewport__ ();
       this .set_layout__ ();
