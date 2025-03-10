@@ -411,6 +411,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
                }
 
+               this .boundedObjects   .delete (childNode);
                this .pointingNodes    .delete (childNode);
                this .cameraObjects    .delete (childNode);
                this .pickableObjects  .delete (childNode);
@@ -418,7 +419,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                this .shadowObjects    .delete (childNode);
                this .childNodes       .delete (childNode);
                this .visibleNodes     .delete (childNode);
-               this .boundedObjects   .delete (childNode);
                this .bboxObjects      .delete (childNode);
                break;
             }
