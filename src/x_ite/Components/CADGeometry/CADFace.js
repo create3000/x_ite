@@ -173,10 +173,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
                      if (childNode .isVisibleObject ())
                         this .visibleNode = childNode;
-                  }
 
-                  if (childNode .isVisible () && childNode .getBBox)
-                     this .boundedObject = childNode;
+                     if (childNode .getBBox)
+                        this .boundedObject = childNode;
+                  }
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                   {

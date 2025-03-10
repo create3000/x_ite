@@ -224,10 +224,10 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
 
             if (childNode .isVisibleObject ())
                this .visibleNode = childNode;
-         }
 
-         if (childNode .isVisible () && childNode .getBBox)
-            this .boundedObject = childNode;
+            if (childNode .getBBox)
+               this .boundedObject = childNode;
+         }
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {

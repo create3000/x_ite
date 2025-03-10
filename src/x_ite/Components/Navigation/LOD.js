@@ -169,10 +169,10 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
                if (childNode .isVisibleObject ())
                   this .visibleNode = childNode;
-            }
 
-            if (childNode .isVisible () && childNode .getBBox)
-               this .boundedObject = childNode;
+               if (childNode .getBBox)
+                  this .boundedObject = childNode;
+            }
 
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
