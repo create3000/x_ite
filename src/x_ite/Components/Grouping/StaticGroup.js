@@ -111,7 +111,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
-      // Connect later for correct order of events.
+      // Connect after setup for correct order of events.
       this .groupNode ._rebuild  .addInterest ("set_rebuild__",  this);
       this .groupNode ._children .addInterest ("set_children__", this);
 
