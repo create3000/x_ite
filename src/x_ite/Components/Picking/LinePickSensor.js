@@ -136,16 +136,12 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                {
                   // Intersect bboxes.
 
-                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (const modelMatrix of modelMatrices)
                   {
-                     const modelMatrix = modelMatrices [m];
-
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (const target of targets)
                      {
-                        const target = targets [t];
-
                         targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
                         if (pickingBBox .intersectsBox (targetBBox))
@@ -179,16 +175,13 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                {
                   // Intersect geometry.
 
-                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (const modelMatrix of modelMatrices)
                   {
-                     const modelMatrix = modelMatrices [m];
-
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (const target of targets)
                      {
                         const
-                           target       = targets [t],
                            geometryNode = target .geometryNode,
                            vertices     = this .pickingGeometryNode .getVertices ();
 
@@ -255,15 +248,13 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                   pickedNormal            .length = 0;
                   pickedPoint             .length = 0;
 
-                  for (let t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
+                  for (const pickedTarget of pickedTargets)
                   {
-                     const pickedIntersections = pickedTargets [t] .intersections;
+                     const pickedIntersections = pickedTarget .intersections;
 
-                     for (let i = 0, iLength = pickedIntersections .length; i < iLength; ++ i)
+                     for (const intersection of pickedIntersections)
                      {
-                        const
-                           intersection = pickedIntersections [i],
-                           t            = intersection .texCoord;
+                        const t = intersection .texCoord;
 
                         texCoord .set (t .x, t .y, t .z);
 

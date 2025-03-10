@@ -205,7 +205,9 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          }
          case SortOrder .ALL:
          {
-            for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+            const length = pickedTargets .length;
+
+            for (let i = 0; i < length; ++ i)
                pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
             pickedGeometries .length = length;
@@ -213,9 +215,11 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          }
          case SortOrder .ALL_SORTED:
          {
-            this .pickedTargetsSorter .sort (0, pickedTargets .length);
+            const length = pickedTargets .length;
 
-            for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+            this .pickedTargetsSorter .sort (0, length);
+
+            for (let i = 0; i < length; ++ i)
                pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
             pickedGeometries .length = length;

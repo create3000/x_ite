@@ -71,12 +71,11 @@ Object .assign (X3DPickableObject .prototype,
    {
       this .objectType .clear ();
 
-      for (var i = 0, length = this ._objectType .length; i < length; ++ i)
-      {
-         this .objectType .add (this ._objectType [i]);
-      }
+      for (const objectType of this ._objectType)
+         this .objectType .add (objectType);
    },
-   dispose () { },
+   dispose ()
+   { },
 });
 
 Object .defineProperties (X3DPickableObject, X3DNode .getStaticProperties ("X3DPickableObject", "Picking", 1));
