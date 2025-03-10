@@ -69,7 +69,7 @@ function Sound (executionContext)
    this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
 
    this .setVisibleObject (true);
-   
+
    // Units
 
    this ._location .setUnit ("length");
@@ -345,7 +345,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          value .distance = viewer .magnitude ();
       };
    })(),
-   getPan: (function ()
+   getPan: (() =>
    {
       const
          rotation  = new Rotation4 (),

@@ -344,7 +344,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       if (DEVELOPMENT)
          console .timeEnd ("StaticGroup");
    },
-   combineClones: (function ()
+   combineClones: (() =>
    {
       const
          modelMatrix = new Matrix4 (),
@@ -593,7 +593,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       visibleNodes .push (newShapeNode);
    },
-   normalizeGeometry: (function ()
+   normalizeGeometry: (() =>
    {
       const GeometryTypes = [
          PointSet,
@@ -833,7 +833,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          return newGeometryNode;
       };
    })(),
-   normalizeSingleShapes: (function ()
+   normalizeSingleShapes: (() =>
    {
       const
          t  = new Vector3 (),

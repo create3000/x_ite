@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
 
       this .set_depthFunction__ ();
    },
-   set_depthFunction__: (function ()
+   set_depthFunction__: (() =>
    {
       const depthFunctions = new Map ([
          ["NEVER",         "NEVER"],

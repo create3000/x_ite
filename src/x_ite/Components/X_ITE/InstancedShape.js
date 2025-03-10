@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    {
       return this .instances;
    },
-   set_bbox__: (function ()
+   set_bbox__: (() =>
    {
       const bbox = new Box3 ();
 

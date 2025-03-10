@@ -65,7 +65,7 @@ function SpatialSound (executionContext)
    this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
 
    this .setVisibleObject (true);
-   
+
    // Units
 
    this ._location       .setUnit ("length");
@@ -192,7 +192,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    {
       this .pannerNode .coneOuterAngle = Algorithm .clamp (Algorithm .degrees (this ._coneOuterAngle .getValue ()), 0, 360);
    },
-   set_distanceModel__: (function ()
+   set_distanceModel__: (() =>
    {
       const distanceModels = new Map ([
          ["LINEAR",      "linear"],

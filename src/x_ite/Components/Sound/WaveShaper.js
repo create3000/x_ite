@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
          ? new Float32Array (2)
          : this ._curve .shrinkToFit ();
    },
-   set_oversample__: (function ()
+   set_oversample__: (() =>
    {
       const oversampleTypes = new Map ([
          ["NONE", "none"],

@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
 
       this .set_geometry__ ();
    },
-   getBBox: (function ()
+   getBBox: (() =>
    {
       const bboxSize = new Vector3 ();
 

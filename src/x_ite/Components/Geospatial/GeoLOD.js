@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
 
       return 0;
    },
-   getDistance: (function ()
+   getDistance: (() =>
    {
       const center = new Vector3 ();
 
