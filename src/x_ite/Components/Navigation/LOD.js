@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    getSubBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
+         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -124,6 +124,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
       // Clear node.
 
       this .childNode       = null;
+      this .boundedObject   = null;
       this .pointingNode    = null;
       this .cameraObject    = null;
       this .pickableObject  = null;
@@ -151,6 +152,9 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
             if (childNode .isVisible ())
             {
+               if (childNode .isBoundedObject ())
+                  this .boundedObject = childNode;
+
                if (childNode .isPointingObject ())
                   this .pointingNode = childNode;
 
@@ -181,11 +185,11 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          }
       }
 
-      this .set_pointingObjects__ ();
-      this .set_cameraObjects__ ();
-      this .set_pickableObjects__ ();
-      this .set_collisionObjects__ ();
-      this .set_shadowObjects__ ();
+      this .set_objects__ ();
+   },
+   set_boundedObjects__ ()
+   {
+      this .setBoundedObject (this .boundedObject || !this .isDefaultBBoxSize ());
    },
    set_pointingObjects__ ()
    {

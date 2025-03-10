@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    getSubBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
+         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -112,6 +112,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
       // Clear node.
 
       this .childNode       = null;
+      this .boundedObject   = null;
       this .pointingNode    = null;
       this .cameraObject    = null;
       this .pickableObject  = null;
@@ -141,6 +142,9 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
 
             if (childNode .isVisible ())
             {
+               if (childNode .isBoundedObject ())
+                  this .boundedObject = childNode;
+
                if (childNode .isPointingObject ())
                   this .pointingNode = childNode;
 
@@ -158,7 +162,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
 
                if (childNode .isVisibleObject ())
                   this .visibleNode = childNode;
-         }
+            }
 
 
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -172,12 +176,11 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
          }
       }
 
-      this .set_pointingObjects__ ();
-      this .set_cameraObjects__ ();
-      this .set_pickableObjects__ ();
-      this .set_collisionObjects__ ();
-      this .set_shadowObjects__ ();
-      this .set_visibleObjects__ ();
+      this .set_objects__ ();
+   },
+   set_boundedObjects__ ()
+   {
+      this .setBoundedObject (this .boundedObject || !this .isDefaultBBoxSize ());
    },
    set_pointingObjects__ ()
    {
@@ -201,7 +204,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNode || this .bboxObject || !this .isDefaultBBoxSize ());
+      this .setVisibleObject (this .visibleNode || this .bboxObject);
    },
    traverse (type, renderObject)
    {

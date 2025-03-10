@@ -64,6 +64,7 @@ function CADFace (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFTime ());
 
+   this .setBoundedObject (true);
    this .setPointingObject (true);
    this .setCollisionObject (true);
    this .setShadowObject (true);
@@ -79,7 +80,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       X3DBoundedObject             .prototype .initialize .call (this);
 
       this ._rebuild  .addInterest ("set_children__",       this);
-      this ._bboxSize .addInterest ("set_visibleObjects__", this);
+      this ._bboxSize .addInterest ("set_boundedObjects__", this);
       this ._shape    .addInterest ("requestRebuild",       this);
 
       this .set_children__ ();
@@ -87,7 +88,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
+         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -120,6 +121,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       // Clear node.
 
       this .childNode       = null;
+      this .boundedObject   = null;
       this .pointingNode    = null;
       this .cameraObject    = null;
       this .pickableObject  = null;
@@ -155,6 +157,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
                   if (childNode .isVisible ())
                   {
+                     if (childNode .isBoundedObject ())
+                        this .boundedObject = childNode;
+
                      if (childNode .isPointingObject ())
                         this .pointingNode = childNode;
 
@@ -199,6 +204,11 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       this .set_collisionObjects__ ();
       this .set_shadowObjects__ ();
       this .set_visibleObjects__ ();
+      this .set_boundedObjects__ ();
+   },
+   set_boundedObjects__ ()
+   {
+      this .setBoundedObject (this .boundedObject || !this .isDefaultBBoxSize ());
    },
    set_pointingObjects__ ()
    {
@@ -222,7 +232,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNode || this .bboxObject || !this .isDefaultBBoxSize ());
+      this .setVisibleObject (this .visibleNode || this .bboxObject);
    },
    traverse (type, renderObject)
    {

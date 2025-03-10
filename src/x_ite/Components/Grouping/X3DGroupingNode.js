@@ -62,6 +62,7 @@ function X3DGroupingNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFTime ());
 
+   this .setBoundedObject (true);
    this .setPointingObject (true);
    this .setCollisionObject (true);
    this .setShadowObject (true);
@@ -82,6 +83,7 @@ function X3DGroupingNode (executionContext)
    this .shadowObjects             = new Set ();
    this .childNodes                = new Set ();
    this .visibleNodes              = new Set ();
+   this .boundedObjects            = new Set ();
    this .bboxObjects               = new Set ();
    this .sensors                   = [ ];
 }
@@ -97,7 +99,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this ._rebuild          .addInterest ("set_children__",        this);
       this ._transformSensors .addInterest ("set_pickableObjects__", this);
 
-      this ._bboxSize       .addInterest ("set_visibleObjects__", this);
+      this ._bboxSize       .addInterest ("set_boundedObjects__", this);
       this ._addChildren    .addInterest ("set_addChildren__",    this);
       this ._removeChildren .addInterest ("set_removeChildren__", this);
       this ._children       .addInterest ("requestRebuild",       this);
@@ -113,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    getSubBBox (bbox, shadows)
    {
-      return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
+      return X3DBoundedObject .prototype .getBBox .call (this, this .boundedObjects, bbox, shadows);
    },
    addAllowedTypes (... types)
    {
@@ -202,6 +204,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       }
 
       this .children                  .clear ();
+      this .boundedObjects            .clear ();
       this .pointingDeviceSensorNodes .clear ();
       this .pointingNodes             .clear ();
       this .clipPlaneNodes            .clear ();
@@ -302,6 +305,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                if (childNode .isVisible ())
                {
+                  if (childNode .isBoundedObject ())
+                     this .boundedObjects .add (childNode);
+
                   if (childNode .isPointingObject ())
                      this .pointingNodes .add (childNode);
 
@@ -412,6 +418,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                this .shadowObjects    .delete (childNode);
                this .childNodes       .delete (childNode);
                this .visibleNodes     .delete (childNode);
+               this .boundedObjects   .delete (childNode);
                this .bboxObjects      .delete (childNode);
                break;
             }
@@ -424,12 +431,17 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_objects__ ()
    {
+      this .set_boundedObjects__ ();
       this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
       this .set_pickableObjects__ ();
       this .set_collisionObjects__ ();
       this .set_shadowObjects__ ();
       this .set_visibleObjects__ ();
+   },
+   set_boundedObjects__ ()
+   {
+      this .setBoundedObject (this .boundedObjects .size || !this .isDefaultBBoxSize ());
    },
    set_pointingObjects__ ()
    {
@@ -453,7 +465,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size || !this .isDefaultBBoxSize ());
+      this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size);
    },
    traverse (type, renderObject)
    {

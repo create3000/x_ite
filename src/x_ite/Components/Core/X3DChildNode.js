@@ -59,7 +59,8 @@ function X3DChildNode (executionContext)
 
    this .addType (X3DConstants .X3DChildNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "isPointingObject",  new Fields .SFBool (),
+   this .addChildObjects (X3DConstants .outputOnly, "isBoundedObject",   new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isPointingObject",  new Fields .SFBool (),
                           X3DConstants .outputOnly, "isCameraObject",    new Fields .SFBool (),
                           X3DConstants .outputOnly, "isPickableObject",  new Fields .SFBool (),
                           X3DConstants .outputOnly, "isCollisionObject", new Fields .SFBool (),
@@ -128,8 +129,23 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
       // This function will be overloaded by X3DBoundedObject.
       return true;
    },
+   setBoundedObject (value)
+   {
+      if (!!value !== this ._isBoundedObject .getValue ())
+         this ._isBoundedObject = value;
+   },
+   isBoundedObject ()
+   {
+      return this ._isBoundedObject .getValue ();
+   },
    connectChildNode (childNode, exclude)
    {
+      if (!exclude ?.includes (TraverseType .BBOX))
+      {
+         childNode ._isBoundedObject .addFieldInterest (this ._isBoundedObject);
+         this .setBoundedObject (childNode .isBoundedObject ());
+      }
+
       if (!exclude ?.includes (TraverseType .POINTER))
       {
          childNode ._isPointingObject .addFieldInterest (this ._isPointingObject);
@@ -168,6 +184,7 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    },
    disconnectChildNode (childNode)
    {
+      childNode ._isBoundedObject   .removeFieldInterest (this ._isBoundedObject);
       childNode ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
       childNode ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
       childNode ._isPickableObject  .removeFieldInterest (this ._isPickableObject);

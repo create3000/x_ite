@@ -61,6 +61,8 @@ function LayoutGroup (executionContext)
 
    this .addType (X3DConstants .LayoutGroup);
 
+   // Private properties
+
    this .matrix          = new Matrix4 ();
    this .modelViewMatrix = new Matrix4 ();
    this .screenMatrix    = new Matrix4 ();
@@ -85,6 +87,10 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    set_layout__ ()
    {
       this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
    },
    getBBox (bbox, shadows)
    {

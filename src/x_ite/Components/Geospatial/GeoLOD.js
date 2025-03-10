@@ -68,6 +68,7 @@ function GeoLOD (executionContext)
 
    this .addType (X3DConstants .GeoLOD);
 
+   this .setBoundedObject (true);
    this .setVisibleObject (true);
 
    // Units
@@ -209,6 +210,10 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
          }
       }
    },
+   set_childBoundedObject__ ()
+   {
+      this .setBoundedObject (this .childInlines .some (childInline => childInline .isBoundedObject ()));
+   },
    set_childPointingObject__ ()
    {
       this .setPointingObject (this .childInlines .some (childInline => childInline .isPointingObject ()));
@@ -280,6 +285,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                   {
                      for (const childInline of this .childInlines)
                      {
+                        childInline ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
                         childInline ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
                         childInline ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
                         childInline ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
@@ -322,6 +328,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
 
                      for (const childInline of this .childInlines)
                      {
+                        childInline ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
                         childInline ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
                         childInline ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
                         childInline ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
@@ -329,6 +336,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                         childInline ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
                      }
 
+                     this .set_childBoundedObject__ ();
                      this .set_childPointingObject__ ();
                      this .set_childCameraObject__ ();
                      this .set_childPickableObject__ ();

@@ -67,6 +67,8 @@ function X3DNBodyCollidableNode (executionContext)
                           X3DConstants .outputOnly, "compoundShape", new Fields .SFTime (),
                           X3DConstants .outputOnly, "rebuild",       new Fields .SFTime ());
 
+
+   this .setBoundedObject (true);
    this .setPointingObject (true);
    this .setCollisionObject (true);
    this .setShadowObject (true);
@@ -92,7 +94,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       X3DBoundedObject .prototype .initialize .call (this);
 
       this ._rebuild  .addInterest ("set_child__",          this);
-      this ._bboxSize .addInterest ("set_visibleObjects__", this);
+      this ._bboxSize .addInterest ("set_boundedObjects__", this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -101,7 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
+         return this .boundedObject ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -183,6 +185,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       // Clear node.
 
       this .childNode       = null;
+      this .boundedObject   = null;
       this .pointingNode    = null;
       this .cameraObject    = null;
       this .pickableObject  = null;
@@ -206,6 +209,9 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
 
          if (childNode .isVisible ())
          {
+            if (childNode .isBoundedObject ())
+               this .boundedObject = childNode;
+
             if (childNode .isPointingObject ())
                this .pointingNode = childNode;
 
@@ -241,12 +247,17 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          this .traverse = Function .prototype;
       }
 
+      this .set_boundedObjects__ ();
       this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
       this .set_pickableObjects__ ();
       this .set_collisionObjects__ ();
       this .set_shadowObjects__ ();
       this .set_visibleObjects__ ();
+   },
+   set_boundedObjects__ ()
+   {
+      this .setBoundedObject (this .boundedObject || !this .isDefaultBBoxSize ());
    },
    set_pointingObjects__ ()
    {
