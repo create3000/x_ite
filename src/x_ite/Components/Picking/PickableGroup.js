@@ -62,6 +62,8 @@ function PickableGroup (executionContext)
 
    this .addType (X3DConstants .PickableGroup);
 
+   // Private properties
+
    this .pickSensorNodes = new Set ();
 }
 

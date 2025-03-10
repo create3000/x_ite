@@ -65,8 +65,10 @@ function PointPickSensor (executionContext)
 
    this .addType (X3DConstants .PointPickSensor);
 
-   this .picker              = new VolumePicker ();
-   this .compoundShapes      = [ ];
+   // Private properties
+
+   this .picker         = new VolumePicker ();
+   this .compoundShapes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSensorNode .prototype),

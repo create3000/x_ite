@@ -62,6 +62,8 @@ function PrimitivePickSensor (executionContext)
 
    this .addType (X3DConstants .PrimitivePickSensor);
 
+   // Private properties
+
    this .picker = new VolumePicker ();
 }
 

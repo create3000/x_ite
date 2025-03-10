@@ -63,6 +63,8 @@ function VolumePickSensor (executionContext)
 
    this .addType (X3DConstants .VolumePickSensor);
 
+   // Private properties
+
    this .picker = new VolumePicker ();
 }
 

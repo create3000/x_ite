@@ -52,6 +52,8 @@ function X3DPickableObject (executionContext)
 {
    this .addType (X3DConstants .X3DPickableObject);
 
+   // Private properties
+
    this .objectType = new Set ();
 }
 

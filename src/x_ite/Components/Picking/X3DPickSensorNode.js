@@ -67,6 +67,8 @@ function X3DPickSensorNode (executionContext)
 
    this .addType (X3DConstants .X3DPickSensorNode);
 
+   // Private properties
+
    this .objectType          = new Set ();
    this .intersectionType    = IntersectionType .BOUNDS;
    this .sortOrder           = SortOrder .CLOSEST;
