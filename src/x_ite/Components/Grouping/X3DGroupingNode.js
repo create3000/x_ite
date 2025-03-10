@@ -564,8 +564,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             for (const visibleObject of this .visibleObjects)
                visibleObject .traverse (type, renderObject);
 
-            for (const boundedObject of this .bboxObjects)
-               boundedObject .displayBBox (type, renderObject);
+            for (const bboxObject of this .bboxObjects)
+               bboxObject .displayBBox (type, renderObject);
 
             for (const displayNode of displayNodes)
                displayNode .pop (renderObject);
