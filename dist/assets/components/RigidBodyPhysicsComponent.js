@@ -1,5 +1,5 @@
-/* X_ITE v11.3.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.0")];
+/* X_ITE v11.3.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -724,13 +724,13 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
+         return this .boundedObject ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getLocalTransform: (() =>
    {
-      var
+      const
          m = new (external_X_ITE_X3D_Matrix4_default()) (),
          o = new AmmoClass .btVector3 (0, 0, 0),
          l = new AmmoClass .btTransform ();
@@ -813,6 +813,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       this .shadowObject    = null;
       this .visibleNode     = null;
       this .boundedObject   = null;
+      this .bboxObject      = null;
 
       // Add node.
 
@@ -848,13 +849,16 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
                this .visibleNode = childNode;
          }
 
+         if (childNode .isVisible () && childNode .getBBox)
+            this .boundedObject = childNode;
+
          if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
          {
             childNode ._display     .addInterest ("requestRebuild", this);
             childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
             if (childNode .isBBoxVisible ())
-               this .boundedObject = childNode;
+               this .bboxObject = childNode;
          }
 
          delete this .traverse;
@@ -869,7 +873,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       this .setPickableObject  (this .pickableObject);
       this .setCollisionObject (this .collisionObject);
       this .setShadowObject    (this .shadowObject);
-      this .setVisibleObject   (this .visibleNode);
+      this .setVisibleObject   (this .visibleNode || this .bboxObject);
    },
    requestRebuild ()
    {
@@ -932,8 +936,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            this .visibleNode   ?.traverse (type, renderObject);
-            this .boundedObject ?.displayBBox (type, renderObject);
+            this .visibleNode ?.traverse    (type, renderObject);
+            this .bboxObject  ?.displayBBox (type, renderObject);
             break;
          }
       }

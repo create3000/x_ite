@@ -1,5 +1,5 @@
-/* X_ITE v11.3.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.0")];
+/* X_ITE v11.3.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1013,6 +1013,11 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
    {
       this .layoutNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DLayoutNode, this ._layout);
    },
+   isVisibleObject ()
+   {
+      // Make sure matrix is calculated for bbox and children.
+      return true;
+   },
    getBBox (bbox, shadows)
    {
       return external_X_ITE_X3D_X3DGroupingNode_default().prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
@@ -1038,8 +1043,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
          }
          default:
          {
-            if (this .viewportNode)
-               this .viewportNode .push ();
+            this .viewportNode ?.push ();
 
             if (this .layoutNode)
             {
@@ -1061,9 +1065,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
                external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
             }
 
-            if (this .viewportNode)
-               this .viewportNode .pop ();
-
+            this .viewportNode ?.pop ();
             return;
          }
       }
@@ -1844,6 +1846,8 @@ function ScreenGroup (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ScreenGroup);
 
+   // Private properties
+
    if (executionContext .getOuterNode () instanceof (external_X_ITE_X3D_X3DProtoDeclaration_default()))
       this .matrix = new (external_X_ITE_X3D_Matrix4_default()) ();
    else
@@ -1852,6 +1856,11 @@ function ScreenGroup (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
 {
+   isVisibleObject ()
+   {
+      // Make sure matrix is calculated for bbox and children.
+      return true;
+   },
    getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
