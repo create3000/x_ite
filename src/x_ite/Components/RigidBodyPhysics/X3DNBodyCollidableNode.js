@@ -187,12 +187,12 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
 
       this .childNode       = null;
       this .boundedObject   = null;
-      this .pointingNode    = null;
+      this .pointingObject  = null;
       this .cameraObject    = null;
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleNode     = null;
+      this .visibleObject   = null;
       this .bboxObject      = null;
 
       // Add node.
@@ -215,7 +215,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
                this .boundedObject = childNode;
 
             if (childNode .isPointingObject ())
-               this .pointingNode = childNode;
+               this .pointingObject = childNode;
 
             if (childNode .isCameraObject ())
                this .cameraObject = childNode;
@@ -230,7 +230,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
                this .shadowObject = childNode;
 
             if (childNode .isVisibleObject ())
-               this .visibleNode = childNode;
+               this .visibleObject = childNode;
          }
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -263,7 +263,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    },
    set_pointingObjects__ ()
    {
-      this .setPointingObject (this .pointingNode);
+      this .setPointingObject (this .pointingObject);
    },
    set_cameraObjects__ ()
    {
@@ -283,7 +283,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNode || this .bboxObject || !this .isDefaultBBoxSize ());
+      this .setVisibleObject (this .visibleObject || this .bboxObject || !this .isDefaultBBoxSize ());
    },
    requestRebuild ()
    {
@@ -310,7 +310,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       {
          case TraverseType .POINTER:
          {
-            this .pointingNode ?.traverse (type, renderObject);
+            this .pointingObject ?.traverse (type, renderObject);
             break;
          }
          case TraverseType .CAMERA:
@@ -327,7 +327,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
             pickingHierarchy .push (this);
 
             if (browser .getPickable () .at (-1))
-               this .visibleNode ?.traverse (type, renderObject);
+               this .visibleObject ?.traverse (type, renderObject);
             else
                this .pickableObject ?.traverse (type, renderObject);
 
@@ -346,8 +346,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleNode ?.traverse    (type, renderObject);
-            this .bboxObject  ?.displayBBox (type, renderObject);
+            this .visibleObject ?.traverse    (type, renderObject);
+            this .bboxObject    ?.displayBBox (type, renderObject);
             break;
          }
       }

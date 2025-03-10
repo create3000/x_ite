@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
+      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
    },
    getBBox (bbox, shadows)
    {

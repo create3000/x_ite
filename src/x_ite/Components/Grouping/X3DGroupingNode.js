@@ -73,7 +73,7 @@ function X3DGroupingNode (executionContext)
    this .allowedTypes              = new Set ();
    this .children                  = new Set ();
    this .pointingDeviceSensorNodes = new Set ();
-   this .pointingNodes             = new Set ();
+   this .pointingObjects           = new Set ();
    this .clipPlaneNodes            = new Set ();
    this .displayNodes              = new Set ();
    this .cameraObjects             = new Set ();
@@ -82,7 +82,7 @@ function X3DGroupingNode (executionContext)
    this .collisionObjects          = new Set ();
    this .shadowObjects             = new Set ();
    this .childNodes                = new Set ();
-   this .visibleNodes              = new Set ();
+   this .visibleObjects            = new Set ();
    this .boundedObjects            = new Set ();
    this .bboxObjects               = new Set ();
    this .sensors                   = [ ];
@@ -207,7 +207,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .children                  .clear ();
       this .boundedObjects            .clear ();
       this .pointingDeviceSensorNodes .clear ();
-      this .pointingNodes             .clear ();
+      this .pointingObjects           .clear ();
       this .clipPlaneNodes            .clear ();
       this .displayNodes              .clear ();
       this .cameraObjects             .clear ();
@@ -216,7 +216,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .collisionObjects          .clear ();
       this .shadowObjects             .clear ();
       this .childNodes                .clear ();
-      this .visibleNodes              .clear ();
+      this .visibleObjects            .clear ();
       this .bboxObjects               .clear ();
    },
    addChildren (children)
@@ -262,10 +262,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                continue;
             }
             case X3DConstants .LocalFog:
-            {
-               this .displayNodes .add (childNode);
-               continue;
-            }
             case X3DConstants .X3DLightNode:
             {
                this .displayNodes .add (childNode);
@@ -299,7 +295,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                      this .boundedObjects .add (childNode);
 
                   if (childNode .isPointingObject ())
-                     this .pointingNodes .add (childNode);
+                     this .pointingObjects .add (childNode);
 
                   if (childNode .isCameraObject ())
                      this .cameraObjects .add (childNode);
@@ -314,7 +310,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                      this .shadowObjects .add (childNode);
 
                   if (childNode .isVisibleObject ())
-                     this .visibleNodes .add (childNode);
+                     this .visibleObjects .add (childNode);
                }
 
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -369,10 +365,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                continue;
             }
             case X3DConstants .LocalFog:
-            {
-               this .displayNodes .delete (childNode);
-               continue;
-            }
             case X3DConstants .X3DLightNode:
             {
                this .displayNodes .delete (childNode);
@@ -403,13 +395,13 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                }
 
                this .boundedObjects   .delete (childNode);
-               this .pointingNodes    .delete (childNode);
+               this .pointingObjects  .delete (childNode);
                this .cameraObjects    .delete (childNode);
                this .pickableObjects  .delete (childNode);
                this .collisionObjects .delete (childNode);
                this .shadowObjects    .delete (childNode);
                this .childNodes       .delete (childNode);
-               this .visibleNodes     .delete (childNode);
+               this .visibleObjects   .delete (childNode);
                this .bboxObjects      .delete (childNode);
                break;
             }
@@ -436,7 +428,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_pointingObjects__ ()
    {
-      this .setPointingObject (this .pointingNodes .size);
+      this .setPointingObject (this .pointingObjects .size);
    },
    set_cameraObjects__ ()
    {
@@ -456,7 +448,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size);
+      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size);
    },
    traverse (type, renderObject)
    {
@@ -483,8 +475,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
 
-            for (const pointingNode of this .pointingNodes)
-               pointingNode .traverse (type, renderObject);
+            for (const pointingObject of this .pointingObjects)
+               pointingObject .traverse (type, renderObject);
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .pop (renderObject);
@@ -522,8 +514,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
             if (browser .getPickable () .at (-1))
             {
-               for (const visibleNode of this .visibleNodes)
-                  visibleNode .traverse (type, renderObject);
+               for (const visibleObject of this .visibleObjects)
+                  visibleObject .traverse (type, renderObject);
             }
             else
             {
@@ -573,8 +565,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             for (const displayNode of displayNodes)
                displayNode .push (renderObject, this);
 
-            for (const visibleNode of this .visibleNodes)
-               visibleNode .traverse (type, renderObject);
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
 
             for (const boundedObject of this .bboxObjects)
                boundedObject .displayBBox (type, renderObject);

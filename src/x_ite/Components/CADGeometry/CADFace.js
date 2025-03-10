@@ -123,12 +123,12 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       this .childNode       = null;
       this .boundedObject   = null;
-      this .pointingNode    = null;
+      this .pointingObject  = null;
       this .cameraObject    = null;
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleNode     = null;
+      this .visibleObject   = null;
       this .bboxObject      = null;
 
       // Add node.
@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                         this .boundedObject = childNode;
 
                      if (childNode .isPointingObject ())
-                        this .pointingNode = childNode;
+                        this .pointingObject = childNode;
 
                      if (childNode .isCameraObject ())
                         this .cameraObject = childNode;
@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                         this .shadowObject = childNode;
 
                      if (childNode .isVisibleObject ())
-                        this .visibleNode = childNode;
+                        this .visibleObject = childNode;
                   }
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_pointingObjects__ ()
    {
-      this .setPointingObject (this .pointingNode);
+      this .setPointingObject (this .pointingObject);
    },
    set_cameraObjects__ ()
    {
@@ -234,7 +234,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNode || this .bboxObject);
+      this .setVisibleObject (this .visibleObject || this .bboxObject);
    },
    traverse (type, renderObject)
    {
@@ -242,7 +242,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       {
          case TraverseType .POINTER:
          {
-            this .pointingNode ?.traverse (type, renderObject);
+            this .pointingObject ?.traverse (type, renderObject);
             return;
          }
          case TraverseType .CAMERA:
@@ -267,7 +267,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
             pickingHierarchy .push (this);
 
             if (browser .getPickable () .at (-1))
-               this .visibleNode ?.traverse (type, renderObject);
+               this .visibleObject ?.traverse (type, renderObject);
             else
                this .pickableObject ?.traverse (type, renderObject);
 
@@ -286,8 +286,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleNode ?.traverse    (type, renderObject);
-            this .bboxObject  ?.displayBBox (type, renderObject);
+            this .visibleObject ?.traverse    (type, renderObject);
+            this .bboxObject    ?.displayBBox (type, renderObject);
             return;
          }
       }

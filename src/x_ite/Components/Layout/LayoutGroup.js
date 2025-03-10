@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
+      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
    },
    getBBox (bbox, shadows)
    {
