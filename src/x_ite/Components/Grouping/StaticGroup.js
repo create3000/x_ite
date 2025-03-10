@@ -116,6 +116,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .groupNode ._children .addInterest ("set_children__", this);
 
       this .connectChildNode (this .groupNode);
+
+      this .set_rebuild__ ();
       this .set_children__ ();
    },
    getBBox (bbox, shadows)
