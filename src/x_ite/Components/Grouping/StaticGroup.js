@@ -105,13 +105,15 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
       this ._children   .addFieldInterest (this .groupNode ._children);
 
-      this .groupNode ._children .addInterest ("set_children__", this);
-
       this .groupNode ._bboxSize   = this ._bboxSize;
       this .groupNode ._bboxCenter = this ._bboxCenter;
       this .groupNode ._children   = this ._children;
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
+
+      // Connect later for correct order of events.
+      this .groupNode ._rebuild  .addInterest ("set_rebuild__",  this);
+      this .groupNode ._children .addInterest ("set_children__", this);
 
       this .connectChildNode (this .groupNode);
       this .set_children__ ();
@@ -120,11 +122,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    {
       return bbox .assign (shadows ? this .shadowBBox : this .bbox);
    },
-   set_children__ ()
+   set_rebuild__ ()
    {
       this .groupNode .getBBox (this .bbox);
       this .groupNode .getBBox (this .shadowBBox, true);
-
+   },
+   set_children__ ()
+   {
       this .visibleNodes = null;
    },
    traverse (type, renderObject)

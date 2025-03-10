@@ -104,6 +104,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       {
          const childNode = this .childNode;
 
+         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
          childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
          childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
          childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
@@ -146,6 +147,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                case X3DConstants .Transform:
                case X3DConstants .X3DShapeNode:
                {
+                  childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
                   childNode ._isPointingObject  .addInterest ("requestRebuild", this);
                   childNode ._isCameraObject    .addInterest ("requestRebuild", this);
                   childNode ._isPickableObject  .addInterest ("requestRebuild", this);

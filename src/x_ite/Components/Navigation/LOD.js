@@ -107,6 +107,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
       {
          const childNode = this .childNode;
 
+         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
          childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
          childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
          childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
@@ -141,6 +142,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
          if (childNode)
          {
+            childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
             childNode ._isPointingObject  .addInterest ("requestRebuild", this);
             childNode ._isCameraObject    .addInterest ("requestRebuild", this);
             childNode ._isPickableObject  .addInterest ("requestRebuild", this);
