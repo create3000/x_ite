@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             this ._children .addInterest ("connectChildren", this);
          }
 
-         this ._children = Array .from (this ._children) .filter (child => this .children .has (child));
+         this ._children = Array .from (this .children);
       }
 
       this ._removeChildren .length = 0;
