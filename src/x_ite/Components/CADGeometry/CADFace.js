@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
+         return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -126,7 +126,6 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       this .collisionObject = null;
       this .shadowObject    = null;
       this .visibleNode     = null;
-      this .boundedObject   = null;
       this .bboxObject      = null;
 
       // Add node.
@@ -172,12 +171,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                         this .shadowObject = childNode;
 
                      if (childNode .isVisibleObject ())
-                     {
                         this .visibleNode = childNode;
-
-                        if (childNode .getBBox)
-                           this .boundedObject = childNode;
-                     }
                   }
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))

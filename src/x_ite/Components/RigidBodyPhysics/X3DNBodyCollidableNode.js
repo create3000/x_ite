@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .boundedObject ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
+         return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -182,14 +182,13 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
 
       // Clear node.
 
-      this .childNode  = null;
+      this .childNode       = null;
       this .pointingNode    = null;
       this .cameraObject    = null;
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
       this .visibleNode     = null;
-      this .boundedObject   = null;
       this .bboxObject      = null;
 
       // Add node.
@@ -223,12 +222,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
                this .shadowObject = childNode;
 
             if (childNode .isVisibleObject ())
-            {
                this .visibleNode = childNode;
-
-               if (childNode .getBBox)
-                  this .boundedObject = childNode;
-            }
          }
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))

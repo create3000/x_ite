@@ -82,7 +82,6 @@ function X3DGroupingNode (executionContext)
    this .shadowObjects             = new Set ();
    this .childNodes                = new Set ();
    this .visibleNodes              = new Set ();
-   this .boundedObjects            = new Set ();
    this .bboxObjects               = new Set ();
    this .sensors                   = [ ];
 }
@@ -114,7 +113,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    getSubBBox (bbox, shadows)
    {
-      return X3DBoundedObject .prototype .getBBox .call (this, this .boundedObjects, bbox, shadows);
+      return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
    },
    addAllowedTypes (... types)
    {
@@ -214,7 +213,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .shadowObjects             .clear ();
       this .childNodes                .clear ();
       this .visibleNodes              .clear ();
-      this .boundedObjects            .clear ();
       this .bboxObjects               .clear ();
    },
    addChildren (children)
@@ -320,12 +318,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                      this .shadowObjects .add (childNode);
 
                   if (childNode .isVisibleObject ())
-                  {
                      this .visibleNodes .add (childNode);
-
-                     if (childNode .getBBox)
-                        this .boundedObjects .add (childNode);
-                  }
                }
 
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -419,7 +412,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                this .shadowObjects    .delete (childNode);
                this .childNodes       .delete (childNode);
                this .visibleNodes     .delete (childNode);
-               this .boundedObjects   .delete (childNode);
                this .bboxObjects      .delete (childNode);
                break;
             }

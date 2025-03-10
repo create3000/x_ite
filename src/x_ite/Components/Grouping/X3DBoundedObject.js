@@ -119,7 +119,7 @@ Object .assign (X3DBoundedObject .prototype,
       bbox .set ();
 
       for (const node of nodes)
-         bbox .add (node .getBBox (childBBox, shadows));
+         bbox .add (node .getBBox ?.(childBBox, shadows) ?? childBBox .set ());
 
       return bbox;
    },

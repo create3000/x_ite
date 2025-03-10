@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    getSubBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
+         return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -118,7 +118,6 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
       this .collisionObject = null;
       this .shadowObject    = null;
       this .visibleNode     = null;
-      this .boundedObject   = null;
       this .bboxObject      = null;
 
       // Add node.
@@ -158,12 +157,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
                   this .shadowObject = childNode;
 
                if (childNode .isVisibleObject ())
-               {
                   this .visibleNode = childNode;
-
-                  if (childNode .getBBox)
-                     this .boundedObject = childNode;
-               }
          }
 
 
