@@ -86,6 +86,11 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    {
       this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
    },
+   isVisibleObject ()
+   {
+      // Make sure matrix is calculated for bbox and children.
+      return true;
+   },
    getBBox (bbox, shadows)
    {
       return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
@@ -111,8 +116,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
          }
          default:
          {
-            if (this .viewportNode)
-               this .viewportNode .push ();
+            this .viewportNode ?.push ();
 
             if (this .layoutNode)
             {
@@ -134,9 +138,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
                X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
             }
 
-            if (this .viewportNode)
-               this .viewportNode .pop ();
-
+            this .viewportNode ?.pop ();
             return;
          }
       }

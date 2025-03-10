@@ -67,6 +67,11 @@ function Billboard (executionContext)
 
 Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .prototype),
 {
+   isVisibleObject ()
+   {
+      // Make sure matrix is calculated for bbox and children.
+      return true;
+   },
    getBBox (bbox, shadows)
    {
       return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);

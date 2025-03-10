@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
+         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -126,6 +126,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       this .shadowObject    = null;
       this .visibleNode     = null;
       this .boundedObject   = null;
+      this .bboxObject      = null;
 
       // Add node.
 
@@ -173,13 +174,16 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                         this .visibleNode = childNode;
                   }
 
+                  if (childNode .isVisible () && childNode .getBBox)
+                     this .boundedObject = childNode;
+
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                   {
                      childNode ._display     .addInterest ("requestRebuild", this);
                      childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                      if (childNode .isBBoxVisible ())
-                        this .boundedObject = childNode;
+                        this .bboxObject = childNode;
                   }
 
                   break;
@@ -221,7 +225,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNode || this .boundedObject);
+      this .setVisibleObject (this .visibleNode || this .bboxObject);
    },
    traverse (type, renderObject)
    {
@@ -273,8 +277,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleNode   ?.traverse    (type, renderObject);
-            this .boundedObject ?.displayBBox (type, renderObject);
+            this .visibleNode ?.traverse    (type, renderObject);
+            this .bboxObject  ?.displayBBox (type, renderObject);
             return;
          }
       }

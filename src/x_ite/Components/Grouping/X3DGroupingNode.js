@@ -83,6 +83,7 @@ function X3DGroupingNode (executionContext)
    this .childNodes                = new Set ();
    this .visibleNodes              = new Set ();
    this .boundedObjects            = new Set ();
+   this .bboxObjects               = new Set ();
    this .sensors                   = [ ];
 }
 
@@ -112,7 +113,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    getSubBBox (bbox, shadows)
    {
-      return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
+      return X3DBoundedObject .prototype .getBBox .call (this, this .boundedObjects, bbox, shadows);
    },
    addAllowedTypes (... types)
    {
@@ -213,6 +214,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .childNodes                .clear ();
       this .visibleNodes              .clear ();
       this .boundedObjects            .clear ();
+      this .bboxObjects               .clear ();
    },
    addChildren (children)
    {
@@ -320,13 +322,16 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                      this .visibleNodes .add (childNode);
                }
 
+               if (childNode .isVisible () && childNode .getBBox)
+                  this .boundedObjects .add (childNode);
+
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                {
                   childNode ._display     .addInterest ("requestRebuild", this);
                   childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                   if (childNode .isBBoxVisible ())
-                     this .boundedObjects .add (childNode);
+                     this .bboxObjects .add (childNode);
                }
 
                break;
@@ -412,6 +417,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                this .childNodes       .delete (childNode);
                this .visibleNodes     .delete (childNode);
                this .boundedObjects   .delete (childNode);
+               this .bboxObjects      .delete (childNode);
                break;
             }
             default:
@@ -452,7 +458,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNodes .size || this .boundedObjects .size);
+      this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size);
    },
    traverse (type, renderObject)
    {
@@ -572,7 +578,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             for (const visibleNode of this .visibleNodes)
                visibleNode .traverse (type, renderObject);
 
-            for (const boundedObject of this .boundedObjects)
+            for (const boundedObject of this .bboxObjects)
                boundedObject .displayBBox (type, renderObject);
 
             for (const displayNode of displayNodes)

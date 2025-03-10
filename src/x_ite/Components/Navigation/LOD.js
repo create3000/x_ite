@@ -85,11 +85,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    getSubBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-      {
-         const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
-
-         return boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
-      }
+         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -135,6 +131,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
       this .shadowObject    = null;
       this .visibleNode     = null;
       this .boundedObject   = null;
+      this .bboxObject      = null;
 
       // Add node.
 
@@ -174,13 +171,16 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
                   this .visibleNode = childNode;
             }
 
+            if (childNode .isVisible () && childNode .getBBox)
+               this .boundedObject = childNode;
+
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
                childNode ._display     .addInterest ("requestRebuild", this);
                childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                if (childNode .isBBoxVisible ())
-                  this .boundedObject = childNode;
+                  this .bboxObject = childNode;
             }
          }
       }
@@ -325,8 +325,8 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
                   }
                }
 
-               this .visibleNode   ?.traverse    (type, renderObject);
-               this .boundedObject ?.displayBBox (type, renderObject);
+               this .visibleNode ?.traverse    (type, renderObject);
+               this .bboxObject  ?.displayBBox (type, renderObject);
                return;
             }
          }

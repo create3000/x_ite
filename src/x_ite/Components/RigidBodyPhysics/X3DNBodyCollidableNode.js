@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
+         return this .boundedObject ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -189,6 +189,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       this .shadowObject    = null;
       this .visibleNode     = null;
       this .boundedObject   = null;
+      this .bboxObject      = null;
 
       // Add node.
 
@@ -224,13 +225,16 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
                this .visibleNode = childNode;
          }
 
+         if (childNode .isVisible () && childNode .getBBox)
+            this .boundedObject = childNode;
+
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
             childNode ._display     .addInterest ("requestRebuild", this);
             childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
             if (childNode .isBBoxVisible ())
-               this .boundedObject = childNode;
+               this .bboxObject = childNode;
          }
 
          delete this .traverse;
@@ -245,7 +249,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       this .setPickableObject  (this .pickableObject);
       this .setCollisionObject (this .collisionObject);
       this .setShadowObject    (this .shadowObject);
-      this .setVisibleObject   (this .visibleNode);
+      this .setVisibleObject   (this .visibleNode || this .bboxObject);
    },
    requestRebuild ()
    {
@@ -308,8 +312,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleNode   ?.traverse (type, renderObject);
-            this .boundedObject ?.displayBBox (type, renderObject);
+            this .visibleNode ?.traverse    (type, renderObject);
+            this .bboxObject  ?.displayBBox (type, renderObject);
             break;
          }
       }
