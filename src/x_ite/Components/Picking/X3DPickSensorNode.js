@@ -326,10 +326,8 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
       return function ()
       {
-         this .sortOrder = sortOrders .get (this ._sortOrder .getValue ());
-
-         if (this .sortOrder === undefined)
-            this .sortOrder = SortOrder .CLOSEST;
+         this .sortOrder = sortOrders .get (this ._sortOrder .getValue ())
+            ?? SortOrder .CLOSEST;
       };
    })(),
    set_pickTarget__ ()
