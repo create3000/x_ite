@@ -270,8 +270,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             case X3DConstants .TransformSensor:
             case X3DConstants .X3DPickSensorNode:
             {
-               childNode ._isPickableObject .addInterest ("requestRebuild", this);
-
                if (childNode .isPickableObject ())
                   this .pickableSensorNodes .add (childNode);
 
@@ -373,8 +371,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             case X3DConstants .TransformSensor:
             case X3DConstants .X3DPickSensorNode:
             {
-               childNode ._isPickableObject .removeInterest ("requestRebuild", this);
-
                this .pickableSensorNodes .delete (childNode);
                continue;
             }
