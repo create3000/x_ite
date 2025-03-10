@@ -91,8 +91,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._rebuild  .addInterest ("set_child__",         this);
-      this ._bboxSize .addInterest ("set_visibleObject__", this);
+      this ._rebuild  .addInterest ("set_child__",          this);
+      this ._bboxSize .addInterest ("set_visibleObjects__", this);
 
       this .addInterest ("eventsProcessed", this);
 
