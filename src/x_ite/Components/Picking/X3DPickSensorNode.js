@@ -413,10 +413,8 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
    process ()
    {
-      const modelMatrices = this .modelMatrices;
-
-      for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
-         ModelMatrixCache .push (modelMatrices [m]);
+      for (const modelMatrix of this .modelMatrices)
+         ModelMatrixCache .push (modelMatrix);
 
       this .modelMatrices .length = 0;
       this .targets .size         = 0;
