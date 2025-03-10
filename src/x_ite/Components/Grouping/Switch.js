@@ -166,7 +166,6 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
                   this .visibleObject = childNode;
             }
 
-
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
                childNode ._display     .addInterest ("requestRebuild", this);
