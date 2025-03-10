@@ -78,8 +78,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       X3DProductStructureChildNode .prototype .initialize .call (this);
       X3DBoundedObject             .prototype .initialize .call (this);
 
-      this ._rebuild .addInterest ("set_children__", this);
-      this ._shape   .addInterest ("requestRebuild", this);
+      this ._rebuild  .addInterest ("set_children__",      this);
+      this ._bboxSize .addInterest ("set_visibleObject__", this);
+      this ._shape    .addInterest ("requestRebuild",      this);
 
       this .set_children__ ();
    },
@@ -225,7 +226,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNode || this .bboxObject);
+      this .setVisibleObject (this .visibleNode || this .bboxObject || !this .isDefaultBBoxSize ());
    },
    traverse (type, renderObject)
    {

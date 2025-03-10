@@ -204,7 +204,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNode || this .bboxObject);
+      this .setVisibleObject (this .visibleNode || this .bboxObject || !this .isDefaultBBoxSize ());
    },
    traverse (type, renderObject)
    {

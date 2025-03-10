@@ -71,11 +71,6 @@ function ScreenGroup (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode .prototype),
 {
-   isVisibleObject ()
-   {
-      // Make sure matrix is calculated for bbox and children.
-      return true;
-   },
    getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);

@@ -91,7 +91,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._rebuild .addInterest ("set_child__", this);
+      this ._rebuild  .addInterest ("set_child__",         this);
+      this ._bboxSize .addInterest ("set_visibleObject__", this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -244,12 +245,36 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          this .traverse = Function .prototype;
       }
 
-      this .setPointingObject  (this .pointingNode);
-      this .setCameraObject    (this .cameraObject);
-      this .setPickableObject  (this .pickableObject);
+      this .set_pointingObjects__ ();
+      this .set_cameraObjects__ ();
+      this .set_pickableObjects__ ();
+      this .set_collisionObjects__ ();
+      this .set_shadowObjects__ ();
+      this .set_visibleObjects__ ();
+   },
+   set_pointingObjects__ ()
+   {
+      this .setPointingObject (this .pointingNode);
+   },
+   set_cameraObjects__ ()
+   {
+      this .setCameraObject (this .cameraObject);
+   },
+   set_pickableObjects__ ()
+   {
+      this .setPickableObject (this .pickableObject);
+   },
+   set_collisionObjects__ ()
+   {
       this .setCollisionObject (this .collisionObject);
-      this .setShadowObject    (this .shadowObject);
-      this .setVisibleObject   (this .visibleNode || this .bboxObject);
+   },
+   set_shadowObjects__ ()
+   {
+      this .setShadowObject (this .shadowObject);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleNode || this .bboxObject || !this .isDefaultBBoxSize ());
    },
    requestRebuild ()
    {

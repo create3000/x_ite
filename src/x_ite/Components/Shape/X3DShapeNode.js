@@ -89,6 +89,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
 
       this ._pointerEvents .addInterest ("set_pointingObject__", this);
       this ._castShadow    .addInterest ("set_shadowObject__",   this);
+      this ._bboxSize      .addInterest ("set_visibleObject__",  this);
       this ._bboxSize      .addInterest ("set_bbox__",           this);
       this ._bboxCenter    .addInterest ("set_bbox__",           this);
       this ._appearance    .addInterest ("set_appearance__",     this);
@@ -271,7 +272,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_visibleObject__ ()
    {
-      this .setVisibleObject (this .isEnabled ());
+      this .setVisibleObject (this .isEnabled () || !this .isDefaultBBoxSize ());
    },
    set_traverse__ ()
    {

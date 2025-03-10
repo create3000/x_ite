@@ -98,6 +98,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this ._rebuild          .addInterest ("set_children__",        this);
       this ._transformSensors .addInterest ("set_pickableObjects__", this);
 
+      this ._bboxSize       .addInterest ("set_visibleObjects__", this);
       this ._addChildren    .addInterest ("set_addChildren__",    this);
       this ._removeChildren .addInterest ("set_removeChildren__", this);
       this ._children       .addInterest ("requestRebuild",       this);
@@ -458,7 +459,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size);
+      this .setVisibleObject (this .visibleNodes .size || this .bboxObjects .size || !this .isDefaultBBoxSize ());
    },
    traverse (type, renderObject)
    {

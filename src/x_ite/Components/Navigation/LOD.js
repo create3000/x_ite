@@ -211,6 +211,8 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    {
       this .setShadowObject (this .shadowObject);
    },
+   set_visibleObjects__ ()
+   { },
    getLevel: (() =>
    {
       const
