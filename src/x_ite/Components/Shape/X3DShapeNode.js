@@ -258,7 +258,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_boundedObject__ ()
    {
-      this .setVisibleObject (this .isEnabled () || !this .isDefaultBBoxSize ());
+      this .setBoundedObject (this .isEnabled () || !this .isDefaultBBoxSize ());
    },
    set_pointingObject__ ()
    {
