@@ -70,6 +70,15 @@ function X3DChildNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .prototype),
 {
+   setBoundedObject (value)
+   {
+      if (!!value !== this ._isBoundedObject .getValue ())
+         this ._isBoundedObject = value;
+   },
+   isBoundedObject ()
+   {
+      return this ._isBoundedObject .getValue ();
+   },
    setPointingObject (value)
    {
       if (!!value !== this ._isPointingObject .getValue ())
@@ -128,15 +137,6 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    {
       // This function will be overloaded by X3DBoundedObject.
       return true;
-   },
-   setBoundedObject (value)
-   {
-      if (!!value !== this ._isBoundedObject .getValue ())
-         this ._isBoundedObject = value;
-   },
-   isBoundedObject ()
-   {
-      return this ._isBoundedObject .getValue ();
    },
    connectChildNode (childNode, exclude)
    {
