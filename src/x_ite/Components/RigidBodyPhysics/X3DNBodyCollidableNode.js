@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    },
    getLocalTransform: (() =>
    {
-      var
+      const
          m = new Matrix4 (),
          o = new Ammo .btVector3 (0, 0, 0),
          l = new Ammo .btTransform ();
