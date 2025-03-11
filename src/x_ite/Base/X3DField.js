@@ -240,7 +240,9 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    addFieldInterest (field)
    {
-      this .getFieldInterests () .add (field);
+      this [_fieldInterests] = new IterableWeakSet (this [_fieldInterests]);
+
+      this [_fieldInterests] .add (field);
    },
    removeFieldInterest (field)
    {

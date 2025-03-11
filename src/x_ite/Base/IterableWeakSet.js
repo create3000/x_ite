@@ -53,17 +53,19 @@ export default Features .WEAK_REF && Features .FINALIZATION_REGISTRY ?
  */
 class IterableWeakSet
 {
-   #callback = undefined;
    #map      = new Map ();
    #registry = new FinalizationRegistry (id =>
    {
       this .#map .delete (id);
-      this .#callback ?.();
    });
 
-   constructor (callback)
+   constructor (objects)
    {
-      this .#callback = callback;
+      if (objects)
+      {
+         for (const object of objects)
+            this .add (object);
+      }
    }
 
    *[Symbol .iterator] ()
@@ -80,7 +82,6 @@ class IterableWeakSet
    {
       this .#map .set (object .getId (), new WeakRef (object));
       this .#registry .register (object, object .getId (), object);
-      this .#callback ?.();
    }
 
    clear ()
@@ -89,14 +90,12 @@ class IterableWeakSet
          this .#registry .unregister (object);
 
       this .#map .clear ();
-      this .#callback ?.();
    }
 
    delete (object)
    {
       this .#map .delete (object .getId ());
       this .#registry .unregister (object);
-      this .#callback ?.();
    }
 
    forEach (callbackFn, thisArg)
@@ -135,8 +134,8 @@ class IterableWeakSet
 :
 class IterableWeakSet extends Set
 {
-   constructor ()
+   constructor (objects)
    {
-      super ();
+      super (objects);
    }
 };
