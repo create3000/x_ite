@@ -54,10 +54,7 @@ export default Features .WEAK_REF && Features .FINALIZATION_REGISTRY ?
 class IterableWeakSet
 {
    #map      = new Map ();
-   #registry = new FinalizationRegistry (id =>
-   {
-      this .#map .delete (id);
-   });
+   #registry = new FinalizationRegistry (id => this .#map .delete (id));
 
    constructor (objects)
    {
