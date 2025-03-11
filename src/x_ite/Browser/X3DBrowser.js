@@ -708,16 +708,20 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          {
             const [key, object] = args;
 
-            for (const map of this [_browserCallbacks] .values ())
-               map .set (key, object);
+            for (const [event, map] of this [_browserCallbacks])
+               this [_browserCallbacks] .set (event, new Map (map) .set (key, object));
 
             break;
          }
          case 3:
          {
-            const [key, event, object] = args;
+            const
+               [key, event, object] = args,
+               map                  = new Map (this [_browserCallbacks] .get (event));
 
-            this [_browserCallbacks] .get (event) .set (key, object);
+            this [_browserCallbacks] .set (event, map);
+
+            map .set (key, object);
             break;
          }
       }
@@ -737,7 +741,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          }
          case 2:
          {
-            const [key, event] = args ;
+            const [key, event] = args;
 
             this [_browserCallbacks] .get (event) .delete (key);
             break;

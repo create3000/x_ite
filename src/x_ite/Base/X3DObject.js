@@ -98,6 +98,7 @@ Object .assign (X3DObject .prototype,
          interestId = X3DObject .getInterestId (callback, object);
 
       this [_registries] ??= new WeakMap ();
+      this [_interests]    = new Map (this [_interests]);
 
       const registry = this [_registries] .get (callback)
          ?? new FinalizationRegistry (interestId => this [_interests] .delete (interestId));
@@ -105,7 +106,7 @@ Object .assign (X3DObject .prototype,
       this [_registries] .set (callback, registry);
 
       registry .register (object, interestId, object);
-      this .getInterests () .set (interestId, { callback, weakRef, args });
+      this [_interests] .set (interestId, { callback, weakRef, args });
    },
    removeInterest (callbackName, object)
    {
