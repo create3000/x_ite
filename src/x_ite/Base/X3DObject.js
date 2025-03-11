@@ -49,11 +49,11 @@ import Generator from "../InputOutput/Generator.js";
 import Features  from "../Features.js";
 
 const
-   _name      = Symbol (),
-   _interests = Symbol (),
-   _registry  = Symbol (),
-   _userData  = Symbol (),
-   _generator = Symbol ();
+   _name       = Symbol (),
+   _interests  = Symbol (),
+   _registries = Symbol (),
+   _userData   = Symbol (),
+   _generator  = Symbol ();
 
 const EMPTY = [ ];
 
@@ -63,7 +63,7 @@ Object .assign (X3DObject .prototype,
 {
    [_name]: "",
    [_interests]: null,
-   [_registry]: null,
+   [_registries]: null,
    [_userData]: null,
    [_generator]: new Generator ({ }),
    getId ()
@@ -88,27 +88,31 @@ Object .assign (X3DObject .prototype,
    },
    hasInterest (callbackName, object)
    {
-      return this [_interests] ?.has (X3DObject .getInterestId (callbackName, object)) ?? false;
+      return this [_interests] ?.has (X3DObject .getInterestId (object [callbackName], object)) ?? false;
    },
    addInterest (callbackName, object, ... args)
    {
       const
-         interestId = X3DObject .getInterestId (callbackName, object),
          callback   = object [callbackName],
-         weakRef    = new WeakRef (object);
+         weakRef    = new WeakRef (object),
+         interestId = X3DObject .getInterestId (callback, object);
 
-      this [_registry] ??= new FinalizationRegistry (interestId => this [_interests] .delete (interestId));
+      this [_registries] ??= new WeakMap ();
 
-      // Copy interests in case of this function is called during a `processInterests` call.
-      this [_interests] = new Map (this [_interests]);
+      const registry = this [_registries] .get (callback)
+         ?? new FinalizationRegistry (interestId => this [_interests] .delete (interestId));
 
-      this [_interests] .set (interestId, { callback, weakRef, args });
-      this [_registry] .register (object, interestId, object);
+      this [_registries] .set (callback, registry);
+
+      registry .register (object, interestId, object);
+      this .getInterests () .set (interestId, { callback, weakRef, args });
    },
    removeInterest (callbackName, object)
    {
-      this [_interests] ?.delete (X3DObject .getInterestId (callbackName, object));
-      this [_registry] ?.unregister (object);
+      const callback = object [callbackName];
+
+      this [_interests] ?.delete (X3DObject .getInterestId (callback, object));
+      this [_registries] ?.get (callback) ?.unregister (object);
    },
    getInterests ()
    {
@@ -271,9 +275,9 @@ Object .assign (X3DObject,
          return counter;
       };
    })(),
-   getInterestId (callbackName, object)
+   getInterestId (callback, object)
    {
-      return `${this .getId (object)}.${this .getId (object [callbackName])}`;
+      return `${this .getId (callback)}:${this .getId (object)}`;
    },
 });
 

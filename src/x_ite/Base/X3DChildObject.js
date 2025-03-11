@@ -54,6 +54,8 @@ const
    _parents          = Symbol (),
    _private          = Symbol ();
 
+const EMPTY = [ ];
+
 function X3DChildObject ()
 {
    X3DObject .call (this);
@@ -63,7 +65,7 @@ Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .pr
 {
    [_modificationTime]: 0,
    [_tainted]: false,
-   [_parents]: new IterableWeakSet (),
+   [_parents]: null,
    [_private]: false,
    isInitializable ()
    {
@@ -95,12 +97,12 @@ Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .pr
    },
    addEvent ()
    {
-      for (const parent of this [_parents])
+      for (const parent of this [_parents] ?? EMPTY)
          parent .addEvent (this);
    },
    addEventObject (field, event)
    {
-      for (const parent of this [_parents])
+      for (const parent of this [_parents] ?? EMPTY)
          parent .addEventObject (this, event);
    },
    processEvent ()
@@ -120,7 +122,7 @@ Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .pr
    {
       let cloneCount = 0;
 
-      for (const parent of this [_parents])
+      for (const parent of this [_parents] ?? EMPTY)
       {
          if (parent [_private])
             continue;
@@ -132,23 +134,20 @@ Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .pr
    },
    addParent (parent)
    {
-      if (this [_parents] === X3DChildObject .prototype [_parents])
-         this [_parents] = new IterableWeakSet (() => this .parentsChanged ());
-
-      this [_parents] .add (parent);
+      this .getParents () .add (parent);
    },
    removeParent (parent)
    {
-      this [_parents] .delete (parent);
+      this [_parents] ?.delete (parent);
    },
    getParents ()
    {
-      return this [_parents];
+      return this [_parents] ??= new IterableWeakSet ();
    },
    parentsChanged () { },
    dispose ()
    {
-      this [_parents] .clear ();
+      this [_parents] ?.clear ();
 
       X3DObject .prototype .dispose .call (this);
    },
