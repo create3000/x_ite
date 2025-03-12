@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .p
 
       // Do transition.
 
-      if (changedNodes .length)
+      if (changedNodes .includes (top))
          top .transitionStart (layerNode, fromNode);
 
       this .addNodeEvent ();
