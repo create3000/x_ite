@@ -113,15 +113,15 @@ Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .p
 
       for (const bindNode of changedNodes)
       {
-         if (bindNode ._set_bind .getValue ())
-         {
-            const index = this .nodes .indexOf (bindNode);
+         if (!bindNode ._set_bind .getValue ())
+            continue;
 
-            if (index > -1)
-               this .nodes .splice (index, 1);
+         const index = this .nodes .indexOf (bindNode);
 
-            this .nodes .push (bindNode);
-         }
+         if (index > -1)
+            this .nodes .splice (index, 1);
+
+         this .nodes .push (bindNode);
       }
 
       // Bind top node if not bound.
@@ -142,7 +142,8 @@ Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .p
 
       // Do transition.
 
-      top .transitionStart (layerNode, fromNode);
+      if (changedNodes .length)
+         top .transitionStart (layerNode, fromNode);
 
       this .addNodeEvent ();
    },
