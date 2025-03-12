@@ -96,7 +96,7 @@ Object .assign (Object .setPrototypeOf (OrientationInterpolator .prototype, X3DI
 
          this ._value_changed = keyValue0 .slerp (keyValue1, weight);
       };
-   }) (),
+   })(),
 });
 
 Object .defineProperties (OrientationInterpolator,
