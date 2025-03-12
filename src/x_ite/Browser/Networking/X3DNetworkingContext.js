@@ -169,7 +169,7 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    getDisplayLoadCount ()
    {
-      return [... this [_loadingObjects]] .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
+      return Array .from (this [_loadingObjects]) .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
    },
    setLoadCount (value)
    {
