@@ -108,7 +108,7 @@ Object .assign (X3DObject .prototype,
 
       this [_interests] = new Map (this [_interests]);
 
-      this [_registry] .register (object, interestId .replace (/^\d+/, ""), object);
+      this [_registry] .register (object, interestId .replace (/^[^:]+/, ""), object);
       this [_interests] .set (interestId, { callback, weakRef, args });
    },
    removeInterest (callbackName, object)
