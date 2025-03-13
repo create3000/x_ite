@@ -91,6 +91,7 @@ function X3DPointingDeviceSensorContext ()
       pointer: new Vector2 (),
       ray: new Line3 (),
       sensors: new Map (),
+      viewMatrix: new Matrix4 (), // Used by SnapTool.
       modelViewMatrix: new Matrix4 (),
       point: new Vector3 (),
       normal: new Vector3 (), // Must be normalized if used.
@@ -105,6 +106,7 @@ function X3DPointingDeviceSensorContext ()
             pointer: this .pointer .copy (),
             ray: this .ray .copy (),
             sensors: new Map (this .sensors),
+            viewMatrix: this .viewMatrix .copy (),
             modelViewMatrix: this .modelViewMatrix .copy (),
             point: this .point .copy (),
             normal: this .normal .copy (),
@@ -339,6 +341,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .layerNode = renderObject;
          hit .shapeNode = shapeNode;
 
+         hit .viewMatrix      .assign (renderObject .getViewpoint () .getViewMatrix ());
          hit .modelViewMatrix .assign (modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
@@ -359,6 +362,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .layerNode = null;
          hit .shapeNode = null;
 
+         hit .viewMatrix      .assign (Matrix4 .Identity);
          hit .modelViewMatrix .assign (Matrix4 .Identity);
       }
 
