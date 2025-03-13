@@ -80,7 +80,8 @@ Object .assign (Object .setPrototypeOf (X3DBindableNode .prototype, X3DChildNode
    { },
    set_bind__ ()
    {
-      modificationCount >>>= 0; // convert to uint
+      if (modificationCount === Number .MAX_SAFE_INTEGER)
+         modificationCount = 0;
 
       this .modificationCount = ++ modificationCount;
    },

@@ -212,7 +212,9 @@ Object .assign (X3DRenderObject .prototype,
 
       return function ()
       {
-         renderCount >>>= 0; // convert to uint
+         if (renderCount === Number .MAX_SAFE_INTEGER)
+            renderCount = 0;
+
          this .renderCount = ++ renderCount;
       }
    })(),
