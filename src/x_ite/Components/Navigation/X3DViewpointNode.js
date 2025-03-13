@@ -331,9 +331,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    transitionStart (layerNode, fromViewpointNode)
    {
-      if (this .timeSensor ._isActive .getValue ())
-         return;
-
       if (this ._jump .getValue ())
       {
          const relative = this .getRelativeTransformation (fromViewpointNode);
