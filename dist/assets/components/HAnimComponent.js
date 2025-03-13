@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -313,13 +313,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this ._bboxSize         .addFieldInterest (this .transformNode ._bboxSize);
       this ._bboxCenter       .addFieldInterest (this .transformNode ._bboxCenter);
 
-      this .transformNode ._isPointingObject  .addFieldInterest (this ._isPointingObject);
-      this .transformNode ._isCameraObject    .addFieldInterest (this ._isCameraObject);
-      this .transformNode ._isPickableObject  .addFieldInterest (this ._isPickableObject);
-      this .transformNode ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-      this .transformNode ._isShadowObject    .addFieldInterest (this ._isShadowObject);
-      this .transformNode ._isVisibleObject   .addFieldInterest (this ._isVisibleObject);
-
       this .transformNode ._translation      = this ._translation;
       this .transformNode ._rotation         = this ._rotation;
       this .transformNode ._scale            = this ._scale;
@@ -337,10 +330,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this .skinNode       .setup ();
       this .transformNode  .setup ();
 
-      this .setPointingObject (this .transformNode .isPointingObject ());
-      this .setCameraObject   (this .transformNode .isCameraObject ());
-      this .setPickableObject (this .transformNode .isPickableObject ());
-      this .setVisibleObject  (this .transformNode .isVisibleObject ());
+      this .connectChildNode (this .transformNode);
 
       // Check WebGL version.
 

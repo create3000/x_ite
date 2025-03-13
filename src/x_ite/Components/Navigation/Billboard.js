@@ -62,11 +62,23 @@ function Billboard (executionContext)
 
    this .addType (X3DConstants .Billboard);
 
+   // Private properties
+
    this .matrix = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .prototype),
 {
+   initialize ()
+   {
+      X3DGroupingNode .prototype .initialize .call (this);
+
+      this ._bboxSize .addInterest ("set_visibleObjects__", this);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
+   },
    getBBox (bbox, shadows)
    {
       return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);

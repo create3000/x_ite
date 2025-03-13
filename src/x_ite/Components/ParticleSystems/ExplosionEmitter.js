@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticle
          return vec4 (position, 1.0);
       }`);
    },
-   getBBox: (function ()
+   getBBox: (() =>
    {
       const bboxSize = new Vector3 ();
 

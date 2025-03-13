@@ -220,7 +220,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       this .updateTextureParameters ();
    },
-   skyBoxToCubeMap: (function ()
+   skyBoxToCubeMap: (() =>
    {
       const offsets = [
          new Vector2 (1, 1), // Front

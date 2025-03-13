@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -86,9 +86,9 @@ var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_req
 ;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
-;// external "__X_ITE_X3D__ .GeometryTypes"
-const external_X_ITE_X3D_GeometryTypes_namespaceObject = __X_ITE_X3D__ .GeometryTypes;
-var external_X_ITE_X3D_GeometryTypes_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_GeometryTypes_namespaceObject);
+;// external "__X_ITE_X3D__ .GeometryType"
+const external_X_ITE_X3D_GeometryType_namespaceObject = __X_ITE_X3D__ .GeometryType;
+var external_X_ITE_X3D_GeometryType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_GeometryType_namespaceObject);
 ;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
@@ -491,7 +491,7 @@ uniform int texCoordCount;uniform sampler2D texCoordRamp;
 #endif
 ${Array .from (this .uniforms .values ()) .join ("\n")}
 in vec4 input0;in vec4 input2;in vec4 input6;out vec4 output0;out vec4 output1;out vec4 output2;out vec4 output3;out vec4 output4;out vec4 output5;out vec4 output6;
-${Object .entries ((external_X_ITE_X3D_GeometryTypes_default())) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
+${Object .entries ((external_X_ITE_X3D_GeometryType_default())) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
 const int ARRAY_SIZE=32;const float M_PI=3.14159265359;uniform float NaN;vec4 texelFetch(const in sampler2D sampler,const in int index,const in int lod){int x=textureSize(sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(sampler,p,lod);return t;}vec3 save_normalize(const in vec3 vector){float l=length(vector);if(l==0.0)return vec3(0.0);return vector/l;}vec4 Quaternion(const in vec3 fromVector,const in vec3 toVector){vec3 from=save_normalize(fromVector);vec3 to=save_normalize(toVector);float cos_angle=dot(from,to);vec3 cross_vec=cross(from,to);float cross_len=length(cross_vec);if(cross_len==0.0){if(cos_angle>0.0){return vec4(0.0,0.0,0.0,1.0);}else{vec3 t=cross(from,vec3(1.0,0.0,0.0));if(dot(t,t)==0.0)t=cross(from,vec3(0.0,1.0,0.0));t=save_normalize(t);return vec4(t,0.0);}}else{float s=sqrt(abs(1.0-cos_angle)*0.5);cross_vec=save_normalize(cross_vec);return vec4(cross_vec*s,sqrt(abs(1.0+cos_angle)*0.5));}}vec3 multVecQuat(const in vec3 v,const in vec4 q){float a=q.w*q.w-q.x*q.x-q.y*q.y-q.z*q.z;float b=2.0*(v.x*q.x+v.y*q.y+v.z*q.z);float c=2.0*q.w;vec3 r=a*v.xyz+b*q.xyz+c*(q.yzx*v.zxy-q.zxy*v.yzx);return r;}mat3 Matrix3(const in vec4 quaternion){float x=quaternion.x;float y=quaternion.y;float z=quaternion.z;float w=quaternion.w;float A=y*y;float B=z*z;float C=x*y;float D=z*w;float E=z*x;float F=y*w;float G=x*x;float H=y*z;float I=x*w;return mat3(1.0-2.0*(A+B),2.0*(C+D),2.0*(E-F),2.0*(C-D),1.0-2.0*(B+G),2.0*(H+I),2.0*(E+F),2.0*(H-I),1.0-2.0*(A+G));}uint seed=1u;void srand(const in int value){seed=uint(value);}float random(){seed=seed*1103515245u+12345u;return float(seed)/4294967295.0;}float getRandomValue(const in float min,const in float max){return min+random()*(max-min);}float getRandomLifetime(){float v=particleLifetime*lifetimeVariation;float min_=max(0.0,particleLifetime-v);float max_=particleLifetime+v;return getRandomValue(min_,max_);}float getRandomSpeed(){float v=speed*variation;float min_=max(0.0,speed-v);float max_=speed+v;return getRandomValue(min_,max_);}vec3 getRandomNormal(){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(-1.0,1.0);float r=sqrt(1.0-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithAngle(const in float angle){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(cos(angle),1.0);float r=sqrt(1.0-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithDirectionAndAngle(const in vec3 direction,const in float angle){vec4 rotation=Quaternion(vec3(0.0,0.0,1.0),direction);vec3 normal=getRandomNormalWithAngle(angle);return multVecQuat(normal,rotation);}vec3 getRandomSurfaceNormal(const in vec3 direction){float theta=getRandomValue(-M_PI,M_PI);float cphi=pow(random(),1.0/3.0);float r=sqrt(1.0-cphi*cphi);vec3 normal=vec3(sin(theta)*r,cos(theta)*r,cphi);vec4 rotation=Quaternion(vec3(0.0,0.0,1.0),direction);return multVecQuat(normal,rotation);}vec3 getRandomSphericalVelocity(){vec3 normal=getRandomNormal();float speed=getRandomSpeed();return normal*speed;}int upperBound(const in sampler2D sampler,in int count,const in float value){int first=0;int step=0;while(count>0){int index=first;step=count>>1;index+=step;if(value<texelFetch(sampler,index,0).x){count=step;}else{first=++index;count-=step+1;}}return first;}
 #if X3D_NUM_COLORS>0||defined(X3D_POLYLINE_EMITTER)||defined(X3D_SURFACE_EMITTER)||defined(X3D_VOLUME_EMITTER)
 void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0,out int index1,out float weight){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;index1=0;weight=0.0;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;index1=count-1;weight=1.0;}else{int index=upperBound(sampler,count,fraction);if(index<count){index1=index;index0=index-1;float key0=texelFetch(sampler,index0,0).x;float key1=texelFetch(sampler,index1,0).x;weight=clamp((fraction-key0)/(key1-key0),0.0,1.0);}else{index0=0;index1=0;weight=0.0;}}}
@@ -1534,9 +1534,6 @@ var external_X_ITE_X3D_GeometryContext_default = /*#__PURE__*/__webpack_require_
 ;// external "__X_ITE_X3D__ .VertexArray"
 const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArray;
 var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
-;// external "__X_ITE_X3D__ .TraverseType"
-const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
-var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// external "__X_ITE_X3D__ .AlphaMode"
 const external_X_ITE_X3D_AlphaMode_namespaceObject = __X_ITE_X3D__ .AlphaMode;
 var external_X_ITE_X3D_AlphaMode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_AlphaMode_namespaceObject);
@@ -2004,7 +2001,6 @@ const BVH_default_ = BVH;
 
 
 
-
 const PointGeometry = new Float32Array ([0, 0, 0, 1]);
 
 // p4 ------ p3
@@ -2175,7 +2171,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    {
       switch (this .geometryType)
       {
-         case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
+         case (external_X_ITE_X3D_GeometryType_default()).GEOMETRY:
             return this .getGeometry ();
          default:
             return this .geometryContext;
@@ -2222,49 +2218,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
-   set_pointingObject__ ()
-   {
-      if (this .geometryType == (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
-         external_X_ITE_X3D_X3DShapeNode_default().prototype .set_pointingObject__ .call (this);
-      else
-         this .setPointingObject (this ._pointerEvents .getValue ());
-   },
-   set_shadowObject__ ()
-   {
-      if (this .geometryType == (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
-         external_X_ITE_X3D_X3DShapeNode_default().prototype .set_shadowObject__ .call (this);
-      else
-         this .setShadowObject (this ._castShadow .getValue ());
-   },
-   set_visibleObject__ ()
-   {
-      if (this .geometryType == (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
-         external_X_ITE_X3D_X3DShapeNode_default().prototype .set_visibleObject__ .call (this);
-      else
-         this .setVisibleObject (true);
-   },
    set_transparent__ ()
    {
       const alphaMode = this .appearanceNode .getAlphaMode ();
 
       if (alphaMode === (external_X_ITE_X3D_AlphaMode_default()).AUTO)
       {
-         switch (this .geometryType)
-         {
-            case (external_X_ITE_X3D_GeometryTypes_default()).POINT:
-            {
-               this .setTransparent (true);
-               break;
-            }
-            default:
-            {
-               this .setTransparent (this .getAppearance () .isTransparent () ||
-                                     this .colorRampNode ?.isTransparent () ||
-                                     (this .geometryType === (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY &&
-                                      this .geometryNode ?.isTransparent ()));
-               break;
-            }
-         }
+         this .setTransparent (this .getAppearance () .isTransparent () ||
+                               this .colorRampNode ?.isTransparent () ||
+                               (this .geometryType === (external_X_ITE_X3D_GeometryType_default()).GEOMETRY &&
+                                this .geometryNode ?.isTransparent ()));
 
          this .setAlphaMode (this .isTransparent () ? (external_X_ITE_X3D_AlphaMode_default()).BLEND : (external_X_ITE_X3D_AlphaMode_default()).OPAQUE);
       }
@@ -2346,13 +2309,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
       // Get geometryType.
 
-      this .geometryType = $.enum ((external_X_ITE_X3D_GeometryTypes_default()), this ._geometryType .getValue ()) ?? (external_X_ITE_X3D_GeometryTypes_default()).QUAD;
+      this .geometryType = $.enum ((external_X_ITE_X3D_GeometryType_default()), this ._geometryType .getValue ()) ?? (external_X_ITE_X3D_GeometryType_default()).QUAD;
 
       // Create buffers.
 
       switch (this .geometryType)
       {
-         case (external_X_ITE_X3D_GeometryTypes_default()).POINT:
+         case (external_X_ITE_X3D_GeometryType_default()).POINT:
          {
             this .geometryContext .geometryType = 0;
             this .geometryContext .hasNormals   = false;
@@ -2368,7 +2331,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
             break;
          }
-         case (external_X_ITE_X3D_GeometryTypes_default()).LINE:
+         case (external_X_ITE_X3D_GeometryType_default()).LINE:
          {
             this .geometryContext .geometryType = 1;
             this .geometryContext .hasNormals   = false;
@@ -2376,9 +2339,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             this .texCoordCount = 0;
             break;
          }
-         case (external_X_ITE_X3D_GeometryTypes_default()).TRIANGLE:
-         case (external_X_ITE_X3D_GeometryTypes_default()).QUAD:
-         case (external_X_ITE_X3D_GeometryTypes_default()).SPRITE:
+         case (external_X_ITE_X3D_GeometryType_default()).TRIANGLE:
+         case (external_X_ITE_X3D_GeometryType_default()).QUAD:
+         case (external_X_ITE_X3D_GeometryType_default()).SPRITE:
          {
             this .geometryContext .geometryType = 2;
             this .geometryContext .hasNormals   = true;
@@ -2396,7 +2359,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
             break;
          }
-         case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
+         case (external_X_ITE_X3D_GeometryType_default()).GEOMETRY:
          {
             this .texCoordCount = 0;
             break;
@@ -2406,10 +2369,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
 
-      this .set_pointingObject__ ();
-      this .set_shadowObject__ ();
-      this .set_visibleObject__ ()
-      this .set_transparent__ ();
+      this .set_objects__ ();
+      this .set_traverse__ ();
    },
    set_maxParticles__ ()
    {
@@ -2425,6 +2386,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
       this .resizeBuffers (lastNumParticles);
       this .updateVertexArrays ();
+
+      this .set_objects__ ();
+      this .set_traverse__ ();
    },
    set_particleLifetime__ ()
    {
@@ -2734,6 +2698,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             this .createParticles = this ._createParticles .getValue ();
 
             deltaTime = Number .POSITIVE_INFINITY;
+
+            this .set_objects__ ();
+            this .set_traverse__ ();
          }
          else
          {
@@ -2754,6 +2721,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
                this .creationTime = now;
 
             this .numParticles = Math .min (this .maxParticles, this .numParticles + newParticles);
+
+            this .set_objects__ ();
+            this .set_traverse__ ();
          }
       }
 
@@ -2850,69 +2820,23 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    })(),
    intersectsBox (box, clipPlanes)
    { },
-   traverse (type, renderObject)
-   {
-      if (this .geometryType === (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
-      {
-         if (!this .getGeometry ())
-            return;
-      }
-
-      switch (type)
-      {
-         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
-         {
-            renderObject .addPointingShape (this);
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
-         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
-         {
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
-         {
-            renderObject .addShadowShape (this);
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
-         {
-            if (renderObject .addDisplayShape (this))
-            {
-               // Currently used for GeneratedCubeMapTexture.
-               this .getAppearance () .traverse (type, renderObject);
-            }
-
-            break;
-         }
-      }
-
-      if (this .geometryType === (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
-      {
-         // Currently used for ScreenText and Tools.
-         this .getGeometry () .traverse (type, renderObject);
-      }
-   },
    displaySimple (gl, renderContext, shaderNode)
    {
-      if (!this .numParticles)
-         return;
-
       // Display geometry.
 
       switch (this .geometryType)
       {
-         case (external_X_ITE_X3D_GeometryTypes_default()).LINE:
+         case (external_X_ITE_X3D_GeometryType_default()).LINE:
          {
             this .lineGeometryNode .displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
-         case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
+         case (external_X_ITE_X3D_GeometryType_default()).GEOMETRY:
          {
             this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
-         case (external_X_ITE_X3D_GeometryTypes_default()).SPRITE:
+         case (external_X_ITE_X3D_GeometryType_default()).SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
             // [fall trough]
@@ -2937,30 +2861,27 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    },
    display (gl, renderContext)
    {
-      if (!this .numParticles)
-         return;
-
       // Display geometry.
 
       switch (this .geometryType)
       {
-         case (external_X_ITE_X3D_GeometryTypes_default()).LINE:
+         case (external_X_ITE_X3D_GeometryType_default()).LINE:
          {
             this .lineGeometryNode .displayInstanced (gl, renderContext, this);
             break;
          }
-         case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
+         case (external_X_ITE_X3D_GeometryType_default()).GEOMETRY:
          {
             this .getGeometry () .displayInstanced (gl, renderContext, this);
             break;
          }
-         case (external_X_ITE_X3D_GeometryTypes_default()).SPRITE:
+         case (external_X_ITE_X3D_GeometryType_default()).SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
             // [fall trough]
          }
-         case (external_X_ITE_X3D_GeometryTypes_default()).QUAD:
-         case (external_X_ITE_X3D_GeometryTypes_default()).TRIANGLE:
+         case (external_X_ITE_X3D_GeometryType_default()).QUAD:
+         case (external_X_ITE_X3D_GeometryType_default()).TRIANGLE:
          {
             const positiveScale = external_X_ITE_X3D_Matrix4_default().prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 

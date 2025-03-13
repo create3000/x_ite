@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1299,9 +1299,6 @@ const EmissiveStrengthMaterialExtension_default_ = EmissiveStrengthMaterialExten
 ;// external "__X_ITE_X3D__ .X3DShapeNode"
 const external_X_ITE_X3D_X3DShapeNode_namespaceObject = __X_ITE_X3D__ .X3DShapeNode;
 var external_X_ITE_X3D_X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DShapeNode_namespaceObject);
-;// external "__X_ITE_X3D__ .TraverseType"
-const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
-var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// external "__X_ITE_X3D__ .VertexArray"
 const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArray;
 var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
@@ -1369,7 +1366,6 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
 
 
 
-
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -1424,7 +1420,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
       this ._centers           .addInterest ("set_transform__", this);
       this ._matrices          .addInterest ("set_matrices__",  this);
 
-      this .set_transform__ ();
+      this .set_matrices__ ();
    },
    getShapeKey ()
    {
@@ -1515,63 +1511,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
 
       this .set_bbox__ ();
-   },
-   set_geometry__ ()
-   {
-      external_X_ITE_X3D_X3DShapeNode_default().prototype .set_geometry__ .call (this);
-
-      if (this .getGeometry ())
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
-
-      this .set_transform__ ();
+      this .set_objects__ ();
+      this .set_traverse__ ();
    },
    intersectsBox (box, clipPlanes, modelViewMatrix)
    { },
-   traverse (type, renderObject)
-   {
-      if (!this .numInstances)
-         return;
-
-      // Always look at ParticleSystem if you do modify something here and there.
-
-      switch (type)
-      {
-         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
-         {
-            renderObject .addPointingShape (this);
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
-         {
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
-         {
-            renderObject .addCollisionShape (this);
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
-         {
-            renderObject .addShadowShape (this);
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
-         {
-            if (renderObject .addDisplayShape (this))
-            {
-               // Currently used for GeneratedCubeMapTexture.
-               this .getAppearance () .traverse (type, renderObject);
-            }
-
-            break;
-         }
-      }
-
-      // Currently used for ScreenText and Tools.
-      this .getGeometry () .traverse (type, renderObject);
-   },
    displaySimple (gl, renderContext, shaderNode)
    {
       this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);

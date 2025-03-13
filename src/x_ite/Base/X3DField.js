@@ -63,6 +63,8 @@ const
    _routeCallbacks      = Symbol (),
    _uniformLocation     = Symbol .for ("X_ITE.X3DField.uniformLocation");
 
+const EMPTY = [ ];
+
 function X3DField (value)
 {
    X3DChildObject .call (this);
@@ -72,16 +74,16 @@ function X3DField (value)
 
 Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .prototype),
 {
-   [_value]: null,
+   [_value]: undefined,
    [_accessType]: X3DConstants .initializeOnly,
-   [_unit]: null,
-   [_references]: new IterableWeakSet (),
-   [_referencesCallbacks]: new Map (),
-   [_fieldInterests]: new IterableWeakSet (),
-   [_fieldCallbacks]: new Map (),
-   [_inputRoutes]: new IterableWeakSet (),
-   [_outputRoutes]: new IterableWeakSet (),
-   [_routeCallbacks]: new Map (),
+   [_unit]: undefined,
+   [_references]: null,
+   [_referencesCallbacks]: null,
+   [_fieldInterests]: null,
+   [_fieldCallbacks]: null,
+   [_inputRoutes]: null,
+   [_outputRoutes]: null,
+   [_routeCallbacks]: null,
    [_uniformLocation]: null,
    create ()
    {
@@ -158,13 +160,12 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    addReference (reference)
    {
-      if (this [_references] === X3DField .prototype [_references])
-         this [_references] = new IterableWeakSet ();
+      const references = this .getReferences ();
 
-      if (this [_references] .has (reference))
+      if (references .has (reference))
          return;
 
-      this [_references] .add (reference);
+      references .add (reference);
 
       // Create IS relationship
 
@@ -191,7 +192,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeReference (reference)
    {
-      this .getReferences () .delete (reference);
+      this [_references] ?.delete (reference);
 
       // Create IS relationship
 
@@ -216,7 +217,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    getReferences ()
    {
-      return this [_references];
+      return this [_references] ??= new IterableWeakSet ();
    },
    addReferencesCallback (key, object)
    {
@@ -226,31 +227,30 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeReferencesCallback (key)
    {
-      this [_referencesCallbacks] .delete (key);
+      this [_referencesCallbacks] ?.delete (key);
    },
    getReferencesCallbacks ()
    {
-      return this [_referencesCallbacks];
+      return this [_referencesCallbacks] ??= new Map ();
    },
    processReferencesCallbacks ()
    {
-      for (const callback of this [_referencesCallbacks] .values ())
+      for (const callback of this [_referencesCallbacks] ?.values () ?? EMPTY)
          callback ();
    },
    addFieldInterest (field)
    {
-      if (this [_fieldInterests] === X3DField .prototype [_fieldInterests])
-         this [_fieldInterests] = new IterableWeakSet ();
+      // There must be no copy, because the event is not executed immediately.
 
-      this [_fieldInterests] .add (field);
+      this .getFieldInterests () .add (field);
    },
    removeFieldInterest (field)
    {
-      this [_fieldInterests] .delete (field);
+      this [_fieldInterests] ?.delete (field);
    },
    getFieldInterests ()
    {
-      return this [_fieldInterests];
+      return this [_fieldInterests] ??= new IterableWeakSet ();
    },
    addFieldCallback (key, object)
    {
@@ -260,49 +260,41 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeFieldCallback (key)
    {
-      this [_fieldCallbacks] .delete (key);
+      this [_fieldCallbacks] ?.delete (key);
    },
    getFieldCallbacks ()
    {
-      return this [_fieldCallbacks];
+      return this [_fieldCallbacks] ??= new Map ();
    },
    addInputRoute (route)
    {
-      if (this [_inputRoutes] === X3DField .prototype [_inputRoutes])
-         this [_inputRoutes] = new IterableWeakSet ();
-
-      this [_inputRoutes] .add (route);
-
+      this .getInputRoutes () .add (route);
       this .processRouteCallbacks ();
    },
    removeInputRoute (route)
    {
-      this [_inputRoutes] .delete (route);
+      this [_inputRoutes] ?.delete (route);
 
       this .processRouteCallbacks ();
    },
    getInputRoutes ()
    {
-      return this [_inputRoutes];
+      return this [_inputRoutes] ??= new IterableWeakSet ();
    },
    addOutputRoute (route)
    {
-      if (this [_outputRoutes] === X3DField .prototype [_outputRoutes])
-         this [_outputRoutes] = new IterableWeakSet ();
-
-      this [_outputRoutes] .add (route);
-
+      this .getOutputRoutes () .add (route);
       this .processRouteCallbacks ();
    },
    removeOutputRoute (route)
    {
-      this [_outputRoutes] .delete (route);
+      this [_outputRoutes] ?.delete (route);
 
       this .processRouteCallbacks ();
    },
    getOutputRoutes ()
    {
-      return this [_outputRoutes];
+      return this [_outputRoutes] ??= new IterableWeakSet ();
    },
    addRouteCallback (key, object)
    {
@@ -314,15 +306,15 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeRouteCallback (key)
    {
-      this [_routeCallbacks] .delete (key);
+      this [_routeCallbacks] ?.delete (key);
    },
    getRouteCallbacks ()
    {
-      return this [_routeCallbacks];
+      return this [_routeCallbacks] ??= new Map ();
    },
    processRouteCallbacks ()
    {
-      for (const callback of this [_routeCallbacks] .values ())
+      for (const callback of this [_routeCallbacks] ?.values () ?? EMPTY)
          callback ();
    },
    processEvent (event = Events .create (this))
@@ -344,7 +336,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
       let first = true;
 
-      for (const field of this [_fieldInterests])
+      for (const field of this [_fieldInterests] ?? EMPTY)
       {
          if (event .has (field))
             continue;
@@ -365,7 +357,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
       // Process field callbacks.
 
-      for (const callback of this [_fieldCallbacks] .values ())
+      for (const callback of this [_fieldCallbacks] ?.values () ?? EMPTY)
          callback (this .valueOf ());
    },
    fromString (string, scene)
@@ -374,7 +366,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    dispose ()
    {
-      for (const reference of this [_references])
+      for (const reference of this [_references] ?? EMPTY)
          reference .removeFieldInterest (this);
 
       for (const route of new Set (this [_inputRoutes]))
@@ -383,13 +375,13 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
       for (const route of new Set (this [_outputRoutes]))
          route .dispose ();
 
-      this [_references]          .clear ();
-      this [_referencesCallbacks] .clear ();
-      this [_fieldInterests]      .clear ();
-      this [_fieldCallbacks]      .clear ();
-      this [_inputRoutes]         .clear ();
-      this [_outputRoutes]        .clear ();
-      this [_routeCallbacks]      .clear ();
+      this [_references]          ?.clear ();
+      this [_referencesCallbacks] ?.clear ();
+      this [_fieldInterests]      ?.clear ();
+      this [_fieldCallbacks]      ?.clear ();
+      this [_inputRoutes]         ?.clear ();
+      this [_outputRoutes]        ?.clear ();
+      this [_routeCallbacks]      ?.clear ();
 
       X3DChildObject .prototype .dispose .call (this);
    }

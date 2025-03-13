@@ -65,6 +65,7 @@ function X3DShapeNode (executionContext)
 
    // Set default values which are almost right in most cases.
 
+   this .setBoundedObject (true);
    this .setPointingObject (true);
    this .setCollisionObject (true);
    this .setShadowObject (true);
@@ -89,6 +90,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
 
       this ._pointerEvents .addInterest ("set_pointingObject__", this);
       this ._castShadow    .addInterest ("set_shadowObject__",   this);
+      this ._bboxSize      .addInterest ("set_boundedObject__",  this);
       this ._bboxSize      .addInterest ("set_bbox__",           this);
       this ._bboxCenter    .addInterest ("set_bbox__",           this);
       this ._appearance    .addInterest ("set_appearance__",     this);
@@ -247,11 +249,16 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_objects__ ()
    {
+      this .set_boundedObject__ ();
       this .set_pointingObject__ ();
       this .set_pickableObject__ ();
       this .set_collisionObject__ ();
       this .set_shadowObject__ ();
       this .set_visibleObject__ ();
+   },
+   set_boundedObject__ ()
+   {
+      this .setBoundedObject (this .isEnabled () || !this .isDefaultBBoxSize ());
    },
    set_pointingObject__ ()
    {

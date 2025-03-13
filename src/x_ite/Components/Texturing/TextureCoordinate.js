@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, X3DSingleT
          return result .set (0, 0, 0, 1);
       }
    },
-   set1Point: (function ()
+   set1Point: (() =>
    {
       const point = new Vector2 ();
 

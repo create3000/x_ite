@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcess
    {
       this .biquadFilterNode .detune .value = this ._detune .getValue ();
    },
-   set_type__: (function ()
+   set_type__: (() =>
    {
       const types = new Map ([
          ["LOWPASS",   "lowpass"],

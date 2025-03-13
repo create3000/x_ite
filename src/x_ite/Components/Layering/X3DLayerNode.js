@@ -288,7 +288,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       if (viewpointNode ._viewAll .getValue ())
          viewpointNode .viewAll (this .getBBox (new Box3 ()));
    },
-   traverse: (function ()
+   traverse: (() =>
    {
       const projectionMatrix = new Matrix4 ();
 

@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2087,7 +2087,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
    },
    set_childPointingObject__ ()
    {
-      this .setCameraObject (this .childInlines .some (childInline => childInline .isPointingObject ()));
+      this .setPointingObject (this .childInlines .some (childInline => childInline .isPointingObject ()));
    },
    set_childCameraObject__ ()
    {
@@ -2165,15 +2165,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
                      if (this ._rootNode .length)
                      {
-                        this .rootGroup ._isPointingObject  .addFieldInterest (this ._isPointingObject);
-                        this .rootGroup ._isCameraObject    .addFieldInterest (this ._isCameraObject);
-                        this .rootGroup ._isPickableObject  .addFieldInterest (this ._isPickableObject);
-                        this .rootGroup ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-                        this .rootGroup ._isShadowObject    .addFieldInterest (this ._isShadowObject);
-
-                        this .setPointingObject (this .rootGroup .isPointingObject ());
-                        this .setCameraObject   (this .rootGroup .isCameraObject ());
-                        this .setPickableObject (this .rootGroup .isPickableObject ());
+                        this .connectChildNode (this .rootGroup, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
 
                         this ._children      = this ._rootNode;
                         this .childrenLoaded = false;
@@ -2182,15 +2174,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
                      {
                         if (this .rootInline .checkLoadState () == (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
                         {
-                           this .rootInline ._isPointingObject  .addFieldInterest (this ._isPointingObject);
-                           this .rootInline ._isCameraObject    .addFieldInterest (this ._isCameraObject);
-                           this .rootInline ._isPickableObject  .addFieldInterest (this ._isPickableObject);
-                           this .rootInline ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-                           this .rootInline ._isShadowObject    .addFieldInterest (this ._isShadowObject);
-
-                           this .setPointingObject (this .rootInline .isPointingObject ());
-                           this .setCameraObject   (this .rootInline .isCameraObject ());
-                           this .setPickableObject (this .rootInline .isPickableObject ());
+                           this .connectChildNode (this .rootInline, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
 
                            this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
                            this .childrenLoaded = false;
@@ -2208,21 +2192,9 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
                   case 1:
                   {
                      if (this ._rootNode .length)
-                     {
-                        this .rootGroup ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
-                        this .rootGroup ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
-                        this .rootGroup ._isPickableObject  .removeFieldInterest (this ._isPickableObject);
-                        this .rootGroup ._isCollisionObject .removeFieldInterest (this ._isCollisionObject);
-                        this .rootGroup ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
-                     }
+                        this .disconnectChildNode (this .rootGroup);
                      else
-                     {
-                        this .rootInline ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
-                        this .rootInline ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
-                        this .rootInline ._isPickableObject  .removeFieldInterest (this ._isPickableObject);
-                        this .rootInline ._isCollisionObject .removeFieldInterest (this ._isCollisionObject);
-                        this .rootInline ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
-                     }
+                        this .disconnectChildNode (this .rootInline);
 
                      for (const childInline of this .childInlines)
                      {
@@ -2236,6 +2208,8 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
                      this .set_childPointingObject__ ();
                      this .set_childCameraObject__ ();
                      this .set_childPickableObject__ ();
+                     this .set_childCollisionObject__ ();
+                     this .set_childShadowObject__ ();
 
                      if (this .child1Inline ._load .getValue ())
                      {
@@ -2902,13 +2876,6 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (external
 
       this ._geoCenter .addFieldInterest (this ._center);
 
-      this .proximitySensor ._isPointingObject  .addFieldInterest (this ._isPointingObject);
-      this .proximitySensor ._isCameraObject    .addFieldInterest (this ._isCameraObject);
-      this .proximitySensor ._isPickableObject  .addFieldInterest (this ._isPickableObject);
-      this .proximitySensor ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-      this .proximitySensor ._isShadowObject    .addFieldInterest (this ._isShadowObject);
-      this .proximitySensor ._isVisibleObject   .addFieldInterest (this ._isVisibleObject);
-
       this .proximitySensor ._isActive                 .addFieldInterest (this ._isActive);
       this .proximitySensor ._enterTime                .addFieldInterest (this ._enterTime);
       this .proximitySensor ._exitTime                 .addFieldInterest (this ._exitTime);
@@ -2924,10 +2891,7 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (external
 
       this .proximitySensor .setup ();
 
-      this .setPointingObject (this .proximitySensor .isPointingObject ());
-      this .setCameraObject   (this .proximitySensor .isCameraObject ());
-      this .setPickableObject (this .proximitySensor .isPickableObject ());
-      this .setVisibleObject  (this .proximitySensor .isVisibleObject ());
+      this .connectChildNode (this .proximitySensor);
    },
    set_position__ (position)
    {

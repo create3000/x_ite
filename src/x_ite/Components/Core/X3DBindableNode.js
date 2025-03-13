@@ -80,8 +80,11 @@ Object .assign (Object .setPrototypeOf (X3DBindableNode .prototype, X3DChildNode
    { },
    set_bind__ ()
    {
+      if (modificationCount === Number .MAX_SAFE_INTEGER)
+         modificationCount = 0;
+
       this .modificationCount = ++ modificationCount;
-   }
+   },
 });
 
 Object .defineProperties (X3DBindableNode, X3DNode .getStaticProperties ("X3DBindableNode", "Core", 1));

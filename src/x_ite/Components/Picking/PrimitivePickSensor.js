@@ -62,6 +62,8 @@ function PrimitivePickSensor (executionContext)
 
    this .addType (X3DConstants .PrimitivePickSensor);
 
+   // Private properties
+
    this .picker = new VolumePicker ();
 }
 
@@ -127,16 +129,12 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
                {
                   // Intersect bboxes.
 
-                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (const modelMatrix of modelMatrices)
                   {
-                     const modelMatrix = modelMatrices [m];
-
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (const target of targets)
                      {
-                        const target = targets [t];
-
                         targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
                         if (pickingBBox .intersectsBox (targetBBox))
@@ -172,21 +170,17 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
 
                   const picker = this .picker;
 
-                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (const modelMatrix of modelMatrices)
                   {
-                     const
-                        modelMatrix  = modelMatrices [m],
-                        pickingShape = this .getPickShape (this .pickingGeometryNode);
+                     const pickingShape = this .getPickShape (this .pickingGeometryNode);
 
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
                      picker .setChildShape1 (modelMatrix, pickingShape .getCompoundShape ());
 
-                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (const target of targets)
                      {
-                        const
-                           target      = targets [t],
-                           targetShape = this .getPickShape (target .geometryNode);
+                        const targetShape = this .getPickShape (target .geometryNode);
 
                         targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 

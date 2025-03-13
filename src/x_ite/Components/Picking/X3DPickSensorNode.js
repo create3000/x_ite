@@ -67,6 +67,8 @@ function X3DPickSensorNode (executionContext)
 
    this .addType (X3DConstants .X3DPickSensorNode);
 
+   // Private properties
+
    this .objectType          = new Set ();
    this .intersectionType    = IntersectionType .BOUNDS;
    this .sortOrder           = SortOrder .CLOSEST;
@@ -205,7 +207,9 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          }
          case SortOrder .ALL:
          {
-            for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+            const length = pickedTargets .length;
+
+            for (let i = 0; i < length; ++ i)
                pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
             pickedGeometries .length = length;
@@ -213,9 +217,11 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          }
          case SortOrder .ALL_SORTED:
          {
-            this .pickedTargetsSorter .sort (0, pickedTargets .length);
+            const length = pickedTargets .length;
 
-            for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+            this .pickedTargetsSorter .sort (0, length);
+
+            for (let i = 0; i < length; ++ i)
                pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
             pickedGeometries .length = length;
@@ -277,10 +283,8 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    {
       this .objectType .clear ();
 
-      for (let i = 0, length = this ._objectType .length; i < length; ++ i)
-      {
-         this .objectType .add (this ._objectType [i]);
-      }
+      for (const objectType of this ._objectType)
+         this .objectType .add (objectType);
 
       this .set_live__ ();
    },
@@ -294,10 +298,8 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
       return function ()
       {
-         this .matchCriterion = matchCriterions .get (this ._matchCriterion .getValue ());
-
-         if (this .matchCriterion === undefined)
-            this .matchCriterion = MatchCriterionType .MATCH_ANY;
+         this .matchCriterion = matchCriterions .get (this ._matchCriterion .getValue ())
+            ?? MatchCriterion .MATCH_ANY;
       };
    })(),
    set_intersectionType__: (() =>
@@ -309,10 +311,8 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
       return function ()
       {
-         this .intersectionType = intersectionTypes .get (this ._intersectionType .getValue ());
-
-         if (this .intersectionType === undefined)
-            this .intersectionType = IntersectionType .BOUNDS;
+         this .intersectionType = intersectionTypes .get (this ._intersectionType .getValue ())
+            ?? IntersectionType .BOUNDS;
       };
    })(),
    set_sortOrder__: (() =>
@@ -326,23 +326,21 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
       return function ()
       {
-         this .sortOrder = sortOrders .get (this ._sortOrder .getValue ());
-
-         if (this .sortOrder === undefined)
-            this .sortOrder = SortOrder .CLOSEST;
+         this .sortOrder = sortOrders .get (this ._sortOrder .getValue ())
+            ?? SortOrder .CLOSEST;
       };
    })(),
    set_pickTarget__ ()
    {
       this .pickTargetNodes .clear ();
 
-      for (let i = 0, length = this ._pickTarget .length; i < length; ++ i)
+      for (const node of this ._pickTarget)
       {
          try
          {
             const
-               node = this ._pickTarget [i] .getValue () .getInnerNode (),
-               type = node .getType ();
+               innerNode = node .getValue () .getInnerNode (),
+               type      = innerNode .getType ();
 
             for (let t = type .length - 1; t >= 0; -- t)
             {
@@ -352,7 +350,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
                   case X3DConstants .Shape:
                   case X3DConstants .X3DGroupingNode:
                   {
-                     this .pickTargetNodes .add (node);
+                     this .pickTargetNodes .add (innerNode);
                      break;
                   }
                   default:
@@ -413,10 +411,8 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
    process ()
    {
-      const modelMatrices = this .modelMatrices;
-
-      for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
-         ModelMatrixCache .push (modelMatrices [m]);
+      for (const modelMatrix of this .modelMatrices)
+         ModelMatrixCache .push (modelMatrix);
 
       this .modelMatrices .length = 0;
       this .targets .size         = 0;

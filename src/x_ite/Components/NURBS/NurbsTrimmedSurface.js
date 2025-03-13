@@ -125,7 +125,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       return trimmingContours;
    },
-   trimSurface: (function ()
+   trimSurface: (() =>
    {
       const unitSquare = [
          new Vector3 (0, 0, 0),

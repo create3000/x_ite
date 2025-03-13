@@ -104,7 +104,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
 
       this .set_type__ ();
    },
-   set_type__: (function ()
+   set_type__: (() =>
    {
       const types = new Map ([
          ["SINE",     "sine"],

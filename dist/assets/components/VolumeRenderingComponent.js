@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1940,13 +1940,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      this .groupNode ._isPointingObject  .addFieldInterest (this ._isPointingObject);
-      this .groupNode ._isCameraObject    .addFieldInterest (this ._isCameraObject);
-      this .groupNode ._isPickableObject  .addFieldInterest (this ._isPickableObject);
-      this .groupNode ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-      this .groupNode ._isShadowObject    .addFieldInterest (this ._isShadowObject);
-      this .groupNode ._isVisibleObject   .addFieldInterest (this ._isVisibleObject);
-
       this ._bboxDisplay .addFieldInterest (this .groupNode ._bboxDisplay);
 
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
@@ -1989,10 +1982,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
       this .proximitySensorNode   .setup ();
       this .groupNode             .setup ();
 
-      this .setPointingObject (this .groupNode .isPointingObject ());
-      this .setCameraObject   (this .groupNode .isCameraObject ());
-      this .setPickableObject (this .groupNode .isPickableObject ());
-      this .setVisibleObject  (this .groupNode .isVisibleObject ());
+      this .connectChildNode (this .groupNode);
 
       if (gl .getVersion () < 2)
          return;

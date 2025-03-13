@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    {
       this .audioDestination .channelCount = Algorithm .clamp (this ._channelCount .getValue (), 1, 32);
    },
-   set_channelCountMode__: (function ()
+   set_channelCountMode__: (() =>
    {
       const channelCountModes = new Map ([
          ["MAX",         "max"],
@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
          this .audioDestination .channelCountMode = channelCountModes .get (this ._channelCountMode .getValue ()) ?? "max";
       };
    })(),
-   set_channelInterpretation__: (function ()
+   set_channelInterpretation__: (() =>
    {
       const channelInterpretations = new Map ([
          ["SPEAKERS", "speakers"],

@@ -49,20 +49,22 @@ import Generator from "../InputOutput/Generator.js";
 import Features  from "../Features.js";
 
 const
-   _name      = Symbol (),
-   _interests = Symbol (),
-   _registry  = Symbol (),
-   _userData  = Symbol (),
-   _generator = Symbol ();
+   _name       = Symbol (),
+   _interests  = Symbol (),
+   _registry   = Symbol (),
+   _userData   = Symbol (),
+   _generator  = Symbol ();
+
+const EMPTY = [ ];
 
 function X3DObject () { }
 
 Object .assign (X3DObject .prototype,
 {
    [_name]: "",
-   [_interests]: new Map (),
-   [_registry]: new FinalizationRegistry (Function .prototype),
-   [_userData]: new Map (),
+   [_interests]: null,
+   [_registry]: null,
+   [_userData]: null,
    [_generator]: new Generator ({ }),
    getId ()
    {
@@ -86,37 +88,40 @@ Object .assign (X3DObject .prototype,
    },
    hasInterest (callbackName, object)
    {
-      return this [_interests] .has (X3DObject .getInterestId (callbackName, object));
+      return this [_interests] ?.has (X3DObject .getInterestId (object [callbackName], object)) ?? false;
    },
    addInterest (callbackName, object, ... args)
    {
       const
-         interestId = X3DObject .getInterestId (callbackName, object),
-         callback   = object [callbackName];
+         weakRef    = new WeakRef (object),
+         callback   = object [callbackName],
+         interestId = X3DObject .getInterestId (callback, object);
 
-      if (this [_registry] === X3DObject .prototype [_registry])
-         this [_registry] = new FinalizationRegistry (interestId => this [_interests] .delete (interestId));
+      this [_registry] ??= new FinalizationRegistry (objectId =>
+      {
+         for (const interestId of this [_interests] .keys ())
+         {
+            if (interestId .endsWith (objectId))
+               this [_interests] .delete (interestId);
+         }
+      });
 
-      const weakRef = new WeakRef (object);
-
-      // Copy interests in case of this function is called during a `processInterests` call.
       this [_interests] = new Map (this [_interests]);
 
+      this [_registry] .register (object, interestId .replace (/^[^:]+/, ""), object);
       this [_interests] .set (interestId, { callback, weakRef, args });
-      this [_registry] .register (object, interestId, object);
    },
    removeInterest (callbackName, object)
    {
-      this [_interests] .delete (X3DObject .getInterestId (callbackName, object));
-      this [_registry] .unregister (object);
+      this [_interests] ?.delete (X3DObject .getInterestId (object [callbackName], object));
    },
    getInterests ()
    {
-      return this [_interests];
+      return this [_interests] ??= new Map ();
    },
    processInterests ()
    {
-      for (const { callback, weakRef, args } of this [_interests] .values ())
+      for (const { callback, weakRef, args } of this [_interests] ?.values () ?? EMPTY)
       {
          const object = weakRef .deref ();
 
@@ -126,18 +131,17 @@ Object .assign (X3DObject .prototype,
    },
    getUserData (key)
    {
-      return this [_userData] .get (key);
+      return this [_userData] ?.get (key);
    },
    setUserData (key, value)
    {
-      if (this [_userData] === X3DObject .prototype [_userData])
-         this [_userData] = new Map ();
+      this [_userData] ??= new Map ();
 
       this [_userData] .set (key, value);
    },
    removeUserData (key)
    {
-      this [_userData] .delete (key);
+      this [_userData] ?.delete (key);
    },
    toString (options)
    {
@@ -209,8 +213,8 @@ Object .assign (X3DObject .prototype,
    },
    dispose ()
    {
-      this [_interests] .clear ();
-      this [_userData]  .clear ();
+      this [_interests] ?.clear ();
+      this [_userData]  ?.clear ();
    },
 });
 
@@ -272,9 +276,9 @@ Object .assign (X3DObject,
          return counter;
       };
    })(),
-   getInterestId (callbackName, object)
+   getInterestId (callback, object)
    {
-      return `${this .getId (object)}.${this .getId (object [callbackName])}`;
+      return `${this .getId (callback)}:${this .getId (object)}`;
    },
 });
 

@@ -102,7 +102,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
       this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
    },
-   setShaderUniforms: (function ()
+   setShaderUniforms: (() =>
    {
       const zeros = new Float32Array (16);
 

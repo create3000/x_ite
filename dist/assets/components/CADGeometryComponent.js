@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -298,6 +298,11 @@ function CADFace (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CADFace);
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+
+   this .setPointingObject (true);
+   this .setCollisionObject (true);
+   this .setShadowObject (true);
+   this .setVisibleObject (true);
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProductStructureChildNode .prototype),
@@ -308,40 +313,28 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
       CADGeometry_X3DProductStructureChildNode .prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
-<<<<<<< HEAD
       this ._rebuild .addInterest ("set_children__", this);
       this ._shape   .addInterest ("requestRebuild", this);
 
       this .set_children__ ();
-=======
-      this ._shape .addInterest ("set_child__", this);
-
-      this .set_child__ ();
->>>>>>> X3D4.1
    },
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
+         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-<<<<<<< HEAD
    requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
    set_children__ ()
    {
-=======
-   set_child__ ()
-   {
->>>>>>> X3D4.1
       // Remove node.
 
       if (this .childNode)
       {
-<<<<<<< HEAD
          const childNode = this .childNode;
 
          childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
@@ -356,16 +349,6 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
             childNode ._display     .removeInterest ("requestRebuild", this);
             childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
          }
-=======
-         this .childNode ._isCameraObject   .removeInterest ("set_child__", this);
-         this .childNode ._isPickableObject .removeInterest ("set_child__", this);
-      }
-
-      if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, this .childNode))
-      {
-         this .childNode ._display     .removeInterest ("set_child__", this);
-         this .childNode ._bboxDisplay .removeInterest ("set_child__", this);
->>>>>>> X3D4.1
       }
 
       // Clear node.
@@ -378,8 +361,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
       this .shadowObject    = null;
       this .visibleNode     = null;
       this .boundedObject   = null;
-
-      // Add node.
+      this .bboxObject      = null;
 
       // Add node.
 
@@ -397,7 +379,6 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
                case (external_X_ITE_X3D_X3DConstants_default()).Transform:
                case (external_X_ITE_X3D_X3DConstants_default()).X3DShapeNode:
                {
-<<<<<<< HEAD
                   childNode ._isPointingObject  .addInterest ("requestRebuild", this);
                   childNode ._isCameraObject    .addInterest ("requestRebuild", this);
                   childNode ._isPickableObject  .addInterest ("requestRebuild", this);
@@ -428,46 +409,17 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
                         this .visibleNode = childNode;
                   }
 
+                  if (childNode .isVisible () && childNode .getBBox)
+                     this .boundedObject = childNode;
+
                   if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
                   {
                      childNode ._display     .addInterest ("requestRebuild", this);
                      childNode ._bboxDisplay .addInterest ("requestRebuild", this);
-=======
-                  childNode ._isCameraObject   .addInterest ("set_child__", this);
-                  childNode ._isPickableObject .addInterest ("set_child__", this);
-
-                  this .childNode = childNode;
-
-                  if (childNode .isCameraObject ())
-                     this .cameraObject = childNode;
-
-                  if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, this .childNode))
-                  {
-                     childNode ._display     .addInterest ("set_child__", this);
-                     childNode ._bboxDisplay .addInterest ("set_child__", this);
-
-                     if (this .childNode .isVisible ())
-                     {
-                        this .visibleNode = childNode;
-
-                        if (childNode .isPickableObject ())
-                           this .pickableObject = childNode;
-                     }
->>>>>>> X3D4.1
 
                      if (childNode .isBBoxVisible ())
-                        this .boundedObject = childNode;
+                        this .bboxObject = childNode;
                   }
-<<<<<<< HEAD
-=======
-                  else
-                  {
-                     this .visibleNode = childNode;
-
-                     if (childNode .isPickableObject ())
-                        this .pickableObject = childNode;
-                  }
->>>>>>> X3D4.1
 
                   break;
                }
@@ -479,7 +431,6 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
       }
 
-<<<<<<< HEAD
       this .set_pointingObjects__ ();
       this .set_cameraObjects__ ();
       this .set_pickableObjects__ ();
@@ -490,18 +441,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
    set_pointingObjects__ ()
    {
       this .setPointingObject (this .pointingNode);
-=======
-      this .set_cameraObjects__ ();
-      this .set_transformSensors__ ();
    },
    set_cameraObjects__ ()
    {
-      this .setCameraObject (this .cameraObject ?.isCameraObject ());
->>>>>>> X3D4.1
-   },
-   set_cameraObjects__ ()
-   {
-<<<<<<< HEAD
       this .setCameraObject (this .cameraObject);
    },
    set_pickableObjects__ ()
@@ -518,27 +460,15 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleNode || this .boundedObject);
-=======
-      this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
->>>>>>> X3D4.1
+      this .setVisibleObject (this .visibleNode || this .bboxObject);
    },
    traverse (type, renderObject)
    {
       switch (type)
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
-<<<<<<< HEAD
-=======
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
->>>>>>> X3D4.1
          {
             this .pointingNode ?.traverse (type, renderObject);
-            return;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
-         {
-            this .cameraObject ?.traverse (type, renderObject);
             return;
          }
          case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
@@ -582,8 +512,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            this .visibleNode   ?.traverse    (type, renderObject);
-            this .boundedObject ?.displayBBox (type, renderObject);
+            this .visibleNode ?.traverse    (type, renderObject);
+            this .bboxObject  ?.displayBBox (type, renderObject);
             return;
          }
       }

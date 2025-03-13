@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
 
       this .set_surface__ ();
    },
-   getBBox: (function ()
+   getBBox: (() =>
    {
       const bboxSize = new Vector3 ();
 

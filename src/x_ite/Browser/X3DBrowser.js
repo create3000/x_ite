@@ -628,8 +628,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          fileLoader .createX3DFromURL (url, parameter, scene =>
          {
+            fileLoader .ready = true;
+
             if (this [_fileLoader] !== fileLoader)
             {
+               this .removeLoadingObject (fileLoader);
                reject (new Error ("Loading of X3D file aborted."));
             }
             else
@@ -741,11 +744,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          }
          case 2:
          {
-            const
-               [key, event] = args,
-               map          = this [_browserCallbacks] .get (event);
+            const [key, event] = args;
 
-            map .delete (key);
+            this [_browserCallbacks] .get (event) .delete (key);
             break;
          }
       }

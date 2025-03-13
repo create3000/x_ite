@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    {
       return this .visibilityLimit;
    },
-   getTransitionType: (function ()
+   getTransitionType: (() =>
    {
       const TransitionTypes = new Set ([
          "TELEPORT",

@@ -61,6 +61,8 @@ function LayoutGroup (executionContext)
 
    this .addType (X3DConstants .LayoutGroup);
 
+   // Private properties
+
    this .matrix          = new Matrix4 ();
    this .modelViewMatrix = new Matrix4 ();
    this .screenMatrix    = new Matrix4 ();
@@ -72,8 +74,9 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
-      this ._viewport .addInterest ("set_viewport__", this);
-      this ._layout   .addInterest ("set_layout__", this);
+      this ._viewport .addInterest ("set_viewport__",       this);
+      this ._layout   .addInterest ("set_layout__",         this);
+      this ._bboxSize .addInterest ("set_visibleObjects__", this);
 
       this .set_viewport__ ();
       this .set_layout__ ();
@@ -85,6 +88,10 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    set_layout__ ()
    {
       this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
    },
    getBBox (bbox, shadows)
    {
@@ -111,8 +118,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
          }
          default:
          {
-            if (this .viewportNode)
-               this .viewportNode .push ();
+            this .viewportNode ?.push ();
 
             if (this .layoutNode)
             {
@@ -134,9 +140,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
                X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
             }
 
-            if (this .viewportNode)
-               this .viewportNode .pop ();
-
+            this .viewportNode ?.pop ();
             return;
          }
       }
