@@ -68,7 +68,6 @@ function GeoLOD (executionContext)
 
    this .addType (X3DConstants .GeoLOD);
 
-   this .setBoundedObject (true);
    this .setVisibleObject (true);
 
    // Units
