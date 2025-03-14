@@ -85,7 +85,6 @@ function GeoLOD (executionContext)
    this .child4Inline     = new Inline (executionContext);
    this .childInlines     = [this .child1Inline, this .child2Inline, this .child3Inline, this .child4Inline];
    this .childrenLoaded   = false;
-   this .childBBox        = new Box3 ();
    this .keepCurrentLevel = false;
    this .modelViewMatrix  = new Matrix4 ();
 }
@@ -147,19 +146,13 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
             }
             case 1:
             {
-               // Must be unique for each GeoLOD..
-               const childBBox = this .childBBox;
-
-               bbox .set ();
-
-               for (const childInline of this .childInlines)
-                  bbox .add (childInline .getBBox (childBBox, shadows));
-
-               return bbox;
+               return X3DBoundedObject .prototype .getBBox .call (this, this .childInlines, bbox, shadows);
+            }
+            default:
+            {
+               return bbox .set ();
             }
          }
-
-         return bbox .set ();
       }
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
