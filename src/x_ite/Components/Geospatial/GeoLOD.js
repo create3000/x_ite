@@ -77,13 +77,13 @@ function GeoLOD (executionContext)
    // Private properties
 
    this .unload           = false;
-   this .rootGroup        = new Group (this .getBrowser () .getPrivateScene ());
-   this .rootInline       = new Inline (executionContext);
-   this .child1Inline     = new Inline (executionContext);
-   this .child2Inline     = new Inline (executionContext);
-   this .child3Inline     = new Inline (executionContext);
-   this .child4Inline     = new Inline (executionContext);
-   this .childInlines     = [this .child1Inline, this .child2Inline, this .child3Inline, this .child4Inline];
+   this .rootGroupNode    = new Group (this .getBrowser () .getPrivateScene ());
+   this .rootInlineNode   = new Inline (executionContext);
+   this .child1InlineNode = new Inline (executionContext);
+   this .child2InlineNode = new Inline (executionContext);
+   this .child3InlineNode = new Inline (executionContext);
+   this .child4InlineNode = new Inline (executionContext);
+   this .childInlineNodes = [this .child1InlineNode, this .child2InlineNode, this .child3InlineNode, this .child4InlineNode];
    this .childrenLoaded   = false;
    this .keepCurrentLevel = false;
    this .modelViewMatrix  = new Matrix4 ();
@@ -99,37 +99,37 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       X3DBoundedObject    .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
 
-      this ._rootNode .addFieldInterest (this .rootGroup ._children);
+      this ._rootNode .addFieldInterest (this .rootGroupNode ._children);
 
-      this .rootGroup ._children = this ._rootNode;
-      this .rootGroup .setPrivate (true);
+      this .rootGroupNode ._children = this ._rootNode;
+      this .rootGroupNode .setPrivate (true);
 
-      this .rootInline ._loadState .addInterest ("set_rootLoadState__", this);
+      this .rootInlineNode ._loadState .addInterest ("set_rootLoadState__", this);
 
-      for (const childInline of this .childInlines)
-         childInline ._loadState .addInterest ("set_childLoadState__", this);
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode ._loadState .addInterest ("set_childLoadState__", this);
 
-      this ._rootUrl   .addFieldInterest (this .rootInline   ._url);
-      this ._child1Url .addFieldInterest (this .child1Inline ._url);
-      this ._child2Url .addFieldInterest (this .child2Inline ._url);
-      this ._child3Url .addFieldInterest (this .child3Inline ._url);
-      this ._child4Url .addFieldInterest (this .child4Inline ._url);
+      this ._rootUrl   .addFieldInterest (this .rootInlineNode   ._url);
+      this ._child1Url .addFieldInterest (this .child1InlineNode ._url);
+      this ._child2Url .addFieldInterest (this .child2InlineNode ._url);
+      this ._child3Url .addFieldInterest (this .child3InlineNode ._url);
+      this ._child4Url .addFieldInterest (this .child4InlineNode ._url);
 
-      this .rootInline ._load = true;
+      this .rootInlineNode ._load = true;
 
-      for (const childInline of this .childInlines)
-         childInline ._load = false;
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode ._load = false;
 
-      this .rootInline   ._url = this ._rootUrl;
-      this .child1Inline ._url = this ._child1Url;
-      this .child2Inline ._url = this ._child2Url;
-      this .child3Inline ._url = this ._child3Url;
-      this .child4Inline ._url = this ._child4Url;
+      this .rootInlineNode   ._url = this ._rootUrl;
+      this .child1InlineNode ._url = this ._child1Url;
+      this .child2InlineNode ._url = this ._child2Url;
+      this .child3InlineNode ._url = this ._child3Url;
+      this .child4InlineNode ._url = this ._child4Url;
 
-      this .rootInline .setup ();
+      this .rootInlineNode .setup ();
 
-      for (const childInline of this .childInlines)
-         childInline .setup ();
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode .setup ();
    },
    getBBox (bbox, shadows)
    {
@@ -140,13 +140,13 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
             case 0:
             {
                if (this ._rootNode .length)
-                  return this .rootGroup .getBBox (bbox, shadows);
+                  return this .rootGroupNode .getBBox (bbox, shadows);
 
-               return this .rootInline .getBBox (bbox, shadows);
+               return this .rootInlineNode .getBBox (bbox, shadows);
             }
             case 1:
             {
-               return X3DBoundedObject .prototype .getBBox .call (this, this .childInlines, bbox, shadows);
+               return X3DBoundedObject .prototype .getBBox .call (this, this .childInlineNodes, bbox, shadows);
             }
          }
       }
@@ -161,9 +161,9 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       if (this ._rootNode .length)
          return;
 
-      if (this .rootInline .checkLoadState () === X3DConstants .COMPLETE_STATE)
+      if (this .rootInlineNode .checkLoadState () === X3DConstants .COMPLETE_STATE)
       {
-         this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
+         this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
          this .childrenLoaded = false;
       }
    },
@@ -172,10 +172,10 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       if (this ._level_changed .getValue () !== 1)
          return;
 
-      const loaded = this .childInlines .reduce ((previous, childInline) =>
+      const loaded = this .childInlineNodes .reduce ((previous, childInlineNode) =>
       {
-         return previous + (childInline .checkLoadState () === X3DConstants .COMPLETE_STATE ||
-            childInline .checkLoadState () === X3DConstants .FAILED_STATE);
+         return previous + (childInlineNode .checkLoadState () === X3DConstants .COMPLETE_STATE ||
+            childInlineNode .checkLoadState () === X3DConstants .FAILED_STATE);
       },
       0)
 
@@ -188,9 +188,9 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
 
       children .length = 0;
 
-      for (const childInline of this .childInlines)
+      for (const childInlineNode of this .childInlineNodes)
       {
-         const rootNodes = childInline .getInternalScene () .getRootNodes ();
+         const rootNodes = childInlineNode .getInternalScene () .getRootNodes ();
 
          for (const rootNode of rootNodes)
             children .push (rootNode);
@@ -198,27 +198,27 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    },
    set_childBoundedObject__ ()
    {
-      this .setBoundedObject (this .childInlines .some (childInline => childInline .isBoundedObject ()));
+      this .setBoundedObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isBoundedObject ()));
    },
    set_childPointingObject__ ()
    {
-      this .setPointingObject (this .childInlines .some (childInline => childInline .isPointingObject ()));
+      this .setPointingObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isPointingObject ()));
    },
    set_childCameraObject__ ()
    {
-      this .setCameraObject (this .childInlines .some (childInline => childInline .isCameraObject ()));
+      this .setCameraObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isCameraObject ()));
    },
    set_childPickableObject__ ()
    {
-      this .setPickableObject (this .childInlines .some (childInline => childInline .isPickableObject ()));
+      this .setPickableObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isPickableObject ()));
    },
    set_childCollisionObject__ ()
    {
-      this .setCollisionObject (this .childInlines .some (childInline => childInline .isCollisionObject ()));
+      this .setCollisionObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isCollisionObject ()));
    },
    set_childShadowObject__ ()
    {
-      this .setShadowObject (this .childInlines .some (childInline => childInline .isShadowObject ()));
+      this .setShadowObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isShadowObject ()));
    },
    getLevel (modelViewMatrix)
    {
@@ -269,38 +269,38 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                {
                   case 0:
                   {
-                     for (const childInline of this .childInlines)
+                     for (const childInlineNode of this .childInlineNodes)
                      {
-                        childInline ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
-                        childInline ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
-                        childInline ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
-                        childInline ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
-                        childInline ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
-                        childInline ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
+                        childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
+                        childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
+                        childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
+                        childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
+                        childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
+                        childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
                      }
 
                      if (this ._rootNode .length)
                      {
-                        this .connectChildNode (this .rootGroup, [TraverseType .DISPLAY]);
+                        this .connectChildNode (this .rootGroupNode, [TraverseType .DISPLAY]);
 
                         this ._children      = this ._rootNode;
                         this .childrenLoaded = false;
                      }
                      else
                      {
-                        if (this .rootInline .checkLoadState () == X3DConstants .COMPLETE_STATE)
+                        if (this .rootInlineNode .checkLoadState () == X3DConstants .COMPLETE_STATE)
                         {
-                           this .connectChildNode (this .rootInline, [TraverseType .DISPLAY]);
+                           this .connectChildNode (this .rootInlineNode, [TraverseType .DISPLAY]);
 
-                           this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
+                           this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
                            this .childrenLoaded = false;
                         }
                      }
 
                      if (this .unload)
                      {
-                        for (const childInline of this .childInlines)
-                           childInline ._load = false;
+                        for (const childInlineNode of this .childInlineNodes)
+                           childInlineNode ._load = false;
                      }
 
                      break;
@@ -308,18 +308,18 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                   case 1:
                   {
                      if (this ._rootNode .length)
-                        this .disconnectChildNode (this .rootGroup);
+                        this .disconnectChildNode (this .rootGroupNode);
                      else
-                        this .disconnectChildNode (this .rootInline);
+                        this .disconnectChildNode (this .rootInlineNode);
 
-                     for (const childInline of this .childInlines)
+                     for (const childInlineNode of this .childInlineNodes)
                      {
-                        childInline ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
-                        childInline ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
-                        childInline ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
-                        childInline ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
-                        childInline ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
-                        childInline ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
+                        childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
+                        childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
+                        childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
+                        childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
+                        childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
+                        childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
                      }
 
                      this .set_childBoundedObject__ ();
@@ -329,14 +329,14 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                      this .set_childCollisionObject__ ();
                      this .set_childShadowObject__ ();
 
-                     if (this .child1Inline ._load .getValue ())
+                     if (this .child1InlineNode ._load .getValue ())
                      {
                         this .set_childLoadState__ ();
                      }
                      else
                      {
-                        for (const childInline of this .childInlines)
-                           childInline ._load = true;
+                        for (const childInlineNode of this .childInlineNodes)
+                           childInlineNode ._load = true;
                      }
 
                      break;
@@ -361,16 +361,16 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
          case 0:
          {
             if (this ._rootNode .length)
-               this .rootGroup .traverse (type, renderObject);
+               this .rootGroupNode .traverse (type, renderObject);
             else
-               this .rootInline .traverse (type, renderObject);
+               this .rootInlineNode .traverse (type, renderObject);
 
             break;
          }
          case 1:
          {
-            for (const childInline of this .childInlines)
-               childInline .traverse (type, renderObject);
+            for (const childInlineNode of this .childInlineNodes)
+               childInlineNode .traverse (type, renderObject);
 
             break;
          }
