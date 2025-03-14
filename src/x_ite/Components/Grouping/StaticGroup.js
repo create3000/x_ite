@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .groupNode ._rebuild  .addInterest ("set_rebuild__",  this);
       this .groupNode ._children .addInterest ("set_children__", this);
 
-      this .connectChildNode (this .groupNode);
+      this .connectChildNode (this .groupNode, [TraverseType .CAMERA]);
 
       this .set_rebuild__ ();
       this .set_children__ ();
