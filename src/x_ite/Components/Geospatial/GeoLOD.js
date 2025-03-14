@@ -148,10 +148,6 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
             {
                return X3DBoundedObject .prototype .getBBox .call (this, this .childInlines, bbox, shadows);
             }
-            default:
-            {
-               return bbox .set ();
-            }
          }
       }
 
