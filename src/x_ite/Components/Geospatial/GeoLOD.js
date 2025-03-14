@@ -160,11 +160,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       if (this ._rootNode .length)
          return;
 
-      if (this .rootInlineNode .checkLoadState () === X3DConstants .COMPLETE_STATE)
-      {
-         this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
-         this .childrenLoaded = false;
-      }
+      if (this .rootInlineNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+         return;
+
+      this .childrenLoaded = false;
+      this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
    },
    set_childLoadState__ ()
    {
@@ -182,8 +182,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
          return;
 
       this .childrenLoaded = true;
-
-      this ._children = this .childInlineNodes .flatMap (childInlineNode => Array .from (childInlineNode .getInternalScene () .getRootNodes ()));
+      this ._children      = this .childInlineNodes .flatMap (childInlineNode => Array .from (childInlineNode .getInternalScene () .getRootNodes ()));
    },
    set_childBoundedObject__ ()
    {
