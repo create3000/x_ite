@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       this .child3Inline ._url = this ._child3Url;
       this .child4Inline ._url = this ._child4Url;
 
-      this .rootInline   .setup ();
+      this .rootInline .setup ();
 
       for (const childInline of this .childInlines)
          childInline .setup ();
@@ -172,30 +172,28 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       if (this ._level_changed .getValue () !== 1)
          return;
 
-      let loaded = 0;
+      const loaded = this .childInlines .reduce ((previous, childInline) =>
+      {
+         return previous + (childInline .checkLoadState () === X3DConstants .COMPLETE_STATE ||
+            childInline .checkLoadState () === X3DConstants .FAILED_STATE);
+      },
+      0)
+
+      if (loaded !== 4)
+         return;
+
+      this .childrenLoaded = true;
+
+      const children = this ._children;
+
+      children .length = 0;
 
       for (const childInline of this .childInlines)
       {
-         if (childInline .checkLoadState () === X3DConstants .COMPLETE_STATE ||
-             childInline .checkLoadState () === X3DConstants .FAILED_STATE)
-            ++ loaded;
-      }
+         const rootNodes = childInline .getInternalScene () .getRootNodes ();
 
-      if (loaded === 4)
-      {
-         this .childrenLoaded = true;
-
-         const children = this ._children;
-
-         children .length = 0;
-
-         for (const childInline of this .childInlines)
-         {
-            const rootNodes = childInline .getInternalScene () .getRootNodes ();
-
-            for (const rootNode of rootNodes)
-               children .push (rootNode);
-         }
+         for (const rootNode of rootNodes)
+            children .push (rootNode);
       }
    },
    set_childBoundedObject__ ()
