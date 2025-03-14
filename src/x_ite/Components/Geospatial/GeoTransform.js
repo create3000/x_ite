@@ -54,10 +54,6 @@ import X3DGeospatialObject      from "./X3DGeospatialObject.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import Matrix4                  from "../../../standard/Math/Numbers/Matrix4.js";
 
-var
-   matrix         = new Matrix4 (),
-   locationMatrix = new Matrix4 ();
-
 function GeoTransform (executionContext)
 {
    X3DTransformMatrix3DNode .call (this, executionContext);
@@ -82,17 +78,24 @@ Object .assign (Object .setPrototypeOf (GeoTransform .prototype, X3DTransformMat
 
       this .eventsProcessed ();
    },
-   eventsProcessed ()
+   eventsProcessed: (() =>
    {
-      this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
+      const
+         matrix         = new Matrix4 (),
+         locationMatrix = new Matrix4 ();
 
-      matrix .set (this ._translation      .getValue (),
-                     this ._rotation         .getValue (),
-                     this ._scale            .getValue (),
-                     this ._scaleOrientation .getValue ());
+      return function ()
+      {
+         this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
 
-      this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
-   },
+         matrix .set (this ._translation        .getValue (),
+                        this ._rotation         .getValue (),
+                        this ._scale            .getValue (),
+                        this ._scaleOrientation .getValue ());
+
+         this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
+      };
+   })(),
    dispose ()
    {
       X3DGeospatialObject      .prototype .dispose .call (this);

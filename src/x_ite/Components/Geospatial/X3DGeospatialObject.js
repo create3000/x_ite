@@ -122,10 +122,10 @@ Object .assign (X3DGeospatialObject .prototype,
       if (this .geoOriginNode)
       {
          // Position
-         var t = this .origin;
+         const t = this .origin;
 
          // Let's work out the orientation at that location in order
-         // to maintain a view where +Y is in the direction of gravitional
+         // to maintain a view where +Y is in the direction of gravitational
          // up for that region of the planet's surface. This will be the
          // value of the rotation matrix for the transform.
 
@@ -193,7 +193,7 @@ Object .assign (X3DGeospatialObject .prototype,
    },
    getLocationMatrix (geoPoint, result)
    {
-      var
+      const
          origin         = this .origin,
          locationMatrix = getStandardLocationMatrix .call (this, geoPoint, result);
 
@@ -204,7 +204,8 @@ Object .assign (X3DGeospatialObject .prototype,
 
       return locationMatrix;
    },
-   dispose () { },
+   dispose ()
+   { },
 });
 
 function getCoordRotateYUp (geoPoint, result)
