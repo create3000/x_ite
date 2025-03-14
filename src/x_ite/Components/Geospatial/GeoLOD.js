@@ -183,17 +183,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
 
       this .childrenLoaded = true;
 
-      const children = this ._children;
-
-      children .length = 0;
-
-      for (const childInlineNode of this .childInlineNodes)
-      {
-         const rootNodes = childInlineNode .getInternalScene () .getRootNodes ();
-
-         for (const rootNode of rootNodes)
-            children .push (rootNode);
-      }
+      this ._children = this .childInlineNodes .flatMap (childInlineNode => Array .from (childInlineNode .getInternalScene () .getRootNodes ()));
    },
    set_childBoundedObject__ ()
    {
