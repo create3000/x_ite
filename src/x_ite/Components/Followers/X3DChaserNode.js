@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
 
       this .set_duration__ ();
 
-      var
+      const
          buffer             = this .getBuffer (),
          initialValue       = this .getInitialValue (),
          initialDestination = this .getInitialDestination (),
@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
 
       buffer [0] = this .duplicate (initialDestination);
 
-      for (var i = 1; i < numBuffers; ++ i)
+      for (let i = 1; i < numBuffers; ++ i)
          buffer [i] = this .duplicate (initialValue);
 
       this .destination = this .duplicate (initialDestination);
@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
       if (t <= 0)
          return 0;
 
-      var duration = this ._duration .getValue ();
+      const duration = this ._duration .getValue ();
 
       if (t >= duration)
          return 1;
@@ -135,11 +135,11 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
       if (! this ._isActive .getValue ())
          this .bufferEndTime = this .getBrowser () .getCurrentTime ();
 
-      var
+      const
          buffer = this .getBuffer (),
          value  = this .getValue ();
 
-      for (var i = 0, length = buffer .length; i < length; ++ i)
+      for (let i = 0, length = buffer .length; i < length; ++ i)
          this .assign (buffer, i, value);
 
       this .setPreviousValue (value);
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
    },
    prepareEvents ()
    {
-      var
+      const
          buffer     = this .getBuffer (),
          numBuffers = buffer .length,
          fraction   = this .updateBuffer ();
@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
                                           buffer [numBuffers - 1],
                                           this .stepResponse ((numBuffers - 1 + fraction) * this .stepTime));
 
-      for (var i = numBuffers - 2; i >= 0; -- i)
+      for (let i = numBuffers - 2; i >= 0; -- i)
       {
          this .step (buffer [i], buffer [i + 1], this .stepResponse ((i + fraction) * this .stepTime));
       }
@@ -183,14 +183,15 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
    },
    updateBuffer ()
    {
-      var
+      const
          buffer     = this .getBuffer (),
-         numBuffers = buffer .length,
-         fraction   = (this .getBrowser () .getCurrentTime () - this .bufferEndTime) / this .stepTime;
+         numBuffers = buffer .length;
+
+      let fraction = (this .getBrowser () .getCurrentTime () - this .bufferEndTime) / this .stepTime;
 
       if (fraction >= 1)
       {
-         var seconds = Math .floor (fraction);
+         const seconds = Math .floor (fraction);
 
          fraction -= seconds;
 
@@ -198,14 +199,14 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
          {
             this .setPreviousValue (buffer [numBuffers - seconds]);
 
-            for (var i = numBuffers - 1; i >= seconds; -- i)
+            for (let i = numBuffers - 1; i >= seconds; -- i)
             {
                this .assign (buffer, i, buffer [i - seconds])
             }
 
-            for (var i = 0; i < seconds; ++ i)
+            for (let i = 0; i < seconds; ++ i)
             {
-               var alpha = i / seconds;
+               const alpha = i / seconds;
 
                this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
             }
@@ -214,7 +215,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
          {
             this .setPreviousValue (seconds == numBuffers ? buffer [0] : this .destination);
 
-            for (var i = 0; i < numBuffers; ++ i)
+            for (let i = 0; i < numBuffers; ++ i)
                this .assign (buffer, i, this .destination);
          }
 

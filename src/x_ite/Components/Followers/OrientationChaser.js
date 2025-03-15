@@ -53,7 +53,7 @@ import X3DChaserNode        from "./X3DChaserNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 
-var
+const
    a        = new Rotation4 (),
    rotation = new Rotation4 ();
 
