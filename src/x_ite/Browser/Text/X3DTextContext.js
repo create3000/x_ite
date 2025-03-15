@@ -93,7 +93,7 @@ Object .assign (X3DTextContext .prototype,
                   throw new Error (response .statusText || response .status);
 
                const decompress = url .includes (".woff2")
-                  ? await this .getWaWoff2 ()
+                  ? await this .getWebAssemblyWoff2 ()
                   : buffer => buffer;
 
                const
@@ -142,11 +142,11 @@ Object .assign (X3DTextContext .prototype,
 
       return cachedGlyph;
    },
-   getWaWoff2 ()
+   getWebAssemblyWoff2 ()
    {
-      return this [_wawoff2] ??= this .loadWaWoff2 ();
+      return this [_wawoff2] ??= this .loadWebAssemblyWoff2 ();
    },
-   async loadWaWoff2 ()
+   async loadWebAssemblyWoff2 ()
    {
       const
          url      = URLs .getLibraryURL ("decompress_binding.js"),
