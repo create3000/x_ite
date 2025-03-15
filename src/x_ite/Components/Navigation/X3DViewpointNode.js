@@ -422,6 +422,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       }
       else
       {
+         this .transitionStop ();
+         
          const navigationInfoNode = layerNode .getNavigationInfo ();
 
          navigationInfoNode ._transitionComplete = true;
@@ -433,7 +435,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          this ._scaleOffset            = relative .scale;
          this ._scaleOrientationOffset = relative .scaleOrientation;
 
-         this .transitionStop ();
          this .setInterpolators (fromViewpointNode, relative);
       }
    },
