@@ -335,6 +335,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          return true;
 
       this .timeSensor ._description = description;
+
       return false;
    },
    transitionStart (layerNode, fromViewpointNode)
@@ -423,7 +424,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       else
       {
          this .transitionStop ();
-         
+
          const navigationInfoNode = layerNode .getNavigationInfo ();
 
          navigationInfoNode ._transitionComplete = true;
