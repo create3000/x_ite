@@ -1037,30 +1037,33 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    display (gl, renderContext)
    {
       const
-         appearanceNode = renderContext .appearanceNode,
-         shaderNode     = appearanceNode .getShader (this, renderContext);
+         appearanceNode  = renderContext .appearanceNode,
+         renderModeNodes = appearanceNode .getRenderModes (),
+         shaderNode      = appearanceNode .getShader (this, renderContext);
+
+      for (const node of renderModeNodes)
+         node .enable (gl);
 
       if (this .solid || !appearanceNode .getBackMaterial ())
       {
-         this .displayGeometry (gl, renderContext, appearanceNode, shaderNode, true, true);
+         this .displayGeometry (gl, renderContext, shaderNode, true, true);
       }
       else
       {
          const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
-         this .displayGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false);
-         this .displayGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true);
+         this .displayGeometry (gl, renderContext, backShaderNode, true,  false);
+         this .displayGeometry (gl, renderContext, shaderNode,     false, true);
       }
-   },
-   displayGeometry (gl, renderContext, appearanceNode, shaderNode, back, front)
-   {
-      const
-         browser         = this .getBrowser (),
-         renderModeNodes = appearanceNode .getRenderModes (),
-         primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
 
       for (const node of renderModeNodes)
-         node .enable (gl);
+         node .disable (gl);
+   },
+   displayGeometry (gl, renderContext, shaderNode, back, front)
+   {
+      const
+         browser       = this .getBrowser (),
+         primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
 
       shaderNode .enable (gl);
       shaderNode .setUniforms (gl, renderContext, this, front);
@@ -1132,9 +1135,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          gl .drawArrays (primitiveMode, 0, this .vertexCount);
       }
-
-      for (const node of renderModeNodes)
-         node .disable (gl);
    },
    displaySimpleInstanced (gl, shaderNode, shapeNode)
    {
@@ -1167,31 +1167,34 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         browser        = this .getBrowser (),
-         appearanceNode = renderContext .appearanceNode,
-         shaderNode     = appearanceNode .getShader (this, renderContext);
+         browser         = this .getBrowser (),
+         appearanceNode  = renderContext .appearanceNode,
+         renderModeNodes = appearanceNode .getRenderModes (),
+         shaderNode      = appearanceNode .getShader (this, renderContext);
+
+      for (const node of renderModeNodes)
+         node .enable (gl);
 
       if (this .solid || !appearanceNode .getBackMaterial ())
       {
-         this .displayInstancedGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, shapeNode);
+         this .displayInstancedGeometry (gl, renderContext, shaderNode, true, true, shapeNode);
       }
       else
       {
          const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
-         this .displayInstancedGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false, shapeNode);
-         this .displayInstancedGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true,  shapeNode);
+         this .displayInstancedGeometry (gl, renderContext, backShaderNode, true,  false, shapeNode);
+         this .displayInstancedGeometry (gl, renderContext, shaderNode,     false, true,  shapeNode);
       }
+
+      for (const node of renderModeNodes)
+         node .disable (gl);
    },
-   displayInstancedGeometry (gl, renderContext, appearanceNode, shaderNode, back, front, shapeNode)
+   displayInstancedGeometry (gl, renderContext, shaderNode, back, front, shapeNode)
    {
       const
          browser         = this .getBrowser (),
-         renderModeNodes = appearanceNode .getRenderModes (),
          primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
-
-      for (const node of renderModeNodes)
-         node .enable (gl);
 
       // Setup shader.
 
@@ -1278,9 +1281,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
       }
-
-      for (const node of renderModeNodes)
-         node .disable (gl);
    },
 });
 

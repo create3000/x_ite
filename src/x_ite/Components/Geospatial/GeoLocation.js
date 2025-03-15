@@ -54,8 +54,6 @@ import X3DGeospatialObject      from "./X3DGeospatialObject.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import Matrix4                  from "../../../standard/Math/Numbers/Matrix4.js";
 
-var locationMatrix = new Matrix4 ();
-
 function GeoLocation (executionContext)
 {
    X3DTransformMatrix3DNode .call (this, executionContext);
@@ -76,10 +74,15 @@ Object .assign (Object .setPrototypeOf (GeoLocation .prototype, X3DTransformMatr
 
       this .eventsProcessed ();
    },
-   eventsProcessed ()
+   eventsProcessed: (() =>
    {
-      this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
-   },
+      const locationMatrix = new Matrix4 ();
+
+      return function ()
+      {
+         this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
+      };
+   })(),
    dispose ()
    {
       X3DGeospatialObject      .prototype .dispose .call (this);

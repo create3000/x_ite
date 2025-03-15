@@ -75,15 +75,9 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
       X3DGroupingNode   .prototype .initialize .call (this);
       X3DPickableObject .prototype .initialize .call (this);
 
-      this ._pickable .addInterest ("set_pickable__", this);
-
-      this .set_pickable__ ();
+      this ._pickable .addInterest ("set_pickableObjects__", this);
    },
    set_pickableObjects__ ()
-   {
-      this .set_pickable__ ();
-   },
-   set_pickable__ ()
    {
       this .setPickableObject (this ._pickable .getValue () || this .getTransformSensors () .size);
    },

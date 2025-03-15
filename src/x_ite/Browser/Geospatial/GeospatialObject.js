@@ -57,14 +57,14 @@ const
    UTM = i ++,
    GC  = i ++;
 
-const CoordinateSystems = {
-   GD:  GD,
-   GDC: GD,
-   UTM: UTM,
-   GC:  GC,
-   GCC: GC,
-   GS:  GC,
-};
+const CoordinateSystems = new Map ([
+   ["GD",  GD],
+   ["GDC", GD],
+   ["UTM", UTM],
+   ["GC",  GC],
+   ["GCC", GC],
+   ["GS",  GC],
+]);
 
 const Zone = /^Z(\d+)$/;
 
@@ -96,7 +96,7 @@ const GeospatialObject =
          }
       }
 
-      return new Geodetic (ReferenceEllipsoids .WE, true, radians);
+      return new Geodetic (ReferenceEllipsoids .get ("WE"), true, radians);
    },
    getElevationFrame (geoSystem, radians)
    {
@@ -106,7 +106,7 @@ const GeospatialObject =
    {
       for (const gs of geoSystem)
       {
-         const coordinateSystem = CoordinateSystems [gs];
+         const coordinateSystem = CoordinateSystems .get (gs);
 
          if (coordinateSystem !== undefined)
             return coordinateSystem;
@@ -118,26 +118,26 @@ const GeospatialObject =
    {
       for (const gs of geoSystem)
       {
-         const ellipsoid = ReferenceEllipsoids [gs];
+         const ellipsoid = ReferenceEllipsoids .get (gs);
 
          if (ellipsoid !== undefined)
             return ellipsoid;
       }
 
-      return ReferenceEllipsoids .WE;
+      return ReferenceEllipsoids .get ("WE");
    },
-   getEllipsoidString (geoSystem)
-   {
-      for (const gs of geoSystem)
-      {
-         const ellipsoid = ReferenceEllipsoids [gs];
+   // getEllipsoidString (geoSystem)
+   // {
+   //    for (const gs of geoSystem)
+   //    {
+   //       const ellipsoid = ReferenceEllipsoids .get (gs);
 
-         if (ellipsoid !== undefined)
-            return gs;
-      }
+   //       if (ellipsoid !== undefined)
+   //          return gs;
+   //    }
 
-      return "WE";
-   },
+   //    return "WE";
+   // },
    isStandardOrder (geoSystem)
    {
       switch (this .getCoordinateSystem (geoSystem))

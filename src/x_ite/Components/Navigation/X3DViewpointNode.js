@@ -329,10 +329,21 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       // VRML behavior support.
       return this .VRMLTransition;
    },
+   checkTransition (description)
+   {
+      if (this .timeSensor ._isActive .getValue () && this .timeSensor ._description .getValue () === description)
+         return true;
+
+      this .timeSensor ._description = description;
+      return false;
+   },
    transitionStart (layerNode, fromViewpointNode)
    {
       if (this ._jump .getValue ())
       {
+         if (this .checkTransition ("transitionStart"))
+            return;
+
          const relative = this .getRelativeTransformation (fromViewpointNode);
 
          if (!this ._retainUserOffsets .getValue ())
@@ -411,6 +422,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       }
       else
       {
+         this .transitionStop ();
+         
          const navigationInfoNode = layerNode .getNavigationInfo ();
 
          navigationInfoNode ._transitionComplete = true;
@@ -510,6 +523,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    lookAt (layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false)
    {
+      if (this .checkTransition ("lookAt"))
+         return;
+
       const
          offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
@@ -550,6 +566,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    straightenView (layerNode)
    {
+      if (this .checkTransition ("straightenView"))
+         return;
+
       layerNode .getNavigationInfo () ._transitionStart = true;
 
       this .timeSensor ._cycleInterval = 1;

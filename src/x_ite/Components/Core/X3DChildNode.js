@@ -138,45 +138,45 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
       // This function will be overloaded by X3DBoundedObject.
       return true;
    },
-   connectChildNode (childNode, exclude)
+   connectChildNode (childNode, excludes)
    {
-      if (!exclude ?.includes (TraverseType .BBOX))
+      if (!excludes ?.includes (TraverseType .BBOX))
       {
          childNode ._isBoundedObject .addFieldInterest (this ._isBoundedObject);
          this .setBoundedObject (childNode .isBoundedObject ());
       }
 
-      if (!exclude ?.includes (TraverseType .POINTER))
+      if (!excludes ?.includes (TraverseType .POINTER))
       {
          childNode ._isPointingObject .addFieldInterest (this ._isPointingObject);
          this .setPointingObject (childNode .isPointingObject ());
       }
 
-      if (!exclude ?.includes (TraverseType .CAMERA))
+      if (!excludes ?.includes (TraverseType .CAMERA))
       {
          childNode ._isCameraObject .addFieldInterest (this ._isCameraObject);
          this .setCameraObject (childNode .isCameraObject ());
       }
 
-      if (!exclude ?.includes (TraverseType .PICKING))
+      if (!excludes ?.includes (TraverseType .PICKING))
       {
          childNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
          this .setPickableObject (childNode .isPickableObject ());
       }
 
-      if (!exclude ?.includes (TraverseType .COLLISION))
+      if (!excludes ?.includes (TraverseType .COLLISION))
       {
          childNode ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
          this .setCollisionObject (childNode .isCollisionObject ());
       }
 
-      if (!exclude ?.includes (TraverseType .SHADOW))
+      if (!excludes ?.includes (TraverseType .SHADOW))
       {
          childNode ._isShadowObject .addFieldInterest (this ._isShadowObject);
          this .setShadowObject (childNode .isShadowObject ());
       }
 
-      if (!exclude ?.includes (TraverseType .DISPLAY))
+      if (!excludes ?.includes (TraverseType .DISPLAY))
       {
          childNode ._isVisibleObject .addFieldInterest (this ._isVisibleObject);
          this .setVisibleObject (childNode .isVisibleObject ());

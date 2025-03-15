@@ -55,8 +55,6 @@ import ProximitySensor            from "../EnvironmentalSensor/ProximitySensor.j
 import X3DConstants               from "../../Base/X3DConstants.js";
 import Vector3                    from "../../../standard/Math/Numbers/Vector3.js";
 
-var geoCoord = new Vector3 ();
-
 function GeoProximitySensor (executionContext)
 {
    X3DEnvironmentalSensorNode .call (this, executionContext);
@@ -105,10 +103,15 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnviro
 
       this .connectChildNode (this .proximitySensor);
    },
-   set_position__ (position)
+   set_position__: (() =>
    {
-      this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
-   },
+      const geoCoord = new Vector3 ();
+
+      return function ()
+      {
+         this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
+      };
+   })(),
    traverse (type, renderObject)
    {
       this .proximitySensor .traverse (type, renderObject);

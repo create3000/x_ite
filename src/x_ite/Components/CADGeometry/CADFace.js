@@ -260,18 +260,16 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                   transformSensorNode .collect (modelMatrix);
             }
 
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy ();
+            // CADFace cannot be pickTarget of a X3DPickSensorNode,
+            // so we do not need to a this node to pickingHierarchy.
 
-            pickingHierarchy .push (this);
+            const browser = this .getBrowser ();
 
             if (browser .getPickable () .at (-1))
                this .visibleObject ?.traverse (type, renderObject);
             else
                this .pickableObject ?.traverse (type, renderObject);
 
-            pickingHierarchy .pop ();
             return;
          }
          case TraverseType .COLLISION:
