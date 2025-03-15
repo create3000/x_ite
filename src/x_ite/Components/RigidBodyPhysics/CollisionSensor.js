@@ -113,7 +113,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
 
          for (const collidableNode of collidableNodes)
          {
-            const bodyNode = collidableNodes [i] .getBody ();
+            const bodyNode = collidableNode .getBody ();
 
             if (bodyNode)
             {
@@ -204,7 +204,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
 
          if (intersectionNodes .size)
          {
-            const i = 0;
+            let i = 0;
 
             intersectionNodes .forEach (intersectionNode => this ._intersections [i ++] = intersectionNode);
 
@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
 
          if (contactNodes .length)
          {
-            const i = 0;
+            let i = 0;
 
             contactNodes .forEach (contactNode => this ._contacts [i ++] = contactNode);
 

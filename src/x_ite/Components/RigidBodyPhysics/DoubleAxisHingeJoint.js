@@ -164,7 +164,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    {
       this .outputs .clear ();
 
-      for (const value of this ._forceOutpu)
+      for (const value of this ._forceOutput)
       {
          if (value == "ALL")
          {
