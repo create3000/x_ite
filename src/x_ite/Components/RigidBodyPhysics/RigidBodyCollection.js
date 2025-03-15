@@ -306,7 +306,6 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       try
       {
          const
-            deltaTime  = this .getTimeStep (),
             iterations = this ._iterations .getValue (),
             gravity    = this ._gravity .getValue ();
 
@@ -315,7 +314,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
          if (this ._preferAccuracy .getValue ())
          {
-            deltaTime /= iterations;
+            const deltaTime = this .getTimeStep () / iterations;
 
             for (let i = 0; i < iterations; ++ i)
             {
@@ -327,6 +326,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          }
          else
          {
+            const deltaTime = this .getTimeStep ();
+
             for (const bodyNode of this .bodyNodes)
                bodyNode .applyForces (gravity);
 
