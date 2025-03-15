@@ -118,10 +118,8 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
    {
       this .outputs .clear ();
 
-      for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
+      for (const value of this ._forceOutput)
       {
-         var value = this ._forceOutput [i];
-
          if (value == "ALL")
          {
             this .outputs .add ("body1AnchorPoint");
@@ -139,7 +137,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
    {
       if (this .joint)
       {
-         var
+         const
             localAnchorPoint1 = this .localAnchorPoint1,
             localAnchorPoint2 = this .localAnchorPoint2;
 
@@ -152,7 +150,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
    },
    update1: (() =>
    {
-      var localAnchorPoint1 = new Vector3 ();
+      const localAnchorPoint1 = new Vector3 ();
 
       return function ()
       {
@@ -162,7 +160,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
    })(),
    update2: (() =>
    {
-      var localAnchorPoint2 = new Vector3 ();
+      const localAnchorPoint2 = new Vector3 ();
 
       return function ()
       {

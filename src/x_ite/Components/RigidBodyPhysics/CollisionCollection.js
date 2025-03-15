@@ -69,7 +69,7 @@ function CollisionCollection (executionContext)
    this ._softnessConstantForceMix .setUnit ("force");
 
    // Private properties
-   
+
    this .appliedParameters   = new Set ();
    this .collidableNodes     = [ ];
    this .collisionSpaceNodes = [ ];
@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
    },
    set_appliedParameters__: (() =>
    {
-      var appliedParametersIndex = new Map ([
+      const appliedParametersIndex = new Map ([
          ["BOUNCE",                 AppliedParametersType .BOUNCE],
          ["USER_FRICTION",          AppliedParametersType .USER_FRICTION],
          ["FRICTION_COEFFICIENT-2", AppliedParametersType .FRICTION_COEFFICIENT_2],
@@ -119,27 +119,27 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
       {
          this .appliedParameters .clear ();
 
-         for (var i = 0, length = this ._appliedParameters .length; i < length; ++ i)
+         for (const appliedParameter of this ._appliedParameters)
          {
-            var appliedParameter = appliedParametersIndex .get (this ._appliedParameters [i]);
+            const value = appliedParametersIndex .get (appliedParameter);
 
-            if (appliedParameter !== undefined)
-               this .appliedParameters .add (appliedParameter);
+            if (value !== undefined)
+               this .appliedParameters .add (value);
          }
       };
    })(),
    set_collidables__ ()
    {
-      var collisionSpaceNodes = this .collisionSpaceNodes;
+      const collisionSpaceNodes = this .collisionSpaceNodes;
 
-      for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
-         collisionSpaceNodes [i] .removeInterest ("collect", this);
+      for (const collisionSpaceNode of collisionSpaceNodes)
+         collisionSpaceNode .removeInterest ("collect", this);
 
       collisionSpaceNodes .length = 0;
 
-      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+      for (const node of this ._collidables)
       {
-         var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
          {
@@ -153,16 +153,16 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
    },
    collect ()
    {
-      var
+      const
          collidableNodes     = this .collidableNodes,
          collisionSpaceNodes = this .collisionSpaceNodes;
 
       collidableNodes     .length = 0;
       collisionSpaceNodes .length = 0;
 
-      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+      for (const node of this ._collidables)
       {
-         var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidables [i]);
+         const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, node);
 
          if (collidableNode)
          {
@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
             continue;
          }
 
-         var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
          {

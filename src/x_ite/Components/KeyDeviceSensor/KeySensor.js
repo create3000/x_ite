@@ -52,7 +52,7 @@ import X3DNode                from "../Core/X3DNode.js";
 import X3DKeyDeviceSensorNode from "./X3DKeyDeviceSensorNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 
-var
+const
    KEY_F1  = 1,
    KEY_F2  = 2,
    KEY_F3  = 3,

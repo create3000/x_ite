@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    {
       const DELAY = 15; // Delay in frames when dt full applies.
 
-      var
+      const
          dt        = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ()),
          deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
 
@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_gravity__: (() =>
    {
-      var gravity = new Ammo .btVector3 (0, 0, 0);
+      const gravity = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -153,8 +153,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    })(),
    set_contactSurfaceThickness__ ()
    {
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-         this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
+      for (const bodyNode of this .bodyNodes)
+         bodyNode .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
    },
    set_collider__ ()
    {

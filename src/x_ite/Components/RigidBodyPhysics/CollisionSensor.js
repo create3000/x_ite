@@ -94,7 +94,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
    },
    update: (() =>
    {
-      var
+      const
          collidableNodesIndex = new Map (),
          collisionWorlds      = new Set (),
          intersectionNodes    = new Set (),
@@ -104,24 +104,22 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
 
       return function ()
       {
-         var
+         const
             colliderNode    = this .colliderNode,
             collidableNodes = colliderNode .getCollidables ();
 
          collidableNodesIndex .clear ();
          collisionWorlds      .clear ();
 
-         for (var i = 0, length = collidableNodes .length; i < length; ++ i)
+         for (const collidableNode of collidableNodes)
          {
-            var
-               collidableNode = collidableNodes [i],
-               bodyNode       = collidableNodes [i] .getBody ();
+            const bodyNode = collidableNodes [i] .getBody ();
 
             if (bodyNode)
             {
                collidableNodesIndex .set (bodyNode .getRigidBody () .ptr, collidableNode);
 
-               var collection = bodyNode .getCollection ();
+               const collection = bodyNode .getCollection ();
 
                if (collection)
                   collisionWorlds .add (collection .getDynamicsWorld ());
@@ -135,32 +133,32 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
          {
             //collisionWorld .performDiscreteCollisionDetection ();
 
-            var
+            const
                dispatcher   = collisionWorld .getDispatcher (),
                numManifolds = dispatcher .getNumManifolds ();
 
-            for (var i = 0; i < numManifolds; ++ i)
+            for (let i = 0; i < numManifolds; ++ i)
             {
-               var
+               const
                   contactManifold = dispatcher .getManifoldByIndexInternal (i),
                   numContacts     = contactManifold .getNumContacts ();
 
-               for (var j = 0; j < numContacts; ++ j)
+               for (let j = 0; j < numContacts; ++ j)
                {
-                  var pt = contactManifold .getContactPoint (j);
+                  const pt = contactManifold .getContactPoint (j);
 
                   if (pt .getDistance () <= 0)
                   {
-                     var
+                     const
                         collidableNode1 = collidableNodesIndex .get (contactManifold .getBody0 () .ptr),
                         collidableNode2 = collidableNodesIndex .get (contactManifold .getBody1 () .ptr);
 
                      if (! collidableNode1 && ! collidableNode2)
                         continue;
 
-                     var contactNode = this .getContact (contactNodes .length);
+                     const contactNode = this .getContact (contactNodes .length);
 
-                     var
+                     const
                         btPosition      = pt .getPositionWorldOnA (),
                         btContactNormal = pt .get_m_normalWorldOnB ();
 
@@ -199,14 +197,14 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
             }
          });
 
-         var active = !! contactNodes .length;
+         const active = !! contactNodes .length;
 
          if (this ._isActive .getValue () !== active)
             this ._isActive = active;
 
          if (intersectionNodes .size)
          {
-            var i = 0;
+            const i = 0;
 
             intersectionNodes .forEach (intersectionNode => this ._intersections [i ++] = intersectionNode);
 
@@ -215,7 +213,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
 
          if (contactNodes .length)
          {
-            var i = 0;
+            const i = 0;
 
             contactNodes .forEach (contactNode => this ._contacts [i ++] = contactNode);
 

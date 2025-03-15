@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    },
    addJoint: (() =>
    {
-      var
+      const
          localAnchorPoint1 = new Vector3 (),
          localAnchorPoint2 = new Vector3 (),
          localAxis1        = new Vector3 (),
@@ -164,10 +164,8 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    {
       this .outputs .clear ();
 
-      for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
+      for (const value of this ._forceOutpu)
       {
-         var value = this ._forceOutput [i];
-
          if (value == "ALL")
          {
             this .outputs .add ("body1AnchorPoint");
@@ -189,7 +187,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    },
    update1: (() =>
    {
-      var
+      const
          localAnchorPoint1 = new Vector3 (),
          localAxis1        = new Vector3 (),
          difference        = new Matrix4 (),
@@ -205,7 +203,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
 
          if (this .outputs .has ("hinge1Angle"))
          {
-            var lastAngle  = this ._hinge1Angle .getValue ();
+            const lastAngle  = this ._hinge1Angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix1 ()) .multRight (this .getBody1 () .getMatrix ());
             difference .get (null, rotation);
@@ -219,7 +217,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    })(),
    update2: (() =>
    {
-      var
+      const
          localAnchorPoint2 = new Vector3 (),
          localAxis2        = new Vector3 (),
          difference        = new Matrix4 (),
@@ -235,7 +233,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
 
          if (this .outputs .has ("hinge2Angle"))
          {
-            var lastAngle  = this ._hinge2Angle .getValue ();
+            const lastAngle  = this ._hinge2Angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
             difference .get (null, rotation);
