@@ -1,5 +1,5 @@
-/* X_ITE v11.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
+/* X_ITE v11.3.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -776,7 +776,7 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
          return vec4 (position, 1.0);
       }`);
    },
-   getBBox: (function ()
+   getBBox: (() =>
    {
       const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
@@ -1217,7 +1217,7 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_
          return vec4 (position, 1.0);
       }`);
    },
-   getBBox: (function ()
+   getBBox: (() =>
    {
       const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
@@ -1367,7 +1367,7 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSys
          return vec4 (position, 1.0);
       }`);
    },
-   getBBox: (function ()
+   getBBox: (() =>
    {
       const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
@@ -3180,7 +3180,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
 
       this .set_polylines__ ();
    },
-   getBBox: (function ()
+   getBBox: (() =>
    {
       const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
@@ -3418,7 +3418,7 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
 
       this .set_surface__ ();
    },
-   getBBox: (function ()
+   getBBox: (() =>
    {
       const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
@@ -3746,7 +3746,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
 
       this .set_geometry__ ();
    },
-   getBBox: (function ()
+   getBBox: (() =>
    {
       const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 

@@ -1,5 +1,5 @@
-/* X_ITE v11.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
+/* X_ITE v11.3.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -829,7 +829,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, (external_X_ITE_X3
 
       this .set_depthFunction__ ();
    },
-   set_depthFunction__: (function ()
+   set_depthFunction__: (() =>
    {
       const depthFunctions = new Map ([
          ["NEVER",         "NEVER"],
@@ -1434,7 +1434,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
    {
       return this .instances;
    },
-   set_bbox__: (function ()
+   set_bbox__: (() =>
    {
       const bbox = new (external_X_ITE_X3D_Box3_default()) ();
 
@@ -2635,7 +2635,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
       this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
    },
-   setShaderUniforms: (function ()
+   setShaderUniforms: (() =>
    {
       const zeros = new Float32Array (16);
 

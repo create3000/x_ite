@@ -1,5 +1,5 @@
-/* X_ITE v11.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
+/* X_ITE v11.3.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -334,7 +334,7 @@ const X3DKeyDeviceSensorNode_default_ = X3DKeyDeviceSensorNode;
 
 
 
-var
+const
    KEY_F1  = 1,
    KEY_F2  = 2,
    KEY_F3  = 3,
