@@ -9,9 +9,9 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v11.3 Series
 
-*Leipzig, 9th March 2025:*
+*Leipzig, 9th March 2025:* The scene-graph now optimizes itself automatically depending on what nodes are present. If, for example, a Group node contains only invisible nodes such as TimeSensor or ScalarInterpolator, this group is completely optimized away, of course this has no influence on the animation. Not only nodes that are invisible, but also nodes that do not participate in collision or shadow calculation can now be sorted out.
 
-* Scene graph traversal optimizations for improved performance and efficiency in processing scene graphs, resulting in faster rendering and reduced computation overhead.
+* Scene-graph traversal optimizations for improved performance and efficiency in processing scene graphs, resulting in faster rendering and reduced computation overhead.
 
 ## X_ITE v11.2 Series
 
