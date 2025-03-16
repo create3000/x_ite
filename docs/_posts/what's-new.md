@@ -11,7 +11,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 *Leipzig, 9th March 2025:*
 
-* Optimized Scene Graph Traversal: Improved performance and efficiency in processing scene graphs, resulting in faster rendering and reduced computation overhead.
+* Scene graph traversal optimizations for improved performance and efficiency in processing scene graphs, resulting in faster rendering and reduced computation overhead.
 
 ## X_ITE v11.2 Series
 
