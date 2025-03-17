@@ -239,6 +239,10 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
          }
 
          this .setTextureData (width, height, true, transparent, data);
+
+         if (transparent)
+            this .setTransparent (this .isImageTransparent (data));
+
          this ._loadState = X3DConstants .COMPLETE_STATE;
       }
       else
