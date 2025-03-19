@@ -77,7 +77,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/ExplosionEmitter/ExplosionEmitter.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/ParticleSystems/ExplosionEmitter/screenshot.png" alt="ExplosionEmitter"/>
+  <img src="https://create3000.github.io/media/examples/ParticleSystems/ExplosionEmitter/screenshot.avif" alt="ExplosionEmitter"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/ExplosionEmitter/ExplosionEmitter.zip)

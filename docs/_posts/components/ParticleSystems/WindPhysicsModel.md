@@ -66,7 +66,7 @@ Initial linear *speed* (default is m/s) imparted to all particles along their di
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/screenshot.png" alt="WindPhysicsModel"/>
+  <img src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/screenshot.avif" alt="WindPhysicsModel"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.zip)

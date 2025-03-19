@@ -128,7 +128,7 @@ The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigi
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/SingleAxisHingeJoint/screenshot.png" alt="SingleAxisHingeJoint"/>
+  <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/SingleAxisHingeJoint/screenshot.avif" alt="SingleAxisHingeJoint"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.zip)

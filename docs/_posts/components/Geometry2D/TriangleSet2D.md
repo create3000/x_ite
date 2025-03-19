@@ -71,7 +71,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/TriangleSet2D/TriangleSet2D.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Geometry2D/TriangleSet2D/screenshot.png" alt="TriangleSet2D"/>
+  <img src="https://create3000.github.io/media/examples/Geometry2D/TriangleSet2D/screenshot.avif" alt="TriangleSet2D"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/TriangleSet2D/TriangleSet2D.zip)

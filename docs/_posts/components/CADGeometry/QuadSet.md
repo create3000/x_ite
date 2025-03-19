@@ -143,7 +143,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/CADGeometry/QuadSet/QuadSet.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/CADGeometry/QuadSet/screenshot.png" alt="QuadSet"/>
+  <img src="https://create3000.github.io/media/examples/CADGeometry/QuadSet/screenshot.avif" alt="QuadSet"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/CADGeometry/QuadSet/QuadSet.zip)

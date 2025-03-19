@@ -174,7 +174,7 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/screenshot.png" alt="ScreenFontStyle"/>
+  <img src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/screenshot.avif" alt="ScreenFontStyle"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.zip)

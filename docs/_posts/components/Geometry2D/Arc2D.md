@@ -90,7 +90,7 @@ Circle *radius*, of which the arc is a portion.
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/screenshot.png" alt="Arc2D"/>
+  <img src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/screenshot.avif" alt="Arc2D"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.zip)

@@ -92,7 +92,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/Cone/Cone.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Geometry3D/Cone/screenshot.png" alt="Cone"/>
+  <img src="https://create3000.github.io/media/examples/Geometry3D/Cone/screenshot.avif" alt="Cone"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry3D/Cone/Cone.zip)

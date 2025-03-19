@@ -131,7 +131,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/PointingDeviceSensor/PlaneSensor/PlaneSensor.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/PointingDeviceSensor/PlaneSensor/screenshot.png" alt="PlaneSensor"/>
+  <img src="https://create3000.github.io/media/examples/PointingDeviceSensor/PlaneSensor/screenshot.avif" alt="PlaneSensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/PointingDeviceSensor/PlaneSensor/PlaneSensor.zip)

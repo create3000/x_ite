@@ -155,7 +155,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/Anchor/Anchor.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Networking/Anchor/screenshot.png" alt="Anchor"/>
+  <img src="https://create3000.github.io/media/examples/Networking/Anchor/screenshot.avif" alt="Anchor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Networking/Anchor/Anchor.zip)

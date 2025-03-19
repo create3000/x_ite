@@ -369,7 +369,7 @@ List of one or more indexed mesh definitions (such as [IndexedFaceSet](/x_ite/co
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/HAnim/HAnimHumanoid/HAnimHumanoid.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/HAnim/HAnimHumanoid/screenshot.png" alt="HAnimHumanoid"/>
+  <img src="https://create3000.github.io/media/examples/HAnim/HAnimHumanoid/screenshot.avif" alt="HAnimHumanoid"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/HAnim/HAnimHumanoid/HAnimHumanoid.zip)

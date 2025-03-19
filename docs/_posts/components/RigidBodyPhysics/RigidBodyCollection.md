@@ -168,7 +168,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/screenshot.png" alt="RigidBodyCollection"/>
+  <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/screenshot.avif" alt="RigidBodyCollection"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.zip)

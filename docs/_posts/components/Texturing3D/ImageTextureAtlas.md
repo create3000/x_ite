@@ -148,7 +148,7 @@ An example image could look like this:
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/screenshot.png" alt="ImageTextureAtlas"/>
+  <img src="https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/screenshot.avif" alt="ImageTextureAtlas"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.zip)

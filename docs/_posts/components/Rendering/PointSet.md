@@ -87,7 +87,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/PointSet/PointSet.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Rendering/PointSet/screenshot.png" alt="PointSet"/>
+  <img src="https://create3000.github.io/media/examples/Rendering/PointSet/screenshot.avif" alt="PointSet"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Rendering/PointSet/PointSet.zip)

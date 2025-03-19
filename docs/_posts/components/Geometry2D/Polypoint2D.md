@@ -56,7 +56,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/screenshot.png" alt="Polypoint2D"/>
+  <img src="https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/screenshot.avif" alt="Polypoint2D"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.zip)

@@ -69,7 +69,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/screenshot.png" alt="EdgeEnhancementVolumeStyle"/>
+  <img src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/screenshot.avif" alt="EdgeEnhancementVolumeStyle"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.zip)

@@ -94,7 +94,7 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/PixelTexture/PixelTexture.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Texturing/PixelTexture/screenshot.png" alt="PixelTexture"/>
+  <img src="https://create3000.github.io/media/examples/Texturing/PixelTexture/screenshot.avif" alt="PixelTexture"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Texturing/PixelTexture/PixelTexture.zip)
