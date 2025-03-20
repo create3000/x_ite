@@ -66,8 +66,6 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
       this ._emissiveTexture .addInterest ("set_transparent__", this);
-
-      this .set_transparent__ ();
    },
    getMaterialKey ()
    {
@@ -94,6 +92,8 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
       X3DOneSidedMaterialNode .prototype .set_emissiveTexture__ .call (this);
 
       this .getBaseTexture () ?._transparent .addInterest ("set_transparent__", this);
+
+      this .set_transparent__ ();
    },
    createShader (key, geometryContext, renderContext)
    {

@@ -89,7 +89,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
       this .set_extensions__ ();
-      this .set_transparent__ ();
    },
    getMaterialKey ()
    {
@@ -137,6 +136,8 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          this .baseTextureNode ._transparent .addInterest ("set_transparent__",  this);
          this .baseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .baseTextureNode);
       }
+
+      this .set_transparent__ ();
 
       this .setTexture (index, this .baseTextureNode);
    },
