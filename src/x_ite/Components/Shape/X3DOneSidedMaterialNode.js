@@ -111,22 +111,14 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    {
       return this .emissiveTextureNode;
    },
-   getEmissiveTexture ()
-   {
-      return this .emissiveTextureNode;
-   },
-   getNormalTexture ()
-   {
-      return this .normalTextureNode;
-   },
    getShaderOptions (geometryContext, renderContext)
    {
       const options = X3DMaterialNode .prototype .getShaderOptions .call (this, geometryContext, renderContext);
 
       if (+this .getTextureBits ())
       {
-         this .getEmissiveTexture () ?.getShaderOptions (options, "EMISSIVE");
-         this .getNormalTexture ()   ?.getShaderOptions (options, "NORMAL");
+         this .emissiveTextureNode ?.getShaderOptions (options, "EMISSIVE");
+         this .normalTextureNode   ?.getShaderOptions (options, "NORMAL");
       }
 
       return options;
