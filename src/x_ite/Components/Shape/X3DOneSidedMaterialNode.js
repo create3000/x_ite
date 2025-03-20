@@ -68,12 +68,14 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
       this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
+      this ._normalScale     .addInterest ("set_normalScale__",     this);
       this ._normalTexture   .addInterest ("set_normalTexture__",   this);
       this ._transparency    .addInterest ("set_transparency__",    this);
       this ._transparency    .addInterest ("set_transparent__",     this);
 
       this .set_emissiveColor__ ();
       this .set_emissiveTexture__ ();
+      this .set_normalScale__ ();
       this .set_normalTexture__ ();
       this .set_transparency__ ();
    },
@@ -92,6 +94,10 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
       this .emissiveTextureNode ?._linear .addInterest (`setTexture${index}`, this, index, this .emissiveTextureNode);
 
       this .setTexture (index, this .emissiveTextureNode);
+   },
+   set_normalScale__ ()
+   {
+      this .normalScale = Math .max (this ._normalScale .getValue (), 0);
    },
    set_normalTexture__ ()
    {
@@ -140,7 +146,7 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
          textureCoordinateMapping);
 
       if (this .normalTextureNode)
-         gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
+         gl .uniform1f (shaderObject .x3d_NormalScale, this .normalScale);
 
       this .normalTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
