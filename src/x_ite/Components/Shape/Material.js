@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    })(),
    getBaseTexture ()
    {
-      return this .diffuseTexture;
+      return this .diffuseTextureNode;
    },
    set_ambientIntensity__ ()
    {
