@@ -96,6 +96,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
       this .set_extensions__ ();
+      this .set_transparent__ ();
    },
    getMaterialKey ()
    {
@@ -143,8 +144,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
          this .diffuseTextureNode ._transparent .addInterest ("set_transparent__",  this);
          this .diffuseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .diffuseTextureNode);
       }
-
-      this .set_transparent__ ();
 
       this .setTexture (index, this .diffuseTextureNode);
    },
