@@ -95,10 +95,6 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
 
       this .getEmissiveTexture () ?._transparent .addInterest ("set_transparent__", this);
    },
-   set_transparent__ ()
-   {
-      this .setTransparent (this .getTransparency () || this .getEmissiveTexture () ?.isTransparent ());
-   },
    createShader (key, geometryContext, renderContext)
    {
       const

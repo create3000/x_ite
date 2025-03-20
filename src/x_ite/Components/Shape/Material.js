@@ -205,10 +205,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
-   set_transparent__ ()
-   {
-      this .setTransparent (this .getTransparency () || this .diffuseTextureNode ?.isTransparent ());
-   },
    createShader (key, geometryContext, renderContext)
    {
       const

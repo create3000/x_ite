@@ -105,11 +105,11 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
    set_transparent__ ()
    {
-      this .setTransparent (this .transparency);
+      this .setTransparent (this .transparency || this .getBaseTexture () ?.isTransparent ());
    },
    getBaseTexture ()
    {
-      return this .getEmissiveTexture ();
+      return this .emissiveTextureNode;
    },
    getEmissiveTexture ()
    {
@@ -118,10 +118,6 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    getNormalTexture ()
    {
       return this .normalTextureNode;
-   },
-   getTransparency ()
-   {
-      return this .transparency;
    },
    getShaderOptions (geometryContext, renderContext)
    {

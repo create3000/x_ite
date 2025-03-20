@@ -171,11 +171,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
-   set_transparent__ ()
-   {
-      this .setTransparent (this .getTransparency () ||
-                            this .diffuseTextureNode ?.isTransparent ());
-   },
    set_extensions__ ()
    {
       const extensionNodes = this .extensionNodes;
