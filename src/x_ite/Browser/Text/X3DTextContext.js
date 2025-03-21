@@ -110,6 +110,9 @@ Object .assign (X3DTextContext .prototype,
             }
             catch (error)
             {
+               if (fileURL .protocol !== "data:")
+                  console .warn (`Error loading font '${decodeURI (fileURL .href)}':`, error);
+
                reject (error);
             }
             finally

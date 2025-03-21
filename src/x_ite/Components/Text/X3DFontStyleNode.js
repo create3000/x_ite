@@ -260,10 +260,9 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       {
          return await browser .loadFont (fileURL, true);
       }
-      catch (error)
+      catch
       {
-         if (fileURL .protocol !== "data:")
-            console .warn (`Error loading font '${decodeURI (fileURL .href)}':`, error);
+         return null;
       }
    },
    dispose ()
