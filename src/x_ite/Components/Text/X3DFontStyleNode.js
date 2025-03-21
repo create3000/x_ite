@@ -117,14 +117,14 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       const majorNormal = this ._horizontal .getValue () ? this ._leftToRight .getValue () : this ._topToBottom .getValue ();
 
       this .alignments [0] = this ._justify .length > 0
-                             ? this .getAlignment (0, majorNormal)
-                             : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
+         ? this .getAlignment (0, majorNormal)
+         : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
 
       const minorNormal = this ._horizontal .getValue () ? this ._topToBottom .getValue () : this ._leftToRight .getValue ();
 
       this .alignments [1] = this ._justify .length > 1
-                             ? this .getAlignment (1, minorNormal)
-                             : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
+         ? this .getAlignment (1, minorNormal)
+         : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
    },
    getAllowEmptyUrl ()
    {
