@@ -98,7 +98,7 @@ Object .assign (X3DTextContext .prototype,
                if (!response .ok)
                   throw new Error (response .statusText || response .status);
 
-               const decompress = url .includes (".woff2")
+               const decompress = url .includes (".woff2") || url .includes ("font/woff2")
                   ? await this .getWebAssemblyWoff2 ()
                   : buffer => buffer;
 
