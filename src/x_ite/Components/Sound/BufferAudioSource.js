@@ -55,7 +55,6 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import FileLoader           from "../../InputOutput/FileLoader.js";
 import AudioElement         from "../../Browser/Sound/AudioElement.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
-import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function BufferAudioSource (executionContext)
 {
@@ -184,7 +183,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
             this .setLoadState (X3DConstants .COMPLETE_STATE);
 
-            if (DEVELOPMENT)
+            if (this .getBrowser () .getBrowserOption ("Debug"))
             {
                if (URL .protocol !== "data:")
                   console .info (`Done loading audio '${decodeURI (URL .href)}'.`);
