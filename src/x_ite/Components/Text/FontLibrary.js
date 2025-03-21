@@ -99,22 +99,17 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
 
       for (const fileURL of fileURLs)
       {
-         try
-         {
-            this .font = await browser .loadFont (fileURL, this .getCache ());
+         this .font = await browser .loadFont (fileURL, this .getCache ());
 
-            browser .registerFont (executionContext, this .font);
+         if (!this .font)
+            continue;
 
-            this .set_family__ ();
+         browser .registerFont (executionContext, this .font);
 
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
-            return;
-         }
-         catch (error)
-         {
-            if (fileURL .protocol !== "data:")
-               console .warn (`Error loading font '${decodeURI (fileURL .href)}':`, error);
-         }
+         this .set_family__ ();
+
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+         return;
       }
 
       this .setLoadState (X3DConstants .FAILED_STATE);
