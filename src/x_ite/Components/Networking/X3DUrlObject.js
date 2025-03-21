@@ -78,6 +78,10 @@ Object .assign (X3DUrlObject .prototype,
       this ._autoRefresh          .addInterest ("set_autoRefresh__", this);
       this ._autoRefreshTimeLimit .addInterest ("set_autoRefresh__", this);
    },
+   getAllowEmptyUrl ()
+   {
+      return false;
+   },
    setLoadState (value, notify = true)
    {
       this ._loadState = value;
@@ -156,7 +160,7 @@ Object .assign (X3DUrlObject .prototype,
       if (!this ._load .getValue ())
          throw new Error (`${this .getTypeName ()}.load is false.`);
 
-      if (this ._url .length === 0 && !this ._family)
+      if (this ._url .length === 0 && !this .getAllowEmptyUrl ())
       {
          this .unloadData ();
          return;

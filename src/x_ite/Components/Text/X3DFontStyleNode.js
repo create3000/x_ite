@@ -141,6 +141,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       return;
    },
+   getAllowEmptyUrl ()
+   {
+      return true;
+   },
    getMajorAlignment ()
    {
       return this .alignments [0];
