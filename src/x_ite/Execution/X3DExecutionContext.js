@@ -110,6 +110,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return false;
    },
+   getLocalScene ()
+   {
+      return this .getExecutionContext () .getLocalScene ();
+   },
    setExecutionContext (executionContext)
    {
       if (this .getExecutionContext ())

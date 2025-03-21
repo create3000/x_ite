@@ -123,7 +123,7 @@ Object .assign (X3DTextContext .prototype,
    registerFont (executionContext, font)
    {
       const
-         scene    = executionContext .isScene () ? executionContext : executionContext .getScene (),
+         scene    = executionContext .getLocalScene (),
          families = this [_families] .get (scene) ?? new Map ();
 
       this [_families] .set (scene, families);
@@ -154,7 +154,7 @@ Object .assign (X3DTextContext .prototype,
    registerFontLibrary (executionContext, fullName, font)
    {
       const
-         scene   = executionContext .isScene () ? executionContext : executionContext .getScene (),
+         scene   = executionContext .getLocalScene (),
          library = this [_library] .get (scene) ?? new Map ();
 
       this [_library] .set (scene, library);
@@ -171,7 +171,7 @@ Object .assign (X3DTextContext .prototype,
          familyName = familyName .toLowerCase ();
          style      = style .toLowerCase () .replaceAll (" ", "");
 
-         const scene = executionContext .isScene () ? executionContext : executionContext .getScene ();
+         const scene = executionContext .getLocalScene ();
 
          for (;;)
          {

@@ -111,6 +111,10 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       return true;
    },
+   getLocalScene ()
+   {
+      return this;
+   },
    setSpecificationVersion (specificationVersion)
    {
       this [_specificationVersion] = String (specificationVersion);
