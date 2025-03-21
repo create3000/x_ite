@@ -128,6 +128,17 @@ Object .assign (X3DTextContext .prototype,
 
       return cachedGlyph;
    },
+   isWoff2 (arrayBuffer)
+   {
+      if (arrayBuffer .byteLength < 4)
+         return false;
+
+      const
+         dataView = new DataView (arrayBuffer),
+         magic    = dataView .getUint32 (0, false);
+
+      return magic === 0x774F4632; // 'wOF2'
+   },
    getWebAssemblyWoff2 ()
    {
       return this [_wawoff2] ??= this .loadWebAssemblyWoff2 ();
