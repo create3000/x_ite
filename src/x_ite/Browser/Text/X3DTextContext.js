@@ -201,17 +201,9 @@ Object .assign (X3DTextContext .prototype,
       if (!cachedFont)
          this [_glyphCache] .set (font, cachedFont = [ ]);
 
-      let cachedQuality = cachedFont [primitiveQuality];
+      const cachedQuality = cachedFont [primitiveQuality] ??= [ ];
 
-      if (!cachedQuality)
-         cachedQuality = cachedFont [primitiveQuality] = [ ];
-
-      let cachedGlyph = cachedQuality [glyphIndex];
-
-      if (!cachedGlyph)
-         cachedGlyph = cachedQuality [glyphIndex] = { };
-
-      return cachedGlyph;
+      return cachedQuality [glyphIndex] ??= { };
    },
    async decompressFont (arrayBuffer)
    {
