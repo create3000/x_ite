@@ -64,7 +64,6 @@ function X3DTextContext ()
    this [_fontCache]    = new Map ();
    this [_families]     = new WeakMap ();
    this [_library]      = new WeakMap ();
-   this [_glyphCache]   = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
 Object .assign (X3DTextContext .prototype,
@@ -196,14 +195,12 @@ Object .assign (X3DTextContext .prototype,
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {
-      let cachedFont = this [_glyphCache] .get (font);
+      const
+         cachedFont    = font [_glyphCache] ??= [ ],
+         cachedQuality = cachedFont [primitiveQuality] ??= [ ],
+         cachedGlyph   = cachedQuality [glyphIndex] ??= { };
 
-      if (!cachedFont)
-         this [_glyphCache] .set (font, cachedFont = [ ]);
-
-      const cachedQuality = cachedFont [primitiveQuality] ??= [ ];
-
-      return cachedQuality [glyphIndex] ??= { };
+      return cachedGlyph;
    },
    async decompressFont (arrayBuffer)
    {
