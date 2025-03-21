@@ -128,6 +128,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
                              ? this .getAlignment (1, minorNormal)
                              : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
    },
+   getAllowEmptyUrl ()
+   {
+      return true;
+   },
    getFont ()
    {
       return this .font;
@@ -140,10 +144,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          return family .get (style) ?? family .get ("PLAIN");
 
       return;
-   },
-   getAllowEmptyUrl ()
-   {
-      return true;
    },
    getMajorAlignment ()
    {
