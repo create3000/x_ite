@@ -70,21 +70,19 @@ Object .assign (X3DTextContext .prototype,
 {
    getDefaultFontStyle ()
    {
-      this [_defaultFontStyle] = new FontStyle (this .getPrivateScene ());
-      this [_defaultFontStyle] .setPrivate (true);
-      this [_defaultFontStyle] .setup ();
+      return this [_defaultFontStyle] ??= (() =>
+      {
+         const defaultFontStyle = new FontStyle (this .getPrivateScene ());
 
-      this .getDefaultFontStyle = function () { return this [_defaultFontStyle]; };
+         defaultFontStyle .setPrivate (true);
+         defaultFontStyle .setup ();
 
-      Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
-
-      return this [_defaultFontStyle];
+         return defaultFontStyle;
+      })();
    },
-   loadFont (url, cache = true)
+   loadFont (fileURL, cache = true)
    {
-      url = String (url);
-
-      let promise = cache ? this [_fontCache] .get (url) : null;
+      let promise = cache ? this [_fontCache] .get (String (fileURL)) : null;
 
       if (!promise)
       {
@@ -92,7 +90,7 @@ Object .assign (X3DTextContext .prototype,
          {
             try
             {
-               const response = await fetch (url, { cache: cache ? "default" : "reload" });
+               const response = await fetch (fileURL, { cache: cache ? "default" : "reload" });
 
                if (!response .ok)
                   throw new Error (response .statusText || response .status);
@@ -101,6 +99,12 @@ Object .assign (X3DTextContext .prototype,
                   arrayBuffer  = await response .arrayBuffer (),
                   decompressed = await this .decompressFont (arrayBuffer),
                   font         = OpenType .parse (decompressed);
+
+               if (this .getBrowserOption ("Debug"))
+               {
+                  if (fileURL .protocol !== "data:")
+                     console .info (`Done loading font '${decodeURI (fileURL .href)}'.`);
+               }
 
                resolve (font);
             }
@@ -115,7 +119,7 @@ Object .assign (X3DTextContext .prototype,
          });
 
          this [_loadingFonts] .add (promise);
-         this [_fontCache] .set (url, promise);
+         this [_fontCache] .set (String (fileURL), promise);
       }
 
       return promise;
@@ -231,8 +235,8 @@ Object .assign (X3DTextContext .prototype,
    async loadWebAssemblyWoff2 ()
    {
       const
-         url      = URLs .getLibraryURL ("decompress_binding.js"),
-         response = await fetch (url);
+         fileURL  = URLs .getLibraryURL ("decompress_binding.js"),
+         response = await fetch (fileURL);
 
       if (!response .ok)
          throw new Error (response .statusText || response .status);
