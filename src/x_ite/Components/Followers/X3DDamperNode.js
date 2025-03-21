@@ -67,14 +67,14 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNod
       this ._set_value       .addInterest ("set_value__", this);
       this ._set_destination .addInterest ("set_destination__", this);
 
-      var
+      const
          buffer             = this .getBuffer (),
          initialValue       = this .getInitialValue (),
          initialDestination = this .getInitialDestination ();
 
       buffer [0] = this .duplicate (initialDestination);
 
-      for (var i = 1, length = this .getOrder () + 1; i < length; ++ i)
+      for (let i = 1, length = this .getOrder () + 1; i < length; ++ i)
          buffer [i] = this .duplicate (initialValue);
 
       if (this .equals (initialDestination, initialValue, this .getTolerance ()))
@@ -96,17 +96,17 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNod
    },
    prepareEvents ()
    {
-      var
-         buffer = this .getBuffer (),
-         order  = buffer .length - 1;
+      const buffer = this .getBuffer ();
+      
+      let order  = buffer .length - 1;
 
       if (this ._tau .getValue ())
       {
-         var
+         const
             delta = 1 / this .getBrowser () .currentFrameRate,
             alpha = Math .exp (-delta / this ._tau .getValue ());
 
-         for (var i = 0; i < order; ++ i)
+         for (let i = 0; i < order; ++ i)
          {
             this .assign (buffer, i + 1, this .interpolate (buffer [i], buffer [i + 1], alpha));
          }
@@ -123,18 +123,18 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNod
          order = 0;
       }
 
-      for (var i = 1, length = buffer .length; i < length; ++ i)
+      for (let i = 1, length = buffer .length; i < length; ++ i)
          this .assign (buffer, i, buffer [order]);
 
       this .set_active (false);
    },
    set_value__ ()
    {
-      var
+      const
          buffer = this .getBuffer (),
          value  = this .getValue ();
 
-      for (var i = 1, length = buffer .length; i < length; ++ i)
+      for (let i = 1, length = buffer .length; i < length; ++ i)
          this .assign (buffer, i, value);
 
       this .setValue (value);
@@ -149,11 +149,11 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNod
    },
    set_order__ ()
    {
-      var
+      const
          buffer = this .getBuffer (),
          value  = buffer [buffer .length - 1];
 
-      for (var i = buffer .length, length = this .getOrder () + 1; i < length; ++ i)
+      for (let i = buffer .length, length = this .getOrder () + 1; i < length; ++ i)
          buffer [i] = this .duplicate (value);
 
       buffer .length = length;

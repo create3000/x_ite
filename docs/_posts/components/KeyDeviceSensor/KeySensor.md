@@ -122,7 +122,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/KeyDeviceSensor/KeySensor/KeySensor.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/KeyDeviceSensor/KeySensor/screenshot.png" alt="KeySensor"/>
+  <img src="https://create3000.github.io/media/examples/KeyDeviceSensor/KeySensor/screenshot.avif" alt="KeySensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/KeyDeviceSensor/KeySensor/KeySensor.zip)

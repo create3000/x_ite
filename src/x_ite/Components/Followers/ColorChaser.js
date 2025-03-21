@@ -54,7 +54,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import Color3               from "../../../standard/Math/Numbers/Color3.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
-var
+const
    initialValue       = new Vector3 (),
    initialDestination = new Vector3 (),
    deltaOut           = new Vector3 (),

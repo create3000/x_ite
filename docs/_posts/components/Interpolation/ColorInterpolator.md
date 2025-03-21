@@ -97,7 +97,7 @@ Linearly interpolated output value determined by current key time and correspond
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Interpolation/ColorInterpolator/ColorInterpolator.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Interpolation/ColorInterpolator/screenshot.png" alt="ColorInterpolator"/>
+  <img src="https://create3000.github.io/media/examples/Interpolation/ColorInterpolator/screenshot.avif" alt="ColorInterpolator"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Interpolation/ColorInterpolator/ColorInterpolator.zip)

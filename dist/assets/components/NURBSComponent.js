@@ -1,5 +1,5 @@
-/* X_ITE v11.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
+/* X_ITE v11.3.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -4866,7 +4866,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, NURBS_X3
 
       return trimmingContours;
    },
-   trimSurface: (function ()
+   trimSurface: (() =>
    {
       const unitSquare = [
          new (external_X_ITE_X3D_Vector3_default()) (0, 0, 0),

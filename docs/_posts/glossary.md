@@ -23,6 +23,9 @@ authoring tool
 avatar
 : Geometry within the scene that represents the user. The location of the avatar corresponds to the user's viewing position.
 
+AVIF
+: AVIF (AV1 Image File Format) is a modern, highly efficient image format based on the AV1 video codec, designed for superior compression while maintaining high image quality. It supports HDR, transparency, animation, and wide color gamuts, making it a strong alternative to JPEG, PNG, and WebP. AVIF offers better compression efficiency than JPEG and WebP, leading to smaller file sizes with improved visual fidelity, and is widely supported by modern web browsers and software.
+
 ## B
 
 backface culling

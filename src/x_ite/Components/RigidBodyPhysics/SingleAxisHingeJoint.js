@@ -96,7 +96,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
    },
    addJoint: (() =>
    {
-      var
+      const
          localAxis1 = new Vector3 (),
          localAxis2 = new Vector3 ();
 
@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
          if (this .getBody2 () .getCollection () !== this .getCollection ())
             return;
 
-         var
+         const
             localAnchorPoint1 = this .localAnchorPoint1,
             localAnchorPoint2 = this .localAnchorPoint2;
 
@@ -156,10 +156,8 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
    {
       this .outputs .clear ();
 
-      for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
+      for (const value of this ._forceOutput)
       {
-         var value = this ._forceOutput [i];
-
          if (value == "ALL")
          {
             this .outputs .add ("body1AnchorPoint");
@@ -177,7 +175,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
    },
    update1: (() =>
    {
-      var localAnchorPoint1 = new Vector3 ();
+      const localAnchorPoint1 = new Vector3 ();
 
       return function ()
       {
@@ -187,7 +185,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
    })(),
    update2: (() =>
    {
-      var
+      const
          localAnchorPoint2 = new Vector3 (),
          difference        = new Matrix4 (),
          rotation          = new Rotation4 ();
@@ -199,7 +197,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
 
          if (this .outputs .has ("angle"))
          {
-            var lastAngle  = this ._angle .getValue ();
+            const lastAngle  = this ._angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
             difference .get (null, rotation);

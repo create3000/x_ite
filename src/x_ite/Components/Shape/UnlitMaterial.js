@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
       this ._emissiveTexture .addInterest ("set_transparent__", this);
-
+      
       this .set_transparent__ ();
    },
    getMaterialKey ()
@@ -89,15 +89,11 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
    })(),
    set_emissiveTexture__ ()
    {
-      this .getEmissiveTexture () ?._transparent .removeInterest ("set_transparent__", this);
+      this .getBaseTexture () ?._transparent .removeInterest ("set_transparent__", this);
 
       X3DOneSidedMaterialNode .prototype .set_emissiveTexture__ .call (this);
 
-      this .getEmissiveTexture () ?._transparent .addInterest ("set_transparent__", this);
-   },
-   set_transparent__ ()
-   {
-      this .setTransparent (this .getTransparency () || this .getEmissiveTexture () ?.isTransparent ());
+      this .getBaseTexture () ?._transparent .addInterest ("set_transparent__", this);
    },
    createShader (key, geometryContext, renderContext)
    {

@@ -100,7 +100,7 @@ Linearly interpolated output value determined by current key time and correspond
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Interpolation/PositionInterpolator2D/PositionInterpolator2D.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Interpolation/PositionInterpolator2D/screenshot.png" alt="PositionInterpolator2D"/>
+  <img src="https://create3000.github.io/media/examples/Interpolation/PositionInterpolator2D/screenshot.avif" alt="PositionInterpolator2D"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Interpolation/PositionInterpolator2D/PositionInterpolator2D.zip)

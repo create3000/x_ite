@@ -91,7 +91,7 @@ Time event generated when user's camera exits visibility region for sensor.
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/VisibilitySensor.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/screenshot.png" alt="VisibilitySensor"/>
+  <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/screenshot.avif" alt="VisibilitySensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/VisibilitySensor.zip)

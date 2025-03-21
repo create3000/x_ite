@@ -141,7 +141,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/PointingDeviceSensor/CylinderSensor/CylinderSensor.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/PointingDeviceSensor/CylinderSensor/screenshot.png" alt="CylinderSensor"/>
+  <img src="https://create3000.github.io/media/examples/PointingDeviceSensor/CylinderSensor/screenshot.avif" alt="CylinderSensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/PointingDeviceSensor/CylinderSensor/CylinderSensor.zip)

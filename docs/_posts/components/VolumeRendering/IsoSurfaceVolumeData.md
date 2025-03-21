@@ -132,7 +132,7 @@ Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturi
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/IsoSurfaceVolumeData/IsoSurfaceVolumeData.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/VolumeRendering/IsoSurfaceVolumeData/screenshot.png" alt="IsoSurfaceVolumeData"/>
+  <img src="https://create3000.github.io/media/examples/VolumeRendering/IsoSurfaceVolumeData/screenshot.avif" alt="IsoSurfaceVolumeData"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/VolumeRendering/IsoSurfaceVolumeData/IsoSurfaceVolumeData.zip)

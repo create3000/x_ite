@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    })(),
    getBaseTexture ()
    {
-      return this .diffuseTexture;
+      return this .diffuseTextureNode;
    },
    set_ambientIntensity__ ()
    {
@@ -204,10 +204,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
-   },
-   set_transparent__ ()
-   {
-      this .setTransparent (this .getTransparency () || this .diffuseTextureNode ?.isTransparent ());
    },
    createShader (key, geometryContext, renderContext)
    {

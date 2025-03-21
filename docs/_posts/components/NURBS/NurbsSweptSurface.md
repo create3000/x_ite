@@ -80,7 +80,7 @@ Describes the center-line path using a [NurbsCurve](/x_ite/components/nurbs/nurb
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/NurbsSweptSurface.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/screenshot.png" alt="NurbsSweptSurface"/>
+  <img src="https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/screenshot.avif" alt="NurbsSweptSurface"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/NurbsSweptSurface.zip)

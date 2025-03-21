@@ -54,7 +54,7 @@ import X3DArrayChaserTemplate from "../../Browser/Followers/X3DArrayChaserTempla
 import X3DConstants           from "../../Base/X3DConstants.js";
 import Vector2                from "../../../standard/Math/Numbers/Vector2.js";
 
-var X3DArrayChaserObject = X3DArrayChaserTemplate (X3DChaserNode);
+const X3DArrayChaserObject = X3DArrayChaserTemplate (X3DChaserNode);
 
 function TexCoordChaser2D (executionContext)
 {

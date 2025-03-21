@@ -149,17 +149,17 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_position__ ()
    {
-      for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-         this .geometryNodes [i] ._translation = this ._position;
+      for (const geometryNode of this .geometryNodes)
+         geometryNode ._translation = this ._position;
    },
    set_orientation__ ()
    {
-      for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-         this .geometryNodes [i] ._rotation = this ._orientation;
+      for (const geometryNode of this .geometryNodes)
+         geometryNode ._rotation = this ._orientation;
    },
    set_transform__: (() =>
    {
-      var
+      const
          o  = new Ammo .btVector3 (0, 0, 0),
          t  = new Ammo .btTransform (),
          im = new Matrix4 (),
@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         var m = this .matrix;
+         const m = this .matrix;
 
          m .set (this ._position .getValue (), this ._orientation .getValue ());
 
@@ -197,9 +197,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          it .setOrigin (io);
 
-         var compoundShape = this .compoundShape;
+         const compoundShape = this .compoundShape;
 
-         for (var i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
+         for (let i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
             compoundShape .updateChildTransform (i, it, false);
 
          this .compoundShape .recalculateLocalAabb ();
@@ -210,7 +210,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_linearVelocity__: (() =>
    {
-      var lv = new Ammo .btVector3 (0, 0, 0);
+      const lv = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -225,7 +225,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    }) (),
    set_angularVelocity__: (() =>
    {
-      var av = new Ammo .btVector3 (0, 0, 0);
+      const av = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -240,7 +240,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_finiteRotationAxis__: (() =>
    {
-      var angularFactor = new Ammo .btVector3 (1, 1, 1);
+      const angularFactor = new Ammo .btVector3 (1, 1, 1);
 
       return function ()
       {
@@ -263,7 +263,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_centerOfMass__: (() =>
    {
-      var
+      const
          rotation     = new Ammo .btQuaternion (0, 0, 0, 1),
          origin       = new Ammo .btVector3 (0, 0, 0),
          centerOfMass = new Ammo .btTransform (rotation, origin);
@@ -278,11 +278,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_massProps__: (() =>
    {
-      var localInertia = new Ammo .btVector3 (0, 0, 0);
+      const localInertia = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
-         var inertia = this ._inertia;
+         const inertia = this ._inertia;
 
          localInertia .setValue (inertia [0] + inertia [1] + inertia [2],
                                  inertia [3] + inertia [4] + inertia [5],
@@ -297,15 +297,15 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    {
       this .force .set (0, 0, 0);
 
-      for (var i = 0, length = this ._forces .length; i < length; ++ i)
-         this .force .add (this ._forces [i] .getValue ());
+      for (const force of this ._forces)
+         this .force .add (force .getValue ());
    },
    set_torques__ ()
    {
       this .torque .set (0, 0, 0);
 
-      for (var i = 0, length = this ._torques .length; i < length; ++ i)
-         this .torque .add (this ._torques [i] .getValue ());
+      for (const torque of this ._torques)
+         this .torque .add (torque .getValue ());
    },
    set_disable__ ()
    {
@@ -320,12 +320,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_geometry__ ()
    {
-      var geometryNodes = this .geometryNodes;
+      const geometryNodes = this .geometryNodes;
 
-      for (var i = 0, length = geometryNodes .length; i < length; ++ i)
+      for (const geometryNode of geometryNodes)
       {
-         var geometryNode = geometryNodes [i];
-
          geometryNode .removeInterest ("addEvent", this ._transform);
          geometryNode ._compoundShape .removeInterest ("set_compoundShape__", this);
 
@@ -338,16 +336,16 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this ._orientation .removeFieldInterest (geometryNode ._rotation);
       }
 
-      for (var i = 0, length = this .otherGeometryNodes .length; i < length; ++ i)
-         this .otherGeometryNodes [i] ._body .removeInterest ("set_body__", this);
+      for (const otherGeometryNode of this .otherGeometryNodes)
+         otherGeometryNode ._body .removeInterest ("set_body__", this);
 
       geometryNodes .length = 0;
 
-      for (var i = 0, length = this ._geometry .length; i < length; ++ i)
+      for (const node of this ._geometry)
       {
-         var geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._geometry [i]);
+         const geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, node);
 
-         if (! geometryNode)
+         if (!geometryNode)
             continue;
 
          if (geometryNode .getBody ())
@@ -362,10 +360,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          geometryNodes .push (geometryNode);
       }
 
-      for (var i = 0, length = geometryNodes .length; i < length; ++ i)
+      for (const geometryNode of geometryNodes)
       {
-         var geometryNode = geometryNodes [i];
-
          geometryNode .addInterest ("addEvent", this ._transform);
          geometryNode ._compoundShape .addInterest ("set_compoundShape__", this);
 
@@ -384,17 +380,17 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_compoundShape__: (() =>
    {
-      var transform = new Ammo .btTransform ();
+      const transform = new Ammo .btTransform ();
 
       return function ()
       {
-         var compoundShape = this .compoundShape;
+         const compoundShape = this .compoundShape;
 
-         for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
+         for (let i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
             compoundShape .removeChildShapeByIndex (i);
 
-         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-            compoundShape .addChildShape (transform, this .geometryNodes [i] .getCompoundShape ());
+         for (const geometryNode of this .geometryNodes)
+            compoundShape .addChildShape (transform, geometryNode .getCompoundShape ());
 
          this .set_position__ ();
          this .set_orientation__ ();
@@ -410,7 +406,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    applyForces: (() =>
    {
-      var
+      const
          g = new Ammo .btVector3 (0, 0, 0),
          f = new Ammo .btVector3 (0, 0, 0),
          t = new Ammo .btVector3 (0, 0, 0),
@@ -436,7 +432,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    update: (() =>
    {
-      var
+      const
          transform       = new Ammo .btTransform (),
          position        = new Vector3 (),
          quaternion      = new Quaternion (),
@@ -448,7 +444,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       {
          this .motionState .getWorldTransform (transform);
 
-         var
+         const
             btOrigin          = transform .getOrigin (),
             btQuaternion      = transform .getRotation (),
             btLinearVeloctity = this .rigidBody .getLinearVelocity (),

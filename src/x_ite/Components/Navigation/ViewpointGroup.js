@@ -83,8 +83,8 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this ._size      .addInterest ("set_size__",     this);
-      this ._children  .addInterest ("set_children__", this);
+      this ._size     .addInterest ("set_size__",     this);
+      this ._children .addInterest ("set_children__", this);
 
       this ._size   .addFieldInterest (this .proximitySensor ._size);
       this ._center .addFieldInterest (this .proximitySensor ._center);
@@ -130,9 +130,16 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
                   this .viewpointGroups .push (childNode);
                   break;
                }
+               default:
+                  continue;
             }
+
+            break;
          }
       }
+
+      this .setCameraObject (this .cameraObjects .length);
+      this .setVisibleObject (this .cameraObjects .length);
    },
    traverse (type, renderObject)
    {

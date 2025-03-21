@@ -71,7 +71,7 @@ function SliderJoint (executionContext)
    this ._separationRate .setUnit ("speed");
 
    // Private properties
-   
+
    this .joint   = null;
    this .outputs = new Set ();
 }
@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
    },
    addJoint: (() =>
    {
-      var
+      const
          axisRotation = new Rotation4 (),
          matrixA      = new Matrix4 (),
          matrixB      = new Matrix4 (),
@@ -162,10 +162,8 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
    {
       this .outputs .clear ();
 
-      for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
+      for (const value of this ._forceOutput)
       {
-         var value = this ._forceOutput [i];
-
          if (value == "ALL")
          {
             this .outputs .add ("separation");

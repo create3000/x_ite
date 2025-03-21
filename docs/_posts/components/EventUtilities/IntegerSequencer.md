@@ -113,7 +113,7 @@ Single intermittent output value determined by current key time and correspondin
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EventUtilities/IntegerSequencer/IntegerSequencer.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/EventUtilities/IntegerSequencer/screenshot.png" alt="IntegerSequencer"/>
+  <img src="https://create3000.github.io/media/examples/EventUtilities/IntegerSequencer/screenshot.avif" alt="IntegerSequencer"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EventUtilities/IntegerSequencer/IntegerSequencer.zip)

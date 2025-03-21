@@ -112,7 +112,7 @@ The *shape* field provides a geometry proxy for specifying which geometry best r
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/CollidableShape.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/screenshot.png" alt="CollidableShape"/>
+  <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/screenshot.avif" alt="CollidableShape"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/CollidableShape.zip)

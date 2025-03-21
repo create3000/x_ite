@@ -101,7 +101,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 ## Example
 
 <x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/StaticGroup/StaticGroup.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Grouping/StaticGroup/screenshot.png" alt="StaticGroup"/>
+  <img src="https://create3000.github.io/media/examples/Grouping/StaticGroup/screenshot.avif" alt="StaticGroup"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Grouping/StaticGroup/StaticGroup.zip)

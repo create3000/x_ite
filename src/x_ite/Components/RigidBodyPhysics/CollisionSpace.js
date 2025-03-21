@@ -87,16 +87,16 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
    },
    set_collidables__ ()
    {
-      var collisionSpaceNodes = this .collisionSpaceNodes;
+      const collisionSpaceNodes = this .collisionSpaceNodes;
 
-      for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
-         collisionSpaceNodes [i] .removeInterest ("collect", this);
+      for (const collisionSpaceNode of collisionSpaceNodes)
+         collisionSpaceNode .removeInterest ("collect", this);
 
       collisionSpaceNodes .length = 0;
 
-      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+      for (const node of this ._collidables)
       {
-         var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
          {
@@ -110,16 +110,16 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
    },
    collect ()
    {
-      var
+      const
          collidableNodes     = this .collidableNodes,
          collisionSpaceNodes = this .collisionSpaceNodes;
 
       collidableNodes     .length = 0;
       collisionSpaceNodes .length = 0;
 
-      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+      for (const node of this ._collidables)
       {
-         var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidables [i]);
+         const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, node);
 
          if (collidableNode)
          {
@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
             continue;
          }
 
-         var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
          if (collisionSpaceNode)
          {

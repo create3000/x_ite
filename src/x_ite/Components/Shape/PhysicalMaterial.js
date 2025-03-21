@@ -164,11 +164,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
-   set_transparent__ ()
-   {
-      this .setTransparent (this .getTransparency () ||
-                            this .baseTextureNode ?.isTransparent ());
-   },
    set_extensions__ ()
    {
       const extensionNodes = this .extensionNodes;

@@ -54,7 +54,7 @@ import X3DArrayFollowerTemplate from "../../Browser/Followers/X3DArrayFollowerTe
 import X3DConstants             from "../../Base/X3DConstants.js";
 import Vector3                  from "../../../standard/Math/Numbers/Vector3.js";
 
-var X3DArrayFollowerObject = X3DArrayFollowerTemplate (X3DDamperNode);
+const X3DArrayFollowerObject = X3DArrayFollowerTemplate (X3DDamperNode);
 
 function CoordinateDamper (executionContext)
 {

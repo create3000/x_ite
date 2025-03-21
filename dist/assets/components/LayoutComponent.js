@@ -1,5 +1,5 @@
-/* X_ITE v11.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
+/* X_ITE v11.3.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -988,6 +988,8 @@ function LayoutGroup (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).LayoutGroup);
 
+   // Private properties
+
    this .matrix          = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .screenMatrix    = new (external_X_ITE_X3D_Matrix4_default()) ();
@@ -999,8 +1001,9 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
    {
       external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
 
-      this ._viewport .addInterest ("set_viewport__", this);
-      this ._layout   .addInterest ("set_layout__", this);
+      this ._viewport .addInterest ("set_viewport__",       this);
+      this ._layout   .addInterest ("set_layout__",         this);
+      this ._bboxSize .addInterest ("set_visibleObjects__", this);
 
       this .set_viewport__ ();
       this .set_layout__ ();
@@ -1013,10 +1016,9 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
    {
       this .layoutNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DLayoutNode, this ._layout);
    },
-   isVisibleObject ()
+   set_visibleObjects__ ()
    {
-      // Make sure matrix is calculated for bbox and children.
-      return true;
+      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
    },
    getBBox (bbox, shadows)
    {
@@ -1856,10 +1858,15 @@ function ScreenGroup (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
 {
-   isVisibleObject ()
+   initialize ()
    {
-      // Make sure matrix is calculated for bbox and children.
-      return true;
+      external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
+
+      this ._bboxSize .addInterest ("set_visibleObjects__", this);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
    },
    getBBox (bbox, shadows)
    {

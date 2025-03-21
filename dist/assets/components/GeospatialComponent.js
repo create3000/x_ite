@@ -1,5 +1,5 @@
-/* X_ITE v11.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
+/* X_ITE v11.3.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -203,47 +203,46 @@ const __default__ = Spheroid3;
 
 
 
-const ReferenceEllipsoids =
-{
+const ReferenceEllipsoids = new Map ([
    // Earth
    // X3D Specification
-   AA: new Geometry_Spheroid3 (6377563.396, 299.3249646,   true), // Airy 1830
-   AM: new Geometry_Spheroid3 (6377340.189, 299.3249646,   true), // Modified Airy
-   AN: new Geometry_Spheroid3 (6378160,     298.25,        true), // Australian National
-   BN: new Geometry_Spheroid3 (6377483.865, 299.1528128,   true), // Bessel 1841 (Namibia)
-   BR: new Geometry_Spheroid3 (6377397.155, 299.1528128,   true), // Bessel 1841 (Ethiopia Indonesia...)
-   CC: new Geometry_Spheroid3 (6378206.4,   294.9786982,   true), // Clarke 1866
-   CD: new Geometry_Spheroid3 (6378249.145, 293.465,       true), // Clarke 1880
-   EA: new Geometry_Spheroid3 (6377276.345, 300.8017,      true), // Everest (India 1830)
-   EB: new Geometry_Spheroid3 (6377298.556, 300.8017,      true), // Everest (Sabah & Sarawak)
-   EC: new Geometry_Spheroid3 (6377301.243, 300.8017,      true), // Everest (India 1956)
-   ED: new Geometry_Spheroid3 (6377295.664, 300.8017,      true), // Everest (W. Malaysia 1969)
-   EE: new Geometry_Spheroid3 (6377304.063, 300.8017,      true), // Everest (W. Malaysia & Singapore 1948)
-   EF: new Geometry_Spheroid3 (6377309.613, 300.8017,      true), // Everest (Pakistan)
-   FA: new Geometry_Spheroid3 (6378155,     298.3,         true), // Modified Fischer 1960
-   HE: new Geometry_Spheroid3 (6378200,     298.3,         true), // Helmert 1906
-   HO: new Geometry_Spheroid3 (6378270,     297,           true), // Hough 1960
-   ID: new Geometry_Spheroid3 (6378160,     298.247,       true), // Indonesian 1974
-   IN: new Geometry_Spheroid3 (6378388,     297,           true), // International 1924
-   KA: new Geometry_Spheroid3 (6378245,     298.3,         true), // Krassovsky 1940
-   RF: new Geometry_Spheroid3 (6378137,     298.257222101, true), // Geodetic Reference System 1980 (GRS 80)
-   SA: new Geometry_Spheroid3 (6378160,     298.25,        true), // South American 1969
-   WD: new Geometry_Spheroid3 (6378135,     298.26,        true), // WGS 72
-   WE: new Geometry_Spheroid3 (6378137,     298.257223563, true), // WGS 84
+   ["AA", new Geometry_Spheroid3 (6377563.396, 299.3249646,   true)], // Airy 1830
+   ["AM", new Geometry_Spheroid3 (6377340.189, 299.3249646,   true)], // Modified Airy
+   ["AN", new Geometry_Spheroid3 (6378160,     298.25,        true)], // Australian National
+   ["BN", new Geometry_Spheroid3 (6377483.865, 299.1528128,   true)], // Bessel 1841 (Namibia)
+   ["BR", new Geometry_Spheroid3 (6377397.155, 299.1528128,   true)], // Bessel 1841 (Ethiopia Indonesia...)
+   ["CC", new Geometry_Spheroid3 (6378206.4,   294.9786982,   true)], // Clarke 1866
+   ["CD", new Geometry_Spheroid3 (6378249.145, 293.465,       true)], // Clarke 1880
+   ["EA", new Geometry_Spheroid3 (6377276.345, 300.8017,      true)], // Everest (India 1830)
+   ["EB", new Geometry_Spheroid3 (6377298.556, 300.8017,      true)], // Everest (Sabah & Sarawak)
+   ["EC", new Geometry_Spheroid3 (6377301.243, 300.8017,      true)], // Everest (India 1956)
+   ["ED", new Geometry_Spheroid3 (6377295.664, 300.8017,      true)], // Everest (W. Malaysia 1969)
+   ["EE", new Geometry_Spheroid3 (6377304.063, 300.8017,      true)], // Everest (W. Malaysia & Singapore 1948)
+   ["EF", new Geometry_Spheroid3 (6377309.613, 300.8017,      true)], // Everest (Pakistan)
+   ["FA", new Geometry_Spheroid3 (6378155,     298.3,         true)], // Modified Fischer 1960
+   ["HE", new Geometry_Spheroid3 (6378200,     298.3,         true)], // Helmert 1906
+   ["HO", new Geometry_Spheroid3 (6378270,     297,           true)], // Hough 1960
+   ["ID", new Geometry_Spheroid3 (6378160,     298.247,       true)], // Indonesian 1974
+   ["IN", new Geometry_Spheroid3 (6378388,     297,           true)], // International 1924
+   ["KA", new Geometry_Spheroid3 (6378245,     298.3,         true)], // Krassovsky 1940
+   ["RF", new Geometry_Spheroid3 (6378137,     298.257222101, true)], // Geodetic Reference System 1980 (GRS 80)
+   ["SA", new Geometry_Spheroid3 (6378160,     298.25,        true)], // South American 1969
+   ["WD", new Geometry_Spheroid3 (6378135,     298.26,        true)], // WGS 72
+   ["WE", new Geometry_Spheroid3 (6378137,     298.257223563, true)], // WGS 84
    // Solar System
-   // https://en.wikipedia.de
+   // https:,//en.wikipedia.de
    // Can someone give me more accurate parameters.
-   SUN:     new Geometry_Spheroid3 (696342000, 1 / 9e-6, true),
-   MERCURY: new Geometry_Spheroid3 (2439700,  2439700),
-   VENUS:   new Geometry_Spheroid3 (6051800,  6051800),
-   MOON:    new Geometry_Spheroid3 (1738140,  1735970),
-   MARS:    new Geometry_Spheroid3 (3395428,  3377678), // https://adsabs.harvard.edu/abs/2010EM%26P..106....1A
-   JUPITER: new Geometry_Spheroid3 (71492000, 66854000),
-   SATURN:  new Geometry_Spheroid3 (60268000, 54364000),
-   URANUS:  new Geometry_Spheroid3 (2555000,  24973000),
-   NEPTUNE: new Geometry_Spheroid3 (24764000, 24341000),
-   PLUTO:   new Geometry_Spheroid3 (1153000,  1153000),
-};
+   ["SUN",     new Geometry_Spheroid3 (696342000, 1 / 9e-6, true)],
+   ["MERCURY", new Geometry_Spheroid3 (2439700,  2439700)],
+   ["VENUS",   new Geometry_Spheroid3 (6051800,  6051800)],
+   ["MOON",    new Geometry_Spheroid3 (1738140,  1735970)],
+   ["MARS",    new Geometry_Spheroid3 (3395428,  3377678)], // https",//adsabs.harvard.edu/abs/2010EM%26P..106....1A
+   ["JUPITER", new Geometry_Spheroid3 (71492000, 66854000)],
+   ["SATURN",  new Geometry_Spheroid3 (60268000, 54364000)],
+   ["URANUS",  new Geometry_Spheroid3 (2555000,  24973000)],
+   ["NEPTUNE", new Geometry_Spheroid3 (24764000, 24341000)],
+   ["PLUTO",   new Geometry_Spheroid3 (1153000,  1153000)],
+]);
 
 const ReferenceEllipsoids_default_ = ReferenceEllipsoids;
 ;
@@ -787,14 +786,14 @@ const
    UTM = i ++,
    GC  = i ++;
 
-const CoordinateSystems = {
-   GD:  GD,
-   GDC: GD,
-   UTM: UTM,
-   GC:  GC,
-   GCC: GC,
-   GS:  GC,
-};
+const CoordinateSystems = new Map ([
+   ["GD",  GD],
+   ["GDC", GD],
+   ["UTM", UTM],
+   ["GC",  GC],
+   ["GCC", GC],
+   ["GS",  GC],
+]);
 
 const Zone = /^Z(\d+)$/;
 
@@ -826,7 +825,7 @@ const GeospatialObject =
          }
       }
 
-      return new Geospatial_Geodetic (Geospatial_ReferenceEllipsoids .WE, true, radians);
+      return new Geospatial_Geodetic (Geospatial_ReferenceEllipsoids .get ("WE"), true, radians);
    },
    getElevationFrame (geoSystem, radians)
    {
@@ -836,7 +835,7 @@ const GeospatialObject =
    {
       for (const gs of geoSystem)
       {
-         const coordinateSystem = CoordinateSystems [gs];
+         const coordinateSystem = CoordinateSystems .get (gs);
 
          if (coordinateSystem !== undefined)
             return coordinateSystem;
@@ -848,26 +847,26 @@ const GeospatialObject =
    {
       for (const gs of geoSystem)
       {
-         const ellipsoid = Geospatial_ReferenceEllipsoids [gs];
+         const ellipsoid = Geospatial_ReferenceEllipsoids .get (gs);
 
          if (ellipsoid !== undefined)
             return ellipsoid;
       }
 
-      return Geospatial_ReferenceEllipsoids .WE;
+      return Geospatial_ReferenceEllipsoids .get ("WE");
    },
-   getEllipsoidString (geoSystem)
-   {
-      for (const gs of geoSystem)
-      {
-         const ellipsoid = Geospatial_ReferenceEllipsoids [gs];
+   // getEllipsoidString (geoSystem)
+   // {
+   //    for (const gs of geoSystem)
+   //    {
+   //       const ellipsoid = ReferenceEllipsoids .get (gs);
 
-         if (ellipsoid !== undefined)
-            return gs;
-      }
+   //       if (ellipsoid !== undefined)
+   //          return gs;
+   //    }
 
-      return "WE";
-   },
+   //    return "WE";
+   // },
    isStandardOrder (geoSystem)
    {
       switch (this .getCoordinateSystem (geoSystem))
@@ -1070,10 +1069,10 @@ Object .assign (X3DGeospatialObject .prototype,
       if (this .geoOriginNode)
       {
          // Position
-         var t = this .origin;
+         const t = this .origin;
 
          // Let's work out the orientation at that location in order
-         // to maintain a view where +Y is in the direction of gravitional
+         // to maintain a view where +Y is in the direction of gravitational
          // up for that region of the planet's surface. This will be the
          // value of the rotation matrix for the transform.
 
@@ -1141,7 +1140,7 @@ Object .assign (X3DGeospatialObject .prototype,
    },
    getLocationMatrix (geoPoint, result)
    {
-      var
+      const
          origin         = this .origin,
          locationMatrix = getStandardLocationMatrix .call (this, geoPoint, result);
 
@@ -1152,7 +1151,8 @@ Object .assign (X3DGeospatialObject .prototype,
 
       return locationMatrix;
    },
-   dispose () { },
+   dispose ()
+   { },
 });
 
 function getCoordRotateYUp (geoPoint, result)
@@ -1870,9 +1870,6 @@ var external_X_ITE_X3D_Group_default = /*#__PURE__*/__webpack_require__.n(extern
 ;// external "__X_ITE_X3D__ .Inline"
 const external_X_ITE_X3D_Inline_namespaceObject = __X_ITE_X3D__ .Inline;
 var external_X_ITE_X3D_Inline_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Inline_namespaceObject);
-;// external "__X_ITE_X3D__ .Box3"
-const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
-var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoLOD.js
 /*******************************************************************************
  *
@@ -1935,7 +1932,6 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
 
 
 
-
 function GeoLOD (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -1953,15 +1949,14 @@ function GeoLOD (executionContext)
    // Private properties
 
    this .unload           = false;
-   this .rootGroup        = new (external_X_ITE_X3D_Group_default()) (this .getBrowser () .getPrivateScene ());
-   this .rootInline       = new (external_X_ITE_X3D_Inline_default()) (executionContext);
-   this .child1Inline     = new (external_X_ITE_X3D_Inline_default()) (executionContext);
-   this .child2Inline     = new (external_X_ITE_X3D_Inline_default()) (executionContext);
-   this .child3Inline     = new (external_X_ITE_X3D_Inline_default()) (executionContext);
-   this .child4Inline     = new (external_X_ITE_X3D_Inline_default()) (executionContext);
-   this .childInlines     = [this .child1Inline, this .child2Inline, this .child3Inline, this .child4Inline];
+   this .rootGroupNode    = new (external_X_ITE_X3D_Group_default()) (this .getBrowser () .getPrivateScene ());
+   this .rootInlineNode   = new (external_X_ITE_X3D_Inline_default()) (executionContext);
+   this .child1InlineNode = new (external_X_ITE_X3D_Inline_default()) (executionContext);
+   this .child2InlineNode = new (external_X_ITE_X3D_Inline_default()) (executionContext);
+   this .child3InlineNode = new (external_X_ITE_X3D_Inline_default()) (executionContext);
+   this .child4InlineNode = new (external_X_ITE_X3D_Inline_default()) (executionContext);
+   this .childInlineNodes = [this .child1InlineNode, this .child2InlineNode, this .child3InlineNode, this .child4InlineNode];
    this .childrenLoaded   = false;
-   this .childBBox        = new (external_X_ITE_X3D_Box3_default()) ();
    this .keepCurrentLevel = false;
    this .modelViewMatrix  = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
@@ -1976,37 +1971,37 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
       Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
-      this ._rootNode .addFieldInterest (this .rootGroup ._children);
+      this ._rootNode .addFieldInterest (this .rootGroupNode ._children);
 
-      this .rootGroup ._children = this ._rootNode;
-      this .rootGroup .setPrivate (true);
+      this .rootGroupNode ._children = this ._rootNode;
+      this .rootGroupNode .setPrivate (true);
 
-      this .rootInline ._loadState .addInterest ("set_rootLoadState__", this);
+      this .rootInlineNode ._loadState .addInterest ("set_rootLoadState__", this);
 
-      for (const childInline of this .childInlines)
-         childInline ._loadState .addInterest ("set_childLoadState__", this);
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode ._loadState .addInterest ("set_childLoadState__", this);
 
-      this ._rootUrl   .addFieldInterest (this .rootInline   ._url);
-      this ._child1Url .addFieldInterest (this .child1Inline ._url);
-      this ._child2Url .addFieldInterest (this .child2Inline ._url);
-      this ._child3Url .addFieldInterest (this .child3Inline ._url);
-      this ._child4Url .addFieldInterest (this .child4Inline ._url);
+      this ._rootUrl   .addFieldInterest (this .rootInlineNode   ._url);
+      this ._child1Url .addFieldInterest (this .child1InlineNode ._url);
+      this ._child2Url .addFieldInterest (this .child2InlineNode ._url);
+      this ._child3Url .addFieldInterest (this .child3InlineNode ._url);
+      this ._child4Url .addFieldInterest (this .child4InlineNode ._url);
 
-      this .rootInline ._load = true;
+      this .rootInlineNode ._load = true;
 
-      for (const childInline of this .childInlines)
-         childInline ._load = false;
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode ._load = false;
 
-      this .rootInline   ._url = this ._rootUrl;
-      this .child1Inline ._url = this ._child1Url;
-      this .child2Inline ._url = this ._child2Url;
-      this .child3Inline ._url = this ._child3Url;
-      this .child4Inline ._url = this ._child4Url;
+      this .rootInlineNode   ._url = this ._rootUrl;
+      this .child1InlineNode ._url = this ._child1Url;
+      this .child2InlineNode ._url = this ._child2Url;
+      this .child3InlineNode ._url = this ._child3Url;
+      this .child4InlineNode ._url = this ._child4Url;
 
-      this .rootInline   .setup ();
+      this .rootInlineNode .setup ();
 
-      for (const childInline of this .childInlines)
-         childInline .setup ();
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode .setup ();
    },
    getBBox (bbox, shadows)
    {
@@ -2017,25 +2012,15 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
             case 0:
             {
                if (this ._rootNode .length)
-                  return this .rootGroup .getBBox (bbox, shadows);
+                  return this .rootGroupNode .getBBox (bbox, shadows);
 
-               return this .rootInline .getBBox (bbox, shadows);
+               return this .rootInlineNode .getBBox (bbox, shadows);
             }
             case 1:
             {
-               // Must be unique for each GeoLOD..
-               const childBBox = this .childBBox;
-
-               bbox .set ();
-
-               for (const childInline of this .childInlines)
-                  bbox .add (childInline .getBBox (childBBox, shadows));
-
-               return bbox;
+               return external_X_ITE_X3D_X3DBoundedObject_default().prototype .getBBox .call (this, this .childInlineNodes, bbox, shadows);
             }
          }
-
-         return bbox .set ();
       }
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
@@ -2048,62 +2033,53 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       if (this ._rootNode .length)
          return;
 
-      if (this .rootInline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
-      {
-         this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
-         this .childrenLoaded = false;
-      }
+      if (this .rootInlineNode .checkLoadState () !== (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
+         return;
+
+      this .childrenLoaded = false;
+      this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
    },
    set_childLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 1)
          return;
 
-      let loaded = 0;
-
-      for (const childInline of this .childInlines)
+      const loaded = this .childInlineNodes .reduce ((previous, childInlineNode) =>
       {
-         if (childInline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE ||
-             childInline .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE)
-            ++ loaded;
-      }
+         return previous + (childInlineNode .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE ||
+            childInlineNode .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
+      },
+      0)
 
-      if (loaded === 4)
-      {
-         this .childrenLoaded = true;
+      if (loaded !== 4)
+         return;
 
-         const children = this ._children;
-
-         children .length = 0;
-
-         for (const childInline of this .childInlines)
-         {
-            const rootNodes = childInline .getInternalScene () .getRootNodes ();
-
-            for (const rootNode of rootNodes)
-               children .push (rootNode);
-         }
-      }
+      this .childrenLoaded = true;
+      this ._children      = this .childInlineNodes .flatMap (childInlineNode => Array .from (childInlineNode .getInternalScene () .getRootNodes ()));
+   },
+   set_childBoundedObject__ ()
+   {
+      this .setBoundedObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isBoundedObject ()));
    },
    set_childPointingObject__ ()
    {
-      this .setPointingObject (this .childInlines .some (childInline => childInline .isPointingObject ()));
+      this .setPointingObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isPointingObject ()));
    },
    set_childCameraObject__ ()
    {
-      this .setCameraObject (this .childInlines .some (childInline => childInline .isCameraObject ()));
+      this .setCameraObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isCameraObject ()));
    },
    set_childPickableObject__ ()
    {
-      this .setPickableObject (this .childInlines .some (childInline => childInline .isPickableObject ()));
+      this .setPickableObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isPickableObject ()));
    },
    set_childCollisionObject__ ()
    {
-      this .setCollisionObject (this .childInlines .some (childInline => childInline .isCollisionObject ()));
+      this .setCollisionObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isCollisionObject ()));
    },
    set_childShadowObject__ ()
    {
-      this .setShadowObject (this .childInlines .some (childInline => childInline .isShadowObject ()));
+      this .setShadowObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isShadowObject ()));
    },
    getLevel (modelViewMatrix)
    {
@@ -2114,7 +2090,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
       return 0;
    },
-   getDistance: (function ()
+   getDistance: (() =>
    {
       const center = new (external_X_ITE_X3D_Vector3_default()) ();
 
@@ -2154,37 +2130,38 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
                {
                   case 0:
                   {
-                     for (const childInline of this .childInlines)
+                     for (const childInlineNode of this .childInlineNodes)
                      {
-                        childInline ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
-                        childInline ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
-                        childInline ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
-                        childInline ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
-                        childInline ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
+                        childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
+                        childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
+                        childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
+                        childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
+                        childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
+                        childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
                      }
 
                      if (this ._rootNode .length)
                      {
-                        this .connectChildNode (this .rootGroup, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
+                        this .connectChildNode (this .rootGroupNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
 
                         this ._children      = this ._rootNode;
                         this .childrenLoaded = false;
                      }
                      else
                      {
-                        if (this .rootInline .checkLoadState () == (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
+                        if (this .rootInlineNode .checkLoadState () == (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
                         {
-                           this .connectChildNode (this .rootInline, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
+                           this .connectChildNode (this .rootInlineNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
 
-                           this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
+                           this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
                            this .childrenLoaded = false;
                         }
                      }
 
                      if (this .unload)
                      {
-                        for (const childInline of this .childInlines)
-                           childInline ._load = false;
+                        for (const childInlineNode of this .childInlineNodes)
+                           childInlineNode ._load = false;
                      }
 
                      break;
@@ -2192,33 +2169,35 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
                   case 1:
                   {
                      if (this ._rootNode .length)
-                        this .disconnectChildNode (this .rootGroup);
+                        this .disconnectChildNode (this .rootGroupNode);
                      else
-                        this .disconnectChildNode (this .rootInline);
+                        this .disconnectChildNode (this .rootInlineNode);
 
-                     for (const childInline of this .childInlines)
+                     for (const childInlineNode of this .childInlineNodes)
                      {
-                        childInline ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
-                        childInline ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
-                        childInline ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
-                        childInline ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
-                        childInline ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
+                        childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
+                        childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
+                        childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
+                        childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
+                        childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
+                        childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
                      }
 
+                     this .set_childBoundedObject__ ();
                      this .set_childPointingObject__ ();
                      this .set_childCameraObject__ ();
                      this .set_childPickableObject__ ();
                      this .set_childCollisionObject__ ();
                      this .set_childShadowObject__ ();
 
-                     if (this .child1Inline ._load .getValue ())
+                     if (this .child1InlineNode ._load .getValue ())
                      {
                         this .set_childLoadState__ ();
                      }
                      else
                      {
-                        for (const childInline of this .childInlines)
-                           childInline ._load = true;
+                        for (const childInlineNode of this .childInlineNodes)
+                           childInlineNode ._load = true;
                      }
 
                      break;
@@ -2243,16 +2222,16 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
          case 0:
          {
             if (this ._rootNode .length)
-               this .rootGroup .traverse (type, renderObject);
+               this .rootGroupNode .traverse (type, renderObject);
             else
-               this .rootInline .traverse (type, renderObject);
+               this .rootInlineNode .traverse (type, renderObject);
 
             break;
          }
          case 1:
          {
-            for (const childInline of this .childInlines)
-               childInline .traverse (type, renderObject);
+            for (const childInlineNode of this .childInlineNodes)
+               childInlineNode .traverse (type, renderObject);
 
             break;
          }
@@ -2358,8 +2337,6 @@ var external_X_ITE_X3D_X3DTransformMatrix3DNode_default = /*#__PURE__*/__webpack
 
 
 
-var locationMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
-
 function GeoLocation (executionContext)
 {
    external_X_ITE_X3D_X3DTransformMatrix3DNode_default().call (this, executionContext);
@@ -2380,10 +2357,15 @@ Object .assign (Object .setPrototypeOf (GeoLocation .prototype, (external_X_ITE_
 
       this .eventsProcessed ();
    },
-   eventsProcessed ()
+   eventsProcessed: (() =>
    {
-      this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
-   },
+      const locationMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+
+      return function ()
+      {
+         this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
+      };
+   })(),
    dispose ()
    {
       Geospatial_X3DGeospatialObject      .prototype .dispose .call (this);
@@ -2843,8 +2825,6 @@ var external_X_ITE_X3D_ProximitySensor_default = /*#__PURE__*/__webpack_require_
 
 
 
-var geoCoord = new (external_X_ITE_X3D_Vector3_default()) ();
-
 function GeoProximitySensor (executionContext)
 {
    external_X_ITE_X3D_X3DEnvironmentalSensorNode_default().call (this, executionContext);
@@ -2893,10 +2873,15 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (external
 
       this .connectChildNode (this .proximitySensor);
    },
-   set_position__ (position)
+   set_position__: (() =>
    {
-      this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
-   },
+      const geoCoord = new (external_X_ITE_X3D_Vector3_default()) ();
+
+      return function ()
+      {
+         this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
+      };
+   })(),
    traverse (type, renderObject)
    {
       this .proximitySensor .traverse (type, renderObject);
@@ -3121,10 +3106,6 @@ const GeoTouchSensor_default_ = GeoTouchSensor;
 
 
 
-var
-   matrix         = new (external_X_ITE_X3D_Matrix4_default()) (),
-   GeoTransform_locationMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
-
 function GeoTransform (executionContext)
 {
    external_X_ITE_X3D_X3DTransformMatrix3DNode_default().call (this, executionContext);
@@ -3149,17 +3130,24 @@ Object .assign (Object .setPrototypeOf (GeoTransform .prototype, (external_X_ITE
 
       this .eventsProcessed ();
    },
-   eventsProcessed ()
+   eventsProcessed: (() =>
    {
-      this .getLocationMatrix (this ._geoCenter .getValue (), GeoTransform_locationMatrix);
+      const
+         matrix         = new (external_X_ITE_X3D_Matrix4_default()) (),
+         locationMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
 
-      matrix .set (this ._translation      .getValue (),
-                     this ._rotation         .getValue (),
-                     this ._scale            .getValue (),
-                     this ._scaleOrientation .getValue ());
+      return function ()
+      {
+         this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
 
-      this .setMatrix (matrix .multRight (GeoTransform_locationMatrix) .multLeft (GeoTransform_locationMatrix .inverse ()));
-   },
+         matrix .set (this ._translation        .getValue (),
+                        this ._rotation         .getValue (),
+                        this ._scale            .getValue (),
+                        this ._scaleOrientation .getValue ());
+
+         this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
+      };
+   })(),
    dispose ()
    {
       Geospatial_X3DGeospatialObject      .prototype .dispose .call (this);

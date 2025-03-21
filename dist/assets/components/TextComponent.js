@@ -1,5 +1,5 @@
-/* X_ITE v11.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
+/* X_ITE v11.3.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 <<<<<<< HEAD
@@ -17882,7 +17882,7 @@ Object .assign (X3DTextContext .prototype,
                   throw new Error (response .statusText || response .status);
 
                const decompress = url .includes (".woff2")
-                  ? await this .getWaWoff2 ()
+                  ? await this .getWebAssemblyWoff2 ()
                   : buffer => buffer;
 
                const
@@ -17998,11 +17998,11 @@ Object .assign (X3DTextContext .prototype,
 
       return cachedGlyph;
    },
-   getWaWoff2 ()
+   getWebAssemblyWoff2 ()
    {
-      return this [_wawoff2] ??= this .loadWaWoff2 ();
+      return this [_wawoff2] ??= this .loadWebAssemblyWoff2 ();
    },
-   async loadWaWoff2 ()
+   async loadWebAssemblyWoff2 ()
    {
       const
          url      = external_X_ITE_X3D_URLs_default().getLibraryURL ("decompress_binding.js"),

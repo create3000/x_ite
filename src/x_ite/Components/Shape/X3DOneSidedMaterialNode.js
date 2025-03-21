@@ -68,12 +68,14 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
       this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
+      this ._normalScale     .addInterest ("set_normalScale__",     this);
       this ._normalTexture   .addInterest ("set_normalTexture__",   this);
       this ._transparency    .addInterest ("set_transparency__",    this);
       this ._transparency    .addInterest ("set_transparent__",     this);
 
       this .set_emissiveColor__ ();
       this .set_emissiveTexture__ ();
+      this .set_normalScale__ ();
       this .set_normalTexture__ ();
       this .set_transparency__ ();
    },
@@ -93,6 +95,10 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       this .setTexture (index, this .emissiveTextureNode);
    },
+   set_normalScale__ ()
+   {
+      this .normalScale = Math .max (this ._normalScale .getValue (), 0);
+   },
    set_normalTexture__ ()
    {
       this .normalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._normalTexture);
@@ -105,23 +111,11 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
    set_transparent__ ()
    {
-      this .setTransparent (this .transparency);
+      this .setTransparent (this .transparency || this .getBaseTexture () ?.isTransparent ());
    },
    getBaseTexture ()
    {
-      return this .getEmissiveTexture ();
-   },
-   getEmissiveTexture ()
-   {
       return this .emissiveTextureNode;
-   },
-   getNormalTexture ()
-   {
-      return this .normalTextureNode;
-   },
-   getTransparency ()
-   {
-      return this .transparency;
    },
    getShaderOptions (geometryContext, renderContext)
    {
@@ -129,8 +123,8 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       if (+this .getTextureBits ())
       {
-         this .getEmissiveTexture () ?.getShaderOptions (options, "EMISSIVE");
-         this .getNormalTexture ()   ?.getShaderOptions (options, "NORMAL");
+         this .emissiveTextureNode ?.getShaderOptions (options, "EMISSIVE");
+         this .normalTextureNode   ?.getShaderOptions (options, "NORMAL");
       }
 
       return options;
@@ -152,7 +146,7 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
          textureCoordinateMapping);
 
       if (this .normalTextureNode)
-         gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
+         gl .uniform1f (shaderObject .x3d_NormalScale, this .normalScale);
 
       this .normalTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,

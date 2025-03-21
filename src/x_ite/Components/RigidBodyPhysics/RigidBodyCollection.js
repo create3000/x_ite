@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    {
       const DELAY = 15; // Delay in frames when dt full applies.
 
-      var
+      const
          dt        = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ()),
          deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
 
@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_gravity__: (() =>
    {
-      var gravity = new Ammo .btVector3 (0, 0, 0);
+      const gravity = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -153,8 +153,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    })(),
    set_contactSurfaceThickness__ ()
    {
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-         this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
+      for (const bodyNode of this .bodyNodes)
+         bodyNode .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
    },
    set_collider__ ()
    {
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_bounce__ ()
    {
-      var
+      const
          colliderNode = this .colliderNode,
          bodyNodes    = this .bodyNodes;
 
@@ -170,9 +170,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       {
          if (colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
          {
-            for (var i = 0, length = bodyNodes .length; i < length; ++ i)
+            for (const bodyNode of bodyNodes)
             {
-               var rigidBody = bodyNodes [i] .getRigidBody ();
+               const rigidBody = bodyNode .getRigidBody ();
 
                if (rigidBody .getLinearVelocity () .length () >= colliderNode ._minBounceSpeed .getValue ())
                   rigidBody .setRestitution (colliderNode ._bounce .getValue ());
@@ -184,8 +184,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          }
       }
 
-      for (var i = 0, length = bodyNodes .length; i < length; ++ i)
-         bodyNodes [i] .getRigidBody () .setRestitution (0);
+      for (const bodyNode of bodyNodes)
+         bodyNode .getRigidBody () .setRestitution (0);
    },
    set_frictionCoefficients__ ()
    {
@@ -193,9 +193,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       {
          if (this .colliderNode .getAppliedParameters () .has (AppliedParametersType .FRICTION_COEFFICIENT_2))
          {
-            for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+            for (const bodyNode of this .bodyNodes)
             {
-               var rigidBody = this .bodyNodes [i] .getRigidBody ();
+               const rigidBody = bodyNode .getRigidBody ();
 
                rigidBody .setFriction (this .colliderNode ._frictionCoefficients .x);
                rigidBody .setRollingFriction (this .colliderNode ._frictionCoefficients .y);
@@ -205,9 +205,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          }
       }
 
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+      for (const bodyNode of this .bodyNodes)
       {
-         var rigidBody = this .bodyNodes [i] .getRigidBody ();
+         const rigidBody = bodyNode .getRigidBody ();
 
          rigidBody .setFriction (0.5);
          rigidBody .setRollingFriction (0);
@@ -215,22 +215,20 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_bodies__ ()
    {
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+      for (const bodyNode of this .bodyNodes)
       {
-         var bodyNode = this .bodyNodes [i];
-
          bodyNode ._enabled .removeInterest ("set_dynamicsWorld__", this);
          bodyNode .setCollection (null);
       }
 
-      for (var i = 0, length = this .otherBodyNodes .length; i < length; ++ i)
-         this .otherBodyNodes [i] ._collection .removeInterest ("set_bodies__", this);
+      for (const otherBodyNode of this .otherBodyNodes)
+         otherBodyNode ._collection .removeInterest ("set_bodies__", this);
 
       this .bodyNodes .length = 0;
 
-      for (var i = 0, length = this ._bodies .length; i < length; ++ i)
+      for (const node of this ._bodies)
       {
-         var bodyNode = X3DCast (X3DConstants .RigidBody, this ._bodies [i]);
+         const bodyNode = X3DCast (X3DConstants .RigidBody, node);
 
          if (! bodyNode)
             continue;
@@ -247,8 +245,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          this .bodyNodes .push (bodyNode);
       }
 
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-         this .bodyNodes [i] ._enabled .addInterest ("set_dynamicsWorld__", this);
+      for (const bodyNode of this .bodyNodes)
+         bodyNode ._enabled .addInterest ("set_dynamicsWorld__", this);
 
       this .set_contactSurfaceThickness__ ();
       this .set_dynamicsWorld__ ();
@@ -256,39 +254,37 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_dynamicsWorld__ ()
    {
-      for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
-         this .dynamicsWorld .removeRigidBody (this .rigidBodies [i]);
+      for (const rigidBody of this .rigidBodies)
+         this .dynamicsWorld .removeRigidBody (rigidBody);
 
       this .rigidBodies .length = 0;
 
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+      for (const bodyNode of this .bodyNodes)
       {
-         var bodyNode = this .bodyNodes [i];
-
          if (! bodyNode ._enabled .getValue ())
             continue;
 
          this .rigidBodies .push (bodyNode .getRigidBody ());
       }
 
-      for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
-         this .dynamicsWorld .addRigidBody (this .rigidBodies [i]);
+      for (const rigidBody of this .rigidBodies)
+         this .dynamicsWorld .addRigidBody (rigidBody);
    },
    set_joints__ ()
    {
-      for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
-         this .jointNodes [i] .setCollection (null);
+      for (const jointNode of this .jointNodes)
+         jointNode .setCollection (null);
 
       this .jointNodes .length = 0;
 
-      for (var i = 0, length = this .otherJointNodes .length; i < length; ++ i)
-         this .otherJointNodes [i] ._collection .removeInterest ("set_joints__", this);
+      for (const otherJointNode of this .otherJointNodes)
+         otherJointNode ._collection .removeInterest ("set_joints__", this);
 
       this .otherJointNodes .length = 0;
 
-      for (var i = 0, length = this ._joints .length; i < length; ++ i)
+      for (const node of this ._joints)
       {
-         var jointNode = X3DCast (X3DConstants .X3DRigidJointNode, this ._joints [i]);
+         const jointNode = X3DCast (X3DConstants .X3DRigidJointNode, node);
 
          if (! jointNode)
             continue;
@@ -309,8 +305,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    {
       try
       {
-         var
-            deltaTime  = this .getTimeStep (),
+         const
             iterations = this ._iterations .getValue (),
             gravity    = this ._gravity .getValue ();
 
@@ -319,26 +314,28 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
          if (this ._preferAccuracy .getValue ())
          {
-            deltaTime /= iterations;
+            const deltaTime = this .getTimeStep () / iterations;
 
-            for (var i = 0; i < iterations; ++ i)
+            for (let i = 0; i < iterations; ++ i)
             {
-               for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-                  this .bodyNodes [i] .applyForces (gravity);
+               for (const bodyNode of this .bodyNodes)
+                  bodyNode .applyForces (gravity);
 
                this .dynamicsWorld .stepSimulation (deltaTime, 0);
             }
          }
          else
          {
-            for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-               this .bodyNodes [i] .applyForces (gravity);
+            const deltaTime = this .getTimeStep ();
+
+            for (const bodyNode of this .bodyNodes)
+               bodyNode .applyForces (gravity);
 
             this .dynamicsWorld .stepSimulation (deltaTime, iterations + 2, deltaTime / iterations);
          }
 
-         for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-            this .bodyNodes [i] .update ();
+         for (const bodyNode of this .bodyNodes)
+            bodyNode .update ();
       }
       catch (error)
       {
