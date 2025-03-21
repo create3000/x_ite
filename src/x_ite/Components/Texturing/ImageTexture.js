@@ -53,7 +53,6 @@ import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
-import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTexture (executionContext)
 {
@@ -147,7 +146,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (texture .target !== this .getTarget ())
          return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_2D'." });
 
-      if (DEVELOPMENT)
+      if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
@@ -171,7 +170,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    },
    setImage ()
    {
-      if (DEVELOPMENT)
+      if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
