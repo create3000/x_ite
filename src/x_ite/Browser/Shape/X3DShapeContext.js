@@ -75,15 +75,15 @@ Object .assign (X3DShapeContext .prototype,
 {
    getDefaultAppearance ()
    {
-      this [_defaultAppearance] = new Appearance (this .getPrivateScene ());
-      this [_defaultAppearance] .setPrivate (true);
-      this [_defaultAppearance] .setup ();
+      return this [_defaultAppearance] ??= (() =>
+      {
+         const defaultAppearance = new Appearance (this .getPrivateScene ());
 
-      this .getDefaultAppearance = function () { return this [_defaultAppearance]; };
+         defaultAppearance .setPrivate (true);
+         defaultAppearance .setup ();
 
-      Object .defineProperty (this, "getDefaultAppearance", { enumerable: false });
-
-      return this [_defaultAppearance];
+         return defaultAppearance;
+      })();
    },
    getLineStippleScale ()
    {
@@ -91,85 +91,83 @@ Object .assign (X3DShapeContext .prototype,
    },
    getDefaultPointProperties ()
    {
-      this [_defaultPointProperties] = new PointProperties (this .getPrivateScene ());
-      this [_defaultPointProperties] .setPrivate (true);
-      this [_defaultPointProperties] .setup ();
+      return this [_defaultPointProperties] ??= (() =>
+      {
+         const defaultPointProperties = new PointProperties (this .getPrivateScene ());
 
-      this .getDefaultPointProperties = function () { return this [_defaultPointProperties]; };
+         defaultPointProperties .setPrivate (true);
+         defaultPointProperties .setup ();
 
-      Object .defineProperty (this, "getDefaultPointProperties", { enumerable: false });
-
-      return this [_defaultPointProperties];
+         return defaultPointProperties;
+      })();
    },
    getDefaultLineProperties ()
    {
-      this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
-      this [_defaultLineProperties] ._applied = false;
-      this [_defaultLineProperties] .setPrivate (true);
-      this [_defaultLineProperties] .setup ();
+      return this [_defaultLineProperties] ??= (() =>
+      {
+         const defaultLineProperties = new LineProperties (this .getPrivateScene ());
 
-      this .getDefaultLineProperties = function () { return this [_defaultLineProperties]; };
+         defaultLineProperties ._applied = false;
+         defaultLineProperties .setPrivate (true);
+         defaultLineProperties .setup ();
 
-      Object .defineProperty (this, "getDefaultLineProperties", { enumerable: false });
-
-      return this [_defaultLineProperties];
+         return defaultLineProperties;
+      })();
    },
    getDefaultMaterial ()
    {
-      this [_defaultMaterial] = new UnlitMaterial (this .getPrivateScene ());
-      this [_defaultMaterial] .setPrivate (true);
-      this [_defaultMaterial] .setup ();
+      return this [_defaultMaterial] ??= (() =>
+      {
+         const defaultMaterial = new UnlitMaterial (this .getPrivateScene ());
 
-      this .getDefaultMaterial = function () { return this [_defaultMaterial]; };
+         defaultMaterial .setPrivate (true);
+         defaultMaterial .setup ();
 
-      Object .defineProperty (this, "getDefaultMaterial", { enumerable: false });
-
-      return this [_defaultMaterial];
+         return defaultMaterial;
+      })();
    },
    getLinetypeTexture ()
    {
-      this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
-      this [_linetypeTextures] ._url [0]           = URLs .getLinetypeURL ();
-      this [_linetypeTextures] ._textureProperties = this .getLineFillTextureProperties ();
-      this [_linetypeTextures] .setPrivate (true);
-      this [_linetypeTextures] .setup ();
+      return this [_linetypeTextures] ??= (() =>
+      {
+         const linetypeTextures = new ImageTexture (this .getPrivateScene ());
 
-      this .getLinetypeTexture = function () { return this [_linetypeTextures]; };
+         linetypeTextures ._url [0]           = URLs .getLinetypeURL ();
+         linetypeTextures ._textureProperties = this .getLineFillTextureProperties ();
+         linetypeTextures .setPrivate (true);
+         linetypeTextures .setup ();
 
-      Object .defineProperty (this, "getLinetypeTexture", { enumerable: false });
-
-      return this [_linetypeTextures];
+         return linetypeTextures;
+      })();
    },
    getHatchStyleTexture (index)
    {
-      let hatchStyleTexture = this [_hatchStyleTextures] [index];
+      return this [_hatchStyleTextures] [index] ??= (() =>
+      {
+         const hatchStyleTexture = new ImageTexture (this .getPrivateScene ());
 
-      if (hatchStyleTexture)
+         hatchStyleTexture ._url [0]           = URLs .getHatchingURL (index);
+         hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
+         hatchStyleTexture .setPrivate (true);
+         hatchStyleTexture .setup ();
+
          return hatchStyleTexture;
-
-      hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
-
-      hatchStyleTexture ._url [0]           = URLs .getHatchingURL (index);
-      hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
-      hatchStyleTexture .setPrivate (true);
-      hatchStyleTexture .setup ();
-
-      return hatchStyleTexture;
+      })();
    },
    getLineFillTextureProperties ()
    {
-      this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
-      this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
-      this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
-      this [_lineFillTextureProperties] ._textureCompression  = "DEFAULT";
-      this [_lineFillTextureProperties] .setPrivate (true);
-      this [_lineFillTextureProperties] .setup ();
+      return this [_lineFillTextureProperties] ??= (() =>
+      {
+         const lineFillTextureProperties = new TextureProperties (this .getPrivateScene ());
 
-      this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };
+         lineFillTextureProperties ._minificationFilter  = "NEAREST_PIXEL";
+         lineFillTextureProperties ._magnificationFilter = "NEAREST_PIXEL";
+         lineFillTextureProperties ._textureCompression  = "DEFAULT";
+         lineFillTextureProperties .setPrivate (true);
+         lineFillTextureProperties .setup ();
 
-      Object .defineProperty (this, "getLineFillTextureProperties", { enumerable: false });
-
-      return this [_lineFillTextureProperties];
+         return lineFillTextureProperties;
+      })();
    },
    getLineTransformShader ()
    {
@@ -221,15 +219,14 @@ Object .assign (X3DShapeContext .prototype,
    },
    getLineTransformFeedback ()
    {
-      const gl = this .getContext ();
+      return this [_lineTransformFeedback] ??= (() =>
+      {
+         const gl = this .getContext ();
 
-      this [_lineTransformFeedback] = gl .createTransformFeedback ();
+         const lineTransformFeedback = gl .createTransformFeedback ();
 
-      this .getLineTransformFeedback = function () { return this [_lineTransformFeedback]; };
-
-      Object .defineProperty (this, "getLineTransformFeedback", { enumerable: false });
-
-      return this [_lineTransformFeedback];
+         return lineTransformFeedback;
+      })();
    },
 });
 
