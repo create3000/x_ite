@@ -106,10 +106,6 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
 
 Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseNode .prototype),
 {
-   isScene ()
-   {
-      return false;
-   },
    getLocalScene ()
    {
       return this .getExecutionContext () .getLocalScene ();
@@ -257,7 +253,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (protoNode)
             return protoNode .createInstance (this, setup);
 
-         if (executionContext .isScene ())
+         if (executionContext .isScene)
             break;
 
          executionContext = executionContext .getExecutionContext ();
@@ -919,6 +915,11 @@ for (const key of Object .keys (X3DExecutionContext .prototype))
 
 Object .defineProperties (X3DExecutionContext .prototype,
 {
+   isScene:
+   {
+      value: false,
+      enumerable: true,
+   },
    specificationVersion:
    {
       get: X3DExecutionContext .prototype .getSpecificationVersion,
