@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       this .family = this .familyStack .shift ();
       this .URL    = new URL (this .family, this .getExecutionContext () .getBaseURL ());
 
-      this .getBrowser () .getFont (this .URL, this .getCache ())
+      this .getBrowser () .loadFont (this .URL, this .getCache ())
          .then (this .setFont .bind (this))
          .catch (this .setError .bind (this));
    },

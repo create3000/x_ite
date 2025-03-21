@@ -52,13 +52,19 @@ import * as OpenType from "../../../lib/opentype/opentype.mjs";
 const
    _defaultFontStyle = Symbol (),
    _fontCache        = Symbol (),
+   _loadingFonts     = Symbol (),
+   _families         = Symbol (),
+   _library          = Symbol (),
    _glyphCache       = Symbol (),
    _wawoff2          = Symbol ();
 
 function X3DTextContext ()
 {
-   this [_fontCache]  = new Map ();
-   this [_glyphCache] = new Map (); // [font] [primitiveQuality] [glyphIndex]
+   this [_loadingFonts] = new Set ();
+   this [_fontCache]    = new Map ();
+   this [_families]     = new WeakMap ();
+   this [_library]      = new WeakMap ();
+   this [_glyphCache]   = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
 Object .assign (X3DTextContext .prototype,
@@ -75,15 +81,15 @@ Object .assign (X3DTextContext .prototype,
 
       return this [_defaultFontStyle];
    },
-   getFont (url, cache = true)
+   loadFont (url, cache = true)
    {
       url = String (url);
 
-      let promise = this [_fontCache] .get (url);
+      let promise = cache ? this [_fontCache] .get (url) : null;
 
       if (!promise)
       {
-         this [_fontCache] .set (url, promise = new Promise (async (resolve, reject) =>
+         promise = new Promise (async (resolve, reject) =>
          {
             try
             {
@@ -94,8 +100,7 @@ Object .assign (X3DTextContext .prototype,
 
                const
                   arrayBuffer  = await response .arrayBuffer (),
-                  decompress   = this .isWoff2 (arrayBuffer) ? await this .getWebAssemblyWoff2 () : arrayBuffer => arrayBuffer,
-                  decompressed = decompress (arrayBuffer),
+                  decompressed = await this .decompressFont (arrayBuffer),
                   font         = OpenType .parse (decompressed);
 
                resolve (font);
@@ -104,10 +109,90 @@ Object .assign (X3DTextContext .prototype,
             {
                reject (error);
             }
-         }));
+            finally
+            {
+               this [_loadingFonts] .delete (promise);
+            }
+         });
+
+         this [_loadingFonts] .add (promise);
+         this [_fontCache] .set (url, promise);
       }
 
       return promise;
+   },
+   registerFont (executionContext, font)
+   {
+      const
+         scene    = executionContext .isScene () ? executionContext : executionContext .getScene (),
+         families = this [_families] .get (scene) ?? new Map ();
+
+      this [_families] .set (scene, families);
+
+      // fontFamily - subfamily
+
+      const fontFamilies = new Map (Object .values (font .names)
+         .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [fontFamily, name])));
+
+      for (const [fontFamily, name] of fontFamilies)
+      {
+         const subfamilies = families .get (fontFamily .toLowerCase ()) ?? new Map ();
+
+         families .set (fontFamily .toLowerCase (), subfamilies);
+
+         for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
+         {
+            if (this .getBrowserOption ("Debug"))
+               console .info (`Registering font family ${fontFamily} - ${subfamily}.`);
+
+            subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
+         }
+      }
+
+      // console .log (name .preferredFamily);
+      // console .log (name .preferredSubfamily);
+   },
+   registerFontLibrary (executionContext, fullName, font)
+   {
+      const
+         scene   = executionContext .isScene () ? executionContext : executionContext .getScene (),
+         library = this [_library] .get (scene) ?? new Map ();
+
+      this [_library] .set (scene, library);
+
+      // if (this .getBrowserOption ("Debug"))
+      //    console .info (`Registering font named ${fullName}.`);
+
+      library .set (fullName .toLowerCase (), font);
+   },
+   async getFont (executionContext, familyName, style)
+   {
+      try
+      {
+         familyName = familyName .toLowerCase ();
+         style      = style .toLowerCase () .replaceAll (" ", "");
+
+         const scene = executionContext .isScene () ? executionContext : executionContext .getScene ();
+
+         for (;;)
+         {
+            const
+               library  = this [_library]  .get (scene),
+               families = this [_families] .get (scene);
+
+            const font = library ?.get (familyName)
+               ?? families ?.get (familyName) ?.get (style);
+
+            if (font)
+               return font;
+
+            await Promise .any (this [_loadingFonts]);
+         }
+      }
+      catch
+      {
+         return null;
+      }
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {
@@ -128,6 +213,17 @@ Object .assign (X3DTextContext .prototype,
 
       return cachedGlyph;
    },
+   async decompressFont (arrayBuffer)
+   {
+      if (this .isWoff2 (arrayBuffer))
+      {
+         const decompress = await this .getWebAssemblyWoff2 ();
+
+         return decompress (arrayBuffer);
+      }
+
+      return arrayBuffer;
+   },
    isWoff2 (arrayBuffer)
    {
       if (arrayBuffer .byteLength < 4)
@@ -139,9 +235,9 @@ Object .assign (X3DTextContext .prototype,
 
       return magic === 0x774F4632; // 'wOF2'
    },
-   getWebAssemblyWoff2 ()
+   async getWebAssemblyWoff2 ()
    {
-      return this [_wawoff2] ??= this .loadWebAssemblyWoff2 ();
+      return this [_wawoff2] ??= await this .loadWebAssemblyWoff2 ();
    },
    async loadWebAssemblyWoff2 ()
    {
@@ -158,7 +254,7 @@ Object .assign (X3DTextContext .prototype,
 
       await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
 
-      return buffer => wawoff2 .decompress (buffer);
+      return arrayBuffer => wawoff2 .decompress (arrayBuffer);
    },
 });
 
