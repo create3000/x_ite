@@ -53,7 +53,6 @@ import X3DEnvironmentTextureNode from "./X3DEnvironmentTextureNode.js";
 import X3DUrlObject              from "../Networking/X3DUrlObject.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
 import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
-import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
@@ -152,7 +151,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       if (texture .target !== this .getTarget ())
          return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'." });
 
-      if (DEVELOPMENT)
+      if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
@@ -175,7 +174,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    },
    setImage ()
    {
-      if (DEVELOPMENT)
+      if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
