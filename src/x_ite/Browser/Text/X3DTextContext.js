@@ -100,8 +100,7 @@ Object .assign (X3DTextContext .prototype,
 
                const
                   arrayBuffer  = await response .arrayBuffer (),
-                  decompress   = this .isWoff2 (arrayBuffer) ? await this .getWebAssemblyWoff2 () : arrayBuffer => arrayBuffer,
-                  decompressed = decompress (arrayBuffer),
+                  decompressed = await this .decompressFont (arrayBuffer),
                   font         = OpenType .parse (decompressed);
 
                resolve (font);
@@ -214,6 +213,17 @@ Object .assign (X3DTextContext .prototype,
 
       return cachedGlyph;
    },
+   async decompressFont (arrayBuffer)
+   {
+      if (this .isWoff2 (arrayBuffer))
+      {
+         const decompress = await this .getWebAssemblyWoff2 ();
+
+         return decompress (arrayBuffer);
+      }
+
+      return arrayBuffer;
+   },
    isWoff2 (arrayBuffer)
    {
       if (arrayBuffer .byteLength < 4)
@@ -225,9 +235,9 @@ Object .assign (X3DTextContext .prototype,
 
       return magic === 0x774F4632; // 'wOF2'
    },
-   getWebAssemblyWoff2 ()
+   async getWebAssemblyWoff2 ()
    {
-      return this [_wawoff2] ??= this .loadWebAssemblyWoff2 ();
+      return this [_wawoff2] ??= await this .loadWebAssemblyWoff2 ();
    },
    async loadWebAssemblyWoff2 ()
    {
