@@ -256,14 +256,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          browser = this .getBrowser (),
          fileURL = new URL (fontPath, this .getExecutionContext () .getBaseURL ());
 
-      try
-      {
-         return await browser .loadFont (fileURL, true);
-      }
-      catch
-      {
-         return null;
-      }
+      return await browser .loadFont (fileURL, true);
    },
    dispose ()
    {
