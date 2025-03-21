@@ -107,10 +107,6 @@ function X3DScene (browser)
 
 Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext .prototype),
 {
-   isScene ()
-   {
-      return true;
-   },
    getLocalScene ()
    {
       return this;
@@ -1046,6 +1042,11 @@ for (const key of Object .keys (X3DScene .prototype))
 
 Object .defineProperties (X3DScene .prototype,
 {
+   isScene:
+   {
+      value: true,
+      enumerable: true,
+   },
    specificationVersion:
    {
       get: X3DScene .prototype .getSpecificationVersion,

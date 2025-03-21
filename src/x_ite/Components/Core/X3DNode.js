@@ -235,7 +235,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             return true;
       }
 
-      if (executionContext .isScene ())
+      if (executionContext .isScene)
       {
          for (const exportedNode of executionContext .getExportedNodes ())
          {
@@ -1724,7 +1724,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (this .getName ())
          executionContext .removeNamedNode (this .getName ())
 
-      if (executionContext .isScene ())
+      if (executionContext .isScene)
       {
          // Remove imported node if any.
 
