@@ -70,15 +70,15 @@ Object .assign (X3DTextContext .prototype,
 {
    getDefaultFontStyle ()
    {
-      this [_defaultFontStyle] = new FontStyle (this .getPrivateScene ());
-      this [_defaultFontStyle] .setPrivate (true);
-      this [_defaultFontStyle] .setup ();
+      return this [_defaultFontStyle] ??= (() =>
+      {
+         const defaultFontStyle = new FontStyle (this .getPrivateScene ());
 
-      this .getDefaultFontStyle = function () { return this [_defaultFontStyle]; };
+         defaultFontStyle .setPrivate (true);
+         defaultFontStyle .setup ();
 
-      Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
-
-      return this [_defaultFontStyle];
+         return defaultFontStyle;
+      })();
    },
    loadFont (url, cache = true)
    {
