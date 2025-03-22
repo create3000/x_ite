@@ -137,7 +137,7 @@ Object .assign (X3DTextContext .prototype,
 
       this [_families] .set (scene, families);
 
-      // fontFamily - subfamily
+      // fontFamily - fontStyle
 
       const fontFamilies = new Map (Object .values (font .names)
          .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [fontFamily, name])));
@@ -147,16 +147,16 @@ Object .assign (X3DTextContext .prototype,
          if (this [_defaultFamilies] .has (fontFamily .toUpperCase ()))
             continue;
 
-         const subfamilies = families .get (fontFamily .toUpperCase ()) ?? new Map ();
+         const fontStyles = families .get (fontFamily .toUpperCase ()) ?? new Map ();
 
-         families .set (fontFamily .toUpperCase (), subfamilies);
+         families .set (fontFamily .toUpperCase (), fontStyles);
 
-         for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
+         for (const fontStyle of new Set (Object .values (name .fontSubfamily ?? { })))
          {
             if (this .getBrowserOption ("Debug"))
-               console .info (`Registering font family ${fontFamily} - ${subfamily}.`);
+               console .info (`Registering font family ${fontFamily} - ${fontStyle}.`);
 
-            subfamilies .set (subfamily .toUpperCase () .replaceAll (" ", ""), font);
+            fontStyles .set (fontStyle .toUpperCase () .replaceAll (" ", ""), font);
          }
       }
 
