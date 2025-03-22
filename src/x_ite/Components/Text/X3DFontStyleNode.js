@@ -227,11 +227,12 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          // DEPRECIATED: Try to get font by URL.
 
-         const fileURL = new URL (fontFamily, this .getExecutionContext () .getBaseURL ());
+         const fileURL = new URL (fontFamily, executionContext .getBaseURL ());
 
          if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
-            console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+            if (executionContext .getSpecificationVersion () >= 4.1)
+               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
 
             const font = await this .loadFont (fileURL);
 
