@@ -90,7 +90,7 @@ Object .assign (X3DTextContext .prototype,
     */
    loadFont (fileURL, cache = true)
    {
-      let promise = cache ? this [_fontCache] .get (String (fileURL)) : null;
+      let promise = cache ? this [_fontCache] .get (fileURL .href) : null;
 
       if (!promise)
       {
@@ -130,7 +130,9 @@ Object .assign (X3DTextContext .prototype,
          });
 
          this [_loadingFonts] .add (promise);
-         this [_fontCache] .set (String (fileURL), promise);
+
+         if (!fileURL .search)
+            this [_fontCache] .set (fileURL .href, promise);
       }
 
       return promise;

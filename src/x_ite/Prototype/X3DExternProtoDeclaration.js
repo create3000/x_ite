@@ -117,9 +117,9 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          try
          {
             const
-               resolvedURL = new URL (url, this .getExecutionContext () .getBaseURL ()),
-               cacheURL    = new URL (resolvedURL),
-               cache       = browser .getBrowserOption ("Cache");
+               fileURL  = new URL (url, this .getExecutionContext () .getBaseURL ()),
+               cacheURL = new URL (fileURL),
+               cache    = browser .getBrowserOption ("Cache");
 
             cacheURL .hash = "";
 
@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
                new FileLoader (this) .createX3DFromURL ([cacheURL], null, resolve);
             });
 
-            if (cache && !cachePromise)
+            if (!cachePromise && !cacheURL .search)
                browser [_cache] .set (cacheURL .href, promise);
 
             const scene = await promise;
@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             if (!scene)
                continue;
 
-            this .setInternalScene (scene, resolvedURL, cache);
+            this .setInternalScene (scene, fileURL, cache);
             return;
          }
          catch (error)
@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       return this [_scene];
    },
-   setInternalScene (scene, url, cache)
+   setInternalScene (scene, fileURL, cache)
    {
       const browser = this .getBrowser ();
 
@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       this [_cache] = cache;
 
       const
-         protoName = decodeURIComponent (url .hash .substring (1)),
+         protoName = decodeURIComponent (fileURL .hash .substring (1)),
          proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
 
       if (!proto)
