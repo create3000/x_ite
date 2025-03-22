@@ -55,6 +55,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import NRRDParser           from "../../Browser/Texturing3D/NRRDParser.js";
 import DICOMParser          from "../../Browser/Texturing3D/DICOMParser.js";
 import FileLoader           from "../../InputOutput/FileLoader.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTexture3D (executionContext)
 {
@@ -154,7 +155,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
       if (texture .target !== this .getTarget ())
          throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
 
-      if (this .getBrowser () .getBrowserOption ("Debug"))
+      if (DEVELOPMENT)
       {
          if (URL .protocol !== "data:")
             console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'.`);
