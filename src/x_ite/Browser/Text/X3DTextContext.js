@@ -56,7 +56,6 @@ const
    _loadingFonts     = Symbol (),
    _families         = Symbol (),
    _library          = Symbol (),
-   _glyphCache       = Symbol (),
    _wawoff2          = Symbol ();
 
 function X3DTextContext ()
@@ -200,15 +199,6 @@ Object .assign (X3DTextContext .prototype,
       {
          return null;
       }
-   },
-   getGlyph (font, primitiveQuality, glyphIndex)
-   {
-      const
-         cachedFont    = font [_glyphCache] ??= [ ],
-         cachedQuality = cachedFont [primitiveQuality] ??= [ ],
-         cachedGlyph   = cachedQuality [glyphIndex] ??= { };
-
-      return cachedGlyph;
    },
    async decompressFont (arrayBuffer)
    {

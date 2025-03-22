@@ -52,6 +52,8 @@ import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
 import Bezier           from "../../../standard/Math/Algorithms/Bezier.js";
 import libtess          from "../../../lib/libtess.js";
 
+const _glyphCache = Symbol ();
+
 function PolygonText (text, fontStyle)
 {
    X3DTextGeometry .call (this, text, fontStyle);
@@ -187,10 +189,19 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
          }
       };
    })(),
+   getGlyph (font, primitiveQuality, glyphIndex)
+   {
+      const
+         cachedFont    = font [_glyphCache] ??= [ ],
+         cachedQuality = cachedFont [primitiveQuality] ??= [ ],
+         cachedGlyph   = cachedQuality [glyphIndex] ??= { };
+
+      return cachedGlyph;
+   },
    getGlyphExtents (font, glyph, primitiveQuality, min, max)
    {
       const
-         glyphCache = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
+         glyphCache = this .getGlyph (font, primitiveQuality, glyph .index),
          extents    = glyphCache .extents;
 
       if (extents)
@@ -222,7 +233,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
    getGlyphGeometry (font, glyph, primitiveQuality)
    {
       const
-         glyphCache    = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
+         glyphCache    = this .getGlyph (font, primitiveQuality, glyph .index),
          glyphGeometry = glyphCache .geometry;
 
       if (glyphGeometry)
