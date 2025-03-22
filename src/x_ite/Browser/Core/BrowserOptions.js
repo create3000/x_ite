@@ -99,8 +99,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this ._Multisampling                .addInterest ("set_Multisampling__",                this);
       this ._OrderIndependentTransparency .addInterest ("set_OrderIndependentTransparency__", this);
       this ._Timings                      .addInterest ("set_Timings__",                      this);
-      this ._XRButton                     .addInterest ("set_XRButton__",                     this);
-      this ._XRSessionMode                .addInterest ("set_XRButton__",                     this);
+      this ._XRSessionMode                .addInterest ("set_XRSessionMode__",                this);
 
       this .set_Antialiased__                  (this ._Antialiased);
       this .set_Shading__                      (this ._Shading);
@@ -110,7 +109,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .set_LogarithmicDepthBuffer__       (this ._LogarithmicDepthBuffer);
       this .set_Multisampling__                (this ._Multisampling);
       this .set_OrderIndependentTransparency__ (this ._OrderIndependentTransparency);
-      this .set_XRButton__                     ();
+      this .set_XRSessionMode__                (this ._XRSessionMode);
 
       this .reset ();
    },
@@ -389,7 +388,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       this .localStorage .Timings = timings .getValue ();
    },
-   set_XRButton__ (mode)
+   set_XRSessionMode__ ()
    {
       this .getBrowser () .xrUpdateButton ();
    },

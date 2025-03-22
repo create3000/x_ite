@@ -816,14 +816,11 @@ update
 url
 : An MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both *src* and *url* attributes are given, the last given attribute takes precedence.
 
-xrButton
-: A Boolean value (`true` or `false`) indicating whether a WebXR icon should be displayed in the lower right corner of the \<x3d-canvas\> element. The default value for the *xrButton* attribute is `true`.
+xrSessionMode
+: A String value that specifies what kind of WebXR session should be created. The default value for the *xrSessionMode* attribute is `IMMERSIVE_VR`. A value of `NONE` completely disables the possibility to use WebXR. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 >**Tip:** If you want to change the position of the WebXR button, use the CSS `x3d-canvas::part(xr-button)` selector.
 {: .prompt-tip }
-
-xrSessionMode
-: A String value that specifies what kind of WebXR session should be created. The default value for the *xrSessionMode* attribute is `IMMERSIVE_VR`. A value of `NONE` completely disables the possibility to use WebXR. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 ### Example of Use
 
