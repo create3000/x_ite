@@ -134,12 +134,12 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    {
       return this .font;
    },
-   getDefaultFont (familyName, style)
+   getDefaultFont (fontFamily, fontStyle)
    {
-      const family = Fonts .get (familyName);
+      const family = Fonts .get (fontFamily);
 
       if (family)
-         return family .get (style) ?? family .get ("PLAIN");
+         return family .get (fontStyle) ?? family .get ("PLAIN");
 
       return;
    },
@@ -192,17 +192,17 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          browser          = this .getBrowser (),
          executionContext = this .getExecutionContext (),
          family           = this ._family .copy (),
-         style            = this ._style .getValue ();
+         fontStyle        = this ._style .getValue ();
 
       family .push ("SERIF");
 
       this .font = null;
 
-      for (const familyName of family)
+      for (const fontFamily of family)
       {
          // Try to get default font.
 
-         const defaultFont = this .getDefaultFont (familyName, style);
+         const defaultFont = this .getDefaultFont (fontFamily, fontStyle);
 
          if (defaultFont)
          {
@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          // Try to get font from family names
 
-         const font = await browser .getFont (executionContext, familyName, style);
+         const font = await browser .getFont (executionContext, fontFamily, fontStyle);
 
          if (font)
          {
@@ -227,7 +227,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          // DEPRECIATED: Try to get font by URL.
 
-         const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
+         const fileURL = new URL (fontFamily, this .getExecutionContext () .getBaseURL ());
 
          if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          }
          else
          {
-            console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
+            console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
          }
       }
 

@@ -179,12 +179,12 @@ Object .assign (X3DTextContext .prototype,
 
       library .set (fontFamily .toUpperCase (), font);
    },
-   async getFont (executionContext, fontFamily, style)
+   async getFont (executionContext, fontFamily, fontStyle)
    {
       try
       {
          fontFamily = fontFamily .toUpperCase ();
-         style      = style .toUpperCase () .replaceAll (" ", "");
+         fontStyle  = fontStyle .toUpperCase () .replaceAll (" ", "");
 
          const scene = executionContext .getLocalScene ();
 
@@ -195,7 +195,7 @@ Object .assign (X3DTextContext .prototype,
                families = this [_families] .get (scene);
 
             const font = library ?.get (fontFamily)
-               ?? families ?.get (fontFamily) ?.get (style);
+               ?? families ?.get (fontFamily) ?.get (fontStyle);
 
             if (font)
                return font;
