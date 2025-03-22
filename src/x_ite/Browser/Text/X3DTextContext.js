@@ -204,7 +204,7 @@ Object .assign (X3DTextContext .prototype,
    {
       if (this .isWoff2 (arrayBuffer))
       {
-         const decompress = await this .getWebAssemblyWoff2 ();
+         const decompress = await this .getWoff2Decompressor ();
 
          return decompress (arrayBuffer);
       }
@@ -222,12 +222,14 @@ Object .assign (X3DTextContext .prototype,
 
       return magic === 0x774F4632; // 'wOF2'
    },
-   async getWebAssemblyWoff2 ()
+   async getWoff2Decompressor ()
    {
-      return this [_wawoff2] ??= await this .loadWebAssemblyWoff2 ();
+      return this [_wawoff2] ??= await this .loadWoff2Decompressor ();
    },
-   async loadWebAssemblyWoff2 ()
+   async loadWoff2Decompressor ()
    {
+      // https://www.npmjs.com/package/wawoff2
+
       const
          fileURL  = URLs .getLibraryURL ("decompress_binding.js"),
          response = await fetch (fileURL);
