@@ -48,6 +48,7 @@
 import FontStyle     from "../../Components/Text/FontStyle.js";
 import URLs          from "../Networking/URLs.js";
 import * as OpenType from "../../../lib/opentype/opentype.mjs";
+import DEVELOPMENT   from "../../DEVELOPMENT.js";
 
 const
    _defaultFontStyle = Symbol (),
@@ -100,7 +101,7 @@ Object .assign (X3DTextContext .prototype,
                   decompressed = await this .decompressFont (arrayBuffer),
                   font         = OpenType .parse (decompressed);
 
-               if (this .getBrowserOption ("Debug"))
+               if (DEVELOPMENT)
                {
                   if (fileURL .protocol !== "data:")
                      console .info (`Done loading font '${decodeURI (fileURL .href)}'.`);

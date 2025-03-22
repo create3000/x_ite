@@ -51,6 +51,7 @@ import GoldenGate   from "../Parser/GoldenGate.js";
 import X3DWorld     from "../Execution/X3DWorld.js";
 import X3DScene     from "../Execution/X3DScene.js";
 import X3DConstants from "../Base/X3DConstants.js";
+import DEVELOPMENT  from "../DEVELOPMENT.js";
 
 const foreignMimeType = new Set ([
    "text/html",
@@ -167,7 +168,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             throw error;
       }
 
-      if (this .browser .getBrowserOption ("Debug"))
+      if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading scene '${decodeURI (this .URL .href)}'.`);
