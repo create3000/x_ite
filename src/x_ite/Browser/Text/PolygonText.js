@@ -232,31 +232,19 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
    },
    getGlyphGeometry (font, glyph, primitiveQuality)
    {
-      const
-         glyphCache    = this .getGlyph (font, primitiveQuality, glyph .index),
-         glyphGeometry = glyphCache .geometry;
+      const glyphCache = this .getGlyph (font, primitiveQuality, glyph .index);
 
-      if (glyphGeometry)
-      {
-         return glyphGeometry;
-      }
-      else
-      {
-         const glyphGeometry = glyphCache .geometry = [ ];
-
-         this .createGlyphGeometry (glyph, glyphGeometry, primitiveQuality);
-
-         return glyphGeometry;
-      }
+      return glyphCache .geometry ??= this .createGlyphGeometry (glyph, primitiveQuality);
    },
-   createGlyphGeometry (glyph, vertices, primitiveQuality)
+   createGlyphGeometry (glyph, primitiveQuality)
    {
       // Get contours for the current glyph.
 
       const
          steps    = this .getBezierSteps (primitiveQuality),
          path     = glyph .getPath (0, 0, 1),
-         contours = [ ];
+         contours = [ ],
+         vertices = [ ];
 
       let
          points = [ ],
