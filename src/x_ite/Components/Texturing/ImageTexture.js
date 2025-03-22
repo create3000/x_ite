@@ -132,13 +132,13 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
                this .URL .searchParams .set ("_", Date .now ());
          }
 
-         this .image .attr ("src", this .URL .href);
+         this .image .attr ("src", this .URL);
       }
    },
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL .href)}:'`, event .type);
+         console .warn (`Error loading image '${decodeURI (this .URL)}:'`, event .type);
 
       this .loadNext ();
    },
@@ -150,7 +150,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
+            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
       }
 
       try
@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
+            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
       }
 
       try

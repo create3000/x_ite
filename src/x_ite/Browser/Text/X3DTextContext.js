@@ -82,6 +82,12 @@ Object .assign (X3DTextContext .prototype,
          return defaultFontStyle;
       })();
    },
+   /**
+    *
+    * @param {URL} fileURL
+    * @param {boolean} cache
+    * @returns Promise<OpenType.Font>
+    */
    loadFont (fileURL, cache = true)
    {
       let promise = cache ? this [_fontCache] .get (String (fileURL)) : null;
@@ -105,7 +111,7 @@ Object .assign (X3DTextContext .prototype,
                if (DEVELOPMENT)
                {
                   if (fileURL .protocol !== "data:")
-                     console .info (`Done loading font '${decodeURI (fileURL .href)}'.`);
+                     console .info (`Done loading font '${decodeURI (fileURL)}'.`);
                }
 
                resolve (font);
@@ -113,7 +119,7 @@ Object .assign (X3DTextContext .prototype,
             catch (error)
             {
                if (fileURL .protocol !== "data:")
-                  console .warn (`Error loading font '${decodeURI (fileURL .href)}':`, error);
+                  console .warn (`Error loading font '${decodeURI (fileURL)}':`, error);
 
                resolve (null);
             }

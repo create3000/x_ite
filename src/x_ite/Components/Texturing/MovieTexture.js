@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       }
       else
       {
-         this .video .attr ("src", this .URL .href);
+         this .video .attr ("src", this .URL);
          this .video .get (0) .load ();
       }
    },
@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading movie '${decodeURI (this .URL .href)}':`, event .type);
+         console .warn (`Error loading movie '${decodeURI (this .URL)}':`, event .type);
 
       this .loadNext ();
    },
@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          if (DEVELOPMENT)
          {
             if (this .URL .protocol !== "data:")
-               console .info (`Done loading movie '${decodeURI (this .URL .href)}'.`);
+               console .info (`Done loading movie '${decodeURI (this .URL)}'.`);
          }
 
          this .video .off ("loadeddata");

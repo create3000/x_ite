@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          if (!(this .node instanceof X3DWorld))
             scene .setExecutionContext (this .executionContext);
 
-         scene .setWorldURL (new URL (worldURL, this .getBaseURL ()) .href);
+         scene .setWorldURL (new URL (worldURL, this .getBaseURL ()));
          scene .setup ();
 
          if (resolve)
@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .URL .href)}'.`);
+            console .info (`Done loading scene '${decodeURI (this .URL)}'.`);
       }
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
