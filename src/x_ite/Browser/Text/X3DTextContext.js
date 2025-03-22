@@ -52,6 +52,7 @@ import DEVELOPMENT   from "../../DEVELOPMENT.js";
 
 const
    _defaultFontStyle = Symbol (),
+   _defaultFamilies  = Symbol (),
    _fontCache        = Symbol (),
    _loadingFonts     = Symbol (),
    _families         = Symbol (),
@@ -60,10 +61,11 @@ const
 
 function X3DTextContext ()
 {
-   this [_loadingFonts] = new Set ();
-   this [_fontCache]    = new Map ();
-   this [_families]     = new WeakMap ();
-   this [_library]      = new WeakMap ();
+   this [_defaultFamilies] = new Set (["SERIF", "SANS", "TYPEWRITER"]);
+   this [_loadingFonts]    = new Set ();
+   this [_fontCache]       = new Map ();
+   this [_families]        = new WeakMap ();
+   this [_library]         = new WeakMap ();
 }
 
 Object .assign (X3DTextContext .prototype,
@@ -142,24 +144,30 @@ Object .assign (X3DTextContext .prototype,
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         const subfamilies = families .get (fontFamily .toLowerCase ()) ?? new Map ();
+         if (this [_defaultFamilies] .has (fontFamily .toUpperCase ()))
+            continue;
 
-         families .set (fontFamily .toLowerCase (), subfamilies);
+         const subfamilies = families .get (fontFamily .toUpperCase ()) ?? new Map ();
+
+         families .set (fontFamily .toUpperCase (), subfamilies);
 
          for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
          {
             if (this .getBrowserOption ("Debug"))
                console .info (`Registering font family ${fontFamily} - ${subfamily}.`);
 
-            subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
+            subfamilies .set (subfamily .toUpperCase () .replaceAll (" ", ""), font);
          }
       }
 
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
    },
-   registerFontLibrary (executionContext, fullName, font)
+   registerFontLibrary (executionContext, fontFamily, font)
    {
+      if (this [_defaultFamilies] .has (fontFamily .toUpperCase ()))
+         return;
+
       const
          scene   = executionContext .getLocalScene (),
          library = this [_library] .get (scene) ?? new Map ();
@@ -167,16 +175,16 @@ Object .assign (X3DTextContext .prototype,
       this [_library] .set (scene, library);
 
       // if (this .getBrowserOption ("Debug"))
-      //    console .info (`Registering font named ${fullName}.`);
+      //    console .info (`Registering font named ${fontFamily}.`);
 
-      library .set (fullName .toLowerCase (), font);
+      library .set (fontFamily .toUpperCase (), font);
    },
-   async getFont (executionContext, familyName, style)
+   async getFont (executionContext, fontFamily, style)
    {
       try
       {
-         familyName = familyName .toLowerCase ();
-         style      = style .toLowerCase () .replaceAll (" ", "");
+         fontFamily = fontFamily .toUpperCase ();
+         style      = style .toUpperCase () .replaceAll (" ", "");
 
          const scene = executionContext .getLocalScene ();
 
@@ -186,8 +194,8 @@ Object .assign (X3DTextContext .prototype,
                library  = this [_library]  .get (scene),
                families = this [_families] .get (scene);
 
-            const font = library ?.get (familyName)
-               ?? families ?.get (familyName) ?.get (style);
+            const font = library ?.get (fontFamily)
+               ?? families ?.get (fontFamily) ?.get (style);
 
             if (font)
                return font;
