@@ -456,11 +456,15 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
       return function (type, renderObject)
       {
+         const navigationInfoNode = this .getNavigationInfo ();
+
+         if (navigationInfoNode ._transitionActive .getValue ())
+            return;
+
          const
-            navigationInfoNode = this .getNavigationInfo (),
-            collisionRadius    = navigationInfoNode .getCollisionRadius (),
-            avatarHeight       = navigationInfoNode .getAvatarHeight (),
-            size               = Math .max (collisionRadius * 2, avatarHeight * 2);
+            collisionRadius = navigationInfoNode .getCollisionRadius (),
+            avatarHeight    = navigationInfoNode .getAvatarHeight (),
+            size            = Math .max (collisionRadius * 2, avatarHeight * 2);
 
          Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 
