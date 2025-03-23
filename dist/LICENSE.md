@@ -642,11 +642,8 @@ ADDITIONAL LICENSES
  */
 
 /*!
- * jQuery Mousewheel 3.1.13
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license
- * http://jquery.org/license
+ * jQuery Mousewheel 3.2.2
+ * Copyright OpenJS Foundation and other contributors
  */
 
 /*! pako 2.1.0 https://github.com/nodeca/pako @license (MIT AND Zlib) */
