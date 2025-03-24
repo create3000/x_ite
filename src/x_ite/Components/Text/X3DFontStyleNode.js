@@ -104,6 +104,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
 
+      this ._family  .addInterest ("set_url__",     this);
       this ._style   .addInterest ("set_url__",     this);
       this ._justify .addInterest ("set_justify__", this);
 
