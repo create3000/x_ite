@@ -63,7 +63,7 @@ function X3DChildObject ()
 
 Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
 {
-   [_modificationTime]: 0,
+   [_modificationTime]: -1,
    [_tainted]: false,
    [_parents]: null,
    [_private]: false,

@@ -156,7 +156,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   continue;
 
                // Is set during parse, or already changed by an route event.
-               if (field .getModificationTime ())
+               if (field .getModificationTime () >= 0)
                   continue;
 
                // Has IS references.
@@ -225,10 +225,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          // Assign default value.
          if (oldField .isInitializable ())
          {
-            if (oldField .getModificationTime () === 0)
+            if (oldField .getModificationTime () < 0)
             {
                oldField .assign (newField);
-               oldField .setModificationTime (0);
+               oldField .setModificationTime (-1);
             }
          }
 
@@ -348,7 +348,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       const protoNode = this [_protoNode];
 
       if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-         return field .getModificationTime () === 0;
+         return field .getModificationTime () < 0;
 
       return X3DNode .prototype .isDefaultValue .call (this, field);
    },
