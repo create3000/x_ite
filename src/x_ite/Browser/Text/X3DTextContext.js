@@ -52,7 +52,6 @@ import DEVELOPMENT   from "../../DEVELOPMENT.js";
 
 const
    _defaultFontStyle = Symbol (),
-   _defaultFamilies  = Symbol (),
    _fontCache        = Symbol (),
    _loadingFonts     = Symbol (),
    _families         = Symbol (),
@@ -61,11 +60,10 @@ const
 
 function X3DTextContext ()
 {
-   this [_defaultFamilies] = new Set (["SERIF", "SANS", "TYPEWRITER"]);
-   this [_loadingFonts]    = new Set ();
-   this [_fontCache]       = new Map ();
-   this [_families]        = new WeakMap ();
-   this [_library]         = new WeakMap ();
+   this [_loadingFonts] = new Set ();
+   this [_fontCache]    = new Map ();
+   this [_families]     = new WeakMap ();
+   this [_library]      = new WeakMap ();
 }
 
 Object .assign (X3DTextContext .prototype,
@@ -152,9 +150,6 @@ Object .assign (X3DTextContext .prototype,
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         if (this [_defaultFamilies] .has (fontFamily .toUpperCase ()))
-            continue;
-
          const fontStyles = families .get (fontFamily .toUpperCase ()) ?? new Map ();
 
          families .set (fontFamily .toUpperCase (), fontStyles);
@@ -173,9 +168,6 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFontLibrary (executionContext, fontFamily, font)
    {
-      if (this [_defaultFamilies] .has (fontFamily .toUpperCase ()))
-         return;
-
       const
          scene   = executionContext .getLocalScene (),
          library = this [_library] .get (scene) ?? new Map ();
