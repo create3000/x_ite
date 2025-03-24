@@ -376,12 +376,6 @@ Returns a browser option with the corresponding *name*.
          <td>KHR_PBR_NEUTRAL</td>
       </tr>
       <tr>
-         <td>XRButton</td>
-         <td>Whether to display an XR button in the lower right corner of the canvas. <small class="blue">non standard</small></td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
          <td>XRSessionMode</td>
          <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a>. <small class="blue">non standard</small></td>
          <td>NONE, IMMERSIVE_AR, IMMERSIVE_VR</td>

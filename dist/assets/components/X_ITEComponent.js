@@ -1,5 +1,5 @@
-/* X_ITE v11.3.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
+/* X_ITE v11.4.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2211,11 +2211,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
       this .occlusionTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._occlusionTexture);
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
-   },
-   set_transparent__ ()
-   {
-      this .setTransparent (this .getTransparency () ||
-                            this .diffuseTextureNode ?.isTransparent ());
    },
    set_extensions__ ()
    {

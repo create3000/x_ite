@@ -1,8 +1,7 @@
-/* X_ITE v11.3.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
+/* X_ITE v11.4.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-<<<<<<< HEAD
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 254:
@@ -16,7 +15,7 @@ module.exports = __X_ITE_X3D__ .jquery;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -30,18 +29,14 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-=======
-/******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
->>>>>>> X3D4.1
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -54,7 +49,7 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -66,12 +61,12 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 
 // UNUSED EXPORTS: default
@@ -257,12 +252,10 @@ function X3DFontStyleNode (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DFontStyleNode);
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",          new (external_X_ITE_X3D_Fields_default()).SFString (),
-                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  this ._family,
+                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  new (external_X_ITE_X3D_Fields_default()).MFString (),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600));
-
-   this ._family .setName ("family");
 
    this .alignments = [ ];
 }
@@ -288,25 +281,29 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
       const majorNormal = this ._horizontal .getValue () ? this ._leftToRight .getValue () : this ._topToBottom .getValue ();
 
       this .alignments [0] = this ._justify .length > 0
-                             ? this .getAlignment (0, majorNormal)
-                             : majorNormal ? Text_TextAlignment .BEGIN : Text_TextAlignment .END;
+         ? this .getAlignment (0, majorNormal)
+         : majorNormal ? Text_TextAlignment .BEGIN : Text_TextAlignment .END;
 
       const minorNormal = this ._horizontal .getValue () ? this ._topToBottom .getValue () : this ._leftToRight .getValue ();
 
       this .alignments [1] = this ._justify .length > 1
-                             ? this .getAlignment (1, minorNormal)
-                             : minorNormal ? Text_TextAlignment .FIRST : Text_TextAlignment .END;
+         ? this .getAlignment (1, minorNormal)
+         : minorNormal ? Text_TextAlignment .FIRST : Text_TextAlignment .END;
+   },
+   getAllowEmptyUrl ()
+   {
+      return true;
    },
    getFont ()
    {
       return this .font;
    },
-   getDefaultFont (familyName, style)
+   getDefaultFont (fontFamily, fontStyle)
    {
-      const family = Fonts .get (familyName);
+      const family = Fonts .get (fontFamily);
 
       if (family)
-         return family .get (style) ?? family .get ("PLAIN");
+         return family .get (fontStyle) ?? family .get ("PLAIN");
 
       return;
    },
@@ -356,17 +353,20 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
       // Add default font to family array.
 
       const
-         browser = this .getBrowser (),
-         family  = this ._family .copy (),
-         style   = this ._style .getValue ();
+         browser          = this .getBrowser (),
+         executionContext = this .getExecutionContext (),
+         family           = this ._family .copy (),
+         fontStyle        = this ._style .getValue ();
 
       family .push ("SERIF");
 
       this .font = null;
 
-      for (const familyName of family)
+      for (const fontFamily of family)
       {
-         const defaultFont = this .getDefaultFont (familyName, style);
+         // Try to get default font.
+
+         const defaultFont = this .getDefaultFont (fontFamily, fontStyle);
 
          if (defaultFont)
          {
@@ -379,7 +379,9 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
             }
          }
 
-         const font = await browser .getFont (familyName, style);
+         // Try to get font from family names
+
+         const font = await browser .getFont (executionContext, fontFamily, fontStyle);
 
          if (font)
          {
@@ -387,11 +389,14 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
             break;
          }
 
-         const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
+         // DEPRECIATED: Try to get font by URL.
 
-         if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
+         const fileURL = new URL (fontFamily, executionContext .getBaseURL ());
+
+         if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
-            console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+            if (executionContext .getSpecificationVersion () >= 4.1)
+               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
 
             const font = await this .loadFont (fileURL);
 
@@ -403,7 +408,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
          }
          else
          {
-            console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
+            console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
          }
       }
 
@@ -416,15 +421,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
          browser = this .getBrowser (),
          fileURL = new URL (fontPath, this .getExecutionContext () .getBaseURL ());
 
-      try
-      {
-         return await browser .loadFont (fileURL, true);
-      }
-      catch (error)
-      {
-         if (fileURL .protocol !== "data:")
-            console .warn (`Error loading font '${decodeURI (fileURL .href)}':`, error);
-      }
+      return await browser .loadFont (fileURL, true);
    },
    dispose ()
    {
@@ -1204,6 +1201,8 @@ var external_X_ITE_X3D_libtess_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+const _glyphCache = Symbol ();
+
 function PolygonText (text, fontStyle)
 {
    Text_X3DTextGeometry .call (this, text, fontStyle);
@@ -1339,10 +1338,19 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
          }
       };
    })(),
+   getGlyph (font, primitiveQuality, glyphIndex)
+   {
+      const
+         cachedFont    = font [_glyphCache] ??= [ ],
+         cachedQuality = cachedFont [primitiveQuality] ??= [ ],
+         cachedGlyph   = cachedQuality [glyphIndex] ??= { };
+
+      return cachedGlyph;
+   },
    getGlyphExtents (font, glyph, primitiveQuality, min, max)
    {
       const
-         glyphCache = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
+         glyphCache = this .getGlyph (font, primitiveQuality, glyph .index),
          extents    = glyphCache .extents;
 
       if (extents)
@@ -1373,31 +1381,19 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
    },
    getGlyphGeometry (font, glyph, primitiveQuality)
    {
-      const
-         glyphCache    = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
-         glyphGeometry = glyphCache .geometry;
+      const glyphCache = this .getGlyph (font, primitiveQuality, glyph .index);
 
-      if (glyphGeometry)
-      {
-         return glyphGeometry;
-      }
-      else
-      {
-         const glyphGeometry = glyphCache .geometry = [ ];
-
-         this .createGlyphGeometry (glyph, glyphGeometry, primitiveQuality);
-
-         return glyphGeometry;
-      }
+      return glyphCache .geometry ??= this .createGlyphGeometry (glyph, primitiveQuality);
    },
-   createGlyphGeometry (glyph, vertices, primitiveQuality)
+   createGlyphGeometry (glyph, primitiveQuality)
    {
       // Get contours for the current glyph.
 
       const
          steps    = this .getBezierSteps (primitiveQuality),
          path     = glyph .getPath (0, 0, 1),
-         contours = [ ];
+         contours = [ ],
+         vertices = [ ];
 
       let
          points = [ ],
@@ -11839,8 +11835,8 @@ var PaletteManager = class {
    */
   // defaultValue = 0x000000FF;
   /**
-   * 
-   * @param {opentype.Font} font 
+   *
+   * @param {opentype.Font} font
    */
   constructor(font) {
     this.defaultValue = 255;
@@ -11858,7 +11854,7 @@ var PaletteManager = class {
   }
   /**
    * Returns an array of arrays of color values for each palette, optionally in a specified color format
-   * @param {string} colorFormat 
+   * @param {string} colorFormat
    * @returns {Array<Array>}
    */
   getAll(colorFormat) {
@@ -11877,7 +11873,7 @@ var PaletteManager = class {
   }
   /**
    * Converts a color value string or array of color value strings to CPAL integer color value(s)
-   * @param {string|Array<string></string>} color 
+   * @param {string|Array<string></string>} color
    * @returns {integer}
    */
   toCPALcolor(color) {
@@ -11891,7 +11887,7 @@ var PaletteManager = class {
    * @param {Array<string>|integer} palette Palette index integer or Array of colors to be filled
    * @param {Array<string|integer>} colors Colors to fill the palette with
    * @param {integer} _colorCount Number of colors to fill the palette with, defaults to the value of the numPaletteEntries field. Used internally by extend() and shouldn't be set manually
-   * @returns 
+   * @returns
    */
   fillPalette(palette, colors = [], _colorCount = this.cpal().numPaletteEntries) {
     palette = Number.isInteger(palette) ? this.get(palette, "raw") : palette;
@@ -11914,7 +11910,7 @@ var PaletteManager = class {
   }
   /**
    * Get a specific palette by its zero-based index
-   * @param {integer} paletteIndex 
+   * @param {integer} paletteIndex
    * @param {string} [colorFormat='hexa']
    * @returns {Array}
    */
@@ -11923,10 +11919,10 @@ var PaletteManager = class {
   }
   /**
    * Get a color from a specific palette by its zero-based index
-   * @param {integer} index 
+   * @param {integer} index
    * @param {integer} paletteIndex
    * @param {string} [colorFormat ='hexa']
-   * @returns 
+   * @returns
    */
   getColor(index, paletteIndex = 0, colorFormat = "hexa") {
     return getPaletteColor(this.font, index, paletteIndex, colorFormat);
@@ -11936,7 +11932,7 @@ var PaletteManager = class {
    * @param {integer} index zero-based color index to start filling from
    * @param {string|integer|Array<string|integer>} color color value or array of color values
    * @param {integer} paletteIndex
-   * @returns 
+   * @returns
    */
   setColor(index, colors, paletteIndex = 0) {
     index = parseInt(index);
@@ -11963,9 +11959,9 @@ var PaletteManager = class {
     this.updateIndices();
   }
   /**
-   * Add a new palette. 
+   * Add a new palette.
    * @param {Array} colors (optional) colors to add to the palette, differences to existing palettes will be filled with the defaultValue.
-   * @returns 
+   * @returns
    */
   add(colors) {
     if (this.ensureCPAL(colors)) {
@@ -11989,7 +11985,7 @@ var PaletteManager = class {
   }
   /**
    * deletes a palette by its zero-based index
-   * @param {integer} paletteIndex 
+   * @param {integer} paletteIndex
    */
   delete(paletteIndex) {
     const palettes = this.getAll("raw");
@@ -12212,7 +12208,7 @@ var LayerManager = class {
    * Mainly used internally. Mainly used internally. Updates the colr table, adding a baseGlyphRecord if needed,
    * ensuring that it's inserted at the correct position, updating numLayers, and adjusting firstLayerIndex values
    * for all baseGlyphRecords according to any deletions or insertions.
-   * @param {integer} glyphIndex 
+   * @param {integer} glyphIndex
    * @param {Array<Object>} layers array of layer objects {glyphID, paletteIndex}
    */
   updateColrTable(glyphIndex, layers) {
@@ -17769,6 +17765,9 @@ function loadSync() {
 }
 
 
+;// external "__X_ITE_X3D__ .DEVELOPMENT"
+const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
+var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Text/X3DTextContext.js
 /*******************************************************************************
  *
@@ -17821,97 +17820,80 @@ function loadSync() {
 
 
 
+
 const
    _defaultFontStyle = Symbol (),
+   _defaultFamilies  = Symbol (),
    _fontCache        = Symbol (),
-<<<<<<< HEAD
    _loadingFonts     = Symbol (),
-   _familyCache      = Symbol (),
-   _fullNameCache    = Symbol (),
-=======
->>>>>>> X3D4.1
-   _glyphCache       = Symbol (),
+   _families         = Symbol (),
+   _library          = Symbol (),
    _wawoff2          = Symbol ();
 
 function X3DTextContext ()
 {
-   this [_fontCache]     = new Map ();
-   this [_loadingFonts]  = new Set ();
-   this [_familyCache]   = new Map ();
-   this [_fullNameCache] = new Map ();
-   this [_glyphCache]    = new Map (); // [font] [primitiveQuality] [glyphIndex]
+   this [_defaultFamilies] = new Set (["SERIF", "SANS", "TYPEWRITER"]);
+   this [_loadingFonts]    = new Set ();
+   this [_fontCache]       = new Map ();
+   this [_families]        = new WeakMap ();
+   this [_library]         = new WeakMap ();
 }
 
 Object .assign (X3DTextContext .prototype,
 {
    getDefaultFontStyle ()
    {
-      this [_defaultFontStyle] = new Text_FontStyle (this .getPrivateScene ());
-      this [_defaultFontStyle] .setPrivate (true);
-      this [_defaultFontStyle] .setup ();
+      return this [_defaultFontStyle] ??= (() =>
+      {
+         const defaultFontStyle = new Text_FontStyle (this .getPrivateScene ());
 
-      this .getDefaultFontStyle = function () { return this [_defaultFontStyle]; };
+         defaultFontStyle .setPrivate (true);
+         defaultFontStyle .setup ();
 
-      Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
-
-      return this [_defaultFontStyle];
+         return defaultFontStyle;
+      })();
    },
-   loadFont (url, cache = true)
+   /**
+    *
+    * @param {URL} fileURL
+    * @param {boolean} cache
+    * @returns Promise<OpenType.Font>
+    */
+   loadFont (fileURL, cache = true)
    {
-      url = String (url);
-
-<<<<<<< HEAD
-      let promise = cache ? this [_fontCache] .get (url) : null;
+      let promise = cache ? this [_fontCache] .get (fileURL .href) : null;
 
       if (!promise)
       {
          promise = new Promise (async (resolve, reject) =>
-=======
-      let promise = this [_fontCache] .get (url);
-
-      if (!promise)
-      {
-         this [_fontCache] .set (url, promise = new Promise (async (resolve, reject) =>
->>>>>>> X3D4.1
          {
             try
             {
-               const response = await fetch (url, { cache: cache ? "default" : "reload" });
+               const response = await fetch (fileURL, { cache: cache ? "default" : "reload" });
 
                if (!response .ok)
                   throw new Error (response .statusText || response .status);
 
-               const decompress = url .includes (".woff2")
-                  ? await this .getWebAssemblyWoff2 ()
-                  : buffer => buffer;
-
                const
-                  buffer       = await response .arrayBuffer (),
-                  decompressed = decompress (buffer),
+                  arrayBuffer  = await response .arrayBuffer (),
+                  decompressed = await this .decompressFont (arrayBuffer),
                   font         = parseBuffer (decompressed);
 
-<<<<<<< HEAD
-               this .registerFont (font);
-=======
-               // for (const name of Object .values (font .names))
-               // {
-               //    console .log (name);
-
-               //    // Properties can be undefined.
-               //    console .log (... Object .values (name .fullName));
-               //    console .log (... Object .values (name .fontFamily));
-               //    console .log (name .preferredFamily);
-               //    console .log (name .preferredSubfamily);
-               // }
->>>>>>> X3D4.1
+               if ((external_X_ITE_X3D_DEVELOPMENT_default()))
+               {
+                  if (fileURL .protocol !== "data:")
+                     console .info (`Done loading font '${decodeURI (fileURL)}'.`);
+               }
 
                resolve (font);
             }
             catch (error)
             {
-               reject (error);
+               if (fileURL .protocol !== "data:")
+                  console .warn (`Error loading font '${decodeURI (fileURL)}':`, error);
+
+               resolve (null);
             }
-<<<<<<< HEAD
             finally
             {
                this [_loadingFonts] .delete (promise);
@@ -17919,94 +17901,125 @@ Object .assign (X3DTextContext .prototype,
          });
 
          this [_loadingFonts] .add (promise);
-         this [_fontCache] .set (url, promise);
+
+         if (!fileURL .search)
+            this [_fontCache] .set (fileURL .href, promise);
       }
 
       return promise;
    },
-   registerFont (font)
+   registerFont (executionContext, font)
    {
-      // fontFamily - subfamily
+      const
+         scene    = executionContext .getLocalScene (),
+         families = this [_families] .get (scene) ?? new Map ();
+
+      this [_families] .set (scene, families);
+
+      // fontFamily - fontStyle
 
       const fontFamilies = new Map (Object .values (font .names)
          .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [fontFamily, name])));
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         const subfamilies = this [_familyCache] .get (fontFamily .toLowerCase ()) ?? new Map ();
+         if (this [_defaultFamilies] .has (fontFamily .toUpperCase ()))
+            continue;
 
-         this [_familyCache] .set (fontFamily .toLowerCase (), subfamilies);
+         const fontStyles = families .get (fontFamily .toUpperCase ()) ?? new Map ();
 
-         for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
+         families .set (fontFamily .toUpperCase (), fontStyles);
+
+         for (const fontStyle of new Set (Object .values (name .fontSubfamily ?? { })))
          {
             if (this .getBrowserOption ("Debug"))
-               console .info (`Registering font family ${fontFamily} - ${subfamily}.`);
+               console .info (`Registering font family ${fontFamily} - ${fontStyle}.`);
 
-            subfamilies .set (subfamily .toLowerCase () .replaceAll (" ", ""), font);
+            fontStyles .set (fontStyle .toUpperCase () .replaceAll (" ", ""), font);
          }
-      }
-
-      // fullName
-
-      const fullNames = new Set (Object .values (font .names)
-         .flatMap (name => Object .values (name .fullName ?? { })));
-
-      for (const fullName of fullNames)
-      {
-         // if (this .getBrowserOption ("Debug"))
-         //    console .info (`Registering font named ${fullName}.`);
-
-         this [_fullNameCache] .set (fullName .toLowerCase (), font);
       }
 
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
    },
-   async getFont (familyName, style)
+   registerFontLibrary (executionContext, fontFamily, font)
    {
-      familyName = familyName .toLowerCase ();
-      style      = style .toLowerCase () .replaceAll (" ", "");
+      if (this [_defaultFamilies] .has (fontFamily .toUpperCase ()))
+         return;
 
-      await Promise .allSettled (this [_loadingFonts]);
+      const
+         scene   = executionContext .getLocalScene (),
+         library = this [_library] .get (scene) ?? new Map ();
 
-      return this [_familyCache] .get (familyName) ?.get (style)
-         ?? this [_fullNameCache] .get (familyName)
-         ?? null;
-=======
-         }));
+      this [_library] .set (scene, library);
+
+      // if (this .getBrowserOption ("Debug"))
+      //    console .info (`Registering font named ${fontFamily}.`);
+
+      library .set (fontFamily .toUpperCase (), font);
+   },
+   async getFont (executionContext, fontFamily, fontStyle)
+   {
+      try
+      {
+         fontFamily = fontFamily .toUpperCase ();
+         fontStyle  = fontStyle .toUpperCase () .replaceAll (" ", "");
+
+         const scene = executionContext .getLocalScene ();
+
+         for (;;)
+         {
+            const
+               library  = this [_library]  .get (scene),
+               families = this [_families] .get (scene);
+
+            const font = library ?.get (fontFamily)
+               ?? families ?.get (fontFamily) ?.get (fontStyle);
+
+            if (font)
+               return font;
+
+            await Promise .any (this [_loadingFonts]);
+         }
+      }
+      catch
+      {
+         return null;
+      }
+   },
+   async decompressFont (arrayBuffer)
+   {
+      if (this .isWoff2 (arrayBuffer))
+      {
+         const decompress = await this .getWoff2Decompressor ();
+
+         return decompress (arrayBuffer);
       }
 
-      return promise;
->>>>>>> X3D4.1
+      return arrayBuffer;
    },
-   getGlyph (font, primitiveQuality, glyphIndex)
+   isWoff2 (arrayBuffer)
    {
-      let cachedFont = this [_glyphCache] .get (font);
+      if (arrayBuffer .byteLength < 4)
+         return false;
 
-      if (!cachedFont)
-         this [_glyphCache] .set (font, cachedFont = [ ]);
-
-      let cachedQuality = cachedFont [primitiveQuality];
-
-      if (!cachedQuality)
-         cachedQuality = cachedFont [primitiveQuality] = [ ];
-
-      let cachedGlyph = cachedQuality [glyphIndex];
-
-      if (!cachedGlyph)
-         cachedGlyph = cachedQuality [glyphIndex] = { };
-
-      return cachedGlyph;
-   },
-   getWebAssemblyWoff2 ()
-   {
-      return this [_wawoff2] ??= this .loadWebAssemblyWoff2 ();
-   },
-   async loadWebAssemblyWoff2 ()
-   {
       const
-         url      = external_X_ITE_X3D_URLs_default().getLibraryURL ("decompress_binding.js"),
-         response = await fetch (url);
+         dataView = new DataView (arrayBuffer),
+         magic    = dataView .getUint32 (0, false);
+
+      return magic === 0x774F4632; // 'wOF2'
+   },
+   async getWoff2Decompressor ()
+   {
+      return this [_wawoff2] ??= await this .loadWoff2Decompressor ();
+   },
+   async loadWoff2Decompressor ()
+   {
+      // https://www.npmjs.com/package/wawoff2
+
+      const
+         fileURL  = external_X_ITE_X3D_URLs_default().getLibraryURL ("decompress_binding.js"),
+         response = await fetch (fileURL);
 
       if (!response .ok)
          throw new Error (response .statusText || response .status);
@@ -18017,7 +18030,7 @@ Object .assign (X3DTextContext .prototype,
 
       await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
 
-      return buffer => wawoff2 .decompress (buffer);
+      return arrayBuffer => wawoff2 .decompress (arrayBuffer);
    },
 });
 

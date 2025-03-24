@@ -918,12 +918,13 @@ Object .assign (X3DRenderObject .prototype,
          // Collision nodes are handled here.
 
          const
-            activeCollisions = [ ], // current active Collision nodes
-            collisionRadius2 = 2.2 * this .getNavigationInfo () .getCollisionRadius (); // Make the radius a little bit larger.
+            activeCollisions   = [ ], // current active Collision nodes
+            collisionRadius2   = 2.2 * this .getNavigationInfo () .getCollisionRadius (), // Make the radius a little bit larger.
+            numCollisionShapes = this .numCollisionShapes;
 
          collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
 
-         for (let i = 0, length = this .numCollisionShapes; i < length; ++ i)
+         for (let i = 0; i < numCollisionShapes; ++ i)
          {
             const
                collisionContext = this .collisionShapes [i],

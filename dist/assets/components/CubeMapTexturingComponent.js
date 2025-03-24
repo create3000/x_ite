@@ -1,5 +1,5 @@
-/* X_ITE v11.3.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
+/* X_ITE v11.4.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -1205,13 +1205,13 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
                this .URL .searchParams .set ("_", Date .now ());
          }
 
-         this .image .attr ("src", this .URL .href);
+         this .image .attr ("src", this .URL);
       }
    },
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL .href)}':`, event .type);
+         console .warn (`Error loading image '${decodeURI (this .URL)}':`, event .type);
 
       this .loadNext ();
    },
@@ -1223,7 +1223,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL)}'.`);
       }
 
       try
@@ -1246,7 +1246,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL)}'.`);
       }
 
       try

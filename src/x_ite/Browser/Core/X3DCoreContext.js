@@ -436,12 +436,6 @@ Object .assign (X3DCoreContext .prototype,
 
             break;
          }
-         case "xrButton":
-         case "xrbutton":
-         {
-            this .setBrowserOption ("XRButton", this .parseBooleanAttribute (newValue) ?? true);
-            break;
-         }
          case "xrSessionMode":
          case "xrsessionmode":
          {

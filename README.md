@@ -36,10 +36,10 @@ If you are going to use X_ITE in a production environment, you should use a fixe
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.3.2/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.4.1/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.3.2/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.4.1/dist/x_ite.min.mjs";
 </script>
 ```
 
@@ -68,7 +68,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ### Declarative Syntax
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.3.2/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.4.1/dist/x_ite.min.js"></script>
 <x3d-canvas>
   <X3D profile='Interchange' version='4.1'>
     <head>
@@ -107,7 +107,7 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.3.2/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.4.1/dist/x_ite.min.mjs";
 
 const
    browser = X3D .getBrowser (),

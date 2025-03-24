@@ -138,12 +138,18 @@ Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .p
 
          top ._isBound  = true;
          top ._bindTime = this .getBrowser () .getCurrentTime ();
-      }
 
-      // Do transition.
+         // Do transition.
 
-      if (changedNodes .includes (top))
          top .transitionStart (layerNode, fromNode);
+      }
+      else
+      {
+         // Do transition.
+
+         if (changedNodes .includes (top))
+            top .transitionStart (layerNode, fromNode);
+      }
 
       this .addNodeEvent ();
    },
