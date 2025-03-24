@@ -97,6 +97,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this ._Exposure                     .addInterest ("set_Exposure__",                     this);
       this ._LogarithmicDepthBuffer       .addInterest ("set_LogarithmicDepthBuffer__",       this);
       this ._Multisampling                .addInterest ("set_Multisampling__",                this);
+      this ._Mute                         .addInterest ("set_Mute__",                         this);
       this ._OrderIndependentTransparency .addInterest ("set_OrderIndependentTransparency__", this);
       this ._Timings                      .addInterest ("set_Timings__",                      this);
       this ._XRSessionMode                .addInterest ("set_XRSessionMode__",                this);
@@ -380,6 +381,17 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       browser .reshape ();
    },
+   set_Mute__ (mute)
+   {
+      const
+         browser      = this .getBrowser (),
+         audioContext = browser .getAudioContext ();
+
+      if (mute .getValue ())
+         browser .stopAudioElement (audioContext, "suspend");
+      else
+         browser .startAudioElement (audioContext, "resume");
+   },
    set_OrderIndependentTransparency__ ()
    {
       this .getBrowser () .reshape ();
@@ -430,6 +442,7 @@ Object .defineProperties (BrowserOptions,
          // A string, which is set to the *reference* field of metadata nodes, when they are created.
          new X3DFieldDefinition (X3DConstants .inputOutput, "MetadataReference",            new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",                new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Mute",                         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",                new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "OrderIndependentTransparency", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",            new Fields .SFBool (true)),
