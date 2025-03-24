@@ -139,10 +139,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    {
       const family = Fonts .get (fontFamily);
 
-      if (family)
-         return family .get (fontStyle) ?? family .get ("PLAIN");
-
-      return;
+      return family ?.get (fontStyle) ?? family ?.get ("PLAIN");
    },
    getMajorAlignment ()
    {

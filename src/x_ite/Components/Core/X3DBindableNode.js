@@ -93,7 +93,7 @@ Object .defineProperties (X3DBindableNode,
 {
    getModificationCount:
    {
-      value: function ()
+      value ()
       {
          return modificationCount;
       },

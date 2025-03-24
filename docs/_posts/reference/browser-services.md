@@ -340,6 +340,12 @@ Returns a browser option with the corresponding *name*.
          <td>4</td>
       </tr>
       <tr>
+         <td>Mute</td>
+         <td>Whether to mute all media. <small class="blue">non standard</small></td>
+         <td>Boolean</td>
+         <td>false</td>
+      </tr>
+      <tr>
          <td>Notifications</td>
          <td>Whether or not notifications should be displayed. <small class="blue">non standard</small></td>
          <td>Boolean</td>
