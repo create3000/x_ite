@@ -201,7 +201,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       for (const fontFamily of family)
       {
-         // Try to get default font.
+         // Try to get default font at first to protect these font families.
 
          const defaultFont = this .getDefaultFont (fontFamily, fontStyle);
 
@@ -216,7 +216,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
             }
          }
 
-         // Try to get font from family names
+         // Try to get font from family names.
 
          const font = await browser .getFont (executionContext, fontFamily, fontStyle);
 
