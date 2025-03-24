@@ -138,6 +138,7 @@ const X_ITE_EXAMPLES = [
    { component: "X3D", test: "Astronomy" },
    { component: "X3D", test: "BeyondGermany", xrButtonPosition: "tl" },
    { component: "X3D", test: "BIC" },
+   { component: "X3D", test: "Capone" },
    { component: "X3D", test: "Chomp" },
    { component: "X3D", test: "Circles" },
    { component: "X3D", test: "CrazySpiral" },
