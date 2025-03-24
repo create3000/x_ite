@@ -455,10 +455,9 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          name = field .getName (),
          f    = this [_userDefinedFields] .get (name) ?? this [_predefinedFields] .get (name);
 
-      if (f === field)
-         var fieldDefinition = this [_fieldDefinitions] .get (name);
-      else if (this .constructor .fieldDefinitions)
-         var fieldDefinition = this .constructor .fieldDefinitions .get (name);
+      const fieldDefinition = f === field
+         ? this [_fieldDefinitions] .get (name)
+         : this .constructor .fieldDefinitions .get (name);
 
       return fieldDefinition ?.value .equals (field) ?? !field .getModificationTime ();
    },
