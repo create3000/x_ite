@@ -80,9 +80,9 @@ function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision 
 
 Object .assign (Generator .prototype,
 {
-   Style (style)
+   Style (style, indentChar = "  ")
    {
-      switch (style, indentChar = "  ")
+      switch (style)
       {
          case "CLEAN":
          {
