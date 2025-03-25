@@ -49,11 +49,12 @@ import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
+function Generator ({ style = "TIDY", indent = "", indentation = "  ", precision = 7, doublePrecision = 15, html = false, closingTags = false })
 {
    this .string          = "";
    this .indent          = indent;
    this .listIndent      = indent;
+   this .indentation     = indentation;
    this .precision       = Algorithm .clamp (precision, 1, 21);
    this .doublePrecision = Algorithm .clamp (doublePrecision, 1, 21);
    this .html            = html;
@@ -122,7 +123,7 @@ Object .assign (Generator .prototype,
             this .break          = "\n";
             this .tidyBreak      = "\n";
             this .tidySpace      = " ";
-            this .indentChar     = "  ";
+            this .indentChar     = this .indentation;
             this .listEnclosure  = " ";
             this .listBreak      = " ";
             this .listIndentChar = "";
@@ -136,10 +137,10 @@ Object .assign (Generator .prototype,
             this .break          = "\n";
             this .tidyBreak      = "\n";
             this .tidySpace      = " ";
-            this .indentChar     = "  ";
+            this .indentChar     = this .indentation;
             this .listEnclosure  = "\n";
             this .listBreak      = "\n";
-            this .listIndentChar = "  ";
+            this .listIndentChar = this .indentChar;
             this .attribBreak    = "\n";
             break;
          }

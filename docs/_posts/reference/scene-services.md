@@ -224,6 +224,7 @@ An object with one or more of these properties:
 
 * **style:** string, output style, one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN"
 * **indent:** string, initial indent, default: ""
+* **indentation:** string, indentation for each level, default: "  " (two spaces)
 * **precision:** integer, float precision, default: 7
 * **doublePrecision:** integer, double precision, default: 15
 * **html:** boolean, HTML style, default: false
