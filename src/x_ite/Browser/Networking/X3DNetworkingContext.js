@@ -159,9 +159,6 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    removeLoadingObject (object)
    {
-      if (!this [_loadingObjects] .has (object))
-         return;
-
       this [_loadingObjects] .delete (object);
 
       this .setLoadCount (this [_loadingObjects] .size);
