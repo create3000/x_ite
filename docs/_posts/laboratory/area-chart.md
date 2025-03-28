@@ -48,6 +48,9 @@ x3d-canvas {
 
 <div class="viewer">
   <div class="viewer-row">
-    <div class="viewer-column-100"><x3d-canvas id="chart" splashScreen="false"></x3d-canvas></div>
+    <div class="viewer-column-100"><x3d-canvas
+        id="chart"
+        splashScreen="false"
+        contentScale="auto"></x3d-canvas></div>
   </div>
 </div>
