@@ -80,6 +80,12 @@ function X3DScene (browser)
                           X3DConstants .outputOnly, "metadata_changed", new Fields .SFTime (),
                           X3DConstants .outputOnly, "loadCount",        new Fields .SFInt32 ())
 
+   this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
+
+   this .setLive (false);
+
+   // Private properties
+
    this [_specificationVersion] = LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
    this [_profile]              = null;
@@ -99,10 +105,6 @@ function X3DScene (browser)
    this [_components]    .addParent (this);
    this [_units]         .addParent (this);
    this [_exportedNodes] .addParent (this);
-
-   this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
-
-   this .setLive (false);
 }
 
 Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext .prototype),
