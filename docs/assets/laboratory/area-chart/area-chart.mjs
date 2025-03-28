@@ -42,11 +42,11 @@ class AreaChart
    {
       const
          viewpoint = this .scene .createNode ("Viewpoint"),
-         distance  = (height * explode / 2) / Math .tan (Math .PI / 8) * 1.2;
+         distance  = (height * explode / 2) / Math .tan (Math .PI / 8) * Math .SQRT1_2 * 1.2;
 
       viewpoint .description = "Initial View";
-      viewpoint .position    = new X3D .SFVec3f (0, distance, 0);
-      viewpoint .orientation = new X3D .SFRotation (-1, 0, 0, Math .PI / 2);
+      viewpoint .position    = new X3D .SFVec3f (0, distance, distance);
+      viewpoint .orientation = new X3D .SFRotation (-1, 0, 0, Math .PI / 4);
 
       return viewpoint;
    }
