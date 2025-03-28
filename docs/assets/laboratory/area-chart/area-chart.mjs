@@ -145,7 +145,7 @@ class AreaChart
       return transform;
    }
 
-   createBox ({ x, y: z, width, height: depth, data: { name, height } }, maxHeight, explode)
+   createBox ({ x, y: z, width, height: depth, data: { id, area, height } }, maxHeight, explode)
    {
       const
          scene       = this .scene,
@@ -174,7 +174,17 @@ class AreaChart
       transform .scale .y       = height;
       transform .scale .z       = depth;
 
-      touchSensor .getField ("isOver") .addFieldCallback (this, value => switchNode .whichChoice = value);
+      touchSensor .getField ("isOver") .addFieldCallback (this, value =>
+      {
+         switchNode .whichChoice = value;
+
+         if (!value)
+            return;
+
+         $("#data-id") .text (`${id}`);
+         $("#data-area") .text (`${area} m²`);
+         $("#data-height") .text (`${height} m`);
+      });
 
       return transform;
    }
@@ -344,18 +354,6 @@ function random (min, max)
    return Math .floor (Math .random () * (max - min + 1)) + min;
 }
 
-function randomName (length = 8)
-{
-   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-   let name = "";
-
-   for (let i = 0; i < length; i++)
-      name += chars .charAt (Math .floor (Math .random () * chars .length));
-
-    return name;
-}
-
 const
    canvas    = document .getElementById ("chart"),
    areaChart = new AreaChart (canvas),
@@ -363,8 +361,8 @@ const
 
 $("#rebuild") .on ("click", () =>
 {
-   const data = Array .from ({ length: count }, () => ({
-      name: randomName (8),
+   const data = Array .from ({ length: count }, (_, i) => ({
+      id: i,
       area: random (1, 100),
       height: random (1, 30),
    }));

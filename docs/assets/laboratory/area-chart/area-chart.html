@@ -16,8 +16,21 @@ x3d-canvas {
     </style>
   </head>
   <body>
-    <x3d-canvas id="chart" splashScreen="false" contentScale="auto"></x3d-canvas>
+    <x3d-canvas
+        id="chart"
+        splashScreen="false"
+        notifications="false"
+        contentScale="auto">
+    </x3d-canvas>
     <br>
     <a id="rebuild" href="#">rebuild</a>
+    <div id="data">
+      <div><b>Chart Data</b></div>
+      <table>
+        <tr><td>Id:</td><td><div id="data-id">0</div></td></tr>
+        <tr><td>Area:</td><td><div id="data-area">0 m²</div></td></tr>
+        <tr><td>Height:</td><td><div id="data-height">0 m</div></td></tr>
+      </table>
+    </div>
   </body>
 </html>

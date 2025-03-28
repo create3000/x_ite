@@ -29,6 +29,7 @@ p {
 }
 
 .viewer-column-100 {
+  position: relative;
   flex: 100%;
   width: 100%;
   height: 100%;
@@ -40,6 +41,17 @@ x3d-canvas {
   height: 100%;
   aspect-ratio: unset;
 }
+
+#data {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  min-width: 200px;
+  padding: 10px 20px;
+  background-color: var(--main-bg);
+  border: 1px solid var(--nav-border-color);
+  border-radius: 0.8rem;
+}
 </style>
 
 <script type="module" src="/x_ite/assets/laboratory/area-chart/area-chart.mjs"></script>
@@ -48,9 +60,20 @@ x3d-canvas {
 
 <div class="viewer">
   <div class="viewer-row">
-    <div class="viewer-column-100"><x3d-canvas
+    <div class="viewer-column-100">
+      <x3d-canvas
         id="chart"
         splashScreen="false"
-        contentScale="auto"></x3d-canvas></div>
+        notifications="false"
+        contentScale="auto"></x3d-canvas>
+      <div id="data">
+        <div><b>Chart Data</b></div>
+        <table>
+          <tr><td>Id:</td><td><div id="data-id">0</div></td></tr>
+          <tr><td>Area:</td><td><div id="data-area">0 m²</div></td></tr>
+          <tr><td>Height:</td><td><div id="data-height">0 m</div></td></tr>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
