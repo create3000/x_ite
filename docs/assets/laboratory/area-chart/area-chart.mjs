@@ -17,9 +17,10 @@ class AreaChart
          profile    = this .browser .getProfile ("Immersive"),
          components = [this .browser .getComponent ("X_ITE")];
 
-      this .scene = await this .browser .createScene (profile, ... components);
-      this .group = this .scene .createNode ("Group");
-      this .box   = this .scene .createNode ("Box");
+      this .scene   = await this .browser .createScene (profile, ... components);
+      this .group   = this .scene .createNode ("Group");
+      this .box     = this .scene .createNode ("Box");
+      this .lineBox = this .createLineBox ();
 
       this .box .size = new X3D .SFVec3f (1, 1, 1);
 
@@ -150,6 +151,7 @@ class AreaChart
          scene       = this .scene,
          transform   = scene .createNode ("Transform"),
          touchSensor = scene .createNode ("TouchSensor"),
+         switchNode  = scene .createNode ("Switch"),
          shape       = scene .createNode ("Shape"),
          appearance  = scene .createNode ("Appearance"),
          material    = scene .createNode ("Material"),
@@ -158,7 +160,8 @@ class AreaChart
       appearance .material = material;
       shape .appearance    = appearance;
       shape .geometry      = box;
-      transform .children  = [shape, touchSensor];
+      switchNode .children = [null, this .lineBox];
+      transform .children  = [shape, touchSensor, switchNode];
 
       touchSensor .description = `Area: ${Math .round (width * depth)} m², Height ${height} m`;
 
@@ -171,7 +174,33 @@ class AreaChart
       transform .scale .y       = height;
       transform .scale .z       = depth;
 
+      touchSensor .getField ("isOver") .addFieldCallback (this, value => switchNode .whichChoice = value);
+
       return transform;
+   }
+
+   createLineBox ()
+   {
+      const
+         scene          = this .scene,
+         shape          = scene .createNode ("Shape"),
+         appearance     = scene .createNode ("Appearance"),
+         lineProperties = scene .createNode ("LineProperties"),
+         box            = scene .createNode ("IndexedLineSet"),
+         coordinate     = scene .createNode ("Coordinate");
+
+      lineProperties .linewidthScaleFactor = 2;
+
+      coordinate .point = [0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5];
+
+      box .coordIndex = [0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1];
+
+      appearance .lineProperties = lineProperties;
+      box .coord                 = coordinate;
+      shape .appearance          = appearance;
+      shape .geometry            = box;
+
+      return shape;
    }
 
    createColor (height, maxHeight)
