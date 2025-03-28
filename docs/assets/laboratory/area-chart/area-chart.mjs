@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.4.1/dist/x_ite.min.mjs";
-
 class AreaChart
 {
    constructor (canvas)
@@ -35,44 +28,11 @@ class AreaChart
 
       this .scene .rootNodes .push (this .createViewpoint (this .rectangle, 1 + explode + border));
       this .scene .rootNodes .push (this .createFloor (this .rectangle, 1 + explode + border));
+      this .scene .rootNodes .push (this .createHeadlineText (this .rectangle, border, 1 + explode));
       this .scene .rootNodes .push (this .createAreaText (this .rectangle, border, 1 + explode));
       this .scene .rootNodes .push (this .group);
 
       await this .browser .replaceWorld (this .scene);
-   }
-
-   createAreaText ({ x, y, width, height }, border, explode)
-   {
-      const
-         scene      = this .scene,
-         transform  = scene .createNode ("Transform"),
-         shape      = scene .createNode ("Shape"),
-         appearance = scene .createNode ("Appearance"),
-         material   = scene .createNode ("Material"),
-         depthMode  = scene .createNode ("DepthMode"),
-         text       = this .scene .createNode ("Text"),
-         fontStyle  = this .scene .createNode ("FontStyle");
-
-      appearance .material    = material;
-      appearance .depthMode   = depthMode;
-      shape .appearance       = appearance;
-      shape .geometry         = text;
-      transform .children [0] = shape;
-
-      material .diffuseColor = new X3D .SFColor (0, 0, 0);
-      depthMode .depthTest   = false;
-
-      text .string    = [`Total Area: ${Math .round (width * height)} m²`];
-      text .fontStyle = fontStyle;
-
-      fontStyle .size    = height * border / 2 * 0.75;
-      fontStyle .justify = ["BEGIN", "MIDDLE"];
-
-      transform .translation .x = -width / 2 * explode;
-      transform .translation .z = height / 2 * (explode + border / 2);
-      transform .rotation       = new X3D .SFRotation (-1, 0, 0, Math .PI / 2);
-
-      return transform;
    }
 
    createViewpoint ({ x, y, width, height }, explode)
@@ -112,6 +72,74 @@ class AreaChart
 
       return transform;
 
+   }
+
+   createHeadlineText ({ x, y, width, height }, border, explode)
+   {
+      const
+         scene      = this .scene,
+         transform  = scene .createNode ("Transform"),
+         shape      = scene .createNode ("Shape"),
+         appearance = scene .createNode ("Appearance"),
+         material   = scene .createNode ("Material"),
+         depthMode  = scene .createNode ("DepthMode"),
+         text       = this .scene .createNode ("Text"),
+         fontStyle  = this .scene .createNode ("FontStyle");
+
+      appearance .material    = material;
+      appearance .depthMode   = depthMode;
+      shape .appearance       = appearance;
+      shape .geometry         = text;
+      transform .children [0] = shape;
+
+      material .diffuseColor = new X3D .SFColor (0, 0, 0);
+      depthMode .depthTest   = false;
+
+      text .string    = [`Area Chart`];
+      text .fontStyle = fontStyle;
+
+      fontStyle .size    = height * border / 2 * 0.5;
+      fontStyle .justify = ["BEGIN", "MIDDLE"];
+
+      transform .translation .x = -width / 2 * (explode + border / 2);
+      transform .translation .z = height / 2 * explode;
+      transform .rotation       = new X3D .SFRotation (-1, 0, 0, Math .PI / 2) .multiply (new X3D .SFRotation (0, 1, 0, Math .PI / 2));
+
+      return transform;
+   }
+
+   createAreaText ({ x, y, width, height }, border, explode)
+   {
+      const
+         scene      = this .scene,
+         transform  = scene .createNode ("Transform"),
+         shape      = scene .createNode ("Shape"),
+         appearance = scene .createNode ("Appearance"),
+         material   = scene .createNode ("Material"),
+         depthMode  = scene .createNode ("DepthMode"),
+         text       = this .scene .createNode ("Text"),
+         fontStyle  = this .scene .createNode ("FontStyle");
+
+      appearance .material    = material;
+      appearance .depthMode   = depthMode;
+      shape .appearance       = appearance;
+      shape .geometry         = text;
+      transform .children [0] = shape;
+
+      material .diffuseColor = new X3D .SFColor (0, 0, 0);
+      depthMode .depthTest   = false;
+
+      text .string    = [`Total Area: ${Math .round (width * height)} m²`];
+      text .fontStyle = fontStyle;
+
+      fontStyle .size    = height * border / 2 * 0.75;
+      fontStyle .justify = ["BEGIN", "MIDDLE"];
+
+      transform .translation .x = -width / 2 * explode;
+      transform .translation .z = height / 2 * (explode + border / 2);
+      transform .rotation       = new X3D .SFRotation (-1, 0, 0, Math .PI / 2);
+
+      return transform;
    }
 
    createBox ({ x, y: z, width, height: depth, data: { name, height } }, maxHeight, explode)
@@ -298,26 +326,19 @@ function randomName (length = 8)
 }
 
 const
-   canvas    = document .querySelector ("x3d-canvas"),
+   canvas    = document .getElementById ("chart"),
    areaChart = new AreaChart (canvas),
    count     = 500;
 
-const data = Array .from ({ length: count }, (v, i) => ({
-   name: randomName (8),
-   area: random (1, 100),
-   height: random (1, 30),
-}));
+$("#rebuild") .on ("click", () =>
+{
+   const data = Array .from ({ length: count }, () => ({
+      name: randomName (8),
+      area: random (1, 100),
+      height: random (1, 30),
+   }));
 
-areaChart .build (data, { explode: 0.1, border: 0.25 });
-    </script>
-    <style>
-x3d-canvas {
-  width: 768px;
-  height: 432px;
-}
-    </style>
-  </head>
-  <body>
-    <x3d-canvas></x3d-canvas>
-  </body>
-</html>
+   areaChart .build (data, { explode: 0.1, border: 0.25, aspectRatio: 16 / 9 });
+   return false;
+})
+.trigger ("click");

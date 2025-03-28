@@ -22,7 +22,7 @@ x_ite: true
 
 #convert-files,
 #converting-files {
-   display: none;
+  display: none;
 }
 
 #drop-zone x3d-canvas,
@@ -49,22 +49,20 @@ x_ite: true
 Convert **X3D, VRML (.wrl), glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X3D format of your choice.
 
 <div id="drop-zone">
-   <p id="open-files" class="center">
-      <a href="#">Choose a file</a> or drag it here.
-      <input type="file" />
-   </p>
-   <p id="convert-files" class="center">
-      <a href="#">Convert file to ...</a>
-      <select>
-         <option value="XML" selected>X3D XML Encoding</option>
-         <option value="VRML">X3D VRML Encoding</option>
-         <option value="JSON">X3D JSON Encoding</option>
-         <option value="HTML">HTML Document</option>
-      </select>
-   </p>
-   <p id="converting-files" class="center">
-      Converting files ...
-   </p>
+  <p id="open-files" class="center">
+    <a href="#">Choose a file</a> or drag it here.
+    <input type="file" />
+  </p>
+  <p id="convert-files" class="center">
+    <a href="#">Convert file to ...</a>
+    <select>
+      <option value="XML" selected>X3D XML Encoding</option>
+      <option value="VRML">X3D VRML Encoding</option>
+      <option value="JSON">X3D JSON Encoding</option>
+      <option value="HTML">HTML Document</option>
+    </select>
+  </p>
+  <p id="converting-files" class="center">Converting files ...</p>
 </div>
 
 ### Converted Files

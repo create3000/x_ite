@@ -33,11 +33,15 @@ table.examples td {
       <a href="../real-time-earth-quake-information/"><img src="/assets/img/laboratory/earthquake.png" alt="Real time Earth Quake Information"/></a>
     </td>
     <td>
+      <a href="../area-chart/"><img src="/assets/img/laboratory/area-chart.png" alt="Area Chart"/></a>
+    </td>
+    <td>
       <a href="../gltf-sample-viewer/"><img src="/assets/img/laboratory/gltf.png" alt="glTF Sample Viewer"/></a>
     </td>
   </tr>
   <tr>
     <td>Real time Earth Quake Information</td>
+    <td>Area Chart</td>
     <td>glTF Sample Viewer</td>
   </tr>
 </table>
