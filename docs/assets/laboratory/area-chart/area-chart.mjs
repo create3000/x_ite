@@ -6,10 +6,12 @@ class AreaChart
       this .browser = canvas .browser;
    }
 
-   async build (data, { border = 0, explode = 0, aspectRatio = 1 } = { })
+   async build (data, { border = 0, explode = 0, aspectRatio = 1, sort = true } = { })
    {
       // Sort descending by area.
-      data .sort ((a, b) => a .area - b .area);
+
+      if (sort)
+         data .sort ((a, b) => a .area - b .area);
 
       const
          profile    = this .browser .getProfile ("Immersive"),
@@ -338,7 +340,7 @@ $("#rebuild") .on ("click", () =>
       height: random (1, 30),
    }));
 
-   areaChart .build (data, { explode: 0.1, border: 0.25, aspectRatio: 16 / 9 });
+   areaChart .build (data, { explode: 0.1, border: 0.25, aspectRatio: 16 / 9, sort: false });
    return false;
 })
 .trigger ("click");
