@@ -393,3 +393,7 @@ The init function is called when the scene is loaded and installs a field callba
 ### The HTML and X3D
 
 The scene defines different named nodes with the »DEF« attribute, which can be accessed later. Download [adrenaline.html](https://create3000.github.io/media/x_ite/external-browser/adrenaline.html){: download="adrenaline.html" } and [adrenaline.x3d](https://create3000.github.io/media/x_ite/external-browser/adrenaline.x3d){: download="adrenaline.x3d" }.
+
+## See Also
+
+* Another good example of using an external script is [Area Chart](/x_ite/laboratory/area-chart/). Here an entire scene is generated from data.
