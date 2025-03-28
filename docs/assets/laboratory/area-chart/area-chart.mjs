@@ -51,7 +51,7 @@ class AreaChart
       return viewpoint;
    }
 
-   createFloor ({ x, y, width, height }, explode)
+   createFloor ({ x, y: z, width, height }, explode)
    {
       const
          scene      = this .scene,
@@ -59,19 +59,22 @@ class AreaChart
          shape      = scene .createNode ("Shape"),
          appearance = scene .createNode ("Appearance"),
          material   = scene .createNode ("Material"),
-         rectangle  = scene .createNode ("Rectangle2D");
+         box        = scene .createNode ("Box");
 
-      appearance .material    = material;
-      shape .appearance       = appearance;
-      shape .geometry         = rectangle;
-      transform .children [0] = shape;
+      appearance .material = material;
+      shape .appearance    = appearance;
+      shape .geometry      = box;
+      transform .children  = [shape];
 
       material .diffuseColor = new X3D .SFColor (0.2, 0.2, 0.2);
-      rectangle .size        = new X3D .SFVec2f (1, 1);
+      box .size              = new X3D .SFVec3f (1, 1, 1);
 
-      transform .rotation = new X3D .SFRotation (1, 0, 0, Math .PI / 2);
-      transform .scale .x = width * explode;
-      transform .scale .y = height * explode;
+      transform .translation .x = x;
+      transform .translation .y = -1;
+      transform .translation .z = z;
+      transform .rotation       = new X3D .SFRotation (1, 0, 0, Math .PI / 2);
+      transform .scale .x       = width * explode;
+      transform .scale .y       = height * explode;
 
       return transform;
 
@@ -89,17 +92,18 @@ class AreaChart
          text       = this .scene .createNode ("Text"),
          fontStyle  = this .scene .createNode ("FontStyle");
 
-      appearance .material    = material;
-      appearance .depthMode   = depthMode;
-      shape .appearance       = appearance;
-      shape .geometry         = text;
-      transform .children [0] = shape;
+      appearance .material  = material;
+      appearance .depthMode = depthMode;
+      shape .appearance     = appearance;
+      shape .geometry       = text;
+      transform .children   = [shape];
 
       material .diffuseColor = new X3D .SFColor (0, 0, 0);
       depthMode .depthTest   = false;
 
       text .string    = [`Area Chart`];
       text .fontStyle = fontStyle;
+      text .solid     = true;
 
       fontStyle .size    = height * border / 2 * 0.5;
       fontStyle .justify = ["BEGIN", "MIDDLE"];
@@ -123,17 +127,18 @@ class AreaChart
          text       = this .scene .createNode ("Text"),
          fontStyle  = this .scene .createNode ("FontStyle");
 
-      appearance .material    = material;
-      appearance .depthMode   = depthMode;
-      shape .appearance       = appearance;
-      shape .geometry         = text;
-      transform .children [0] = shape;
+      appearance .material  = material;
+      appearance .depthMode = depthMode;
+      shape .appearance     = appearance;
+      shape .geometry       = text;
+      transform .children   = [shape];
 
       material .diffuseColor = new X3D .SFColor (0, 0, 0);
       depthMode .depthTest   = false;
 
       text .string    = [`Total Area: ${Math .round (width * height)} m²`];
       text .fontStyle = fontStyle;
+      text .solid     = true;
 
       fontStyle .size    = height * border / 2 * 0.75;
       fontStyle .justify = ["BEGIN", "MIDDLE"];
