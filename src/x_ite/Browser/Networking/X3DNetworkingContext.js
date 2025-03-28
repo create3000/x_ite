@@ -182,6 +182,8 @@ Object .assign (X3DNetworkingContext .prototype,
 
       for (const object of this .getPrivateScene () .getLoadingObjects ())
          this .addLoadingObject (object);
+
+      this .setCursor (this .getCursor ());
    },
    [_set_loadCount] ()
    {
