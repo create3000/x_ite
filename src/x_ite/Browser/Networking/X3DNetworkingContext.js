@@ -159,9 +159,13 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    removeLoadingObject (object)
    {
-      this [_loadingObjects] .delete (object);
+      if (this [_loadingObjects] .has (object))
+      {
+         this [_loadingObjects] .delete (object);
 
-      this .setLoadCount (this [_loadingObjects] .size);
+         this .setLoadCount (this [_loadingObjects] .size);
+      }
+
       this .setCursor (this .getCursor ());
    },
    getDisplayLoadCount ()
