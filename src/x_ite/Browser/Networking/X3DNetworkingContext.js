@@ -154,7 +154,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      this .setCursor (this .getCursor ());
+      this .updateCursor ();
    },
    removeLoadingObject (object)
    {
@@ -162,7 +162,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      this .setCursor (this .getCursor ());
+      this .updateCursor ();
    },
    getDisplayLoadCount ()
    {
@@ -179,7 +179,7 @@ Object .assign (X3DNetworkingContext .prototype,
       for (const object of this .getPrivateScene () .getLoadingObjects ())
          this .addLoadingObject (object);
 
-      this .setCursor (this .getCursor ());
+      this .updateCursor ();
    },
    [_set_loadCount] ()
    {
@@ -194,7 +194,7 @@ Object .assign (X3DNetworkingContext .prototype,
       else
       {
          var string = _("Loading done");
-         this .setCursor (this .getCursor ());
+         this .updateCursor ();
       }
 
       if (this [_loading])

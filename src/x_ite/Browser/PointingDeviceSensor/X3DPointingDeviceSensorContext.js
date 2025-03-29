@@ -144,11 +144,11 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       this [_cursorType] = value;
 
-      this .getSurface () .css ("cursor", this .getDisplayLoadCount () ? "wait" : value .toLowerCase ());
+      this .updateCursor ();
    },
-   getCursor ()
+   updateCursor ()
    {
-      return this [_cursorType];
+      this .getSurface () .css ("cursor", this .getDisplayLoadCount () ? "wait" : this [_cursorType] .toLowerCase ());
    },
    getPointer ()
    {
