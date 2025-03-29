@@ -993,9 +993,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    addLoadingObject (node)
    {
-      if (this [_loadingObjects] .has (node))
-         return;
-
       this [_loadingObjects] .add (node);
 
       this ._loadCount = this [_loadingObjects] .size;
@@ -1006,12 +1003,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    removeLoadingObject (node)
    {
-      if (this [_loadingObjects] .has (node))
-      {
-         this [_loadingObjects] .delete (node);
+      this [_loadingObjects] .delete (node);
 
-         this ._loadCount = this [_loadingObjects] .size;
-      }
+      this ._loadCount = this [_loadingObjects] .size;
 
       const parent = this .getScene () ?? this .getBrowser ();
 
