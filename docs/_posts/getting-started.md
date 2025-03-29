@@ -666,9 +666,9 @@ Also try [x_ite-node](https://www.npmjs.com/package/x_ite-node), a pure Node.js 
 $ npm install x_ite-node
 ```
 
-### VS Code Extension
+### VS Code Extensions
 
-Discover the [X_ITE VS Code Extension](https://marketplace.visualstudio.com/items?itemName=create3000.x-ite-vscode) on the VS Code Marketplace.
+Discover the [X_ITE VS Code Extension](https://marketplace.visualstudio.com/items?itemName=create3000.x-ite-vscode) and [X_ITE VS Code Formatter](https://marketplace.visualstudio.com/items?itemName=create3000.x-ite-vscode-formatter) on the VS Code Marketplace.
 
 ## Embedding X_ITE within a Web Page
 
