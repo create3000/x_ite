@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             if (this .grabbing)
                this .grabTimeout = setTimeout (() => browser .setCursor ("GRABBING"), GRABBING_TIME);
 
-            browser .setCursor ("HAND");
+            browser .setCursor ("POINTER");
 
             this .onverifymotion (x, y);
          }
@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       clearTimeout (this .grabTimeout);
 
       browser .buttonReleaseEvent ();
-      browser .setCursor (this .over ? "HAND" : "DEFAULT");
+      browser .setCursor (this .over ? "POINTER" : "DEFAULT");
       this .onverifymotion (x, y);
    },
    dblclick (event)
@@ -237,7 +237,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          {
             this .over = true;
 
-            browser .setCursor (this .grabbing ? "GRABBING" : "HAND");
+            browser .setCursor (this .grabbing ? "GRABBING" : "POINTER");
          }
       }
       else
