@@ -155,8 +155,6 @@ Object .assign (X3DNetworkingContext .prototype,
       this ._loadCount = this [_loadingObjects] .size;
 
       this .setCursor (this .getCursor ());
-
-      console .log (this .getCursor ())
    },
    removeLoadingObject (object)
    {
