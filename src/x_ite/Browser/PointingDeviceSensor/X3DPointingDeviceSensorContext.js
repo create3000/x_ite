@@ -157,10 +157,13 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          case "HAND": // Hand with finger
             div .css ("cursor", "pointer");
             break;
-         case "MOVE": // Hand grabbed something
+         case "GRABBING": // Hand grabbing something
+            div .css ("cursor", "grabbing");
+            break;
+         case "MOVE": // Move arrows +
             div .css ("cursor", "move");
             break;
-         case "CROSSHAIR": //
+         case "CROSSHAIR": // Crosshair +
             div .css ("cursor", "crosshair");
             break;
          default: // arrow

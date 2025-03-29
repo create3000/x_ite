@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
 
 typeof jquery_mousewheel; // import plugin
 
@@ -55,7 +56,8 @@ function PointingDevice (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .isOver = false;
+   this .over     = false;
+   this .grabbing = false;
 }
 
 Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .prototype),
@@ -106,7 +108,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .preventDefault ();
             event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
 
-            browser .setCursor ("HAND");
+            this .grabbing = Array .from (browser .getHit () .sensors .keys ())
+               .some (node => node .getType () .includes (X3DConstants .X3DDragSensorNode));
+
+            browser .setCursor (this .grabbing ? "GRABBING" : "HAND");
             this .onverifymotion (x, y);
          }
       }
@@ -115,25 +120,27 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    {
       event .preventDefault ();
 
-      if (event .button === 0)
-      {
-         const
-            browser = this .getBrowser (),
-            element = browser .getSurface ();
+      if (event .button !== 0)
+         return;
 
-         const { x, y } = browser .getPointerFromEvent (event);
+      const
+         browser = this .getBrowser (),
+         element = browser .getSurface ();
 
-         $(document) .off (".PointingDevice" + this .getId ());
-         element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+      const { x, y } = browser .getPointerFromEvent (event);
 
-         browser .buttonReleaseEvent ();
-         browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
-         this .onverifymotion (x, y);
-      }
+      $(document) .off (".PointingDevice" + this .getId ());
+      element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+
+      this .grabbing = false;
+
+      browser .buttonReleaseEvent ();
+      browser .setCursor (this .over ? "HAND" : "DEFAULT");
+      this .onverifymotion (x, y);
    },
    dblclick (event)
    {
-      if (this .isOver)
+      if (this .over)
          event .stopImmediatePropagation ();
    },
    mousemove (event)
@@ -219,20 +226,20 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       if (browser .motionNotifyEvent (x, y))
       {
-         if (!this .isOver)
+         if (!this .over)
          {
-            this .isOver = true;
+            this .over = true;
 
-            browser .setCursor ("HAND");
+            browser .setCursor (this .grabbing ? "GRABBING" : "HAND");
          }
       }
       else
       {
-         if (this .isOver)
+         if (this .over)
          {
-            this .isOver = false;
+            this .over = false;
 
-            browser .setCursor ("DEFAULT");
+            browser .setCursor (this .grabbing ? "GRABBING" : "DEFAULT");
          }
       }
    },
