@@ -140,9 +140,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       this [_pointingDeviceSensorNodes] .delete (node);
    },
-   setCursor (value)
+   setCursor (cursorType)
    {
-      this [_cursorType] = value;
+      if (cursorType === this [_cursorType])
+         return;
+
+      this [_cursorType] = cursorType;
 
       this .updateCursor ();
    },
