@@ -147,7 +147,8 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    addLoadingObject (object)
    {
-      ++ this [_loadingTotal];
+      if (!this [_loadingObjects] .has (object))
+         ++ this [_loadingTotal];
 
       this [_loadingObjects] .add (object);
 
