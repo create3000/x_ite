@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             {
                this .touchX       = event .pageX;
                this .touchY       = event .pageY;
-               this .touchTimeout = setTimeout (this .showContextMenu .bind (this, event), CONTEXT_MENU_TIME);
+               this .touchTimeout = setTimeout (() => this .showContextMenu (event), CONTEXT_MENU_TIME);
             }
 
             break;
