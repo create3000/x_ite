@@ -80,6 +80,12 @@ function X3DScene (browser)
                           X3DConstants .outputOnly, "metadata_changed", new Fields .SFTime (),
                           X3DConstants .outputOnly, "loadCount",        new Fields .SFInt32 ())
 
+   this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
+
+   this .setLive (false);
+
+   // Private properties
+
    this [_specificationVersion] = LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
    this [_profile]              = null;
@@ -99,10 +105,6 @@ function X3DScene (browser)
    this [_components]    .addParent (this);
    this [_units]         .addParent (this);
    this [_exportedNodes] .addParent (this);
-
-   this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
-
-   this .setLive (false);
 }
 
 Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext .prototype),
@@ -985,35 +987,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
 },
 {
-   setExecutionContext (executionContext)
-   {
-      if (this .getExecutionContext ())
-      {
-         const scene = this .getScene ();
-
-         for (const object of this [_loadingObjects])
-            scene .removeLoadingObject (object);
-      }
-
-      X3DExecutionContext .prototype .setExecutionContext .call (this, executionContext);
-
-      if (this .getExecutionContext ())
-      {
-         const scene = this .getScene ();
-
-         for (const object of this [_loadingObjects])
-            scene .addLoadingObject (object);
-      }
-   },
    getLoadingObjects ()
    {
       return this [_loadingObjects];
    },
    addLoadingObject (node)
    {
-      if (this [_loadingObjects] .has (node))
-         return;
-
       this [_loadingObjects] .add (node);
 
       this ._loadCount = this [_loadingObjects] .size;
@@ -1024,9 +1003,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    removeLoadingObject (node)
    {
-      if (!this [_loadingObjects] .has (node))
-         return;
-
       this [_loadingObjects] .delete (node);
 
       this ._loadCount = this [_loadingObjects] .size;

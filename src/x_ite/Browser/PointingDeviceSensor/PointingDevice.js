@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
 
 typeof jquery_mousewheel; // import plugin
 
@@ -55,8 +56,8 @@ function PointingDevice (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .cursor = "DEFAULT";
-   this .isOver = false;
+   this .over     = false;
+   this .grabbing = false;
 }
 
 Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .prototype),
@@ -107,7 +108,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .preventDefault ();
             event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
 
-            browser .setCursor ("HAND");
+            this .grabbing = Array .from (browser .getHit () .sensors .keys ())
+               .some (node => node .getType () .includes (X3DConstants .X3DDragSensorNode));
+
+            browser .setCursor ("POINTER");
+
             this .onverifymotion (x, y);
          }
       }
@@ -116,27 +121,27 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    {
       event .preventDefault ();
 
-      if (event .button === 0)
-      {
-         const
-            browser = this .getBrowser (),
-            element = browser .getSurface ();
+      if (event .button !== 0)
+         return;
 
-         const { x, y } = browser .getPointerFromEvent (event);
+      const
+         browser = this .getBrowser (),
+         element = browser .getSurface ();
 
-         $(document) .off (".PointingDevice" + this .getId ());
-         element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+      const { x, y } = browser .getPointerFromEvent (event);
 
-         browser .buttonReleaseEvent ();
-         browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
-         this .onverifymotion (x, y);
+      $(document) .off (".PointingDevice" + this .getId ());
+      element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
-         this .cursor = "DEFAULT";
-      }
+      this .grabbing = false;
+
+      browser .buttonReleaseEvent ();
+      browser .setCursor (this .over ? "POINTER" : "DEFAULT");
+      this .onverifymotion (x, y);
    },
    dblclick (event)
    {
-      if (this .isOver)
+      if (this .over)
          event .stopImmediatePropagation ();
    },
    mousemove (event)
@@ -147,7 +152,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       const { x, y } = browser .getPointerFromEvent (event);
 
-      this .onmotion (x, y);
+      this .onmotion (x, y, true);
    },
    touchstart (event)
    {
@@ -173,7 +178,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             {
                this .touchX       = event .pageX;
                this .touchY       = event .pageY;
-               this .touchTimeout = setTimeout (this .showContextMenu .bind (this, event), CONTEXT_MENU_TIME);
+               this .touchTimeout = setTimeout (() => this .showContextMenu (event), CONTEXT_MENU_TIME);
             }
 
             break;
@@ -216,29 +221,16 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          }
       }
    },
-   onmotion (x, y)
+   onmotion (x, y, move = false)
    {
       const browser = this .getBrowser ();
 
-      if (browser .motionNotifyEvent (x, y))
-      {
-         if (!this .isOver)
-         {
-            this .isOver = true;
-            this .cursor = browser .getCursor ();
+      this .over = browser .motionNotifyEvent (x, y);
 
-            browser .setCursor ("HAND");
-         }
-      }
+      if (this .over)
+         browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
       else
-      {
-         if (this .isOver)
-         {
-            this .isOver = false;
-
-            browser .setCursor (this .cursor);
-         }
-      }
+         browser .setCursor (this .grabbing && move ? "GRABBING" : "DEFAULT");
    },
    onmouseout (event)
    {

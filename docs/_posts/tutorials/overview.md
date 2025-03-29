@@ -74,6 +74,9 @@ Some words about optimizing a scene
 
 - [Script Node Authoring Interface](/x_ite/reference/script-node-authoring-interface/)
 - [ECMAScript Object and Function Definitions](/x_ite/reference/ecmascript-object-and-function-definitions/)
+- [Accessing the External Browser](/x_ite/accessing-the-external-browser/)
+- [DOM Integration](/x_ite//dom-integration/)
+- [How to Use X_ITE With Electron](/x_ite/how-to-use-x-ite-with-electron/)
 - [Custom Shaders](/x_ite/custom-shaders/)
 
 ## There are also Books for Further Reading

@@ -140,38 +140,18 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       this [_pointingDeviceSensorNodes] .delete (node);
    },
-   setCursor (value)
+   setCursor (cursorType)
    {
-      const div = this .getSurface ();
+      if (cursorType === this [_cursorType])
+         return;
 
-      this [_cursorType] = value;
+      this [_cursorType] = cursorType;
 
-      switch (value)
-      {
-         case "HAND": // Hand with finger
-            div .css ("cursor", "pointer");
-            break;
-         case "MOVE": // Hand grabbed something
-            div .css ("cursor", "move");
-            break;
-         case "CROSSHAIR":
-            div .css ("cursor", "crosshair");
-            break;
-         default:
-         {
-            if (this .getDisplayLoadCount ())
-               div .css ("cursor", "wait");
-            else if (this [_pointingDevice] ?.isOver)
-               div .css ("cursor", "pointer");
-            else
-               div .css ("cursor", "default");
-            break;
-         }
-      }
+      this .updateCursor ();
    },
-   getCursor ()
+   updateCursor ()
    {
-      return this [_cursorType];
+      this .getSurface () .css ("cursor", this .getDisplayLoadCount () ? "wait" : this [_cursorType] .toLowerCase ());
    },
    getPointer ()
    {

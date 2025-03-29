@@ -49,7 +49,7 @@ import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
+function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, html = false, closingTags = false })
 {
    this .string          = "";
    this .indent          = indent;
@@ -64,7 +64,7 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .doubleFormat            = this .createFloatFormat (this .doublePrecision);
    this .doubleExponentialFormat = this .createFloatExponentialFormat (this .doublePrecision);
 
-   this .Style (style);
+   this .Style (style, indentChar);
 
    this .executionContextStack = [ ];
    this .executionContextIndex = new Set ();
@@ -80,7 +80,7 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
 
 Object .assign (Generator .prototype,
 {
-   Style (style)
+   Style (style, indentChar = "  ")
    {
       switch (style)
       {
@@ -122,7 +122,7 @@ Object .assign (Generator .prototype,
             this .break          = "\n";
             this .tidyBreak      = "\n";
             this .tidySpace      = " ";
-            this .indentChar     = "  ";
+            this .indentChar     = indentChar;
             this .listEnclosure  = " ";
             this .listBreak      = " ";
             this .listIndentChar = "";
@@ -136,10 +136,10 @@ Object .assign (Generator .prototype,
             this .break          = "\n";
             this .tidyBreak      = "\n";
             this .tidySpace      = " ";
-            this .indentChar     = "  ";
+            this .indentChar     = indentChar;
             this .listEnclosure  = "\n";
             this .listBreak      = "\n";
-            this .listIndentChar = "  ";
+            this .listIndentChar = this .indentChar;
             this .attribBreak    = "\n";
             break;
          }

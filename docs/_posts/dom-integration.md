@@ -67,6 +67,8 @@ touchSensor .addEventListener ("hitPoint_changed", event =>
                         containerField='diffuseTexture'
                         image='2 2 1 0xff 0x00 0x00 0xff'>
                       <TextureProperties
+                          minificationFilter='FASTEST'
+                          magnificationFilter='FASTEST'
                           boundaryModeS='CLAMP_TO_EDGE'
                           boundaryModeT='CLAMP_TO_EDGE'>
                       </TextureProperties>
@@ -106,14 +108,14 @@ You can add an event listener to any X3D element with the name of the output fie
 
 Events sent from a node are of type CustomEvent and have the following properties:
 
-```js
-CustomEvent: {
-  type: string,        // name of field
-  target: HTMLElement, // X3D element of node
+```ts
+class CustomEvent {
+  type: string;        // name of field
+  target: HTMLElement; // X3D element of node
   detail: {
-    node: SFNode,      // node to which the field belongs to
-    value: any,        // new value of field
-  }
+    node: SFNode;      // node to which the field belongs to
+    value: any;        // new value of field
+  };
 }
 ```
 

@@ -147,33 +147,22 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    addLoadingObject (object)
    {
-      if (this [_loadingObjects] .has (object))
-         return;
-
-      ++ this [_loadingTotal];
+      if (!this [_loadingObjects] .has (object))
+         ++ this [_loadingTotal];
 
       this [_loadingObjects] .add (object);
 
-      this .setLoadCount (this [_loadingObjects] .size);
-      this .setCursor ("DEFAULT");
+      this ._loadCount = this [_loadingObjects] .size;
    },
    removeLoadingObject (object)
    {
-      if (!this [_loadingObjects] .has (object))
-         return;
-
       this [_loadingObjects] .delete (object);
 
-      this .setLoadCount (this [_loadingObjects] .size);
-      this .setCursor (this .getCursor ());
+      this ._loadCount = this [_loadingObjects] .size;
    },
    getDisplayLoadCount ()
    {
       return Array .from (this [_loadingObjects]) .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
-   },
-   setLoadCount (value)
-   {
-      this ._loadCount = value;
    },
    resetLoadCount ()
    {
@@ -199,8 +188,9 @@ Object .assign (X3DNetworkingContext .prototype,
       else
       {
          var string = _("Loading done");
-         this .setCursor ("DEFAULT");
       }
+
+      this .updateCursor ();
 
       if (this [_loading])
       {
