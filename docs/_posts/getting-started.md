@@ -607,7 +607,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
   </tr>
 </table>
 
->**Tip:** If you still haven't had enough and would like to see even more models, then take a look at the [glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/). There are a lot of models from simple to advanced.
+>**Tip:** If you still haven't had enough and would like to see even more models, then take a look at the [X_ITE glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/). There are a lot of models from simple to advanced.
 {: .prompt-tip }
 
 ## Download X_ITE v{{ site.x_ite_latest_version }}
