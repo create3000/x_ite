@@ -50,9 +50,7 @@ import X3DConstants from "../../Base/X3DConstants.js";
 
 typeof jquery_mousewheel; // import plugin
 
-const
-   CONTEXT_MENU_TIME = 1200,
-   GRABBING_TIME     = 200;
+const CONTEXT_MENU_TIME = 1200;
 
 function PointingDevice (executionContext)
 {
