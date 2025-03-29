@@ -113,9 +113,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             this .grabbing = Array .from (browser .getHit () .sensors .keys ())
                .some (node => node .getType () .includes (X3DConstants .X3DDragSensorNode));
 
-            if (this .grabbing)
-               this .grabTimeout = setTimeout (() => browser .setCursor ("GRABBING"), GRABBING_TIME);
-
             browser .setCursor ("POINTER");
 
             this .onverifymotion (x, y);
@@ -139,7 +136,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
       this .grabbing = false;
-      clearTimeout (this .grabTimeout);
 
       browser .buttonReleaseEvent ();
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
@@ -158,7 +154,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       const { x, y } = browser .getPointerFromEvent (event);
 
-      this .onmotion (x, y);
+      this .onmotion (x, y, true);
    },
    touchstart (event)
    {
@@ -227,28 +223,16 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          }
       }
    },
-   onmotion (x, y)
+   onmotion (x, y, move)
    {
       const browser = this .getBrowser ();
 
-      if (browser .motionNotifyEvent (x, y))
-      {
-         if (!this .over)
-         {
-            this .over = true;
+      this .over = browser .motionNotifyEvent (x, y);
 
-            browser .setCursor (this .grabbing ? "GRABBING" : "POINTER");
-         }
-      }
+      if (this .over)
+         browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
       else
-      {
-         if (this .over)
-         {
-            this .over = false;
-
-            browser .setCursor (this .grabbing ? "GRABBING" : "DEFAULT");
-         }
-      }
+         browser .setCursor (this .grabbing && move ? "GRABBING" : "DEFAULT");
    },
    onmouseout (event)
    {
