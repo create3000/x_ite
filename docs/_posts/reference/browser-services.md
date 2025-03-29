@@ -341,7 +341,7 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>Mute</td>
-         <td>Whether to mute all media. <small class="blue">non standard</small></td>
+         <td>Whether to mute all audio. <small class="blue">non standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
