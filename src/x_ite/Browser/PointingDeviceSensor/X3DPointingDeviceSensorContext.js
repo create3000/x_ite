@@ -142,9 +142,15 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    setCursor (value)
    {
+      this [_cursorType] = value;
+
       const div = this .getSurface ();
 
-      this [_cursorType] = value;
+      if (this .getDisplayLoadCount ())
+      {
+         div .css ("cursor", "wait");
+         return;
+      }
 
       switch (value)
       {
@@ -154,19 +160,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          case "MOVE": // Hand grabbed something
             div .css ("cursor", "move");
             break;
-         case "CROSSHAIR":
+         case "CROSSHAIR": //
             div .css ("cursor", "crosshair");
             break;
-         default:
-         {
-            if (this .getDisplayLoadCount ())
-               div .css ("cursor", "wait");
-            else if (this [_pointingDevice] ?.isOver)
-               div .css ("cursor", "pointer");
-            else
-               div .css ("cursor", "default");
+         default: // arrow
+            div .css ("cursor", "default");
             break;
-         }
       }
    },
    getCursor ()

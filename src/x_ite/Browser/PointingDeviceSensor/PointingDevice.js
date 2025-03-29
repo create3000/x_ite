@@ -55,7 +55,6 @@ function PointingDevice (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .cursor = "DEFAULT";
    this .isOver = false;
 }
 
@@ -130,8 +129,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          browser .buttonReleaseEvent ();
          browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
          this .onverifymotion (x, y);
-
-         this .cursor = "DEFAULT";
       }
    },
    dblclick (event)
@@ -225,7 +222,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          if (!this .isOver)
          {
             this .isOver = true;
-            this .cursor = browser .getCursor ();
 
             browser .setCursor ("HAND");
          }
@@ -236,7 +232,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          {
             this .isOver = false;
 
-            browser .setCursor (this .cursor);
+            browser .setCursor ("DEFAULT");
          }
       }
    },
