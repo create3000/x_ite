@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v11.4 Series
 
-*Leipzig, 30th March 2025:* This series comes with a lot of small but important changes and features.
+*Leipzig, 23rd March 2025:* This series comes with a lot of small but important changes and features.
 
 * Improved WOFF2 font files handling.
 * New dragging cursor when a X3DDragSensorNode is dragged.
