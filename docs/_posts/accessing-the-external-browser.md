@@ -396,4 +396,4 @@ The scene defines different named nodes with the »DEF« attribute, which can be
 
 ## See Also
 
-* Another good example of using an external script is [Area Chart](/x_ite/laboratory/area-chart/). Here an entire scene is generated from data.
+* Another good example of using an external script is [Area Chart](/x_ite/laboratory/area-chart/). Here an entire scene is generated from data using only JavaScript.
