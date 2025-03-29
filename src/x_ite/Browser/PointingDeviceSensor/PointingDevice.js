@@ -52,7 +52,7 @@ typeof jquery_mousewheel; // import plugin
 
 const
    CONTEXT_MENU_TIME = 1200,
-   GRABBING_TIME     = 300;
+   GRABBING_TIME     = 200;
 
 function PointingDevice (executionContext)
 {
