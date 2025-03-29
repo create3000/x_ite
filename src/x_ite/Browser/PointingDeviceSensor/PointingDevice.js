@@ -113,10 +113,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             this .grabbing = Array .from (browser .getHit () .sensors .keys ())
                .some (node => node .getType () .includes (X3DConstants .X3DDragSensorNode));
 
-            browser .setCursor ("HAND");
-
             if (this .grabbing)
                this .grabTimeout = setTimeout (() => browser .setCursor ("GRABBING"), GRABBING_TIME);
+
+            browser .setCursor ("HAND");
 
             this .onverifymotion (x, y);
          }
