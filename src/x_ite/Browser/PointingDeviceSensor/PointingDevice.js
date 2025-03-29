@@ -50,7 +50,9 @@ import X3DConstants from "../../Base/X3DConstants.js";
 
 typeof jquery_mousewheel; // import plugin
 
-const CONTEXT_MENU_TIME = 1200;
+const
+   CONTEXT_MENU_TIME = 1200,
+   GRABBING_TIME     = 300;
 
 function PointingDevice (executionContext)
 {
@@ -111,7 +113,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             this .grabbing = Array .from (browser .getHit () .sensors .keys ())
                .some (node => node .getType () .includes (X3DConstants .X3DDragSensorNode));
 
-            browser .setCursor (this .grabbing ? "GRABBING" : "HAND");
+            browser .setCursor ("HAND");
+
+            if (this .grabbing)
+               this .grabTimeout = setTimeout (() => browser .setCursor ("GRABBING"), GRABBING_TIME);
+
             this .onverifymotion (x, y);
          }
       }
@@ -133,6 +139,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
       this .grabbing = false;
+      clearTimeout (this .grabTimeout);
 
       browser .buttonReleaseEvent ();
       browser .setCursor (this .over ? "HAND" : "DEFAULT");
