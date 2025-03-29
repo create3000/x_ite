@@ -152,23 +152,21 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this [_loadingObjects] .add (object);
 
-      this .setLoadCount (this [_loadingObjects] .size);
-      this .setCursor ("DEFAULT");
+      this ._loadCount = this [_loadingObjects] .size;
+
+      this .setCursor (this .getCursor ());
    },
    removeLoadingObject (object)
    {
       this [_loadingObjects] .delete (object);
 
-      this .setLoadCount (this [_loadingObjects] .size);
+      this ._loadCount = this [_loadingObjects] .size;
+
       this .setCursor (this .getCursor ());
    },
    getDisplayLoadCount ()
    {
       return Array .from (this [_loadingObjects]) .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
-   },
-   setLoadCount (value)
-   {
-      this ._loadCount = value;
    },
    resetLoadCount ()
    {
