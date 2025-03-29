@@ -223,7 +223,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          }
       }
    },
-   onmotion (x, y, move)
+   onmotion (x, y, move = false)
    {
       const browser = this .getBrowser ();
 
