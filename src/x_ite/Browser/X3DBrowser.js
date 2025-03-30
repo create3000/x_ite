@@ -423,7 +423,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    replaceWorld (scene)
    {
-      return new Promise ((resolve, reject) =>
+      return new Promise (async (resolve, reject) =>
       {
          this [_fileLoader] ?.abort ();
 
@@ -434,6 +434,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          if (this .initialized () .getValue () >= 0)
          {
+            await this .nextFrame ();
+
             this .getExecutionContext () .setLive (false);
             this .shutdown () .processInterests ();
             this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
