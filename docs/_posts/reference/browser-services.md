@@ -107,9 +107,11 @@ The `getComponent` service returns a ComponentInfo object of the named component
 
 The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
 
+<!--
 #### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non standard</small>
 
 Loads all components, external and internal, specified by `args`. If the argument is a `string`, the name of a component must be given.
+-->
 
 #### **replaceWorld** (*scene: X3DScene*): Promise\<void\>
 
