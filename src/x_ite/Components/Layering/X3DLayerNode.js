@@ -270,7 +270,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       this .traverse (TraverseType .CAMERA, this);
 
-      // Bind first viewpoint in viewpoint list.
+      // Bind first viewpoint in viewpoint list and other bindables too.
 
       const
          navigationInfoNode = this .navigationInfos .getBound (),
