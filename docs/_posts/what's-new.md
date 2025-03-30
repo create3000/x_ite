@@ -14,7 +14,8 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Improved WOFF2 font files handling.
 * New dragging cursor when a X3DDragSensorNode is dragged.
 * New [Mute](/x_ite/reference/browser-services/#getbrowseroption-name-string-any) browser option.
-* Fixed a bug when a X3DBindableNode receives a *set_bind* `FALSE` event.
+* Fixed a issue when a X3DBindableNode receives a *set_bind* `FALSE` event.
+* Fixed an issue with viewpoint binding at initialization of world and when the viewpoint has received an additional *set_bind* `TRUE` event.
 * The pixel data of a [PixelTexture](/x_ite/components/texturing/pixeltexture/) node are now checked for transparent pixels if necessary, to automatically determine alpha mode of [Appearance](/x_ite/components/shape/appearance/) node.
 
 ## X_ITE v11.3 Series
