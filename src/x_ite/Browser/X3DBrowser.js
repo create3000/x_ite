@@ -434,6 +434,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          if (this .initialized () .getValue () >= 0)
          {
+            // Wait for events to be processed before scene is replaced. To get correct
+            // results from getBBox and viewpoint binding in new scene.
             await this .nextFrame ();
 
             this .getExecutionContext () .setLive (false);
