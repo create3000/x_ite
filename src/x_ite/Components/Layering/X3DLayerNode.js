@@ -283,6 +283,8 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this .backgroundStack     .pushOnTop (backgroundNode);
       this .fogStack            .pushOnTop (fogNode);
 
+      // Update matrices of viewpoint.
+
       viewpointNode .resetUserOffsets ();
 
       if (viewpointNode ._viewAll .getValue ())
