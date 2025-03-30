@@ -122,9 +122,13 @@ function update (... versions)
 		process .chdir (cwd);
 
 		systemSync (`rsync -a --delete --exclude=".*" ${dist}/ ${docs}/`);
+		legacy_message (docs);
 
 		if (version === "latest")
+		{
 			systemSync (`cp -r '${dist}' '${docs}'`); // legacy
+			legacy_message (`${docs}/dist`);
+		}
 
 		process .chdir (code);
 
@@ -137,6 +141,22 @@ function update (... versions)
 	systemSync (`git push origin`);
 
 	process .chdir (cwd);
+}
+
+function legacy_message (folder)
+{
+	const paths = [
+		"x_ite.js",
+		"x_ite.min.js",
+		"x_ite.mjs",
+		"x_ite.min.mjs",
+	]
+	.map (filename => `${folder}/${filename}`);
+
+	for (const path of paths)
+	{
+		systemSync (`echo '\n;console .warn ("Use of https://create3000.github.io/code/ is discouraged. Please use files from jsDelivr, see https://create3000.github.io/x_ite/#jsdelivr-cdn");' >> ${path}`);
+	}
 }
 
 function other ()
