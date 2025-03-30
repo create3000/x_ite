@@ -279,9 +279,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          viewpointNode      = this .viewpoints      .getBound (viewpointName);
 
       this .navigationInfoStack .pushOnTop (navigationInfoNode);
-      this .viewpointStack      .pushOnTop (viewpointNode);
       this .backgroundStack     .pushOnTop (backgroundNode);
       this .fogStack            .pushOnTop (fogNode);
+      this .viewpointStack      .pushOnTop (viewpointNode);
 
       // Update matrices of viewpoint.
 
