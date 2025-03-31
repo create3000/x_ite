@@ -544,11 +544,11 @@ The SFNode object corresponds to an X3D SFNode field.
 
 *vrmlSyntax* is a UTF-8 string containing the definition of an X3D node.
 
-This constructor is only available inside Script nodes. If the specification version is greater than 2.0, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](/x_ite/reference/scene-services/#createnode-typename-string-sfnode) or [X3DExecutionContext.createProto](/x_ite/reference/scene-services/#createproto-protoname-string-sfnode) instead.
+This constructor is only available inside [Script](/x_ite/components/scripting/script/) nodes. If the specification version is greater than 2.0, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](/x_ite/reference/scene-services/#createnode-typename-string-sfnode) or [X3DExecutionContext.createProto](/x_ite/reference/scene-services/#createproto-protoname-string-sfnode) instead.
 
 ### Properties
 
-Each node may assign values to its initializeOnly, inputOnly and inputOutput fields and obtain the last output values of its initializeOnly, outputOnly and inputOutput fields using the `sfNodeObjectName.fieldName` syntax. The *directOutput* field of the corresponding Script node must then be set to TRUE.
+Each node may be assigned values to its **initializeOnly,** **inputOnly** and **inputOutput** fields and obtain the last output values of its **initializeOnly,** **outputOnly** and **inputOutput** fields using the `sfNodeObjectName.fieldName` syntax. The *directOutput* field of a corresponding [Script](/x_ite/components/scripting/script/) node must then be set to TRUE.
 
 ### Methods
 
