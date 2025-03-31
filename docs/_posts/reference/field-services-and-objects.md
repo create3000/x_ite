@@ -548,13 +548,13 @@ This constructor is only available inside [Script](/x_ite/components/scripting/s
 
 ### Properties
 
-Each node may be assigned values to its **initializeOnly,** **inputOnly** and **inputOutput** fields and obtain the last output values of its **initializeOnly,** **outputOnly** and **inputOutput** fields using the `sfNodeObjectName.fieldName` syntax. The *directOutput* field of a corresponding [Script](/x_ite/components/scripting/script/) node must then be set to TRUE.
+Each node may be assigned values to its **initializeOnly,** **inputOnly** and **inputOutput** fields and obtain the last output values of its **initializeOnly,** **outputOnly** and **inputOutput** fields using the `sfNodeObjectName.fieldName` syntax. The *directOutput* field of a corresponding [Script](/x_ite/components/scripting/script/) node must then be set to `TRUE`.
 
 ### Methods
 
 #### **getFieldDefinition** (*name: string*): X3DFieldDefinition
 
-Returns the corresponding X3DFieldDefinition object associated with *name*.
+Returns the corresponding [X3DFieldDefinition](/x_ite/reference/field-services-and-objects/#x3dfielddefinition) object associated with *name*.
 
 #### **getFieldDefinitions** (): FieldDefinitionArray
 
@@ -575,7 +575,7 @@ Returns the node name.
 
 #### **getNodeType** (): number []
 
-Returns, in the array, a list of constant values that indicate node types as provided in the X3DConstants object.
+Returns, in the array, a list of constant values that indicate node types as provided in the [X3DConstants](/x_ite/reference/constants-services/#x3dconstants) object.
 
 See [Concrete Node Types](/x_ite/reference/constants-services/#concrete-node-types) and [Abstract Node Types](/x_ite/reference/constants-services/#abstract-node-types).
 
