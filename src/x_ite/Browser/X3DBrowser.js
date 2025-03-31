@@ -423,11 +423,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    replaceWorld (scene)
    {
+      this [_fileLoader] ?.abort ();
+      this [_reject] ?.("Replacing world aborted.");
+      this [_reject] = null;
+
       return new Promise (async (resolve, reject) =>
       {
-         this [_fileLoader] ?.abort ();
-
-         this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
 
          // Remove world.
@@ -439,11 +440,17 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             // a SCRIPTED scene is created.
             await this .nextFrame ();
 
+            if (this [_reject] !== reject)
+               return;
+
             this .getExecutionContext () .setLive (false);
             this .shutdown () .processInterests ();
             this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
             this .callBrowserEventHandler ("shutdown");
          }
+
+         if (this [_reject] !== reject)
+            return;
 
          // Replace world.
 
