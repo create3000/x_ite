@@ -544,7 +544,8 @@ The SFNode object corresponds to an X3D SFNode field.
 
 *vrmlSyntax* is a UTF-8 string containing the definition of an X3D node.
 
-This constructor is only available inside [Script](/x_ite/components/scripting/script/) nodes. If the specification version is greater than 2.0, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](/x_ite/reference/scene-services/#createnode-typename-string-sfnode) or [X3DExecutionContext.createProto](/x_ite/reference/scene-services/#createproto-protoname-string-sfnode) instead.
+>**Attention:** This constructor is only available inside [Script](/x_ite/components/scripting/script/) nodes. If the specification version is greater than **2.0**, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](/x_ite/reference/scene-services/#createnode-typename-string-sfnode) or [X3DExecutionContext.createProto](/x_ite/reference/scene-services/#createproto-protoname-string-sfnode) instead.
+{: .prompt-danger }
 
 ### Properties
 
