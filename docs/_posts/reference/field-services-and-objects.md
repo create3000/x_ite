@@ -138,7 +138,7 @@ Disposes this X3DField. The object can then no longer be used.
 
 ## SFColor Object
 
-The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax `sfColorObjectName.<property>`, where `sfColorObjectName` is an instance of a SFColor object. All methods are invoked using the syntax `sfColorObjectName.method (<argument-list>)`, where `sfColorObjectName` is an instance of a SFColor object.
+The SFColor object corresponds to an X3D SFColor field.
 
 ### Instance Creation Method(s)
 
@@ -160,7 +160,7 @@ const copy = new SFColor (... color); // Copy using spread syntax.
 
 ### Properties
 
-Individual elements of the object can be referenced using the standard C-style dereferencing operator (e.g. `sfColorObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<3).
+Each component of the rotation can be accessed using the `r`, `g` and `b` properties or using the standard C-style dereferencing operator (e.g. `sfColorObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<3).
 
 #### **r**: number
 {: .writable }
@@ -203,7 +203,7 @@ Linearly interpolates in HSV space between source color and destination color by
 
 ## SFColorRGBA Object
 
-The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax `sfColorRGBAObjectName.<property>`, where `sfColorRGBAObjectName` is an instance of a SFColorRGBA object. All methods are invoked using the syntax `sfColorRGBAObjectName.method (<argument-list>)`, where `sfColorRGBAObjectName` is an instance of a SFColorRGBA object.
+The SFColorRGBA object corresponds to an X3D SFColorRGBA field.
 
 ### Instance Creation Method(s)
 
@@ -225,7 +225,7 @@ const copy = new SFColorRGBA (... color); // Copy using spread syntax.
 
 ### Properties
 
-Individual elements of the object can be referenced using the standard C-style dereferencing operator (e.g. `sfColorRGBAObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
+Each component of the rotation can be accessed using the `r`, `g`, `b` and `a` properties or using the standard C-style dereferencing operator (e.g. `sfColorRGBAObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
 
 #### **r**: number
 {: .writable }
