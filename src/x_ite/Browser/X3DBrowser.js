@@ -423,12 +423,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    replaceWorld (scene)
    {
-      this [_fileLoader] ?.abort ();
-      this [_reject] ?.("Replacing world aborted.");
-      this [_reject] = null;
-
       return new Promise (async (resolve, reject) =>
       {
+         this [_fileLoader] ?.abort ();
+
+         this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
 
          // Remove world.
