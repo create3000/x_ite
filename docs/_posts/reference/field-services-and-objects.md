@@ -548,7 +548,7 @@ This constructor is only available inside Script nodes. If the specification ver
 
 ### Properties
 
-Each node may assign values to its inputOnly fields and obtain the last output values of its outputOnly fields using the `sfNodeObjectName.fieldName` syntax. The *directOutput* field of the corresponding Script node must then be set to TRUE.
+Each node may assign values to its initializeOnly, inputOnly and inputOutput fields and obtain the last output values of its initializeOnly, outputOnly and inputOutput fields using the `sfNodeObjectName.fieldName` syntax. The *directOutput* field of the corresponding Script node must then be set to TRUE.
 
 ### Methods
 
