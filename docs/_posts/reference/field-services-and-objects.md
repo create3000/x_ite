@@ -286,7 +286,7 @@ A new image initialized with zero values is created and returned.
 *width* is the width in pixels of the image.
 *height* is the height in pixels of the image.
 *components* are the number of components of the image (0-4).
-*array* is a MFInt32 array with pixel data.
+*array* is a optional MFInt32 array with pixel data.
 
 ### Iterator
 
@@ -1098,7 +1098,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFColor/MFColorRGBA Object
 
@@ -1122,7 +1122,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFDouble/MFFloat Object
 
@@ -1144,7 +1144,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFImage Object
 
@@ -1166,7 +1166,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFInt32 Object
 
@@ -1188,7 +1188,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFMatrix3d/MFMatrix3d/f Object
 
@@ -1210,7 +1210,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFMatrix4d/MFMatrix4f Object
 
@@ -1232,7 +1232,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFNode Object
 
@@ -1292,7 +1292,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFString Object
 
@@ -1314,7 +1314,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFTime Object
 
@@ -1336,7 +1336,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFVec2d/MFVec2f Object
 
@@ -1358,7 +1358,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFVec3d/MFVec3d/f Object
 
@@ -1380,7 +1380,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFVec4d/MFVec4f Object
 
@@ -1402,4 +1402,4 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13)
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
