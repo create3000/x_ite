@@ -160,7 +160,7 @@ const copy = new SFColor (... color); // Copy using spread syntax.
 
 ### Properties
 
-Each component of the rotation can be accessed using the `r`, `g` and `b` properties or using the standard C-style dereferencing operator (e.g. `sfColorObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<3).
+Each component of the color can be accessed using the `r`, `g` and `b` properties or using the standard C-style dereferencing operator (e.g. `sfColorObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<3).
 
 #### **r**: number
 {: .writable }
@@ -225,7 +225,7 @@ const copy = new SFColorRGBA (... color); // Copy using spread syntax.
 
 ### Properties
 
-Each component of the rotation can be accessed using the `r`, `g`, `b` and `a` properties or using the standard C-style dereferencing operator (e.g. `sfColorRGBAObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
+Each component of the color can be accessed using the `r`, `g`, `b` and `a` properties or using the standard C-style dereferencing operator (e.g. `sfColorRGBAObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
 
 #### **r**: number
 {: .writable }
