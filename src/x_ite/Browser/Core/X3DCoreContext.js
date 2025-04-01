@@ -119,11 +119,11 @@ function X3DCoreContext (element)
             .appendTo (shadow);
       }));
 
-      if (instanceId === 0 && navigator .userAgent .includes ("Windows"))
+      if (instanceId === 0 && !navigator .userAgent .includes ("AppleWebKit"))
       {
-         // In Window fonts from font-face rule are not loaded when inside
-         // a shadow root for some reasons, so we add the fonts CSS as a child
-         // of the x3d-canvas element.
+         // Except on MacOS fonts from font-face rule are not loaded when
+         // inside a shadow root for some reasons, so we add the fonts CSS as a
+         // child of the x3d-canvas element.
 
          stylesheets .push (new Promise (resolve =>
          {
