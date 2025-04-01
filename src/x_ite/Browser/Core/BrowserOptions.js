@@ -132,13 +132,11 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "SplashScreen",
          "TextCompression",
          "ToneMapping",
-         "XRButton",
          "XRSessionMode",
       ]);
 
       const mappings = new Map ([
          ["AutoUpdate",    "update"],
-         ["XRButton",      "xrButton"],
          ["XRSessionMode", "xrSessionMode"],
       ]);
 
@@ -449,7 +447,6 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "TextCompression",              new Fields .SFString ("CHAR_SPACING")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ToneMapping",                  new Fields .SFString ("NONE")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "XRButton",                     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "XRSessionMode",                new Fields .SFString ("IMMERSIVE_VR")),
       ]),
       enumerable: true,

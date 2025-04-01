@@ -137,11 +137,9 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFont (executionContext, font)
    {
-      const
-         scene    = executionContext .getLocalScene (),
-         families = this [_families] .get (scene) ?? new Map ();
+      const families = this [_families] .get (executionContext) ?? new Map ();
 
-      this [_families] .set (scene, families);
+      this [_families] .set (executionContext, families);
 
       // fontFamily - fontStyle
 
@@ -168,11 +166,9 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFontLibrary (executionContext, fontFamily, font)
    {
-      const
-         scene   = executionContext .getLocalScene (),
-         library = this [_library] .get (scene) ?? new Map ();
+      const library = this [_library] .get (executionContext) ?? new Map ();
 
-      this [_library] .set (scene, library);
+      this [_library] .set (executionContext, library);
 
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fontFamily}.`);
@@ -186,13 +182,11 @@ Object .assign (X3DTextContext .prototype,
          fontFamily = fontFamily .toUpperCase ();
          fontStyle  = fontStyle .toUpperCase () .replaceAll (" ", "");
 
-         const scene = executionContext .getLocalScene ();
-
          for (;;)
          {
             const
-               library  = this [_library]  .get (scene),
-               families = this [_families] .get (scene);
+               library  = this [_library]  .get (executionContext),
+               families = this [_families] .get (executionContext);
 
             const font = library ?.get (fontFamily)
                ?? families ?.get (fontFamily) ?.get (fontStyle);

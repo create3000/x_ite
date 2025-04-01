@@ -423,22 +423,33 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    replaceWorld (scene)
    {
-      this [_fileLoader] ?.abort ();
-      this [_reject]     ?.("Replacing world aborted.");
-
-      return new Promise ((resolve, reject) =>
+      return new Promise (async (resolve, reject) =>
       {
+         this [_fileLoader] ?.abort ();
+
+         this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
 
          // Remove world.
 
          if (this .initialized () .getValue () >= 0)
          {
+            // Wait for events to be processed before scene is replaced, to get correct
+            // results from getBBox and viewpoint binding in new scene, especially when
+            // a SCRIPTED scene is created.
+            await this .nextFrame ();
+
+            if (this [_reject] !== reject)
+               return;
+
             this .getExecutionContext () .setLive (false);
             this .shutdown () .processInterests ();
             this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
             this .callBrowserEventHandler ("shutdown");
          }
+
+         if (this [_reject] !== reject)
+            return;
 
          // Replace world.
 

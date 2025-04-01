@@ -83,9 +83,6 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      if (!this .getBrowserOption ("XRButton"))
-         return;
-
       $("<div></div>")
          .attr ("part", "xr-button")
          .attr ("title", "Start WebXR session.")

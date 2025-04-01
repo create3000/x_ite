@@ -1,5 +1,5 @@
-/* X_ITE v11.4.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.1")];
+/* X_ITE v11.4.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -546,9 +546,6 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      if (!this .getBrowserOption ("XRButton"))
-         return;
-
       $("<div></div>")
          .attr ("part", "xr-button")
          .attr ("title", "Start WebXR session.")

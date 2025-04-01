@@ -135,16 +135,21 @@ Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .pr
    addParent (parent)
    {
       this .getParents () .add (parent);
+
+      this .parentsChanged ();
    },
    removeParent (parent)
    {
       this [_parents] ?.delete (parent);
+
+      this .parentsChanged ();
    },
    getParents ()
    {
       return this [_parents] ??= new IterableWeakSet ();
    },
-   parentsChanged () { },
+   parentsChanged ()
+   { },
    dispose ()
    {
       this [_parents] ?.clear ();

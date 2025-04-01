@@ -1,5 +1,5 @@
-/* X_ITE v11.4.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.1")];
+/* X_ITE v11.4.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -268,6 +268,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
       external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
 
+      this ._family  .addInterest ("set_url__",     this);
       this ._style   .addInterest ("set_url__",     this);
       this ._justify .addInterest ("set_justify__", this);
 
@@ -302,10 +303,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
    {
       const family = Fonts .get (fontFamily);
 
-      if (family)
-         return family .get (fontStyle) ?? family .get ("PLAIN");
-
-      return;
+      return family ?.get (fontStyle) ?? family ?.get ("PLAIN");
    },
    getMajorAlignment ()
    {
@@ -364,13 +362,13 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
       for (const fontFamily of family)
       {
-         // Try to get default font.
+         // Try to get default font at first to protect these font families.
 
          const defaultFont = this .getDefaultFont (fontFamily, fontStyle);
 
          if (defaultFont)
          {
-            const font = await this .loadFont (defaultFont);
+            const font = await browser .loadFont (new URL (defaultFont), true);
 
             if (font)
             {
@@ -379,7 +377,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
             }
          }
 
-         // Try to get font from family names
+         // Try to get font from family names.
 
          const font = await browser .getFont (executionContext, fontFamily, fontStyle);
 
@@ -398,7 +396,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
             if (executionContext .getSpecificationVersion () >= 4.1)
                console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
 
-            const font = await this .loadFont (fileURL);
+            const font = await browser .loadFont (fileURL, this .getCache ());
 
             if (font)
             {
@@ -414,14 +412,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
       this .setLoadState (this .font ? (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE : (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
       this .addNodeEvent ();
-   },
-   async loadFont (fontPath)
-   {
-      const
-         browser = this .getBrowser (),
-         fileURL = new URL (fontPath, this .getExecutionContext () .getBaseURL ());
-
-      return await browser .loadFont (fileURL, true);
    },
    dispose ()
    {
@@ -17823,7 +17813,6 @@ var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(
 
 const
    _defaultFontStyle = Symbol (),
-   _defaultFamilies  = Symbol (),
    _fontCache        = Symbol (),
    _loadingFonts     = Symbol (),
    _families         = Symbol (),
@@ -17832,11 +17821,10 @@ const
 
 function X3DTextContext ()
 {
-   this [_defaultFamilies] = new Set (["SERIF", "SANS", "TYPEWRITER"]);
-   this [_loadingFonts]    = new Set ();
-   this [_fontCache]       = new Map ();
-   this [_families]        = new WeakMap ();
-   this [_library]         = new WeakMap ();
+   this [_loadingFonts] = new Set ();
+   this [_fontCache]    = new Map ();
+   this [_families]     = new WeakMap ();
+   this [_library]      = new WeakMap ();
 }
 
 Object .assign (X3DTextContext .prototype,
@@ -17923,9 +17911,6 @@ Object .assign (X3DTextContext .prototype,
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         if (this [_defaultFamilies] .has (fontFamily .toUpperCase ()))
-            continue;
-
          const fontStyles = families .get (fontFamily .toUpperCase ()) ?? new Map ();
 
          families .set (fontFamily .toUpperCase (), fontStyles);
@@ -17944,9 +17929,6 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFontLibrary (executionContext, fontFamily, font)
    {
-      if (this [_defaultFamilies] .has (fontFamily .toUpperCase ()))
-         return;
-
       const
          scene   = executionContext .getLocalScene (),
          library = this [_library] .get (scene) ?? new Map ();
