@@ -434,7 +434,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Remove world.
 
-         if (this .getWorld ())
+         if (this .initialized () .getValue () >= 0)
          {
             // Wait for events to be processed before scene is replaced, to get correct
             // results from getBBox and viewpoint binding in new scene, especially when
