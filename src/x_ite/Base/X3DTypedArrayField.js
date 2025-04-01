@@ -78,10 +78,11 @@ const handler =
                components = target .getComponents (),
                valueType  = target .getValueType ();
 
-            let array = target .getValue ();
-
-            if (index >= target [_length])
-               array = target .resize (index + 1, target .getSingleValue ());
+            // For historical reasons this behavior is intended (resize), there are enough
+            // X3D/VRML worlds in the Internet who rely on this behavior.
+            const array = index < target [_length]
+               ? target .getValue ()
+               : target .resize (index + 1, target .getSingleValue ());
 
             if (components === 1)
             {

@@ -71,6 +71,8 @@ const handler =
 
          if (Number .isInteger (index))
          {
+            // For historical reasons this behavior is intended (resize), there are enough
+            // X3D/VRML worlds in the Internet who rely on this behavior.
             if (index >= array .length)
                target .resize (index + 1);
 
