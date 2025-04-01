@@ -408,7 +408,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                for (let i = 0; i < length;)
                {
-                  const f = field [field .length];
+                  const
+                     l = field .length ++,
+                     f = field [l];
 
                   for (const key in f)
                      f [key] = value [i ++];
@@ -427,16 +429,17 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                for (let i = 0; i < length;)
                {
                   const
-                     f = field [field .length],
+                     l = field .length ++,
+                     f = field [l],
                      a = f .array;
 
                   f .width  = value [i ++];
                   f .height = value [i ++];
                   f .comp   = value [i ++];
 
-                  const l = a .length;
+                  const p = a .length;
 
-                  for (let k = 0; k < l; ++ k)
+                  for (let k = 0; k < p; ++ k)
                      a [k] = value [i ++];
                }
 
