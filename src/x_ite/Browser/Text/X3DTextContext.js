@@ -137,9 +137,7 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFont (executionContext, font)
    {
-      const families = this [_families] .get (executionContext) ?? new Map ();
-
-      this [_families] .set (executionContext, families);
+      const families = this [_families] .getOrInsertComputed (executionContext, () => new Map ());
 
       // fontFamily - fontStyle
 
@@ -148,9 +146,7 @@ Object .assign (X3DTextContext .prototype,
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         const fontStyles = families .get (fontFamily .toUpperCase ()) ?? new Map ();
-
-         families .set (fontFamily .toUpperCase (), fontStyles);
+         const fontStyles = families .getOrInsertComputed (fontFamily .toUpperCase (), () => new Map ());
 
          for (const fontStyle of new Set (Object .values (name .fontSubfamily ?? { })))
          {
@@ -166,9 +162,7 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFontLibrary (executionContext, fontFamily, font)
    {
-      const library = this [_library] .get (executionContext) ?? new Map ();
-
-      this [_library] .set (executionContext, library);
+      const library = this [_library] .getOrInsertComputed (executionContext, () => new Map ());
 
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fontFamily}.`);
