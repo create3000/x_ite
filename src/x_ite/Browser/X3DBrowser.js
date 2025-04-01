@@ -430,6 +430,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
 
+         this .setBrowserLoading (true);
+
          // Remove world.
 
          if (this .getWorld ())
@@ -483,7 +485,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          this .setExecutionContext (scene);
          this .setDescription ("");
-         this .setBrowserLoading (true);
 
          this ._loadCount .addInterest ("checkLoadCount", this, resolve);
          this ._loadCount .addEvent ();
@@ -637,7 +638,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          const fileLoader = new FileLoader (this .getScriptNode () ?? this .getWorld ());
 
-         fileLoader .createX3DFromURL (url, parameter, scene =>
+         fileLoader .createX3DFromURL (url, parameter, async scene =>
          {
             fileLoader .ready = true;
 
@@ -653,7 +654,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
                if (scene)
                {
+                  this .addLoadingObject (this); // Prevent resetLoadCount.
                   this .replaceWorld (scene) .then (resolve) .catch (reject);
+                  this .removeLoadingObject (this);
                   this .removeLoadingObject (fileLoader);
                }
                else
