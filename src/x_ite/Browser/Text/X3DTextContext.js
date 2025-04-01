@@ -202,7 +202,7 @@ Object .assign (X3DTextContext .prototype,
       {
          const decompress = await this .getWoff2Decompressor ();
 
-         return decompress (arrayBuffer);
+         return await decompress (arrayBuffer);
       }
 
       return arrayBuffer;
@@ -237,7 +237,7 @@ Object .assign (X3DTextContext .prototype,
          text    = await response .text (),
          wawoff2 = (new Function (text)) ();
 
-      await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
+      await new Promise (resolve => wawoff2 .onRuntimeInitialized = () => setTimeout (resolve));
 
       return arrayBuffer => wawoff2 .decompress (arrayBuffer);
    },

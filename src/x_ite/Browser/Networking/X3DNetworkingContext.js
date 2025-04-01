@@ -114,9 +114,6 @@ Object .assign (X3DNetworkingContext .prototype,
 
       if (value)
       {
-         if (!this [_loadingObjects] .has (this))
-            this .resetLoadCount ();
-
          this .getShadow () .find (".x_ite-private-world-info") .remove ();
 
          if (this .getBrowserOption ("SplashScreen"))
@@ -163,17 +160,6 @@ Object .assign (X3DNetworkingContext .prototype,
    getDisplayLoadCount ()
    {
       return Array .from (this [_loadingObjects]) .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
-   },
-   resetLoadCount ()
-   {
-      this ._loadCount       = 0;
-      this [_loadingDisplay] = 0;
-      this [_loadingTotal]   = 0;
-
-      this [_loadingObjects] .clear ();
-
-      for (const object of this .getPrivateScene () .getLoadingObjects ())
-         this .addLoadingObject (object);
    },
    [_set_loadCount] ()
    {

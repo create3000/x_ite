@@ -653,9 +653,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
                if (scene)
                {
-                  this .addLoadingObject (this); // Prevent resetLoadCount.
                   this .replaceWorld (scene) .then (resolve) .catch (reject);
-                  this .removeLoadingObject (this);
                   this .removeLoadingObject (fileLoader);
                }
                else
