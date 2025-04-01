@@ -1108,22 +1108,22 @@ function createValue (target, index, components, valueType)
    return value;
 }
 
-function getValue (index, components, value)
+function getValue (index, components, internalValue)
 {
    const array = this .getValue ();
 
    for (let c = 0; c < components; ++ c, ++ index)
-      value [c] = array [index];
+      internalValue [c] = array [index];
 
-   return value;
+   return internalValue;
 }
 
-function addEvent (index, components, value)
+function addEvent (index, components, internalValue)
 {
    const array = this .getValue ();
 
    for (let c = 0; c < components; ++ c, ++ index)
-      array [index] = value [c];
+      array [index] = internalValue [c];
 
    this .addEvent ();
 }
