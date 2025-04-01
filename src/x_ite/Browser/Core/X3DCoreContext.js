@@ -111,7 +111,6 @@ function X3DCoreContext (element)
       $("<link css-integrity-placeholder/>")
          .on ("load", () => browser .show ())
          .attr ("rel", "stylesheet")
-         .attr ("type", "text/css")
          .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
          .appendTo (shadow);
 
