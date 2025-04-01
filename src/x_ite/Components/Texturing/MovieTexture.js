@@ -146,7 +146,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             img = $("<img></img>") .appendTo ($("<div></div>")),
             gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type: type }) });
 
-         gif .load_url (this .URL, this .setGif .bind (this, gif));
+         gif .load_url (this .URL, () => this .setGif (gif));
 
          // this .setTimeout ({ type: "timeout" });
       }
