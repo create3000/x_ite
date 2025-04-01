@@ -56,7 +56,7 @@ const
    _loadingFonts     = Symbol (),
    _families         = Symbol (),
    _library          = Symbol (),
-   _wawoff2          = Symbol ();
+   _woff2Decoder     = Symbol ();
 
 function X3DTextContext ()
 {
@@ -200,7 +200,7 @@ Object .assign (X3DTextContext .prototype,
    {
       if (this .isWoff2 (arrayBuffer))
       {
-         const decompress = await this .getWoff2Decompressor ();
+         const decompress = await this .getWoff2Decoder ();
 
          return await decompress (arrayBuffer);
       }
@@ -218,16 +218,16 @@ Object .assign (X3DTextContext .prototype,
 
       return magic === 0x774F4632; // 'wOF2'
    },
-   async getWoff2Decompressor ()
+   async getWoff2Decoder ()
    {
-      return this [_wawoff2] ??= await this .loadWoff2Decompressor ();
+      return this [_woff2Decoder] ??= await this .loadWoff2Decoder ();
    },
-   async loadWoff2Decompressor ()
+   async loadWoff2Decoder ()
    {
       // https://www.npmjs.com/package/wawoff2
 
       const
-         fileURL  = URLs .getLibraryURL ("decompress_binding.js"),
+         fileURL  = URLs .getLibraryURL ("woff2_decoder.js"),
          response = await fetch (fileURL);
 
       if (!response .ok)
@@ -235,11 +235,9 @@ Object .assign (X3DTextContext .prototype,
 
       const
          text    = await response .text (),
-         wawoff2 = (new Function (text)) ();
+         decoder = (new Function (text)) ();
 
-      await new Promise (resolve => wawoff2 .onRuntimeInitialized = () => setTimeout (resolve));
-
-      return arrayBuffer => wawoff2 .decompress (arrayBuffer);
+      return decoder;
    },
 });
 
