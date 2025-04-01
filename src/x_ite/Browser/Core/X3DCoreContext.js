@@ -112,7 +112,7 @@ function X3DCoreContext (element)
          .on ("load", () => browser .show ())
          .attr ("rel", "stylesheet")
          .attr ("type", "text/css")
-         .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()) .href)
+         .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
          .appendTo (shadow);
 
       this [_shadow] = shadow
