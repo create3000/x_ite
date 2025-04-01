@@ -224,7 +224,7 @@ Object .assign (X3DTextContext .prototype,
    },
    async loadWoff2Decoder ()
    {
-      // https://www.npmjs.com/package/wawoff2
+      // https://www.npmjs.com/package/woff2-encoder
 
       const
          fileURL  = URLs .getLibraryURL ("woff2_decoder.js"),
