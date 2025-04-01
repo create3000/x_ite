@@ -137,4 +137,37 @@ const Features =
    }
 })();
 
+(() =>
+{
+   // https://tc39.es/proposal-upsert/
+
+   for (const Class of [Map, WeakMap])
+   {
+      Class .prototype .getOrInsert ??= function (key, value)
+      {
+         if (this .has (key))
+            return this .get (key);
+
+         this .set (key, value);
+
+         return value;
+      };
+   }
+
+   for (const Class of [Map, WeakMap])
+   {
+      Class .prototype .getOrInsertComputed ??= function (key, callbackfn)
+      {
+         if (this .has (key))
+            return this .get (key);
+
+         const value = callbackfn ();
+
+         this .set (key, value);
+
+         return value;
+      };
+   }
+})();
+
 export default Features;
