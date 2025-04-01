@@ -72,7 +72,7 @@ const handler =
          if (Number .isInteger (index))
          {
             if (index >= array .length)
-               return undefined;
+               target .resize (index + 1);
 
             return array [index] .valueOf ();
          }

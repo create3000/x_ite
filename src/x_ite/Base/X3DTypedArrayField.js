@@ -76,11 +76,11 @@ const handler =
          {
             const
                components = target .getComponents (),
-               valueType  = target .getValueType (),
-               array      = target .getValue ();
+               valueType  = target .getValueType ();
 
-            if (index >= target [_length])
-               return undefined;
+            const array = index < target [_length]
+               ? target .getValue ()
+               : target .resize (index + 1, target .getSingleValue ());
 
             if (components === 1)
             {
