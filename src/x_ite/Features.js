@@ -161,7 +161,7 @@ const Features =
          if (this .has (key))
             return this .get (key);
 
-         const value = callbackfn ();
+         const value = callbackfn (key);
 
          this .set (key, value);
 
