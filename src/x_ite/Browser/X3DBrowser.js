@@ -434,7 +434,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Remove world.
 
-         if (this .initialized () .getValue () >= 0)
+         if (this .getWorld ())
          {
             // Wait for events to be processed before scene is replaced, to get correct
             // results from getBBox and viewpoint binding in new scene, especially when
@@ -486,12 +486,15 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          this .setExecutionContext (scene);
          this .setDescription ("");
 
-         this ._loadCount .addInterest ("checkLoadCount", this, resolve);
+         this ._loadCount .addInterest ("checkLoadCount", this, resolve, reject);
          this ._loadCount .addEvent ();
       });
    },
-   checkLoadCount (resolve, loadCount)
+   checkLoadCount (resolve, reject, loadCount)
    {
+      if (this [_reject] !== reject)
+         return;
+
       if (loadCount .getValue ())
          return;
 
