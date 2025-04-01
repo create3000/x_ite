@@ -114,6 +114,14 @@ function X3DCoreContext (element)
          .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
          .appendTo (shadow);
 
+      if (instanceId === 0 && navigator .userAgent .includes ("Windows"))
+      {
+         $("<link/>")
+            .attr ("rel", "stylesheet")
+            .attr ("href", URLs .getFontsURL ("PT_Sans/PTSans.css"))
+            .appendTo (element);
+      }
+
       this [_shadow] = shadow
          .append (browser .hide ());
    }
