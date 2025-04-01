@@ -116,6 +116,10 @@ function X3DCoreContext (element)
 
       if (instanceId === 0 && navigator .userAgent .includes ("Windows"))
       {
+         // In Window fonts from font-face rule are not loaded when inside
+         // a shadow root for some reason, so we add the fonts CSS as a child
+         // of the x3d-canvas element.
+         
          $("<link/>")
             .attr ("rel", "stylesheet")
             .attr ("href", URLs .getFontsURL ("PT_Sans/PTSans.css"))
