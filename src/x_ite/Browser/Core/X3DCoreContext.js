@@ -106,34 +106,26 @@ function X3DCoreContext (element)
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
-      const
-         shadow      = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true })),
-         stylesheets = [ ];
+      const shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
-      stylesheets .push (new Promise (resolve =>
-      {
-         $("<link css-integrity-placeholder/>")
-            .on ("load", resolve)
-            .attr ("rel", "stylesheet")
-            .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
-            .appendTo (shadow);
-      }));
-
-      if (instanceId === 0 && !navigator .userAgent .includes ("AppleWebKit"))
-      {
-         // Except on MacOS fonts from font-face rule are not loaded when
-         // inside a shadow root for some reasons, so we add the fonts CSS as a
-         // child of the x3d-canvas element.
-
-         stylesheets .push (new Promise (resolve =>
+      const stylesheets = [
+         new Promise (resolve =>
+         {
+            $("<link css-integrity-placeholder/>")
+               .on ("load", resolve)
+               .attr ("rel", "stylesheet")
+               .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
+               .appendTo (shadow);
+         }),
+         new Promise (resolve =>
          {
             $("<link/>")
                .on ("load", resolve)
                .attr ("rel", "stylesheet")
                .attr ("href", URLs .getFontsURL ("PT_Sans/PTSans.css"))
                .appendTo (element);
-         }));
-      }
+         }),
+      ];
 
       this [_shadow] = shadow .append (browser .hide ());
 
