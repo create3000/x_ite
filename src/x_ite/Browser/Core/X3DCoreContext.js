@@ -123,6 +123,7 @@ function X3DCoreContext (element)
       {
          // Fonts (font-face rules) must be declared outside the shadow root,
          // so we add a stylesheet to the x3d-canvas element itself.
+         // https://issues.chromium.org/41085401
 
          stylesheets .push (new Promise (resolve =>
          {
