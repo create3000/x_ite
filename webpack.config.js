@@ -119,9 +119,7 @@ export default Namespace .add ("${base}", __default__);`;
       ],
    };
 
-   const integrities = [ ];
-
-   for (const src of sh (`find src -type f -name "*.css"`) .trim () .split (/[\r\n]+/))
+   const integrities = sh (`find src -type f -name "*.css"`) .trim () .split (/[\r\n]+/) .map (src =>
    {
       const dist = src .replace ("src", "dist");
 
@@ -133,8 +131,8 @@ export default Namespace .add ("${base}", __default__);`;
          integrity = "sha384-" + sh (`shasum -b -a 384 '${dist}' | awk '{ print $1 }' | xxd -r -p | base64`) .trim (),
          action    = `perl -p0i -e 's|integrity-${name}-css|${integrity}|sg' dist/x_ite{,.min}.js`
 
-      integrities .push (action);
-   }
+      return action;
+   });
 
    targets .push ({
       entry: {
