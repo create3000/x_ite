@@ -124,7 +124,7 @@ Returns true if the passed SF* or MF* *field* of the same type is equals to this
 
 #### **addFieldCallback** (*key: any, callback: (value: any) => void*): void
 
-Adds a field callback function, if external browser interface is used. *Key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
+Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
 
 The callback has a signature of `function (value)`, where value is the current value of the field.
 
@@ -553,6 +553,12 @@ Each node may be assigned values to its **initializeOnly,** **inputOnly** and **
 
 ### Methods
 
+#### **addFieldCallback** (*key: any, name: string, callback: (value: any) => void*): void
+
+Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*. *name* is the name of the field to which the callback should be connected. The callback is called when the field has been changed.
+
+The callback has a signature of `function (value)`, where value is the current value of the field.
+
 #### **getFieldDefinition** (*name: string*): X3DFieldDefinition
 
 Returns the corresponding [X3DFieldDefinition](/x_ite/reference/field-services-and-objects/#x3dfielddefinition) object associated with *name*.
@@ -583,6 +589,10 @@ See [Concrete Node Types](/x_ite/reference/constants-services/#concrete-node-typ
 #### **getNodeTypeName** (): string
 
 Returns the node type name.
+
+#### **removeFieldCallback** (key: any, name: string): void
+
+Removes a field callback function associated with *key* and *name* of field.
 
 #### **toVRMLString** (options: Options): string
 

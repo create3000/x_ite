@@ -1988,15 +1988,15 @@ declare namespace X3D
       static readonly typeName: "SFNode";
 
       /**
-       * Adds a field callback function, if external browser interface is used. *Key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
+       * Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
        *
        * The callback has a signature of `function (value)`, where value is the current value of the field.
        */
       addFieldCallback (key: any, callback: (value: this) => void): void;
       /**
-       * @deprecated Use `node .getField (name) .addFieldCallback (key, callback)`.
+       * Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*. *name* is the name of the field to which the callback should be connected. The callback is called when the field has been changed.
        */
-      addFieldCallback (name: string, key: any, callback: (value: unknown) => void): void;
+      addFieldCallback (key: any, name: string, callback: (value: unknown) => void): void;
       /**
        * Returns the corresponding X3DFieldDefinition object associated with *name*.
        */
@@ -2034,9 +2034,9 @@ declare namespace X3D
        */
       removeFieldCallback (key: any): void;
       /**
-       * @deprecated Use `node .getField (name) .removeFieldCallback (key)`.
+       * Removes a field callback function associated with *key* and *name* of field.
        */
-      removeFieldCallback (name: string, key: any): void;
+      removeFieldCallback (key: any, name: string): void;
       /**
        * Removes a user-data associated with *key*.
        */

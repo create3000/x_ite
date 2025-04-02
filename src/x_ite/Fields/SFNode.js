@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       throw new Error ("SFNode is disposed.")
    },
-   addFieldCallback (name, key, object)
+   addFieldCallback (key, name, object)
    {
       const target = this [_target];
 
@@ -318,7 +318,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          {
             return X3DField .prototype .addFieldCallback .apply (target, arguments);
          }
-         case 3: // Depreciated
+         case 3:
          {
             const value = target .getValue ();
 
@@ -329,7 +329,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          }
       }
    },
-   removeFieldCallback (name, key)
+   removeFieldCallback (key, name)
    {
       const target = this [_target];
 
@@ -339,7 +339,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          {
             return X3DField .prototype .removeFieldCallback .apply (target, arguments);
          }
-         case 2: // Depreciated
+         case 2:
          {
             const value = target .getValue ();
 
