@@ -121,9 +121,9 @@ function X3DCoreContext (element)
 
       if (instanceId === 0)
       {
-         // Fonts (font-face) must be declared outside the shadow root,
+         // Fonts (font-face rules) must be declared outside the shadow root,
          // so we add a stylesheet to the x3d-canvas element itself.
-         
+
          stylesheets .push (new Promise (resolve =>
          {
             $("<link/>")
