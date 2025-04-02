@@ -55,21 +55,20 @@ Object .assign (X3DEnvironmentalEffectsContext .prototype,
 {
    getBackgroundTextureProperties ()
    {
-      this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
+      return this [_backgroundTextureProperties] ??= (() =>
+      {
+         const backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
 
-      this [_backgroundTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
-      this [_backgroundTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
-      this [_backgroundTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
-      this [_backgroundTextureProperties] ._minificationFilter  = "NICEST";
-      this [_backgroundTextureProperties] ._magnificationFilter = "NICEST";
-      this [_backgroundTextureProperties] ._textureCompression  = "DEFAULT";
-      this [_backgroundTextureProperties] .setup ();
+         backgroundTextureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
+         backgroundTextureProperties ._boundaryModeT       = "CLAMP_TO_EDGE";
+         backgroundTextureProperties ._boundaryModeR       = "CLAMP_TO_EDGE";
+         backgroundTextureProperties ._minificationFilter  = "NICEST";
+         backgroundTextureProperties ._magnificationFilter = "NICEST";
+         backgroundTextureProperties ._textureCompression  = "DEFAULT";
+         backgroundTextureProperties .setup ();
 
-      this .getBackgroundTextureProperties = function () { return this [_backgroundTextureProperties]; };
-
-      Object .defineProperty (this, "getBackgroundTextureProperties", { enumerable: false });
-
-      return this [_backgroundTextureProperties];
+         return backgroundTextureProperties;
+      })();
    },
 });
 

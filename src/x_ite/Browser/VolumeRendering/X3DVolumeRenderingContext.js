@@ -61,70 +61,71 @@ Object .assign (X3DVolumeRenderingContext .prototype,
 {
    getDefaultVoxels ()
    {
-      this [_defaultVoxelsNode] = this .getPrivateScene () .createNode ("PixelTexture3D", false);
-      this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
-      this [_defaultVoxelsNode] .repeatS = true;
-      this [_defaultVoxelsNode] .repeatT = true;
-      this [_defaultVoxelsNode] .repeatR = true;
-      this [_defaultVoxelsNode] .setPrivate (true);
-      this [_defaultVoxelsNode] .setup ();
+      return this [_defaultVoxelsNode] ??= (() =>
+      {
+         const defaultVoxelsNode = this .getPrivateScene () .createNode ("PixelTexture3D", false);
 
-      this .getDefaultVoxels = function () { return this [_defaultVoxelsNode]; };
+         defaultVoxelsNode ._image = [1, 1, 1, 1, 255];
+         defaultVoxelsNode .repeatS = true;
+         defaultVoxelsNode .repeatT = true;
+         defaultVoxelsNode .repeatR = true;
+         defaultVoxelsNode .setPrivate (true);
+         defaultVoxelsNode .setup ();
 
-      Object .defineProperty (this, "getDefaultVoxels", { enumerable: false });
-
-      return this [_defaultVoxelsNode];
-   },
+         return defaultVoxelsNode;
+      })();
+      },
    getDefaultVolumeStyle ()
    {
-      this [_defaultVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
-      this [_defaultVolumeStyle] .setPrivate (true);
-      this [_defaultVolumeStyle] .setup ();
+      return this [_defaultVolumeStyle] ??= (() =>
+      {
+         const defaultVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
 
-      this .getDefaultVolumeStyle = function () { return this [_defaultVolumeStyle]; };
+         defaultVolumeStyle .setPrivate (true);
+         defaultVolumeStyle .setup ();
 
-      Object .defineProperty (this, "getDefaultVolumeStyle", { enumerable: false });
-
-      return this [_defaultVolumeStyle];
+         return defaultVolumeStyle;
+      })();
    },
    getDefaultBlendedVolumeStyle ()
    {
-      this [_defaultBlendedVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
-      this [_defaultBlendedVolumeStyle] .setPrivate (true);
-      this [_defaultBlendedVolumeStyle] .setup ();
+      return this [_defaultBlendedVolumeStyle] ??= (() =>
+      {
+         const defaultBlendedVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
 
-      this .getDefaultBlendedVolumeStyle = function () { return this [_defaultBlendedVolumeStyle]; };
+         defaultBlendedVolumeStyle .setPrivate (true);
+         defaultBlendedVolumeStyle .setup ();
 
-      Object .defineProperty (this, "getDefaultBlendedVolumeStyle", { enumerable: false });
-
-      return this [_defaultBlendedVolumeStyle];
+         return defaultBlendedVolumeStyle;
+      })();
    },
    getDefaultTransferFunction ()
    {
-      const textureProperties = new TextureProperties (this .getPrivateScene ());
-      textureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
-      textureProperties ._boundaryModeT       = "REPEAT";
-      textureProperties ._magnificationFilter = "DEFAULT";
-      textureProperties ._minificationFilter  = "DEFAULT";
-      textureProperties ._generateMipMaps     = true;
-      textureProperties ._textureCompression  = "DEFAULT";
-      textureProperties .setPrivate (true);
-      textureProperties .setup ();
+      return this [_defaultTransferFunction] ??= (() =>
+      {
+         const textureProperties = new TextureProperties (this .getPrivateScene ());
 
-      this [_defaultTransferFunction] = new PixelTexture (this .getPrivateScene ());
-      this [_defaultTransferFunction] ._textureProperties = textureProperties;
-      this [_defaultTransferFunction] ._image .width      = 256;
-      this [_defaultTransferFunction] ._image .height     = 1;
-      this [_defaultTransferFunction] ._image .comp       = 2;
-      this [_defaultTransferFunction] ._image .array      = Array .from ({ length: 256 }, (v, i) => (i << 8) | i);
-      this [_defaultTransferFunction] .setPrivate (true);
-      this [_defaultTransferFunction] .setup ();
+         textureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
+         textureProperties ._boundaryModeT       = "REPEAT";
+         textureProperties ._magnificationFilter = "DEFAULT";
+         textureProperties ._minificationFilter  = "DEFAULT";
+         textureProperties ._generateMipMaps     = true;
+         textureProperties ._textureCompression  = "DEFAULT";
+         textureProperties .setPrivate (true);
+         textureProperties .setup ();
 
-      this .getDefaultTransferFunction = function () { return this [_defaultTransferFunction]; };
+         const defaultTransferFunction = new PixelTexture (this .getPrivateScene ());
 
-      Object .defineProperty (this, "getDefaultTransferFunction", { enumerable: false });
+         defaultTransferFunction ._textureProperties = textureProperties;
+         defaultTransferFunction ._image .width      = 256;
+         defaultTransferFunction ._image .height     = 1;
+         defaultTransferFunction ._image .comp       = 2;
+         defaultTransferFunction ._image .array      = Array .from ({ length: 256 }, (v, i) => (i << 8) | i);
+         defaultTransferFunction .setPrivate (true);
+         defaultTransferFunction .setup ();
 
-      return this [_defaultTransferFunction];
+         return defaultTransferFunction;
+      })();
    },
 });
 

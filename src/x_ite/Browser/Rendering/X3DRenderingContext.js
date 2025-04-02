@@ -210,38 +210,32 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getTransmissionBuffer ()
    {
-      this [_transmissionBuffer] = new TextureBuffer (this,
-         this ._viewport [2],
-         this ._viewport [3],
-         false,
-         true);
-
-      this .getTransmissionBuffer = function () { return this [_transmissionBuffer]; };
-
-      Object .defineProperty (this, "getTransmissionBuffer", { enumerable: false });
-
-      return this [_transmissionBuffer];
+      return this [_transmissionBuffer] ??= (() =>
+      {
+         return new TextureBuffer (this, this ._viewport [2], this ._viewport [3], false, true);
+      })();
    },
    getFullscreenVertexArrayObject ()
    {
       // Quad for fullscreen rendering.
 
-      const gl = this .getContext ();
+      return this [_fullscreenArray] ??= (() =>
+      {
+         const
+            gl               = this .getContext (),
+            fullscreenArray  = gl .createVertexArray (),
+            fullscreenBuffer = gl .createBuffer ();
 
-      this [_fullscreenArray]  = gl .createVertexArray ();
-      this [_fullscreenBuffer] = gl .createBuffer ();
+         this [_fullscreenBuffer] = fullscreenBuffer;
 
-      gl .bindVertexArray (this [_fullscreenArray]);
-      gl .bindBuffer (gl .ARRAY_BUFFER, this [_fullscreenBuffer]);
-      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([-1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1]), gl .STATIC_DRAW);
-      gl .enableVertexAttribArray (0);
-      gl .vertexAttribPointer (0, 2, gl .FLOAT, false, 0, 0);
+         gl .bindVertexArray (fullscreenArray);
+         gl .bindBuffer (gl .ARRAY_BUFFER, fullscreenBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([-1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1]), gl .STATIC_DRAW);
+         gl .enableVertexAttribArray (0);
+         gl .vertexAttribPointer (0, 2, gl .FLOAT, false, 0, 0);
 
-      this .getFullscreenVertexArrayObject = function () { return this [_fullscreenArray]; };
-
-      Object .defineProperty (this, "getFullscreenVertexArrayObject", { enumerable: false });
-
-      return this [_fullscreenArray];
+         return fullscreenArray;
+      })();
    },
    getOITComposeShader ()
    {

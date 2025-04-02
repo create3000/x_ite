@@ -86,27 +86,26 @@ Object .assign (X3DSoundContext .prototype,
    },
    getAudioContext ()
    {
-      this [_audioContext] = new AudioContext ();
+      return this [_audioContext] ??= (() =>
+      {
+         const audioContext = new AudioContext ();
 
-      this .startAudioElement (this [_audioContext], "resume");
+         this .startAudioElement (audioContext, "resume");
 
-      this .getAudioContext = function () { return this [_audioContext]; };
-
-      Object .defineProperty (this, "getAudioContext", { enumerable: false });
-
-      return this [_audioContext];
+         return audioContext;
+      })();
    },
    getDefaultPeriodicWave ()
    {
-      this [_defaultPeriodicWave] = new PeriodicWave (this .getPrivateScene ());
-      this [_defaultPeriodicWave] .setPrivate (true);
-      this [_defaultPeriodicWave] .setup ();
+      return this [_defaultPeriodicWave] ??= (() =>
+      {
+         const defaultPeriodicWave = new PeriodicWave (this .getPrivateScene ());
 
-      this .getDefaultPeriodicWave = function () { return this [_defaultPeriodicWave]; };
+         defaultPeriodicWave .setPrivate (true);
+         defaultPeriodicWave .setup ();
 
-      Object .defineProperty (this, "getDefaultPeriodicWave", { enumerable: false });
-
-      return this [_defaultPeriodicWave];
+         return defaultPeriodicWave;
+      })();
    },
    startAudioElements ()
    {
