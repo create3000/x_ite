@@ -121,12 +121,15 @@ function X3DCoreContext (element)
 
       if (instanceId === 0)
       {
-         // Fonts (font-face rules) must be declared outside the shadow root,
-         // so we add a stylesheet to the x3d-canvas element itself.
+         // Fonts (@font-face rules) must be declared outside the shadow root,
+         // so we add a stylesheet with fonts to the x3d-canvas element itself.
          // https://issues.chromium.org/41085401
 
-         stylesheets .push (new Promise (resolve =>
+         stylesheets .push (new Promise (async resolve =>
          {
+            // Make it work in tests.
+            await $.sleep (0);
+
             $("<link/>")
                .on ("load error", resolve)
                .attr ("integrity", "integrity-ptsans-css")
