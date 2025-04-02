@@ -127,7 +127,7 @@ function X3DCoreContext (element)
          stylesheets .push (new Promise (resolve =>
          {
             $("<link/>")
-               .on ("load", resolve)
+               .on ("load error", resolve)
                .attr ("integrity", "integrity-ptsans-css")
                .attr ("crossorigin", "anonymous")
                .attr ("rel", "stylesheet")
