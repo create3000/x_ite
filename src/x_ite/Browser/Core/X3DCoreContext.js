@@ -193,33 +193,6 @@ Object .assign (X3DCoreContext .prototype,
             value: this,
             configurable: true,
             enumerable: true,
-            writable: true,
-         },
-         src:
-         {
-            get: () =>
-            {
-               return this .getExecutionContext () .getWorldURL ();
-            },
-            set: (value) =>
-            {
-               this .loadURL (new Fields .MFString (value))
-                  .catch (error => console .error (error));
-            },
-            enumerable: true,
-         },
-         url:
-         {
-            get: () =>
-            {
-               return new Fields .MFString (this .getExecutionContext () .getWorldURL ());
-            },
-            set: (value) =>
-            {
-               this .loadURL (value)
-                  .catch (error => console .error (error));
-            },
-            enumerable: true,
          },
       });
 
@@ -291,18 +264,18 @@ Object .assign (X3DCoreContext .prototype,
    },
    getPrivateScene ()
    {
-      if (this [_privateScene])
-         return this [_privateScene];
+      return this [_privateScene] ??= (() =>
+      {
+         // X3DScene for default nodes.
 
-      // X3DScene for default nodes.
+         const privateScene = new X3DScene (this);
 
-      this [_privateScene] = new X3DScene (this);
+         privateScene .checkLiveState = () => true;
+         privateScene .setLive (true);
+         privateScene .setup ();
 
-      this [_privateScene] .checkLiveState = () => true;
-      this [_privateScene] .setLive (true);
-      this [_privateScene] .setup ();
-
-      return this [_privateScene];
+         return privateScene;
+      })();
    },
    connectedCallback ()
    { },
