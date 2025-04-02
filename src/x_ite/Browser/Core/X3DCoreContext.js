@@ -263,11 +263,11 @@ Object .assign (X3DCoreContext .prototype,
       return this [_contextMenu];
    },
    getPrivateScene ()
-   {
+{
+      // X3DScene for default nodes.
+
       return this [_privateScene] ??= (() =>
       {
-         // X3DScene for default nodes.
-
          const privateScene = new X3DScene (this);
 
          privateScene .checkLiveState = () => true;
