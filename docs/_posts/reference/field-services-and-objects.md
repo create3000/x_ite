@@ -124,7 +124,7 @@ Returns true if the passed SF* or MF* *field* of the same type is equals to this
 
 #### **addFieldCallback** (*key: any, callback: (value: any) => void*): void
 
-Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
+Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. The callback is called when the field has been changed.
 
 The callback has a signature of `function (value)`, where value is the current value of the field.
 
@@ -555,9 +555,13 @@ Each node may be assigned values to its **initializeOnly,** **inputOnly** and **
 
 #### **addFieldCallback** (*key: any, name: string, callback: (value: any) => void*): void
 
-Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*. *name* is the name of the field to which the callback should be connected. The callback is called when the field has been changed.
+Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the field to which the callback should be connected. The callback is called when the field has been changed.
 
 The callback has a signature of `function (value)`, where value is the current value of the field.
+
+```js
+visibilitySensor .addFieldCallback ("checkItOut", "enterTime", time => console .log (`You have entered the world at ${time}.`));
+```
 
 #### **getFieldDefinition** (*name: string*): X3DFieldDefinition
 

@@ -1988,13 +1988,13 @@ declare namespace X3D
       static readonly typeName: "SFNode";
 
       /**
-       * Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
+       * Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. The callback is called when the field has been changed.
        *
        * The callback has a signature of `function (value)`, where value is the current value of the field.
        */
       addFieldCallback (key: any, callback: (value: this) => void): void;
       /**
-       * Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*. *name* is the name of the field to which the callback should be connected. The callback is called when the field has been changed.
+       * Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the field to which the callback should be connected. The callback is called when the field has been changed.
        */
       addFieldCallback (key: any, name: string, callback: (value: unknown) => void): void;
       /**
