@@ -121,7 +121,7 @@ export default Namespace .add ("${base}", __default__);`;
 
    const integrities = [ ];
 
-   for (const src of sh (`find src -type f -name "*.css"`) .trim () .split (/\s+/))
+   for (const src of sh (`find src -type f -name "*.css"`) .trim () .split (/[\r\n]+/))
    {
       const dist = src .replace ("src", "dist");
 
