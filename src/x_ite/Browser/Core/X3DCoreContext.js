@@ -110,8 +110,10 @@ function X3DCoreContext (element)
 
       const stylesheets = [new Promise (resolve =>
       {
-         $("<link css-integrity-placeholder/>")
+         $("<link/>")
             .on ("load", resolve)
+            .attr ("integrity", "integrity-x_ite-css")
+            .attr ("crossorigin", "anonymous")
             .attr ("rel", "stylesheet")
             .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
             .appendTo (shadow);
@@ -119,10 +121,15 @@ function X3DCoreContext (element)
 
       if (instanceId === 0)
       {
+         // Fonts (font-face) must be declared outside the shadow root,
+         // so we add a stylesheet to the x3d-canvas element itself.
+         
          stylesheets .push (new Promise (resolve =>
          {
             $("<link/>")
                .on ("load", resolve)
+               .attr ("integrity", "integrity-ptsans-css")
+               .attr ("crossorigin", "anonymous")
                .attr ("rel", "stylesheet")
                .attr ("href", URLs .getFontsURL ("PT_Sans/PTSans.css"))
                .appendTo (element);
