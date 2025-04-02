@@ -70,7 +70,7 @@ function foo (node)
 
 #### **X3DFields**
 
-All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as constructor. See also [Field Services and Objects](/x_ite/reference/field-services-and-objects/).
+All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as constructor. If you want to know what fields are available, take a look at [Field Services and Objects](/x_ite/reference/field-services-and-objects/).
 
 >**Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
 {: .prompt-info }
