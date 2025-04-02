@@ -42,7 +42,7 @@ The X3DCanvasElement defines several attributes [that are documented here](/x_it
 
 #### **browser**: X3DBrowser
 
-A reference to the X3DBrowser object that is associated with this element. This property is read only.
+A reference to the [X3DBrowser](/x_ite/reference/browser-services/) object that is associated with this element. This property is read only.
 
 ### Methods
 
