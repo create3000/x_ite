@@ -108,24 +108,26 @@ function X3DCoreContext (element)
    {
       const shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
-      const stylesheets = [
-         new Promise (resolve =>
-         {
-            $("<link css-integrity-placeholder/>")
-               .on ("load", resolve)
-               .attr ("rel", "stylesheet")
-               .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
-               .appendTo (shadow);
-         }),
-         new Promise (resolve =>
+      const stylesheets = [new Promise (resolve =>
+      {
+         $("<link css-integrity-placeholder/>")
+            .on ("load", resolve)
+            .attr ("rel", "stylesheet")
+            .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
+            .appendTo (shadow);
+      })];
+
+      if (instanceId === 0)
+      {
+         stylesheets .push (new Promise (resolve =>
          {
             $("<link/>")
                .on ("load", resolve)
                .attr ("rel", "stylesheet")
                .attr ("href", URLs .getFontsURL ("PT_Sans/PTSans.css"))
                .appendTo (element);
-         }),
-      ];
+         }));
+      }
 
       this [_shadow] = shadow .append (browser .hide ());
 
