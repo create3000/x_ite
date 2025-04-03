@@ -47,7 +47,6 @@
 
 import X3DArrayField from "./X3DArrayField.js";
 import Algorithm     from "../../standard/Math/Algorithm.js";
-import STRICT_ARRAYS from "./STRICT_ARRAYS.js";
 
 const
    _target = Symbol (),
