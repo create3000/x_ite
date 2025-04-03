@@ -47,6 +47,7 @@
 
 import X3DArrayField from "./X3DArrayField.js";
 import Algorithm     from "../../standard/Math/Algorithm.js";
+import STRICT_ARRAYS from "./STRICT_ARRAYS.js";
 
 const
    _target = Symbol (),
@@ -78,11 +79,21 @@ const handler =
                components = target .getComponents (),
                valueType  = target .getValueType ();
 
-            // For historical reasons this behavior is intended (resize), there are enough
-            // X3D/VRML worlds in the Internet who rely on this behavior.
-            const array = index < target [_length]
-               ? target .getValue ()
-               : target .resize (index + 1, target .getSingleValue ());
+
+            if (index >= target [_length])
+            {
+               if (STRICT_ARRAYS)
+                  return undefined;
+
+               // For historical reasons this behavior is intended (resize), there are enough
+               // X3D/VRML worlds in the Internet who rely on this behavior.
+
+               var array = target .resize (index + 1, target .getSingleValue ());;
+            }
+            else
+            {
+               var array = target .getValue ();
+            }
 
             if (components === 1)
             {

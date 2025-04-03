@@ -47,6 +47,7 @@
 
 import X3DField      from "./X3DField.js";
 import X3DArrayField from "./X3DArrayField.js";
+import STRICT_ARRAYS from "./STRICT_ARRAYS.js";
 
 const
    _target = Symbol (),
@@ -71,10 +72,16 @@ const handler =
 
          if (Number .isInteger (index))
          {
-            // For historical reasons this behavior is intended (resize), there are enough
-            // X3D/VRML worlds in the Internet who rely on this behavior.
             if (index >= array .length)
+            {
+               if (STRICT_ARRAYS)
+                  return undefined;
+
+               // For historical reasons this behavior is intended (resize), there are enough
+               // X3D/VRML worlds in the Internet who rely on this behavior.
+
                target .resize (index + 1);
+            }
 
             return array [index] .valueOf ();
          }
