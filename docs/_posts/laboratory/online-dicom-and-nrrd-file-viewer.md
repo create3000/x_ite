@@ -71,7 +71,7 @@ x3d-canvas {
 
 <script type="module" src="/x_ite/assets/laboratory/dicom/dicom.mjs"></script>
 
-<p>Click »Choose File« and select a DICOM P10 or NRRD file from your local file system.</p>
+Click »Choose File« and select a DICOM P10 or NRRD file from your local file system.
 
 <div class="viewer">
   <div class="viewer-row">
