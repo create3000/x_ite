@@ -81,19 +81,9 @@ const handler =
 
 
             if (index >= target [_length])
-            {
-               if (STRICT_ARRAYS)
-                  return undefined;
+               return undefined;
 
-               // For historical reasons this behavior is intended (resize), there are enough
-               // X3D/VRML worlds in the Internet who rely on this behavior.
-
-               var array = target .resize (index + 1, target .getSingleValue ());;
-            }
-            else
-            {
-               var array = target .getValue ();
-            }
+            const array = target .getValue ();
 
             if (components === 1)
             {

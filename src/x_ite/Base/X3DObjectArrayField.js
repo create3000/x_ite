@@ -73,15 +73,7 @@ const handler =
          if (Number .isInteger (index))
          {
             if (index >= array .length)
-            {
-               if (STRICT_ARRAYS)
-                  return undefined;
-
-               // For historical reasons this behavior is intended (resize), there are enough
-               // X3D/VRML worlds in the Internet who rely on this behavior.
-
-               target .resize (index + 1);
-            }
+               return undefined;
 
             return array [index] .valueOf ();
          }
