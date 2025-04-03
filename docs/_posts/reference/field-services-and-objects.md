@@ -560,7 +560,10 @@ Adds a field callback function, if external browser interface is used. *key* is 
 The callback has a signature of `function (value)`, where value is the current value of the field.
 
 ```js
-visibilitySensor .addFieldCallback ("checkItOut", "enterTime", time => console .log (`You have entered the world at ${time}.`));
+visibilitySensor .addFieldCallback ("checkItOut", "enterTime", time =>
+{
+  console .log (`You have entered the world at ${time}.`);
+});
 ```
 
 #### **getFieldDefinition** (*name: string*): X3DFieldDefinition
