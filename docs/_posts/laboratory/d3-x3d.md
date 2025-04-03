@@ -3,7 +3,7 @@ title: D3-X3D Area Chart
 date: 2025-04-03
 layout: wide
 categories: [Laboratory]
-tags: [Area Char, D3-X3D]
+tags: [Area Chart, D3-X3D]
 ---
 <style>
 /* Paragraph */
