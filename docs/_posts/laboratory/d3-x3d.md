@@ -65,32 +65,37 @@ x3d-canvas {
 
 <div class="viewer">
   <div class="viewer-row">
-     <div class="viewer-column-80"><x3d-canvas id="chartholder" splashScreen="false"></x3d-canvas></div>
-     <div class="viewer-column-20">
-     <div class="table-wrapper">
-       <table>
-         <tr>
+    <div class="viewer-column-80">
+      <x3d-canvas
+          id="chartholder"
+          splashScreen="false"
+          contentScale="auto"></x3d-canvas>
+    </div>
+    <div class="viewer-column-20">
+      <div class="table-wrapper">
+        <table>
+          <tr>
             <td>UK:</td>
             <td><input type="checkbox" name="country" id="uk" checked value="UK"/></td>
-         </tr>
-         <tr>
+          </tr>
+          <tr>
             <td>France:</td>
             <td><input type="checkbox" name="country" id="france" checked value="France"/></td>
-         </tr>
-         <tr>
+            </tr>
+            <tr>
             <td>Spain:</td>
             <td><input type="checkbox" name="country" id="spain" value="Spain"/></td>
-         </tr>
-         <tr>
+            </tr>
+            <tr>
             <td>Germany:</td>
             <td><input type="checkbox" name="country" id="germany" checked value="Germany"/></td>
-         </tr>
-         <tr>
+            </tr>
+            <tr>
             <td>Italy:</td>
             <td><input type="checkbox" name="country" id="italy" value="Italy"/></td>
-         </tr>
-       </table>
-     </div>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </div>
