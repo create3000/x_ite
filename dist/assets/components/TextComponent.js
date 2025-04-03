@@ -1,5 +1,5 @@
-/* X_ITE v11.4.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.2")];
+/* X_ITE v11.5.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -17817,7 +17817,7 @@ const
    _loadingFonts     = Symbol (),
    _families         = Symbol (),
    _library          = Symbol (),
-   _wawoff2          = Symbol ();
+   _woff2Decoder     = Symbol ();
 
 function X3DTextContext ()
 {
@@ -17898,11 +17898,7 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFont (executionContext, font)
    {
-      const
-         scene    = executionContext .getLocalScene (),
-         families = this [_families] .get (scene) ?? new Map ();
-
-      this [_families] .set (scene, families);
+      const families = this [_families] .getOrInsertComputed (executionContext, () => new Map ());
 
       // fontFamily - fontStyle
 
@@ -17911,9 +17907,7 @@ Object .assign (X3DTextContext .prototype,
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         const fontStyles = families .get (fontFamily .toUpperCase ()) ?? new Map ();
-
-         families .set (fontFamily .toUpperCase (), fontStyles);
+         const fontStyles = families .getOrInsertComputed (fontFamily .toUpperCase (), () => new Map ());
 
          for (const fontStyle of new Set (Object .values (name .fontSubfamily ?? { })))
          {
@@ -17929,11 +17923,7 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFontLibrary (executionContext, fontFamily, font)
    {
-      const
-         scene   = executionContext .getLocalScene (),
-         library = this [_library] .get (scene) ?? new Map ();
-
-      this [_library] .set (scene, library);
+      const library = this [_library] .getOrInsertComputed (executionContext, () => new Map ());
 
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fontFamily}.`);
@@ -17947,13 +17937,11 @@ Object .assign (X3DTextContext .prototype,
          fontFamily = fontFamily .toUpperCase ();
          fontStyle  = fontStyle .toUpperCase () .replaceAll (" ", "");
 
-         const scene = executionContext .getLocalScene ();
-
          for (;;)
          {
             const
-               library  = this [_library]  .get (scene),
-               families = this [_families] .get (scene);
+               library  = this [_library]  .get (executionContext),
+               families = this [_families] .get (executionContext);
 
             const font = library ?.get (fontFamily)
                ?? families ?.get (fontFamily) ?.get (fontStyle);
@@ -17973,9 +17961,9 @@ Object .assign (X3DTextContext .prototype,
    {
       if (this .isWoff2 (arrayBuffer))
       {
-         const decompress = await this .getWoff2Decompressor ();
+         const decompress = await this .getWoff2Decoder ();
 
-         return decompress (arrayBuffer);
+         return await decompress (arrayBuffer);
       }
 
       return arrayBuffer;
@@ -17991,16 +17979,16 @@ Object .assign (X3DTextContext .prototype,
 
       return magic === 0x774F4632; // 'wOF2'
    },
-   async getWoff2Decompressor ()
+   async getWoff2Decoder ()
    {
-      return this [_wawoff2] ??= await this .loadWoff2Decompressor ();
+      return this [_woff2Decoder] ??= await this .loadWoff2Decoder ();
    },
-   async loadWoff2Decompressor ()
+   async loadWoff2Decoder ()
    {
-      // https://www.npmjs.com/package/wawoff2
+      // https://www.npmjs.com/package/woff2-encoder
 
       const
-         fileURL  = external_X_ITE_X3D_URLs_default().getLibraryURL ("decompress_binding.js"),
+         fileURL  = external_X_ITE_X3D_URLs_default().getLibraryURL ("woff2_decoder.js"),
          response = await fetch (fileURL);
 
       if (!response .ok)
@@ -18008,11 +17996,9 @@ Object .assign (X3DTextContext .prototype,
 
       const
          text    = await response .text (),
-         wawoff2 = (new Function (text)) ();
+         decoder = (new Function (text)) ();
 
-      await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
-
-      return arrayBuffer => wawoff2 .decompress (arrayBuffer);
+      return decoder;
    },
 });
 

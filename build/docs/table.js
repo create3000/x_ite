@@ -14,8 +14,8 @@ const
 	docs     = `${cwd}/docs/_posts/components`;
 
 const
-	X3D    = sh (`find '${examples}/X3D' -type f -name 'example.html'`) .trim () .split ("\n") .sort (),
-	other  = sh (`find '${examples}' -type f -name 'example.html' -not -path '*/X3D/*'`) .trim () .split ("\n") .sort (),
+	X3D    = sh (`find '${examples}/X3D' -type f -name 'example.html'`) .trim () .split (/[\r\n]+/) .sort (),
+	other  = sh (`find '${examples}' -type f -name 'example.html' -not -path '*/X3D/*'`) .trim () .split (/[\r\n]+/) .sort (),
 	html   = [... X3D, ... other],
 	table  = Array .from ({ length: Math .floor ((html .length - 1) / COLUMNS) + 1 }, () => [ ]),
 	config = require (`${examples}/config.json`),

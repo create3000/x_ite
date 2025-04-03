@@ -51,6 +51,12 @@ import CylinderOptions   from "./CylinderOptions.js";
 import QuadSphereOptions from "./QuadSphereOptions.js";
 import PrimitiveQuality  from "../Core/PrimitiveQuality.js";
 
+const
+   _boxOptions      = Symbol (),
+   _coneOptions     = Symbol (),
+   _cylinderOptions = Symbol (),
+   _sphereOptions   = Symbol ();
+
 function X3DGeometry3DContext () { }
 
 Object .assign (X3DGeometry3DContext .prototype,
@@ -61,19 +67,19 @@ Object .assign (X3DGeometry3DContext .prototype,
    },
    getBoxOptions ()
    {
-      return getOptionNode .call (this, "getBoxOptions", BoxOptions);
+      return getOptionNode .call (this, _boxOptions, BoxOptions);
    },
    getConeOptions ()
    {
-      return getOptionNode .call (this, "getConeOptions", ConeOptions);
+      return getOptionNode .call (this, _coneOptions, ConeOptions);
    },
    getCylinderOptions ()
    {
-      return getOptionNode .call (this, "getCylinderOptions", CylinderOptions);
+      return getOptionNode .call (this, _cylinderOptions, CylinderOptions);
    },
    getSphereOptions ()
    {
-      return getOptionNode .call (this, "getSphereOptions", QuadSphereOptions);
+      return getOptionNode .call (this, _sphereOptions, QuadSphereOptions);
    },
    setPrimitiveQuality3D (primitiveQuality)
    {
@@ -114,15 +120,14 @@ Object .assign (X3DGeometry3DContext .prototype,
 
 function getOptionNode (key, OptionNode)
 {
-   const optionNode = new OptionNode (this .getPrivateScene ());
+   return this [key] ??= (() =>
+   {
+      const optionNode = new OptionNode (this .getPrivateScene ());
 
-   optionNode .setup ();
+      optionNode .setup ();
 
-   this [key] = function () { return optionNode; };
-
-   Object .defineProperty (this, key, { enumerable: false });
-
-   return optionNode;
+      return optionNode;
+   })();
 }
 
 export default X3DGeometry3DContext;

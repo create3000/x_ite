@@ -308,40 +308,48 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       throw new Error ("SFNode is disposed.")
    },
-   addFieldCallback (name, key, object)
+   addFieldCallback (... args)
    {
       const target = this [_target];
 
-      switch (arguments .length)
+      switch (args .length)
       {
          case 2:
          {
-            return X3DField .prototype .addFieldCallback .apply (target, arguments);
+            const [key, callback] = args;
+
+            return X3DField .prototype .addFieldCallback .call (target, key, callback);
          }
-         case 3: // Depreciated
+         case 3:
          {
-            const value = target .getValue ();
+            const
+               [key, name, callback] = args,
+               value                 = target .getValue ();
 
             if (value)
-               return value .getField (name) .addFieldCallback (key, object);
+               return value .getField (name) .addFieldCallback (key, callback);
 
             throw new Error ("SFNode.addFieldCallback: node is null.");
          }
       }
    },
-   removeFieldCallback (name, key)
+   removeFieldCallback (... args)
    {
       const target = this [_target];
 
-      switch (arguments .length)
+      switch (args .length)
       {
          case 1:
          {
-            return X3DField .prototype .removeFieldCallback .apply (target, arguments);
+            const key = [args];
+
+            return X3DField .prototype .removeFieldCallback .call (target, key);
          }
-         case 2: // Depreciated
+         case 2:
          {
-            const value = target .getValue ();
+            const
+               [key, name] = args,
+               value       = target .getValue ();
 
             if (value)
                return value .getField (name) .removeFieldCallback (key);

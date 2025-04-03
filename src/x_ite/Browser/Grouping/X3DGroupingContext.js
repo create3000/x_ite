@@ -57,27 +57,24 @@ Object .assign (X3DGroupingContext .prototype,
 {
    getBBoxNode ()
    {
-      const
-         bboxShape      = new Shape (this .getPrivateScene ()),
-         bboxGeometry   = new IndexedLineSet (this .getPrivateScene ()),
-         bboxCoordinate = new Coordinate (this .getPrivateScene ());
+      return this [_bboxShape] ??= (() =>
+      {
+         const
+            bboxShape      = new Shape (this .getPrivateScene ()),
+            bboxGeometry   = new IndexedLineSet (this .getPrivateScene ()),
+            bboxCoordinate = new Coordinate (this .getPrivateScene ());
 
-      bboxShape ._geometry      = bboxGeometry;
-      bboxGeometry ._coordIndex = [0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1];
-      bboxGeometry ._coord      = bboxCoordinate;
-      bboxCoordinate ._point    = [0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5];
+         bboxShape ._geometry      = bboxGeometry;
+         bboxGeometry ._coordIndex = [0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1];
+         bboxGeometry ._coord      = bboxCoordinate;
+         bboxCoordinate ._point    = [0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5];
 
-      bboxCoordinate .setup ();
-      bboxGeometry   .setup ();
-      bboxShape      .setup ();
+         bboxCoordinate .setup ();
+         bboxGeometry   .setup ();
+         bboxShape      .setup ();
 
-      this [_bboxShape] = bboxShape;
-
-      this .getBBoxNode = function () { return this [_bboxShape]; };
-
-      Object .defineProperty (this, "getBBoxNode", { enumerable: false });
-
-      return bboxShape;
+         return bboxShape;
+      })();
    },
 });
 

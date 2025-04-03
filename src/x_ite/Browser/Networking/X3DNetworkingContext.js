@@ -210,16 +210,15 @@ Object .assign (X3DNetworkingContext .prototype,
    {
       // Inline node's empty scene.
 
-      this [_defaultScene] = new X3DScene (this);
+      return this [_defaultScene] ??= (() =>
+      {
+         const defaultScene = new X3DScene (this);
 
-      this [_defaultScene] .setup ();
-      this [_defaultScene] .setLive (this .isLive ());
+         defaultScene .setup ();
+         defaultScene .setLive (this .isLive ());
 
-      this .getDefaultScene = function () { return this [_defaultScene]; };
-
-      Object .defineProperty (this, "getDefaultScene", { enumerable: false });
-
-      return this [_defaultScene];
+         return defaultScene;
+      })();
    },
 });
 

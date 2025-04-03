@@ -108,15 +108,42 @@ function X3DCoreContext (element)
    {
       const shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
-      $("<link css-integrity-placeholder/>")
-         .on ("load", () => browser .show ())
-         .attr ("rel", "stylesheet")
-         .attr ("type", "text/css")
-         .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()) .href)
-         .appendTo (shadow);
+      const stylesheets = [new Promise (resolve =>
+      {
+         $("<link/>")
+            .on ("load", resolve)
+            .attr ("integrity", "integrity-x_ite-css")
+            .attr ("crossorigin", "anonymous")
+            .attr ("rel", "stylesheet")
+            .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
+            .appendTo (shadow);
+      })];
 
-      this [_shadow] = shadow
-         .append (browser .hide ());
+      if (instanceId === 0)
+      {
+         // Fonts (@font-face rules) must be declared outside the shadow root,
+         // so we add a stylesheet with fonts to the x3d-canvas element itself.
+         // https://issues.chromium.org/41085401
+
+         stylesheets .push (new Promise (async resolve =>
+         {
+            // Make it work in tests:
+            // (Failed to construct 'CustomElement': The result must not have children)
+            await $.sleep (0);
+
+            $("<link/>")
+               .on ("load error", resolve)
+               .attr ("integrity", "integrity-ptsans-css")
+               .attr ("crossorigin", "anonymous")
+               .attr ("rel", "stylesheet")
+               .attr ("href", URLs .getFontsURL ("PT_Sans/PTSans.css"))
+               .appendTo (element);
+         }));
+      }
+
+      this [_shadow] = shadow .append (browser .hide ());
+
+      Promise .all (stylesheets) .then (() => browser .show ());
    }
    else
    {
@@ -165,33 +192,6 @@ Object .assign (X3DCoreContext .prototype,
          {
             value: this,
             configurable: true,
-            enumerable: true,
-            writable: true,
-         },
-         src:
-         {
-            get: () =>
-            {
-               return this .getExecutionContext () .getWorldURL ();
-            },
-            set: (value) =>
-            {
-               this .loadURL (new Fields .MFString (value))
-                  .catch (error => console .error (error));
-            },
-            enumerable: true,
-         },
-         url:
-         {
-            get: () =>
-            {
-               return new Fields .MFString (this .getExecutionContext () .getWorldURL ());
-            },
-            set: (value) =>
-            {
-               this .loadURL (value)
-                  .catch (error => console .error (error));
-            },
             enumerable: true,
          },
       });
@@ -263,19 +263,19 @@ Object .assign (X3DCoreContext .prototype,
       return this [_contextMenu];
    },
    getPrivateScene ()
-   {
-      if (this [_privateScene])
-         return this [_privateScene];
-
+{
       // X3DScene for default nodes.
 
-      this [_privateScene] = new X3DScene (this);
+      return this [_privateScene] ??= (() =>
+      {
+         const privateScene = new X3DScene (this);
 
-      this [_privateScene] .checkLiveState = () => true;
-      this [_privateScene] .setLive (true);
-      this [_privateScene] .setup ();
+         privateScene .checkLiveState = () => true;
+         privateScene .setLive (true);
+         privateScene .setup ();
 
-      return this [_privateScene];
+         return privateScene;
+      })();
    },
    connectedCallback ()
    { },

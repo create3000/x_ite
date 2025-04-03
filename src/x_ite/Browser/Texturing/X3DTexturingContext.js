@@ -327,42 +327,42 @@ Object .assign (X3DTexturingContext .prototype,
    },
    getDefaultTextureProperties ()
    {
-      this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());
-      this [_defaultTextureProperties] ._generateMipMaps     = true;
-      this [_defaultTextureProperties] ._minificationFilter  = "NICEST";
-      this [_defaultTextureProperties] ._magnificationFilter = "NICEST";
+      return this [_defaultTextureProperties] ??= (() =>
+      {
+         const defaultTextureProperties = new TextureProperties (this .getPrivateScene ());
 
-      this [_defaultTextureProperties] .setup ();
+         defaultTextureProperties ._generateMipMaps     = true;
+         defaultTextureProperties ._minificationFilter  = "NICEST";
+         defaultTextureProperties ._magnificationFilter = "NICEST";
 
-      this .getDefaultTextureProperties = function () { return this [_defaultTextureProperties]; };
+         defaultTextureProperties .setup ();
 
-      Object .defineProperty (this, "getDefaultTextureProperties", { enumerable: false });
-
-      return this [_defaultTextureProperties];
+         return defaultTextureProperties;
+      })();
    },
    getDefaultTextureTransform ()
    {
-      this [_defaultTextureTransform] = new TextureTransform (this .getPrivateScene ());
-      this [_defaultTextureTransform] .setPrivate (true);
-      this [_defaultTextureTransform] .setup ();
+      return this [_defaultTextureTransform] ??= (() =>
+      {
+         const defaultTextureTransform = new TextureTransform (this .getPrivateScene ());
 
-      this .getDefaultTextureTransform = function () { return this [_defaultTextureTransform]; };
+         defaultTextureTransform .setPrivate (true);
+         defaultTextureTransform .setup ();
 
-      Object .defineProperty (this, "getDefaultTextureTransform", { enumerable: false });
-
-      return this [_defaultTextureTransform];
+         return defaultTextureTransform;
+      })();
    },
    getDefaultTextureCoordinate ()
    {
-      this [_defaultTextureCoordinate] = new TextureCoordinate (this .getPrivateScene ());
-      this [_defaultTextureCoordinate] .setPrivate (true);
-      this [_defaultTextureCoordinate] .setup ();
+      return this [_defaultTextureCoordinate] ??= (() =>
+      {
+         const defaultTextureCoordinate = new TextureCoordinate (this .getPrivateScene ());
 
-      this .getDefaultTextureCoordinate = function () { return this [_defaultTextureCoordinate]; };
+         defaultTextureCoordinate .setPrivate (true);
+         defaultTextureCoordinate .setup ();
 
-      Object .defineProperty (this, "getDefaultTextureCoordinate", { enumerable: false });
-
-      return this [_defaultTextureCoordinate];
+         return defaultTextureCoordinate;
+      })();
    },
    setTextureQuality (textureQuality)
    {

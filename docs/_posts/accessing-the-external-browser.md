@@ -163,125 +163,11 @@ And here you can see the result:
   </X3D>
 </x3d-canvas>
 
-## X3D Object
-
-### Functions
-
-#### **noConflict** (): X3D
-
-In X_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
-
-If for some reason two versions of X_ITE are loaded (which is not recommended), calling `X3D .noConflict ()` from the second version will return the globally scoped `X3D` object to those of the first version.
-
-```html
-<script src="other_lib.js"></script>
-<script src="x_ite.js"></script>
-<script>
-const X_ITE_X3D = X3D .noConflict ();
-// Code that uses other library's X3D can follow here.
-</script>
-```
-
-The following services can be used to establish a session and obtain the X3DBrowser object.
-
-#### **getBrowser** (*selector: string*): X3DBrowser
-
-The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
-
-```js
-// Obtain X3DBrowser object of first x3d-canvas element.
-const Browser = X3D .getBrowser ();
-```
-
-#### **getBrowser** (*element: HTMLElement*): X3DBrowser
-
-Given a DOM element that represents a x3d-canvas element, the getBrowser function returns the appropriate X3DBrowser object.
-
-```js
-// Query all x3d-canvas elements within the HTML page.
-const canvases = document .querySelectorAll ("x3d-canvas");
-
-for (const canvas of canvases)
-{
-  // Obtain X3DBrowser object of element i.
-  const Browser = X3D .getBrowser (canvas);
-  ...
-}
-```
-
-#### **createBrowser** (): X3DCanvasElement
-
-Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
-
-```js
-function addBrowser (parent)
-{
-   // Create a new x3d-canvas element.
-   const canvas = X3D .createBrowser ();
-
-   canvas .setAttribute ("src", "/my/world.x3d");
-
-   parent .appendChild (canvas);
-}
-```
-
-### Objects
-
-The X3D object has several properties, you can use any of the properties below.
-
-#### **X3DConstants**
-
-The X3DConstants object defines values that can be useful for scripting. See also [Constants Services](/x_ite/reference/constants-services/).
-
-```js
-function foo (node)
-{
-  // Get node type array.
-
-  const types = node .getNodeType () .reverse ();
-
-  // Iterate over node type array in reverse order with
-  // concrete node types as first and abstract node
-  // types as last index.
-
-  for (const type of types)
-  {
-    switch (type)
-    {
-      case X3D .X3DConstants .Transform:
-        // node is of type Transform.
-        ...
-        break;
-      case X3D .X3DConstants .X3DLightNode:
-        //  node is at least of type X3DLightNode.
-        ...
-        break;
-    }
-  }
-}
-```
-
-#### **X3DFields**
-
-All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as constructor. See also [Field Services and Objects](/x_ite/reference/field-services-and-objects/).
-
->**Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
-{: .prompt-info }
-
-```js
-// Create a new translation vector and
-// determine the length of this vector.
-
-const
-  translation = new X3D .SFVec3f (4, 2, 0),
-  length      = translation .length ();
-```
-
-## Function Reference
+## Documentation
 
 A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found in [ECMAScript Object and Function Definitions](/x_ite/reference/ecmascript-object-and-function-definitions/).
 
-## Example
+## Second Example
 
 <iframe src="https://create3000.github.io/media/x_ite/external-browser/adrenaline.html"></iframe>
 
@@ -310,8 +196,8 @@ function init ()
   $("#spin")              .on ("click",  spin);
 
   // Add a field callback to be notified when cycleTime is fired. "time" is an arbitrary
-  // string to identify the callback, for example if you want to remove the callback later.
-  timer .getField ("cycleTime") .addFieldCallback ("time", value =>
+  // string to identify the callback, especially if you want to remove the callback later.
+  timer .addFieldCallback ("time", "cycleTime", value =>
   {
     console .log ("cycleTime: " + value);
   });
