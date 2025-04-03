@@ -69,6 +69,7 @@ x3d-canvas {
       <x3d-canvas
           id="chartholder"
           splashScreen="false"
+          notifications="false"
           contentScale="auto"></x3d-canvas>
     </div>
     <div class="viewer-column-20">
