@@ -1,9 +1,9 @@
 ---
-title: Real Time Earth Quake Information
-date: 2023-02-21
+title: D3-X3D Area Chart
+date: 2025-04-03
 layout: wide
 categories: [Laboratory]
-tags: [Real Time, Earth Quake, Laboratory]
+tags: [Area Char, D3-X3D]
 ---
 <style>
 /* Paragraph */
