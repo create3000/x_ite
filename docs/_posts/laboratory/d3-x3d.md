@@ -58,8 +58,8 @@ x3d-canvas {
 }
 </style>
 
-<script defer src="https://d3js.org/d3.v7.min.js"></script>
-<script defer src="https://raw.githack.com/jamesleesaunders/d3-x3d/master/dist/d3-x3d.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/d3@latest/dist/d3.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/d3-x3d@latest/dist/d3-x3d.min.js"></script>
 
 **D3-X3D** is an external JavaScript library that combines the power of **D3.js** with X3D and can be found on [GitHub](https://github.com/jamesleesaunders/d3-x3d#d3-x3d) with even more examples and documentation.
 
