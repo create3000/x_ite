@@ -110,8 +110,7 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
-const
-   _screenTextureProperties = Symbol ();
+const _screenTextureProperties = Symbol ();
 
 function X3DLayoutContext () { }
 
@@ -119,23 +118,22 @@ Object .assign (X3DLayoutContext .prototype,
 {
    getScreenTextureProperties ()
    {
-      this [_screenTextureProperties] = new (external_X_ITE_X3D_TextureProperties_default()) (this .getPrivateScene ());
+      return this [_screenTextureProperties] ??= (() =>
+      {
+         const screenTextureProperties = new (external_X_ITE_X3D_TextureProperties_default()) (this .getPrivateScene ());
 
-      this [_screenTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
-      this [_screenTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
-      this [_screenTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
-      this [_screenTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
-      this [_screenTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
-      this [_screenTextureProperties] ._generateMipMaps     = false;
-      this [_screenTextureProperties] ._textureCompression  = "DEFAULT";
+         screenTextureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
+         screenTextureProperties ._boundaryModeT       = "CLAMP_TO_EDGE";
+         screenTextureProperties ._boundaryModeR       = "CLAMP_TO_EDGE";
+         screenTextureProperties ._minificationFilter  = "NEAREST_PIXEL";
+         screenTextureProperties ._magnificationFilter = "NEAREST_PIXEL";
+         screenTextureProperties ._generateMipMaps     = false;
+         screenTextureProperties ._textureCompression  = "DEFAULT";
 
-      this [_screenTextureProperties] .setup ();
+         screenTextureProperties .setup ();
 
-      this .getScreenTextureProperties = function () { return this [_screenTextureProperties]; };
-
-      Object .defineProperty (this, "getScreenTextureProperties", { enumerable: false });
-
-      return this [_screenTextureProperties];
+         return screenTextureProperties;
+      })();
    },
    getScreenScaleMatrix: (() =>
    {
