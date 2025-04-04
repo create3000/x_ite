@@ -70,7 +70,7 @@ x3d-canvas {
 
 <script type="module" src="/x_ite/assets/laboratory/earthquakes/earthquakes.mjs"></script>
 
-<p>This page uses data from the <a href="https://earthquake.usgs.gov">USGS Earthquakes Hazards Program (EHP)</a> to provide real-time earthquake information.</p>
+This page uses data from the <a href="https://earthquake.usgs.gov">USGS Earthquakes Hazards Program (EHP)</a> to provide real-time earthquake information.
 
 <div class="viewer">
   <div class="viewer-row">

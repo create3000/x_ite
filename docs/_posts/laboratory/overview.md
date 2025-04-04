@@ -54,4 +54,4 @@ Looking for a command line tool to convert 3D file formats? Use [x3d-tidy](https
 
 ## D3-X3D
 
-[D3-X3D](https://github.com/jamesleesaunders/d3-x3d#d3-x3d) is an external JavaScript library that combines the power of **D3.js** with X3D and can be found on GitHub.
+[D3-X3D](../d3-x3d) is a library that combines **D3.js** (for data-driven visualizations) with X3D (for 3D graphics in the browser). It enables the creation of interactive 3D visualizations using D3's data-binding capabilities while rendering in an X3D environment. This allows for seamless integration of data visualization with 3D scene manipulation.

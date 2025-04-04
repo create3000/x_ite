@@ -127,8 +127,7 @@ function X3DCoreContext (element)
 
          stylesheets .push (new Promise (async resolve =>
          {
-            // Make it work in tests:
-            // (Failed to construct 'CustomElement': The result must not have children)
+            // A newly constructed custom element must not have child nodes.
             await $.sleep (0);
 
             $("<link/>")
