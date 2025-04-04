@@ -56,7 +56,7 @@ x3d-canvas {
 
 <script type="module" src="/x_ite/assets/laboratory/area-chart/area-chart.mjs"></script>
 
-<p>This page automatically generates an area chart from a set of random areas and heights. Try to <a id="rebuild" href="#">rebuild</a> this chart, or download <a download href="/x_ite/assets/laboratory/area-chart/area-chart.html">area-chart.html</a> and <a download href="/x_ite/assets/laboratory/area-chart/area-chart.mjs">area-chart.mjs</a>.</p>
+This page automatically generates an area chart from a set of random areas and heights. Try to <a id="rebuild" href="#">rebuild</a> this chart, or download <a download href="/x_ite/assets/laboratory/area-chart/area-chart.html">area-chart.html</a> and <a download href="/x_ite/assets/laboratory/area-chart/area-chart.mjs">area-chart.mjs</a>.
 
 <div class="viewer">
   <div class="viewer-row">
