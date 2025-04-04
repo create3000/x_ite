@@ -892,15 +892,15 @@ Object .assign (X3DParticleSystemsContext .prototype,
 {
    getDefaultEmitter ()
    {
-      this [_defaultEmitter] = new ParticleSystems_PointEmitter (this .getPrivateScene ());
-      this [_defaultEmitter] .setPrivate (true);
-      this [_defaultEmitter] .setup ();
+      return this [_defaultEmitter] ??= (() =>
+      {
+         const defaultEmitter = new ParticleSystems_PointEmitter (this .getPrivateScene ());
 
-      this .getDefaultEmitter = function () { return this [_defaultEmitter]; };
+         defaultEmitter .setPrivate (true);
+         defaultEmitter .setup ();
 
-      Object .defineProperty (this, "getDefaultEmitter", { enumerable: false });
-
-      return this [_defaultEmitter];
+         return defaultEmitter;
+      })();
    },
 });
 

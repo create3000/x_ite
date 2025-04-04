@@ -676,6 +676,13 @@ var external_X_ITE_X3D_PrimitiveQuality_default = /*#__PURE__*/__webpack_require
 
 
 
+const
+   _arc2DOptions       = Symbol (),
+   _arcClose2DOptions  = Symbol (),
+   _circle2DOptions    = Symbol (),
+   _disk2DOptions      = Symbol (),
+   _rectangle2DOptions = Symbol ();
+
 function X3DGeometry2DContext () { }
 
 Object .assign (X3DGeometry2DContext .prototype,
@@ -686,23 +693,23 @@ Object .assign (X3DGeometry2DContext .prototype,
    },
    getArc2DOptions ()
    {
-      return getOptionNode .call (this, "getArc2DOptions", Geometry2D_Arc2DOptions);
+      return getOptionNode .call (this, _arc2DOptions, Geometry2D_Arc2DOptions);
    },
    getArcClose2DOptions ()
    {
-      return getOptionNode .call (this, "getArcClose2DOptions", Geometry2D_ArcClose2DOptions);
+      return getOptionNode .call (this, _arcClose2DOptions, Geometry2D_ArcClose2DOptions);
    },
    getCircle2DOptions ()
    {
-      return getOptionNode .call (this, "getCircle2DOptions", Geometry2D_Circle2DOptions);
+      return getOptionNode .call (this, _circle2DOptions, Geometry2D_Circle2DOptions);
    },
    getDisk2DOptions ()
    {
-      return getOptionNode .call (this, "getDisk2DOptions", Geometry2D_Disk2DOptions);
+      return getOptionNode .call (this, _disk2DOptions, Geometry2D_Disk2DOptions);
    },
    getRectangle2DOptions ()
    {
-      return getOptionNode .call (this, "getRectangle2DOptions", Geometry2D_Rectangle2DOptions);
+      return getOptionNode .call (this, _rectangle2DOptions, Geometry2D_Rectangle2DOptions);
    },
    setPrimitiveQuality2D (primitiveQuality)
    {
@@ -744,15 +751,14 @@ Object .assign (X3DGeometry2DContext .prototype,
 
 function getOptionNode (key, OptionNode)
 {
-   const optionNode = new OptionNode (this .getPrivateScene ());
+   return this [key] ??= (() =>
+   {
+      const optionNode = new OptionNode (this .getPrivateScene ());
 
-   optionNode .setup ();
+      optionNode .setup ();
 
-   this [key] = function () { return optionNode; };
-
-   Object .defineProperty (this, key, { enumerable: false });
-
-   return optionNode;
+      return optionNode;
+   })();
 }
 
 const X3DGeometry2DContext_default_ = X3DGeometry2DContext;
