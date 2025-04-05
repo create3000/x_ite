@@ -228,14 +228,11 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
    copy ()
    {
       const
-         target     = this [_target],
-         array      = target .getValue (),
-         copy       = target .create (),
-         copyArray  = new (target .getArrayType ()) (array);
+         target = this [_target],
+         array  = target .getValue (),
+         copy   = target .create ();
 
-      copy [_length] = target [_length];
-
-      X3DArrayField .prototype .set .call (copy, copyArray);
+      copy .set (array, target [_length]);
 
       return copy;
    },
