@@ -33,7 +33,7 @@ The AudioClip node belongs to the **Sound** component and requires at least leve
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -57,8 +57,8 @@ Enables/disables node operation.
 
 #### Hints
 
-- Allows author to design when [Inline](/x_ite/components/networking/inline/) loading occurs via user interaction, event chains or scripting.
-- Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
+- Allows author to design when [Inline](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/networking/inline/) loading occurs via user interaction, event chains or scripting.
+- Use a separate [LoadSensor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -130,7 +130,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
@@ -138,7 +138,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and AudioClip bec
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
@@ -146,7 +146,7 @@ When time now \>= *pauseTime*, isPaused becomes true and AudioClip becomes pause
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
@@ -154,12 +154,12 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/eventutilities/timetrigger/) triggerTime.
 
 #### Warnings
 
-- An active [TimeSensor](/x_ite/components/time/timesensor/) node ignores set_cycleInterval and set_startTime events.
-- An active [TimeSensor](/x_ite/components/time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
+- An active [TimeSensor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/time/timesensor/) node ignores set_cycleInterval and set_startTime events.
+- An active [TimeSensor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
@@ -217,7 +217,7 @@ Any audio file format supported by the web browser, but at least:
 
 ### Hints
 
-- Add a parent [Sound](/x_ite/components/sound/sound/) node first.
+- Add a parent [Sound](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/sound/sound/) node first.
 - Utilize DEF/USE references for multiple copies of a single AudioClip sound file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple audio formats for the same audio track, with each source address listed separately in the url field.
 - Player support for .wav format is required, .midi format is recommended, other formats are optional.

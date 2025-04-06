@@ -29,7 +29,7 @@ The GeoElevationGrid node belongs to the **Geospatial** component and requires a
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -37,7 +37,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
-Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Single contained [GeoOrigin](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -163,11 +163,11 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 #### Warning
 
-- Note type double, unlike [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) *creaseAngle*.
+- Note type double, unlike [ElevationGrid](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/elevationgrid/) *creaseAngle*.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether [Color](/x_ite/components/rendering/color/) node color values are applied to each point vertex (true) or per quadrilateral (false).
+Whether [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) node color values are applied to each point vertex (true) or per quadrilateral (false).
 
 #### Hint
 
@@ -175,19 +175,19 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 
 ### SFBool [ ] **normalPerVertex** TRUE
 
-Whether [Normal](/x_ite/components/rendering/normal/) node vector values are applied to each point vertex (true) or per quadrilateral (false).
+Whether [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) node vector values are applied to each point vertex (true) or per quadrilateral (false).
 
 #### Hint
 
-- If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- If no child [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
+Single contained [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) or [ColorRGBA](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 
-Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
+Single contained [TextureCoordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
 
@@ -195,15 +195,15 @@ Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/renderi
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
-Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Single contained [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
-- Useful for special effects. [Normal](/x_ite/components/rendering/normal/) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
+- Useful for special effects. [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
 #### Warning
 
-- *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
+- *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### MFDouble [ ] **height** [ 0, 0 ] <small>(-∞,∞)</small>
 
@@ -226,15 +226,15 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 - The height array defines (xDimension-1)*(zDimension-1) quadrilaterals.
 - Positive direction for normal of each triangle is on same side of the quadrilateral. Triangles are defined either counterclockwise or clockwise depending on value of ccw field.
-- GeoElevationGrid can contain [GeoOrigin](/x_ite/components/geospatial/geoorigin/), [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/), [Normal](/x_ite/components/rendering/normal/) and [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) nodes.
-- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
+- GeoElevationGrid can contain [GeoOrigin](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoorigin/), [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) or [ColorRGBA](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/colorrgba/), [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) and [TextureCoordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/texturecoordinate/) nodes.
+- Insert a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf)
 
 ### Warnings
 
 - Generated quadrilaterals can be nonplanar. Tessellation splits quadrilaterals into triangles along seam starting at initial vertex of the quadrilateral and proceeding to opposite vertex.
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
-- Avoid having [GeoLocation](/x_ite/components/geospatial/geolocation/) or [GeoTransform](/x_ite/components/geospatial/geotransform/) as a parent or ancestor node of GeoElevationGrid, since multiple geospatial transformations then occur with unpredictable results.
+- Avoid having [GeoLocation](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geolocation/) or [GeoTransform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geotransform/) as a parent or ancestor node of GeoElevationGrid, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Example
 

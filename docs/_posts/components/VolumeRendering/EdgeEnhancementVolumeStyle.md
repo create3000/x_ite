@@ -30,7 +30,7 @@ The EdgeEnhancementVolumeStyle node belongs to the **VolumeRendering** component
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -42,7 +42,7 @@ Enables/disables node operation.
 
 ### SFColorRGBA [in, out] **edgeColor** 0 0 0 1 <small>[0,1]</small>
 
-[Color](/x_ite/components/rendering/color/) used to highlight edges.
+[Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) used to highlight edges.
 
 #### Hint
 
@@ -60,7 +60,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Hint
 
-- SurfaceNormals can be provided in a single [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/) or [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) node.
+- SurfaceNormals can be provided in a single [ComposedTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/imagetexture3d/) or [PixelTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/pixeltexture3d/) node.
 
 ### Warning
 

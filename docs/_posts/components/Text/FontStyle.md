@@ -29,7 +29,7 @@ The FontStyle node belongs to the **Text** component and requires at least level
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -170,7 +170,7 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 - Full internationalization (i18n) and localization (l10n) features are available for any written language.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes.
 - [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
-- First add a [Text](/x_ite/components/text/text/) node as a parent node for FontStyle.
+- First add a [Text](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/text/text/) node as a parent node for FontStyle.
 - [Wikipedia](https://en.wikipedia.org/wiki/Font)
 - [Wikipedia](https://en.wikipedia.org/wiki/Typeface)
 

@@ -30,7 +30,7 @@ The Sound node belongs to the **Sound** component and requires at least level **
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -67,7 +67,7 @@ Position of sound ellipsoid center, relative to local coordinate system.
 
 #### Hint
 
-- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize height.
+- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) avatarSize height.
 
 ### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
 
@@ -111,7 +111,7 @@ Player hint [0,1] if needed to choose which sounds to play.
 
 ### SFNode [in, out] **source** NULL <small>[X3DSoundSourceNode]</small>
 
-Sound *source* for the Sound node, either an [AudioClip](/x_ite/components/sound/audioclip/) node or a [MovieTexture](/x_ite/components/texturing/movietexture/) node.
+Sound *source* for the Sound node, either an [AudioClip](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/sound/audioclip/) node or a [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/) node.
 
 #### Warning
 

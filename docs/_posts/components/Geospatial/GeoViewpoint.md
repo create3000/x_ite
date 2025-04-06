@@ -31,7 +31,7 @@ The GeoViewpoint node belongs to the **Geospatial** component and requires at le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -39,7 +39,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
-Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Single contained [GeoOrigin](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -86,7 +86,7 @@ Author-provided prose that describes intended purpose of this node.
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>(-∞,∞) or -1 1</small>
 
-Rotation of [Viewpoint](/x_ite/components/navigation/viewpoint/), relative to default -Z axis direction in local coordinate system.
+Rotation of [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/), relative to default -Z axis direction in local coordinate system.
 
 #### Hint
 
@@ -110,7 +110,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 
 #### Hints
 
-- Overrides bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize value, if any.
+- Overrides bound [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) avatarSize value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
 - [Aliasing](https://en.wikipedia.org/wiki/Aliasing) and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics))
 
@@ -124,7 +124,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 
 #### Hints
 
-- Overrides bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) visibilityLimit value, if any.
+- Overrides bound [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) visibilityLimit value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
 - [Aliasing](https://en.wikipedia.org/wiki/Aliasing) and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics))
 
@@ -134,7 +134,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 
 ### SFBool [in, out] **viewAll** FALSE
 
-[Viewpoint](/x_ite/components/navigation/viewpoint/) is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
+[Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
 
 #### Hints
 
@@ -147,7 +147,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 
 ### SFBool [in, out] **jump** TRUE
 
-Whether to transition instantly by jumping, or else smoothly animate to this [Viewpoint](/x_ite/components/navigation/viewpoint/).
+Whether to transition instantly by jumping, or else smoothly animate to this [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/).
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
 
@@ -159,7 +159,7 @@ Retain (true) or reset to zero (false) any prior user navigation offsets from de
 
 #### Hint
 
-- *speedFactor* is a relative value and not an absolute speed as defined by [NavigationInfo](/x_ite/components/navigation/navigationinfo/).
+- *speedFactor* is a relative value and not an absolute speed as defined by [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/).
 
 ### SFBool [out] **isBound**
 
@@ -179,31 +179,31 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ### SFNode [in, out] **navigationInfo** NULL <small>[NavigationInfo]</small>
 
-The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node for this X3DViewpointNode. The specified [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
+The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) node for this X3DViewpointNode. The specified [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
 
 #### Hint
 
-- Allows simple integration of custom navigation associated with each [Viewpoint](/x_ite/components/navigation/viewpoint/) according to user needs at that location.
+- Allows simple integration of custom navigation associated with each [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) according to user needs at that location.
 
 ## Advice
 
 ### Hints
 
-- Alternatively can use [GeoLocation](/x_ite/components/geospatial/geolocation/) or [GeoTransform](/x_ite/components/geospatial/geotransform/) as parent of a [Viewpoint](/x_ite/components/navigation/viewpoint/) node to orient geospatial views.
+- Alternatively can use [GeoLocation](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geolocation/) or [GeoTransform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geotransform/) as parent of a [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) node to orient geospatial views.
 - Include `<component name='Geospatial' level='1'/>`
-- When a GeoViewpoint node is bound, it also overrides the currently bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node in the scene and controls user navigation for smoother geospatial interaction.
-- [Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), GeoViewpoint, [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
-- GeoViewpoint [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
+- When a GeoViewpoint node is bound, it also overrides the currently bound [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) node in the scene and controls user navigation for smoother geospatial interaction.
+- [Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/), [Fog](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fog/), GeoViewpoint, [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- GeoViewpoint [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Regardless of viewpoint jump value at bind time, the relative viewing transformation between user's view and defined position/orientation is stored for later use when un-jumping (returning to the viewpoint when subsequent viewpoint is unbound).
-- Customizable design pattern for dedicated [Viewpoint](/x_ite/components/navigation/viewpoint/)/[NavigationInfo](/x_ite/components/navigation/navigationinfo/) pair: \<[Viewpoint](/x_ite/components/navigation/viewpoint/) DEF='SpecialView'/\> \<[NavigationInfo](/x_ite/components/navigation/navigationinfo/) DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
+- Customizable design pattern for dedicated [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/)/[NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) pair: \<[Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) DEF='SpecialView'/\> \<[NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
 - [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints)
 
 ### Warnings
 
-- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
-- Do not include GeoViewpoint [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) or [Viewpoint](/x_ite/components/navigation/viewpoint/) as a child of [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/), instead use [ViewpointGroup](/x_ite/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
-- GeoViewpoint navType and headlight fields were removed as part of X3D version 3.3, authors can instead use a [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node for those fields in prior X3D versions 3.0, 3.1 or 3.2. Upgrading such legacy scenes to version 3.3 or greater is preferred and recommended.
-- Avoid having [GeoLocation](/x_ite/components/geospatial/geolocation/) or [GeoTransform](/x_ite/components/geospatial/geotransform/) as a parent or ancestor node of GeoViewpoint, since multiple geospatial transformations then occur with unpredictable results.
+- Results are undefined if a bindable node ([Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/), [Fog](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/lod/) or [Switch](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/switch/). Avoid this authoring pattern.
+- Do not include GeoViewpoint [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/) or [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) as a child of [LOD](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/lod/) or [Switch](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/switch/), instead use [ViewpointGroup](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
+- GeoViewpoint navType and headlight fields were removed as part of X3D version 3.3, authors can instead use a [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) node for those fields in prior X3D versions 3.0, 3.1 or 3.2. Upgrading such legacy scenes to version 3.3 or greater is preferred and recommended.
+- Avoid having [GeoLocation](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geolocation/) or [GeoTransform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geotransform/) as a parent or ancestor node of GeoViewpoint, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Example
 

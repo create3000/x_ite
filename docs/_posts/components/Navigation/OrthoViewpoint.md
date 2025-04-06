@@ -31,7 +31,7 @@ The OrthoViewpoint node belongs to the **Navigation** component and requires at 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -39,7 +39,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFBool [in] **set_bind**
 
-Sending event *set_bind*=true makes this node active. Sending event *set_bind*=false makes this node inactive. Thus setting *set_bind* to true/false will pop/push (enable/disable) this [Viewpoint](/x_ite/components/navigation/viewpoint/).
+Sending event *set_bind*=true makes this node active. Sending event *set_bind*=false makes this node inactive. Thus setting *set_bind* to true/false will pop/push (enable/disable) this [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/).
 
 #### Hint
 
@@ -51,19 +51,19 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 
 ### SFString [in, out] **description** ""
 
-[Text](/x_ite/components/text/text/) *description* or navigation hint to describe the significance of this model [Viewpoint](/x_ite/components/navigation/viewpoint/).
+[Text](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/text/text/) *description* or navigation hint to describe the significance of this model [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/).
 
 #### Hints
 
 - A sequence of good Viewpoints with understandable descriptions can provide a guided tour of a model.
-- The currently bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node has a major effect on how a user might change viewing position and orientation after reaching this [Viewpoint](/x_ite/components/navigation/viewpoint/).
-- Consider paired [Viewpoint](/x_ite/components/navigation/viewpoint/)/[NavigationInfo](/x_ite/components/navigation/navigationinfo/) node combinations by defining ROUTE connections between corresponding isBound/set_bind fields.
+- The currently bound [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) node has a major effect on how a user might change viewing position and orientation after reaching this [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/).
+- Consider paired [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/)/[NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) node combinations by defining ROUTE connections between corresponding isBound/set_bind fields.
 - Include space characters since a *description* is not a DEF identifier. Write short phrases that make descriptions clear and readable.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 #### Warning
 
-- Without *description*, this OrthoViewpoint is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
+- Without *description*, this OrthoViewpoint is unlikely to appear on browser [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) menus.
 
 ### SFVec3f [in, out] **position** 0 0 10 <small>(-∞,∞)</small>
 
@@ -71,7 +71,7 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>[-1,1],(-∞,∞)</small>
 
-Rotation (axis, angle in radians) of [Viewpoint](/x_ite/components/navigation/viewpoint/), relative to default -Z axis direction in local coordinate system.
+Rotation (axis, angle in radians) of [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/), relative to default -Z axis direction in local coordinate system.
 
 #### Hints
 
@@ -107,7 +107,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 #### Hints
 
-- Overrides bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize value, if any.
+- Overrides bound [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) avatarSize value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
 - [Aliasing](https://en.wikipedia.org/wiki/Aliasing) and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics))
 
@@ -121,7 +121,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 #### Hints
 
-- Overrides bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) visibilityLimit value, if any.
+- Overrides bound [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) visibilityLimit value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
 - [Aliasing](https://en.wikipedia.org/wiki/Aliasing) and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics))
 
@@ -131,7 +131,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 ### SFBool [in, out] **viewAll** FALSE
 
-[Viewpoint](/x_ite/components/navigation/viewpoint/) is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
+[Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
 
 #### Hints
 
@@ -144,11 +144,11 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 ### SFBool [in, out] **jump** TRUE
 
-Transition instantly by jumping, otherwise smoothly adjust offsets in place when changing to this [Viewpoint](/x_ite/components/navigation/viewpoint/).
+Transition instantly by jumping, otherwise smoothly adjust offsets in place when changing to this [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/).
 
 #### Hints
 
-- See [NavigationInfo](/x_ite/components/navigation/navigationinfo/).transitionType for the manner in which animated [Viewpoint](/x_ite/components/navigation/viewpoint/) transistions occur.
+- See [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/).transitionType for the manner in which animated [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) transistions occur.
 - Set *jump*=true for instantaneous camera motion when going to this viewpoint.
 
 #### Warning
@@ -181,26 +181,26 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ### SFNode [in, out] **navigationInfo** NULL <small>[NavigationInfo]</small>
 
-The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node for this X3DViewpointNode. The specified [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
+The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) node for this X3DViewpointNode. The specified [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
 
 #### Hint
 
-- Allows simple integration of custom navigation associated with each [Viewpoint](/x_ite/components/navigation/viewpoint/) according to user needs at that location.
+- Allows simple integration of custom navigation associated with each [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) according to user needs at that location.
 
 ## Advice
 
 ### Hints
 
-- [Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), OrthoViewpoint, [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
-- [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) OrthoViewpoint and [Viewpoint](/x_ite/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
+- [Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/), [Fog](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/), OrthoViewpoint, [TextureBackground](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- [GeoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoviewpoint/) OrthoViewpoint and [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Regardless of viewpoint jump value at bind time, the relative viewing transformation between user's view and defined position/orientation is stored for later use when un-jumping (returning to the viewpoint when subsequent viewpoint is unbound).
-- Customizable design pattern for dedicated [Viewpoint](/x_ite/components/navigation/viewpoint/)/[NavigationInfo](/x_ite/components/navigation/navigationinfo/) pair: \<[Viewpoint](/x_ite/components/navigation/viewpoint/) DEF='SpecialView'/\> \<[NavigationInfo](/x_ite/components/navigation/navigationinfo/) DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
+- Customizable design pattern for dedicated [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/)/[NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) pair: \<[Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) DEF='SpecialView'/\> \<[NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
 - [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints)
 
 ### Warnings
 
-- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), OrthoViewpoint, [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
-- Do not include [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) OrthoViewpoint or [Viewpoint](/x_ite/components/navigation/viewpoint/) as a child of [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/), instead use [ViewpointGroup](/x_ite/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
+- Results are undefined if a bindable node ([Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/), [Fog](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/), OrthoViewpoint, [TextureBackground](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/lod/) or [Switch](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/switch/). Avoid this authoring pattern.
+- Do not include [GeoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoviewpoint/) OrthoViewpoint or [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) as a child of [LOD](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/lod/) or [Switch](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/switch/), instead use [ViewpointGroup](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
 
 ## Example
 

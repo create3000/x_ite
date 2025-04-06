@@ -30,7 +30,7 @@ The LOD node belongs to the **Navigation** component and requires at least level
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -42,7 +42,7 @@ Whether to perform every range-based transition, regardless of browser optimizat
 
 ### SFVec3f [ ] **center** 0 0 0 <small>(-∞,∞)</small>
 
-[Viewpoint](/x_ite/components/navigation/viewpoint/) distance-measurement offset from origin of local coordinate system, used for LOD node distance calculations.
+[Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) distance-measurement offset from origin of local coordinate system, used for LOD node distance calculations.
 
 ### MFFloat [ ] **range** [ ] <small>[0,∞) or -1</small>
 
@@ -50,7 +50,7 @@ Specifies ideal distances at which to switch between levels. The *range* field i
 
 #### Hints
 
-- Can add `<[WorldInfo](/x_ite/components/core/worldinfo/) info='null node'/>` as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
+- Can add `<[WorldInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/worldinfo/) info='null node'/>` as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
 - Not setting *range* values indicates that level switching can be optimized automatically based on performance.
 
 ### SFInt32 [out] **level_changed**
@@ -126,20 +126,20 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- Can add \<[WorldInfo](/x_ite/components/core/worldinfo/) info='null node'/\> as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
-- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
-- [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
+- Can add \<[WorldInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/worldinfo/) info='null node'/\> as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
+- Insert a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
+- [GeoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Security mechanisms such as encryption and authentication can be applied to high levels of detail, allowing authors to protect intellectual property at high resolution for authorized users while still rendering simple unrestricted models for other users.
-- Contained nodes must have type X3DChildNode, such as [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/) or [Shape](/x_ite/components/shape/shape/).
-- Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
+- Contained nodes must have type X3DChildNode, such as [Group](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/group/) or [Transform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/transform/) or [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/).
+- Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/cadgeometry/cadface/).
 - [ConformanceNist X3D Examples Archive](https://www.web3d.org/x3d/content/examples/ConformanceNist/SpecialGroups/LOD)
 
 ### Warnings
 
-- Do not include [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) or [Viewpoint](/x_ite/components/navigation/viewpoint/) as a child of LOD or [Switch](/x_ite/components/grouping/switch/), instead use [ViewpointGroup](/x_ite/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
-- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either LOD or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
-- Nested LOD (and/or [GeoLOD](/x_ite/components/geospatial/geolod/)) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
-- LOD is not allowed as a direct parent of [Appearance](/x_ite/components/shape/appearance/), [Material](/x_ite/components/shape/material/), [Color](/x_ite/components/rendering/color/), [Coordinate](/x_ite/components/rendering/coordinate/), [Normal](/x_ite/components/rendering/normal/) or Texture nodes, instead ensure that a [Shape](/x_ite/components/shape/shape/) is present.
+- Do not include [GeoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/) or [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) as a child of LOD or [Switch](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/switch/), instead use [ViewpointGroup](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
+- Results are undefined if a bindable node ([Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/), [Fog](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/)) is a contained descendant node of either LOD or [Switch](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/switch/). Avoid this authoring pattern.
+- Nested LOD (and/or [GeoLOD](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geolod/)) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
+- LOD is not allowed as a direct parent of [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/), [Material](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/material/), [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/), [Coordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/coordinate/), [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) or Texture nodes, instead ensure that a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) is present.
 
 ## See Also
 

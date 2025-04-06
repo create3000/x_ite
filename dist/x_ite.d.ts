@@ -2006,7 +2006,7 @@ declare namespace X3D
        */
       getFieldDefinitions (): FieldDefinitionArray;
       /**
-       * Returns the corresponding X3DField object associated with *name*.
+       * @deprecated Returns the corresponding X3DField object associated with *name*.
        */
       getField (name: string): X3DField;
       /**

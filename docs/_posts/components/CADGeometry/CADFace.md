@@ -32,7 +32,7 @@ The CADFace node belongs to the **CADGeometry** component and requires at least 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -91,11 +91,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### SFNode [in, out] **shape** NULL <small>[X3DShapeNode, LOD, Transform]</small>
 
-Contained [Shape](/x_ite/components/shape/shape/) for this [CADPart](/x_ite/components/cadgeometry/cadpart/).
+Contained [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) for this [CADPart](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/cadgeometry/cadpart/).
 
 #### Warning
 
-- If [LOD](/x_ite/components/navigation/lod/) or [Transform](/x_ite/components/grouping/transform/) are used, only zero or one [Shape](/x_ite/components/shape/shape/) child is allowed to be active at one time.
+- If [LOD](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/lod/) or [Transform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/transform/) are used, only zero or one [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) child is allowed to be active at one time.
 
 ## Advice
 
@@ -105,7 +105,7 @@ Contained [Shape](/x_ite/components/shape/shape/) for this [CADPart](/x_ite/comp
 
 ### Warnings
 
-- Only zero or one [Shape](/x_ite/components/shape/shape/) child is allowed to be active at one time.
+- Only zero or one [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) child is allowed to be active at one time.
 - Requires X3D `profile='Full'` or else include `<component name='CADGeometry' level='2'/>`
 
 ## See Also

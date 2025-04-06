@@ -29,7 +29,7 @@ The ViewpointGroup node belongs to the **Navigation** component and requires at 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -37,7 +37,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFString [in, out] **description** ""
 
-[Text](/x_ite/components/text/text/) *description* or navigation hint to identify this ViewpointGroup.
+[Text](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/text/text/) *description* or navigation hint to identify this ViewpointGroup.
 
 #### Hints
 
@@ -46,7 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Warning
 
-- Without *description*, this ViewpointGroup is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
+- Without *description*, this ViewpointGroup is unlikely to appear on browser [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) menus.
 
 ### SFBool [in, out] **displayed** TRUE
 
@@ -70,7 +70,7 @@ Retain (true) or reset to zero (false) any prior user navigation offsets from de
 
 ### MFNode [in, out] **children** [ ] <small>[X3DViewpointNode | ViewpointGroup]</small>
 
-ViewpointGroup contains [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes that each have `containerField='children'` default value.
+ViewpointGroup contains [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes that each have `containerField='children'` default value.
 
 #### Hints
 
@@ -82,9 +82,9 @@ ViewpointGroup contains [Viewpoint](/x_ite/components/navigation/viewpoint/), [O
 
 ### Hints
 
-- Use ViewpointGroup as parent for [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes to constrain location proximity where contained viewpoints are available to user.
-- ViewpointGroup and [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) require Navigation component level 3, which is higher than CADInterchange profile.
-- [Viewpoint](/x_ite/components/navigation/viewpoint/) and ViewpointGroup descriptions together build simple menu/submenu lists for simple user navigation. ViewpointGroup is not an X3DGroupingNode, and can only contain a Metadata* node, [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes.
+- Use ViewpointGroup as parent for [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes to constrain location proximity where contained viewpoints are available to user.
+- ViewpointGroup and [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/) require Navigation component level 3, which is higher than CADInterchange profile.
+- [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) and ViewpointGroup descriptions together build simple menu/submenu lists for simple user navigation. ViewpointGroup is not an X3DGroupingNode, and can only contain a Metadata* node, [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes.
 
 ## See Also
 

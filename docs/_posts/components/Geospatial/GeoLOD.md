@@ -31,7 +31,7 @@ The GeoLOD node belongs to the **Geospatial** component and requires at least le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -39,7 +39,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
-Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Single contained [GeoOrigin](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -173,7 +173,7 @@ The outputOnly *children* field exposes a portion of the scene graph for the cur
 
 - Do not use rootUrl and rootNode simultaneously, since each specifies the root tile.
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
-- Nested [LOD](/x_ite/components/navigation/lod/) (and/or GeoLOD) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
+- Nested [LOD](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/lod/) (and/or GeoLOD) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
 
 ## Example
 

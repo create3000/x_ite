@@ -29,7 +29,7 @@ The VolumeEmitter node belongs to the **ParticleSystems** component and requires
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -84,7 +84,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 ### MFInt32 [ ] **coordIndex** -1 <small>[0,∞) or -1</small>
 
-*coordIndex* indices are applied to contained [Coordinate](/x_ite/components/rendering/coordinate/) values in order to define randomly generated initial geometry of the particles.
+*coordIndex* indices are applied to contained [Coordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/coordinate/) values in order to define randomly generated initial geometry of the particles.
 
 #### Warning
 
@@ -98,7 +98,7 @@ Coordinates for the geometry used as the emitting volume.
 
 ### Hint
 
-- Otherwise, a VolumeEmitter node acts like a [PolylineEmitter](/x_ite/components/particlesystems/polylineemitter/) node.
+- Otherwise, a VolumeEmitter node acts like a [PolylineEmitter](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/particlesystems/polylineemitter/) node.
 
 ## Example
 

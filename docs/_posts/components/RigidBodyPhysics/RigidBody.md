@@ -28,7 +28,7 @@ The RigidBody node belongs to the **RigidBodyPhysics** component and requires at
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -121,7 +121,7 @@ The *massDensityModel* field is used to describe the geometry type and dimension
 
 ### SFBool [in, out] **useGlobalGravity** TRUE
 
-*useGlobalGravity* indicates whether this particular body is influenced by parent [RigidBodyCollection](/x_ite/components/rigidbodyphysics/rigidbodycollection/)'s gravity setting.
+*useGlobalGravity* indicates whether this particular body is influenced by parent [RigidBodyCollection](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/rigidbodycollection/)'s gravity setting.
 
 #### Hint
 

@@ -31,7 +31,7 @@ The NurbsTrimmedSurface node belongs to the **NURBS** component and requires at 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -97,11 +97,11 @@ Vector assigning relative *weight* value to each control point.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode|NurbsTextureCoordinate]</small>
 
-Single contained [NurbsTextureCoordinate](/x_ite/components/nurbs/nurbstexturecoordinate/), [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
+Single contained [NurbsTextureCoordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/nurbs/nurbstexturecoordinate/), [TextureCoordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
+Single contained [Coordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 
 ### MFNode [in] **addTrimmingContour**
 
@@ -113,11 +113,11 @@ Input field *removeTrimmingContour*.
 
 ### MFNode [in, out] **trimmingContour** [ ] <small>[Contour2D]</small>
 
-A set of [Contour2D](/x_ite/components/nurbs/contour2d/) nodes are used as trimming loops.
+A set of [Contour2D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/nurbs/contour2d/) nodes are used as trimming loops.
 
 #### Hint
 
-- If no trimming contours are defined, NurbsTrimmedSurface has same semantics as [NurbsPatchSurface](/x_ite/components/nurbs/nurbspatchsurface/) node.
+- If no trimming contours are defined, NurbsTrimmedSurface has same semantics as [NurbsPatchSurface](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/nurbs/nurbspatchsurface/) node.
 
 ## Example
 

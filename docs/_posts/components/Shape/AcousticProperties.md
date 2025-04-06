@@ -29,7 +29,7 @@ The AcousticProperties node belongs to the **Shape** component and requires at l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -57,7 +57,7 @@ Enables/disables node operation.
 
 ### SFFloat [in, out] **refraction** 0 <small>[0,1]</small>
 
-[Sound](/x_ite/components/sound/sound/) *refraction* coefficient of a medium, which determines change in propagation direction of sound wave when obliquely crossing boundary between two mediums where its speed is different.
+[Sound](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/sound/sound/) *refraction* coefficient of a medium, which determines change in propagation direction of sound wave when obliquely crossing boundary between two mediums where its speed is different.
 
 #### Hint
 
@@ -71,7 +71,7 @@ Specifies the sound *absorption* coefficient of a surface, meaning the ratio of 
 
 ### Hints
 
-- AcousticProperties must have a parent [Appearance](/x_ite/components/shape/appearance/) node, and only affects geometry within the same [Shape](/x_ite/components/shape/shape/).
+- AcousticProperties must have a parent [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) node, and only affects geometry within the same [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/).
 - Proxy geometry for acoustic response can be far simpler than geometry needed for visual rendering.
 - [X3D Architecture Figure 16.2 Sound Propagation Phenomena](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-SoundPropagationPhenomena)
 

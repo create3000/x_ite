@@ -31,7 +31,7 @@ The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component an
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -47,7 +47,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFNode [in, out] **frontTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/), other texture nodes).
 
 #### Warnings
 
@@ -56,7 +56,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 
 ### SFNode [in, out] **backTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/), other texture nodes).
 
 #### Warnings
 
@@ -65,7 +65,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 
 ### SFNode [in, out] **leftTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodese).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/), other texture nodese).
 
 #### Warnings
 
@@ -74,7 +74,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 
 ### SFNode [in, out] **rightTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/), other texture nodes).
 
 #### Warnings
 
@@ -83,7 +83,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 
 ### SFNode [in, out] **topTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/), other texture nodes).
 
 #### Warnings
 
@@ -92,7 +92,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 
 ### SFNode [in, out] **bottomTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/), other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/), other texture nodes).
 
 #### Warnings
 
@@ -101,21 +101,21 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
-Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+Single contained [TextureProperties](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 #### Warning
 
-- [TextureProperties](/x_ite/components/texturing/textureproperties/) must follow other textures in order to meet XML validation requirements.
+- [TextureProperties](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/textureproperties/) must follow other textures in order to meet XML validation requirements.
 
 ## Advice
 
 ### Hint
 
-- 0..6 child image nodes are allowed ([ImageTexture](/x_ite/components/texturing/imagetexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/)) with corresponding containerField values: front back left right top bottom.
+- 0..6 child image nodes are allowed ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/)) with corresponding containerField values: front back left right top bottom.
 
 ### Warnings
 
-- Each of the child [ImageTexture](/x_ite/components/texturing/imagetexture/) or [PixelTexture](/x_ite/components/texturing/pixeltexture/) nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
+- Each of the child [ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) or [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
 - Fields originally named back, bottom, front, left, right, or top in X3Dv3.
 
 ## Example

@@ -30,7 +30,7 @@ The CollisionSensor node belongs to the **RigidBodyPhysics** component and requi
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -66,14 +66,14 @@ Output field *contacts*.
 
 ### SFNode [in, out] **collider** NULL <small>[CollisionCollection]</small>
 
-The *collider* field specifies a [CollisionCollection](/x_ite/components/rigidbodyphysics/collisioncollection/) node that holds a collidables field of nodes and spaces that are to be included in collision-detection computations.
+The *collider* field specifies a [CollisionCollection](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/collisioncollection/) node that holds a collidables field of nodes and spaces that are to be included in collision-detection computations.
 
 ## Advice
 
 ### Hints
 
-- Contains [CollisionCollection](/x_ite/components/rigidbodyphysics/collisioncollection/) node (`containerField='collider').`
-- CollisionSensor also has output events: [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/) and [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) nodes (`containerField='intersections'),` [Contact](/x_ite/components/rigidbodyphysics/contact/) nodes (`containerField='contacts').`
+- Contains [CollisionCollection](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/collisioncollection/) node (`containerField='collider').`
+- CollisionSensor also has output events: [CollidableOffset](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/collidableoffset/) and [CollidableShape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/collidableshape/) nodes (`containerField='intersections'),` [Contact](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/contact/) nodes (`containerField='contacts').`
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#ExecutionModel)
 - Content must be visible to be collidable and to be pickable.
 

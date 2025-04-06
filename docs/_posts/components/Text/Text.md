@@ -29,7 +29,7 @@ The Text node belongs to the **Text** component and requires at least level **1,
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -95,7 +95,7 @@ Array of 2D bounding box values for each line of text in the local coordinate sy
 
 ### SFNode [in, out] **fontStyle** NULL <small>[X3DFontStyleNode]</small>
 
-The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle/) or [ScreenFontStyle](/x_ite/components/layout/screenfontstyle/) node defining size, family, and style for presented text.
+The *fontStyle* field can contain a [FontStyle](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/text/fontstyle/) or [ScreenFontStyle](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/layout/screenfontstyle/) node defining size, family, and style for presented text.
 
 #### Hint
 
@@ -108,7 +108,7 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 - [String (computer science)](https://en.wikipedia.org/wiki/String_(computer_science))
 - Full internationalization (i18n) and localization (l10n) features are available for any written language.
 - [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
-- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
+- Insert a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
 ### Warning

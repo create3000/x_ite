@@ -29,7 +29,7 @@ The IndexedLineSet node belongs to the **Rendering** component and requires at l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -37,11 +37,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
+*colorIndex* values define the order in which [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) or [ColorRGBA](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
 
 #### Hints
 
-- If *colorIndex* array is not provided, then [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) or [ColorRGBA](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/colorrgba/) values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. Omitting duplicative *colorIndex* fields can reduce file size.
 - This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
@@ -65,7 +65,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether [Color](/x_ite/components/rendering/color/) node color values are applied to each point vertex (true) or per polyline (false).
+Whether [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) node color values are applied to each point vertex (true) or per polyline (false).
 
 #### Hint
 
@@ -73,18 +73,18 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
+*colorIndex* values define the order in which [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) or [ColorRGBA](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
 
 #### Hints
 
-- If *colorIndex* array is not provided, then [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are indexed according to the coordIndex field. Omitting duplicative *colorIndex* fields can reduce file size.
+- If *colorIndex* array is not provided, then [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) or [ColorRGBA](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/colorrgba/) values are indexed according to the coordIndex field. Omitting duplicative *colorIndex* fields can reduce file size.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
-- If rendering [Coordinate](/x_ite/components/rendering/coordinate/) points originally defined for an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), index values may need to repeat initial each initial vertex to close the polygons.
+- If rendering [Coordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/coordinate/) points originally defined for an [IndexedFaceSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/indexedfaceset/), index values may need to repeat initial each initial vertex to close the polygons.
 
 #### Warning
 
-- If child [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node is not provided, then geometry is rendered using corresponding [Appearance](/x_ite/components/shape/appearance/) and material/texture values.
+- If child [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) or [ColorRGBA](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/colorrgba/) node is not provided, then geometry is rendered using corresponding [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) and material/texture values.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 
@@ -92,7 +92,7 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 
 #### Hints
 
-- If rendering [Coordinate](/x_ite/components/rendering/coordinate/) points originally defined for an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), index values may need to repeat initial each initial vertex to close the polygons.
+- If rendering [Coordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/coordinate/) points originally defined for an [IndexedFaceSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/indexedfaceset/), index values may need to repeat initial each initial vertex to close the polygons.
 - Sentinel value -1 is used to separate indices for each successive polyline.
 
 #### Warning
@@ -101,7 +101,7 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
+Single contained [FloatVertexAttribute](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -109,11 +109,11 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
-Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
+Single contained [FogCoordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Single contained [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) or [ColorRGBA](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
 
@@ -121,37 +121,37 @@ Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/renderi
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
-Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Single contained [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
-- Useful for special effects. [Normal](/x_ite/components/rendering/normal/) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
+- Useful for special effects. [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
 #### Warning
 
-- *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
+- *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
+Single contained [Coordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 
 ## Advice
 
 ### Hints
 
 - [Polygonal chain](https://en.wikipedia.org/wiki/Polygonal_chain)
-- Either values in a contained [Color](/x_ite/components/rendering/color/) node, or else [Material](/x_ite/components/shape/material/) emissiveColor in corresponding [Appearance](/x_ite/components/shape/appearance/) node, are used for rendering lines and points.
-- Adding [LineProperties](/x_ite/components/shape/lineproperties/) to the corresponding [Appearance](/x_ite/components/shape/appearance/) node can modify the rendering style of these lines.
-- If rendering [Coordinate](/x_ite/components/rendering/coordinate/) points originally defined for an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), index values may need to repeat each initial vertex to close each polygon outline.
+- Either values in a contained [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) node, or else [Material](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/material/) emissiveColor in corresponding [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) node, are used for rendering lines and points.
+- Adding [LineProperties](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/lineproperties/) to the corresponding [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) node can modify the rendering style of these lines.
+- If rendering [Coordinate](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/coordinate/) points originally defined for an [IndexedFaceSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/indexedfaceset/), index values may need to repeat each initial vertex to close each polygon outline.
 - Step-wise variation or linear interpolation of color values can be used as a good scientific visualization technique to map arbitrary function values to a color map.
-- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
+- Insert a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
-- Consider including [Fog](/x_ite/components/environmentaleffects/fog/) (with [Fog](/x_ite/components/environmentaleffects/fog/) color matching [Background](/x_ite/components/environmentaleffects/background/) color) to provide further depth cueing for IndexedLineSet (ILS).
+- Consider including [Fog](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fog/) (with [Fog](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fog/) color matching [Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/) color) to provide further depth cueing for IndexedLineSet (ILS).
 
 ### Warnings
 
 - Lines are not lit, are not texture-mapped, and do not participate in collision detection.
-- Use a different color (or [Material](/x_ite/components/shape/material/) emissiveColor) than the [Background](/x_ite/components/environmentaleffects/background/) color, otherwise geometry is invisible.
+- Use a different color (or [Material](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/material/) emissiveColor) than the [Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/) color, otherwise geometry is invisible.
 
 ## Example
 

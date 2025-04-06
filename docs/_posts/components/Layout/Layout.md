@@ -30,7 +30,7 @@ The Layout node belongs to the **Layout** component and requires at least level 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -97,7 +97,7 @@ The *scaleMode* field specifies how the scale of the parent is modified. Two quo
 
 #### Hints
 
-- A *scaleMode* field value of NONE specifies that the corresponding scale value is not modified. Instead, the scale is inherited from its parent. Since a [LayoutLayer](/x_ite/components/layout/layoutlayer/) node does not have a parent, the value of NONE reverts to FRACTION.
+- A *scaleMode* field value of NONE specifies that the corresponding scale value is not modified. Instead, the scale is inherited from its parent. Since a [LayoutLayer](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/layout/layoutlayer/) node does not have a parent, the value of NONE reverts to FRACTION.
 - A *scaleMode* value of FRACTION specifies a scale in the corresponding direction so that one unit is equal to the dimension (width or height) of this rectangle.
 - A *scaleMode* value of STRETCH specifies a scale in the corresponding direction such that the resulting scale in the horizontal direction is equal to the scale in the vertical direction, thus producing a uniform scale.
 - A value of PIXEL specifies a scale in the corresponding direction such that one unit is equal to one pixel.

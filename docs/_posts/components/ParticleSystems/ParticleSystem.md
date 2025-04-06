@@ -32,7 +32,7 @@ The ParticleSystem node belongs to the **ParticleSystems** component and require
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -108,18 +108,18 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 
 #### Hints
 
-- [Color](/x_ite/components/rendering/color/) values are interpolated in linear Hue Saturation Value (HSV) space, similar to [ColorInterpolator](/x_ite/components/interpolation/colorinterpolator/) node.
-- [Color](/x_ite/components/rendering/color/) values are defined as per-vertex color values.
+- [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) values are interpolated in linear Hue Saturation Value (HSV) space, similar to [ColorInterpolator](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/interpolation/colorinterpolator/) node.
+- [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) values are defined as per-vertex color values.
 - Number of *colorKey* values must match length of the per-vertex color field array values!
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warning
 
-- If an [Appearance](/x_ite/components/shape/appearance/) and [Material](/x_ite/components/shape/material/) nodes are provided, those material properties override color field interpolation.
+- If an [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) and [Material](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/material/) nodes are provided, those material properties override color field interpolation.
 
 ### SFNode [ ] **color** NULL <small>[X3DColorNode]</small>
 
-The *color* field contains [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) nodes as a series of *color* values to be used at the given colorKey points in time.
+The *color* field contains [Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) or [ColorRGBA](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/colorrgba/) nodes as a series of *color* values to be used at the given colorKey points in time.
 
 #### Hints
 
@@ -130,7 +130,7 @@ The *color* field contains [Color](/x_ite/components/rendering/color/) or [Color
 #### Warnings
 
 - [Field originally named 'colorRamp' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
-- If an [Appearance](/x_ite/components/shape/appearance/) and [Material](/x_ite/components/shape/material/) nodes are provided, those material properties override *color* field interpolation.
+- If an [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) and [Material](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/material/) nodes are provided, those material properties override *color* field interpolation.
 
 ### MFFloat [ ] **texCoordKey** [ ] <small>[0,∞)</small>
 
@@ -144,7 +144,7 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 
 ### SFNode [ ] **texCoord** NULL <small>[TextureCoordinate]</small>
 
-Texture coordinates of the provided texture(s) in the [Appearance](/x_ite/components/shape/appearance/) node, over time. Particle systems frequently like to change the texture on a particle as it ages, yet there is no good way of accomplishing this through standard interpolators because interpolators have no concept of particle time. This pair of fields hold time-dependent values for the texture coordinates to be applied to the particle. When a particle reaches the next time stamp it moves to the next set of texture coordinates.
+Texture coordinates of the provided texture(s) in the [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) node, over time. Particle systems frequently like to change the texture on a particle as it ages, yet there is no good way of accomplishing this through standard interpolators because interpolators have no concept of particle time. This pair of fields hold time-dependent values for the texture coordinates to be applied to the particle. When a particle reaches the next time stamp it moves to the next set of texture coordinates.
 
 #### Hints
 
@@ -169,12 +169,12 @@ Texture coordinates of the provided texture(s) in the [Appearance](/x_ite/compon
 
 ### SFBool [in, out] **castShadow** TRUE
 
-The *castShadow* field defines whether this [Shape](/x_ite/components/shape/shape/) casts shadows as produced by lighting nodes.
+The *castShadow* field defines whether this [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) casts shadows as produced by lighting nodes.
 
 #### Hints
 
-- If the visible field is FALSE, then the [Shape](/x_ite/components/shape/shape/) does not cast any shadows, regardless of the *castShadow* value.
-- If prior X3D3 content is loaded into an X3D4 model, then legacy [Shape](/x_ite/components/shape/shape/) nodes have shadows set to true.
+- If the visible field is FALSE, then the [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) does not cast any shadows, regardless of the *castShadow* value.
+- If prior X3D3 content is loaded into an X3D4 model, then legacy [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) nodes have shadows set to true.
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -216,7 +216,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### SFNode [in, out] **appearance** NULL <small>[X3DAppearanceNode]</small>
 
-The *appearance* field holds an [Appearance](/x_ite/components/shape/appearance/) node that is used for the geometry. All effects, such as material colors and/or multi-textures, are applied to each particle.
+The *appearance* field holds an [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) node that is used for the geometry. All effects, such as material colors and/or multi-textures, are applied to each particle.
 
 #### Hints
 

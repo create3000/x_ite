@@ -31,7 +31,7 @@ The TextureBackground node belongs to the **EnvironmentalEffects** component and
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -65,7 +65,7 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
 
-[Color](/x_ite/components/rendering/color/) of the sky at various angles on the sky sphere. First value is color of sky at 0.0 radians representing the zenith (straight up).
+[Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) of the sky at various angles on the sky sphere. First value is color of sky at 0.0 radians representing the zenith (straight up).
 
 #### Hints
 
@@ -93,7 +93,7 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
 
-[Color](/x_ite/components/rendering/color/) of the ground at the various angles on the ground partial sphere. First value is color of ground at 0.0 radians representing the nadir (straight down).
+[Color](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/color/) of the ground at the various angles on the ground partial sphere. First value is color of ground at 0.0 radians representing the nadir (straight down).
 
 #### Hints
 
@@ -131,7 +131,7 @@ Event sent when node becomes active/inactive.
 
 ### SFNode [in, out] **frontTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/) [MultiTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -139,7 +139,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ### SFNode [in, out] **backTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/) [MultiTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -147,7 +147,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ### SFNode [in, out] **leftTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/) [MultiTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -155,7 +155,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ### SFNode [in, out] **rightTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/) [MultiTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -163,7 +163,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ### SFNode [in, out] **topTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/) [MultiTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -171,7 +171,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ### SFNode [in, out] **bottomTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/) [MultiTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -181,13 +181,13 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ### Hints
 
-- [Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), TextureBackground and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
-- Authors can have [LoadSensor](/x_ite/components/networking/loadsensor/) nodes receive notifications and send reporting events when background texture node(s) are loaded.
+- [Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/), [Fog](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/), TextureBackground and [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- Authors can have [LoadSensor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/networking/loadsensor/) nodes receive notifications and send reporting events when background texture node(s) are loaded.
 
 ### Warnings
 
-- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), TextureBackground, [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
-- Each of the child [ImageTexture](/x_ite/components/texturing/imagetexture/) or [PixelTexture](/x_ite/components/texturing/pixeltexture/) nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
+- Results are undefined if a bindable node ([Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/), [Fog](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/orthoviewpoint/), TextureBackground, [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/lod/) or [Switch](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/switch/). Avoid this authoring pattern.
+- Each of the child [ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) or [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/) nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
 
 ## Example
 

@@ -31,7 +31,7 @@ The TextureProjectorParallel node belongs to the **TextureProjection** component
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -96,7 +96,7 @@ Minimum and maximum extents of projection texture in units of local coordinate s
 #### Warnings
 
 - Minimum corner values must remain less than maximum corner values.
-- This field differs for TextureProjectorParallel and [TextureProjector](/x_ite/components/textureprojection/textureprojector/).
+- This field differs for TextureProjectorParallel and [TextureProjector](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/textureprojection/textureprojector/).
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 
@@ -112,11 +112,11 @@ Maximum distance necessary for texture display.
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 
-Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
+Single contained *texture* node ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/), [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/), [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexture/)) that maps image(s) to surface geometry.
 
 #### Hints
 
-- If *texture* node is NULL or unspecified, corresponding [Shape](/x_ite/components/shape/shape/) geometry for this [Appearance](/x_ite/components/shape/appearance/) is not textured.
+- If *texture* node is NULL or unspecified, corresponding [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) geometry for this [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) is not textured.
 - [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)
 - [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html)
 - [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texture3D.html)

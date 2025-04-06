@@ -31,7 +31,7 @@ The LoadSensor node belongs to the **Networking** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -101,7 +101,7 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 - If watchList contains multiple USE nodes, output events are only generated when all *children* have loaded successfully or at least one node has failed.
 - If individual load status information is desired for different nodes, multiple LoadSensor nodes may be used, each with a single watchList element.
-- [Anchor](/x_ite/components/networking/anchor/) nodes can be monitored for binding a target [Viewpoint](/x_ite/components/navigation/viewpoint/), loading a new scene, or loading a new scene in a new window.
+- [Anchor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/networking/anchor/) nodes can be monitored for binding a target [Viewpoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/viewpoint/), loading a new scene, or loading a new scene in a new window.
 
 #### Warning
 
@@ -112,8 +112,8 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 ### Hints
 
 - Use multiple LoadSensor nodes to track multiple loading nodes individually.
-- [Background](/x_ite/components/environmentaleffects/background/) node is not sensed by LoadSensor due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) node with multiple [ImageTexture](/x_ite/components/texturing/imagetexture/) nodes each referenced inside LoadSensor.
-- Use [Inline](/x_ite/components/networking/inline/) 'load' field to prompt or defer loading.
+- [Background](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/background/) node is not sensed by LoadSensor due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/environmentaleffects/texturebackground/) node with multiple [ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) nodes each referenced inside LoadSensor.
+- Use [Inline](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/networking/inline/) 'load' field to prompt or defer loading.
 - [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter12EnvironmentSensorSound)
 
 ### Warnings

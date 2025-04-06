@@ -30,7 +30,7 @@ The SpatialSound node belongs to the **Sound** component and requires at least l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -66,7 +66,7 @@ Position of sound ellipsoid center, relative to local coordinate system.
 
 #### Hint
 
-- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize height.
+- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/navigation/navigationinfo/) avatarSize height.
 
 ### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
 
@@ -149,7 +149,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Hints
 
-- Functional support requires player support for [Sound](/x_ite/components/sound/sound/) component level 3.
+- Functional support requires player support for [Sound](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/sound/sound/) component level 3.
 - [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect)
 
 ### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
@@ -166,7 +166,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 #### Warning
 
-- Contained [AudioClip](/x_ite/components/sound/audioclip/) or [MovieTexture](/x_ite/components/texturing/movietexture/) nodes must have `containerField='children'` to override otherwise-incorrect defaults.
+- Contained [AudioClip](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/sound/audioclip/) or [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/) nodes must have `containerField='children'` to override otherwise-incorrect defaults.
 
 ## Advice
 

@@ -30,7 +30,7 @@ The ProgramShader node belongs to the **Shaders** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -70,7 +70,7 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 ### MFNode [in, out] **programs** [ ] <small>[ShaderProgram]</small>
 
-ProgramShader contains zero or more [ShaderProgram](/x_ite/components/shaders/shaderprogram/) node instances. In general, only two [ShaderProgram](/x_ite/components/shaders/shaderprogram/) instances are needed: one each for vertex and fragment processing.
+ProgramShader contains zero or more [ShaderProgram](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/shaderprogram/) node instances. In general, only two [ShaderProgram](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/shaderprogram/) instances are needed: one each for vertex and fragment processing.
 
 #### Hint
 
@@ -80,7 +80,7 @@ ProgramShader contains zero or more [ShaderProgram](/x_ite/components/shaders/sh
 
 ### Hint
 
-- Apply default `containerField='shaders'` when parent node is [Appearance](/x_ite/components/shape/appearance/).
+- Apply default `containerField='shaders'` when parent node is [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
 
 ### Warning
 

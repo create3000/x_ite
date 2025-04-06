@@ -30,7 +30,7 @@ The LayoutGroup node belongs to the **Layout** component and requires at least l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -106,12 +106,12 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Hints
 
 - The origin of the node is always in the center of its layout region. Thus, children (with the exception of LayoutGroup) are specified in a coordinate system whose origin is located at the center of the rectangle and can be transformed from that location.
-- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
-- LayoutGroup does not directly have any pixel-dependent concepts. However, it can contain a [Layout](/x_ite/components/layout/layout/) node that does have pixel-specific options.
+- Insert a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
+- LayoutGroup does not directly have any pixel-dependent concepts. However, it can contain a [Layout](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/layout/layout/) node that does have pixel-specific options.
 
 ### Warning
 
-- A LayoutGroup can only be a child of a [LayoutLayer](/x_ite/components/layout/layoutlayer/) node or another LayoutGroup node.
+- A LayoutGroup can only be a child of a [LayoutLayer](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/layout/layoutlayer/) node or another LayoutGroup node.
 
 ## See Also
 

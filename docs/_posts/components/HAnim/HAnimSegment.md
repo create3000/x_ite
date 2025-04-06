@@ -30,7 +30,7 @@ The HAnimSegment node belongs to the **HAnim** component and requires at least l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -50,7 +50,7 @@ Unique *name* attribute must be defined so that HAnimSegment node can be identif
 
 #### Hints
 
-- For arbitrary humanoids, HAnimSegment *name* can describe geometry between parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and sibling [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes (for example LeftHip_to_LeftKnee).
+- For arbitrary humanoids, HAnimSegment *name* can describe geometry between parent [HAnimJoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimjoint/) and sibling [HAnimJoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimjoint/) nodes (for example LeftHip_to_LeftKnee).
 - [HAnim Specification part 1, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#Hierarchy)
 - Well-defined names can simplify design and debugging through improved author understanding.
 - [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions)
@@ -59,7 +59,7 @@ Unique *name* attribute must be defined so that HAnimSegment node can be identif
 
 #### Warnings
 
-- *name* prefix must match ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
+- *name* prefix must match ancestor [HAnimHumanoid](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimhumanoid/) *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches. Examples: sacrum pelvis l_thigh l_calf etc. as listed in HAnim Specification.
 
 ### SFFloat [in, out] **mass** 0 <small>[0,∞)</small>
@@ -81,19 +81,19 @@ Location within segment of center of mass.
 
 ### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
 
-The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) objects for a particular HAnimSegment object.
+The *displacers* field stores [HAnimDisplacer](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimdisplacer/) objects for a particular HAnimSegment object.
 
 #### Warning
 
-- Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with [HAnimJoint](/x_ite/components/hanim/hanimjoint/) HAnimSegment and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
+- Index values for [HAnimHumanoid](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with [HAnimJoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimjoint/) HAnimSegment and [HAnimDisplacer](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
-The *coord* field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) for the paarent HAnimSegment object. The coordinates are given the same name as the HAnim Segment object, but with "_coords" appended to the name (for example, "skull_coords").
+The *coord* field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the [IndexedFaceSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/indexedfaceset/) for the paarent HAnimSegment object. The coordinates are given the same name as the HAnim Segment object, but with "_coords" appended to the name (for example, "skull_coords").
 
 #### Warning
 
-- Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with [HAnimJoint](/x_ite/components/hanim/hanimjoint/) HAnimSegment and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
+- Index values for [HAnimHumanoid](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with [HAnimJoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimjoint/) HAnimSegment and [HAnimDisplacer](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -148,7 +148,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 #### Hints
 
 - Each grouping node defines a coordinate space for its *children*, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
-- Place any geometry for parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) within a child [Transform](/x_ite/components/grouping/transform/) having the same translation value as the parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) center value.
+- Place any geometry for parent [HAnimJoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimjoint/) within a child [Transform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/transform/) having the same translation value as the parent [HAnimJoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimjoint/) center value.
 - InputOnly MFNode addChildren field can append new X3DChildNode nodes via a ROUTE connection, duplicate input nodes (i.e. matching DEF, USE values) are ignored.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#GroupingAndChildrenNodes)
@@ -157,7 +157,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- HAnimSegment displays geometry between parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and sibling [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes.
+- HAnimSegment displays geometry between parent [HAnimJoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimjoint/) and sibling [HAnimJoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimjoint/) nodes.
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
 - [HAnim Specification part 1, Segment](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Segment)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
@@ -166,7 +166,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
-- The number of contained \<HAnimSegment USE='*' `containerField='segments'/>` nodes at top level of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) needs to match the number of corresponding [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node instances found within the preceding skeleton hierarchy.
+- The number of contained \<HAnimSegment USE='*' `containerField='segments'/>` nodes at top level of [HAnimHumanoid](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimhumanoid/) needs to match the number of corresponding [HAnimJoint](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/hanim/hanimjoint/) node instances found within the preceding skeleton hierarchy.
 
 ## See Also
 

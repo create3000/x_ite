@@ -29,7 +29,7 @@ The PointProperties node belongs to the **Shape** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
 
 #### Hint
 
@@ -72,7 +72,7 @@ Are set to default values if undefined. Together these parameters define *attenu
 ### Hints
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- When an X3DTextureNode is defined in the same [Appearance](/x_ite/components/shape/appearance/) instance as PointProperties node, the points of a [PointSet](/x_ite/components/rendering/pointset/) shall be displayed as point sprites using the given texture(s).
+- When an X3DTextureNode is defined in the same [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/) instance as PointProperties node, the points of a [PointSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rendering/pointset/) shall be displayed as point sprites using the given texture(s).
 
 ### Warning
 
