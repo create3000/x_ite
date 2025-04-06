@@ -74,15 +74,13 @@ const handler =
 
          if (Number .isInteger (index))
          {
-            const
-               components = target .getComponents (),
-               valueType  = target .getValueType ();
-
-
             if (index >= target [_length])
                return undefined;
 
-            const array = target .getValue ();
+            const
+               components = target .getComponents (),
+               valueType  = target .getValueType (),
+               array      = target .getValue ();
 
             if (components === 1)
             {
