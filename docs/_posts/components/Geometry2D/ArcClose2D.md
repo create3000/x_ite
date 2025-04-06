@@ -29,7 +29,7 @@ The ArcClose2D node belongs to the **Geometry2D** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -49,7 +49,7 @@ Arc extends from *startAngle* counterclockwise to endAngle, in radians.
 
 #### Hints
 
-- For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/transform/) node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components/grouping/transform/) node instead.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warning
@@ -62,7 +62,7 @@ Arc extends from startAngle counterclockwise to *endAngle*, in radians.
 
 #### Hints
 
-- For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/transform/) node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components/grouping/transform/) node instead.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warning
@@ -75,7 +75,7 @@ Circle *radius*, of which the arc is a portion.
 
 #### Hint
 
-- For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/grouping/transform/) node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components/grouping/transform/) node instead.
 
 #### Warning
 
@@ -100,7 +100,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### Hint
 
-- Insert a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
 

@@ -30,7 +30,7 @@ The NurbsSweptSurface node belongs to the **NURBS** component and requires at le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -69,13 +69,13 @@ Defines cross-section of the surface traced about the trajectoryCurve axis.
 
 ### SFNode [in, out] **trajectoryCurve** NULL <small>[NurbsCurve]</small>
 
-Describes the center-line path using a [NurbsCurve](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/nurbs/nurbscurve/) node, oriented so that it is defined counterclockwise when looking down the −Y axis, thus defining a concept of inside and outside.
+Describes the center-line path using a [NurbsCurve](/x_ite/components/nurbs/nurbscurve/) node, oriented so that it is defined counterclockwise when looking down the −Y axis, thus defining a concept of inside and outside.
 
 ## Advice
 
 ### Hint
 
-- Conceptually it is the NURBS equivalent of [Extrusion](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/extrusion/) but permits the use of non-closed cross sections.
+- Conceptually it is the NURBS equivalent of [Extrusion](/x_ite/components/geometry3d/extrusion/) but permits the use of non-closed cross sections.
 
 ## Example
 

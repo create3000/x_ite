@@ -30,7 +30,7 @@ The MetadataString node belongs to the **Core** component and requires at least 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), MetadataString or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), MetadataString or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -65,17 +65,17 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 
 ### Hints
 
-- Typically use `containerField='value'` if the parent node is [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/).
+- Typically use `containerField='value'` if the parent node is [MetadataSet](/x_ite/components/core/metadataset/).
 - Explicitly defining containerField for Metadata nodes is always allowed and also unambiguous across each version of X3D.
 - [Each of the Metadata nodes are allowed as top-level root nodes in a scene, if doing that be sure to explicitly define `containerField='metadata'.`](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes)
 - If present, an IS statement is the first child within any other node.
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
-- Comments are not readable when a model file is loaded for viewing, but [WorldInfo](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/worldinfo/) and Metadata* nodes are persistent and inspectable at run time.
+- Comments are not readable when a model file is loaded for viewing, but [WorldInfo](/x_ite/components/core/worldinfo/) and Metadata* nodes are persistent and inspectable at run time.
 - [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html)
 
 ### Warnings
 
-- Default `containerField='metadata'` in X3D 3 changed to default `containerField='value'` in X3D 4.0, allowing construction of much terser [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) vocabulary structures.
+- Default `containerField='metadata'` in X3D 3 changed to default `containerField='value'` in X3D 4.0, allowing construction of much terser [MetadataSet](/x_ite/components/core/metadataset/) vocabulary structures.
 - Metadata nodes can only contain other Metadata nodes.
 
 ## See Also

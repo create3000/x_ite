@@ -29,7 +29,7 @@ The Extrusion node belongs to the **Geometry3D** component and requires at least
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -93,7 +93,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 ### SFBool [ ] **beginCap** TRUE
 
-Whether beginning cap is drawn (similar to [Cylinder](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/cylinder/) top cap).
+Whether beginning cap is drawn (similar to [Cylinder](/x_ite/components/geometry3d/cylinder/) top cap).
 
 #### Warning
 
@@ -101,7 +101,7 @@ Whether beginning cap is drawn (similar to [Cylinder](/x_ite/components//users/h
 
 ### SFBool [ ] **endCap** TRUE
 
-Whether end cap is drawn (similar to [Cylinder](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/cylinder/) bottom cap).
+Whether end cap is drawn (similar to [Cylinder](/x_ite/components/geometry3d/cylinder/) bottom cap).
 
 #### Warning
 
@@ -214,7 +214,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 ### Hints
 
 - [Extrusion](https://en.wikipedia.org/wiki/Extrusion)
-- Insert a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
 

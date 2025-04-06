@@ -28,7 +28,7 @@ The Contact node belongs to the **RigidBodyPhysics** component and requires at l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -48,7 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### MFString [in, out] **appliedParameters** "BOUNCE"
 
-Default global parameters for collision outputs of rigid body physics system. Contact node can override parent [CollisionCollection](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/collisioncollection/) node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
+Default global parameters for collision outputs of rigid body physics system. Contact node can override parent [CollisionCollection](/x_ite/components/rigidbodyphysics/collisioncollection/) node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
 
 #### Hint
 
@@ -110,7 +110,7 @@ The body1 and *body2* fields specify two top-level nodes that should be evaluate
 
 ### Hint
 
-- Each Contact node contains two [RigidBody](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/rigidbody/) nodes (`containerField='body1'` and `containerField='body2')` as well as two [CollidableShape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/collidableshape/) or [CollidableOffset](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/rigidbodyphysics/collidableoffset/) nodes (`containerField='geometry1'` and `containerField='geometry2').`
+- Each Contact node contains two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes (`containerField='body1'` and `containerField='body2')` as well as two [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) or [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/) nodes (`containerField='geometry1'` and `containerField='geometry2').`
 
 ### Warning
 

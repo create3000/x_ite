@@ -29,7 +29,7 @@ The Appearance node belongs to the **Shape** component and requires at least lev
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -37,7 +37,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFString [in, out] **alphaMode** "AUTO" <small>["AUTO"|"OPAQUE"|"MASK"|"BLEND"]</small>
 
-Provides options for control of alpha transparency handling for textures. AUTO means [Material](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/material/) transparency is applied to texture transparency for full backwards compatility with X3D3, OPAQUE means ignore alpha transparency to render texture as opaque, MASK means alpha-testing of pixels as fully transparent when alpha value is less than alphaCutoff and fully opaque when alpha value is greater than or equal to alphaCutoff, BLEND combines partial transparency of textures and materials.
+Provides options for control of alpha transparency handling for textures. AUTO means [Material](/x_ite/components/shape/material/) transparency is applied to texture transparency for full backwards compatility with X3D3, OPAQUE means ignore alpha transparency to render texture as opaque, MASK means alpha-testing of pixels as fully transparent when alpha value is less than alphaCutoff and fully opaque when alpha value is greater than or equal to alphaCutoff, BLEND combines partial transparency of textures and materials.
 
 #### Hint
 
@@ -57,48 +57,48 @@ Single contained *acousticProperties* node that can specify additional acoustic 
 
 ### SFNode [in, out] **pointProperties** NULL <small>[PointProperties]</small>
 
-Single contained [PointProperties](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/pointproperties/) node that can specify additional visual attributes applied to corresponding point geometry.
+Single contained [PointProperties](/x_ite/components/shape/pointproperties/) node that can specify additional visual attributes applied to corresponding point geometry.
 
 ### SFNode [in, out] **lineProperties** NULL <small>[LineProperties]</small>
 
-Single contained [LineProperties](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/lineproperties/) node that can specify additional visual attributes applied to corresponding line geometry.
+Single contained [LineProperties](/x_ite/components/shape/lineproperties/) node that can specify additional visual attributes applied to corresponding line geometry.
 
 ### SFNode [in, out] **fillProperties** NULL <small>[FillProperties]</small>
 
-Single contained [FillProperties](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/fillproperties/) node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
+Single contained [FillProperties](/x_ite/components/shape/fillproperties/) node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
 
 ### SFNode [in, out] **material** NULL <small>[X3DMaterialNode]</small>
 
-Single contained [Material](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/material/), [PhysicalMaterial](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/physicalmaterial/), [TwoSidedMaterial](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/twosidedmaterial/) (deprecated), or [UnlitMaterial](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
+Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/), [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) (deprecated), or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
 
 #### Warning
 
-- If *material* is NULL or unspecified, lighting is off (all lights ignored) for this [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) and unlit object color is (1, 1, 1).
+- If *material* is NULL or unspecified, lighting is off (all lights ignored) for this [Shape](/x_ite/components/shape/shape/) and unlit object color is (1, 1, 1).
 
 ### SFNode [in, out] **backMaterial** NULL <small>[X3DOneSidedMaterialNode]</small>
 
-Single contained [Material](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/material/), [PhysicalMaterial](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/physicalmaterial/) or [UnlitMaterial](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to back faces of corresponding geometry.
+Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to back faces of corresponding geometry.
 
 #### Warnings
 
 - It is only allowed to define a *backMaterial* field if the material field is also defined (not NULL).
 - The node type for *backMaterial* field (if any) must match node type for material field.
-- If material is NULL or unspecified, lighting is off (all lights ignored) for this [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) and unlit object color is (1, 1, 1).
+- If material is NULL or unspecified, lighting is off (all lights ignored) for this [Shape](/x_ite/components/shape/shape/) and unlit object color is (1, 1, 1).
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTextureNode]</small>
 
-Single contained *texture* node ([ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/), [MovieTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/movietexture/), [PixelTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexture/)) that maps image(s) to surface geometry.
+Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
 
 #### Hints
 
-- If *texture* node is NULL or unspecified, corresponding [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) geometry for this Appearance is not textured.
+- If *texture* node is NULL or unspecified, corresponding [Shape](/x_ite/components/shape/shape/) geometry for this Appearance is not textured.
 - [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)
 - [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html)
 - [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texture3D.html)
 
 ### SFNode [in, out] **textureTransform** NULL <small>[X3DTextureTransformNode]</small>
 
-Single contained [TextureTransform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/texturetransform/) node that defines 2D transformation applied to texture coordinates.
+Single contained [TextureTransform](/x_ite/components/texturing/texturetransform/) node that defines 2D transformation applied to texture coordinates.
 
 #### Hints
 
@@ -107,7 +107,7 @@ Single contained [TextureTransform](/x_ite/components//users/holger/desktop/x_it
 
 ### MFNode [in, out] **shaders** [ ] <small>[X3DShaderNode]</small>
 
-Zero or more contained programmable shader nodes ([ComposedShader](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/composedshader/), [PackagedShader](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/packagedshader/), [ProgramShader](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/programshader/)) that specify, in order of preference, author-programmed rendering characteristics.
+Zero or more contained programmable shader nodes ([ComposedShader](/x_ite/components/shaders/composedshader/), [PackagedShader](/x_ite/components/shaders/packagedshader/), [ProgramShader](/x_ite/components/shaders/programshader/)) that specify, in order of preference, author-programmed rendering characteristics.
 
 #### Hint
 
@@ -125,10 +125,10 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 
 ### Hints
 
-- Insert a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) node before adding geometry or Appearance. Interchange profile
-- Only [Material](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/material/) and [ImageTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/imagetexture/) children are allowed.
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or Appearance. Interchange profile
+- Only [Material](/x_ite/components/shape/material/) and [ImageTexture](/x_ite/components/texturing/imagetexture/) children are allowed.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- Advanced uses can contain [MultiTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexture/), [MultiTextureTransform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing/multitexturetransform/)/[TextureTransformMatrix3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/texturetransformmatrix3d/)/[TextureTransform3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/texturetransform3d/), [ComposedShader](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/composedshader/)/[PackagedShader](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/packagedshader/)/[ProgramShader](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/programshader/), [ComposedTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/composedtexture3d/)/[ImageTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/imagetexture3d/)/[PixelTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/pixeltexture3d/), or [ComposedCubeMapTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/cubemaptexturing/composedcubemaptexture/)/[GeneratedCubeMapTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/cubemaptexturing/generatedcubemaptexture/)/[ImageCubeMapTexture](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/cubemaptexturing/imagecubemaptexture/).
+- Advanced uses can contain [MultiTexture](/x_ite/components/texturing/multitexture/), [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/)/[TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/)/[TextureTransform3D](/x_ite/components/texturing3d/texturetransform3d/), [ComposedShader](/x_ite/components/shaders/composedshader/)/[PackagedShader](/x_ite/components/shaders/packagedshader/)/[ProgramShader](/x_ite/components/shaders/programshader/), [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/)/[ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/)/[PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/), or [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/)/[GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/)/[ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/).
 - [X3D Architecture 12.2.2 Appearance node](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#Appearancenode)
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/lighting.html#Lightingmodel)
 

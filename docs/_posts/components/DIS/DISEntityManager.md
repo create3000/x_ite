@@ -29,7 +29,7 @@ The DISEntityManager node belongs to the **DIS** component and requires at least
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -45,11 +45,11 @@ Each simulation application that can respond to simulation management PDUs needs
 
 ### MFNode [in, out] **children** [ ] <small>[DISEntityTypeMapping]</small>
 
-Mapping field provides a mechanism for automatically creating an X3D model when a new entity arrives over the network. If a new entity matches one of the nodes, an instance of the provided URL is created and added as a child to the [EspduTransform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/dis/espdutransform/) specified in the addedEntities field.
+Mapping field provides a mechanism for automatically creating an X3D model when a new entity arrives over the network. If a new entity matches one of the nodes, an instance of the provided URL is created and added as a child to the [EspduTransform](/x_ite/components/dis/espdutransform/) specified in the addedEntities field.
 
 #### Hint
 
-- Multiple [DISEntityTypeMapping](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/dis/disentitytypemapping/) nodes can be provided in mapping field, best match takes precedence.
+- Multiple [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) nodes can be provided in mapping field, best match takes precedence.
 
 #### Warning
 
@@ -73,7 +73,7 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### MFNode [out] **removedEntities**
 
-*removedEntities* output array provides [EspduTransform](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/dis/espdutransform/) references to any entities removed during last frame, either due to a timeout or from an explicit RemoveEntityPDU action.
+*removedEntities* output array provides [EspduTransform](/x_ite/components/dis/espdutransform/) references to any entities removed during last frame, either due to a timeout or from an explicit RemoveEntityPDU action.
 
 #### Warning
 
@@ -83,7 +83,7 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### Hints
 
-- DISEntityManager contains [DISEntityTypeMapping](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/dis/disentitytypemapping/) nodes.
+- DISEntityManager contains [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) nodes.
 - DisEntityManager ESPDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
 - [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)

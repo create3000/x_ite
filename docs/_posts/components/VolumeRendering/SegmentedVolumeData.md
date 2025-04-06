@@ -30,7 +30,7 @@ The SegmentedVolumeData node belongs to the **VolumeRendering** component and re
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -88,7 +88,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### SFNode [in, out] **segmentIdentifiers** NULL <small>[X3DTexture3DNode]</small>
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/pixeltexture3d/)) holds component texture that provides corresponding segment identifier.
+Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) holds component texture that provides corresponding segment identifier.
 
 #### Hint
 
@@ -108,13 +108,13 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
+Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
 ## Advice
 
 ### Hints
 
-- SegmentedVolumeData can contain a single [ComposedTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/imagetexture3d/) or [PixelTexture3D](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/texturing3d/pixeltexture3d/) node with `containerField='segmentIdentifiers'` and another with `containerField='voxels'.`
+- SegmentedVolumeData can contain a single [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/) or [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) node with `containerField='segmentIdentifiers'` and another with `containerField='voxels'.`
 - SegmentedVolumeData can contain multiple RenderStyle nodes.
 
 ### Warning

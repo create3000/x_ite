@@ -31,7 +31,7 @@ The PrimitivePickSensor node belongs to the **Picking** component and requires a
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -51,7 +51,7 @@ Enables/disables node operation.
 
 ### MFString [in, out] **objectType** "ALL" <small>["ALL", "NONE", "TERRAIN", ...]</small>
 
-The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a [PickableGroup](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/picking/pickablegroup/) with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field of the corresponding [PickableGroup](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/picking/pickablegroup/) to false.
+The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a [PickableGroup](/x_ite/components/picking/pickablegroup/) with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field of the corresponding [PickableGroup](/x_ite/components/picking/pickablegroup/) to false.
 
 #### Hints
 
@@ -114,15 +114,15 @@ Output event containing the node or nodes that have been found to intersect with
 
 ### Hints
 
-- Sorting is defined based on the primitive type as follows. For [Cone](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/cone/), the closest picked primitive is defined to be that closest to the vertex point. For [Cylinder](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/cylinder/), [Box](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/box/), and [Sphere](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/sphere/), the closest picked primitive is defined to be that closest to the center.
-- Picking is performed between rendered frames of the event model. An author sets up the picking request in one frame by placing a [LinePickSensor](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/picking/linepicksensor/) in the desired location. At the start of the next frame, any picking intersections are reported by the pick sensor.
+- Sorting is defined based on the primitive type as follows. For [Cone](/x_ite/components/geometry3d/cone/), the closest picked primitive is defined to be that closest to the vertex point. For [Cylinder](/x_ite/components/geometry3d/cylinder/), [Box](/x_ite/components/geometry3d/box/), and [Sphere](/x_ite/components/geometry3d/sphere/), the closest picked primitive is defined to be that closest to the center.
+- Picking is performed between rendered frames of the event model. An author sets up the picking request in one frame by placing a [LinePickSensor](/x_ite/components/picking/linepicksensor/) in the desired location. At the start of the next frame, any picking intersections are reported by the pick sensor.
 - Picking notification is performed at the start of the frame for all enabled pick sensors once all other sensors are processed.
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#ExecutionModel)
-- [Box](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/box/), [Cone](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/cone/), [Cylinder](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/cylinder/) or [Sphere](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/sphere/) can be used for pickingGeometry node.
+- [Box](/x_ite/components/geometry3d/box/), [Cone](/x_ite/components/geometry3d/cone/), [Cylinder](/x_ite/components/geometry3d/cylinder/) or [Sphere](/x_ite/components/geometry3d/sphere/) can be used for pickingGeometry node.
 
 ### Warnings
 
-- Boolean fields used to control visibility of primitive pickingGeometry subsections are ignored when evaluating picking intersections. Example: a [Cylinder](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/cylinder/) without end caps is still treated as an enclosed [Cylinder](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/geometry3d/cylinder/).
+- Boolean fields used to control visibility of primitive pickingGeometry subsections are ignored when evaluating picking intersections. Example: a [Cylinder](/x_ite/components/geometry3d/cylinder/) without end caps is still treated as an enclosed [Cylinder](/x_ite/components/geometry3d/cylinder/).
 - Order of contained nodes is significant, single pickingGeometry node must precede pickTarget node array.
 
 ## Example

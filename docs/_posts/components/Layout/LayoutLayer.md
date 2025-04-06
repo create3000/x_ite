@@ -29,7 +29,7 @@ The LayoutLayer node belongs to the **Layout** component and requires at least l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -41,7 +41,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### MFString [in, out] **objectType** "ALL" <small>["ALL", "NONE", "TERRAIN", ...]</small>
 
-The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a [PickableGroup](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/picking/pickablegroup/) with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field to false.
+The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a [PickableGroup](/x_ite/components/picking/pickablegroup/) with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field to false.
 
 #### Hints
 
@@ -63,11 +63,11 @@ Whether or not renderable content within this node is visually displayed.
 
 ### SFNode [in, out] **layout** NULL <small>[X3DLayoutNode]</small>
 
-The *layout* field contains an X3DLayoutNode node that provides the information required to locate and size the *layout* region of the [LayoutGroup](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/layout/layoutgroup/) node relative to its parent’s *layout* region, and also to scale the contents of the [LayoutGroup](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/layout/layoutgroup/).
+The *layout* field contains an X3DLayoutNode node that provides the information required to locate and size the *layout* region of the [LayoutGroup](/x_ite/components/layout/layoutgroup/) node relative to its parent’s *layout* region, and also to scale the contents of the [LayoutGroup](/x_ite/components/layout/layoutgroup/).
 
 ### SFNode [in, out] **viewport** NULL <small>[X3DViewportNode]</small>
 
-The content of the [LayoutGroup](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/layout/layoutgroup/) is clipped by the specified *viewport*.
+The content of the [LayoutGroup](/x_ite/components/layout/layoutgroup/) is clipped by the specified *viewport*.
 
 ### MFNode [in] **addChildren**
 
@@ -92,7 +92,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hint
 
-- Insert a [Shape](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
 

@@ -32,7 +32,7 @@ The ComposedShader node belongs to the **Shaders** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataboolean/), [MetadataDouble](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatadouble/), [MetadataFloat](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatafloat/), [MetadataInteger](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatainteger/), [MetadataString](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadatastring/) or [MetadataSet](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -72,18 +72,18 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 ### MFNode [in, out] **parts** [ ] <small>[ShaderPart]</small>
 
-ComposedShader can contain multiple [ShaderPart](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/shaderpart/) nodes in the *parts* field.
+ComposedShader can contain multiple [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes in the *parts* field.
 
 ## Advice
 
 ### Hints
 
-- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by Metadata* nodes (if any), then \<[ShaderPart](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/shaderpart/) `containerField='parts'/>` nodes.
-- Apply default `containerField='shaders'` when parent node is [Appearance](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shape/appearance/).
+- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by Metadata* nodes (if any), then \<[ShaderPart](/x_ite/components/shaders/shaderpart/) `containerField='parts'/>` nodes.
+- Apply default `containerField='shaders'` when parent node is [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
 
-- ComposedShader does not contain CDATA section of plain-text source code. All source programs are contained in child [ShaderPart](/x_ite/components//users/holger/desktop/x_ite/x_ite/docs/_posts/components/shaders/shaderpart/) nodes.
+- ComposedShader does not contain CDATA section of plain-text source code. All source programs are contained in child [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes.
 
 ## Example
 
