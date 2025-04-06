@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          if (result)
          {
-            this .callback (url .substring (result [0] .length));
+            await this .callback (url .substring (result [0] .length));
             return;
          }
       }
@@ -234,7 +234,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             data = $.try (() => decodeURIComponent (data)) ?? data; // Decode data.
             data = data .replace (/^ï»¿/, "");                      // Remove BOM.
 
-            this .callback (data);
+            await this .callback (data);
             return;
          }
       }
