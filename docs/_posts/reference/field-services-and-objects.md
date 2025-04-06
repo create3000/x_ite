@@ -122,6 +122,7 @@ Returns a copy of this X3DField.
 
 Returns true if the passed SF* or MF* *field* of the same type is equals to this object, otherwise false.
 
+<!--
 #### **addFieldCallback** (*key: any, callback: (value: any) => void*): void
 
 Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. The callback is called when the field has been changed.
@@ -131,6 +132,7 @@ The callback has a signature of `function (value)`, where value is the current v
 #### **removeFieldCallback** (*key: any*): void
 
 Removes a field callback function associated with *key*.
+-->
 
 #### **dispose** (): void
 
