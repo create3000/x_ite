@@ -111,13 +111,13 @@ The following services can be used to establish a session and obtain the X3DBrow
 The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
 
 ```js
-// Obtain X3DBrowser object of first x3d-canvas element.
+// Obtain X3DBrowser object of first x3d-canvas element in the document.
 const Browser = X3D .getBrowser ();
 ```
 
-#### **getBrowser** (*element: HTMLElement*): X3DBrowser
+#### **getBrowser** (*element: X3DCanvasElement*): X3DBrowser
 
-Given a DOM element that represents a x3d-canvas element, the getBrowser function returns the appropriate X3DBrowser object.
+Given a DOM element that represents a x3d-canvas element, the getBrowser function returns the appropriate X3DBrowser object. This function is exactly the same as accessing the `browser` property from the X3DCanvasElement directly.
 
 ```js
 // Query all x3d-canvas elements within the HTML page.
@@ -133,7 +133,7 @@ for (const canvas of canvases)
 
 #### **createBrowser** (): X3DCanvasElement
 
-Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
+Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created. This function is exactly the same as `document .createElement ("x3d-canvas")`.
 
 ```js
 function addBrowser (parent)
@@ -156,7 +156,9 @@ The X3DCanvasElement, \<x3d-canvas\>, is the main element that displays the X3D 
 An \<x3d-canvas\> can be created with the `document.createElement` function to get a reference to an X3DCanvasElement.
 
 ```js
-const canvas = document .createElement ("x3d-canvas");
+const
+   canvas  = document .createElement ("x3d-canvas"),
+   browser = canvas .browser;
 ```
 
 ### Attributes

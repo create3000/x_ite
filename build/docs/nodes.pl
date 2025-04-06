@@ -40,7 +40,7 @@ $inOut = {
 
 %links = map { m|([^/]+)$|o; ($1, lc $_) }
    map { s|\.md$||or }
-   map { s|$cwd/docs/_posts/components//||or }
+   map { s|$cwd/docs/_posts/components//?||or }
    split "\n", `find $cwd/docs/_posts/components/ -type f -mindepth 2`;
 
 sub node {

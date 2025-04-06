@@ -78,8 +78,8 @@ const handler =
                components = target .getComponents (),
                valueType  = target .getValueType ();
 
-            // For historical reasons this behavior is intended (resize), there are enough
-            // X3D/VRML worlds in the Internet who rely on this behavior.
+            // For historical reasons this behavior is intended (resize), there are
+            // enough X3D/VRML worlds in the Internet who rely on this behavior.
             const array = index < target [_length]
                ? target .getValue ()
                : target .resize (index + 1, target .getSingleValue ());
@@ -228,14 +228,11 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
    copy ()
    {
       const
-         target     = this [_target],
-         array      = target .getValue (),
-         copy       = target .create (),
-         copyArray  = new (target .getArrayType ()) (array);
+         target = this [_target],
+         array  = target .getValue (),
+         copy   = target .create ();
 
-      copy [_length] = target [_length];
-
-      X3DArrayField .prototype .set .call (copy, copyArray);
+      copy .set (array, target [_length]);
 
       return copy;
    },

@@ -179,15 +179,15 @@ class AreaChart
       transform .scale .y       = height;
       transform .scale .z       = depth;
 
-      touchSensor .getField ("isOver") .addFieldCallback (this, value =>
+      touchSensor .addFieldCallback ("areaChart", "isOver", value =>
       {
          switchNode .whichChoice = value;
 
          if (!value)
             return;
 
-         $("#data-id") .text (`${id}`);
-         $("#data-area") .text (`${area} m²`);
+         $("#data-id")     .text (`${id}`);
+         $("#data-area")   .text (`${area} m²`);
          $("#data-height") .text (`${height} m`);
       });
 

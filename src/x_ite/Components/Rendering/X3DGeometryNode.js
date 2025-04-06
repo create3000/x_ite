@@ -472,7 +472,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
             {
                const Q = normals [q];
 
-               if (Q .dot (P) >= cosCreaseAngle)
+               if (Q .dot (P) > cosCreaseAngle)
                   N .add (Q);
             }
 
