@@ -90,7 +90,6 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
 
       else
          this .getBrowser () .removeCollision (this);
-
    },
    set_enabled__ ()
    {
@@ -115,33 +114,17 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    },
    set_collisionObjects__ ()
    {
-      this .setCollisionObject (this ._enabled .getValue () && (this .collisionObjects .size || this .proxyNode ?.isCollisionObject ()));
-   },
-   traverse (type, renderObject)
-   {
-      switch (type)
+      if (!this ._enabled .getValue ())
       {
-         case TraverseType .COLLISION:
-         {
-            const collisions = renderObject .getCollisions ();
-
-            collisions .push (this);
-
-            if (this .proxyNode)
-               this .proxyNode .traverse (type, renderObject);
-
-            else
-               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-            collisions .pop ();
-            return;
-         }
-         default:
-         {
-            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-            return;
-         }
+         this .collisionObjects .clear ();
       }
+      else if (this .proxyNode)
+      {
+         this .collisionObjects .clear ();
+         this .collisionObjects .add (this .proxyNode);
+      }
+
+      X3DGroupingNode .prototype .set_collisionObjects__ .call (this);
    },
    dispose ()
    {
