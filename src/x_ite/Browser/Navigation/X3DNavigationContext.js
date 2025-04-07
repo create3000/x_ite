@@ -186,10 +186,7 @@ Object .assign (X3DNavigationContext .prototype,
    {
       const navigationInfo = this ._activeNavigationInfo .getValue ();
 
-      if (navigationInfo)
-         this ._availableViewers = navigationInfo ._availableViewers;
-      else
-         this ._availableViewers .length = 0;
+      this ._availableViewers = navigationInfo ?._availableViewers ?? [ ];
 
       // Create viewer node.
 
