@@ -170,27 +170,17 @@ Object .assign (X3DNavigationContext .prototype,
    },
    set_activeNavigationInfo__ ()
    {
-      const activeNavigationInfo = this ._activeNavigationInfo .getValue ();
+      this ._activeNavigationInfo .getValue () ?._viewer .removeFieldInterest (this ._viewer);
 
-      activeNavigationInfo ?._viewer .removeFieldInterest (this ._viewer);
+      this ._activeNavigationInfo = this ._activeLayer .getValue () ?.getNavigationInfo ();
 
-      if (this ._activeLayer .getValue ())
-      {
-         this ._activeNavigationInfo = this ._activeLayer .getValue () .getNavigationInfo ();
+      this ._activeNavigationInfo .getValue () ?._viewer .addFieldInterest (this ._viewer);
 
-         this ._activeNavigationInfo .getValue () ._viewer .addFieldInterest (this ._viewer);
-
-         this ._viewer = this ._activeNavigationInfo .getValue () ._viewer;
-      }
-      else
-      {
-         this ._activeNavigationInfo = null;
-         this ._viewer               = "NONE";
-      }
+      this ._viewer = this ._activeNavigationInfo .getValue () ?._viewer ?? "NONE";
    },
    set_activeViewpoint__ ()
    {
-      this ._activeViewpoint = this ._activeLayer .getValue () ?.getViewpoint () ?? null;
+      this ._activeViewpoint = this ._activeLayer .getValue () ?.getViewpoint ();
    },
    set_viewer__ (viewer)
    {
