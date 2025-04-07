@@ -94,7 +94,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          .on ("abort error", this .setError .bind (this))
          .on ("suspend stalled", this .setTimeout .bind (this))
          .attr ("crossorigin", "anonymous")
-         .attr ("preload", "auto");
+         .attr ("preload", "auto")
+         .prop ("muted", true);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -152,6 +153,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       }
       else
       {
+         this .video .prop ("muted", true);
          this .video .attr ("src", this .URL);
          this .video .get (0) .load ();
       }
@@ -194,6 +196,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             throw new Error ("The movie texture is a non power-of-two texture.");
 
          this ._duration_changed = video .duration;
+
+         this .video .prop ("muted", this ._gain .getValue () === 0);
 
          this .setMediaElement (video);
          this .setTextureData (width, height, true, false, video);
