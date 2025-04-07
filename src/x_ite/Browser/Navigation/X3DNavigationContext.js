@@ -76,8 +76,8 @@ Object .assign (X3DNavigationContext .prototype,
    {
       this ._viewer .addInterest ("set_viewer__", this);
 
-      this .initialized () .addInterest ("set_world__",    this);
       this .shutdown ()    .addInterest ("remove_world__", this);
+      this .initialized () .addInterest ("set_world__",    this);
 
       this [_headlightContainer] = this .createHeadlight ();
       this [_viewerNode] .setup ();
