@@ -178,9 +178,6 @@ Object .assign (X3DNavigationContext .prototype,
       {
          this ._activeNavigationInfo = this ._activeLayer .getValue () .getNavigationInfo ();
 
-         if (this ._activeNavigationInfo .getValue () === activeNavigationInfo)
-            return;
-
          this ._activeNavigationInfo .getValue () ._viewer .addFieldInterest (this ._viewer);
 
          this ._viewer = this ._activeNavigationInfo .getValue () ._viewer;
