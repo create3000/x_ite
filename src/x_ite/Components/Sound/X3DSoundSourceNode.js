@@ -121,9 +121,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
    },
    set_gain__ ()
    {
-      if (this .mediaElement)
-         this .mediaElement .muted = this ._gain .getValue () === 0;
-
       this .audioSource .gain .value = this ._gain .getValue ();
    },
    set_loop ()

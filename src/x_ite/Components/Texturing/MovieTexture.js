@@ -231,6 +231,13 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
+   set_gain__ ()
+   {
+      if (this .mediaElement)
+         this .mediaElement .muted = this ._gain .getValue () === 0;
+
+      X3DSoundSourceNode .prototype .set_gain__ .call (this);
+   },
    set_speed__ ()
    {
       const media = this .getMediaElement ();
