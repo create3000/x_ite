@@ -257,9 +257,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       X3DSoundSourceNode .prototype .set_time .call (this);
 
-      if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-         return;
-
       const media = this .getMediaElement ();
 
       if (media)
