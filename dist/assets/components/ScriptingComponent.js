@@ -501,7 +501,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
       // See: 29.2.2 Script execution
       await this .unloadData ();
 
-      new (external_X_ITE_X3D_FileLoader_default()) (this) .loadDocument (this ._url, data =>
+      new (external_X_ITE_X3D_FileLoader_default()) (this) .loadDocument (this ._url, async data =>
       {
          if (data === null)
          {
@@ -510,7 +510,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          }
          else
          {
-            this .initialize__ ($.decodeText (data));
+            await this .initialize__ ($.decodeText (data));
             this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
          }
       });
