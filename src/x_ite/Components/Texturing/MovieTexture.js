@@ -162,12 +162,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       this .clearTimeout ();
 
-      this .timeoutId = setTimeout (() =>
-      {
-         if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-            this .setError (event);
-      },
-      30_000);
+      this .timeoutId = setTimeout (() => this .setError (event), 30_000);
    },
    clearTimeout ()
    {
