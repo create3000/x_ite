@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.63, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Tue, 08 Apr 2025 08:24:52 GMT'/>
+    <meta name='modified' content='Tue, 08 Apr 2025 08:52:24 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -50,9 +50,6 @@
                 gain='0'
                 loop='true'/>
           </UnlitMaterial>
-          <TextureTransform
-              scale='1 0.7'
-              center='0 -0.2'/>
         </Appearance>
         <Rectangle2D DEF='_1'/>
       </Shape>
