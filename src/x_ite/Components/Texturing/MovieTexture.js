@@ -68,7 +68,7 @@ function MovieTexture (executionContext)
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .urlStack               = new Fields .MFString ();
-   this .video                  = $("<video playsinline></video>");
+   this .video                  = $("<video></video>");
    this .sourceNode             = audioContext .createMediaElementSource (this .video [0]);
    this .mediaStreamDestination = audioContext .createMediaStreamDestination ();
 
@@ -92,7 +92,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       this .video
          .attr ("crossorigin", "anonymous")
-         .attr ("preload", "auto");
+         .attr ("preload", "auto")
+         .attr ("playsinline", "");
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
