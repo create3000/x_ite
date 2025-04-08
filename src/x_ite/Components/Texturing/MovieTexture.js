@@ -247,7 +247,18 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       if (!media)
          return;
 
-      media .playbackRate   = this ._speed .getValue () * Math .max (this ._pitch .getValue (), 0);
+      try
+      {
+         // Chrome throws an error if playbackRate is negative.
+         media .playbackRate = this ._speed .getValue () * Math .max (this ._pitch .getValue (), 0);
+      }
+      catch (error)
+      {
+         console .error (error .message);
+
+         media .playbackRate = 1;
+      }
+
       media .preservesPitch = this ._pitch .getValue () === 1;
    },
    set_time ()
