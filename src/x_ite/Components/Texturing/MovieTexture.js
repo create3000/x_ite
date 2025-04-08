@@ -210,7 +210,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          this .setTextureData (width, height, true, false, video);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
-         this .set_gain__ ();
          this .set_speed__ ();
       }
       catch (error)
