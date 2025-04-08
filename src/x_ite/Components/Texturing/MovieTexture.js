@@ -114,8 +114,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    loadData ()
    {
-      this .setMediaElement (null);
-      this .urlStack .setValue (this ._url);
+      this .urlStack .assign (this ._url);
       this .loadNext ();
    },
    loadNext ()
@@ -126,6 +125,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          this .video .off ("loadeddata");
          this ._duration_changed = -1;
+         this .setMediaElement (null);
          this .clearTexture ();
          this .setLoadState (X3DConstants .FAILED_STATE);
          return;
