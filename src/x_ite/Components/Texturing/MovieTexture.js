@@ -116,7 +116,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       this .setMediaElement (null);
       this .urlStack .setValue (this ._url);
-      this .video .on ("loadeddata", this .setVideo .bind (this));
       this .loadNext ();
    },
    loadNext ()
@@ -155,8 +154,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       else
       {
          this .video
-            .attr ("src", this .URL)
-            .get (0) .load ();
+            .on ("loadeddata", this .setVideo .bind (this))
+            .attr ("src", this .URL);
       }
    },
    setTimeout (event)
@@ -191,15 +190,15 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
                console .info (`Done loading movie '${decodeURI (this .URL)}'.`);
          }
 
-         this .clearTimeout ();
-
-         this .video .off ("loadeddata");
-
          const
             gl     = this .getBrowser () .getContext (),
             video  = this .video [0],
             width  = video .videoWidth,
             height = video .videoHeight;
+
+         this .clearTimeout ();
+
+         this .video .off ("loadeddata");
 
          if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
             throw new Error ("The movie texture is a non power-of-two texture.");
