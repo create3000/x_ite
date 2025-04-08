@@ -122,6 +122,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    loadNext ()
    {
+      this .clearTimeout ();
+
       if (this .urlStack .length === 0)
       {
          this .video .off ("loadeddata");
@@ -161,12 +163,18 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    setTimeout (event)
    {
-      setTimeout (() =>
+      this .clearTimeout ();
+
+      this .timeoutId = setTimeout (() =>
       {
          if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
             this .setError (event);
       },
       30_000);
+   },
+   clearTimeout ()
+   {
+      clearTimeout (this .timeoutId);
    },
    setError (event)
    {
@@ -184,6 +192,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             if (this .URL .protocol !== "data:")
                console .info (`Done loading movie '${decodeURI (this .URL)}'.`);
          }
+
+         this .clearTimeout ();
 
          this .video .off ("loadeddata");
 
