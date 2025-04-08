@@ -91,8 +91,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       this ._pitch .addInterest ("set_speed__", this);
 
       this .video
-         .on ("abort error", this .setError .bind (this))
-         .on ("suspend stalled", this .setTimeout .bind (this))
          .attr ("crossorigin", "anonymous")
          .attr ("preload", "auto");
 
@@ -123,7 +121,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       if (this .urlStack .length === 0)
       {
-         this .video .off ("loadeddata");
+         this .video .off ("abort error suspend stalled loadeddata");
          this ._duration_changed = -1;
          this .setMediaElement (null);
          this .clearTexture ();
@@ -154,6 +152,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       else
       {
          this .video
+            .on ("abort error", this .setError .bind (this))
+            .on ("suspend stalled", this .setTimeout .bind (this))
             .on ("loadeddata", this .setVideo .bind (this))
             .attr ("src", this .URL)
             .get (0) .load ();
@@ -192,9 +192,9 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             width  = video .videoWidth,
             height = video .videoHeight;
 
-         this .clearTimeout ();
+         this .video .off ("abort error suspend stalled loadeddata");
 
-         this .video .off ("loadeddata");
+         this .clearTimeout ();
 
          if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
             throw new Error ("The movie texture is a non power-of-two texture.");
