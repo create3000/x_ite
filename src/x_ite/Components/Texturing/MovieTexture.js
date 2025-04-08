@@ -94,8 +94,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          .on ("abort error", this .setError .bind (this))
          .on ("suspend stalled", this .setTimeout .bind (this))
          .attr ("crossorigin", "anonymous")
-         .attr ("preload", "auto")
-         .prop ("muted", true);
+         .attr ("preload", "auto");
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -156,7 +155,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       else
       {
          this .video
-            .prop ("muted", true)
             .attr ("src", this .URL)
             .get (0) .load ();
       }
@@ -245,10 +243,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       X3DSoundSourceNode .prototype .set_gain__ .call (this);
 
-      const media = this .getMediaElement ();
-
-      if (media)
-         media .muted = this ._gain .getValue () === 0;
+      this .video .prop ("muted", this ._gain .getValue () === 0);
    },
    set_speed__ ()
    {
