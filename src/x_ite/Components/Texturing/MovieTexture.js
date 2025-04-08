@@ -153,9 +153,10 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       }
       else
       {
-         this .video .prop ("muted", true);
-         this .video .attr ("src", this .URL);
-         this .video .get (0) .load ();
+         this .video
+            .prop ("muted", true)
+            .attr ("src", this .URL)
+            .get (0) .load ();
       }
    },
    setTimeout (event)
