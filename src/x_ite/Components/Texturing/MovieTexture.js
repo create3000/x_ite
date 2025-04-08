@@ -197,12 +197,11 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
          this ._duration_changed = video .duration;
 
-         this .video .prop ("muted", this ._gain .getValue () === 0);
-
          this .setMediaElement (video);
          this .setTextureData (width, height, true, false, video);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
+         this .set_gain__ ();
          this .set_speed__ ();
       }
       catch (error)
