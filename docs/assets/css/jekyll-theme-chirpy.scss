@@ -9,6 +9,10 @@
 
 /* append your custom style below */
 
+/*
+ * Common rules start here
+ */
+
 @mixin x_ite-dark-scheme {
   /* Colors */
 
@@ -298,27 +302,6 @@ x3d-canvas.xr-button-tl::part(xr-button) {
   left: 10px;
 }
 
-/* teaser */
-
-.content .teaser {
-    aspect-ratio: 16 / 5;
-}
-
-.content .teaser::part(surface) {
-  cursor: default !important;
-}
-
-.content .mascot-wrapper {
-  position: relative;
-}
-
-.content .mascot {
-  pointer-events: none;
-  aspect-ratio: 780 / 280;
-  position: absolute;
-  transform: translateY(-70%);
-}
-
 /* */
 
 span[data-label-text="X3D" i],
@@ -516,6 +499,31 @@ select.select option {
   border-radius: .625rem;
   padding: .5rem;
   text-align: center;
+}
+
+/*
+ * Website specify rules start here
+ */
+
+/* teaser */
+
+.content .teaser {
+    aspect-ratio: 16 / 5;
+}
+
+.content .teaser::part(surface) {
+  cursor: default !important;
+}
+
+.content .mascot-wrapper {
+  position: relative;
+}
+
+.content .mascot {
+  pointer-events: none;
+  aspect-ratio: 780 / 280;
+  position: absolute;
+  transform: translateY(-70%);
 }
 
 /* table examples */
