@@ -117,6 +117,16 @@ html {
   overflow: auto;
 }
 
+/* rouge console */
+
+.highlight .gp {
+  @extend .s;
+}
+
+.highlight .nb {
+  @extend .na;
+}
+
 /* append your custom style below */
 
 .red {
