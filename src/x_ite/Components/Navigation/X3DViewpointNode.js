@@ -205,7 +205,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       return this .descriptions;
    },
-   setInterpolators () { },
+   setInterpolators ()
+   { },
    getPosition ()
    {
       return this ._position .getValue ();
