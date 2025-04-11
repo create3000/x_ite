@@ -620,7 +620,7 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 
 CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the JavaScript file in the script element directly from the [jsDelivr](https://www.jsdelivr.com) or [UNPKG](https://www.unpkg.com) CDN domain.
 
-If you are going to use X_ITE in a production environment, you should use a fixed version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions), and here a list of all [CDNs](/x_ite/releases/).
+If you are going to use X_ITE in a production environment, you should always use a **fixed** version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions), and here a list of all [CDNs](/x_ite/releases/).
 
 #### jsDelivr CDN
 
