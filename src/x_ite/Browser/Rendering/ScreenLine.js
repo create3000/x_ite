@@ -179,6 +179,7 @@ Object .assign (ScreenLine .prototype,
 
          gl .viewport (... viewport);
          gl .scissor (... viewport);
+         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
          // Set projection and model view matrix.
 
