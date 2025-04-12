@@ -563,7 +563,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Better control of navigation with mouse and trackpad on macOS and tablet devices.
 - Fixed examine viewer rotation when multiple layer with viewport are present.
-- Emulate middle mouse button when pressing Alt/Option key.
+- Emulate middle mouse button when pressing *Alt-or-Option*-key.
 - Fixed bug in IndexedTriangleFanSet.
 - Updated Shape component to level 5.
 - Fix bug in rotation axis/angle calculation.
