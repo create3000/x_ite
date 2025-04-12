@@ -848,7 +848,7 @@ Object .assign (X3DRenderObject .prototype,
             browser  = this .getBrowser (),
             gl       = browser .getContext (),
             viewport = this .viewVolumes .at (-1) .getViewport (),
-            [x, y]   = browser .getPointer ();
+            { x, y } = browser .getPointer ();
 
          // Configure depth shaders.
 
