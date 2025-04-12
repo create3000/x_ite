@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       browser .getElement () .focus ();
 
-      if (browser .getShiftKey () && browser .getControlKey ())
+      if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
 
       if (event .button === 0)

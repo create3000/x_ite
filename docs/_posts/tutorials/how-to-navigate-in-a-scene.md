@@ -29,7 +29,7 @@ None Viewer
 
 You can choose a viewer from the available viewers in the viewer menu of the context menu. Not all viewers have to be available at the same time. **Note:** This is controlled by the X3D author by setting the *type* field of a [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node.
 
->**Tip:** Holding the *Shift+Ctrl*-key overrides any [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) that the pointer may be over and forces the pointing device to function as the viewpoint navigation tool; i.e., drag operations cause rotation, click operations cause center of rotation point selection.
+>**Tip:** Holding the *Shift+CtrlOrCommand*-key overrides any [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) that the pointer may be over and forces the pointing device to function as the viewpoint navigation tool; i.e., drag operations cause rotation, click operations cause center of rotation point selection.
 {: .prompt-tip }
 
 ## Examine Viewer
