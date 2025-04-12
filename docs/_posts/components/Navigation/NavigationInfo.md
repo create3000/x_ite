@@ -186,4 +186,4 @@ Event sent reporting timestamp when node becomes active/inactive.
 ## See Also
 
 - [X3D Specification of NavigationInfo Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo)
-- [How to Navigate in the Scene](/x_ite/tutorials/how-to-navigate-in-a-scene/)
+- [How to Navigate in a Scene](/x_ite/tutorials/how-to-navigate-in-a-scene/)
