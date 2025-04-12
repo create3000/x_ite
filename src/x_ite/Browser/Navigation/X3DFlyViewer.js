@@ -220,6 +220,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       event .preventDefault ();
 
+      // Disable all.
+
       this .event  = null;
       this .button = -1;
 

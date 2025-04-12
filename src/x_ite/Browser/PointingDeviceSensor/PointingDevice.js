@@ -126,6 +126,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       event .preventDefault ();
 
+      // Handle button release.
+
       const
          browser = this .getBrowser (),
          element = browser .getSurface ();
@@ -156,6 +158,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       // Stop event propagation.
 
       event .preventDefault ();
+
+      // Motion.
 
       const browser = this .getBrowser ();
 

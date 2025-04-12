@@ -276,6 +276,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       event .preventDefault ();
 
+      // Look at.
+
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();

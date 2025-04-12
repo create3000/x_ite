@@ -132,6 +132,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
             event .preventDefault ();
 
+            // Look around.
+
             this .button = event .button;
 
             $(document) .on ("mouseup.LookAtViewer"   + this .getId (), this .mouseup   .bind (this));
@@ -140,9 +142,6 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
             $(document) .on ("touchmove.LookAtViewer" + this .getId (), this .touchmove .bind (this));
 
             this .getActiveViewpoint () .transitionStop ();
-
-            // Look around.
-
             this .trackballProjectToSphere (x, y, this .fromVector);
 
             this ._isActive = true;
@@ -167,6 +166,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
             event .preventDefault ();
 
+            // Look around.
+
             this ._isActive = false;
             break;
          }
@@ -177,6 +178,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
       // Stop event propagation.
 
       event .preventDefault ();
+
+      // Look at.
 
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
@@ -199,7 +202,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
             event .preventDefault ();
 
-            // Look around
+            // Look around.
 
             const toVector = this .trackballProjectToSphere (x, y, this .toVector);
 

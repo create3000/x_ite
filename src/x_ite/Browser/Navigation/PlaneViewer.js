@@ -105,6 +105,8 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
             event .preventDefault ();
 
+            // Start move.
+
             this .button = event .button;
 
             this .getBrowser () .getSurface () .off ("mousemove.PlaneViewer");
@@ -129,6 +131,8 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       // Stop event propagation.
 
       event .preventDefault ();
+
+      // Disable all.
 
       this .button = -1;
 
