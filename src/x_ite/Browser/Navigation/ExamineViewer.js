@@ -180,6 +180,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          case 0:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // Start rotate.
 
             this .button = event .button;
@@ -201,6 +205,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // Start pan.
 
             this .button = event .button;
@@ -233,6 +241,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          case 0:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // End rotate.
 
             this .getBrowser () .setCursor ("DEFAULT");
@@ -245,6 +257,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // End pan.
 
             this .getBrowser () .setCursor ("DEFAULT");
@@ -256,6 +272,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    dblclick (event)
    {
+      // Stop event propagation.
+
+      event .preventDefault ();
+
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();
@@ -269,6 +289,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          case 0:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // Rotate view around Viewpoint.centerOfRotation.
 
             this .rotate (x, y);
@@ -278,6 +302,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // Move view along center plane.
 
             this .pan (x, y);

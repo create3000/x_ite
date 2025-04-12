@@ -138,6 +138,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       {
          case 0:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // Start walk or fly.
 
             this .button = event .button;
@@ -177,6 +181,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          }
          case 1:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // Start pan.
 
             this .button = event .button;
@@ -208,6 +216,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       if (event .button !== this .button)
          return;
 
+      // Stop event propagation.
+
+      event .preventDefault ();
+
       this .event  = null;
       this .button = -1;
 
@@ -235,6 +247,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       {
          case 0:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             if (browser .getControlKey () || browser .getCommandKey () || this .lookAround)
             {
                // Look around
@@ -257,6 +273,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          }
          case 1:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // Pan
 
             this .toVector  .set (x, y, 0);

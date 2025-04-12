@@ -101,6 +101,10 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       {
          case 1:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             this .button = event .button;
 
             this .getBrowser () .getSurface () .off ("mousemove.PlaneViewer");
@@ -122,6 +126,10 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       if (event .button !== this .button)
          return;
 
+      // Stop event propagation.
+
+      event .preventDefault ();
+
       this .button = -1;
 
       $(document) .off (".PlaneViewer" + this .getId ());
@@ -139,6 +147,10 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       {
          case 1:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // Move.
 
             const

@@ -103,6 +103,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
          if (browser .buttonPressEvent (x, y))
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
             event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
 
             this .grabbing = Array .from (browser .getHit () .sensors .keys ())
@@ -118,6 +121,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    {
       if (event .button !== 0)
          return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
 
       const
          browser = this .getBrowser (),
@@ -136,11 +143,20 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    dblclick (event)
    {
-      if (this .over)
-         event .stopImmediatePropagation ();
+      if (!this .over)
+         return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
    },
    mousemove (event)
    {
+      // Stop event propagation.
+
+      event .preventDefault ();
+
       const browser = this .getBrowser ();
 
       const { x, y } = browser .getPointerFromEvent (event);
