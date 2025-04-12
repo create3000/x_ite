@@ -98,8 +98,8 @@ class AreaChart
       shape .geometry       = text;
       transform .children   = [shape];
 
-      material .diffuseColor = new X3D .SFColor (0, 0, 0);
-      depthMode .depthTest   = false;
+      material .diffuseColor   = new X3D .SFColor (0, 0, 0);
+      depthMode .polygonOffset = new X3D .SFVec2f (-1, -1);
 
       text .string    = [`Area Chart`];
       text .fontStyle = fontStyle;
