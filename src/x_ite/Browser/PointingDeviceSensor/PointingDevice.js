@@ -77,9 +77,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
    },
    mousewheel (event)
-   {
-      // event .preventDefault () must be done in the all viewers.
-   },
+   { },
    mousedown (event)
    {
       const
@@ -105,7 +103,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
          if (browser .buttonPressEvent (x, y))
          {
-            event .preventDefault ();
             event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
 
             this .grabbing = Array .from (browser .getHit () .sensors .keys ())
@@ -119,8 +116,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    mouseup (event)
    {
-      event .preventDefault ();
-
       if (event .button !== 0)
          return;
 
@@ -146,8 +141,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    mousemove (event)
    {
-      event .preventDefault ();
-
       const browser = this .getBrowser ();
 
       const { x, y } = browser .getPointerFromEvent (event);

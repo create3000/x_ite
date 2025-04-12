@@ -70,7 +70,7 @@ Object .assign ($.fn,
          $window        = $(window),
          elementTop     = $this .offset () .top,
          elementBottom  = elementTop + $this .outerHeight (),
-         viewportTop    = $window .scrollTop (),
+         viewportTop    = Math .max ($window .scrollTop (), 0),
          viewportBottom = viewportTop + $window .height ();
 
       return elementBottom > viewportTop && elementTop < viewportBottom;

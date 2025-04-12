@@ -182,10 +182,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             // Start rotate.
 
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             this .button = event .button;
 
             $(document) .on ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
@@ -206,10 +202,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          case 1:
          {
             // Start pan.
-
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
 
             this .button = event .button;
 
@@ -243,10 +235,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             // End rotate.
 
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             this .getBrowser () .setCursor ("DEFAULT");
 
             if (Math .abs (this .deltaRotation .angle) > SPIN_ANGLE && Date .now () - this .motionTime < SPIN_RELEASE_TIME)
@@ -259,10 +247,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             // End pan.
 
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             this .getBrowser () .setCursor ("DEFAULT");
 
             this ._isActive = false;
@@ -272,10 +256,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    dblclick (event)
    {
-      // Stop event propagation.
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
-
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();
@@ -291,10 +271,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             // Rotate view around Viewpoint.centerOfRotation.
 
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             this .rotate (x, y);
 
             this .motionTime = Date .now ();
@@ -304,11 +280,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             // Move view along center plane.
 
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
             this .pan (x, y);
-
             break;
          }
       }
@@ -323,7 +295,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       // Stop event propagation.
 
       event .preventDefault ();
-      event .stopImmediatePropagation ();
 
       // Change viewpoint position.
 

@@ -140,10 +140,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          {
             // Start walk or fly.
 
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             this .button = event .button;
 
             $(document) .on ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
@@ -183,10 +179,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          {
             // Start pan.
 
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             this .button = event .button;
 
             $(document) .on ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
@@ -213,8 +205,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    mouseup (event)
    {
-      event .preventDefault ();
-
       if (event .button !== this .button)
          return;
 
@@ -247,10 +237,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          {
             if (browser .getControlKey () || browser .getCommandKey () || this .lookAround)
             {
-               // Stop event propagation.
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
-
                // Look around
 
                const toVector = this .trackballProjectToSphere (x, y, this .toVector);
@@ -271,10 +257,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          }
          case 1:
          {
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             // Pan
 
             this .toVector  .set (x, y, 0);
@@ -294,7 +276,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       // Stop event propagation.
 
       event .preventDefault ();
-      event .stopImmediatePropagation ();
 
       // Change viewpoint position.
 

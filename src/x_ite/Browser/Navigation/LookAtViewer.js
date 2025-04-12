@@ -128,11 +128,6 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
       {
          case 0:
          {
-            // Stop event propagation.
-
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             this .button = event .button;
 
             $(document) .on ("mouseup.LookAtViewer"   + this .getId (), this .mouseup   .bind (this));
@@ -164,11 +159,6 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
       {
          case 0:
          {
-            // Stop event propagation.
-
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             this ._isActive = false;
             break;
          }
@@ -176,10 +166,6 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    },
    dblclick (event)
    {
-      // Stop event propagation.
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
-
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();

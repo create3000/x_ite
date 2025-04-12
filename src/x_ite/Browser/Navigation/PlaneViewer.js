@@ -101,11 +101,6 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       {
          case 1:
          {
-            // Stop event propagation.
-
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             this .button = event .button;
 
             this .getBrowser () .getSurface () .off ("mousemove.PlaneViewer");
@@ -124,11 +119,6 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    },
    mouseup (event)
    {
-      // Stop event propagation.
-
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
-
       if (event .button !== this .button)
          return;
 
@@ -149,11 +139,6 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       {
          case 1:
          {
-            // Stop event propagation.
-
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-
             // Move.
 
             const
@@ -179,7 +164,6 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       // Stop event propagation.
 
       event .preventDefault ();
-      event .stopImmediatePropagation ();
 
       // Change viewpoint position.
 
