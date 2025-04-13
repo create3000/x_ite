@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v11.5 Series
 
-*Leipzig, 6th April 2025:* This series comes improvements in Sunrize.
+*Leipzig, 6th April 2025:* This series comes improvements in [Sunrize](/sunrize/).
 
 * Objects can now directly be selected in the browser window.
 * New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
