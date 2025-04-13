@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       this .rotationChaser .setup ();
 
       this .timeSensor ._loop     = true;
-      this .timeSensor ._stopTime = browser .getCurrentTime ();
+      this .timeSensor ._stopTime = Date .now () / 1000;
       this .timeSensor .setup ();
 
       this .timeSensor ._fraction_changed  .addInterest ("spin", this);
@@ -640,7 +640,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .axis .negate ();
 
          this .timeSensor ._cycleInterval = Math .PI / (angle * SPIN_FACTOR * 25);
-         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = Date .now () / 1000;
 
          const lookAtRotation = viewpoint .getLookAtRotation (userPosition, userCenterOfRotation);
 
@@ -657,7 +657,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    {
       const browser = this .getBrowser ();
 
-      this .timeSensor ._stopTime = browser .getCurrentTime ();
+      this .timeSensor ._stopTime = Date .now () / 1000;
       browser .prepareEvents () .removeInterest ("spin", this);
    },
    spin: (() =>

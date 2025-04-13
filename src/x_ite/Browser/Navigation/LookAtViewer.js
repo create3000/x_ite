@@ -299,7 +299,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       // Start dblclick (button 0).
 
-      if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
+      if (Date .now () - this .tapStart < this .dblTapInterval)
       {
          event .button = 1;
          event .pageX  = this .touch1 .x;
@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          this .dblclick (event);
       }
 
-      this .tapStart = this .getBrowser () .getCurrentTime ();
+      this .tapStart = Date .now ();
    },
    touchmove: (() =>
    {
