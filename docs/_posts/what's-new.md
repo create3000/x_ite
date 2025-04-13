@@ -14,6 +14,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Objects can now directly be selected in the browser window.
 * New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
 * New »View all objects in active layer.« button in the Dashboard.
+* Fixed issue with animation getting stuck when using in transition, viewAll or lookAt mode.
 * Bug fixes.
 
 ## X_ITE v11.4 Series
