@@ -11,11 +11,11 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 *Leipzig, 6th April 2025:* This series comes improvements in [Sunrize](/sunrize/).
 
-* Objects can now directly be selected in the browser window.
-* New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
-* New »View all objects in active layer.« button in the Dashboard.
-* Fixed issue with animation getting stuck when using in transition, viewAll or lookAt mode.
-* Fixed issue with TouchSensor sending »old« *touchTime* values.
+* Sunrize: Objects can now directly be selected in the browser window.
+* Sunrize: New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
+* Sunrize: New »View all objects in active layer.« button in the Dashboard.
+* X_ITE: Fixed issue with animation getting stuck when using in transition, viewAll or lookAt mode.
+* X_ITE: Fixed issue with TouchSensor sending »old« *touchTime* values.
 * Bug fixes.
 
 ## X_ITE v11.4 Series
