@@ -328,7 +328,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       if (!(this .getLive () .getValue ()))
          return;
 
-      this .getBrowser () .advanceTime ();
+      this .getBrowser () .advanceOnlyTime ();
 
       this [callback] ();
    },

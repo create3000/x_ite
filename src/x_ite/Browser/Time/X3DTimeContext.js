@@ -75,11 +75,15 @@ Object .assign (X3DTimeContext .prototype,
    {
       return this [_currentSpeed];
    },
+   advanceOnlyTime ()
+   {
+      this [_currentTime] = Date .now () / 1000;
+   },
    advanceTime: (() =>
    {
       const lastPosition = new Vector3 ();
 
-      return function (onlyTime = false)
+      return function ()
       {
          const
             time          = Date .now () / 1000,
@@ -88,9 +92,6 @@ Object .assign (X3DTimeContext .prototype,
 
          this [_currentTime] = time;
 
-         if (onlyTime)
-            return;
-         
          this [_currentFrameRate] = interval ? 1 / interval : 60;
 
          if (viewpointNode)
