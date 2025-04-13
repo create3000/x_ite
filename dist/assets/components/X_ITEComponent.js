@@ -1,5 +1,5 @@
-/* X_ITE v11.5.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
+/* X_ITE v11.5.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2107,7 +2107,6 @@ function SpecularGlossinessMaterial (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).SpecularGlossinessMaterial);
 
-   this .materialKey        = "4/";
    this .diffuseColorArray  = new Float32Array (3);
    this .specularColorArray = new Float32Array (3);
    this .extensionNodes     = [ ];

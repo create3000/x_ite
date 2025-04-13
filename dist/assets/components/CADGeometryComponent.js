@@ -1,5 +1,5 @@
-/* X_ITE v11.5.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
+/* X_ITE v11.5.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -333,6 +333,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
    },
    set_children__ ()
    {
+      this .setChild (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DChildNode, this ._shape));
+   },
+   setChild (childNode)
+   {
       // Remove node.
 
       if (this .childNode)
@@ -367,8 +371,6 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
       this .bboxObject      = null;
 
       // Add node.
-
-      const childNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DChildNode, this ._shape);
 
       if (childNode)
       {

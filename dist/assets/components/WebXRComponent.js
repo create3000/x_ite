@@ -1,5 +1,5 @@
-/* X_ITE v11.5.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
+/* X_ITE v11.5.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -220,6 +220,7 @@ Object .assign (ScreenPoint .prototype,
 
          gl .viewport (... viewport);
          gl .scissor (... viewport);
+         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
          // Apply screen scale to matrix.
 
