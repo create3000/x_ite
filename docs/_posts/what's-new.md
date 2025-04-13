@@ -12,8 +12,9 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 *Leipzig, 6th April 2025:* This series comes improvements in Sunrize.
 
 * Objects can now directly be selected in the browser window.
-* New Hierarchy buttons »Select parent nodes(s)« and »Select child node(s)« in the Dashboard.
-* New »View all objects in active layer« button in the Dashboard.
+* New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
+* New »View all objects in active layer.« button in the Dashboard.
+* Bug fixes.
 
 ## X_ITE v11.4 Series
 
