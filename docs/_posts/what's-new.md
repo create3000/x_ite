@@ -7,6 +7,14 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v11.5 Series
+
+*Leipzig, 6th April 2025:* This series comes improvements in Sunrize.
+
+* Objects can now directly be selected in the browser window.
+* New Hierarchy buttons »Select parent nodes(s)« and »Select child node(s)« in the Dashboard.
+* New »View all objects in active layer« button in the Dashboard.
+
 ## X_ITE v11.4 Series
 
 *Leipzig, 23rd March 2025:* This series comes with a lot of small but important changes and features.
