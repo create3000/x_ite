@@ -124,8 +124,9 @@ html {
 /* rouge console */
 
 /* rest of text */
-.language-console .highlight pre {
-  @extend .mf;
+.language-console .highlight pre,
+.language-console .highlight .o {
+  @extend .na;
 }
 
 /* $ */
@@ -135,7 +136,7 @@ html {
 
 /* some parameter */
 .language-console .highlight .nb {
-  @extend .na;
+  @extend .mf;
 }
 
 /* append your custom style below */
