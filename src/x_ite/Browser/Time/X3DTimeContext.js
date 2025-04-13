@@ -79,14 +79,18 @@ Object .assign (X3DTimeContext .prototype,
    {
       const lastPosition = new Vector3 ();
 
-      return function ()
+      return function (onlyTime = false)
       {
          const
             time          = Date .now () / 1000,
             interval      = time - this [_currentTime],
             viewpointNode = this .getActiveViewpoint ();
 
-         this [_currentTime]      = time;
+         this [_currentTime] = time;
+
+         if (onlyTime)
+            return;
+         
          this [_currentFrameRate] = interval ? 1 / interval : 60;
 
          if (viewpointNode)
