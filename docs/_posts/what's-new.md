@@ -21,7 +21,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 ### X_ITE
 
 * Fixed various minor bugs in [MovieTexture](/x_ite/components/texturing/movietexture/).
-* Fixed issue with animation getting stuck when using in transition, viewAll or lookAt mode.
+* Fixed issue with animation getting stuck when in transition, viewAll or lookAt animation.
 * Fixed issue with [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) sending »old« *touchTime* values.
 * Bug fixes.
 

@@ -123,11 +123,18 @@ html {
 
 /* rouge console */
 
-.highlight .gp {
-  @extend .s;
+/* rest of text */
+.language-console .highlight pre {
+  @extend .mf;
 }
 
-.highlight .nb {
+/* $ */
+.language-console .highlight .gp {
+  @extend .k;
+}
+
+/* some parameter */
+.language-console .highlight .nb {
   @extend .na;
 }
 
