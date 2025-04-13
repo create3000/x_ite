@@ -308,9 +308,11 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
    addTimeout (name, callback, time)
    {
+      const ms = (time - this .getBrowser () .getCurrentTime ()) * 1000;
+
       this .removeTimeout (name);
 
-      this .timeouts .set (name, setTimeout (this .processTimeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000));
+      this .timeouts .set (name, setTimeout (() => this .processTimeout (callback), ms));
    },
    removeTimeout (name)
    {
