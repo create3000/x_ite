@@ -394,8 +394,7 @@ declare namespace X3D
       TextCompression:              "CHAR_SPACING" | "SCALING",
       Timings:                      boolean,
       ToneMapping:                  ToneMappingTypes,
-      XRButton:                     boolean,
-      XRSessionMode:                "NONE" | "IMMERSIVE_VR",
+      XRSessionMode:                "NONE" | "IMMERSIVE_VR" | "IMMERSIVE_AR",
    };
 
    type ColorSpaceTypes   = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
@@ -412,10 +411,12 @@ declare namespace X3D
       ColorDepth:             number,
       TextureMemory:          number,
       ContentScale:           number,
+      LogarithmicDepthBuffer: boolean,
       MaxAnisotropicDegree:   number,
       MaxSamples:             number,
       Multisampling:          number,
-      LogarithmicDepthBuffer: boolean,
+      PixelsPerPoint:         number,
+      XRSession:              boolean,
    }
 
    class ContextMenu
