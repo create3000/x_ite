@@ -121,11 +121,9 @@ const components = [browser .getComponent ("..."), browser .getComponent ("...")
 const scene      = await browser .createScene (profile, ... components);
 ```
 
-<!--
 #### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non standard</small>
 
 Loads all components, external and internal, specified by `args`. If the argument is a `string`, the name of a component must be given.
--->
 
 #### **replaceWorld** (*scene: X3DScene*): Promise\<void\>
 
