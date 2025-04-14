@@ -929,7 +929,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    beginUpdate ()
    {
       this .setLive (true);
-      this .advanceTime ();
+      this .advanceOnlyTime ();
       this .addBrowserEvent ();
    },
    endUpdate ()

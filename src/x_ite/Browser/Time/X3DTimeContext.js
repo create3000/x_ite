@@ -75,6 +75,14 @@ Object .assign (X3DTimeContext .prototype,
    {
       return this [_currentSpeed];
    },
+   advanceOnlyTime ()
+   {
+      this [_currentTime] = Date .now () / 1000;
+   },
+   advanceOnlyTime ()
+   {
+      this [_currentTime] = Date .now () / 1000;
+   },
    advanceTime: (() =>
    {
       const lastPosition = new Vector3 ();
@@ -96,7 +104,7 @@ Object .assign (X3DTimeContext .prototype,
             lastPosition .assign (this [_currentPosition]);
             this [_currentPosition] .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
 
-            this [_currentSpeed] = lastPosition .distance (this [_currentPosition]) * this [_currentFrameRate];
+            this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .magnitude () * this [_currentFrameRate];
          }
          else
          {
