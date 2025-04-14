@@ -16,14 +16,15 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Objects can now directly be selected in the browser window.
 * New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
 * New »View all objects in active layer.« button in the Dashboard.
-* Bug fixes.
+* Other bug fixes.
 
 ### X_ITE
 
 * Fixed various minor bugs in [MovieTexture](/x_ite/components/texturing/movietexture/).
 * Fixed issue with animation getting stuck when in transition, viewAll or lookAt animation.
 * Fixed issue with [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) sending »old« *touchTime* values.
-* Bug fixes.
+* Fixed issue in normal calculations in rare cases.
+* Other bug fixes.
 
 ## X_ITE v11.4 Series
 
