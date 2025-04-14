@@ -388,6 +388,7 @@ declare namespace X3D
       LogarithmicDepthBuffer:       boolean,
       MetadataReference:            string,
       Multisampling:                number,
+      Mute:                         boolean,
       Notifications:                boolean,
       OrderIndependentTransparency: boolean,
       StraightenHorizon:            boolean,
