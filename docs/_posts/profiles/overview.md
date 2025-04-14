@@ -82,7 +82,7 @@ All supported profiles are listed below with their components and support levels
 - [Core](/x_ite/components/overview/#core) 1
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) 1
 - [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) 1
-- [Geometry3D](/x_ite/components/overview/#geometry3D) 2
+- [Geometry3D](/x_ite/components/overview/#geometry3d) 2
 - [Grouping](/x_ite/components/overview/#grouping) 2
 - [Interpolation](/x_ite/components/overview/#interpolation) 2
 - [Lighting](/x_ite/components/overview/#lighting) 2
