@@ -30,11 +30,11 @@ All supported profiles are listed below with their components and support levels
 - [Geometry3D](/x_ite/components/overview/#geometry3d) 2
 - [Grouping](/x_ite/components/overview/#grouping) 1
 - [Interpolation](/x_ite/components/overview/#interpolation) 2
-- [Lighting](/x_ite/components/overview/#Lighting) 1
+- [Lighting](/x_ite/components/overview/#lighting) 1
 - [Navigation](/x_ite/components/overview/#navigation) 1
 - [Networking](/x_ite/components/overview/#networking) 1
 - [Rendering](/x_ite/components/overview/#rendering) 3
-- [Shape](/x_ite/components/overview/#Shape) 1
+- [Shape](/x_ite/components/overview/#shape) 1
 - [Texturing](/x_ite/components/overview/#texturing) 2
 - [Time](/x_ite/components/overview/#time) 1
 
@@ -82,7 +82,7 @@ All supported profiles are listed below with their components and support levels
 - [Core](/x_ite/components/overview/#core) 1
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) 1
 - [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) 1
-- [Geometry3D](/x_ite/components/overview/#eometry3D) 2
+- [Geometry3D](/x_ite/components/overview/#geometry3D) 2
 - [Grouping](/x_ite/components/overview/#grouping) 2
 - [Interpolation](/x_ite/components/overview/#interpolation) 2
 - [Lighting](/x_ite/components/overview/#lighting) 2
