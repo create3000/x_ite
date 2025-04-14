@@ -91,21 +91,35 @@ Returns a reference to the corresponding X3DCanvasElement. This property is read
 
 The `getSupportedProfile` service returns a ProfileInfo object of the named profile from the `supportedProfiles` array. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
 
+* [List of supported profiles](/x_ite/profiles/overview/)
+
 #### **getSupportedComponent** (*name: string*): ComponentInfo
 
 The `getSupportedComponent` service returns a ComponentInfo object of the named component from the `supportedComponents` array. The parameter is the name of a component from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component. If it does not support the component, an error is thrown.
+
+* [List of supported components](/x_ite/components/overview/)
 
 #### **getProfile** (*name: string*): ProfileInfo
 
 The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
 
+* [List of supported profiles](/x_ite/profiles/overview/)
+
 #### **getComponent** (*name: string, level?: number*): ComponentInfo
 
 The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only return a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
 
+* [List of supported components](/x_ite/components/overview/)
+
 #### **createScene** (*profile: ProfileInfo, ... components: ComponentInfo []*): Promise\<X3DScene\>
 
 The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
+
+```js
+const profile    = browser .getProfile ("Interactive");
+const components = [browser .getComponent ("..."), browser .getComponent ("...")];
+const scene      = await browser .createScene (profile, ... components);
+```
 
 #### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non standard</small>
 

@@ -5,7 +5,7 @@ nav: components
 categories: [components]
 tags: [Components]
 ---
-X3D groups nodes into components and components into profiles. This index lists the components and nodes in alphabetical order for quick access to the X3D documentation.
+X3D groups nodes into components and components into [profiles](/x_ite/profiles/overview/). This index lists the components and nodes in alphabetical order for quick access to the X3D documentation.
 
 <!-- COMPONENTS BEGIN -->
 
