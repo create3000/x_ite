@@ -450,6 +450,11 @@ Returns a rendering property with the corresponding *name*.
          <td>Currently used factor to scale content. <small class="blue">non standard</small></td>
       </tr>
       <tr>
+         <td>LogarithmicDepthBuffer</td>
+         <td>Boolean</td>
+         <td>True or false if the logarithmic depth buffer is currently enabled or not. <small class="blue">non standard</small></td>
+      </tr>
+      <tr>
          <td>MaxAnisotropicDegree</td>
          <td>Float</td>
          <td>The maximum number of available anisotropy. <small class="blue">non standard</small></td>
@@ -470,9 +475,9 @@ Returns a rendering property with the corresponding *name*.
          <td>Number of pixels per point. <small class="blue">non standard</small></td>
       </tr>
       <tr>
-         <td>LogarithmicDepthBuffer</td>
+         <td>XRSession</td>
          <td>Boolean</td>
-         <td>True or false if the logarithmic depth buffer is currently enabled or not. <small class="blue">non standard</small></td>
+         <td>True if a WebXR session is active, otherwise false. <small class="blue">non standard</small></td>
       </tr>
    </tbody>
 </table>

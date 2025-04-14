@@ -49,6 +49,7 @@ import VERSION              from "../BROWSER_VERSION.js";
 import X3DFieldDefinition   from "../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../Base/FieldDefinitionArray.js";
 import Fields               from "../Fields.js";
+import SFNodeCache          from "../Fields/SFNodeCache.js";
 import Components           from "../Components.js";
 import X3DBrowserContext    from "./X3DBrowserContext.js";
 import DOMIntegration       from "./DOMIntegration.js";
@@ -1084,6 +1085,30 @@ Object .defineProperties (X3DBrowser .prototype,
             return null;
 
          return this ._activeViewpoint .valueOf ();
+      },
+      enumerable: true,
+   },
+   browserProperties:
+   {
+      get ()
+      {
+         return SFNodeCache .get (this .getBrowserProperties ());
+      },
+      enumerable: true,
+   },
+   browserOptions:
+   {
+      get ()
+      {
+         return SFNodeCache .get (this .getBrowserOptions ());
+      },
+      enumerable: true,
+   },
+   renderingProperties:
+   {
+      get ()
+      {
+         return SFNodeCache .get (this .getRenderingProperties ());
       },
       enumerable: true,
    },
