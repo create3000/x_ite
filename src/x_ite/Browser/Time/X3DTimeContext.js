@@ -90,8 +90,7 @@ Object .assign (X3DTimeContext .prototype,
             interval      = time - this [_currentTime],
             viewpointNode = this .getActiveViewpoint ();
 
-         this [_currentTime] = time;
-
+         this [_currentTime]      = time;
          this [_currentFrameRate] = interval ? 1 / interval : 60;
 
          if (viewpointNode)
