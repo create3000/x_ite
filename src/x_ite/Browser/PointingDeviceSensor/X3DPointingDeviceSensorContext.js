@@ -212,6 +212,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (!this [_pointingDeviceSensorNodes] .size)
          return false;
 
+      // Must advance time, because event are later processed.
+      this .advanceTime ();
+
       if (hit === this [_hit])
          this .touch (x, y);
 
@@ -244,7 +247,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (!this [_pointingDeviceSensorNodes] .size)
          return;
 
-      this .advanceOnlyTime ();
+      // Must advance time, because event are later processed.
+      this .advanceTime ();
 
       for (const [node, sensor] of this [_activeSensors])
       {
@@ -264,6 +268,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       if (!this [_pointingDeviceSensorNodes] .size)
          return false;
+
+      // Must advance time, because event are later processed.
+      this .advanceTime ();
 
       if (hit === this [_hit])
          this .touch (x, y);

@@ -75,10 +75,6 @@ Object .assign (X3DTimeContext .prototype,
    {
       return this [_currentSpeed];
    },
-   advanceOnlyTime ()
-   {
-      this [_currentTime] = Date .now () / 1000;
-   },
    advanceTime: (() =>
    {
       const lastPosition = new Vector3 ();
