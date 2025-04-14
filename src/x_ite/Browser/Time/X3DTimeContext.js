@@ -100,7 +100,7 @@ Object .assign (X3DTimeContext .prototype,
             lastPosition .assign (this [_currentPosition]);
             this [_currentPosition] .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
 
-            this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .magnitude () * this [_currentFrameRate];
+            this [_currentSpeed] = lastPosition .distance (this [_currentPosition]) * this [_currentFrameRate];
          }
          else
          {
