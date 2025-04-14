@@ -200,9 +200,25 @@ declare namespace X3D
        */
       setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
       /**
+       * Adds a browser option callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the browser option to which the callback should be connected. The callback is called when the property has been changed.
+       */
+      addBrowserOptionCallback <T extends keyof BrowserOption> (key: any, name: T, callback: (value: BrowserOption [T]) => void): void;
+      /**
+       * Removes a browser option callback function associated with *key* and *name* of the browser option.
+       */
+      removeBrowserOptionCallback <T extends keyof BrowserOption> (key: any, name: T): void;
+      /**
        * Returns a rendering property with the corresponding *name*.
        */
       getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
+      /**
+       * Adds a rendering property callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the rendering property to which the callback should be connected. The callback is called when the property has been changed.
+       */
+      addRenderingPropertyCallback <T extends keyof RenderingProperty> (key: any, name: T, callback: (value: RenderingProperty [T]) => void): void;
+      /**
+       * Removes a rendering property callback function associated with *key* and *name* of the rendering property.
+       */
+      removeRenderingPropertyCallback <T extends keyof RenderingProperty> (key: any, name: T): void;
       /**
        * Returns context menu object.
        */
