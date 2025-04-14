@@ -181,7 +181,7 @@ Contributions are always welcome. There is no special form to do this. A good id
 
 ## License
 
-X_ITE is free software: you can redistribute it and/or modify it under the terms of the [MIT License](LICENSE.md) only.
+X_ITE is free software and licensed under the [MIT License](LICENSE.md).
 
 ## See Also
 
