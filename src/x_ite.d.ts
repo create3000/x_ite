@@ -127,18 +127,6 @@ declare namespace X3D
        * Returns the bound X3DViewpointNode in the active layer, if any. This property is read only.
        */
       readonly activeViewpoint: X3DViewpointNodeProxy | null;
-      /*
-       * Returns a browser properties node. This property is read only.
-       */
-      readonly browserProperties: SFNode;
-      /*
-       * Returns a browser options node. This property is read only.
-       */
-      readonly browserOptions: SFNode;
-      /*
-       * Returns a rendering properties node. This property is read only.
-       */
-      readonly renderingProperties: SFNode;
       /**
        * Returns a reference to the corresponding ContextMenu. This property is read only.
        */
@@ -215,6 +203,9 @@ declare namespace X3D
        * Returns a rendering property with the corresponding *name*.
        */
       getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
+      /**
+       * Returns context menu object.
+       */
       getContextMenu (): ContextMenu;
       /**
        * Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event can be any value listed below:
@@ -225,8 +216,8 @@ declare namespace X3D
        * - X3DConstants .SHUTDOWN_EVENT
        * - X3DConstants .INITIALIZED_ERROR
        */
-      addBrowserCallback (key: any, callback: (event: number) => void): void;
       addBrowserCallback (key: any, event: number, callback: (event: number) => void): void;
+      addBrowserCallback (key: any, callback: (event: number) => void): void;
       /**
        * Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callback associated whit key are removed.
        */
@@ -254,8 +245,8 @@ declare namespace X3D
       /**
        * Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
        */
-      changeViewpoint (name: string): void;
       changeViewpoint (layer: SFNode, name: string): void;
+      changeViewpoint (name: string): void;
       /**
        * Start processing events.
        */
