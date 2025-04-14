@@ -127,6 +127,18 @@ declare namespace X3D
        * Returns the bound X3DViewpointNode in the active layer, if any. This property is read only.
        */
       readonly activeViewpoint: X3DViewpointNodeProxy | null;
+      /*
+       * Returns a browser properties node. This property is read only.
+       */
+      readonly browserProperties: SFNode;
+      /*
+       * Returns a browser options node. This property is read only.
+       */
+      readonly browserOptions: SFNode;
+      /*
+       * Returns a rendering properties node. This property is read only.
+       */
+      readonly renderingProperties: SFNode;
       /**
        * Returns a reference to the corresponding ContextMenu. This property is read only.
        */
