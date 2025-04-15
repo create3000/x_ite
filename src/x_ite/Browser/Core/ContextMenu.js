@@ -322,6 +322,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             },
             "available-viewers": {
                name: _("Available Viewers"),
+               className: "context-menu-icon x_ite-private-icon-viewer",
                items: this .getAvailableViewers (),
             },
             "straighten-horizon": {

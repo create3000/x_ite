@@ -556,6 +556,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/visibility.svg);
 }
 
+.x_ite-private-icon-viewer {
+  background-image: url(assets/images/stadia_controller.svg);
+}
+
 .x_ite-private-icon-examine-viewer {
   background-image: url(assets/images/language.svg);
 }
