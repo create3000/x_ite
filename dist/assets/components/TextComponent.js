@@ -4,7 +4,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.2")];
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 254:
+/***/ 873:
 /***/ ((module) => {
 
 module.exports = __X_ITE_X3D__ .jquery;
@@ -161,7 +161,7 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 const external_X_ITE_X3D_URLs_namespaceObject = __X_ITE_X3D__ .URLs;
 var external_X_ITE_X3D_URLs_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_URLs_namespaceObject);
 ;// ./src/x_ite/Components/Text/X3DFontStyleNode.js
-/* provided dependency */ var $ = __webpack_require__(254);
+/* provided dependency */ var $ = __webpack_require__(873);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
