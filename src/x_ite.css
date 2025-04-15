@@ -5,31 +5,31 @@
 @charset "utf-8";
 
 @font-face {
-  font-family: "PT Sans";
+  font-family: PT Sans;
   font-style: normal;
   font-weight: 400;
-  src: url("assets/fonts/PT_Sans/PTSans-Regular.woff2") format("woff2");
+  src: url(assets/fonts/PT_Sans/PTSans-Regular.woff2);
 }
 
 @font-face {
-  font-family: "PT Sans";
+  font-family: PT Sans;
   font-style: normal;
   font-weight: 700;
-  src: url("assets/fonts/PT_Sans/PTSans-Bold.woff2") format("woff2");
+  src: url(assets/fonts/PT_Sans/PTSans-Bold.woff2);
 }
 
 @font-face {
-  font-family: "PT Sans";
+  font-family: PT Sans;
   font-style: italic;
   font-weight: 400;
-  src: url("assets/fonts/PT_Sans/PTSans-Italic.woff2") format("woff2");
+  src: url(assets/fonts/PT_Sans/PTSans-Italic.woff2);
 }
 
 @font-face {
-  font-family: "PT Sans";
+  font-family: PT Sans;
   font-style: italic;
   font-weight: 700;
-  src: url("assets/fonts/PT_Sans/PTSans-BoldItalic.woff2") format("woff2");
+  src: url(assets/fonts/PT_Sans/PTSans-BoldItalic.woff2);
 }
 
 :host,
@@ -128,7 +128,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: relative;
   top: -1px;
   padding: 0 24px 0 20px;
-  background: url("assets/images/logo.bw.svg") no-repeat top -0.5px left 0px;
+  background: url(assets/images/logo.bw.svg) no-repeat top -0.5px left 0px;
   background-size: 16px 16px;
 }
 
@@ -185,7 +185,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-browser-timings table {
   overflow: hidden;
-  background: url("assets/images/schedule.svg") no-repeat 0px -1px;
+  background: url(assets/images/schedule.svg) no-repeat 0px -1px;
   background-size: 16px 16px;
   image-rendering: pixelated;
   width: 100%;
@@ -497,8 +497,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 /* position checkboxes and radios like icons */
-.x_ite-private-menu .context-menu-input > label > input[type="checkbox"],
-.x_ite-private-menu .context-menu-input > label > input[type="radio"] {
+.x_ite-private-menu .context-menu-input > label > input[type=checkbox],
+.x_ite-private-menu .context-menu-input > label > input[type=radio] {
   display: inline;
   width: 16px;
   height: 16px;
@@ -509,7 +509,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: inline-block;
   position: absolute;
   top: 3px;
-  background: url("assets/images/radio_button_unchecked.svg") no-repeat left 0px top 0px;
+  background: url(assets/images/radio_button_unchecked.svg) no-repeat left 0px top 0px;
   background-size: 16px 16px;
 }
 
@@ -517,12 +517,12 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   color: rgb(255, 69, 58);
 }
 
-.x_ite-private-menu .context-menu-input > label > input[type="checkbox"]:checked {
-  background-image: url("assets/images/check_circle.svg");
+.x_ite-private-menu .context-menu-input > label > input[type=checkbox]:checked {
+  background-image: url(assets/images/check_circle.svg);
 }
 
-.x_ite-private-menu .context-menu-input > label > input[type="radio"]:checked {
-  background-image: url("assets/images/radio_button_checked.svg");
+.x_ite-private-menu .context-menu-input > label > input[type=radio]:checked {
+  background-image: url(assets/images/radio_button_checked.svg);
 }
 
 .x_ite-private-menu .context-menu-input > label > span {
@@ -549,59 +549,59 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-icon-viewpoint {
-  background-image: url("assets/images/visibility.svg");
+  background-image: url(assets/images/visibility.svg);
 }
 
 .x_ite-private-icon-examine-viewer {
-  background-image: url("assets/images/language.svg");
+  background-image: url(assets/images/language.svg);
 }
 
 .x_ite-private-icon-walk-viewer {
-  background-image: url("assets/images/directions_run.svg");
+  background-image: url(assets/images/directions_run.svg);
 }
 
 .x_ite-private-icon-fly-viewer {
-  background-image: url("assets/images/travel.svg");
+  background-image: url(assets/images/travel.svg);
 }
 
 .x_ite-private-icon-plane-viewer {
-  background-image: url("assets/images/border_all.svg");
+  background-image: url(assets/images/border_all.svg);
 }
 
 .x_ite-private-icon-lookat-viewer {
-  background-image: url("assets/images/point_scan.svg");
+  background-image: url(assets/images/point_scan.svg);
 }
 
 .x_ite-private-icon-none-viewer {
-  background-image: url("assets/images/block.svg");
+  background-image: url(assets/images/block.svg);
 }
 
 .x_ite-private-icon-primitive-quality {
-  background-image: url("assets/images/hexagon.svg");
+  background-image: url(assets/images/hexagon.svg);
 }
 
 .x_ite-private-icon-texture-quality {
-  background-image: url("assets/images/texture.svg");
+  background-image: url(assets/images/texture.svg);
 }
 
 .x_ite-private-icon-shading {
-  background-image: url("assets/images/stroke_partial.svg");
+  background-image: url(assets/images/stroke_partial.svg);
 }
 
 .x_ite-private-icon-enter-fullscreen {
-  background-image: url("assets/images/fullscreen.svg");
+  background-image: url(assets/images/fullscreen.svg);
 }
 
 .x_ite-private-icon-leave-fullscreen {
-  background-image: url("assets/images/fullscreen_exit.svg");
+  background-image: url(assets/images/fullscreen_exit.svg);
 }
 
 .x_ite-private-icon-world-info {
-  background-image: url("assets/images/globe.svg");
+  background-image: url(assets/images/globe.svg);
 }
 
 .x_ite-private-icon-help-about {
-  background-image: url("assets/images/info.svg");
+  background-image: url(assets/images/info.svg);
 }
 
 /* Spinner */
@@ -626,7 +626,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   left: calc(50% - (160px / 2) + 9px);
   width: 160px;
   height: 160px;
-  background: url("assets/images/logo.svg") no-repeat;
+  background: url(assets/images/logo.svg) no-repeat;
   background-size: 160px 160px;
   opacity: 0.6;
   -webkit-animation: spinner-animation-spin 32s linear infinite;
@@ -703,7 +703,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   bottom: 10px;
   width: 32px;
   height: 18px;
-  background: url("assets/images/XR.svg");
+  background: url(assets/images/XR.svg);
   cursor: pointer;
   transition: transform .2s ease-in-out;
 }
