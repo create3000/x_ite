@@ -311,8 +311,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          className: "x_ite-private-menu",
          items: {
             "title": {
-               name: browser .getName () + " Browser v" + browser .getVersion (),
-               className: "context-menu-title context-menu-not-selectable",
+               name: `${browser .getName ()} Browser v${browser .getVersion ()}`,
+               className: "context-menu-title context-menu-icon x_ite-private-icon-logo context-menu-not-selectable",
             },
             "separator0": "--------",
             "viewpoints": {

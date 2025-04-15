@@ -557,6 +557,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-size: 16px 16px;
 }
 
+.x_ite-private-icon-logo {
+  background-image: url(assets/images/logo.svg);
+}
+
 .x_ite-private-icon-viewpoint {
   background-image: url(assets/images/visibility.svg);
 }
