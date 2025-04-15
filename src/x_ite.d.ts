@@ -204,7 +204,7 @@ declare namespace X3D
        */
       addBrowserOptionCallback <T extends keyof BrowserOption> (key: any, name: T, callback: (value: BrowserOption [T]) => void): void;
       /**
-       * Removes a browser option callback function associated with *key* and *name* of the browser option.
+       * Removes a browser option callback function associated with *key* and *name* from the browser option.
        */
       removeBrowserOptionCallback <T extends keyof BrowserOption> (key: any, name: T): void;
       /**
@@ -216,7 +216,7 @@ declare namespace X3D
        */
       addRenderingPropertyCallback <T extends keyof RenderingProperty> (key: any, name: T, callback: (value: RenderingProperty [T]) => void): void;
       /**
-       * Removes a rendering property callback function associated with *key* and *name* of the rendering property.
+       * Removes a rendering property callback function associated with *key* and *name* from the rendering property.
        */
       removeRenderingPropertyCallback <T extends keyof RenderingProperty> (key: any, name: T): void;
       /**
@@ -2055,7 +2055,7 @@ declare namespace X3D
        */
       removeFieldCallback (key: any): void;
       /**
-       * Removes a field callback function associated with *key* and *name* of field.
+       * Removes a field callback function associated with *key* and *name* from the field.
        */
       removeFieldCallback (key: any, name: string): void;
       /**
