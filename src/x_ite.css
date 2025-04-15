@@ -422,7 +422,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item:hover:not(.context-menu-not-selectable) {
-  background-color: rgba(255, 69, 58, 0.8);
+  background-color: #ff453a;
 }
 
 .x_ite-private-menu .context-menu-item:hover > .context-menu-list {
@@ -505,7 +505,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   margin: 0;
   margin-left: -22px;
   padding: 0;
-
   display: inline-block;
   position: absolute;
   top: 3px;
@@ -514,7 +513,12 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-input > label > input:checked {
-  color: rgb(255, 69, 58);
+  /* orange */
+  filter: brightness(0) saturate(100%) invert(71%) sepia(100%) saturate(1647%) hue-rotate(335deg) brightness(101%) contrast(101%);
+}
+
+.x_ite-private-menu .context-menu-input:hover > label > input:checked {
+  filter: none;
 }
 
 .x_ite-private-menu .context-menu-input > label > input[type=checkbox]:checked {
