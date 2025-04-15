@@ -563,7 +563,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-icon-viewpoint {
-  background-image: url(assets/images/visibility.svg);
+  background-image: url(assets/images/eye_tracking.svg);
 }
 
 .x_ite-private-menu .x_ite-private-viewpoint input {
@@ -571,7 +571,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .x_ite-private-viewpoint input:checked {
-  background-image: url(assets/images/eye_tracking.svg);
+  background-image: url(assets/images/visibility.svg);
 }
 
 .x_ite-private-icon-viewer {
