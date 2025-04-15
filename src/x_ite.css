@@ -468,7 +468,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 5px 24px;
 }
 
-.x_ite-private-menu .context-menu-input > label {
+.x_ite-private-menu label {
   cursor: pointer;
   display: block;
   box-sizing: border-box;
@@ -481,7 +481,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 /* vertically align inside labels */
-.x_ite-private-menu .context-menu-input > label > * {
+.x_ite-private-menu label > * {
   vertical-align: top;
   font-size: 10pt;
   font-weight: normal;
@@ -489,7 +489,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   line-height: 1;
 }
 
-.x_ite-private-menu .context-menu-item > label > input {
+.x_ite-private-menu input {
   all: revert;
   cursor: pointer;
   -webkit-appearance: none;
@@ -498,8 +498,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 /* position checkboxes and radios like icons */
-.x_ite-private-menu .context-menu-input > label > input[type=checkbox],
-.x_ite-private-menu .context-menu-input > label > input[type=radio] {
+.x_ite-private-menu input[type=checkbox],
+.x_ite-private-menu input[type=radio] {
   display: inline;
   width: 16px;
   height: 16px;
@@ -513,24 +513,24 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-size: 16px 16px;
 }
 
-.x_ite-private-menu .context-menu-input > label > input:checked {
+.x_ite-private-menu input:checked {
   /* orange */
   filter: brightness(0) saturate(100%) invert(71%) sepia(100%) saturate(1647%) hue-rotate(335deg) brightness(101%) contrast(101%);
 }
 
-.x_ite-private-menu .context-menu-input:hover > label > input:checked {
+.x_ite-private-menu input:hover:checked {
   filter: none;
 }
 
-.x_ite-private-menu .context-menu-input > label > input[type=checkbox]:checked {
+.x_ite-private-menu input[type=checkbox]:checked {
   background-image: url(assets/images/check_circle.svg);
 }
 
-.x_ite-private-menu .context-menu-input > label > input[type=radio]:checked {
+.x_ite-private-menu input[type=radio]:checked {
   background-image: url(assets/images/radio_button_checked.svg);
 }
 
-.x_ite-private-menu .context-menu-input > label > span {
+.x_ite-private-menu span {
   padding-left: 0px;
 }
 
@@ -557,11 +557,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/visibility.svg);
 }
 
-.x_ite-private-menu .context-menu-input.x_ite-private-viewpoint > label > input {
+.x_ite-private-menu .x_ite-private-viewpoint input {
   background-image: url(assets/images/eye_closed.svg);
 }
 
-.x_ite-private-menu .context-menu-input.x_ite-private-viewpoint > label > input:checked {
+.x_ite-private-menu .x_ite-private-viewpoint input:checked {
   background-image: url(assets/images/eye_tracking.svg);
 }
 
@@ -569,33 +569,33 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/stadia_controller.svg);
 }
 
-.x_ite-private-menu .context-menu-input.x_ite-private-examine-viewer > label > input,
-.x_ite-private-menu .context-menu-input.x_ite-private-examine-viewer > label > input:checked {
+.x_ite-private-menu .x_ite-private-examine-viewer input,
+.x_ite-private-menu .x_ite-private-examine-viewer input:checked {
   background-image: url(assets/images/language.svg);
 }
 
-.x_ite-private-menu .context-menu-input.x_ite-private-walk-viewer > label > input,
-.x_ite-private-menu .context-menu-input.x_ite-private-walk-viewer > label > input:checked {
+.x_ite-private-menu .x_ite-private-walk-viewer input,
+.x_ite-private-menu .x_ite-private-walk-viewer input:checked {
   background-image: url(assets/images/directions_run.svg);
 }
 
-.x_ite-private-menu .context-menu-input.x_ite-private-fly-viewer > label > input,
-.x_ite-private-menu .context-menu-input.x_ite-private-fly-viewer > label > input:checked {
+.x_ite-private-menu .x_ite-private-fly-viewer input,
+.x_ite-private-menu .x_ite-private-fly-viewer input:checked {
   background-image: url(assets/images/travel.svg);
 }
 
-.x_ite-private-menu .context-menu-input.x_ite-private-plane-viewer > label > input,
-.x_ite-private-menu .context-menu-input.x_ite-private-plane-viewer > label > input:checked {
+.x_ite-private-menu .x_ite-private-plane-viewer input,
+.x_ite-private-menu .x_ite-private-plane-viewer input:checked {
   background-image: url(assets/images/border_all.svg);
 }
 
-.x_ite-private-menu .context-menu-input.x_ite-private-lookat-viewer > label > input,
-.x_ite-private-menu .context-menu-input.x_ite-private-lookat-viewer > label > input:checked {
+.x_ite-private-menu .x_ite-private-lookat-viewer input,
+.x_ite-private-menu .x_ite-private-lookat-viewer input:checked {
   background-image: url(assets/images/point_scan.svg);
 }
 
-.x_ite-private-menu .context-menu-input.x_ite-private-none-viewer > label > input,
-.x_ite-private-menu .context-menu-input.x_ite-private-none-viewer > label > input:checked {
+.x_ite-private-menu .x_ite-private-none-viewer input,
+.x_ite-private-menu .x_ite-private-none-viewer input:checked {
   background-image: url(assets/images/block.svg);
 }
 
