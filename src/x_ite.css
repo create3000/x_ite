@@ -128,7 +128,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: relative;
   top: -1px;
   padding: 0 24px 0 20px;
-  background: url(assets/images/logo.svg) no-repeat top -0.5px left 0px;
+  background: url(assets/images/logo.svg) no-repeat top -1px left 0px;
   background-size: 16px 16px;
 }
 
@@ -557,8 +557,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-size: 16px 16px;
 }
 
-.x_ite-private-icon-logo {
+.x_ite-private-menu .context-menu-icon.x_ite-private-icon-logo {
   background-image: url(assets/images/logo.svg);
+  background-position: 2px 4px;
 }
 
 .x_ite-private-icon-viewpoint {
