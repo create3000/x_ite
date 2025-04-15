@@ -185,7 +185,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-browser-timings table {
   overflow: hidden;
-  background: url("assets/images/Time.png") no-repeat;
+  background: url("assets/images/schedule.svg") no-repeat 0px 0px;
+  background-size: 16px 16px;
   image-rendering: pixelated;
   width: 100%;
   max-width: 100%;
@@ -490,21 +491,41 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu .context-menu-item > label > input {
   all: revert;
   cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 /* position checkboxes and radios like icons */
 .x_ite-private-menu .context-menu-input > label > input[type="checkbox"],
 .x_ite-private-menu .context-menu-input > label > input[type="radio"] {
-  accent-color: rgb(255, 69, 58);
   display: inline;
-  width: 12px;
+  width: 16px;
+  height: 16px;
   margin: 0;
-  margin-left: -20px;
+  margin-left: -22px;
   padding: 0;
+
+  display: inline-block;
+  position: absolute;
+  background: url("assets/images/radio_button_unchecked.svg") no-repeat left 0px top -1px;
+  background-size: 16px 16px;
+}
+
+.x_ite-private-menu .context-menu-input > label > input:checked {
+  color: rgb(255, 69, 58);
+}
+
+.x_ite-private-menu .context-menu-input > label > input[type="checkbox"]:checked {
+  background-image: url("assets/images/check_circle.svg");
+}
+
+.x_ite-private-menu .context-menu-input > label > input[type="radio"]:checked {
+  background-image: url("assets/images/radio_button_checked.svg");
 }
 
 .x_ite-private-menu .context-menu-input > label > span {
-  padding-left: 8px;
+  padding-left: 0px;
 }
 
 /* Item styles */
@@ -523,71 +544,63 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu .context-menu-icon {
   background-repeat: no-repeat;
   background-position: 2px 3px;
-  image-rendering: pixelated;
+  background-size: 16px 16px;
 }
 
 .x_ite-private-icon-viewpoint {
-  background: url("assets/images/Viewpoint.png");
+  background-image: url("assets/images/visibility.svg");
 }
 
 .x_ite-private-icon-examine-viewer {
-  background: url("assets/images/ExamineViewer.png");
+  background-image: url("assets/images/language.svg");
 }
 
 .x_ite-private-icon-walk-viewer {
-  background: url("assets/images/WalkViewer.png");
+  background-image: url("assets/images/directions_run.svg");
 }
 
 .x_ite-private-icon-fly-viewer {
-  background: url("assets/images/FlyViewer.png");
-}
-
-.x_ite-private-icon-lookat-viewer {
-  background: url("assets/images/gtk-zoom-in.png");
+  background-image: url("assets/images/travel.svg");
 }
 
 .x_ite-private-icon-plane-viewer {
-  background: url("assets/images/PlaneViewer.png");
+  background-image: url("assets/images/border_all.svg");
+}
+
+.x_ite-private-icon-lookat-viewer {
+  background-image: url("assets/images/point_scan.svg");
 }
 
 .x_ite-private-icon-none-viewer {
-  background: url("assets/images/NoneViewer.png");
-}
-
-.x_ite-private-icon-zoom-fit {
-  background: url("assets/images/gtk-zoom-fit.png");
-}
-
-.x_ite-private-icon-zoom-in {
-  background: url("assets/images/gtk-zoom-in.png");
+  background-image: url("assets/images/block.svg");
 }
 
 .x_ite-private-icon-primitive-quality {
-  background: url("assets/images/PrimitiveQuality.png");
+  background-image: url("assets/images/hexagon.svg");
 }
 
 .x_ite-private-icon-texture-quality {
-  background: url("assets/images/TextureQuality.png");
+  background-image: url("assets/images/texture.svg");
 }
 
 .x_ite-private-icon-shading {
-  background: url("assets/images/Shading.png");
+  background-image: url("assets/images/stroke_partial.svg");
 }
 
 .x_ite-private-icon-enter-fullscreen {
-  background: url("assets/images/gtk-fullscreen.png");
+  background-image: url("assets/images/fullscreen.svg");
 }
 
 .x_ite-private-icon-leave-fullscreen {
-  background: url("assets/images/gtk-leave-fullscreen.png");
+  background-image: url("assets/images/fullscreen_exit.svg");
 }
 
 .x_ite-private-icon-world-info {
-  background: url("assets/images/go-next.png");
+  background-image: url("assets/images/globe.svg");
 }
 
 .x_ite-private-icon-help-about {
-  background: url("assets/images/help-about.png");
+  background-image: url("assets/images/info.svg");
 }
 
 /* Spinner */
