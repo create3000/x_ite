@@ -476,15 +476,19 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 5px 24px;
   width: 100%;
   font-size: 10pt;
+  font-weight: normal;
   letter-spacing: unset;
   line-height: 1;
+}
+
+.x_ite-private-menu label:has(>input[type=radio]:checked) {
+  font-weight: bold;
 }
 
 /* vertically align inside labels */
 .x_ite-private-menu label > * {
   vertical-align: top;
   font-size: 10pt;
-  font-weight: normal;
   letter-spacing: unset;
   line-height: 1;
 }
