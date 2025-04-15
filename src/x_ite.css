@@ -703,7 +703,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   bottom: 10px;
   width: 32px;
   height: 18px;
-  background: url(assets/images/XR.svg);
+  background: url(assets/images/xr.svg);
   cursor: pointer;
   transition: transform .2s ease-in-out;
 }
