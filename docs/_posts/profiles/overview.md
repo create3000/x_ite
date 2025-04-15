@@ -4,7 +4,7 @@ date: 2025-04-14
 categories: [profiles]
 tags: [Profiles]
 ---
-All supported profiles are listed below with their components and support levels.
+All supported profiles are listed below in alphabetical order with their components and support levels.
 
 ## CADInterchange
 
