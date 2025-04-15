@@ -59,7 +59,7 @@ Input/Output field *scaleOrientations*.
 
 Input/Output field *centers*.
 
-### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non standard</small>
+### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 
 *pointerEvents* defines whether this Shape becomes target for pointer events.
 

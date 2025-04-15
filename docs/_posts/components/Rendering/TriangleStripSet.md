@@ -112,7 +112,7 @@ Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_i
 
 Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
-### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
+### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
 
 Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
 

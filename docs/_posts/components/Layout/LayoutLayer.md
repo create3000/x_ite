@@ -48,7 +48,7 @@ The *objectType* field specifies a set of labels used in the picking process. Ea
 - Authors may define any value for *objectType*.
 - MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
-### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non standard</small>
+### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 
 *pointerEvents* defines whether this LayoutLayer becomes target for pointer events.
 

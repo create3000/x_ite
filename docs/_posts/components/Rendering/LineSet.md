@@ -55,7 +55,7 @@ Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoord
 
 Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
-### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
+### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
 
 Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
 
