@@ -128,7 +128,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: relative;
   top: -1px;
   padding: 0 24px 0 20px;
-  background: url(assets/images/logo.bw.svg) no-repeat top -0.5px left 0px;
+  background: url(assets/images/logo.svg) no-repeat top -0.5px left 0px;
   background-size: 16px 16px;
 }
 
