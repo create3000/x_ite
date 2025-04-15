@@ -543,9 +543,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             },
             "fullscreen": {
                name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
-               className: "context-menu-icon " + (fullscreen
+               className: `context-menu-icon ${fullscreen
                   ? "x_ite-private-icon-leave-fullscreen"
-                  : "x_ite-private-icon-enter-fullscreen"),
+                  : "x_ite-private-icon-enter-fullscreen"}`,
                callback: () =>
                {
                   browser .getElement () .toggleFullScreen ();
