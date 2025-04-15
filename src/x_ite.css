@@ -621,15 +621,17 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-spinner {
   position: absolute;
-  top: calc(50% - (138px / 2));
-  left: calc(50% - (134px / 2));
-  width: 138px;
-  height: 134px;
-  background: url("assets/images/logo.128.png") no-repeat;
-  image-rendering: optimizeQuality;
+  top: calc(50% - (160px / 2));
+  left: calc(50% - (160px / 2) + 5px);
+  width: 160px;
+  height: 160px;
+  background: url("assets/images/logo.svg") no-repeat;
+  background-size: 160px 160px;
+  opacity: 0.6;
   -webkit-animation: spinner-animation-spin 32s linear infinite;
   -moz-animation: spinner-animation-spin 32s linear infinite;
   animation: spinner-animation-spin 32s linear infinite;
+  transform-origin: calc(468px / 1024px * 160px) calc(556px / 1024px * 160px);
 }
 
 @-moz-keyframes spinner-animation-spin {
