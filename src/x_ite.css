@@ -56,7 +56,7 @@ X3DCanvas {
   height: 100vh !important;
 }
 
-X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
+X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: none;
 }
 
@@ -424,7 +424,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-color: rgba(255, 69, 58, 0.8);
 }
 
-.x_ite-private-menu .context-menu-item:hover>.context-menu-list {
+.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
   visibility: visible;
 }
 
@@ -460,13 +460,13 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   height: 0;
 }
 
-.x_ite-private-menu .context-menu-item>span {
+.x_ite-private-menu .context-menu-item > span {
   display: block;
   width: 100%;
   padding: 5px 24px;
 }
 
-.x_ite-private-menu .context-menu-input>label {
+.x_ite-private-menu .context-menu-input > label {
   cursor: pointer;
   display: block;
   box-sizing: border-box;
@@ -479,7 +479,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 /* vertically align inside labels */
-.x_ite-private-menu .context-menu-input>label>* {
+.x_ite-private-menu .context-menu-input > label > * {
   vertical-align: top;
   font-size: 10pt;
   font-weight: normal;
@@ -487,14 +487,14 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   line-height: 1;
 }
 
-.x_ite-private-menu .context-menu-item>label>input {
+.x_ite-private-menu .context-menu-item > label > input {
   all: revert;
   cursor: pointer;
 }
 
 /* position checkboxes and radios like icons */
-.x_ite-private-menu .context-menu-input>label>input[type="checkbox"],
-.x_ite-private-menu .context-menu-input>label>input[type="radio"] {
+.x_ite-private-menu .context-menu-input > label > input[type="checkbox"],
+.x_ite-private-menu .context-menu-input > label > input[type="radio"] {
   accent-color: rgb(255, 69, 58);
   display: inline;
   width: 12px;
@@ -503,7 +503,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 0;
 }
 
-.x_ite-private-menu .context-menu-input>label>span {
+.x_ite-private-menu .context-menu-input > label > span {
   padding-left: 8px;
 }
 
