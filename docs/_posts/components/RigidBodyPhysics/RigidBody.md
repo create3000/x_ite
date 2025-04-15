@@ -15,7 +15,7 @@ tags: [RigidBody, RigidBodyPhysics]
 
 RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. Contains a Sphere, Box, or Cone (`containerField='massDensityModel')` and multiple CollidableOffset or CollidableShape nodes (`containerField='geometry')` for animating collidable geometry.
 
-The RigidBody node belongs to the **RigidBodyPhysics** component and requires at least level **2,** its default container field is *bodies.* It is available from X3D version 3.2 or higher.
+The RigidBody node belongs to the **RigidBodyPhysics** component and requires at least support level **2,** its default container field is *bodies.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

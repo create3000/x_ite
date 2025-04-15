@@ -15,7 +15,7 @@ tags: [BiquadFilter, Sound]
 
 BiquadFilter node is an AudioNode processor implementing common low-order filters. Low-order filters are the building blocks of basic tone controls (bass, mid, treble), graphic equalizers, and more advanced filters. Multiple BiquadFilter node filters can be combined to form more complex filters. The filter parameters such as frequency can be changed over time for filter sweeps, etc.
 
-The BiquadFilter node belongs to the **Sound** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The BiquadFilter node belongs to the **Sound** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

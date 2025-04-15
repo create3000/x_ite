@@ -15,7 +15,7 @@ tags: [CADPart, CADGeometry]
 
 CADPart is an atomic part that defines both coordinate-system location and the faces that constitute a part in a Computer-Aided Design (CAD) model. CADPart contains multiple CADFace nodes that make up a single part.
 
-The CADPart node belongs to the **CADGeometry** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 3.1 or higher.
+The CADPart node belongs to the **CADGeometry** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 

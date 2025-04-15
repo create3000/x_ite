@@ -15,7 +15,7 @@ tags: [PickableGroup, Picking]
 
 PickableGroup is a Grouping node that can contain most nodes. PickableGroup contains children that are marked as having a given classification of picking types, and can also enable or disable picking of the children.
 
-The PickableGroup node belongs to the **Picking** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The PickableGroup node belongs to the **Picking** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

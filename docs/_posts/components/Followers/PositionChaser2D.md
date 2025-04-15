@@ -15,7 +15,7 @@ tags: [PositionChaser2D, Followers]
 
 PositionChaser2D generates a series of 2D position values that progressively change from initial value to destination value.
 
-The PositionChaser2D node belongs to the **Followers** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The PositionChaser2D node belongs to the **Followers** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [Group, Grouping]
 
 Group is a Grouping node that can contain most nodes.
 
-The Group node belongs to the **Grouping** component and requires at least level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Group node belongs to the **Grouping** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

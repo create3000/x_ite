@@ -15,7 +15,7 @@ tags: [HAnimJoint, HAnim]
 
 HAnimJoint node can represent each joint in a body. The child HAnimSegment node provides a visual representation of the skeleton segment.
 
-The HAnimJoint node belongs to the **HAnim** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The HAnimJoint node belongs to the **HAnim** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

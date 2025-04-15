@@ -15,7 +15,7 @@ tags: [ViewpointGroup, Navigation]
 
 ViewpointGroup can contain Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes for better user-navigation support with a shared description on the viewpoint list.
 
-The ViewpointGroup node belongs to the **Navigation** component and requires at least level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The ViewpointGroup node belongs to the **Navigation** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [Extrusion, Geometry3D]
 
 Extrusion is a geometry node that sequentially stretches a 2D cross section along a 3D-spine path in the local coordinate system, creating an outer hull. Scaling and rotating the crossSection 2D outline at each control point can modify the outer hull of the Extrusion to produce a wide variety of interesting shapes.
 
-The Extrusion node belongs to the **Geometry3D** component and requires at least level **4,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Extrusion node belongs to the **Geometry3D** component and requires at least support level **4,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

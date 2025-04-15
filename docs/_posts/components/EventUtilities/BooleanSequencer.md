@@ -15,7 +15,7 @@ tags: [BooleanSequencer, EventUtilities]
 
 BooleanSequencer generates periodic discrete Boolean values. Authors can ROUTE value_changed output events to other Boolean attributes.
 
-The BooleanSequencer node belongs to the **EventUtilities** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The BooleanSequencer node belongs to the **EventUtilities** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

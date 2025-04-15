@@ -15,7 +15,7 @@ tags: [NurbsSurfaceInterpolator, NURBS]
 
 NurbsSurfaceInterpolator describes a 3D NURBS curve and outputs interpolated position and normal values.
 
-The NurbsSurfaceInterpolator node belongs to the **NURBS** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The NurbsSurfaceInterpolator node belongs to the **NURBS** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

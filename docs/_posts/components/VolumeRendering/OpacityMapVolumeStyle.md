@@ -15,7 +15,7 @@ tags: [OpacityMapVolumeStyle, VolumeRendering]
 
 OpacityMapVolumeStyle specifies that volumetric data is rendered using opacity mapped to a transfer function texture.
 
-The OpacityMapVolumeStyle node belongs to the **VolumeRendering** component and requires at least level **1,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The OpacityMapVolumeStyle node belongs to the **VolumeRendering** component and requires at least support level **1,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 

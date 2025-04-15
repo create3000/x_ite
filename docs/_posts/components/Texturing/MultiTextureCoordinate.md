@@ -15,7 +15,7 @@ tags: [MultiTextureCoordinate, Texturing]
 
 MultiTextureCoordinate contains multiple TextureCoordinate or TextureCoordinateGenerator nodes, for use by a parent polygonal geometry node such as IndexedFaceSet or a Triangle* node. Each of the contained texture coordinate nodes correspond to the multiple texture nodes contained in a sibling Appearance/MultiTexture node.
 
-The MultiTextureCoordinate node belongs to the **Texturing** component and requires at least level **2,** its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
+The MultiTextureCoordinate node belongs to the **Texturing** component and requires at least support level **2,** its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

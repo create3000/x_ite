@@ -15,7 +15,7 @@ tags: [ScreenFontStyle, Layout]
 
 ScreenFontStyle is an X3DFontStyleNode defines the size, family, justification, and other styles used within a screen layout. ScreenFontStyle renders text so that it appears identical to typical 2D applications by specifying pointSize in points (as in 2D document layout) rather than size in meters. Each glyph of text is rendered as a quadrilateral with a texture applied.
 
-The ScreenFontStyle node belongs to the **Layout** component and requires at least level **2,** its default container field is *fontStyle.* It is available from X3D version 3.2 or higher.
+The ScreenFontStyle node belongs to the **Layout** component and requires at least support level **2,** its default container field is *fontStyle.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

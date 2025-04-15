@@ -15,7 +15,7 @@ tags: [ColorChaser, Followers]
 
 ColorChaser generates a series of SFColor values that progressively change from initial value to destination value.
 
-The ColorChaser node belongs to the **Followers** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.3 or higher.
+The ColorChaser node belongs to the **Followers** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 

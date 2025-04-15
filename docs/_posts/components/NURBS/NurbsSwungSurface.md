@@ -15,7 +15,7 @@ tags: [NurbsSwungSurface, NURBS]
 
 NurbsSwungSurface contains a profileCurve and a trajectoryCurve [X3DNurbsControlCurveNode].
 
-The NurbsSwungSurface node belongs to the **NURBS** component and requires at least level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The NurbsSwungSurface node belongs to the **NURBS** component and requires at least support level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

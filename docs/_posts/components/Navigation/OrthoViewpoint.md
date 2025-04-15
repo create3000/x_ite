@@ -15,7 +15,7 @@ tags: [OrthoViewpoint, Navigation]
 
 OrthoViewpoint provides an orthographic perspective-free view of a scene from a specific location and direction.
 
-The OrthoViewpoint node belongs to the **Navigation** component and requires at least level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The OrthoViewpoint node belongs to the **Navigation** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

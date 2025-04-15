@@ -15,7 +15,7 @@ tags: [CADLayer, CADGeometry]
 
 CADLayer nodes define a hierarchy that shows layer structure for a Computer-Aided Design (CAD) model. CADLayer is a Grouping node that can contain CADAssembly and most nodes.
 
-The CADLayer node belongs to the **CADGeometry** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 3.1 or higher.
+The CADLayer node belongs to the **CADGeometry** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 

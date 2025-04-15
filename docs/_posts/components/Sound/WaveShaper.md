@@ -15,7 +15,7 @@ tags: [WaveShaper, Sound]
 
 WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. Non-linear waveshaping distortion is commonly used for both subtle non-linear warming, or more obvious distortion effects. Arbitrary non-linear shaping curves may be specified.
 
-The WaveShaper node belongs to the **Sound** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The WaveShaper node belongs to the **Sound** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

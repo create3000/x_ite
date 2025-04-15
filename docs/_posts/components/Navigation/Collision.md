@@ -15,7 +15,7 @@ tags: [Collision, Navigation]
 
 Collision detects camera-to-object contact using current view and NavigationInfo avatarSize. Collision is a Grouping node that reports collision detection for its children.
 
-The Collision node belongs to the **Navigation** component and requires at least level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Collision node belongs to the **Navigation** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

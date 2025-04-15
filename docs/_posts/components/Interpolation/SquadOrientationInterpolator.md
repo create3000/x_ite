@@ -15,7 +15,7 @@ tags: [SquadOrientationInterpolator, Interpolation]
 
 SquadOrientationInterpolator performs non-linear interpolation among paired lists of rotation values to produce an SFRotation value_changed output event.
 
-The SquadOrientationInterpolator node belongs to the **Interpolation** component and requires at least level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The SquadOrientationInterpolator node belongs to the **Interpolation** component and requires at least support level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

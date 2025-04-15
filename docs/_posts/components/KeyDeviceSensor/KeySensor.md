@@ -15,7 +15,7 @@ tags: [KeySensor, KeyDeviceSensor]
 
 KeySensor generates events as the user presses keys on the keyboard. Browser support includes the notion of "keyboard focus".
 
-The KeySensor node belongs to the **KeyDeviceSensor** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The KeySensor node belongs to the **KeyDeviceSensor** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

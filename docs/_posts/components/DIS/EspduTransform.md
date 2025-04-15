@@ -15,7 +15,7 @@ tags: [EspduTransform, DIS]
 
 EspduTransform is a networked Transform node that can contain most nodes. If activated, EspduTransform can send or receive Entity State Protocol Data Unit (PDU) packets, also integrating functionality for the following DIS PDUs: EntityStatePdu, CollisionPdu, DetonatePdu, FirePdu, CreateEntity and RemoveEntity PDUs.
 
-The EspduTransform node belongs to the **DIS** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The EspduTransform node belongs to the **DIS** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

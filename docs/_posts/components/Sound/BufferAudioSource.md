@@ -15,7 +15,7 @@ tags: [BufferAudioSource, Sound]
 
 BufferAudioSource node represents a memory-resident audio asset that can contain one or more channels. Typically the length of the Pulse Coded Modulation (PCM) data is expected to be fairly short (usually somewhat less than a minute).
 
-The BufferAudioSource node belongs to the **Sound** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The BufferAudioSource node belongs to the **Sound** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [TextureBackground, EnvironmentalEffects]
 
 TextureBackground simulates ground and sky, using vertical arrays of wraparound color values, TextureBackground can also provide backdrop texture images on all six sides.
 
-The TextureBackground node belongs to the **EnvironmentalEffects** component and requires at least level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The TextureBackground node belongs to the **EnvironmentalEffects** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

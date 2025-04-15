@@ -15,7 +15,7 @@ tags: [LocalFog, EnvironmentalEffects]
 
 LocalFog simulates atmospheric effects by blending distant objects with fog color. LocalFog effects occur around the local transformation center, rather than bound to the viewer. The nearest LocalFog node within range takes precedence over other LocalFog and Fog nodes.
 
-The LocalFog node belongs to the **EnvironmentalEffects** component and requires at least level **4,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The LocalFog node belongs to the **EnvironmentalEffects** component and requires at least support level **4,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

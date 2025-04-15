@@ -15,7 +15,7 @@ tags: [ElevationGrid, Geometry3D]
 
 ElevationGrid is a geometry node defining a rectangular height field, with default values for a 1m by 1m square at height 0. Vertices corresponding to ElevationGrid height values define quadrilaterals, which are placed above or below a flat surface.
 
-The ElevationGrid node belongs to the **Geometry3D** component and requires at least level **3,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The ElevationGrid node belongs to the **Geometry3D** component and requires at least support level **3,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

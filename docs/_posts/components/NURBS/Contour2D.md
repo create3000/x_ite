@@ -15,7 +15,7 @@ tags: [Contour2D, NURBS]
 
 Contour2D groups a set of curve segments into a composite contour. The children segments form a closed loop, with first point of first child repeated as last point of last child, and last point of each segment repeated as the first point of the next consecutive segment. The children segments are type NurbsCurve2D or ContourPolyline2D, enumerated in the consecutive order of contour topology.
 
-The Contour2D node belongs to the **NURBS** component and requires at least level **4,** its default container field is *trimmingContour.* It is available from X3D version 3.0 or higher.
+The Contour2D node belongs to the **NURBS** component and requires at least support level **4,** its default container field is *trimmingContour.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [Polyline2D, Geometry2D]
 
 Polyline2D is a geometry node that defines a connected set of vertices in a contiguous set of line segments in X-Y plane.
 
-The Polyline2D node belongs to the **Geometry2D** component and requires at least level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The Polyline2D node belongs to the **Geometry2D** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

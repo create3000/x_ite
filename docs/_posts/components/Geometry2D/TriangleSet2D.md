@@ -15,7 +15,7 @@ tags: [TriangleSet2D, Geometry2D]
 
 TriangleSet2D is a geometry node that defines a set of filled 2D triangles in X-Y plane.
 
-The TriangleSet2D node belongs to the **Geometry2D** component and requires at least level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The TriangleSet2D node belongs to the **Geometry2D** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

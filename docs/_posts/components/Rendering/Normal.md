@@ -15,7 +15,7 @@ tags: [Normal, Rendering]
 
 Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Normal values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading.
 
-The Normal node belongs to the **Rendering** component and requires at least level **2,** its default container field is *normal.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Normal node belongs to the **Rendering** component and requires at least support level **2,** its default container field is *normal.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [LayerSet, Layering]
 
 LayerSet defines a list of layers and a rendering order. The rendering order is specified by the order field.
 
-The LayerSet node belongs to the **Layering** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The LayerSet node belongs to the **Layering** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

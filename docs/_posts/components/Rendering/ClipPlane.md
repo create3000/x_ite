@@ -15,7 +15,7 @@ tags: [ClipPlane, Rendering]
 
 ClipPlane specifies a single plane equation used to clip (i.e. cull or hide) displayed geometry. The plane field specifies a four-component plane equation that describes both inside and outside half space.
 
-The ClipPlane node belongs to the **Rendering** component and requires at least level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The ClipPlane node belongs to the **Rendering** component and requires at least support level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

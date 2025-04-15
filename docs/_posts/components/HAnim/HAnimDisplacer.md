@@ -15,7 +15,7 @@ tags: [HAnimDisplacer, HAnim]
 
 HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimJoint or HAnimSegment nodes. Displacer effects are scaled by the corresponding weight field.
 
-The HAnimDisplacer node belongs to the **HAnim** component and requires at least level **1,** its default container field is *displacers.* It is available from X3D version 3.0 or higher.
+The HAnimDisplacer node belongs to the **HAnim** component and requires at least support level **1,** its default container field is *displacers.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

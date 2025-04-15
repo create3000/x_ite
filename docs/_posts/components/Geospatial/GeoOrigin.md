@@ -15,7 +15,7 @@ tags: [GeoOrigin, Geospatial]
 
 GeoOrigin specifies local geospatial coordinate system for parent node, enabling increased geographic precision during scene rendering (by mitigating potential floating-point roundoff errors). GeoOrigin can be contained by other Geospatial component nodes, typically via DEF/USE to ensure consistency.
 
-The GeoOrigin node belongs to the **Geospatial** component and requires at least level **1,** its default container field is *geoOrigin.* It is available from X3D version 3.0 or higher.
+The GeoOrigin node belongs to the **Geospatial** component and requires at least support level **1,** its default container field is *geoOrigin.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

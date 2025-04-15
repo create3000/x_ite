@@ -15,7 +15,7 @@ tags: [SpotLight, Lighting]
 
 SpotLight is a light source that illuminates geometry within a conical beam. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
 
-The SpotLight node belongs to the **Lighting** component and requires at least level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The SpotLight node belongs to the **Lighting** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

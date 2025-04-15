@@ -15,7 +15,7 @@ tags: [ShaderPart, Shaders]
 
 ShaderPart defines the source for a portion of source code used by a ComposedShader node. The source is not required to be a complete shader for all of the vertex/fragment processing.
 
-The ShaderPart node belongs to the **Shaders** component and requires at least level **1,** its default container field is *parts.* It is available from X3D version 3.0 or higher.
+The ShaderPart node belongs to the **Shaders** component and requires at least support level **1,** its default container field is *parts.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

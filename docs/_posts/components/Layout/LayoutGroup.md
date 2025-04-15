@@ -15,7 +15,7 @@ tags: [LayoutGroup, Layout]
 
 LayoutGroup is a Grouping node that can contain most nodes, whose children are related by a common layout within a parent layout. The layout field contains an X3DLayoutNode node that provides the information required to locate and size the layout region of the LayoutGroup node relative to its parent’s layout region. LayoutGroup content is clipped by the specified viewport node.
 
-The LayoutGroup node belongs to the **Layout** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The LayoutGroup node belongs to the **Layout** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

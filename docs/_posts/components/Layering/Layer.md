@@ -15,7 +15,7 @@ tags: [Layer, Layering]
 
 Layer contains a list of children nodes that define the contents of the layer.
 
-The Layer node belongs to the **Layering** component and requires at least level **1,** its default container field is *layers.* It is available from X3D version 3.2 or higher.
+The Layer node belongs to the **Layering** component and requires at least support level **1,** its default container field is *layers.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

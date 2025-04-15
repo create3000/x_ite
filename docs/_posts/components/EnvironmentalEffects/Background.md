@@ -15,7 +15,7 @@ tags: [Background, EnvironmentalEffects]
 
 Background simulates ground and sky, using vertical arrays of wraparound color values. Background can also provide url addresses for backdrop textures on all six sides.
 
-The Background node belongs to the **EnvironmentalEffects** component and requires at least level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Background node belongs to the **EnvironmentalEffects** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

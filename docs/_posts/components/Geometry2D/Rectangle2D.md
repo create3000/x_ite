@@ -15,7 +15,7 @@ tags: [Rectangle2D, Geometry2D]
 
 Rectangle2D is a geometry node that defines a 2D rectangle in X-Y plane.
 
-The Rectangle2D node belongs to the **Geometry2D** component and requires at least level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The Rectangle2D node belongs to the **Geometry2D** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [MetadataBoolean, Core]
 
 MetadataBoolean contains a typed list of values providing metadata information about its parent node. Further information about this specific Metadata* node may be provided by a single child Metadata* node with `containerField='metadata'.`
 
-The MetadataBoolean node belongs to the **Core** component and requires at least level **1,** its default container field is *value.* It is available from X3D version 3.3 or higher.
+The MetadataBoolean node belongs to the **Core** component and requires at least support level **1,** its default container field is *value.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 

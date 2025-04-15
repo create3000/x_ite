@@ -15,7 +15,7 @@ tags: [ImageTexture, Texturing]
 
 ImageTexture maps a 2D-image file onto a geometric shape. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The ImageTexture node belongs to the **Texturing** component and requires at least level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The ImageTexture node belongs to the **Texturing** component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

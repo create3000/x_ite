@@ -15,7 +15,7 @@ tags: [PointPickSensor, Picking]
 
 PointPickSensor tests one or more pickingGeometry points in space as lying inside the provided pickTarget geometry. For each pickingGeometry PointSet coordinate point that lies inside the pickTarget geometry, a pickedPoint coordinate is returned along with a corresponding pickedGeometry node inside which the point lies.
 
-The PointPickSensor node belongs to the **Picking** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The PointPickSensor node belongs to the **Picking** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

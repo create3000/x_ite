@@ -15,7 +15,7 @@ tags: [FogCoordinate, EnvironmentalEffects]
 
 FogCoordinate defines a set of explicit fog depths on a per-vertex basis, overriding Fog visibilityRange.
 
-The FogCoordinate node belongs to the **EnvironmentalEffects** component and requires at least level **4,** its default container field is *fogCoord.* It is available from X3D version 3.0 or higher.
+The FogCoordinate node belongs to the **EnvironmentalEffects** component and requires at least support level **4,** its default container field is *fogCoord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

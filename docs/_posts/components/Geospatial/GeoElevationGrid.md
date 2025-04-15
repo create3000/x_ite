@@ -15,7 +15,7 @@ tags: [GeoElevationGrid, Geospatial]
 
 GeoElevationGrid is a geometry node defining a rectangular height field, with default values for a 1m by 1m square at height 0. Vertices corresponding to GeoElevationGrid height values define quadrilaterals, which are placed above or below a curved geospatial surface using geographic coordinates.
 
-The GeoElevationGrid node belongs to the **Geospatial** component and requires at least level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The GeoElevationGrid node belongs to the **Geospatial** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
