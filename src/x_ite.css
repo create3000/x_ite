@@ -522,7 +522,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   filter: brightness(0) saturate(100%) invert(71%) sepia(100%) saturate(1647%) hue-rotate(335deg) brightness(101%) contrast(101%);
 }
 
-.x_ite-private-menu input:hover:checked {
+.x_ite-private-menu .context-menu-input:hover input:checked {
   filter: none;
 }
 
