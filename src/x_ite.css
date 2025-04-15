@@ -128,8 +128,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: relative;
   top: -1px;
   padding: 0 24px 0 20px;
-  background: url("assets/images/icon.bw.png") no-repeat top -0.5px left 0px;
-  image-rendering: pixelated;
+  background: url("assets/images/logo.bw.svg") no-repeat top -0.5px left 0px;
+  background-size: 16px 16px;
 }
 
 .x_ite-private-browser-timings {
@@ -185,7 +185,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-browser-timings table {
   overflow: hidden;
-  background: url("assets/images/schedule.svg") no-repeat 0px 0px;
+  background: url("assets/images/schedule.svg") no-repeat 0px -1px;
   background-size: 16px 16px;
   image-rendering: pixelated;
   width: 100%;
