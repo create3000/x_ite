@@ -510,6 +510,13 @@ Returns a rendering property with the corresponding *name*.
 
 Adds a rendering property callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the rendering property to which the callback should be connected. The callback is called when the property has been changed.
 
+```js
+browser .addRenderingPropertyCallback ("check", "XRSession", value =>
+{
+   console .log (`User ${value ? "entered" : "leaved"} WebXR.`);
+});
+```
+
 #### **removeRenderingPropertyCallback** (*key: any, name: string*): void
 
 Removes a rendering property callback function associated with *key* and *name* from the rendering property.
