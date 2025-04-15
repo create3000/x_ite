@@ -508,7 +508,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
   display: inline-block;
   position: absolute;
-  background: url("assets/images/radio_button_unchecked.svg") no-repeat left 0px top -1px;
+  top: 3px;
+  background: url("assets/images/radio_button_unchecked.svg") no-repeat left 0px top 0px;
   background-size: 16px 16px;
 }
 
