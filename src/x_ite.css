@@ -338,6 +338,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-menu.context-menu-list,
 .x_ite-private-menu .context-menu-list {
+  overscroll-behavior: none;
   visibility: hidden;
   box-sizing: border-box;
   min-width: 120px;
@@ -345,7 +346,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   margin-left: 1px;
   border: 4px solid transparent;
   border-radius: 5px;
-  padding: 5px 10px 9px 9px;
+  padding: 5px 10px 4px 9px;
   color: white;
   font-family: PT Sans, sans-serif;
   font-size: 10pt;
@@ -556,31 +557,45 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/visibility.svg);
 }
 
+.x_ite-private-menu .context-menu-input.x_ite-private-viewpoint > label > input {
+  background-image: url(assets/images/eye_closed.svg);
+}
+
+.x_ite-private-menu .context-menu-input.x_ite-private-viewpoint > label > input:checked {
+  background-image: url(assets/images/eye_tracking.svg);
+}
+
 .x_ite-private-icon-viewer {
   background-image: url(assets/images/stadia_controller.svg);
 }
 
-.x_ite-private-icon-examine-viewer {
+.x_ite-private-menu .context-menu-input.x_ite-private-examine-viewer > label > input,
+.x_ite-private-menu .context-menu-input.x_ite-private-examine-viewer > label > input:checked {
   background-image: url(assets/images/language.svg);
 }
 
-.x_ite-private-icon-walk-viewer {
+.x_ite-private-menu .context-menu-input.x_ite-private-walk-viewer > label > input,
+.x_ite-private-menu .context-menu-input.x_ite-private-walk-viewer > label > input:checked {
   background-image: url(assets/images/directions_run.svg);
 }
 
-.x_ite-private-icon-fly-viewer {
+.x_ite-private-menu .context-menu-input.x_ite-private-fly-viewer > label > input,
+.x_ite-private-menu .context-menu-input.x_ite-private-fly-viewer > label > input:checked {
   background-image: url(assets/images/travel.svg);
 }
 
-.x_ite-private-icon-plane-viewer {
+.x_ite-private-menu .context-menu-input.x_ite-private-plane-viewer > label > input,
+.x_ite-private-menu .context-menu-input.x_ite-private-plane-viewer > label > input:checked {
   background-image: url(assets/images/border_all.svg);
 }
 
-.x_ite-private-icon-lookat-viewer {
+.x_ite-private-menu .context-menu-input.x_ite-private-lookat-viewer > label > input,
+.x_ite-private-menu .context-menu-input.x_ite-private-lookat-viewer > label > input:checked {
   background-image: url(assets/images/point_scan.svg);
 }
 
-.x_ite-private-icon-none-viewer {
+.x_ite-private-menu .context-menu-input.x_ite-private-none-viewer > label > input,
+.x_ite-private-menu .context-menu-input.x_ite-private-none-viewer > label > input:checked {
   background-image: url(assets/images/block.svg);
 }
 

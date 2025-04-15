@@ -649,15 +649,18 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
          const item = {
             name: description,
-            callback: () =>
-            {
-               browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-               browser .getSurface () .focus ();
+            type: "radio",
+            radio: "viewpoints",
+            selected: viewpoint === currentViewpoint,
+            className: "x_ite-private-viewpoint",
+            events: {
+               click: () =>
+               {
+                  browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
+                  browser .getSurface () .focus ();
+               },
             },
          };
-
-         if (viewpoint === currentViewpoint)
-            item .className = "context-menu-selected";
 
          menu [`Viewpoint-${viewpoint .getId ()}`] = item;
       }
@@ -676,17 +679,19 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       {
          menu [viewer] = {
             name: _(this .getViewerName (viewer)),
-            className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
-            callback: () =>
-            {
-               browser ._viewer = viewer;
-               browser .getNotification () ._string = _(this .getViewerName (viewer));
-               browser .getSurface () .focus ();
+            type: "radio",
+            radio: "viewers",
+            selected: viewer === currentViewer,
+            className: "x_ite-private-" + viewer .toLowerCase () + "-viewer",
+            events: {
+               click: () =>
+               {
+                  browser ._viewer = viewer;
+                  browser .getNotification () ._string = _(this .getViewerName (viewer));
+                  browser .getSurface () .focus ();
+               },
             },
          };
-
-         if (viewer === currentViewer)
-            menu [viewer] .className += " context-menu-selected";
       }
 
       return menu;
