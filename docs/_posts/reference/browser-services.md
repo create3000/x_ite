@@ -410,6 +410,7 @@ Returns a browser option with the corresponding *name*.
 
 Sets a browser option with the corresponding *name* to the given value.
 
+<!--
 #### **addBrowserOptionCallback** (*key: any, name: string, callback: (value: unknown) => void*): void
 
 Adds a browser option callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the browser option to which the callback should be connected. The callback is called when the property has been changed.
@@ -417,6 +418,7 @@ Adds a browser option callback function, if external browser interface is used. 
 #### **removeBrowserOptionCallback** (*key: any, name: string*): void
 
 Removes a browser option callback function associated with *key* and *name* from the browser option.
+-->
 
 #### **getRenderingProperty** (*name: string*): any
 
@@ -506,6 +508,7 @@ Returns a rendering property with the corresponding *name*.
    </tbody>
 </table>
 
+<!--
 #### **addRenderingPropertyCallback** (*key: any, name: string, callback: (value: unknown) => void*): void
 
 Adds a rendering property callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the rendering property to which the callback should be connected. The callback is called when the property has been changed.
@@ -520,6 +523,7 @@ browser .addRenderingPropertyCallback ("check", "XRSession", value =>
 #### **removeRenderingPropertyCallback** (*key: any, name: string*): void
 
 Removes a rendering property callback function associated with *key* and *name* from the rendering property.
+-->
 
 #### **addBrowserCallback** (*key: any, [event?: number,] callback: (event: number) => void*): void
 

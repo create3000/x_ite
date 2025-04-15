@@ -831,6 +831,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this .getBrowserOptions () .getField (name) .getValue ();
    },
+   /*
    addBrowserOptionCallback (key, name, callback)
    {
       return this .getBrowserOptions () .getField (name) .addFieldCallback (key, callback);
@@ -839,10 +840,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this .getBrowserOptions () .getField (name) .removeFieldCallback (key);
    },
+   */
    getRenderingProperty (name)
    {
       return this .getRenderingProperties () .getField (name) .getValue ();
    },
+   /*
    addRenderingPropertyCallback (key, name, callback)
    {
       return this .getRenderingProperties () .getField (name) .addFieldCallback (key, callback);
@@ -851,6 +854,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this .getRenderingProperties () .getField (name) .removeFieldCallback (key);
    },
+   */
    viewAll (layerNode, transitionTime = 1)
    {
       if (arguments .length === 1 && typeof layerNode === "number")
