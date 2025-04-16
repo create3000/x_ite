@@ -615,6 +615,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          delete menu .items ["straighten-horizon"];
       }
 
+      if (!browser .getCurrentViewer () .match (/^(?:WALK|FLY)$/))
+      {
+         delete menu .items ["display-rubberband"];
+      }
+
       if (!browser .getBrowserOption ("Debug"))
       {
          delete menu .items ["shading"];
