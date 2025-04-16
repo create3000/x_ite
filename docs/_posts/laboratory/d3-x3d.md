@@ -102,22 +102,9 @@ x3d-canvas {
 </div>
 
 <script type="module">
-if (!Array.prototype.includes) {
-  Array.prototype.includes = function() {
-     'use strict';
-     return Array.prototype.indexOf.apply(this, arguments) !== -1;
-  };
-}
-
-// Select chartholder
 var chartHolder = d3.select("#chartholder");
-
-// Generate some data
 var data = d3.x3d.randomData.dataset2();
-
-// Declare the chart component
 var myChart = d3.x3d.chart.areaChartMultiSeries();
-
 var checks = d3.selectAll("input[type=checkbox]");
 
 window .refreshChart = function() {
