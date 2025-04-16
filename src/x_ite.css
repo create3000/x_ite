@@ -620,11 +620,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/stroke_partial.svg);
 }
 
-.x_ite-private-icon-enter-fullscreen {
+.x_ite-private-icon-fullscreen {
   background-image: url(assets/images/fullscreen.svg);
 }
 
-.x_ite-private-icon-leave-fullscreen {
+:host(.x_ite-fullscreen) .x_ite-private-icon-fullscreen {
   background-image: url(assets/images/fullscreen_exit.svg);
 }
 
@@ -632,7 +632,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/globe.svg);
 }
 
-.x_ite-private-icon-help-about {
+.x_ite-private-icon-info {
   background-image: url(assets/images/info.svg);
 }
 

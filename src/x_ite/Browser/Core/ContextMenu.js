@@ -253,12 +253,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   if (item .selected)
                      input .attr ("checked", "checked");
 
-                  for (const k in item .events)
-                  {
-                     if (typeof item .events [k] === "function")
-                        input .on (k, item .events [k]);
-                  }
-
+                  this .addEvents (item, input);
                   li .addClass ("context-menu-input");
 
                   break;
@@ -268,9 +263,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   if (item .name)
                      $("<span></span>") .text (item .name) .appendTo (li);
 
-                  if (typeof item .callback === "function")
-                     li .on ("click", item .callback) .on ("click", hide);
-
+                  this .addEvents (item, li);
                   break;
                }
             }
@@ -297,6 +290,20 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       }
 
       return li;
+   },
+   addEvents (item, element)
+   {
+      if (typeof item .callback === "function")
+         element .on ("click", item .callback);
+
+      if (typeof item .events === "object")
+      {
+         for (const k in item .events)
+         {
+            if (typeof item .events [k] === "function")
+               element .on (k, item .events [k]);
+         }
+      }
    },
    build (event)
    {
@@ -329,36 +336,32 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                name: _("Straighten Horizon"),
                type: "checkbox",
                selected: browser .getBrowserOption ("StraightenHorizon"),
-               events: {
-                  click: (event) =>
-                  {
-                     const straightenHorizon = $(event .target) .is (":checked");
+               callback: (event) =>
+               {
+                  const straightenHorizon = $(event .target) .is (":checked");
 
-                     browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
+                  browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
 
-                     if (straightenHorizon)
-                        browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("on");
-                     else
-                        browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("off");
-                  },
+                  if (straightenHorizon)
+                     browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("on");
+                  else
+                     browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("off");
                },
             },
             "display-rubberband": {
                name: _("Display Rubberband"),
                type: "checkbox",
                selected: browser .getBrowserOption ("Rubberband"),
-               events: {
-                  click: (event) =>
-                  {
-                     const rubberband = $(event .target) .is (":checked");
+               callback: (event) =>
+               {
+                  const rubberband = $(event .target) .is (":checked");
 
-                     browser .setBrowserOption ("Rubberband", rubberband);
+                  browser .setBrowserOption ("Rubberband", rubberband);
 
-                     if (rubberband)
-                        browser .getNotification () ._string = _("Rubberband") + ": " + _("on");
-                     else
-                        browser .getNotification () ._string = _("Rubberband") + ": " + _("off");
-                  },
+                  if (rubberband)
+                     browser .getNotification () ._string = _("Rubberband") + ": " + _("on");
+                  else
+                     browser .getNotification () ._string = _("Rubberband") + ": " + _("off");
                },
             },
             "separator1": "--------",
@@ -371,12 +374,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "primitive-quality",
                      selected: browser .getBrowserOption ("PrimitiveQuality") === "HIGH",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("PrimitiveQuality", "HIGH");
-                           browser .getNotification () ._string = _("Primitive Quality") + ": " + _("high");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("PrimitiveQuality", "HIGH");
+                        browser .getNotification () ._string = _("Primitive Quality") + ": " + _("high");
                      },
                   },
                   "medium": {
@@ -384,12 +385,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "primitive-quality",
                      selected: browser .getBrowserOption ("PrimitiveQuality") === "MEDIUM",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
-                           browser .getNotification () ._string = _("Primitive Quality") + ": " + _("medium");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
+                        browser .getNotification () ._string = _("Primitive Quality") + ": " + _("medium");
                      },
                   },
                   "low": {
@@ -397,12 +396,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "primitive-quality",
                      selected: browser .getBrowserOption ("PrimitiveQuality") === "LOW",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("PrimitiveQuality", "LOW");
-                           browser .getNotification () ._string = _("Primitive Quality") + ": " + _("low");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("PrimitiveQuality", "LOW");
+                        browser .getNotification () ._string = _("Primitive Quality") + ": " + _("low");
                      },
                   },
                },
@@ -416,12 +413,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "texture-quality",
                      selected: browser .getBrowserOption ("TextureQuality") === "HIGH",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("TextureQuality", "HIGH");
-                           browser .getNotification () ._string = _("Texture Quality") + ": " + _("high");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("TextureQuality", "HIGH");
+                        browser .getNotification () ._string = _("Texture Quality") + ": " + _("high");
                      },
                   },
                   "medium": {
@@ -429,12 +424,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "texture-quality",
                      selected: browser .getBrowserOption ("TextureQuality") === "MEDIUM",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("TextureQuality", "MEDIUM");
-                           browser .getNotification () ._string = _("Texture Quality") + ": " + _("medium");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("TextureQuality", "MEDIUM");
+                        browser .getNotification () ._string = _("Texture Quality") + ": " + _("medium");
                      },
                   },
                   "low": {
@@ -442,12 +435,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "texture-quality",
                      selected: browser .getBrowserOption ("TextureQuality") === "LOW",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("TextureQuality", "LOW");
-                           browser .getNotification () ._string = _("Texture Quality") + ": " + _("low");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("TextureQuality", "LOW");
+                        browser .getNotification () ._string = _("Texture Quality") + ": " + _("low");
                      },
                   },
                },
@@ -461,12 +452,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "POINT",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("Shading", "POINT");
-                           browser .getNotification () ._string = _("Shading") + ": " + _("Points");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("Shading", "POINT");
+                        browser .getNotification () ._string = _("Shading") + ": " + _("Points");
                      },
                   },
                   "wireframe": {
@@ -474,12 +463,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "WIREFRAME",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("Shading", "WIREFRAME");
-                           browser .getNotification () ._string = _("Shading") + ": " + _("Wireframe");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("Shading", "WIREFRAME");
+                        browser .getNotification () ._string = _("Shading") + ": " + _("Wireframe");
                      },
                   },
                   "flat": {
@@ -487,12 +474,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "FLAT",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("Shading", "FLAT");
-                           browser .getNotification () ._string = _("Shading") + ": " + _("Flat");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("Shading", "FLAT");
+                        browser .getNotification () ._string = _("Shading") + ": " + _("Flat");
                      },
                   },
                   "gouraud": {
@@ -500,12 +485,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "GOURAUD",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("Shading", "GOURAUD");
-                           browser .getNotification () ._string = _("Shading") + ": " + _("Gouraud");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("Shading", "GOURAUD");
+                        browser .getNotification () ._string = _("Shading") + ": " + _("Gouraud");
                      },
                   },
                   "phong": {
@@ -513,12 +496,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      type: "radio",
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "PHONG",
-                     events: {
-                        click: () =>
-                        {
-                           browser .setBrowserOption ("Shading", "PHONG");
-                           browser .getNotification () ._string = _("Shading") + ": " + _("Phong");
-                        },
+                     callback: () =>
+                     {
+                        browser .setBrowserOption ("Shading", "PHONG");
+                        browser .getNotification () ._string = _("Shading") + ": " + _("Phong");
                      },
                   },
                },
@@ -533,19 +514,15 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                name: _("Browser Timings"),
                type: "checkbox",
                selected: browser .getBrowserOption ("Timings"),
-               events: {
-                  click: (event) =>
-                  {
-                     browser .setBrowserOption ("Timings", $(event .target) .is (":checked"));
-                     browser .getSurface () .focus ();
-                  },
+               callback: (event) =>
+               {
+                  browser .setBrowserOption ("Timings", $(event .target) .is (":checked"));
+                  browser .getSurface () .focus ();
                },
             },
             "fullscreen": {
                name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
-               className: `context-menu-icon ${fullscreen
-                  ? "x_ite-private-icon-leave-fullscreen"
-                  : "x_ite-private-icon-enter-fullscreen"}`,
+               className: "context-menu-icon x_ite-private-icon-fullscreen",
                callback: () =>
                {
                   browser .getElement () .toggleFullScreen ();
@@ -593,7 +570,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             },
             "about": {
                name: _("About X_ITE"),
-               className: "context-menu-icon x_ite-private-icon-help-about",
+               className: "context-menu-icon x_ite-private-icon-info",
                callback ()
                {
                   window .open (browser .getProviderURL ());
@@ -658,12 +635,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             radio: "viewpoints",
             selected: viewpoint === currentViewpoint,
             className: "x_ite-private-viewpoint",
-            events: {
-               click: () =>
-               {
-                  browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-                  browser .getSurface () .focus ();
-               },
+            callback: () =>
+            {
+               browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
+               browser .getSurface () .focus ();
             },
          };
 
@@ -688,13 +663,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             radio: "viewers",
             selected: viewer === currentViewer,
             className: "x_ite-private-" + viewer .toLowerCase () + "-viewer",
-            events: {
-               click: () =>
-               {
-                  browser ._viewer = viewer;
-                  browser .getNotification () ._string = _(this .getViewerName (viewer));
-                  browser .getSurface () .focus ();
-               },
+            callback: () =>
+            {
+               browser ._viewer = viewer;
+               browser .getNotification () ._string = _(this .getViewerName (viewer));
+               browser .getSurface () .focus ();
             },
          };
       }
