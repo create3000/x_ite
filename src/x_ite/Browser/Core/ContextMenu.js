@@ -255,7 +255,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                   li .addClass ("context-menu-input");
                   this .addEvents (item, input);
-
                   break;
                }
                default:
