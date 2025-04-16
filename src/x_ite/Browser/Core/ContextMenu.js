@@ -251,10 +251,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   $("<span></span>") .text (item .name) .appendTo (label);
 
                   if (item .selected)
-                     input .attr ("checked", "checked");
+                     input .attr ("checked", "");
 
-                  this .addEvents (item, input);
                   li .addClass ("context-menu-input");
+                  this .addEvents (item, input);
 
                   break;
                }
