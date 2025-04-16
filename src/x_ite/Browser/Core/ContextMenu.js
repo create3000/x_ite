@@ -246,7 +246,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                   input
                      .attr ("type", item .type)
-                     .attr ("name", `context-menu-input-${item .radio ?? parent}`);
+                     .attr ("name", `context-menu-input-${item .radio || parent}`);
 
                   $("<span></span>") .text (item .name) .appendTo (label);
 
