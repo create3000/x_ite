@@ -625,7 +625,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 :host(.x_ite-fullscreen) .x_ite-private-icon-fullscreen,
-X3DCanvas .x_ite-private-icon-fullscreen {
+X3DCanvas.x_ite-fullscreen .x_ite-private-icon-fullscreen {
   background-image: url(assets/images/fullscreen_exit.svg);
 }
 
