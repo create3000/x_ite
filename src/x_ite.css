@@ -563,7 +563,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .x_ite-private-viewpoint input {
-  background-image: url(assets/images/eye_closed.svg);
+  background-image: none;
 }
 
 .x_ite-private-menu .x_ite-private-viewpoint input:checked {
