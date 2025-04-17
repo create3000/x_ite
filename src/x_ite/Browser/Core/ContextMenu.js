@@ -214,8 +214,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Layer
 
-      layer .on ("click contextmenu", this [_hide]);
-      ul .on ("contextmenu", this [_hide]);
+      layer .on ("click contextmenu", () => this .hide ());
+      ul .on ("contextmenu", () => this .hide ());
 
       return false;
    },
