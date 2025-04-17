@@ -635,7 +635,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       {
          const description = viewpoint .getDescriptions () .join (" » ");
 
-         const item = {
+         menu [`Viewpoint-${viewpoint .getId ()}`] = {
             name: description,
             type: "radio",
             radio: "viewpoints",
@@ -647,8 +647,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                browser .getSurface () .focus ();
             },
          };
-
-         menu [`Viewpoint-${viewpoint .getId ()}`] = item;
       }
 
       return menu;
