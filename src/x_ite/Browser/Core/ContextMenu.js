@@ -52,7 +52,8 @@ typeof jquery_fullscreen; // import plugin
 
 const
    _options  = Symbol (),
-   _userMenu = Symbol ();
+   _userMenu = Symbol (),
+   _hide     = Symbol ();
 
 function ContextMenu (executionContext)
 {
@@ -104,7 +105,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
    },
    hide (event)
    {
-      // Will be overridden by a generated function on show.
+      this [_hide] ?.();
    },
    show (event)
    {
@@ -121,16 +122,16 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          .addClass (["context-menu-layer", menu .className])
          .appendTo (options .appendTo);
 
-      const hide = this .hide = () =>
+      this [_hide] = () =>
       {
-         delete this .hide;
+         this [_hide] = null;
 
          layer .remove ();
-         ul .children ()
+         ul
             .removeClass ("x_ite-private-fade-in-300")
             .addClass ("x_ite-private-fade-out-300");
 
-         setTimeout (() => ul .remove (), 2000);
+         setTimeout (() => ul .remove (), 1000);
 
          return false;
       };
@@ -139,7 +140,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       const ul = $("<ul></ul>")
          .hide ()
-         .addClass (["context-menu-root", "context-menu-list", menu .className])
+         .addClass (["context-menu-root", "context-menu-list", "x_ite-private-hidden", menu .className])
          .offset ({ "left": event .pageX, "top": event .pageY })
          .appendTo (options .appendTo);
 
@@ -148,13 +149,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          .appendTo (ul);
 
       for (const k in menu .items)
-         ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
+         ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1));
 
       // Show
 
-      ul .children () .addClass ("x_ite-private-hidden");
-      ul .show ();
-      ul .children ()
+      ul
+         .show ()
          .removeClass ("x_ite-private-hidden")
          .addClass ("x_ite-private-fade-in-300");
 
@@ -212,12 +212,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Layer
 
-      layer .on ("click contextmenu", hide);
-      ul .on ("contextmenu", hide);
+      layer .on ("click contextmenu", this [_hide]);
+      ul .on ("contextmenu", this [_hide]);
 
       return false;
    },
-   createItem (item, parent, key, level, hide)
+   createItem (item, parent, key, level)
    {
       const li = $("<li></li>") .addClass ("context-menu-item");
 
@@ -274,7 +274,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       if (typeof item .items === "object" && level < 3)
       {
          const ul = $("<ul></ul>")
-            .addClass ("context-menu-list")
+            .addClass ("context-menu-list", "x_ite-private-hidden")
             .css ({ "z-index": level })
             .appendTo (li);
 
@@ -283,7 +283,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             .appendTo (ul);
 
          for (const k in item .items)
-            ul .append (this .createItem (item .items [k], key, k, level + 1, hide));
+            ul .append (this .createItem (item .items [k], key, k, level + 1));
 
          li .addClass ("context-menu-submenu");
       }

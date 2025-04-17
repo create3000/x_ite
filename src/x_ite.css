@@ -339,7 +339,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu.context-menu-list,
 .x_ite-private-menu .context-menu-list {
   overscroll-behavior: none;
-  visibility: hidden;
   box-sizing: border-box;
   min-width: 120px;
   margin: 0;
@@ -362,12 +361,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-list {
+  display: none;
   position: absolute;
-}
-
-.x_ite-private-menu .context-menu-list {
   top: -13px;
-  /* re-positioned by js */
 }
 
 .x_ite-private-menu .context-menu-background {
@@ -427,7 +423,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item:hover > .context-menu-list {
-  visibility: visible;
+  display: block;
 }
 
 .x_ite-private-menu .context-menu-not-selectable {
