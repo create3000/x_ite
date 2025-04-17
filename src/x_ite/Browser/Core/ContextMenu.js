@@ -256,7 +256,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      input .attr ("checked", "");
 
                   li .addClass ("context-menu-input");
-                  this .addEvents (item, input, true);
+                  this .addEvents (item, input, false);
                   break;
                }
                default:
