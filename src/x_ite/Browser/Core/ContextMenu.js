@@ -256,7 +256,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      input .attr ("checked", "");
 
                   li .addClass ("context-menu-input");
-                  this .addEvents (item, input);
+                  this .addEvents (item, input, true);
                   break;
                }
                default:
@@ -292,10 +292,15 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       return li;
    },
-   addEvents (item, element)
+   addEvents (item, element, hide = true)
    {
       if (typeof item .callback === "function")
+      {
          element .on ("click", item .callback);
+
+         if (hide)
+            element .on ("click", () => this .hide ());
+      }
 
       if (typeof item .events === "object")
       {
