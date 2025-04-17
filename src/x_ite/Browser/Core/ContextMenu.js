@@ -306,12 +306,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
    },
    build (event)
    {
-      const
-         browser    = this .getBrowser (),
-         fullscreen = browser .getElement () .fullScreen ();
+      const browser = this .getBrowser ();
 
       if (!browser .getBrowserOption ("ContextMenu"))
          return;
+
+      let fullscreen = browser .getElement () .fullScreen ();
 
       const menu = {
          className: "x_ite-private-menu",
@@ -524,7 +524,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                className: "context-menu-icon x_ite-private-icon-fullscreen",
                callback: () =>
                {
+                  fullscreen = !fullscreen;
+
                   browser .getElement () .toggleFullScreen ();
+                  browser .getShadow () .find (".x_ite-private-menu .x_ite-private-icon-fullscreen span")
+                     .text (fullscreen ? _("Leave Fullscreen") : _("Fullscreen"));
                },
             },
             "separator4": "--------",
