@@ -51,7 +51,8 @@ X3DCanvas {
   display: none;
 }
 
-:host(.x_ite-fullscreen) {
+:host(.x_ite-fullscreen),
+X3DCanvas.x_ite-fullscreen {
   width: 100vw !important;
   height: 100vh !important;
 }
@@ -616,13 +617,23 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/stroke_partial.svg);
 }
 
-.x_ite-private-icon-fullscreen {
+.x_ite-private-icon-enter-fullscreen {
   background-image: url(assets/images/fullscreen.svg);
 }
 
-:host(.x_ite-fullscreen) .x_ite-private-icon-fullscreen,
-X3DCanvas.x_ite-fullscreen .x_ite-private-icon-fullscreen {
+.x_ite-private-icon-leave-fullscreen {
+  display: none;
   background-image: url(assets/images/fullscreen_exit.svg);
+}
+
+:host(.x_ite-fullscreen) .x_ite-private-icon-enter-fullscreen,
+X3DCanvas.x_ite-fullscreen .x_ite-private-icon-enter-fullscreen {
+  display: none;
+}
+
+:host(.x_ite-fullscreen) .x_ite-private-icon-leave-fullscreen,
+X3DCanvas.x_ite-fullscreen .x_ite-private-icon-leave-fullscreen {
+  display: block;
 }
 
 .x_ite-private-icon-world-info {
