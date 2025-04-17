@@ -313,7 +313,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
    },
    build (event)
    {
-      const browser = this .getBrowser ();
+      const
+         browser    = this .getBrowser (),
+         fullscreen = browser .getElement () .fullScreen ();
 
       if (!browser .getBrowserOption ("ContextMenu"))
          return;
@@ -524,20 +526,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   browser .getSurface () .focus ();
                },
             },
-            "enter-fullscreen": {
-               name: _("Fullscreen"),
-               className: "context-menu-icon x_ite-private-icon-enter-fullscreen",
+            "fullscreen": {
+               name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
+               className: `context-menu-icon ${fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-enter-fullscreen"}`,
                callback: () =>
                {
-                  browser .getElement () .fullScreen (true);
-               },
-            },
-            "leave-fullscreen": {
-               name: _("Leave Fullscreen"),
-               className: "context-menu-icon x_ite-private-icon-leave-fullscreen",
-               callback: () =>
-               {
-                  browser .getElement () .fullScreen (false);
+                  browser .getElement () .fullScreen (!fullscreen);
                },
             },
             "separator4": "--------",
