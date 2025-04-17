@@ -645,7 +645,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             {
                browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
                browser .getSurface () .focus ();
-               this .hide ();
             },
          };
 
@@ -675,7 +674,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                browser ._viewer = viewer;
                browser .getNotification () ._string = _(this .getViewerName (viewer));
                browser .getSurface () .focus ();
-               this .hide ();
             },
          };
       }
