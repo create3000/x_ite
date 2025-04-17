@@ -82,12 +82,12 @@ new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-Italic.woff2"
 })
 .load () .then (font => document .fonts .add (font));
 
-new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-BoldItalic.woff2")})`,
-{
-   style: "italic",
-   weight: "700",
-})
-.load () .then (font => document .fonts .add (font));
+// new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-BoldItalic.woff2")})`,
+// {
+//    style: "italic",
+//    weight: "700",
+// })
+// .load () .then (font => document .fonts .add (font));
 
 const WEBGL_VERSION = 2;
 
