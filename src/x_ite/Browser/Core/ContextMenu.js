@@ -645,6 +645,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             {
                browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
                browser .getSurface () .focus ();
+               this .hide ();
             },
          };
 
@@ -668,12 +669,13 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             type: "radio",
             radio: "viewers",
             selected: viewer === currentViewer,
-            className: "x_ite-private-" + viewer .toLowerCase () + "-viewer",
+            className: `x_ite-private-${viewer .toLowerCase ()}-viewer`,
             callback: () =>
             {
                browser ._viewer = viewer;
                browser .getNotification () ._string = _(this .getViewerName (viewer));
                browser .getSurface () .focus ();
+               this .hide ();
             },
          };
       }
