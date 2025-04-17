@@ -161,13 +161,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   pointer-events: none;
 }
 
-.x_ite-private-browser-timings table,
-.x_ite-private-browser-timings thead,
-.x_ite-private-browser-timings tbody,
-.x_ite-private-browser-timings tfoot,
-.x_ite-private-browser-timings tr,
-.x_ite-private-browser-timings th,
-.x_ite-private-browser-timings td {
+.x_ite-private-browser-timings :is(table, thead, tbody, tfoot, tr, th, td) {
   box-sizing: border-box;
   outline: 0;
   margin: 0;
@@ -281,10 +275,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 21pt;
 }
 
-.x_ite-private-world-info .x_ite-private-world-info-top,
-.x_ite-private-world-info .x_ite-private-world-info-title,
-.x_ite-private-world-info .x_ite-private-world-info-info,
-.x_ite-private-world-info p {
+.x_ite-private-world-info :is(.x_ite-private-world-info-top, .x_ite-private-world-info-title, .x_ite-private-world-info-info, p) {
   box-sizing: border-box;
   outline: 0;
   margin: 0;
@@ -575,33 +566,27 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/stadia_controller.svg);
 }
 
-.x_ite-private-menu .x_ite-private-examine-viewer input,
-.x_ite-private-menu .x_ite-private-examine-viewer input:checked {
+.x_ite-private-menu .x_ite-private-examine-viewer :is(input, input:checked) {
   background-image: url(assets/images/language.svg);
 }
 
-.x_ite-private-menu .x_ite-private-walk-viewer input,
-.x_ite-private-menu .x_ite-private-walk-viewer input:checked {
+.x_ite-private-menu .x_ite-private-walk-viewer :is(input, input:checked) {
   background-image: url(assets/images/directions_run.svg);
 }
 
-.x_ite-private-menu .x_ite-private-fly-viewer input,
-.x_ite-private-menu .x_ite-private-fly-viewer input:checked {
+.x_ite-private-menu .x_ite-private-fly-viewer :is(input, input:checked) {
   background-image: url(assets/images/travel.svg);
 }
 
-.x_ite-private-menu .x_ite-private-plane-viewer input,
-.x_ite-private-menu .x_ite-private-plane-viewer input:checked {
+.x_ite-private-menu .x_ite-private-plane-viewer :is(input, input:checked) {
   background-image: url(assets/images/border_all.svg);
 }
 
-.x_ite-private-menu .x_ite-private-lookat-viewer input,
-.x_ite-private-menu .x_ite-private-lookat-viewer input:checked {
+.x_ite-private-menu .x_ite-private-lookat-viewer :is(input, input:checked) {
   background-image: url(assets/images/point_scan.svg);
 }
 
-.x_ite-private-menu .x_ite-private-none-viewer input,
-.x_ite-private-menu .x_ite-private-none-viewer input:checked {
+.x_ite-private-menu .x_ite-private-none-viewer :is(input, input:checked) {
   background-image: url(assets/images/block.svg);
 }
 
