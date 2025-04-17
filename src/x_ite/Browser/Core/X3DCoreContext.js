@@ -61,6 +61,34 @@ import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
 import _                   from "../../../locale/gettext.js";
 
+new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-Regular.woff2")})`,
+{
+   style: "normal",
+   weight: "400",
+})
+.load () .then (font => document .fonts .add (font));
+
+new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-Bold.woff2")})`,
+{
+   style: "normal",
+   weight: "700",
+})
+.load () .then (font => document .fonts .add (font));
+
+new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-Italic.woff2")})`,
+{
+   style: "italic",
+   weight: "400",
+})
+.load () .then (font => document .fonts .add (font));
+
+new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-BoldItalic.woff2")})`,
+{
+   style: "italic",
+   weight: "700",
+})
+.load () .then (font => document .fonts .add (font));
+
 const WEBGL_VERSION = 2;
 
 const
@@ -108,7 +136,7 @@ function X3DCoreContext (element)
    {
       const shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
-      const stylesheets = [new Promise (resolve =>
+      const stylesheet = new Promise (resolve =>
       {
          $("<link/>")
             .on ("load", resolve)
@@ -117,32 +145,11 @@ function X3DCoreContext (element)
             .attr ("rel", "stylesheet")
             .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
             .appendTo (shadow);
-      })];
-
-      if (instanceId === 0)
-      {
-         // Fonts (@font-face rules) must be declared outside the shadow root,
-         // so we add a stylesheet with fonts to the x3d-canvas element itself.
-         // https://issues.chromium.org/41085401
-
-         stylesheets .push (new Promise (async resolve =>
-         {
-            // A newly constructed custom element must not have child nodes.
-            await $.sleep (0);
-
-            $("<link/>")
-               .on ("load error", resolve)
-               .attr ("integrity", "integrity-ptsans-css")
-               .attr ("crossorigin", "anonymous")
-               .attr ("rel", "stylesheet")
-               .attr ("href", URLs .getFontsURL ("PT_Sans/PTSans.css"))
-               .appendTo (element);
-         }));
-      }
+      });
 
       this [_shadow] = shadow .append (browser .hide ());
 
-      Promise .all (stylesheets) .then (() => browser .show ());
+      stylesheet .then (() => browser .show ());
    }
    else
    {
