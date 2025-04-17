@@ -633,10 +633,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       for (const viewpoint of viewpoints)
       {
-         const description = viewpoint .getDescriptions () .join (" » ");
-
          menu [`Viewpoint-${viewpoint .getId ()}`] = {
-            name: description,
+            name: viewpoint .getDescriptions () .join (" » "),
             type: "radio",
             radio: "viewpoints",
             selected: viewpoint === currentViewpoint,
