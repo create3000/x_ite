@@ -264,7 +264,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   if (item .name)
                      $("<span></span>") .text (item .name) .appendTo (li);
 
-                  this .addEvents (item, li);
+                  this .addEvents (item, li, true);
                   break;
                }
             }
@@ -292,7 +292,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       return li;
    },
-   addEvents (item, element, hide = true)
+   addEvents (item, element, hide)
    {
       if (typeof item .callback === "function")
       {
