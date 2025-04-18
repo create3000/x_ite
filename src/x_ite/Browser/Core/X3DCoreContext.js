@@ -135,7 +135,7 @@ function X3DCoreContext (element)
    $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
    this [_instanceId]   = ++ instanceId;
-   this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_instanceId] + ").");
+   this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this[_instanceId]}).`);
    this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
    this [_element]      = element;
    this [_surface]      = surface;
