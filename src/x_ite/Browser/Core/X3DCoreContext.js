@@ -597,7 +597,7 @@ Object .assign (X3DCoreContext .prototype,
                   else
                      this .beginUpdate ();
 
-                  this .setDescription (this .getLive () .getValue () ? "Begin Update" : "End Update");
+                  this .setDescription (this .isLive () ? "Begin Update" : "End Update");
                }
             }
 
