@@ -74,7 +74,6 @@ const
    _context             = Symbol (),
    _splashScreen        = Symbol (),
    _localStorage        = Symbol (),
-   _mobile              = Symbol (),
    _browserTimings      = Symbol (),
    _browserOptions      = Symbol (),
    _browserProperties   = Symbol (),
@@ -136,11 +135,10 @@ function X3DCoreContext (element)
 
    this [_instanceId]   = ++ instanceId;
    this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
-   this [_mobile]       = navigator .userAgentData ?.mobile ?? /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
    this [_element]      = element;
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>") .attr ("part", "canvas") .addClass ("x_ite-private-canvas") .prependTo (surface);
-   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true", this [_mobile]);
+   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true");
    this [_splashScreen] = splashScreen;
 
    this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
@@ -209,10 +207,6 @@ Object .assign (X3DCoreContext .prototype,
    getContext ()
    {
       return this [_context];
-   },
-   getMobile ()
-   {
-      return this [_mobile];
    },
    getLocalStorage ()
    {

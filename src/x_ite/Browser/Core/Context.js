@@ -53,7 +53,7 @@ const Context =
       "WEBGL_debug_renderer_info",
       "WEBGL_polygon_mode",
    ]),
-   create (canvas, version, preserveDrawingBuffer, mobile)
+   create (canvas, version, preserveDrawingBuffer)
    {
       const options = { preserveDrawingBuffer }; // TODO: xrCompatible: true
 
@@ -149,7 +149,7 @@ const Context =
       gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
       gl .HAS_FEATURE_FRAG_DEPTH    = gl .getVersion () >= 2 || !! gl .getExtension ("EXT_frag_depth");
 
-      if (mobile)
+      if (gl .RGBA32F === undefined)
       {
          {
             const ext = gl .getExtension ("EXT_color_buffer_half_float");
