@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import MOBILE      from "../../MOBILE.js";
 import DEVELOPMENT from "../../DEVELOPMENT.js";
 
 const Context =
@@ -149,7 +150,7 @@ const Context =
       gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
       gl .HAS_FEATURE_FRAG_DEPTH    = gl .getVersion () >= 2 || !! gl .getExtension ("EXT_frag_depth");
 
-      if (gl .RGBA32F === undefined)
+      if (MOBILE)
       {
          {
             const ext = gl .getExtension ("EXT_color_buffer_half_float");
