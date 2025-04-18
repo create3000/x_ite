@@ -61,33 +61,7 @@ import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
 import _                   from "../../../locale/gettext.js";
 
-new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-Regular.woff2")})`,
-{
-   style: "normal",
-   weight: "400",
-})
-.load () .then (font => document .fonts .add (font));
-
-new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-Bold.woff2")})`,
-{
-   style: "normal",
-   weight: "700",
-})
-.load () .then (font => document .fonts .add (font));
-
-new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-Italic.woff2")})`,
-{
-   style: "italic",
-   weight: "400",
-})
-.load () .then (font => document .fonts .add (font));
-
-// new FontFace ("PT Sans", `url(${URLs .getFontsURL ("PT_Sans/PTSans-BoldItalic.woff2")})`,
-// {
-//    style: "italic",
-//    weight: "700",
-// })
-// .load () .then (font => document .fonts .add (font));
+import "./Fonts.js";
 
 const WEBGL_VERSION = 2;
 
