@@ -56,7 +56,7 @@ const Context =
    ]),
    create (canvas, version, preserveDrawingBuffer)
    {
-      const options = { preserveDrawingBuffer }; // TODO: xrCompatible: true
+      const options = { preserveDrawingBuffer };
 
       let gl = null;
 
