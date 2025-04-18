@@ -152,16 +152,14 @@ const Context =
 
       if (MOBILE)
       {
-         {
-            const ext = gl .getExtension ("EXT_color_buffer_half_float");
+         const ext = gl .getExtension ("EXT_color_buffer_half_float");
 
-            // Use defineProperty to overwrite property.
-            Object .defineProperty (gl, "RGBA32F",
-            {
-               value: gl .getVersion () === 1 ? ext .RGBA16F_EXT : gl .RGBA16F,
-               enumerable: true,
-            });
-         }
+         // Use defineProperty to overwrite property.
+         Object .defineProperty (gl, "RGBA32F",
+         {
+            value: gl .getVersion () === 1 ? ext .RGBA16F_EXT : gl .RGBA16F,
+            enumerable: true,
+         });
       }
 
       return gl;
