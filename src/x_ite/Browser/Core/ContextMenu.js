@@ -349,9 +349,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
 
                   if (straightenHorizon)
-                     browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("on");
+                     browser .setDescription (_("Straighten Horizon") + ": " + _("on"));
                   else
-                     browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("off");
+                     browser .setDescription (_("Straighten Horizon") + ": " + _("off"));
                },
             },
             "display-rubberband": {
@@ -365,9 +365,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   browser .setBrowserOption ("Rubberband", rubberband);
 
                   if (rubberband)
-                     browser .getNotification () ._string = _("Rubberband") + ": " + _("on");
+                     browser .setDescription (_("Rubberband") + ": " + _("on"));
                   else
-                     browser .getNotification () ._string = _("Rubberband") + ": " + _("off");
+                     browser .setDescription (_("Rubberband") + ": " + _("off"));
                },
             },
             "separator1": "--------",
@@ -383,7 +383,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("PrimitiveQuality", "HIGH");
-                        browser .getNotification () ._string = _("Primitive Quality") + ": " + _("high");
+                        browser .setDescription (_("Primitive Quality") + ": " + _("high"));
                      },
                   },
                   "medium": {
@@ -394,7 +394,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
-                        browser .getNotification () ._string = _("Primitive Quality") + ": " + _("medium");
+                        browser .setDescription (_("Primitive Quality") + ": " + _("medium"));
                      },
                   },
                   "low": {
@@ -405,7 +405,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("PrimitiveQuality", "LOW");
-                        browser .getNotification () ._string = _("Primitive Quality") + ": " + _("low");
+                        browser .setDescription (_("Primitive Quality") + ": " + _("low"));
                      },
                   },
                },
@@ -422,7 +422,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("TextureQuality", "HIGH");
-                        browser .getNotification () ._string = _("Texture Quality") + ": " + _("high");
+                        browser .setDescription (_("Texture Quality") + ": " + _("high"));
                      },
                   },
                   "medium": {
@@ -433,7 +433,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("TextureQuality", "MEDIUM");
-                        browser .getNotification () ._string = _("Texture Quality") + ": " + _("medium");
+                        browser .setDescription (_("Texture Quality") + ": " + _("medium"));
                      },
                   },
                   "low": {
@@ -444,7 +444,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("TextureQuality", "LOW");
-                        browser .getNotification () ._string = _("Texture Quality") + ": " + _("low");
+                        browser .setDescription (_("Texture Quality") + ": " + _("low"));
                      },
                   },
                },
@@ -461,7 +461,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "POINT");
-                        browser .getNotification () ._string = _("Shading") + ": " + _("Points");
+                        browser .setDescription (_("Shading") + ": " + _("Points"));
                      },
                   },
                   "wireframe": {
@@ -472,7 +472,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "WIREFRAME");
-                        browser .getNotification () ._string = _("Shading") + ": " + _("Wireframe");
+                        browser .setDescription (_("Shading") + ": " + _("Wireframe"));
                      },
                   },
                   "flat": {
@@ -483,7 +483,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "FLAT");
-                        browser .getNotification () ._string = _("Shading") + ": " + _("Flat");
+                        browser .setDescription (_("Shading") + ": " + _("Flat"));
                      },
                   },
                   "gouraud": {
@@ -494,7 +494,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "GOURAUD");
-                        browser .getNotification () ._string = _("Shading") + ": " + _("Gouraud");
+                        browser .setDescription (_("Shading") + ": " + _("Gouraud"));
                      },
                   },
                   "phong": {
@@ -505,7 +505,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "PHONG");
-                        browser .getNotification () ._string = _("Shading") + ": " + _("Phong");
+                        browser .setDescription (_("Shading") + ": " + _("Phong"));
                      },
                   },
                },
@@ -668,7 +668,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             callback: () =>
             {
                browser ._viewer = viewer;
-               browser .getNotification () ._string = _(this .getViewerName (viewer));
+               browser .setDescription (_(this .getViewerName (viewer)));
                browser .getSurface () .focus ();
             },
          };

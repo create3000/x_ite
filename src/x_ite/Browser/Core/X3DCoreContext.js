@@ -522,7 +522,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "POINT");
-                  this .getNotification () ._string = "Shading: Pointset";
+                  this .setDescription ("Shading: Pointset");
                }
             }
 
@@ -536,7 +536,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "WIREFRAME");
-                  this .getNotification () ._string = "Shading: Wireframe";
+                  this .setDescription ("Shading: Wireframe");
                }
             }
 
@@ -550,7 +550,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "FLAT");
-                  this .getNotification () ._string = "Shading: Flat";
+                  this .setDescription ("Shading: Flat");
                }
             }
 
@@ -564,7 +564,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "GOURAUD");
-                  this .getNotification () ._string = "Shading: Gouraud";
+                  this .setDescription ("Shading: Gouraud");
                }
             }
 
@@ -578,7 +578,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "PHONG");
-                  this .getNotification () ._string = "Shading: Phong";
+                  this .setDescription ("Shading: Phong");
                }
             }
 
@@ -597,7 +597,7 @@ Object .assign (X3DCoreContext .prototype,
                   else
                      this .beginUpdate ();
 
-                  this .getNotification () ._string = this .getLive () .getValue () ? "Begin Update" : "End Update";
+                  this .setDescription (this .getLive () .getValue () ? "Begin Update" : "End Update");
                }
             }
 
@@ -728,7 +728,7 @@ Object .assign (X3DCoreContext .prototype,
 
                this .copyToClipboard (text) .then (() =>
                {
-                  this .getNotification () ._string = _ ("Viewpoint copied to clipboard.");
+                  this .setDescription (_("Viewpoint copied to clipboard."));
 
                   console .log ("Viewpoint copied to clipboard.");
                   console .debug (text);

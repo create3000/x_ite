@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    set_bound__ ()
    {
       if (this ._isBound .getValue ())
-         this .getBrowser () .getNotification () ._string = this ._description;
+         this .getBrowser () .setDescription (this ._description);
       else
          this .timeSensor ._stopTime = Date .now () / 1000;
    },
