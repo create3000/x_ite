@@ -152,6 +152,9 @@ const Context =
 
       if (MOBILE)
       {
+         // At least on iOS and Samsung Galaxy, float 32 textures are not supported.
+         // We use half float textures instead.
+
          const ext = gl .getExtension ("EXT_color_buffer_half_float");
 
          // Use defineProperty to overwrite property.
