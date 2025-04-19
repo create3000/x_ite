@@ -51,6 +51,9 @@ function add (path, bold, italic)
 {
    try
    {
+      // In case of people embed the CSS file in a HTML page, we need to check if the
+      // font is already loaded. If so, we should not add it again.
+
       document .fonts .add (new FontFace ("PT Sans", `url(${URLs .getFontsURL (path)})`,
       {
          style: italic ? "italic" : "normal",
