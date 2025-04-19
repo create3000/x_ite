@@ -49,11 +49,18 @@ import URLs from "../Networking/URLs.js";
 
 function add (path, bold, italic)
 {
-   document .fonts .add (new FontFace ("PT Sans", `url(${URLs .getFontsURL (path)})`,
+   try
    {
-      style: italic ? "italic" : "normal",
-      weight: bold ? "700" : "400",
-   }));
+      document .fonts .add (new FontFace ("PT Sans", `url(${URLs .getFontsURL (path)})`,
+      {
+         style: italic ? "italic" : "normal",
+         weight: bold ? "700" : "400",
+      }));
+   }
+   catch (error)
+   {
+      console .error (error);
+   }
 }
 
 add ("PT_Sans/PTSans-Regular.woff2",    false, false);
