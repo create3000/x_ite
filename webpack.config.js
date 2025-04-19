@@ -123,7 +123,7 @@ export default Namespace .add ("${base}", __default__);`;
    {
       const dist = src .replace ("src", "dist");
 
-      sh (`npx --yes css-minify < src/x_ite.css > dist/x_ite.css`);
+      sh (`npx --yes css-minify < '${src}' > '${dist}'`);
       sh (`perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' '${dist}'`);
 
       const
