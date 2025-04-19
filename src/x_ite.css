@@ -634,7 +634,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-spinner {
   position: absolute;
   top: calc(50% - (160px / 2));
-  left: calc(50% - (160px / 2) + 9px);
+  left: calc(50% - (160px / 2) + 8px);
   width: 160px;
   height: 160px;
   background: url(assets/images/logo.svg) no-repeat;
@@ -643,7 +643,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   -webkit-animation: spinner-animation-spin 32s linear infinite;
   -moz-animation: spinner-animation-spin 32s linear infinite;
   animation: spinner-animation-spin 32s linear infinite;
-  transform-origin: calc(458px / 1024px * 160px) calc(539px / 1024px * 160px);
+  transform-origin: 72px 84px; /* calc(458px / 1024px * 160px) calc(539px / 1024px * 160px) */
 }
 
 @-moz-keyframes spinner-animation-spin {
