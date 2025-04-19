@@ -4,6 +4,7 @@
 
 @charset "utf-8";
 
+/*
 @font-face {
   font-family: PT Sans;
   font-style: normal;
@@ -31,6 +32,7 @@
   font-weight: 700;
   src: url(assets/fonts/PT_Sans/PTSans-BoldItalic.woff2);
 }
+*/
 
 :host,
 X3DCanvas {
