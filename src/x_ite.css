@@ -6,28 +6,28 @@
 
 /*
 @font-face {
-  font-family: PT Sans;
+  font-family: X_ITE PT Sans;
   font-style: normal;
   font-weight: 400;
   src: url(assets/fonts/PT_Sans/PTSans-Regular.woff2);
 }
 
 @font-face {
-  font-family: PT Sans;
+  font-family: X_ITE PT Sans;
   font-style: normal;
   font-weight: 700;
   src: url(assets/fonts/PT_Sans/PTSans-Bold.woff2);
 }
 
 @font-face {
-  font-family: PT Sans;
+  font-family: X_ITE PT Sans;
   font-style: italic;
   font-weight: 400;
   src: url(assets/fonts/PT_Sans/PTSans-Italic.woff2);
 }
 
 @font-face {
-  font-family: PT Sans;
+  font-family: X_ITE PT Sans;
   font-style: italic;
   font-weight: 700;
   src: url(assets/fonts/PT_Sans/PTSans-BoldItalic.woff2);
@@ -118,7 +118,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 5px;
   padding: 5px;
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
   letter-spacing: unset;
   line-height: 1;
@@ -157,7 +157,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 5px;
   padding: 10px 15px 14px 14px;
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-size: 9pt;
   white-space: pre;
   pointer-events: none;
@@ -231,7 +231,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 0;
   background: rgba(0, 0, 0, 0.38196601);
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-style: italic;
   font-size: 9pt;
   letter-spacing: unset;
@@ -286,7 +286,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 0;
   background: none;
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-size: inherit;
   font-weight: inherit;
   font-style: normal;
@@ -341,7 +341,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 5px;
   padding: 5px 10px 4px 9px;
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
   white-space: pre;
   line-height: 1.2;
@@ -677,7 +677,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-size: 28pt;
   text-align: center;
   text-shadow: 1px 1px 0 black;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
 }
 
 .x_ite-private-spinner-text {
@@ -685,7 +685,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-size: 11pt;
   text-align: center;
   text-shadow: 1px 1px 0 black;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
 }
 
 .x_ite-private-progressbar {
