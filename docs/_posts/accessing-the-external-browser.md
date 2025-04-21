@@ -196,8 +196,9 @@ function init ()
   $("#change-background") .on ("change", changeBackground);
   $("#spin")              .on ("click",  spin);
 
-  // Add a field callback to be notified when cycleTime is fired. "check" is an arbitrary
-  // string to identify the callback, especially if you want to remove the callback later.
+  // Add a field callback to be notified when cycleTime is fired. "check" is an
+  // arbitrary string to identify the callback, for example if you want to
+  // remove the callback later.
   timer .addFieldCallback ("check", "cycleTime", value =>
   {
     console .log (`cycleTime: ${value}`);
@@ -209,6 +210,7 @@ function init ()
 
 function center ()
 {
+  // Rebind viewpoint and remove user offsets.
   Browser .changeViewpoint ("Viewpoint");
 }
 
