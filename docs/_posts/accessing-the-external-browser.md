@@ -197,7 +197,7 @@ function init ()
   $("#spin")              .on ("click",  spin);
 
   // Add a field callback to be notified when cycleTime is fired. "check" is an
-  // arbitrary string to identify the callback, for example if you want to
+  // arbitrary string to identify the callback, especially if you want to
   // remove the callback later.
   timer .addFieldCallback ("check", "cycleTime", value =>
   {
