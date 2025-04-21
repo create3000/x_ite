@@ -179,8 +179,6 @@ getMaterialColor ()
             v,
             materialInfo .perceptualRoughness,
             baseColor .rgb,
-            materialInfo .f0_dielectric,
-            materialInfo .f90,
             vertex,
             eye (x3d_ModelViewMatrix), // x3d_ModelMatrix
             x3d_ProjectionMatrix,
@@ -312,7 +310,7 @@ getMaterialColor ()
             pointToLight -= transmissionRay;
             l             = normalize (pointToLight);
 
-            vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, materialInfo .f0_dielectric, materialInfo .f90, baseColor .rgb, materialInfo .ior);
+            vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, baseColor .rgb, materialInfo .ior);
 
             #if defined (X3D_VOLUME_MATERIAL_EXT)
                transmittedLight = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);
