@@ -182,6 +182,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 
 const Browser = X3D .getBrowser (".browser");
 
+// Fires when scene is loaded.
 Browser .addBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT, init);
 
 function init ()
