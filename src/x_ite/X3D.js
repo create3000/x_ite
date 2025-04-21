@@ -183,7 +183,7 @@ Namespace, Namespace .Fields,
    })(),
    getBrowser (element)
    {
-      return $(element || "x3d-canvas, X3DCanvas") .prop ("browser");
+      return $(element || "x3d-canvas, X3DCanvas") .filter ("x3d-canvas, X3DCanvas") .prop ("browser");
    },
    createBrowser (url, parameter)
    {
