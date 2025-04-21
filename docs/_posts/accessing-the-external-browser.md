@@ -195,11 +195,11 @@ function init ()
   $("#change-background") .on ("change", changeBackground);
   $("#spin")              .on ("click",  spin);
 
-  // Add a field callback to be notified when cycleTime is fired. "time" is an arbitrary
+  // Add a field callback to be notified when cycleTime is fired. "check" is an arbitrary
   // string to identify the callback, especially if you want to remove the callback later.
-  timer .addFieldCallback ("time", "cycleTime", value =>
+  timer .addFieldCallback ("check", "cycleTime", value =>
   {
-    console .log ("cycleTime: " + value);
+    console .log (`cycleTime: ${value}`);
   });
 
   changeStyle ();
