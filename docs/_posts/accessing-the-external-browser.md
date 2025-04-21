@@ -180,6 +180,7 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
+// Get browser from x3d-canvas with class "browser".
 const Browser = X3D .getBrowser (".browser");
 
 // Fires when scene is loaded.
