@@ -63,7 +63,7 @@ import _                   from "../../../locale/gettext.js";
 
 import "./Fonts.js";
 
-const WEBGL_VERSION = 1;
+const WEBGL_VERSION = 2;
 
 const
    _instanceId          = Symbol (),
