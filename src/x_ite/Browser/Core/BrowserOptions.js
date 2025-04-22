@@ -249,13 +249,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_Shading__: (() =>
    {
-      const strings = new Map ([
-         [Shading .POINT,     "POINT"],
-         [Shading .WIREFRAME, "WIREFRAME"],
-         [Shading .FLAT,      "FLAT"],
-         [Shading .GOURAUD,   "GOURAUD"],
-         [Shading .PHONG,     "PHONG"],
-      ]);
+      const strings = new Map (Object .entries (Shading) .map (entry => entry .reverse ()));
 
       return function (value)
       {
