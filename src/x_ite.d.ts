@@ -382,7 +382,6 @@ declare namespace X3D
       Shading:	                     ShadingTypes,
       MotionBlur:                   boolean,
       // Additional options:
-      AlwaysUpdateGeometries:       boolean,
       AutoUpdate:                   boolean,
       Cache:                        boolean,
       ColorSpace:                   ColorSpaceTypes,

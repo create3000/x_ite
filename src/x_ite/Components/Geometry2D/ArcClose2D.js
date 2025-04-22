@@ -75,14 +75,7 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
-
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getArcClose2DOptions () .addInterest ("requestRebuild", this);
-      else
-         browser .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
+      this .connectOptions (this .getBrowser () .getArcClose2DOptions ());
    },
    getSweepAngle ()
    {

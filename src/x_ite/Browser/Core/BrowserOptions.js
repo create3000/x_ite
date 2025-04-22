@@ -229,11 +229,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .localStorage .PrimitiveQuality = primitiveQuality;
       this .primitiveQuality               = $.enum (PrimitiveQuality, primitiveQuality) ?? PrimitiveQuality .MEDIUM;
 
-      if (typeof browser .setPrimitiveQuality2D === "function")
-         browser .setPrimitiveQuality2D (this .primitiveQuality);
-
-      if (typeof browser .setPrimitiveQuality3D === "function")
-         browser .setPrimitiveQuality3D (this .primitiveQuality);
+      browser .setPrimitiveQuality2D ?.(this .primitiveQuality);
+      browser .setPrimitiveQuality3D ?.(this .primitiveQuality);
    },
    set_TextureQuality__ (value)
    {
@@ -244,8 +241,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .localStorage .TextureQuality = textureQuality;
       this .textureQuality               = $.enum (TextureQuality, textureQuality) ?? TextureQuality .MEDIUM;
 
-      if (typeof browser .setTextureQuality === "function")
-         browser .setTextureQuality (this .textureQuality);
+      browser .setTextureQuality ?.(this .textureQuality);
    },
    set_Shading__: (() =>
    {
@@ -419,8 +415,6 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                      new Fields .SFString ("GOURAUD")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",                   new Fields .SFBool ()),
          // Additional options:
-         // Always update geometries, even if browser is not live.
-         new X3DFieldDefinition (X3DConstants .inputOutput, "AlwaysUpdateGeometries",       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "AutoUpdate",                   new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Cache",                        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ColorSpace",                   new Fields .SFString ("LINEAR_WHEN_PHYSICAL_MATERIAL")),

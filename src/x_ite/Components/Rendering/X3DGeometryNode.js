@@ -718,9 +718,23 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          browser .getBrowserOptions () ._Shading .removeInterest ("updateGeometryKey", this);
       }
    },
+   connectOptions (options)
+   {
+      if (this .getLive () .getValue ())
+      {
+         options .addInterest ("requestRebuild", this);
+
+         if (options .getModificationTime () >= this ._rebuild .getValue ())
+            this .requestRebuild ();
+      }
+      else
+      {
+         options .removeInterest ("requestRebuild", this);
+      }
+   },
    requestRebuild ()
    {
-      this ._rebuild .addEvent ();
+      this ._rebuild = Date .now ();
    },
    rebuild ()
    {

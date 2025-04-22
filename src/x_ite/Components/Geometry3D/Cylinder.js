@@ -70,14 +70,7 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
-
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getCylinderOptions () .addInterest ("requestRebuild", this);
-      else
-         browser .getCylinderOptions () .removeInterest ("requestRebuild", this);
+      this .connectOptions (this .getBrowser () .getCylinderOptions ());
    },
    build ()
    {

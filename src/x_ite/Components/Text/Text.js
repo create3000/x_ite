@@ -93,14 +93,14 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
+      const browser = this .getBrowser ();
 
-      if (this .getLive () .getValue () || alwaysUpdate)
+      if (this .getLive () .getValue ())
       {
          browser .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
          browser .getBrowserOptions () ._TextCompression  .addInterest ("requestRebuild", this);
+
+         this .requestRebuild ();
       }
       else
       {

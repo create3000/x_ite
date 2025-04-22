@@ -192,14 +192,18 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    },
    set_live__ ()
    {
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
+      const browser = this .getBrowser ();
 
-       if (this .getLive () .getValue () || alwaysUpdate)
-          browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
+      if (this .getLive () .getValue ())
+      {
+         browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
+
+         this .set_dimensions__ ();
+      }
       else
+      {
          browser .getBrowserOptions () ._TextureQuality .removeInterest ("set_dimensions__", this);
+      }
    },
    set_dimensions__ ()
    {

@@ -507,6 +507,8 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    addNodeEvent ()
    {
+      this .setModificationTime (Date .now ());
+
       if (this .isTainted ())
          return;
 
