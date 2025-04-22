@@ -720,11 +720,15 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    connectOptions (options)
    {
-      if (this .getLive () .getValue () || this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries"))
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
+
+      if (this .getLive () .getValue () || alwaysUpdate)
       {
          options .addInterest ("requestRebuild", this);
 
-         if (options .getModificationTime () >= this ._rebuild .getValue ())
+         if (options .getModificationTime () / 1000 >= this ._rebuild .getValue ())
             this .requestRebuild ();
       }
       else
@@ -734,7 +738,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    requestRebuild ()
    {
-      this ._rebuild = Date .now ();
+      this ._rebuild = Date .now () / 1000;
    },
    rebuild ()
    {
