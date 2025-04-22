@@ -132,7 +132,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   top: -1px;
   padding: 0 24px 0 20px;
   background: url(assets/images/logo.svg) no-repeat top -1px left 0px;
-  background-size: 16px 16px;
+  background-size: 17px 17px;
 }
 
 .x_ite-private-browser-timings {
@@ -183,7 +183,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-browser-timings table {
   overflow: hidden;
   background: url(assets/images/schedule.svg) no-repeat 0px -1px;
-  background-size: 16px 16px;
+  background-size: 17px 17px;
   image-rendering: pixelated;
   width: 100%;
   max-width: 100%;
@@ -495,8 +495,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu input[type=checkbox],
 .x_ite-private-menu input[type=radio] {
   display: inline;
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   margin: 0;
   margin-left: -22px;
   padding: 0;
@@ -504,7 +504,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: absolute;
   top: 3px;
   background: url(assets/images/radio_button_unchecked.svg) no-repeat left 0px top 0px;
-  background-size: 16px 16px;
+  background-size: 17px 17px;
 }
 
 .x_ite-private-menu input:checked {
@@ -539,7 +539,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu .context-menu-icon {
   background-repeat: no-repeat;
   background-position: 2px 3px;
-  background-size: 16px 16px;
+  background-size: 17px 17px;
 }
 
 .x_ite-private-menu .context-menu-icon.x_ite-private-icon-logo {
