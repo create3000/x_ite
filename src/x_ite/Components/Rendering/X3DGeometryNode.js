@@ -720,7 +720,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    connectOptions (options)
    {
-      if (this .getLive () .getValue ())
+      if (this .getLive () .getValue () || this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries"))
       {
          options .addInterest ("requestRebuild", this);
 

@@ -415,6 +415,8 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                      new Fields .SFString ("GOURAUD")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",                   new Fields .SFBool ()),
          // Additional options:
+         // Always update geometries, even if browser is not live.
+         new X3DFieldDefinition (X3DConstants .inputOutput, "AlwaysUpdateGeometries",       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "AutoUpdate",                   new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Cache",                        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ColorSpace",                   new Fields .SFString ("LINEAR_WHEN_PHYSICAL_MATERIAL")),

@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
 
       const browser = this .getBrowser ();
 
-      if (this .getLive () .getValue ())
+      if (this .getLive () .getValue () || browser .getBrowserOption ("AlwaysUpdateGeometries"))
       {
          browser .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
          browser .getBrowserOptions () ._TextCompression  .addInterest ("requestRebuild", this);
