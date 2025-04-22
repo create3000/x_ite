@@ -70,7 +70,6 @@ function GeometryContext (options = { })
 
 Object .assign (GeometryContext .prototype,
 {
-   updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
    getTextureCoordinateMapping ()
    {
       return this .textureCoordinateMapping;
@@ -79,6 +78,11 @@ Object .assign (GeometryContext .prototype,
    {
       return this .textureCoordinateNode;
    },
+   isFlatShading ()
+   {
+      return false;
+   },
+   updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
 });
 
 export default GeometryContext;

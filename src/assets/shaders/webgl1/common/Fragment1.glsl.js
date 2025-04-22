@@ -46,7 +46,7 @@ export default /* glsl */ `
       varying mat3 TBN;
    #endif
 #else
-   const vec3 normal = vec3 (0.0, 0.0, 1.0);
+   vec3 normal = vec3 (0.0, 0.0, 1.0);
 
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       const vec3 localNormal = vec3 (0.0, 0.0, 1.0);
@@ -77,6 +77,13 @@ getMaterialColor ();
 void
 fragment_main ()
 {
+   #if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
+      vec3 dFdxPos = dFdx (vertex);
+      vec3 dFdyPos = dFdy (vertex);
+
+      normal = normalize (cross (dFdxPos, dFdyPos));
+   #endif
+
    #if defined (X3D_CLIP_PLANES)
       clip ();
    #endif

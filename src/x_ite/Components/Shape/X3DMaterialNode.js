@@ -182,7 +182,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       if (geometryContext .colorMaterial)
          options .push ("X3D_COLOR_MATERIAL");
 
-      if (geometryContext .hasNormals)
+      const flat = geometryContext .isFlatShading ();
+
+      if (geometryContext .hasNormals && !flat)
          options .push ("X3D_NORMALS");
 
       if (geometryContext .hasTangents)

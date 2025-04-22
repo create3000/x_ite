@@ -28,7 +28,7 @@ getNormalInfo (const in float normalScale)
    vec3 n, t, b, ng;
 
    // Compute geometrical TBN:
-   #if defined (X3D_TANGENTS)
+   #if defined (X3D_NORMALS) && defined (X3D_TANGENTS)
       // Trivial TBN computation, present as vertex attribute.
       // Normalize eigenvectors as matrix is linearly interpolated.
       t  = normalize (TBN [0]);

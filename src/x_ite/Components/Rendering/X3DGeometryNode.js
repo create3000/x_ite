@@ -56,7 +56,6 @@ import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../../standard/Math/Geometry/Box3.js";
 import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
-import Triangle3    from "../../../standard/Math/Geometry/Triangle3.js";
 import Algorithm    from "../../../standard/Math/Algorithm.js";
 import DEVELOPMENT  from "../../DEVELOPMENT.js";
 
@@ -90,7 +89,6 @@ function X3DGeometryNode (executionContext)
    this .solid                    = true;
    this .primitiveMode            = browser .getContext () .TRIANGLES;
    this .geometryType             = 3;
-   this .flatShading              = undefined;
    this .colorMaterial            = false;
    this .attribNodes              = [ ];
    this .attribArrays             = [ ];
@@ -102,7 +100,6 @@ function X3DGeometryNode (executionContext)
    this .colors                   = X3DGeometryNode .createArray ();
    this .tangents                 = X3DGeometryNode .createArray ();
    this .normals                  = X3DGeometryNode .createArray ();
-   this .flatNormals              = X3DGeometryNode .createArray ();
    this .vertices                 = X3DGeometryNode .createArray ();
    this .hasFogCoords             = false;
    this .hasNormals               = false;
@@ -708,80 +705,19 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    })(),
    set_live__ ()
    {
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
+      const browser = this .getBrowser ();
 
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
-      else
-         browser .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
-   },
-   set_shading__: (() =>
-   {
-      const
-         v0     = new Vector3 (),
-         v1     = new Vector3 (),
-         v2     = new Vector3 (),
-         normal = new Vector3 ();
-
-      return function (shading)
+      if (this .getLive () .getValue ())
       {
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
+         browser .getBrowserOptions () ._Shading .addInterest ("updateGeometryKey", this);
 
-         if (this .geometryType < 2)
-         {
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, this .normals .getValue (), gl .DYNAMIC_DRAW);
-         }
-         else
-         {
-            const flatShading = browser .getBrowserOptions () .getShading () === Shading .FLAT;
-
-            if (flatShading === this .flatShading)
-               return;
-
-            this .flatShading = flatShading;
-
-            // Generate flat normals if needed.
-
-            if (flatShading)
-            {
-               if (!this .flatNormals .length)
-               {
-                  const
-                     cw          = this .frontFace === gl .CW,
-                     flatNormals = this .flatNormals,
-                     vertices    = this .vertices .getValue ();
-
-                  for (let i = 0, length = vertices .length; i < length; i += 12)
-                  {
-                     Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
-                                        v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-                                        v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
-                                        normal);
-
-                     if (cw)
-                        normal .negate ();
-
-                     flatNormals .push (normal .x, normal .y, normal .z,
-                                        normal .x, normal .y, normal .z,
-                                        normal .x, normal .y, normal .z);
-                  }
-
-                  flatNormals .shrinkToFit ();
-               }
-            }
-
-            // Transfer normals.
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
-         }
-      };
-   })(),
+         this .updateGeometryKey ();
+      }
+      else
+      {
+         browser .getBrowserOptions () ._Shading .removeInterest ("updateGeometryKey", this);
+      }
+   },
    requestRebuild ()
    {
       this ._rebuild .addEvent ();
@@ -848,8 +784,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Buffer
 
-      this .flatShading = undefined;
-
       this .coordIndices   .length = 0;
       this .fogDepths      .length = 0;
       this .colors         .length = 0;
@@ -857,7 +791,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .texCoords      .length = 0;
       this .tangents       .length = 0;
       this .normals        .length = 0;
-      this .flatNormals    .length = 0;
       this .vertices       .length = 0;
    },
    updateBBox: (() =>
@@ -970,7 +903,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       const lastHasNormals = this .hasNormals;
 
-      this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, this .normals .getValue (), gl .DYNAMIC_DRAW);
 
       this .hasNormals = !! this .normals .length;
 
@@ -984,14 +918,20 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .vertexCount = this .vertices .length / 4;
    },
+   isFlatShading ()
+   {
+      return this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+   },
    updateGeometryKey ()
    {
+      const flat = this .isFlatShading ();
+
       this .geometryKey  = "";
       this .geometryKey += this .geometryType;
-      this .geometryKey += this .hasFogCoords  ? "1" : "0";
-      this .geometryKey += this .colorMaterial ? "1" : "0";
-      this .geometryKey += this .hasTangents   ? "1" : "0";
-      this .geometryKey += this .hasNormals    ? "1" : "0";
+      this .geometryKey += this .hasFogCoords        ? "1" : "0";
+      this .geometryKey += this .colorMaterial       ? "1" : "0";
+      this .geometryKey += this .hasTangents         ? "1" : "0";
+      this .geometryKey += this .hasNormals && !flat ? "1" : "0";
    },
    updateRenderFunctions ()
    {
