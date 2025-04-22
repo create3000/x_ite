@@ -249,13 +249,13 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_Shading__: (() =>
    {
-      const strings = {
-         [Shading .POINT]:     "POINT",
-         [Shading .WIREFRAME]: "WIREFRAME",
-         [Shading .FLAT]:      "FLAT",
-         [Shading .GOURAUD]:   "GOURAUD",
-         [Shading .PHONG]:     "PHONG",
-      };
+      const strings = new Map ([
+         [Shading .POINT,     "POINT"],
+         [Shading .WIREFRAME, "WIREFRAME"],
+         [Shading .FLAT,      "FLAT"],
+         [Shading .GOURAUD,   "GOURAUD"],
+         [Shading .PHONG,     "PHONG"],
+      ]);
 
       return function (value)
       {
@@ -265,7 +265,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
          this .shading = $.enum (Shading, shading) ?? Shading .GOURAUD;
 
-         browser .getRenderingProperties () ._Shading = strings [this .shading];
+         browser .getRenderingProperties () ._Shading = strings .get (this .shading);
          browser .setShading (this .shading);
       };
    })(),
