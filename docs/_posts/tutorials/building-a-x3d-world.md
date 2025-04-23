@@ -90,6 +90,35 @@ Shape {
 - Nodes are grouped into components
 - Components are grouped into profiles
 - Browsers can load components on demand to reduce initial load times and improve performance by only fetching what is necessary when it’s needed
+- Additionally add as many **COMPONENT** statements you need
+
+### XML Encoding
+
+```x3d
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+  <head>
+    <component name='Scripting' level='1'/>
+  </head>
+  <Scene>
+    ...
+  </Scene>
+</X3D>
+```
+
+### Classic VRML Encoding
+
+```vrml
+PROFILE Interchange
+
+COMPONENT Scripting : 1
+```
+
+What profiles and components are there:
+
+- [Profiles](/x_ite/profiles/overview/)
+- [Components](/x_ite/components/overview/)
 
 ## Using comments
 
