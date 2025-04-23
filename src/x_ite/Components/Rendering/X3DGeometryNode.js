@@ -730,7 +730,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    rebuild ()
    {
-      console .log (this .getTypeName (), this .getId ());
       this .clear ();
       this .build ();
 
