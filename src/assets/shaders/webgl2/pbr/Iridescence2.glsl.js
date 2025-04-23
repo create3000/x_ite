@@ -1,4 +1,8 @@
 export default /* glsl */ `
+
+// Originally from:
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/iridescence.glsl
+
 #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
 // XYZ to sRGB color space
 const mat3 XYZ_TO_REC709 = mat3 (

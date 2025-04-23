@@ -1,4 +1,8 @@
 export default /* glsl */ `
+
+// Originally from:
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/punctual.glsl
+
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
 float
 applyIorToRoughness (const in float roughness, const in float ior)

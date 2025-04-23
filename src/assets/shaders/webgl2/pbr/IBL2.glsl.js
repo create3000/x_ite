@@ -1,4 +1,8 @@
 export default /* glsl */ `
+
+// Originally from:
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/ibl.glsl
+
 #if defined (X3D_USE_IBL)
 
 uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;
