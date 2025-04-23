@@ -50,12 +50,12 @@ import SupportedComponents from "./SupportedComponents.js";
 import ComponentInfo       from "./ComponentInfo.js";
 import Algorithm           from "../../standard/Math/Algorithm.js";
 
-export function getComponent (name, level)
+function getComponent (name, level)
 {
    const component = SupportedComponents .get (name);
 
    return new ComponentInfo (component .name,
-      Algorithm .clamp (level || component .level, 1, component .level),
+      Algorithm .clamp (level, 1, component .level),
       component .title,
       component .providerURL,
       component .external,
