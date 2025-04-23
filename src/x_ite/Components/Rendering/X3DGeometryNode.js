@@ -50,7 +50,6 @@ import VertexArray  from "../../Rendering/VertexArray.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import MikkTSpace   from "../../Browser/Rendering/MikkTSpace.js";
-import Shading      from "../../Browser/Core/Shading.js";
 import Vector2      from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
@@ -704,20 +703,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       };
    })(),
    set_live__ ()
-   {
-      const browser = this .getBrowser ();
-
-      if (this .getLive () .getValue ())
-      {
-         browser .getBrowserOptions () ._Shading .addInterest ("updateGeometryKey", this);
-
-         this .updateGeometryKey ();
-      }
-      else
-      {
-         browser .getBrowserOptions () ._Shading .removeInterest ("updateGeometryKey", this);
-      }
-   },
+   { },
    connectOptions (options)
    {
       const
