@@ -71,8 +71,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
 {
    set_live__ ()
    {
-      X3DGeometryNode .prototype .set_live__ .call (this);
-
       this .connectOptions (this .getBrowser () .getDisk2DOptions ());
    },
    build ()

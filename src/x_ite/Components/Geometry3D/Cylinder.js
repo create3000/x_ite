@@ -68,8 +68,6 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
 {
    set_live__ ()
    {
-      X3DGeometryNode .prototype .set_live__ .call (this);
-
       this .connectOptions (this .getBrowser () .getCylinderOptions ());
    },
    build ()

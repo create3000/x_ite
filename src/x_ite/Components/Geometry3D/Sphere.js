@@ -67,8 +67,6 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prot
 {
    set_live__ ()
    {
-      X3DGeometryNode .prototype .set_live__ .call (this);
-
       this .connectOptions (this .getBrowser () .getSphereOptions ());
    },
    build ()

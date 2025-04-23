@@ -67,8 +67,6 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode
 {
    set_live__ ()
    {
-      X3DLineGeometryNode .prototype .set_live__ .call (this);
-
       this .connectOptions (this .getBrowser () .getCircle2DOptions ());
    },
    build ()

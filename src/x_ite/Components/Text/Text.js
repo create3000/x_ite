@@ -91,8 +91,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    },
    set_live__ ()
    {
-      X3DGeometryNode .prototype .set_live__ .call (this);
-
       const
          browser      = this .getBrowser (),
          alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");

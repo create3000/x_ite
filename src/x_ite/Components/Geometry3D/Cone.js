@@ -70,8 +70,6 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .protot
 {
    set_live__ ()
    {
-      X3DGeometryNode .prototype .set_live__ .call (this);
-
       this .connectOptions (this .getBrowser () .getConeOptions ());
    },
    build ()

@@ -703,7 +703,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       };
    })(),
    set_live__ ()
-   { },
+   {
+      // Not called by primitives with options.
+   },
    connectOptions (options)
    {
       const
