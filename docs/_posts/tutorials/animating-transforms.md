@@ -288,10 +288,10 @@ ROUTE Position1.value_changed TO Particle1.set_translation
 | Animate color        | [ColorInterpolator][]       |
 | Animate transparency | [ScalarInterpolator][]      |
 
-  [PositionInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator
-  [OrientationInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#OrientationInterpolator
-  [ColorInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ColorInterpolator
-  [ScalarInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ScalarInterpolator
+  [PositionInterpolator]: /x_ite/components/interpolation/positioninterpolator
+  [OrientationInterpolator]: /x_ite/components/interpolation/orientationinterpolator/
+  [ColorInterpolator]: /x_ite/components/interpolation/colorinterpolator/
+  [ScalarInterpolator]: /x_ite/components/interpolation/scalarinterpolator/
 
 ## Syntax: OrientationInterpolator
 
