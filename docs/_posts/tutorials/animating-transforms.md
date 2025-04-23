@@ -235,7 +235,7 @@ The *value\_changed* output:
 ### XML Encoding
 
 ```x3d
-<Transform DEF='Particle1'
+<Transform DEF='Particle1'>
   <Shape><!-- ... --></Shape>
 </Transform>
 
@@ -277,6 +277,16 @@ DEF Position1 PositionInterpolator {
 ROUTE Timer1.fraction_changed TO Position1.set_fraction
 ROUTE Position1.value_changed TO Particle1.set_translation
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/interpolator1/interpolator1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/interpolator1/screenshot.avif" alt="Monolith1Timer"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/interpolator1/interpolator1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/interpolator1/interpolator1.x3dv)
+{: .example-links }
 
 ## Using other types of interpolators
 

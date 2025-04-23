@@ -24,7 +24,7 @@ X3D files contain:
 ```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
-<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
   <!-- A Cylinder -->
   <Shape>
@@ -43,6 +43,9 @@ X3D files contain:
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
+
+PROFILE Interchange
+
 # A Cylinder
 Shape {
   appearance Appearance {
@@ -80,6 +83,13 @@ Shape {
   - UCS (Universal Character Set) Transformation Format, 8-bit
   - Can encodes up to 2,164,864 characters for many languages
   - ASCII is a subset
+
+## Understanding profiles and components
+
+- **PROFILE Interchange:** File uses nodes from the interchange profile
+- Nodes are grouped into components
+- Components are grouped into profiles
+- Browsers can load components on demand to reduce initial load times and improve performance by only fetching what is necessary when it’s needed
 
 ## Using comments
 
