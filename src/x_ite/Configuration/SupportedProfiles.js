@@ -48,14 +48,16 @@
 import ProfileInfoArray    from "./ProfileInfoArray.js";
 import SupportedComponents from "./SupportedComponents.js";
 import ComponentInfo       from "./ComponentInfo.js";
-import Algorithm           from "../../standard/Math/Algorithm.js";
 
 function getComponent (name, level)
 {
    const component = SupportedComponents .get (name);
 
+   if (level > component .level)
+      throw new Error (`Component ${name} level ${level} exceeds maximum level ${component .level}.`);
+
    return new ComponentInfo (component .name,
-      Algorithm .clamp (level, 1, component .level),
+      level,
       component .title,
       component .providerURL,
       component .external,
@@ -127,7 +129,7 @@ SupportedProfiles .add ("Full",
       getComponent ("Text", 1),
       getComponent ("TextureProjection", 2),
       getComponent ("Texturing", 4),
-      getComponent ("Texturing3D", 3),
+      getComponent ("Texturing3D", 2),
       getComponent ("Time", 2),
       getComponent ("VolumeRendering", 4),
    ],
@@ -220,7 +222,7 @@ SupportedProfiles .add ("MedicalInterchange",
       getComponent ("Shape", 3),
       getComponent ("Text", 1),
       getComponent ("Texturing", 2),
-      getComponent ("Texturing3D", 3),
+      getComponent ("Texturing3D", 2),
       getComponent ("Time", 1),
       getComponent ("VolumeRendering", 4),
    ],

@@ -60,7 +60,7 @@ All supported profiles are listed below in alphabetical order with their compone
 - [Text](/x_ite/components/overview/#text) : **1**
 - [TextureProjection](/x_ite/components/overview/#textureprojection) : **2**
 - [Texturing](/x_ite/components/overview/#texturing) : **4**
-- [Texturing3D](/x_ite/components/overview/#texturing3d) : **3**
+- [Texturing3D](/x_ite/components/overview/#texturing3d) : **2**
 - [Time](/x_ite/components/overview/#time) : **2**
 - [VolumeRendering](/x_ite/components/overview/#volumerendering) : **4**
 
@@ -154,7 +154,7 @@ All supported profiles are listed below in alphabetical order with their compone
 - [Shape](/x_ite/components/overview/#shape) : **3**
 - [Text](/x_ite/components/overview/#text) : **1**
 - [Texturing](/x_ite/components/overview/#texturing) : **2**
-- [Texturing3D](/x_ite/components/overview/#texturing3d) : **3**
+- [Texturing3D](/x_ite/components/overview/#texturing3d) : **2**
 - [Time](/x_ite/components/overview/#time) : **1**
 - [VolumeRendering](/x_ite/components/overview/#volumerendering) : **4**
 
