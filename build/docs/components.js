@@ -84,9 +84,14 @@ function updateComponents (supported)
       count = 0,
       all   = 0;
 
+   const supportedComponents = sh (`cat`, `src/x_ite/Configuration/SupportedComponents.js`);
+
    for (const [component, nodes] of createIndex ())
    {
+      const m = supportedComponents .match (new RegExp (`"${component}".*?level:\\s*(\\d)`, "s"));
+
       list += `##${supported ? "#" : ""} ${component}\n\n`;
+      list += `Highest supported level is: **${m [1]}**\n\n`;
 
       for (const node of nodes .sort ())
       {

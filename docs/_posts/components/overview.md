@@ -11,6 +11,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## CADGeometry
 
+Highest supported level is: **2**
+
 - [CADAssembly](/x_ite/components/cadgeometry/cadassembly/)
 - [CADFace](/x_ite/components/cadgeometry/cadface/)
 - [CADLayer](/x_ite/components/cadgeometry/cadlayer/)
@@ -19,6 +21,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 - [QuadSet](/x_ite/components/cadgeometry/quadset/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/cadgeometry/quadset/#example)
 
 ## Core
+
+Highest supported level is: **2**
 
 - [MetadataBoolean](/x_ite/components/core/metadataboolean/)
 - [MetadataDouble](/x_ite/components/core/metadatadouble/)
@@ -30,11 +34,15 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## CubeMapTexturing
 
+Highest supported level is: **3**
+
 - [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/cubemaptexturing/composedcubemaptexture/#example)
 - [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/cubemaptexturing/generatedcubemaptexture/#example)
 - [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/)
 
 ## DIS
+
+Highest supported level is: **2**
 
 - [DISEntityManager](/x_ite/components/dis/disentitymanager/) <small class="red">not supported</small>
 - [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) <small class="red">not supported</small>
@@ -45,6 +53,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## EnvironmentalEffects
 
+Highest supported level is: **4**
+
 - [Background](/x_ite/components/environmentaleffects/background/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentaleffects/background/#example)
 - [Fog](/x_ite/components/environmentaleffects/fog/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentaleffects/fog/#example)
 - [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/)
@@ -53,11 +63,15 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## EnvironmentalSensor
 
+Highest supported level is: **3**
+
 - [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentalsensor/proximitysensor/#example)
 - [TransformSensor](/x_ite/components/environmentalsensor/transformsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentalsensor/transformsensor/#example)
 - [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentalsensor/visibilitysensor/#example)
 
 ## EventUtilities
+
+Highest supported level is: **1**
 
 - [BooleanFilter](/x_ite/components/eventutilities/booleanfilter/)
 - [BooleanSequencer](/x_ite/components/eventutilities/booleansequencer/)
@@ -68,6 +82,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 - [TimeTrigger](/x_ite/components/eventutilities/timetrigger/)
 
 ## Followers
+
+Highest supported level is: **1**
 
 - [ColorChaser](/x_ite/components/followers/colorchaser/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/followers/colorchaser/#example)
 - [ColorDamper](/x_ite/components/followers/colordamper/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/followers/colordamper/#example)
@@ -86,6 +102,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Geometry2D
 
+Highest supported level is: **2**
+
 - [Arc2D](/x_ite/components/geometry2d/arc2d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry2d/arc2d/#example)
 - [ArcClose2D](/x_ite/components/geometry2d/arcclose2d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry2d/arcclose2d/#example)
 - [Circle2D](/x_ite/components/geometry2d/circle2d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry2d/circle2d/#example)
@@ -97,6 +115,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Geometry3D
 
+Highest supported level is: **4**
+
 - [Box](/x_ite/components/geometry3d/box/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/box/#example)
 - [Cone](/x_ite/components/geometry3d/cone/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/cone/#example)
 - [Cylinder](/x_ite/components/geometry3d/cylinder/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/cylinder/#example)
@@ -106,6 +126,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 - [Sphere](/x_ite/components/geometry3d/sphere/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/sphere/#example)
 
 ## Geospatial
+
+Highest supported level is: **2**
 
 - [GeoCoordinate](/x_ite/components/geospatial/geocoordinate/)
 - [GeoElevationGrid](/x_ite/components/geospatial/geoelevationgrid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geospatial/geoelevationgrid/#example)
@@ -121,12 +143,16 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Grouping
 
+Highest supported level is: **3**
+
 - [Group](/x_ite/components/grouping/group/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/group/#example)
 - [StaticGroup](/x_ite/components/grouping/staticgroup/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/staticgroup/#example)
 - [Switch](/x_ite/components/grouping/switch/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/switch/#example)
 - [Transform](/x_ite/components/grouping/transform/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/transform/#example)
 
 ## HAnim
+
+Highest supported level is: **3**
 
 - [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/)
 - [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/hanim/hanimhumanoid/#example)
@@ -136,6 +162,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 - [HAnimSite](/x_ite/components/hanim/hanimsite/)
 
 ## Interpolation
+
+Highest supported level is: **5**
 
 - [ColorInterpolator](/x_ite/components/interpolation/colorinterpolator/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/interpolation/colorinterpolator/#example)
 - [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/interpolation/coordinateinterpolator/#example)
@@ -153,16 +181,22 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## KeyDeviceSensor
 
+Highest supported level is: **2**
+
 - [KeySensor](/x_ite/components/keydevicesensor/keysensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/keydevicesensor/keysensor/#example)
 - [StringSensor](/x_ite/components/keydevicesensor/stringsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/keydevicesensor/stringsensor/#example)
 
 ## Layering
+
+Highest supported level is: **1**
 
 - [Layer](/x_ite/components/layering/layer/)
 - [LayerSet](/x_ite/components/layering/layerset/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/layering/layerset/#example)
 - [Viewport](/x_ite/components/layering/viewport/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/layering/viewport/#example)
 
 ## Layout
+
+Highest supported level is: **2**
 
 - [Layout](/x_ite/components/layout/layout/)
 - [LayoutGroup](/x_ite/components/layout/layoutgroup/)
@@ -172,12 +206,16 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Lighting
 
+Highest supported level is: **3**
+
 - [DirectionalLight](/x_ite/components/lighting/directionallight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/directionallight/#example)
 - [EnvironmentLight](/x_ite/components/lighting/environmentlight/) <small class="blue">experimental</small>
 - [PointLight](/x_ite/components/lighting/pointlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/pointlight/#example)
 - [SpotLight](/x_ite/components/lighting/spotlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/spotlight/#example)
 
 ## NURBS
+
+Highest supported level is: **4**
 
 - [Contour2D](/x_ite/components/nurbs/contour2d/)
 - [ContourPolyline2D](/x_ite/components/nurbs/contourpolyline2d/)
@@ -195,6 +233,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Navigation
 
+Highest supported level is: **3**
+
 - [Billboard](/x_ite/components/navigation/billboard/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/navigation/billboard/#example)
 - [Collision](/x_ite/components/navigation/collision/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/navigation/collision/#example)
 - [LOD](/x_ite/components/navigation/lod/)
@@ -205,11 +245,15 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Networking
 
+Highest supported level is: **4**
+
 - [Anchor](/x_ite/components/networking/anchor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/anchor/#example)
 - [Inline](/x_ite/components/networking/inline/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/inline/#example)
 - [LoadSensor](/x_ite/components/networking/loadsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/loadsensor/#example)
 
 ## ParticleSystems
+
+Highest supported level is: **3**
 
 - [BoundedPhysicsModel](/x_ite/components/particlesystems/boundedphysicsmodel/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/particlesystems/boundedphysicsmodel/#example)
 - [ConeEmitter](/x_ite/components/particlesystems/coneemitter/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/particlesystems/coneemitter/#example)
@@ -224,6 +268,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Picking
 
+Highest supported level is: **3**
+
 - [LinePickSensor](/x_ite/components/picking/linepicksensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/picking/linepicksensor/#example)
 - [PickableGroup](/x_ite/components/picking/pickablegroup/)
 - [PointPickSensor](/x_ite/components/picking/pointpicksensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/picking/pointpicksensor/#example)
@@ -232,12 +278,16 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## PointingDeviceSensor
 
+Highest supported level is: **1**
+
 - [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/pointingdevicesensor/cylindersensor/#example)
 - [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/pointingdevicesensor/planesensor/#example)
 - [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/)
 - [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/pointingdevicesensor/touchsensor/#example)
 
 ## Rendering
+
+Highest supported level is: **5**
 
 - [ClipPlane](/x_ite/components/rendering/clipplane/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rendering/clipplane/#example)
 - [Color](/x_ite/components/rendering/color/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rendering/color/#example)
@@ -258,6 +308,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## RigidBodyPhysics
 
+Highest supported level is: **1**
+
 - [BallJoint](/x_ite/components/rigidbodyphysics/balljoint/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rigidbodyphysics/balljoint/#example)
 - [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/)
 - [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rigidbodyphysics/collidableshape/#example)
@@ -275,9 +327,13 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Scripting
 
+Highest supported level is: **1**
+
 - [Script](/x_ite/components/scripting/script/)
 
 ## Shaders
+
+Highest supported level is: **1**
 
 - [ComposedShader](/x_ite/components/shaders/composedshader/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shaders/composedshader/#example)
 - [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shaders/floatvertexattribute/#example)
@@ -289,6 +345,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 - [ShaderProgram](/x_ite/components/shaders/shaderprogram/) <small class="red">not supported</small>
 
 ## Shape
+
+Highest supported level is: **4**
 
 - [AcousticProperties](/x_ite/components/shape/acousticproperties/)
 - [Appearance](/x_ite/components/shape/appearance/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shape/appearance/#example)
@@ -302,6 +360,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 - [UnlitMaterial](/x_ite/components/shape/unlitmaterial/)
 
 ## Sound
+
+Highest supported level is: **3**
 
 - [Analyser](/x_ite/components/sound/analyser/)
 - [AudioClip](/x_ite/components/sound/audioclip/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/sound/audioclip/#example)
@@ -327,15 +387,21 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Text
 
+Highest supported level is: **3**
+
 - [FontStyle](/x_ite/components/text/fontstyle/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/fontstyle/#example)
 - [Text](/x_ite/components/text/text/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/text/#example)
 
 ## TextureProjection
 
+Highest supported level is: **2**
+
 - [TextureProjector](/x_ite/components/textureprojection/textureprojector/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/textureprojection/textureprojector/#example)
 - [TextureProjectorParallel](/x_ite/components/textureprojection/textureprojectorparallel/)
 
 ## Texturing
+
+Highest supported level is: **4**
 
 - [ImageTexture](/x_ite/components/texturing/imagetexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing/imagetexture/#example)
 - [MovieTexture](/x_ite/components/texturing/movietexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing/movietexture/#example)
@@ -350,6 +416,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Texturing3D
 
+Highest supported level is: **2**
+
 - [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/)
 - [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing3d/imagetexture3d/#example)
 - [ImageTextureAtlas](/x_ite/components/texturing3d/imagetextureatlas/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing3d/imagetextureatlas/#example) <small class="blue">experimental</small>
@@ -361,9 +429,13 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## Time
 
+Highest supported level is: **2**
+
 - [TimeSensor](/x_ite/components/time/timesensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/time/timesensor/#example)
 
 ## VolumeRendering
+
+Highest supported level is: **4**
 
 - [BlendedVolumeStyle](/x_ite/components/volumerendering/blendedvolumestyle/)
 - [BoundaryEnhancementVolumeStyle](/x_ite/components/volumerendering/boundaryenhancementvolumestyle/)
@@ -380,6 +452,8 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 - [VolumeData](/x_ite/components/volumerendering/volumedata/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/volumerendering/volumedata/#example)
 
 ## X_ITE
+
+Highest supported level is: **1**
 
 - [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) <small class="blue">experimental</small>
 - [BlendMode](/x_ite/components/x-ite/blendmode/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/blendmode/#example) <small class="blue">experimental</small>
