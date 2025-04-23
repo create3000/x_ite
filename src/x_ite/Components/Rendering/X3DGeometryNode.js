@@ -728,7 +728,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       {
          options .addInterest ("requestRebuild", this);
 
-         if (options .getModificationTime () / 1000 >= this ._rebuild .getValue ())
+         if (options .getModificationTime () >= this ._rebuild .getValue ())
             this .requestRebuild ();
       }
       else
