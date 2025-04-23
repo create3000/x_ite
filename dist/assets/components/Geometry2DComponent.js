@@ -854,16 +854,7 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, (external_X_ITE_X3D_X3
 {
    set_live__ ()
    {
-      external_X_ITE_X3D_X3DLineGeometryNode_default().prototype .set_live__ .call (this);
-
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
-
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getArc2DOptions () .addInterest ("requestRebuild", this);
-      else
-         browser .getArc2DOptions () .removeInterest ("requestRebuild", this);
+      this .connectOptions (this .getBrowser () .getArc2DOptions ());
    },
    getSweepAngle ()
    {
@@ -1010,16 +1001,7 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (external_X_ITE_X
 {
    set_live__ ()
    {
-      external_X_ITE_X3D_X3DGeometryNode_default().prototype .set_live__ .call (this);
-
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
-
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getArcClose2DOptions () .addInterest ("requestRebuild", this);
-      else
-         browser .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
+      this .connectOptions (this .getBrowser () .getArcClose2DOptions ());
    },
    getSweepAngle ()
    {
@@ -1223,16 +1205,7 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, (external_X_ITE_X3D
 {
    set_live__ ()
    {
-      external_X_ITE_X3D_X3DLineGeometryNode_default().prototype .set_live__ .call (this);
-
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
-
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getCircle2DOptions () .addInterest ("requestRebuild", this);
-      else
-         browser .getCircle2DOptions () .removeInterest ("requestRebuild", this);
+      this .connectOptions (this .getBrowser () .getCircle2DOptions ());
    },
    build ()
    {
@@ -1353,16 +1326,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
 {
    set_live__ ()
    {
-      external_X_ITE_X3D_X3DGeometryNode_default().prototype .set_live__ .call (this);
-
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
-
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getDisk2DOptions () .addInterest ("requestRebuild", this);
-      else
-         browser .getDisk2DOptions () .removeInterest ("requestRebuild", this);
+      this .connectOptions (this .getBrowser () .getDisk2DOptions ());
    },
    build ()
    {

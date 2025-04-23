@@ -18106,8 +18106,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
    },
    set_live__ ()
    {
-      external_X_ITE_X3D_X3DGeometryNode_default().prototype .set_live__ .call (this);
-
       const
          browser      = this .getBrowser (),
          alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
@@ -18116,6 +18114,8 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
       {
          browser .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
          browser .getBrowserOptions () ._TextCompression  .addInterest ("requestRebuild", this);
+
+         this .requestRebuild ();
       }
       else
       {

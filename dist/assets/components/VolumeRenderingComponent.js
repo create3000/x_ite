@@ -1988,12 +1988,12 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
       if (gl .getVersion () < 2)
          return;
 
-      this .getLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this, true);
 
       this ._dimensions .addInterest ("set_dimensions__", this);
       this .textureTransformNode .addInterest ("set_textureTransform__", this);
 
-      this .set_live__ ();
+      this .set_live__ (false);
       this .set_dimensions__ ();
       this .set_textureTransform__ ();
    },
@@ -2036,16 +2036,23 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
 
       return 200;
    },
-   set_live__ ()
+   set_live__ (rebuild)
    {
       const
          browser      = this .getBrowser (),
          alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
-       if (this .getLive () .getValue () || alwaysUpdate)
-          browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
+      if (this .getLive () .getValue () || alwaysUpdate)
+      {
+         browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
+
+         if (rebuild)
+            this .set_dimensions__ ();
+      }
       else
+      {
          browser .getBrowserOptions () ._TextureQuality .removeInterest ("set_dimensions__", this);
+      }
    },
    set_dimensions__ ()
    {
