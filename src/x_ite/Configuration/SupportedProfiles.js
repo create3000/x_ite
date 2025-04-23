@@ -50,12 +50,15 @@ import SupportedComponents from "./SupportedComponents.js";
 import ComponentInfo       from "./ComponentInfo.js";
 import DEVELOPMENT         from "../DEVELOPMENT.js";
 
-function getComponent (name, level)
+function getComponent (name, level = 0)
 {
    const component = SupportedComponents .get (name);
 
-   if (DEVELOPMENT && level > component .level)
-      throw new Error (`Component ${name} level ${level} exceeds maximum level ${component .level}.`);
+   if (DEVELOPMENT)
+   {
+      if (level < 1 || level > component .level)
+         throw new Error (`Component ${name} level ${level} exceeds maximum level ${component .level}.`);
+   }
 
    return new ComponentInfo (component .name,
       level,
