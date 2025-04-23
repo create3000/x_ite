@@ -6,6 +6,8 @@ tags: [Profiles]
 ---
 All supported profiles are listed below in alphabetical order with their components and support levels.
 
+<!-- PROFILES BEGIN -->
+
 ## CADInterchange
 
 - [CADGeometry](/x_ite/components/overview/#cadgeometry) : **2**
@@ -34,7 +36,7 @@ All supported profiles are listed below in alphabetical order with their compone
 - [EventUtilities](/x_ite/components/overview/#eventutilities) : **1**
 - [Followers](/x_ite/components/overview/#followers) : **1**
 - [Geometry2D](/x_ite/components/overview/#geometry2d) : **2**
-- [Geometry3D](/x_ite/components/overview/#geometry3d) : **4**
+- [Geometry3D](/x_ite/components/overview/#geometry3d) : **3**
 - [Geospatial](/x_ite/components/overview/#geospatial) : **2**
 - [Grouping](/x_ite/components/overview/#grouping) : **3**
 - [HAnim](/x_ite/components/overview/#hanim) : **3**
@@ -58,7 +60,7 @@ All supported profiles are listed below in alphabetical order with their compone
 - [Text](/x_ite/components/overview/#text) : **1**
 - [TextureProjection](/x_ite/components/overview/#textureprojection) : **2**
 - [Texturing](/x_ite/components/overview/#texturing) : **4**
-- [Texturing3D](/x_ite/components/overview/#texturing3d) : **2**
+- [Texturing3D](/x_ite/components/overview/#texturing3d) : **3**
 - [Time](/x_ite/components/overview/#time) : **2**
 - [VolumeRendering](/x_ite/components/overview/#volumerendering) : **4**
 
@@ -68,8 +70,8 @@ All supported profiles are listed below in alphabetical order with their compone
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **2**
 - [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) : **2**
 - [EventUtilities](/x_ite/components/overview/#eventutilities) : **1**
-- [Geometry2D](/x_ite/components/overview/#geometry2d) : **1**
-- [Geometry3D](/x_ite/components/overview/#geometry3d) : **4**
+- [Geometry2D](/x_ite/components/overview/#geometry2d) : **2**
+- [Geometry3D](/x_ite/components/overview/#geometry3d) : **3**
 - [Grouping](/x_ite/components/overview/#grouping) : **2**
 - [Interpolation](/x_ite/components/overview/#interpolation) : **2**
 - [KeyDeviceSensor](/x_ite/components/overview/#keydevicesensor) : **2**
@@ -108,7 +110,7 @@ All supported profiles are listed below in alphabetical order with their compone
 
 - [Core](/x_ite/components/overview/#core) : **1**
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
-- [Geometry3D](/x_ite/components/overview/#geometry3d) : **2**
+- [Geometry3D](/x_ite/components/overview/#geometry3d) : **3**
 - [Grouping](/x_ite/components/overview/#grouping) : **1**
 - [Interpolation](/x_ite/components/overview/#interpolation) : **2**
 - [Lighting](/x_ite/components/overview/#lighting) : **1**
@@ -119,32 +121,12 @@ All supported profiles are listed below in alphabetical order with their compone
 - [Texturing](/x_ite/components/overview/#texturing) : **2**
 - [Time](/x_ite/components/overview/#time) : **1**
 
-## MedicalInterchange
-
-- [Core](/x_ite/components/overview/#core) : **1**
-- [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
-- [EventUtilities](/x_ite/components/overview/#eventutilities) : **1**
-- [Geometry2D](/x_ite/components/overview/#geometry2d) : **2**
-- [Geometry3D](/x_ite/components/overview/#geometry3d) : **2**
-- [Grouping](/x_ite/components/overview/#grouping) : **3**
-- [Interpolation](/x_ite/components/overview/#interpolation) : **2**
-- [Lighting](/x_ite/components/overview/#lighting) : **1**
-- [Navigation](/x_ite/components/overview/#navigation) : **3**
-- [Networking](/x_ite/components/overview/#networking) : **2**
-- [Rendering](/x_ite/components/overview/#rendering) : **5**
-- [Shape](/x_ite/components/overview/#shape) : **3**
-- [Text](/x_ite/components/overview/#text) : **1**
-- [Texturing](/x_ite/components/overview/#texturing) : **2**
-- [Texturing3D](/x_ite/components/overview/#texturing3d) : **2**
-- [Time](/x_ite/components/overview/#time) : **1**
-- [VolumeRendering](/x_ite/components/overview/#volumerendering) : **4**
-
-## MPEG4Interactive
+## MPEG-4
 
 - [Core](/x_ite/components/overview/#core) : **1**
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
 - [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) : **1**
-- [Geometry3D](/x_ite/components/overview/#geometry3d) : **2**
+- [Geometry3D](/x_ite/components/overview/#geometry3d) : **3**
 - [Grouping](/x_ite/components/overview/#grouping) : **2**
 - [Interpolation](/x_ite/components/overview/#interpolation) : **2**
 - [Lighting](/x_ite/components/overview/#lighting) : **2**
@@ -155,3 +137,25 @@ All supported profiles are listed below in alphabetical order with their compone
 - [Shape](/x_ite/components/overview/#shape) : **1**
 - [Texturing](/x_ite/components/overview/#texturing) : **1**
 - [Time](/x_ite/components/overview/#time) : **1**
+
+## MedicalInterchange
+
+- [Core](/x_ite/components/overview/#core) : **1**
+- [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
+- [EventUtilities](/x_ite/components/overview/#eventutilities) : **1**
+- [Geometry2D](/x_ite/components/overview/#geometry2d) : **2**
+- [Geometry3D](/x_ite/components/overview/#geometry3d) : **3**
+- [Grouping](/x_ite/components/overview/#grouping) : **3**
+- [Interpolation](/x_ite/components/overview/#interpolation) : **2**
+- [Lighting](/x_ite/components/overview/#lighting) : **1**
+- [Navigation](/x_ite/components/overview/#navigation) : **3**
+- [Networking](/x_ite/components/overview/#networking) : **2**
+- [Rendering](/x_ite/components/overview/#rendering) : **5**
+- [Shape](/x_ite/components/overview/#shape) : **3**
+- [Text](/x_ite/components/overview/#text) : **1**
+- [Texturing](/x_ite/components/overview/#texturing) : **2**
+- [Texturing3D](/x_ite/components/overview/#texturing3d) : **3**
+- [Time](/x_ite/components/overview/#time) : **1**
+- [VolumeRendering](/x_ite/components/overview/#volumerendering) : **4**
+
+<!-- PROFILES END -->
