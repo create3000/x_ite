@@ -230,7 +230,7 @@ The *value\_changed* output:
 
 - Outputs the position along the path each time the fraction is set
 
-## A sample using position interpolatorsolators
+## A sample using position interpolator
 
 ### XML Encoding
 
@@ -278,7 +278,7 @@ ROUTE Timer1.fraction_changed TO Position1.set_fraction
 ROUTE Position1.value_changed TO Particle1.set_translation
 ```
 
-## Using other types of interpolatorsolators
+## Using other types of interpolators
 
 |                      |                             |
 |----------------------|-----------------------------|
@@ -387,12 +387,12 @@ The sensor outputs:
 
 Interpolators use key times and values and compute intermediate values
 
-All interpolatorsolators have:
+All interpolators have:
 
 - a *set\_fraction* input to set the fractional time
 - a *value\_changed* output to send new values
 
-Some interpolatorsolators are:
+Some interpolators are:
 
 - The [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator/) node converts times to positions (or scales)
 - The [OrientationInterpolator](/x_ite/components/interpolation/orientationinterpolator/) node converts times to rotations
