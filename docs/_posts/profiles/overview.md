@@ -10,6 +10,9 @@ All supported profiles are listed below in alphabetical order with their compone
 
 ## CADInterchange
 
+Computer-Aided Design (CAD) interchange
+{: .small }
+
 - [CADGeometry](/x_ite/components/overview/#cadgeometry) : **2**
 - [Core](/x_ite/components/overview/#core) : **1**
 - [Grouping](/x_ite/components/overview/#grouping) : **1**
@@ -23,9 +26,15 @@ All supported profiles are listed below in alphabetical order with their compone
 
 ## Core
 
+Core
+{: .small }
+
 - [Core](/x_ite/components/overview/#core) : **1**
 
 ## Full
+
+Full
+{: .small }
 
 - [CADGeometry](/x_ite/components/overview/#cadgeometry) : **2**
 - [Core](/x_ite/components/overview/#core) : **2**
@@ -66,6 +75,9 @@ All supported profiles are listed below in alphabetical order with their compone
 
 ## Immersive
 
+Immersive
+{: .small }
+
 - [Core](/x_ite/components/overview/#core) : **2**
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **2**
 - [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) : **2**
@@ -89,6 +101,9 @@ All supported profiles are listed below in alphabetical order with their compone
 
 ## Interactive
 
+Interactive
+{: .small }
+
 - [Core](/x_ite/components/overview/#core) : **1**
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
 - [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) : **1**
@@ -108,6 +123,9 @@ All supported profiles are listed below in alphabetical order with their compone
 
 ## Interchange
 
+Interchange
+{: .small }
+
 - [Core](/x_ite/components/overview/#core) : **1**
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
 - [Geometry3D](/x_ite/components/overview/#geometry3d) : **3**
@@ -122,6 +140,9 @@ All supported profiles are listed below in alphabetical order with their compone
 - [Time](/x_ite/components/overview/#time) : **1**
 
 ## MPEG-4
+
+MPEG-4 interactive
+{: .small }
 
 - [Core](/x_ite/components/overview/#core) : **1**
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
@@ -139,6 +160,9 @@ All supported profiles are listed below in alphabetical order with their compone
 - [Time](/x_ite/components/overview/#time) : **1**
 
 ## MedicalInterchange
+
+Medical interchange
+{: .small }
 
 - [Core](/x_ite/components/overview/#core) : **1**
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**

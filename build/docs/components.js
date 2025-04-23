@@ -89,10 +89,14 @@ function updateComponents (supported)
 
    for (const [component, nodes] of createIndex ())
    {
-      const m = supportedComponents .match (new RegExp (`"${component}".*?level:\\s*(\\d)`, "s"));
-
       list += `##${supported ? "#" : ""} ${component}\n\n`;
-      list += `Highest supported level is: **${m [1]}**\n\n`;
+
+      const title = supportedComponents .match (new RegExp (`add\\s\\("${component}".*?title:\\s*"(.*?)"`, "s")) [1]
+      const level = supportedComponents .match (new RegExp (`add\\s\\("${component}".*?level:\\s*(\\d)`, "s")) [1];
+
+      list += `${title}<br>\n`;
+      list += `Highest supported level: **${level}**\n`;
+      list += `{: .small }\n\n`;
 
       for (const node of nodes .sort ())
       {
@@ -183,6 +187,11 @@ function updateProfiles ()
       m = m .match (/add\s*\("(.*?)"/s);
 
       list += `## ${m [1]}\n\n`;
+
+      const title = supportedProfiles .match (new RegExp (`add\\s\\("${m [1]}".*?title:\\s*"(.*?)"`, "s")) [1]
+
+      list += `${title}\n`;
+      list += `{: .small }\n\n`;
 
       supportedProfiles .match (new RegExp (`"${m [1]}".*?components:\\s*\\[\\s*(.*?)\\s*\\]`, "s")) [1] .split ("\n") .map (c => c.match (/"(.*?)",\s*(\d)/s)) .sort ((a, b) => a [1] .localeCompare (b [1], "en")) .forEach (([_, component, level]) =>
       {

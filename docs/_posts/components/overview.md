@@ -11,7 +11,9 @@ X3D groups nodes into components and components into [profiles](/x_ite/profiles/
 
 ## CADGeometry
 
-Highest supported level is: **2**
+CAD geometry<br>
+Highest supported level: **2**
+{: .small }
 
 - [CADAssembly](/x_ite/components/cadgeometry/cadassembly/)
 - [CADFace](/x_ite/components/cadgeometry/cadface/)
@@ -22,7 +24,9 @@ Highest supported level is: **2**
 
 ## Core
 
-Highest supported level is: **2**
+Core<br>
+Highest supported level: **2**
+{: .small }
 
 - [MetadataBoolean](/x_ite/components/core/metadataboolean/)
 - [MetadataDouble](/x_ite/components/core/metadatadouble/)
@@ -34,7 +38,9 @@ Highest supported level is: **2**
 
 ## CubeMapTexturing
 
-Highest supported level is: **3**
+Cube map environmental texturing<br>
+Highest supported level: **3**
+{: .small }
 
 - [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/cubemaptexturing/composedcubemaptexture/#example)
 - [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/cubemaptexturing/generatedcubemaptexture/#example)
@@ -42,7 +48,9 @@ Highest supported level is: **3**
 
 ## DIS
 
-Highest supported level is: **2**
+Distributed interactive simulation<br>
+Highest supported level: **2**
+{: .small }
 
 - [DISEntityManager](/x_ite/components/dis/disentitymanager/) <small class="red">not supported</small>
 - [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) <small class="red">not supported</small>
@@ -53,7 +61,9 @@ Highest supported level is: **2**
 
 ## EnvironmentalEffects
 
-Highest supported level is: **4**
+Environmental effects<br>
+Highest supported level: **4**
+{: .small }
 
 - [Background](/x_ite/components/environmentaleffects/background/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentaleffects/background/#example)
 - [Fog](/x_ite/components/environmentaleffects/fog/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentaleffects/fog/#example)
@@ -63,7 +73,9 @@ Highest supported level is: **4**
 
 ## EnvironmentalSensor
 
-Highest supported level is: **3**
+Environmental sensor<br>
+Highest supported level: **3**
+{: .small }
 
 - [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentalsensor/proximitysensor/#example)
 - [TransformSensor](/x_ite/components/environmentalsensor/transformsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentalsensor/transformsensor/#example)
@@ -71,7 +83,9 @@ Highest supported level is: **3**
 
 ## EventUtilities
 
-Highest supported level is: **1**
+Event utilities<br>
+Highest supported level: **1**
+{: .small }
 
 - [BooleanFilter](/x_ite/components/eventutilities/booleanfilter/)
 - [BooleanSequencer](/x_ite/components/eventutilities/booleansequencer/)
@@ -83,7 +97,9 @@ Highest supported level is: **1**
 
 ## Followers
 
-Highest supported level is: **1**
+Followers<br>
+Highest supported level: **1**
+{: .small }
 
 - [ColorChaser](/x_ite/components/followers/colorchaser/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/followers/colorchaser/#example)
 - [ColorDamper](/x_ite/components/followers/colordamper/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/followers/colordamper/#example)
@@ -102,7 +118,9 @@ Highest supported level is: **1**
 
 ## Geometry2D
 
-Highest supported level is: **2**
+Geometry2D<br>
+Highest supported level: **2**
+{: .small }
 
 - [Arc2D](/x_ite/components/geometry2d/arc2d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry2d/arc2d/#example)
 - [ArcClose2D](/x_ite/components/geometry2d/arcclose2d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry2d/arcclose2d/#example)
@@ -115,7 +133,9 @@ Highest supported level is: **2**
 
 ## Geometry3D
 
-Highest supported level is: **4**
+Geometry3D<br>
+Highest supported level: **4**
+{: .small }
 
 - [Box](/x_ite/components/geometry3d/box/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/box/#example)
 - [Cone](/x_ite/components/geometry3d/cone/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/cone/#example)
@@ -127,7 +147,9 @@ Highest supported level is: **4**
 
 ## Geospatial
 
-Highest supported level is: **2**
+Geospatial<br>
+Highest supported level: **2**
+{: .small }
 
 - [GeoCoordinate](/x_ite/components/geospatial/geocoordinate/)
 - [GeoElevationGrid](/x_ite/components/geospatial/geoelevationgrid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geospatial/geoelevationgrid/#example)
@@ -143,7 +165,9 @@ Highest supported level is: **2**
 
 ## Grouping
 
-Highest supported level is: **3**
+Grouping<br>
+Highest supported level: **3**
+{: .small }
 
 - [Group](/x_ite/components/grouping/group/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/group/#example)
 - [StaticGroup](/x_ite/components/grouping/staticgroup/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/staticgroup/#example)
@@ -152,7 +176,9 @@ Highest supported level is: **3**
 
 ## HAnim
 
-Highest supported level is: **3**
+Humanoid animation (HAnim)<br>
+Highest supported level: **3**
+{: .small }
 
 - [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/)
 - [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/hanim/hanimhumanoid/#example)
@@ -163,7 +189,9 @@ Highest supported level is: **3**
 
 ## Interpolation
 
-Highest supported level is: **5**
+Interpolation<br>
+Highest supported level: **5**
+{: .small }
 
 - [ColorInterpolator](/x_ite/components/interpolation/colorinterpolator/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/interpolation/colorinterpolator/#example)
 - [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/interpolation/coordinateinterpolator/#example)
@@ -181,14 +209,18 @@ Highest supported level is: **5**
 
 ## KeyDeviceSensor
 
-Highest supported level is: **2**
+Key device sensor<br>
+Highest supported level: **2**
+{: .small }
 
 - [KeySensor](/x_ite/components/keydevicesensor/keysensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/keydevicesensor/keysensor/#example)
 - [StringSensor](/x_ite/components/keydevicesensor/stringsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/keydevicesensor/stringsensor/#example)
 
 ## Layering
 
-Highest supported level is: **1**
+Layering<br>
+Highest supported level: **1**
+{: .small }
 
 - [Layer](/x_ite/components/layering/layer/)
 - [LayerSet](/x_ite/components/layering/layerset/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/layering/layerset/#example)
@@ -196,7 +228,9 @@ Highest supported level is: **1**
 
 ## Layout
 
-Highest supported level is: **2**
+Layout<br>
+Highest supported level: **2**
+{: .small }
 
 - [Layout](/x_ite/components/layout/layout/)
 - [LayoutGroup](/x_ite/components/layout/layoutgroup/)
@@ -206,7 +240,9 @@ Highest supported level is: **2**
 
 ## Lighting
 
-Highest supported level is: **3**
+Lighting<br>
+Highest supported level: **3**
+{: .small }
 
 - [DirectionalLight](/x_ite/components/lighting/directionallight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/directionallight/#example)
 - [EnvironmentLight](/x_ite/components/lighting/environmentlight/) <small class="blue">experimental</small>
@@ -215,7 +251,9 @@ Highest supported level is: **3**
 
 ## NURBS
 
-Highest supported level is: **4**
+NURBS<br>
+Highest supported level: **4**
+{: .small }
 
 - [Contour2D](/x_ite/components/nurbs/contour2d/)
 - [ContourPolyline2D](/x_ite/components/nurbs/contourpolyline2d/)
@@ -233,7 +271,9 @@ Highest supported level is: **4**
 
 ## Navigation
 
-Highest supported level is: **3**
+Navigation<br>
+Highest supported level: **3**
+{: .small }
 
 - [Billboard](/x_ite/components/navigation/billboard/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/navigation/billboard/#example)
 - [Collision](/x_ite/components/navigation/collision/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/navigation/collision/#example)
@@ -245,7 +285,9 @@ Highest supported level is: **3**
 
 ## Networking
 
-Highest supported level is: **4**
+Networking<br>
+Highest supported level: **4**
+{: .small }
 
 - [Anchor](/x_ite/components/networking/anchor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/anchor/#example)
 - [Inline](/x_ite/components/networking/inline/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/inline/#example)
@@ -253,7 +295,9 @@ Highest supported level is: **4**
 
 ## ParticleSystems
 
-Highest supported level is: **3**
+Particle systems<br>
+Highest supported level: **3**
+{: .small }
 
 - [BoundedPhysicsModel](/x_ite/components/particlesystems/boundedphysicsmodel/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/particlesystems/boundedphysicsmodel/#example)
 - [ConeEmitter](/x_ite/components/particlesystems/coneemitter/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/particlesystems/coneemitter/#example)
@@ -268,7 +312,9 @@ Highest supported level is: **3**
 
 ## Picking
 
-Highest supported level is: **3**
+Picking<br>
+Highest supported level: **3**
+{: .small }
 
 - [LinePickSensor](/x_ite/components/picking/linepicksensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/picking/linepicksensor/#example)
 - [PickableGroup](/x_ite/components/picking/pickablegroup/)
@@ -278,7 +324,9 @@ Highest supported level is: **3**
 
 ## PointingDeviceSensor
 
-Highest supported level is: **1**
+Pointing device sensor<br>
+Highest supported level: **1**
+{: .small }
 
 - [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/pointingdevicesensor/cylindersensor/#example)
 - [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/pointingdevicesensor/planesensor/#example)
@@ -287,7 +335,9 @@ Highest supported level is: **1**
 
 ## Rendering
 
-Highest supported level is: **5**
+Rendering<br>
+Highest supported level: **5**
+{: .small }
 
 - [ClipPlane](/x_ite/components/rendering/clipplane/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rendering/clipplane/#example)
 - [Color](/x_ite/components/rendering/color/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rendering/color/#example)
@@ -308,7 +358,9 @@ Highest supported level is: **5**
 
 ## RigidBodyPhysics
 
-Highest supported level is: **1**
+Rigid body physics<br>
+Highest supported level: **2**
+{: .small }
 
 - [BallJoint](/x_ite/components/rigidbodyphysics/balljoint/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rigidbodyphysics/balljoint/#example)
 - [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/)
@@ -327,13 +379,17 @@ Highest supported level is: **1**
 
 ## Scripting
 
-Highest supported level is: **1**
+Scripting<br>
+Highest supported level: **1**
+{: .small }
 
 - [Script](/x_ite/components/scripting/script/)
 
 ## Shaders
 
-Highest supported level is: **1**
+Programmable shaders<br>
+Highest supported level: **1**
+{: .small }
 
 - [ComposedShader](/x_ite/components/shaders/composedshader/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shaders/composedshader/#example)
 - [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shaders/floatvertexattribute/#example)
@@ -346,7 +402,9 @@ Highest supported level is: **1**
 
 ## Shape
 
-Highest supported level is: **4**
+Shape<br>
+Highest supported level: **4**
+{: .small }
 
 - [AcousticProperties](/x_ite/components/shape/acousticproperties/)
 - [Appearance](/x_ite/components/shape/appearance/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shape/appearance/#example)
@@ -361,7 +419,9 @@ Highest supported level is: **4**
 
 ## Sound
 
-Highest supported level is: **3**
+Sound<br>
+Highest supported level: **3**
+{: .small }
 
 - [Analyser](/x_ite/components/sound/analyser/)
 - [AudioClip](/x_ite/components/sound/audioclip/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/sound/audioclip/#example)
@@ -387,21 +447,27 @@ Highest supported level is: **3**
 
 ## Text
 
-Highest supported level is: **3**
+Text<br>
+Highest supported level: **1**
+{: .small }
 
 - [FontStyle](/x_ite/components/text/fontstyle/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/fontstyle/#example)
 - [Text](/x_ite/components/text/text/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/text/#example)
 
 ## TextureProjection
 
-Highest supported level is: **2**
+Texture Projection<br>
+Highest supported level: **2**
+{: .small }
 
 - [TextureProjector](/x_ite/components/textureprojection/textureprojector/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/textureprojection/textureprojector/#example)
 - [TextureProjectorParallel](/x_ite/components/textureprojection/textureprojectorparallel/)
 
 ## Texturing
 
-Highest supported level is: **4**
+Texturing<br>
+Highest supported level: **4**
+{: .small }
 
 - [ImageTexture](/x_ite/components/texturing/imagetexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing/imagetexture/#example)
 - [MovieTexture](/x_ite/components/texturing/movietexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing/movietexture/#example)
@@ -416,7 +482,9 @@ Highest supported level is: **4**
 
 ## Texturing3D
 
-Highest supported level is: **2**
+Texturing3D<br>
+Highest supported level: **2**
+{: .small }
 
 - [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/)
 - [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing3d/imagetexture3d/#example)
@@ -429,13 +497,17 @@ Highest supported level is: **2**
 
 ## Time
 
-Highest supported level is: **2**
+Time<br>
+Highest supported level: **2**
+{: .small }
 
 - [TimeSensor](/x_ite/components/time/timesensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/time/timesensor/#example)
 
 ## VolumeRendering
 
-Highest supported level is: **4**
+Volume rendering<br>
+Highest supported level: **4**
+{: .small }
 
 - [BlendedVolumeStyle](/x_ite/components/volumerendering/blendedvolumestyle/)
 - [BoundaryEnhancementVolumeStyle](/x_ite/components/volumerendering/boundaryenhancementvolumestyle/)
@@ -453,7 +525,9 @@ Highest supported level is: **4**
 
 ## X_ITE
 
-Highest supported level is: **1**
+X_ITE<br>
+Highest supported level: **1**
+{: .small }
 
 - [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) <small class="blue">experimental</small>
 - [BlendMode](/x_ite/components/x-ite/blendmode/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/blendmode/#example) <small class="blue">experimental</small>
