@@ -292,13 +292,24 @@ getMaterialColor ()
          float l_albedoSheenScaling  = 1.0;
 
          #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-            vec3 diffuse_btdf = lightIntensity * clamp (dot (-n, l), 0.0, 1.0) * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
+            l_diffuse *= 1.0 - materialInfo .diffuseTransmissionFactor;
 
-            #if defined (X3D_VOLUME_MATERIAL_EXT)
-               diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
-            #endif
+            if (dot (n, l) < 0.0)
+            {
+               float diffuseNdotL = clamp (dot (-n, l), 0.0, 1.0);
+               vec3  diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
-            l_diffuse = mix (l_diffuse, diffuse_btdf, materialInfo .diffuseTransmissionFactor);
+               vec3  l_mirror     = normalize (l + 2.0 * n * dot (-l, n)); // Mirror light reflection vector on surface
+               float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
+
+               dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
+
+               #if defined (X3D_VOLUME_MATERIAL_EXT)
+                  diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+               #endif
+
+               l_diffuse += diffuse_btdf * materialInfo .diffuseTransmissionFactor;
+            }
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
          // BTDF (Bidirectional Transmittance Distribution Function)
