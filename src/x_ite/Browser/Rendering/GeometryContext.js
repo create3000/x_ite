@@ -78,10 +78,6 @@ Object .assign (GeometryContext .prototype,
    {
       return this .textureCoordinateNode;
    },
-   isFlatShading ()
-   {
-      return false;
-   },
    updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
 });
 

@@ -936,20 +936,17 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .vertexCount = this .vertices .length / 4;
    },
-   isFlatShading ()
-   {
-      return this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
-   },
    updateGeometryKey ()
    {
-      const flat = this .isFlatShading ();
+      let key = "";
 
-      this .geometryKey  = "";
-      this .geometryKey += this .geometryType;
-      this .geometryKey += this .hasFogCoords        ? "1" : "0";
-      this .geometryKey += this .colorMaterial       ? "1" : "0";
-      this .geometryKey += this .hasTangents         ? "1" : "0";
-      this .geometryKey += this .hasNormals && !flat ? "1" : "0";
+      key += this .geometryType;
+      key += this .hasFogCoords  ? 1 : 0;
+      key += this .colorMaterial ? 1 : 0;
+      key += this .hasTangents   ? 1 : 0;
+      key += this .hasNormals    ? 1 : 0;
+
+      this .geometryKey = key;
    },
    updateRenderFunctions ()
    {
