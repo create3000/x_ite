@@ -172,9 +172,9 @@ To animate the position of a shape you provide:
 - A list of key positions for a movement path
 - A time at which to be at each position
 
-An interpolatorsolator node converts an input time to an output position
+An interpolator node converts an input time to an output position
 
-- When a time is in between two key positions, the interpolatorsolator computes an intermediate position
+- When a time is in between two key positions, the interpolator computes an intermediate position
 
 ## Interpolating positions
 
@@ -220,7 +220,7 @@ PositionInterpolator {
 
 Typically route into a [Transform](/x_ite/components/grouping/transform/) node's *set\_translation* input
 
-## Using position interpolatorsolator inputs and outputs
+## Using position interpolator inputs and outputs
 
 The *set\_fraction* input:
 
