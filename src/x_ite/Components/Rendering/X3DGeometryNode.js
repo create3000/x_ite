@@ -76,7 +76,7 @@ function X3DGeometryNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "transparent",  new Fields .SFBool (),
                           X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "rebuild",      new Fields .SFTime ());
+                          X3DConstants .outputOnly, "rebuild",      new Fields .SFTime (Date .now () / 1000));
 
    // Members
 
@@ -730,6 +730,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    rebuild ()
    {
+      console .log (this .getTypeName (), this .getId ());
       this .clear ();
       this .build ();
 
