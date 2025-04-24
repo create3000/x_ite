@@ -55,7 +55,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 /**
- * THIS NODE IS DEPRECIATED.
+ * THIS NODE IS DEPRECIATED SINCE X3D VERSION 4.0.
  */
 
 function TwoSidedMaterial (executionContext)
