@@ -278,6 +278,8 @@ The ${node} node belongs to the **${component}** component and its default conta
 
 ## Fields
 
+{: .fields }
+
 ${fields}
 
 ## External Links
