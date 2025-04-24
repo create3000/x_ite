@@ -34,9 +34,9 @@ The following lists outline the profiles and nodes supported in X_ITE.
 
 ## Supported Profiles
 
-X_ITE has achieved the [X3D Immersive profile](/profiles/overview/#immersive) support (which matches the VRML97 palette) verified by the X3D consortium at [web3d.org](https://www.web3d.org).
+X_ITE has achieved the [X3D Immersive profile](/x_ite/profiles/overview/#immersive) support (which matches the VRML97 palette) verified by the X3D consortium at [web3d.org](https://www.web3d.org).
 
-Of course, [all other profiles](/x_ite/profiles/overview/) can also be used, as a large number of nodes are available.
+Of course, [all other X3D profiles](/x_ite/profiles/overview/) can also be used, as a large number of nodes are available.
 
 ## Supported Components
 
