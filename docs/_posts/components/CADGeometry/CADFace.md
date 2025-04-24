@@ -26,7 +26,8 @@ The CADFace node belongs to the **CADGeometry** component and requires at least 
       + CADFace (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

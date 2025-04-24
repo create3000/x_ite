@@ -25,7 +25,8 @@ The NurbsSet node belongs to the **NURBS** component and requires at least suppo
     + NurbsSet (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

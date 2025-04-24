@@ -27,7 +27,8 @@ The ReceiverPdu node belongs to the **DIS** component and requires at least supp
         + ReceiverPdu (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

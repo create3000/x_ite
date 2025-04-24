@@ -28,7 +28,8 @@ The ImageTexture3D node belongs to the **Texturing3D** component and requires at
           + ImageTexture3D (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

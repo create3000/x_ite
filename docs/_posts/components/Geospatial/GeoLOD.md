@@ -25,7 +25,8 @@ The GeoLOD node belongs to the **Geospatial** component and requires at least su
     + GeoLOD (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

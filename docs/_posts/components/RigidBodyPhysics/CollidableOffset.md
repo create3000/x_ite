@@ -26,7 +26,8 @@ The CollidableOffset node belongs to the **RigidBodyPhysics** component and requ
       + CollidableOffset
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

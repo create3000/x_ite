@@ -26,7 +26,8 @@ The CADAssembly node belongs to the **CADGeometry** component and requires at le
       + CADAssembly (X3DProductStructureChildNode)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

@@ -25,7 +25,8 @@ The StaticGroup node belongs to the **Grouping** component and requires at least
     + StaticGroup (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

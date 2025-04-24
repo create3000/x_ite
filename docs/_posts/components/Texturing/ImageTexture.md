@@ -28,7 +28,8 @@ The ImageTexture node belongs to the **Texturing** component and requires at lea
           + ImageTexture (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

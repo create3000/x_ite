@@ -24,7 +24,8 @@ The MetadataString node belongs to the **Core** component and requires at least 
   + MetadataString (X3DMetadataObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

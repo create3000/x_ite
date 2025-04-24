@@ -27,7 +27,8 @@ The ImageCubeMapTexture node belongs to the **CubeMapTexturing** component and r
         + ImageCubeMapTexture (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

@@ -27,7 +27,8 @@ The AudioClip node belongs to the **Sound** component and requires at least supp
         + AudioClip (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

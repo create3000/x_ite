@@ -25,7 +25,8 @@ The HAnimHumanoid node belongs to the **HAnim** component and requires at least 
     + HAnimHumanoid (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

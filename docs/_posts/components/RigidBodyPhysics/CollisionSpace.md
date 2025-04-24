@@ -25,7 +25,8 @@ The CollisionSpace node belongs to the **RigidBodyPhysics** component and requir
     + CollisionSpace
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

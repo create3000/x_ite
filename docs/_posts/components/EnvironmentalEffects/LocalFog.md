@@ -25,7 +25,8 @@ The LocalFog node belongs to the **EnvironmentalEffects** component and requires
     + LocalFog (X3DFogObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

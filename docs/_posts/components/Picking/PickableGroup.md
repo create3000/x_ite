@@ -26,7 +26,8 @@ The PickableGroup node belongs to the **Picking** component and requires at leas
       + PickableGroup (X3DPickableObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

@@ -28,7 +28,8 @@ The MovieTexture node belongs to the **Texturing** component and requires at lea
           + MovieTexture (X3DSoundSourceNode, X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

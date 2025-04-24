@@ -26,7 +26,8 @@ The PackagedShader node belongs to the **Shaders** component and requires at lea
       + PackagedShader (X3DUrlObject, X3DProgrammableShaderObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

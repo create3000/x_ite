@@ -26,7 +26,8 @@ The ParticleSystem node belongs to the **ParticleSystems** component and require
       + ParticleSystem
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

@@ -26,7 +26,8 @@ The TimeSensor node belongs to the **Time** component and requires at least supp
       + TimeSensor (X3DSensorNode)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

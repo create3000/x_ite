@@ -25,7 +25,8 @@ The Inline node belongs to the **Networking** component and requires at least su
     + Inline (X3DBoundedObject, X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

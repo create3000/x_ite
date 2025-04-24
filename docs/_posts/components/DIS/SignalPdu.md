@@ -27,7 +27,8 @@ The SignalPdu node belongs to the **DIS** component and requires at least suppor
         + SignalPdu (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

@@ -26,7 +26,8 @@ The Collision node belongs to the **Navigation** component and requires at least
       + Collision (X3DSensorNode)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

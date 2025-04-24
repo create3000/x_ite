@@ -24,7 +24,8 @@ The MetadataFloat node belongs to the **Core** component and requires at least s
   + MetadataFloat (X3DMetadataObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

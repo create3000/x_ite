@@ -31,7 +31,8 @@ The ImageTextureAtlas node belongs to the **Texturing3D** component and its defa
           + ImageTextureAtlas (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

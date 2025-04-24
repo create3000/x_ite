@@ -24,7 +24,8 @@ The MetadataDouble node belongs to the **Core** component and requires at least 
   + MetadataDouble (X3DMetadataObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

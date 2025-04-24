@@ -26,7 +26,8 @@ The Script node belongs to the **Scripting** component and requires at least sup
       + Script
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

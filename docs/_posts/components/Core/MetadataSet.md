@@ -24,7 +24,8 @@ The MetadataSet node belongs to the **Core** component and requires at least sup
   + MetadataSet (X3DMetadataObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

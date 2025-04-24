@@ -26,7 +26,8 @@ The EspduTransform node belongs to the **DIS** component and requires at least s
       + EspduTransform (X3DSensorNode)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

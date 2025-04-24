@@ -24,7 +24,8 @@ The ShaderPart node belongs to the **Shaders** component and requires at least s
   + ShaderPart (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

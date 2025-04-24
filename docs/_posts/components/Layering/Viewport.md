@@ -27,7 +27,8 @@ The Viewport node belongs to the **Layering** component and requires at least su
         + Viewport (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

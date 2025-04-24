@@ -24,7 +24,8 @@ The MetadataInteger node belongs to the **Core** component and requires at least
   + MetadataInteger (X3DMetadataObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

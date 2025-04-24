@@ -27,7 +27,8 @@ The TransmitterPdu node belongs to the **DIS** component and requires at least s
         + TransmitterPdu (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

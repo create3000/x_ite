@@ -26,7 +26,8 @@ The GeoMetadata node belongs to the **Geospatial** component and requires at lea
       + GeoMetadata (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

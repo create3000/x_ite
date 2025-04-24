@@ -26,7 +26,8 @@ The IsoSurfaceVolumeData node belongs to the **VolumeRendering** component and r
       + IsoSurfaceVolumeData
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
