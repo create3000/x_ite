@@ -351,7 +351,7 @@ sub fields_list {
       {
          $text = "| $1 | $2 | [$name](#field-$name) | $3 |";
 
-         $fields -> {$field -> [1]} = $text;
+         $fields -> {$name} = $text;
       }
    }
 
