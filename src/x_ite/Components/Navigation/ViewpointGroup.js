@@ -99,6 +99,10 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
       this .set_size__ ();
       this .set_children__ ();
    },
+   getDisplayed ()
+   {
+      return this .displayed;
+   },
    set_size__ ()
    {
       this .proximitySensor ._enabled = !this ._size .getValue () .equals (Vector3 .Zero);
@@ -151,10 +155,6 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
 
       this .setCameraObject  (this .cameraObjects   .length);
       this .setVisibleObject (this .viewpointGroups .length);
-   },
-   getDisplayed ()
-   {
-      return this .displayed;
    },
    traverse (type, renderObject)
    {
