@@ -27,6 +27,16 @@ The ConeEmitter node belongs to the **ParticleSystems** component and requires a
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFBool \[in, out\] [on](#sfbool-in-out-on-true)
+- SFVec3f \[in, out\] [position](#sfvec3f-in-out-position-0-0-0--)
+- SFVec3f \[in, out\] [direction](#sfvec3f-in-out-direction-0-1-0--)
+- SFFloat \[in, out\] [angle](#sffloat-in-out-angle-4-0-)
+- SFFloat \[in, out\] [speed](#sffloat-in-out-speed-0-0)
+- SFFloat \[in, out\] [variation](#sffloat-in-out-variation-025-0)
+- SFFloat \[in, out\] [mass](#sffloat-in-out-mass-0-0)
+- SFFloat \[in, out\] [surfaceArea](#sffloat-in-out-surfacearea-0-0)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

@@ -29,6 +29,21 @@ The OscillatorSource node belongs to the **Sound** component and requires at lea
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFFloat \[in, out\] [gain](#sffloat-in-out-gain-1--)
+- SFFloat \[in, out\] [detune](#sffloat-in-out-detune-0-0)
+- SFFloat \[in, out\] [frequency](#sffloat-in-out-frequency-0-0)
+- SFNode \[in, out\] [periodicWave](#sfnode-in-out-periodicwave-null-periodicwave)
+- SFTime \[in, out\] [startTime](#sftime-in-out-starttime-0--)
+- SFTime \[in, out\] [resumeTime](#sftime-in-out-resumetime-0--)
+- SFTime \[in, out\] [pauseTime](#sftime-in-out-pausetime-0--)
+- SFTime \[in, out\] [stopTime](#sftime-in-out-stoptime-0--)
+- SFBool \[out\] [isPaused](#sfbool-out-ispaused)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

@@ -28,6 +28,14 @@ The Layout node belongs to the **Layout** component and requires at least suppor
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- MFString \[in, out\] [align](#mfstring-in-out-align--center-center--leftcenterright)
+- MFString \[in, out\] [offsetUnits](#mfstring-in-out-offsetunits--world-world--worldfractionpixel)
+- MFFloat \[in, out\] [offset](#mffloat-in-out-offset--0-0---)
+- MFString \[in, out\] [sizeUnits](#mfstring-in-out-sizeunits--world-world--worldfractionpixel)
+- MFFloat \[in, out\] [size](#mffloat-in-out-size--1-1--0)
+- MFString \[in, out\] [scaleMode](#mfstring-in-out-scalemode--none-none--nonefractionstretchpixel)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

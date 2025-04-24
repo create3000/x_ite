@@ -28,6 +28,21 @@ The Sound node belongs to the **Sound** component and requires at least support 
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFBool \[ \] [spatialize](#sfbool---spatialize-true)
+- SFFloat \[in, out\] [intensity](#sffloat-in-out-intensity-1-0-1)
+- SFVec3f \[in, out\] [location](#sfvec3f-in-out-location-0-0-0--)
+- SFVec3f \[in, out\] [direction](#sfvec3f-in-out-direction-0-0-1--)
+- SFFloat \[in, out\] [minBack](#sffloat-in-out-minback-1-0)
+- SFFloat \[in, out\] [minFront](#sffloat-in-out-minfront-1-0)
+- SFFloat \[in, out\] [maxBack](#sffloat-in-out-maxback-10-0)
+- SFFloat \[in, out\] [maxFront](#sffloat-in-out-maxfront-10-0)
+- SFFloat \[in, out\] [priority](#sffloat-in-out-priority-0-0-1)
+- SFNode \[in, out\] [source](#sfnode-in-out-source-null-x3dsoundsourcenode)
+- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

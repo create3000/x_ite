@@ -27,6 +27,17 @@ The FontStyle node belongs to the **Text** component and requires at least suppo
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [language](#sfstring-in-out-language-)
+- MFString \[in, out\] [family](#mfstring-in-out-family-serif-string-or-uri)
+- SFString \[in, out\] [style](#sfstring-in-out-style-plain-plainbolditalicbolditalic)
+- SFFloat \[in, out\] [size](#sffloat-in-out-size-1-0)
+- SFFloat \[in, out\] [spacing](#sffloat-in-out-spacing-1-0)
+- SFBool \[in, out\] [horizontal](#sfbool-in-out-horizontal-true)
+- SFBool \[in, out\] [leftToRight](#sfbool-in-out-lefttoright-true)
+- SFBool \[in, out\] [topToBottom](#sfbool-in-out-toptobottom-true)
+- MFString \[in, out\] [justify](#mfstring-in-out-justify-begin-begin-end-first-middle-)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

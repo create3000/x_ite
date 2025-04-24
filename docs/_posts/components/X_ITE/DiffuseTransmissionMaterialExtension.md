@@ -30,6 +30,14 @@ The DiffuseTransmissionMaterialExtension node belongs to the **X_ITE** component
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in, out\] [diffuseTransmission](#sffloat-in-out-diffusetransmission-0-0)
+- SFString \[in, out\] [diffuseTransmissionTextureMapping](#sfstring-in-out-diffusetransmissiontexturemapping-)
+- SFNode \[in, out\] [diffuseTransmissionTexture](#sfnode-in-out-diffusetransmissiontexture-null-x3dsingletexturenode)
+- SFColor \[in, out\] [diffuseTransmissionColor](#sfcolor-in-out-diffusetransmissioncolor-1-1-1-0-1)
+- SFString \[in, out\] [diffuseTransmissionColorTextureMapping](#sfstring-in-out-diffusetransmissioncolortexturemapping-)
+- SFNode \[in, out\] [diffuseTransmissionColorTexture](#sfnode-in-out-diffusetransmissioncolortexture-null-x3dsingletexturenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

@@ -27,6 +27,15 @@ The LineSet node belongs to the **Rendering** component and requires at least su
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- MFInt32 \[in, out\] [vertexCount](#mfint32-in-out-vertexcount---2)
+- MFNode \[in, out\] [attrib](#mfnode-in-out-attrib---x3dvertexattributenode)
+- SFNode \[in, out\] [fogCoord](#sfnode-in-out-fogcoord-null-fogcoordinate)
+- SFNode \[in, out\] [color](#sfnode-in-out-color-null-x3dcolornode)
+- SFNode \[in, out\] [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard)
+- SFNode \[in, out\] [normal](#sfnode-in-out-normal-null-x3dnormalnode)
+- SFNode \[in, out\] [coord](#sfnode-in-out-coord-null-x3dcoordinatenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

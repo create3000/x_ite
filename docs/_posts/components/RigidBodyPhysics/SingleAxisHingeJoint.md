@@ -27,6 +27,21 @@ The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and 
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- MFString \[in, out\] [forceOutput](#mfstring-in-out-forceoutput-none-all-none-)
+- SFVec3f \[in, out\] [anchorPoint](#sfvec3f-in-out-anchorpoint-0-0-0--)
+- SFVec3f \[in, out\] [axis](#sfvec3f-in-out-axis-0-1-0--)
+- SFFloat \[in, out\] [minAngle](#sffloat-in-out-minangle-----small-classrednot-supported)
+- SFFloat \[in, out\] [maxAngle](#sffloat-in-out-maxangle---small-classrednot-supported)
+- SFFloat \[in, out\] [stopBounce](#sffloat-in-out-stopbounce-0-0-1-small-classrednot-supported)
+- SFFloat \[in, out\] [stopErrorCorrection](#sffloat-in-out-stoperrorcorrection-08-0-1-small-classrednot-supported)
+- SFVec3f \[out\] [body1AnchorPoint](#sfvec3f-out-body1anchorpoint)
+- SFVec3f \[out\] [body2AnchorPoint](#sfvec3f-out-body2anchorpoint)
+- SFFloat \[out\] [angle](#sffloat-out-angle)
+- SFFloat \[out\] [angleRate](#sffloat-out-anglerate)
+- SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
+- SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

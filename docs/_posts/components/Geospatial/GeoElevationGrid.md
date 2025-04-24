@@ -27,6 +27,27 @@ The GeoElevationGrid node belongs to the **Geospatial** component and requires a
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
+- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
+- MFDouble \[in\] [set_height](#mfdouble-in-set_height--)
+- SFVec3d \[ \] [geoGridOrigin](#sfvec3d---geogridorigin-0-0-0--)
+- SFInt32 \[ \] [xDimension](#sfint32---xdimension-0-0)
+- SFInt32 \[ \] [zDimension](#sfint32---zdimension-0-0)
+- SFDouble \[ \] [xSpacing](#sfdouble---xspacing-1-0)
+- SFDouble \[ \] [zSpacing](#sfdouble---zspacing-1-0)
+- SFFloat \[in, out\] [yScale](#sffloat-in-out-yscale-1-0)
+- SFBool \[ \] [solid](#sfbool---solid-true)
+- SFBool \[ \] [ccw](#sfbool---ccw-true)
+- SFDouble \[ \] [creaseAngle](#sfdouble---creaseangle-0-0)
+- SFBool \[ \] [colorPerVertex](#sfbool---colorpervertex-true)
+- SFBool \[ \] [normalPerVertex](#sfbool---normalpervertex-true)
+- SFNode \[in, out\] [color](#sfnode-in-out-color-null-x3dcolornode)
+- SFNode \[in, out\] [texCoord](#sfnode-in-out-texcoord-null-x3dtexturecoordinatenode)
+- SFNode \[in, out\] [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard)
+- SFNode \[in, out\] [normal](#sfnode-in-out-normal-null-x3dnormalnode)
+- MFDouble \[ \] [height](#mfdouble---height--0-0---)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

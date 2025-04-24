@@ -29,6 +29,15 @@ The ScalarChaser node belongs to the **Followers** component and requires at lea
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in\] [set_value](#sffloat-in-set_value--)
+- SFFloat \[in\] [set_destination](#sffloat-in-set_destination--)
+- SFFloat \[ \] [initialValue](#sffloat---initialvalue-0--)
+- SFFloat \[ \] [initialDestination](#sffloat---initialdestination-0--)
+- SFTime \[ \] [duration](#sftime---duration-1-0)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- SFFloat \[out\] [value_changed](#sffloat-out-value_changed)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

@@ -30,6 +30,21 @@ The Anchor node belongs to the **Networking** component and requires at least su
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
+- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
+- MFString \[in, out\] [parameter](#mfstring-in-out-parameter--)
+- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
+- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
+- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
+- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
+- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
+- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+- MFNode \[in\] [addChildren](#mfnode-in-addchildren)
+- MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
+- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dchildnode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

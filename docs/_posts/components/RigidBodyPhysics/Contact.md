@@ -26,6 +26,24 @@ The Contact node belongs to the **RigidBodyPhysics** component and requires at l
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFVec3f \[in, out\] [position](#sfvec3f-in-out-position-0-0-0--)
+- SFVec3f \[in, out\] [contactNormal](#sfvec3f-in-out-contactnormal-0-1-0--)
+- SFFloat \[in, out\] [depth](#sffloat-in-out-depth-0--)
+- MFString \[in, out\] [appliedParameters](#mfstring-in-out-appliedparameters-bounce)
+- SFFloat \[in, out\] [bounce](#sffloat-in-out-bounce-0-0-1)
+- SFFloat \[in, out\] [minBounceSpeed](#sffloat-in-out-minbouncespeed-0)
+- SFVec3f \[in, out\] [frictionDirection](#sfvec3f-in-out-frictiondirection-0-1-0--)
+- SFVec2f \[in, out\] [frictionCoefficients](#sfvec2f-in-out-frictioncoefficients-0-0-0)
+- SFVec2f \[in, out\] [surfaceSpeed](#sfvec2f-in-out-surfacespeed-0-0--)
+- SFVec2f \[in, out\] [slipCoefficients](#sfvec2f-in-out-slipcoefficients-0-0--)
+- SFFloat \[in, out\] [softnessConstantForceMix](#sffloat-in-out-softnessconstantforcemix-00001-0-1)
+- SFFloat \[in, out\] [softnessErrorCorrection](#sffloat-in-out-softnesserrorcorrection-08-0-1)
+- SFNode \[in, out\] [geometry1](#sfnode-in-out-geometry1-null-x3dnbodycollidablenode)
+- SFNode \[in, out\] [geometry2](#sfnode-in-out-geometry2-null-x3dnbodycollidablenode)
+- SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
+- SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

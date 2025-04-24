@@ -28,6 +28,13 @@ The SilhouetteEnhancementVolumeStyle node belongs to the **VolumeRendering** com
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFFloat \[in, out\] [silhouetteRetainedOpacity](#sffloat-in-out-silhouetteretainedopacity-1-0-1)
+- SFFloat \[in, out\] [silhouetteBoundaryOpacity](#sffloat-in-out-silhouetteboundaryopacity-0-0-1)
+- SFFloat \[in, out\] [silhouetteSharpness](#sffloat-in-out-silhouettesharpness-05-0)
+- SFNode \[in, out\] [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

@@ -28,6 +28,12 @@ The NurbsSwungSurface node belongs to the **NURBS** component and requires at le
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFBool \[ \] [solid](#sfbool---solid-true)
+- SFBool \[ \] [ccw](#sfbool---ccw-true)
+- SFNode \[in, out\] [profileCurve](#sfnode-in-out-profilecurve-null-x3dnurbscontrolcurvenode)
+- SFNode \[in, out\] [trajectoryCurve](#sfnode-in-out-trajectorycurve-null-x3dnurbscontrolcurvenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

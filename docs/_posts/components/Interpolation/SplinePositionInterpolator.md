@@ -28,6 +28,15 @@ The SplinePositionInterpolator node belongs to the **Interpolation** component a
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in\] [set_fraction](#sffloat-in-set_fraction--)
+- SFBool \[in, out\] [closed](#sfbool-in-out-closed-false)
+- MFFloat \[in, out\] [key](#mffloat-in-out-key----)
+- MFVec3f \[in, out\] [keyValue](#mfvec3f-in-out-keyvalue----)
+- MFVec3f \[in, out\] [keyVelocity](#mfvec3f-in-out-keyvelocity----)
+- SFBool \[in, out\] [normalizeVelocity](#sfbool-in-out-normalizevelocity-false)
+- SFVec3f \[out\] [value_changed](#sfvec3f-out-value_changed)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

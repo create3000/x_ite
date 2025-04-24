@@ -31,6 +31,21 @@ The TwoSidedMaterial node belongs to the **Shape** component and requires at lea
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFBool \[in, out\] [separateBackColor](#sfbool-in-out-separatebackcolor-false)
+- SFFloat \[in, out\] [ambientIntensity](#sffloat-in-out-ambientintensity-02-0-1)
+- SFColor \[in, out\] [diffuseColor](#sfcolor-in-out-diffusecolor-08-08-08-0-1)
+- SFColor \[in, out\] [specularColor](#sfcolor-in-out-specularcolor-0-0-0-0-1)
+- SFColor \[in, out\] [emissiveColor](#sfcolor-in-out-emissivecolor-0-0-0-0-1)
+- SFFloat \[in, out\] [shininess](#sffloat-in-out-shininess-02-0-1)
+- SFFloat \[in, out\] [transparency](#sffloat-in-out-transparency-0-0-1)
+- SFFloat \[in, out\] [backAmbientIntensity](#sffloat-in-out-backambientintensity-02-0-1)
+- SFColor \[in, out\] [backDiffuseColor](#sfcolor-in-out-backdiffusecolor-08-08-08-0-1)
+- SFColor \[in, out\] [backSpecularColor](#sfcolor-in-out-backspecularcolor-0-0-0-0-1)
+- SFColor \[in, out\] [backEmissiveColor](#sfcolor-in-out-backemissivecolor-0-0-0-0-1)
+- SFFloat \[in, out\] [backShininess](#sffloat-in-out-backshininess-02-0-1)
+- SFFloat \[in, out\] [backTransparency](#sffloat-in-out-backtransparency-0-0-1)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

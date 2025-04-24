@@ -31,6 +31,21 @@ The InstancedShape node belongs to the **X_ITE** component and its default conta
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- MFVec3f \[in, out\] [translations](#mfvec3f-in-out-translations----)
+- MFRotation \[in, out\] [rotations](#mfrotation-in-out-rotations-----or--1-1)
+- MFVec3f \[in, out\] [scales](#mfvec3f-in-out-scales----)
+- MFRotation \[in, out\] [scaleOrientations](#mfrotation-in-out-scaleorientations-----or--1-1)
+- MFVec3f \[in, out\] [centers](#mfvec3f-in-out-centers----)
+- SFBool \[in, out\] [pointerEvents](#sfbool-in-out-pointerevents-true-small-classbluenon-standard)
+- SFBool \[in, out\] [castShadow](#sfbool-in-out-castshadow-true)
+- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
+- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
+- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
+- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+- SFNode \[in, out\] [appearance](#sfnode-in-out-appearance-null-x3dappearancenode)
+- SFNode \[in, out\] [geometry](#sfnode-in-out-geometry-null-x3dgeometrynode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

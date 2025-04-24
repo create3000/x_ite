@@ -29,6 +29,38 @@ The HAnimHumanoid node belongs to the **HAnim** component and requires at least 
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [version](#sfstring-in-out-version-20)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFString \[in, out\] [name](#sfstring-in-out-name-)
+- MFString \[in, out\] [info](#mfstring-in-out-info--)
+- SFString \[in, out\] [skeletalConfiguration](#sfstring-in-out-skeletalconfiguration-basic)
+- SFInt32 \[in, out\] [loa](#sfint32-in-out-loa--1--1)
+- SFVec3f \[in, out\] [translation](#sfvec3f-in-out-translation-0-0-0--)
+- SFRotation \[in, out\] [rotation](#sfrotation-in-out-rotation-0-0-1-0---or--1-1)
+- SFVec3f \[in, out\] [scale](#sfvec3f-in-out-scale-1-1-1-0)
+- SFRotation \[in, out\] [scaleOrientation](#sfrotation-in-out-scaleorientation-0-0-1-0---or--1-1)
+- SFVec3f \[in, out\] [center](#sfvec3f-in-out-center-0-0-0--)
+- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
+- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
+- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
+- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+- MFNode \[in, out\] [skeleton](#mfnode-in-out-skeleton---hanimjoint-hanimsite)
+- MFVec3f \[in, out\] [jointBindingPositions](#mfvec3f-in-out-jointbindingpositions----)
+- MFRotation \[in, out\] [jointBindingRotations](#mfrotation-in-out-jointbindingrotations-----or--1-1)
+- MFVec3f \[in, out\] [jointBindingScales](#mfvec3f-in-out-jointbindingscales----)
+- MFNode \[in, out\] [joints](#mfnode-in-out-joints---hanimjoint)
+- MFNode \[in, out\] [segments](#mfnode-in-out-segments---hanimsegment)
+- MFNode \[in, out\] [sites](#mfnode-in-out-sites---hanimsite)
+- MFNode \[in, out\] [viewpoints](#mfnode-in-out-viewpoints---hanimsite)
+- MFBool \[in, out\] [motionsEnabled](#mfbool-in-out-motionsenabled--)
+- MFNode \[in, out\] [motions](#mfnode-in-out-motions---hanimmotion)
+- SFNode \[in, out\] [skinBindingNormals](#sfnode-in-out-skinbindingnormals-null-x3dnormalnode)
+- SFNode \[in, out\] [skinBindingCoords](#sfnode-in-out-skinbindingcoords-null-x3dcoordinatenode)
+- SFNode \[in, out\] [skinNormal](#sfnode-in-out-skinnormal-null-x3dnormalnode)
+- SFNode \[in, out\] [skinCoord](#sfnode-in-out-skincoord-null-x3dcoordinatenode)
+- MFNode \[in, out\] [skin](#mfnode-in-out-skin---x3dchildnode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

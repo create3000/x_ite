@@ -29,6 +29,10 @@ The TextureTransformMatrix3D node belongs to the **Texturing3D** component and r
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [mapping](#sfstring-in-out-mapping-)
+- SFMatrix4f \[in, out\] [matrix](#sfmatrix4f-in-out-matrix-1-0-0-0-0-1-0-0-0-0-1-0-0-0-0-1--)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

@@ -26,6 +26,16 @@ The NurbsTextureCoordinate node belongs to the **NURBS** component and requires 
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFInt32 \[ \] [uOrder](#sfint32---uorder-3-2)
+- SFInt32 \[ \] [vOrder](#sfint32---vorder-3-2)
+- SFInt32 \[ \] [uDimension](#sfint32---udimension-0-0)
+- SFInt32 \[ \] [vDimension](#sfint32---vdimension-0-0)
+- MFDouble \[ \] [uKnot](#mfdouble---uknot----)
+- MFDouble \[ \] [vKnot](#mfdouble---vknot----)
+- MFDouble \[in, out\] [weight](#mfdouble-in-out-weight---0)
+- MFVec2f \[in, out\] [controlPoint](#mfvec2f-in-out-controlpoint----)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

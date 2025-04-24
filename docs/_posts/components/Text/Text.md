@@ -27,6 +27,16 @@ The Text node belongs to the **Text** component and requires at least support le
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- MFString \[in, out\] [string](#mfstring-in-out-string--)
+- MFFloat \[in, out\] [length](#mffloat-in-out-length---0)
+- SFFloat \[in, out\] [maxExtent](#sffloat-in-out-maxextent-0-0)
+- SFBool \[ \] [solid](#sfbool---solid-false)
+- SFVec3f \[out\] [origin](#sfvec3f-out-origin)
+- SFVec2f \[out\] [textBounds](#sfvec2f-out-textbounds)
+- MFVec2f \[out\] [lineBounds](#mfvec2f-out-linebounds)
+- SFNode \[in, out\] [fontStyle](#sfnode-in-out-fontstyle-null-x3dfontstylenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

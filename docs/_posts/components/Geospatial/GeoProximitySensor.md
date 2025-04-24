@@ -29,6 +29,22 @@ The GeoProximitySensor node belongs to the **Geospatial** component and requires
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
+- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFVec3f \[in, out\] [size](#sfvec3f-in-out-size-0-0-0-0)
+- SFVec3d \[in, out\] [center](#sfvec3d-in-out-center-0-0-0---starting-with-vs-33)
+- SFVec3d \[in, out\] [geoCenter](#sfvec3d-in-out-geocenter-0-0-0--)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- SFTime \[out\] [enterTime](#sftime-out-entertime)
+- SFTime \[out\] [exitTime](#sftime-out-exittime)
+- SFVec3d \[out\] [geoCoord_changed](#sfvec3d-out-geocoord_changed)
+- SFVec3f \[out\] [position_changed](#sfvec3f-out-position_changed)
+- SFRotation \[out\] [orientation_changed](#sfrotation-out-orientation_changed)
+- SFVec3f \[out\] [centerOfRotation_changed](#sfvec3f-out-centerofrotation_changed)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

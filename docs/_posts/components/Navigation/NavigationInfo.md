@@ -28,6 +28,19 @@ The NavigationInfo node belongs to the **Navigation** component and requires at 
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFBool \[in\] [set_bind](#sfbool-in-set_bind)
+- MFString \[in, out\] [type](#mfstring-in-out-type--examine-any--examine-walk-fly-plane_create3000githubio-lookat-explore-any-none)
+- MFFloat \[in, out\] [avatarSize](#mffloat-in-out-avatarsize--025-16-075--0)
+- SFFloat \[in, out\] [speed](#sffloat-in-out-speed-1-0)
+- SFBool \[in, out\] [headlight](#sfbool-in-out-headlight-true)
+- SFFloat \[in, out\] [visibilityLimit](#sffloat-in-out-visibilitylimit-0-0)
+- MFString \[in, out\] [transitionType](#mfstring-in-out-transitiontype-linear-teleportlinearanimate)
+- SFTime \[in, out\] [transitionTime](#sftime-in-out-transitiontime-1-0)
+- SFBool \[out\] [transitionComplete](#sfbool-out-transitioncomplete)
+- SFBool \[out\] [isBound](#sfbool-out-isbound)
+- SFTime \[out\] [bindTime](#sftime-out-bindtime)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

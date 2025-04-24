@@ -30,6 +30,11 @@ The TransmissionMaterialExtension node belongs to the **X_ITE** component and re
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in, out\] [transmission](#sffloat-in-out-transmission-0-0)
+- SFString \[in, out\] [transmissionTextureMapping](#sfstring-in-out-transmissiontexturemapping-)
+- SFNode \[in, out\] [transmissionTexture](#sfnode-in-out-transmissiontexture-null-x3dsingletexturenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

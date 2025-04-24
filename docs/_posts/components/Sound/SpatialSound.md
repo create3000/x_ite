@@ -28,6 +28,26 @@ The SpatialSound node belongs to the **Sound** component and requires at least s
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFBool \[ \] [spatialize](#sfbool---spatialize-true)
+- SFFloat \[in, out\] [intensity](#sffloat-in-out-intensity-1-0-1)
+- SFVec3f \[in, out\] [location](#sfvec3f-in-out-location-0-0-0--)
+- SFVec3f \[in, out\] [direction](#sfvec3f-in-out-direction-0-0-1--)
+- SFFloat \[in, out\] [gain](#sffloat-in-out-gain-1--)
+- SFFloat \[in, out\] [coneOuterGain](#sffloat-in-out-coneoutergain-0--)
+- SFFloat \[in, out\] [coneInnerAngle](#sffloat-in-out-coneinnerangle-62832-0-2)
+- SFFloat \[in, out\] [coneOuterAngle](#sffloat-in-out-coneouterangle-62832-0-2)
+- SFString \[in, out\] [distanceModel](#sfstring-in-out-distancemodel-inverse-linear-inverse-exponential)
+- SFFloat \[in, out\] [maxDistance](#sffloat-in-out-maxdistance-10000-0)
+- SFFloat \[in, out\] [referenceDistance](#sffloat-in-out-referencedistance-1-0)
+- SFFloat \[in, out\] [rolloffFactor](#sffloat-in-out-rollofffactor-1-0)
+- SFBool \[in, out\] [enableHRTF](#sfbool-in-out-enablehrtf-false)
+- SFBool \[in, out\] [dopplerEnabled](#sfbool-in-out-dopplerenabled-false-small-classrednot-supported)
+- SFFloat \[in, out\] [priority](#sffloat-in-out-priority-0-0-1)
+- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

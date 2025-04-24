@@ -25,6 +25,20 @@ The DISEntityTypeMapping node belongs to the **DIS** component and requires at l
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
+- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
+- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
+- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
+- SFInt32 \[ \] [category](#sfint32---category-0-0-255)
+- SFInt32 \[ \] [country](#sfint32---country-0-0-0-65535)
+- SFInt32 \[ \] [domain](#sfint32---domain-0-0-255)
+- SFInt32 \[ \] [extra](#sfint32---extra-0-0-255)
+- SFInt32 \[ \] [kind](#sfint32---kind-0-0-255)
+- SFInt32 \[ \] [specific](#sfint32---specific-0-0-255)
+- SFInt32 \[ \] [subcategory](#sfint32---subcategory-0-0-255)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

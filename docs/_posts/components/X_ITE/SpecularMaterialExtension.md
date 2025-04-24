@@ -30,6 +30,14 @@ The SpecularMaterialExtension node belongs to the **X_ITE** component and requir
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in, out\] [specular](#sffloat-in-out-specular-1-0)
+- SFString \[in, out\] [specularTextureMapping](#sfstring-in-out-speculartexturemapping-)
+- SFNode \[in, out\] [specularTexture](#sfnode-in-out-speculartexture-null-x3dsingletexturenode)
+- SFColor \[in, out\] [specularColor](#sfcolor-in-out-specularcolor-1-1-1-0)
+- SFString \[in, out\] [specularColorTextureMapping](#sfstring-in-out-specularcolortexturemapping-)
+- SFNode \[in, out\] [specularColorTexture](#sfnode-in-out-specularcolortexture-null-x3dsingletexturenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

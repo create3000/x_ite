@@ -27,6 +27,23 @@ The CollisionCollection node belongs to the **RigidBodyPhysics** component and r
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- MFString \[in, out\] [appliedParameters](#mfstring-in-out-appliedparameters-bounce)
+- SFFloat \[in, out\] [bounce](#sffloat-in-out-bounce-0-0-1)
+- SFFloat \[in, out\] [minBounceSpeed](#sffloat-in-out-minbouncespeed-01-0)
+- SFVec2f \[in, out\] [frictionCoefficients](#sfvec2f-in-out-frictioncoefficients-0-0-0)
+- SFVec2f \[in, out\] [surfaceSpeed](#sfvec2f-in-out-surfacespeed-0-0--)
+- SFVec2f \[in, out\] [slipFactors](#sfvec2f-in-out-slipfactors-0-0--)
+- SFFloat \[in, out\] [softnessConstantForceMix](#sffloat-in-out-softnessconstantforcemix-00001-0-1)
+- SFFloat \[in, out\] [softnessErrorCorrection](#sffloat-in-out-softnesserrorcorrection-08-0-1)
+- MFNode \[in, out\] [collidables](#mfnode-in-out-collidables---x3dnbodycollisionspacenode-x3dnbodycollidablenode)
+- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
+- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
+- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
+- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

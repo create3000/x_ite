@@ -30,6 +30,16 @@ The IridescenceMaterialExtension node belongs to the **X_ITE** component and req
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in, out\] [iridescence](#sffloat-in-out-iridescence-0-0)
+- SFString \[in, out\] [iridescenceTextureMapping](#sfstring-in-out-iridescencetexturemapping-)
+- SFNode \[in, out\] [iridescenceTexture](#sfnode-in-out-iridescencetexture-null-x3dsingletexturenode)
+- SFFloat \[in, out\] [iridescenceIndexOfRefraction](#sffloat-in-out-iridescenceindexofrefraction-13-1)
+- SFFloat \[in, out\] [iridescenceThicknessMinimum](#sffloat-in-out-iridescencethicknessminimum-100-0)
+- SFFloat \[in, out\] [iridescenceThicknessMaximum](#sffloat-in-out-iridescencethicknessmaximum-400-0)
+- SFString \[in, out\] [iridescenceThicknessTextureMapping](#sfstring-in-out-iridescencethicknesstexturemapping-)
+- SFNode \[in, out\] [iridescenceThicknessTexture](#sfnode-in-out-iridescencethicknesstexture-null-x3dsingletexturenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

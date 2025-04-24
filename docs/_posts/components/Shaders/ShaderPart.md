@@ -28,6 +28,14 @@ The ShaderPart node belongs to the **Shaders** component and requires at least s
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFString \[ \] [type](#sfstring---type-vertex-vertexfragment)
+- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
+- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
+- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
+- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

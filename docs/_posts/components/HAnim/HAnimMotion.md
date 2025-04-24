@@ -27,6 +27,27 @@ The HAnimMotion node belongs to the **HAnim** component and requires at least su
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFString \[in, out\] [name](#sfstring-in-out-name-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFInt32 \[in, out\] [loa](#sfint32-in-out-loa--1--1-4)
+- SFString \[in, out\] [joints](#sfstring-in-out-joints-)
+- MFBool \[in, out\] [channelsEnabled](#mfbool-in-out-channelsenabled--)
+- SFString \[in, out\] [channels](#sfstring-in-out-channels-)
+- MFFloat \[in, out\] [values](#mffloat-in-out-values----)
+- SFBool \[in, out\] [loop](#sfbool-in-out-loop-false)
+- SFBool \[in\] [next](#sfbool-in-next)
+- SFBool \[in\] [previous](#sfbool-in-previous)
+- SFInt32 \[in, out\] [frameIndex](#sfint32-in-out-frameindex-0-0)
+- SFTime \[in, out\] [frameDuration](#sftime-in-out-frameduration-01-0)
+- SFInt32 \[in, out\] [frameIncrement](#sfint32-in-out-frameincrement-1--)
+- SFInt32 \[in, out\] [startFrame](#sfint32-in-out-startframe-0-0)
+- SFInt32 \[in, out\] [endFrame](#sfint32-in-out-endframe-0-0)
+- SFTime \[out\] [cycleTime](#sftime-out-cycletime)
+- SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
+- SFInt32 \[out\] [frameCount](#sfint32-out-framecount)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

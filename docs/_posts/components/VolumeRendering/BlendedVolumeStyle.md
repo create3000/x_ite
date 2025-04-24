@@ -28,6 +28,17 @@ The BlendedVolumeStyle node belongs to the **VolumeRendering** component and req
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFFloat \[in, out\] [weightConstant1](#sffloat-in-out-weightconstant1-05-0-1)
+- SFFloat \[in, out\] [weightConstant2](#sffloat-in-out-weightconstant2-05-0-1)
+- SFString \[in, out\] [weightFunction1](#sfstring-in-out-weightfunction1-constant-constant-alpha0-alpha1-table-one_minus_alpha0-one_minus_alpha1)
+- SFString \[in, out\] [weightFunction2](#sfstring-in-out-weightfunction2-constant-constant-alpha0-alpha1-table-one_minus_alpha0-one_minus_alpha1)
+- SFNode \[in, out\] [weightTransferFunction1](#sfnode-in-out-weighttransferfunction1-null-x3dtexture2dnode)
+- SFNode \[in, out\] [weightTransferFunction2](#sfnode-in-out-weighttransferfunction2-null-x3dtexture2dnode)
+- SFNode \[in, out\] [renderStyle](#sfnode-in-out-renderstyle-null-x3dcomposablevolumerenderstylenode)
+- SFNode \[in, out\] [voxels](#sfnode-in-out-voxels-null-x3dtexture3dnode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

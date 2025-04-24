@@ -29,6 +29,18 @@ The ProximitySensor node belongs to the **EnvironmentalSensor** component and re
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFVec3f \[in, out\] [size](#sfvec3f-in-out-size-0-0-0-0)
+- SFVec3f \[in, out\] [center](#sfvec3f-in-out-center-0-0-0--)
+- SFTime \[out\] [enterTime](#sftime-out-entertime)
+- SFTime \[out\] [exitTime](#sftime-out-exittime)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- SFVec3f \[out\] [position_changed](#sfvec3f-out-position_changed)
+- SFRotation \[out\] [orientation_changed](#sfrotation-out-orientation_changed)
+- SFVec3f \[out\] [centerOfRotation_changed](#sfvec3f-out-centerofrotation_changed)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

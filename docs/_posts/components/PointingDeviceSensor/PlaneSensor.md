@@ -30,6 +30,19 @@ The PlaneSensor node belongs to the **PointingDeviceSensor** component and requi
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFRotation \[in, out\] [axisRotation](#sfrotation-in-out-axisrotation-0-0-1-0--1-1-or--)
+- SFBool \[in, out\] [autoOffset](#sfbool-in-out-autooffset-true)
+- SFVec3f \[in, out\] [offset](#sfvec3f-in-out-offset-0-0-0--)
+- SFVec2f \[in, out\] [minPosition](#sfvec2f-in-out-minposition-0-0--)
+- SFVec2f \[in, out\] [maxPosition](#sfvec2f-in-out-maxposition--1--1--)
+- SFVec3f \[out\] [trackPoint_changed](#sfvec3f-out-trackpoint_changed)
+- SFVec3f \[out\] [translation_changed](#sfvec3f-out-translation_changed)
+- SFBool \[out\] [isOver](#sfbool-out-isover)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

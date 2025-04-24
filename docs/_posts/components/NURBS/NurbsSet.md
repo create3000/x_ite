@@ -29,6 +29,16 @@ The NurbsSet node belongs to the **NURBS** component and requires at least suppo
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in, out\] [tessellationScale](#sffloat-in-out-tessellationscale-1-0)
+- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
+- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
+- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
+- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+- MFNode \[in\] [addGeometry](#mfnode-in-addgeometry)
+- MFNode \[in\] [removeGeometry](#mfnode-in-removegeometry)
+- MFNode \[in, out\] [geometry](#mfnode-in-out-geometry---x3dnurbssurfacegeometrynode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

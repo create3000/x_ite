@@ -29,6 +29,25 @@ The Delay node belongs to the **Sound** component and requires at least support 
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFFloat \[in, out\] [gain](#sffloat-in-out-gain-1--)
+- SFTime \[in, out\] [tailTime](#sftime-in-out-tailtime-0-0)
+- SFTime \[in, out\] [maxDelayTime](#sftime-in-out-maxdelaytime-1-0)
+- SFTime \[in, out\] [delayTime](#sftime-in-out-delaytime-0-0)
+- SFInt32 \[in, out\] [channelCount](#sfint32-in-out-channelcount)
+- SFString \[in, out\] [channelCountMode](#sfstring-in-out-channelcountmode-max-max-clamped-max-explicit)
+- SFString \[in, out\] [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete)
+- SFTime \[in, out\] [startTime](#sftime-in-out-starttime-0--)
+- SFTime \[in, out\] [resumeTime](#sftime-in-out-resumetime-0--)
+- SFTime \[in, out\] [pauseTime](#sftime-in-out-pausetime-0--)
+- SFTime \[in, out\] [stopTime](#sftime-in-out-stoptime-0--)
+- SFBool \[out\] [isPaused](#sfbool-out-ispaused)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
+- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

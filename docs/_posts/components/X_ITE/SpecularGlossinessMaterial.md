@@ -35,6 +35,26 @@ The SpecularGlossinessMaterial node belongs to the **X_ITE** component and requi
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFColor \[in, out\] [diffuseColor](#sfcolor-in-out-diffusecolor-1-1-1-0-1)
+- SFString \[in, out\] [diffuseTextureMapping](#sfstring-in-out-diffusetexturemapping-)
+- SFNode \[in, out\] [diffuseTexture](#sfnode-in-out-diffusetexture-null-x3dsingletexturenode)
+- SFColor \[in, out\] [specularColor](#sfcolor-in-out-specularcolor-1-1-1-0-1)
+- SFFloat \[in, out\] [glossiness](#sffloat-in-out-glossiness-1-0-1)
+- SFString \[in, out\] [specularGlossinessTextureMapping](#sfstring-in-out-specularglossinesstexturemapping-)
+- SFNode \[in, out\] [specularGlossinessTexture](#sfnode-in-out-specularglossinesstexture-null-x3dsingletexturenode)
+- SFColor \[in, out\] [emissiveColor](#sfcolor-in-out-emissivecolor-0-0-0-0-1)
+- SFString \[in, out\] [emissiveTextureMapping](#sfstring-in-out-emissivetexturemapping-)
+- SFNode \[in, out\] [emissiveTexture](#sfnode-in-out-emissivetexture-null-x3dsingletexturenode)
+- SFFloat \[in, out\] [occlusionStrength](#sffloat-in-out-occlusionstrength-1-0-1)
+- SFString \[in, out\] [occlusionTextureMapping](#sfstring-in-out-occlusiontexturemapping-)
+- SFNode \[in, out\] [occlusionTexture](#sfnode-in-out-occlusiontexture-null-x3dsingletexturenode)
+- SFFloat \[in, out\] [normalScale](#sffloat-in-out-normalscale-1-0)
+- SFString \[in, out\] [normalTextureMapping](#sfstring-in-out-normaltexturemapping-)
+- SFNode \[in, out\] [normalTexture](#sfnode-in-out-normaltexture-null-x3dsingletexturenode)
+- SFFloat \[in, out\] [transparency](#sffloat-in-out-transparency-0-0-1)
+- MFNode \[in, out\] [extensions](#mfnode-in-out-extensions---x3dmaterialextensionnode-small-classbluenon-standard)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

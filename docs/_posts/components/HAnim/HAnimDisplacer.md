@@ -27,6 +27,13 @@ The HAnimDisplacer node belongs to the **HAnim** component and requires at least
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFString \[in, out\] [name](#sfstring-in-out-name-)
+- SFFloat \[in, out\] [weight](#sffloat-in-out-weight-0--)
+- MFInt32 \[in, out\] [coordIndex](#mfint32-in-out-coordindex---0-or--1)
+- MFVec3f \[in, out\] [displacements](#mfvec3f-in-out-displacements--)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

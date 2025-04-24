@@ -28,6 +28,11 @@ The MetadataDouble node belongs to the **Core** component and requires at least 
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [name](#sfstring-in-out-name-)
+- SFString \[in, out\] [reference](#sfstring-in-out-reference-)
+- MFDouble \[in, out\] [value](#mfdouble-in-out-value--)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), MetadataDouble, [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

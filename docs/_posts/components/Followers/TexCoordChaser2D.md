@@ -29,6 +29,15 @@ The TexCoordChaser2D node belongs to the **Followers** component and requires at
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- MFVec2f \[in\] [set_value](#mfvec2f-in-set_value--)
+- MFVec2f \[in\] [set_destination](#mfvec2f-in-set_destination--)
+- MFVec2f \[ \] [initialValue](#mfvec2f---initialvalue----)
+- MFVec2f \[ \] [initialDestination](#mfvec2f---initialdestination----)
+- SFTime \[ \] [duration](#sftime---duration-1-0)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- MFVec2f \[out\] [value_changed](#mfvec2f-out-value_changed)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

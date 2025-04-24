@@ -26,6 +26,35 @@ The RigidBody node belongs to the **RigidBodyPhysics** component and requires at
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFBool \[in, out\] [fixed](#sfbool-in-out-fixed-false)
+- SFVec3f \[in, out\] [position](#sfvec3f-in-out-position-0-0-0--)
+- SFRotation \[in, out\] [orientation](#sfrotation-in-out-orientation-0-0-1-0--1-1-or--)
+- SFVec3f \[in, out\] [linearVelocity](#sfvec3f-in-out-linearvelocity-0-0-0--)
+- SFVec3f \[in, out\] [angularVelocity](#sfvec3f-in-out-angularvelocity-0-0-0--)
+- SFBool \[in, out\] [useFiniteRotation](#sfbool-in-out-usefiniterotation-false)
+- SFVec3f \[in, out\] [finiteRotationAxis](#sfvec3f-in-out-finiterotationaxis-0-1-0--)
+- SFBool \[in, out\] [autoDamp](#sfbool-in-out-autodamp-false)
+- SFFloat \[in, out\] [linearDampingFactor](#sffloat-in-out-lineardampingfactor-0001-0-1)
+- SFFloat \[in, out\] [angularDampingFactor](#sffloat-in-out-angulardampingfactor-0001-0-1)
+- SFFloat \[in, out\] [mass](#sffloat-in-out-mass-1-0)
+- SFVec3f \[in, out\] [centerOfMass](#sfvec3f-in-out-centerofmass-0-0-0--)
+- SFNode \[in, out\] [massDensityModel](#sfnode-in-out-massdensitymodel-null-small-classrednot-supported)
+- SFBool \[in, out\] [useGlobalGravity](#sfbool-in-out-useglobalgravity-true)
+- MFVec3f \[in, out\] [forces](#mfvec3f-in-out-forces--)
+- MFVec3f \[in, out\] [torques](#mfvec3f-in-out-torques--)
+- SFMatrix3f \[in, out\] [inertia](#sfmatrix3f-in-out-inertia-1-0-0-0-1-0-0-0-1-1-0-0)
+- SFBool \[in, out\] [autoDisable](#sfbool-in-out-autodisable-false)
+- SFTime \[in, out\] [disableTime](#sftime-in-out-disabletime-0-0-small-classrednot-supported)
+- SFFloat \[in, out\] [disableLinearSpeed](#sffloat-in-out-disablelinearspeed-0-0)
+- SFFloat \[in, out\] [disableAngularSpeed](#sffloat-in-out-disableangularspeed-0-0)
+- MFNode \[in, out\] [geometry](#mfnode-in-out-geometry---x3dnbodycollidablenode)
+- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
+- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
+- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
+- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

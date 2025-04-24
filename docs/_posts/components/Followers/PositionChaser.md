@@ -29,6 +29,15 @@ The PositionChaser node belongs to the **Followers** component and requires at l
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFVec3f \[in\] [set_value](#sfvec3f-in-set_value--)
+- SFVec3f \[in\] [set_destination](#sfvec3f-in-set_destination--)
+- SFVec3f \[ \] [initialValue](#sfvec3f---initialvalue-0-0-0--)
+- SFVec3f \[ \] [initialDestination](#sfvec3f---initialdestination-0-0-0--)
+- SFTime \[ \] [duration](#sftime---duration-1-0)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- SFVec3f \[out\] [value_changed](#sfvec3f-out-value_changed)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

@@ -29,6 +29,16 @@ The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component an
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFNode \[in, out\] [frontTexture](#sfnode-in-out-fronttexture-null-x3dtexture2dnode)
+- SFNode \[in, out\] [backTexture](#sfnode-in-out-backtexture-null-x3dtexture2dnode)
+- SFNode \[in, out\] [leftTexture](#sfnode-in-out-lefttexture-null-x3dtexture2dnode)
+- SFNode \[in, out\] [rightTexture](#sfnode-in-out-righttexture-null-x3dtexture2dnode)
+- SFNode \[in, out\] [topTexture](#sfnode-in-out-toptexture-null-x3dtexture2dnode)
+- SFNode \[in, out\] [bottomTexture](#sfnode-in-out-bottomtexture-null-x3dtexture2dnode)
+- SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

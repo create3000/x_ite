@@ -27,6 +27,25 @@ The ElevationGrid node belongs to the **Geometry3D** component and requires at l
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- MFFloat \[in\] [set_height](#mffloat-in-set_height--)
+- SFInt32 \[ \] [xDimension](#sfint32---xdimension-0-0)
+- SFInt32 \[ \] [zDimension](#sfint32---zdimension-0-0)
+- SFFloat \[ \] [xSpacing](#sffloat---xspacing-1-0)
+- SFFloat \[ \] [zSpacing](#sffloat---zspacing-1-0)
+- SFBool \[ \] [solid](#sfbool---solid-true)
+- SFBool \[ \] [ccw](#sfbool---ccw-true)
+- SFFloat \[ \] [creaseAngle](#sffloat---creaseangle-0-0)
+- SFBool \[ \] [colorPerVertex](#sfbool---colorpervertex-true)
+- SFBool \[ \] [normalPerVertex](#sfbool---normalpervertex-true)
+- MFNode \[in, out\] [attrib](#mfnode-in-out-attrib---x3dvertexattributenode)
+- SFNode \[in, out\] [fogCoord](#sfnode-in-out-fogcoord-null-fogcoordinate)
+- SFNode \[in, out\] [color](#sfnode-in-out-color-null-x3dcolornode)
+- SFNode \[in, out\] [texCoord](#sfnode-in-out-texcoord-null-x3dtexturecoordinatenode)
+- SFNode \[in, out\] [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard)
+- SFNode \[in, out\] [normal](#sfnode-in-out-normal-null-x3dnormalnode)
+- MFFloat \[ \] [height](#mffloat---height----)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

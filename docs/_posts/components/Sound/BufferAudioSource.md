@@ -29,6 +29,35 @@ The BufferAudioSource node belongs to the **Sound** component and requires at le
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
+- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
+- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
+- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
+- SFInt32 \[in, out\] [numberOfChannels](#sfint32-in-out-numberofchannels-0-0)
+- SFFloat \[in, out\] [sampleRate](#sffloat-in-out-samplerate-0-0)
+- SFInt32 \[in, out\] [bufferLength](#sfint32-in-out-bufferlength)
+- MFFloat \[in, out\] [buffer](#mffloat-in-out-buffer---1-1)
+- SFTime \[out\] [bufferDuration](#sftime-out-bufferduration-0-0)
+- SFFloat \[in, out\] [gain](#sffloat-in-out-gain-1--)
+- SFFloat \[in, out\] [detune](#sffloat-in-out-detune-0-0)
+- SFFloat \[in, out\] [playbackRate](#sffloat-in-out-playbackrate-1--)
+- SFTime \[in, out\] [loopStart](#sftime-in-out-loopstart-0-0)
+- SFTime \[in, out\] [loopEnd](#sftime-in-out-loopend-0-0)
+- SFInt32 \[in, out\] [channelCount](#sfint32-in-out-channelcount)
+- SFString \[in, out\] [channelCountMode](#sfstring-in-out-channelcountmode-max-max-clamped-max-explicit)
+- SFString \[in, out\] [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete)
+- SFBool \[in, out\] [loop](#sfbool-in-out-loop-false)
+- SFTime \[in, out\] [startTime](#sftime-in-out-starttime-0--)
+- SFTime \[in, out\] [resumeTime](#sftime-in-out-resumetime-0--)
+- SFTime \[in, out\] [pauseTime](#sftime-in-out-pausetime-0--)
+- SFTime \[in, out\] [stopTime](#sftime-in-out-stoptime-0--)
+- SFBool \[out\] [isPaused](#sfbool-out-ispaused)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

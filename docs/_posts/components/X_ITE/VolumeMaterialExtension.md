@@ -30,6 +30,13 @@ The VolumeMaterialExtension node belongs to the **X_ITE** component and requires
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in, out\] [thickness](#sffloat-in-out-thickness-0-0)
+- SFString \[in, out\] [thicknessTextureMapping](#sfstring-in-out-thicknesstexturemapping-)
+- SFNode \[in, out\] [thicknessTexture](#sfnode-in-out-thicknesstexture-null-x3dsingletexturenode)
+- SFFloat \[in, out\] [attenuationDistance](#sffloat-in-out-attenuationdistance-1000000-0)
+- SFColor \[in, out\] [attenuationColor](#sfcolor-in-out-attenuationcolor-1-1-1-0-1)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

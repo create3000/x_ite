@@ -29,6 +29,15 @@ The ListenerPointSource node belongs to the **Sound** component and requires at 
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFBool \[in, out\] [trackCurrentView](#sfbool-in-out-trackcurrentview-false)
+- SFVec3f \[in, out\] [position](#sfvec3f-in-out-position-0-0-0--)
+- SFRotation \[in, out\] [orientation](#sfrotation-in-out-orientation-0-0-1-0--1-1-or--)
+- SFFloat \[in, out\] [interauralDistance](#sffloat-in-out-interauraldistance-0-0-small-classrednot-supported)
+- SFBool \[in, out\] [dopplerEnabled](#sfbool-in-out-dopplerenabled-false-small-classrednot-supported)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

@@ -29,6 +29,15 @@ The ColorChaser node belongs to the **Followers** component and requires at leas
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFColor \[in\] [set_value](#sfcolor-in-set_value-0-1)
+- SFColor \[in\] [set_destination](#sfcolor-in-set_destination-0-1)
+- SFColor \[ \] [initialValue](#sfcolor---initialvalue-08-08-08-0-1)
+- SFColor \[ \] [initialDestination](#sfcolor---initialdestination-08-08-08-0-1)
+- SFTime \[ \] [duration](#sftime---duration-1-0)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- SFColor \[out\] [value_changed](#sfcolor-out-value_changed)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

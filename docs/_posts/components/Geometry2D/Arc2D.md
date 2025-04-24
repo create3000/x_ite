@@ -27,6 +27,11 @@ The Arc2D node belongs to the **Geometry2D** component and requires at least sup
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[ \] [startAngle](#sffloat---startangle-0--2-2)
+- SFFloat \[ \] [endAngle](#sffloat---endangle-2--2-2)
+- SFFloat \[ \] [radius](#sffloat---radius-1-0)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

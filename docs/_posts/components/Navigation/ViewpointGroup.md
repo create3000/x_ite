@@ -27,6 +27,14 @@ The ViewpointGroup node belongs to the **Navigation** component and requires at 
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [displayed](#sfbool-in-out-displayed-true)
+- SFBool \[in, out\] [retainUserOffsets](#sfbool-in-out-retainuseroffsets-false)
+- SFVec3f \[in, out\] [size](#sfvec3f-in-out-size-0-0-0--)
+- SFVec3f \[in, out\] [center](#sfvec3f-in-out-center-0-0-0--)
+- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dviewpointnode--viewpointgroup)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

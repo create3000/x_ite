@@ -30,6 +30,12 @@ The AnisotropyMaterialExtension node belongs to the **X_ITE** component and requ
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in, out\] [anisotropyStrength](#sffloat-in-out-anisotropystrength-0-0)
+- SFFloat \[in, out\] [anisotropyRotation](#sffloat-in-out-anisotropyrotation-0--)
+- SFString \[in, out\] [anisotropyTextureMapping](#sfstring-in-out-anisotropytexturemapping-)
+- SFNode \[in, out\] [anisotropyTexture](#sfnode-in-out-anisotropytexture-null-x3dsingletexturenode)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

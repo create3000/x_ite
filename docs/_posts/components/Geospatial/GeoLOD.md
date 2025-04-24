@@ -29,6 +29,24 @@ The GeoLOD node belongs to the **Geospatial** component and requires at least su
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
+- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
+- MFString \[ \] [rootUrl](#mfstring---rooturl---uri)
+- MFString \[ \] [child1Url](#mfstring---child1url---uri)
+- MFString \[ \] [child2Url](#mfstring---child2url---uri)
+- MFString \[ \] [child3Url](#mfstring---child3url---uri)
+- MFString \[ \] [child4Url](#mfstring---child4url---uri)
+- SFVec3d \[ \] [center](#sfvec3d---center-0-0-0--)
+- SFFloat \[ \] [range](#sffloat---range-10-0)
+- SFInt32 \[out\] [level_changed](#sfint32-out-level_changed)
+- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
+- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
+- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
+- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+- MFNode \[ \] [rootNode](#mfnode---rootnode---x3dchildnode)
+- MFNode \[out\] [children](#mfnode-out-children)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

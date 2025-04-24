@@ -61,6 +61,7 @@ sub node {
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
    $file   = `cat $md`;
    $file   = reorder_fields ($typeName, $componentName, $file);
+   $file   = fields_list ($typeName, $componentName, $file);
    $file   = update_example ($typeName, $componentName, $file);
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
@@ -326,7 +327,54 @@ sub reorder_fields {
    $string = "";
    $string .= $fields -> {$_ -> [1]} foreach @sourceFields;
 
-   $file =~ s/(## Fields\n+)/$1$string/so;
+   $file =~ s/(## Fields\n+(?:-.*?\n)*\n*)/$1$string/so;
+
+   return $file;
+}
+
+sub fields_list {
+   $typeName      = shift;
+   $componentName = shift;
+   $file          = shift;
+
+   $source       = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
+   @sourceFields = $source =~ /\bX3DFieldDefinition\s*\(.*/go;
+   @sourceFields = map { /X3DConstants\s*\.(\w+),\s*"(.*?)",.*?([SM]F\w+)/o; $_ = [$1, $2, $3] } @sourceFields;
+
+   $fields = { };
+
+   #sfvec3f---bboxsize--1--1--1-0-or-1-1-1
+   #sfvec3f-bboxsize--1--1--1-0-or-1-1-1
+
+   #mfstring-in-out-type--examine-any--examine-walk-fly-plane_create3000githubio-lookat-explore-any-none
+   #mfstring-in-out-type--examine-any--examine-walk-fly-plane_create3000githubio-lookat-explore-any-none
+
+
+   foreach $field (@sourceFields)
+   {
+      if ($file =~ m/###\s*(.*?\*\*$field->[1]\*\*)(.*?)\n/)
+      {
+         $text = $1;
+         $slug = lc ($1 . $2);
+
+         $slug =~ s/<\/?small>//sgo;
+         $slug =~ s/[()]|[^\x00-\x7F]//sgo;
+         $slug =~ s/^[\s,]+|[\s,]+$//sgo;
+         $slug =~ s/[\s,]+/-/sgo;
+         $slug =~ s/[^a-zA-Z\d-_]//sgo;
+
+         $text =~ s/([\[\]])/\\$1/sgo;
+         $text =~ s/\*\*(.*?)\*\*/[$1](#$slug)/so;
+         $fields -> {$field -> [1]} = $text;
+      }
+   }
+
+   $string = "";
+   $string .= "- " . $fields -> {$_ -> [1]} . "\n" foreach @sourceFields;
+   $string .= "{: .fields }\n";
+   $string .= "\n";
+
+   $file =~ s/(## Fields\n+(?:-.*?\n)*\n*)/$1$string/so;
 
    return $file;
 }

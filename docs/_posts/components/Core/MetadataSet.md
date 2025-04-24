@@ -28,6 +28,11 @@ The MetadataSet node belongs to the **Core** component and requires at least sup
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [name](#sfstring-in-out-name-)
+- SFString \[in, out\] [reference](#sfstring-in-out-reference-)
+- MFNode \[in, out\] [value](#mfnode-in-out-value---x3dmetadataobject)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or MetadataSet node.

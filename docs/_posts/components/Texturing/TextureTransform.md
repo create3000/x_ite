@@ -29,6 +29,13 @@ The TextureTransform node belongs to the **Texturing** component and requires at
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [mapping](#sfstring-in-out-mapping-)
+- SFVec2f \[in, out\] [translation](#sfvec2f-in-out-translation-0-0--)
+- SFFloat \[in, out\] [rotation](#sffloat-in-out-rotation-0--)
+- SFVec2f \[in, out\] [scale](#sfvec2f-in-out-scale-1-1--)
+- SFVec2f \[in, out\] [center](#sfvec2f-in-out-center-0-0--)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

@@ -28,6 +28,12 @@ The ScalarInterpolator node belongs to the **Interpolation** component and requi
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFFloat \[in\] [set_fraction](#sffloat-in-set_fraction--)
+- MFFloat \[in, out\] [key](#mffloat-in-out-key----)
+- MFFloat \[in, out\] [keyValue](#mffloat-in-out-keyvalue----)
+- SFFloat \[out\] [value_changed](#sffloat-out-value_changed)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.

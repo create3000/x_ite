@@ -31,6 +31,41 @@ The ReceiverPdu node belongs to the **DIS** component and requires at least supp
 
 ## Fields
 
+- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
+- SFString \[in, out\] [description](#sfstring-in-out-description-)
+- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
+- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
+- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
+- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
+- SFBool \[out\] [isActive](#sfbool-out-isactive)
+- SFString \[in, out\] [address](#sfstring-in-out-address-localhost)
+- SFInt32 \[in, out\] [applicationID](#sfint32-in-out-applicationid-0-0-65535)
+- SFInt32 \[in, out\] [entityID](#sfint32-in-out-entityid-0-0-65535)
+- SFString \[in, out\] [multicastRelayHost](#sfstring-in-out-multicastrelayhost-)
+- SFInt32 \[in, out\] [multicastRelayPort](#sfint32-in-out-multicastrelayport-0-0-65535)
+- SFString \[in, out\] [networkMode](#sfstring-in-out-networkmode-standalone-standalonenetworkreadernetworkwriter)
+- SFInt32 \[in, out\] [port](#sfint32-in-out-port-0-0-65535)
+- SFInt32 \[in, out\] [radioID](#sfint32-in-out-radioid-0-0-65535)
+- SFTime \[in, out\] [readInterval](#sftime-in-out-readinterval-01-0)
+- SFFloat \[in, out\] [receivedPower](#sffloat-in-out-receivedpower-0-0)
+- SFInt32 \[in, out\] [receiverState](#sfint32-in-out-receiverstate-0-0-65535)
+- SFBool \[in, out\] [rtpHeaderExpected](#sfbool-in-out-rtpheaderexpected-false)
+- SFInt32 \[in, out\] [siteID](#sfint32-in-out-siteid-0-0-65535)
+- SFInt32 \[in, out\] [transmitterApplicationID](#sfint32-in-out-transmitterapplicationid-0-0-65535)
+- SFInt32 \[in, out\] [transmitterEntityID](#sfint32-in-out-transmitterentityid-0-0-65535)
+- SFInt32 \[in, out\] [transmitterRadioID](#sfint32-in-out-transmitterradioid-0-0-65535)
+- SFInt32 \[in, out\] [transmitterSiteID](#sfint32-in-out-transmittersiteid-0-0-65535)
+- SFInt32 \[in, out\] [whichGeometry](#sfint32-in-out-whichgeometry-1--1)
+- SFTime \[in, out\] [writeInterval](#sftime-in-out-writeinterval-1-0)
+- SFBool \[out\] [isNetworkReader](#sfbool-out-isnetworkreader)
+- SFBool \[out\] [isNetworkWriter](#sfbool-out-isnetworkwriter)
+- SFBool \[out\] [isRtpHeaderHeard](#sfbool-out-isrtpheaderheard)
+- SFBool \[out\] [isStandAlone](#sfbool-out-isstandalone)
+- SFTime \[out\] [timestamp](#sftime-out-timestamp)
+- SFVec3d \[in, out\] [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--)
+- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
