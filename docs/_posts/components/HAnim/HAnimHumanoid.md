@@ -33,10 +33,10 @@ The HAnimHumanoid node belongs to the **HAnim** component and requires at least 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [version](#field-version) | "2.0" |
 | SFString | [in, out] | [description](#field-description) | "" |
 | SFString | [in, out] | [name](#field-name) | "" |
 | MFString | [in, out] | [info](#field-info) | [ ] |
+| SFString | [in, out] | [version](#field-version) | "2.0" |
 | SFString | [in, out] | [skeletalConfiguration](#field-skeletalConfiguration) | "BASIC" |
 | SFInt32 | [in, out] | [loa](#field-loa) | -1  |
 | SFVec3f | [in, out] | [translation](#field-translation) | 0 0 0  |
@@ -74,20 +74,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFString [in, out] **version** "2.0"
-{: #field-version }
-
-HAnimHumanoid *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019.
-
-#### Hint
-
-- Default HAnimHumanoid *version* is 1.0 for X3D *version* 3, and HAnimHumanoid required *version* is 2.0 for X3D *version* 4.
-
-#### Warnings
-
-- No other values are allowed for strict validation.
-- Prior developmental versions of HAnim nodes, such as *version* 1 of standardized ISO 19774 *version* 2006, might not validate correctly due to small changes in the contained-node content model, so conversion of such models is recommended.
-
 ### SFString [in, out] **description** ""
 {: #field-description }
 
@@ -122,6 +108,20 @@ Contains metadata keyword=value pairs, where approved keyword terms are humanoid
 
 - Height and weight are in base units (typically meters), hanimVersion is for author use and separate from HAnimHumanoid version field.
 - Alternate metadata keywords are also allowed.
+
+### SFString [in, out] **version** "2.0"
+{: #field-version }
+
+HAnimHumanoid *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019.
+
+#### Hint
+
+- Default HAnimHumanoid *version* is 1.0 for X3D *version* 3, and HAnimHumanoid required *version* is 2.0 for X3D *version* 4.
+
+#### Warnings
+
+- No other values are allowed for strict validation.
+- Prior developmental versions of HAnim nodes, such as *version* 1 of standardized ISO 19774 *version* 2006, might not validate correctly due to small changes in the contained-node content model, so conversion of such models is recommended.
 
 ### SFString [in, out] **skeletalConfiguration** "BASIC"
 {: #field-skeletalConfiguration }
