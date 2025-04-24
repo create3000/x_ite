@@ -199,12 +199,12 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       navigationInfoNode ._transitionComplete = true;
    },
+   setInterpolators ()
+   { },
    getDescriptions ()
    {
       return this .descriptions;
    },
-   setInterpolators ()
-   { },
    getPosition ()
    {
       return this ._position .getValue ();
@@ -631,7 +631,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       if (this ._description .getValue ())
       {
-         if (renderObject .getViewpointGroups () .every (viewpointGroupNode => viewpointGroupNode ._displayed .getValue ()))
+         if (renderObject .getViewpointGroups () .every (viewpointGroupNode => viewpointGroupNode .getDisplayed ()))
          {
             for (const viewpointGroupNode of renderObject .getViewpointGroups ())
             {

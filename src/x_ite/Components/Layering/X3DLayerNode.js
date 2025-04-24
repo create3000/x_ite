@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          currentScene           = browser .currentScene;
 
       return Array .from (new Set (this .viewpoints .get ()
-         .filter (viewpointNode => viewpointNode ._description .length)
+         .filter (viewpointNode => viewpointNode .getDescriptions () .length)
          .filter (viewpointNode => enableInlineViewpoints || viewpointNode .getScene () === currentScene)));
    },
    getBackgroundStack ()

@@ -139,7 +139,16 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
       }
 
       this .setCameraObject (this .cameraObjects .length);
-      this .setVisibleObject (this .cameraObjects .length);
+      this .setVisibleObject (this .viewpointGroups .length);
+   },
+   getDisplayed ()
+   {
+      if (!this ._displayed .getValue ())
+         return false;
+
+      const proximitySensor = this .proximitySensor;
+
+      return proximitySensor ._isActive .getValue () || !proximitySensor ._enabled .getValue ();
    },
    traverse (type, renderObject)
    {
@@ -151,16 +160,12 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
          {
             proximitySensor .traverse (type, renderObject);
 
-            if (proximitySensor ._isActive .getValue () || !proximitySensor ._enabled .getValue ())
-            {
-               renderObject .getViewpointGroups () .push (this);
+            renderObject .getViewpointGroups () .push (this);
 
-               for (const cameraObject of this .cameraObjects)
-                  cameraObject .traverse (type, renderObject);
+            for (const cameraObject of this .cameraObjects)
+               cameraObject .traverse (type, renderObject);
 
-               renderObject .getViewpointGroups () .pop ();
-            }
-
+            renderObject .getViewpointGroups () .pop ();
             return;
          }
          case TraverseType .DISPLAY:
