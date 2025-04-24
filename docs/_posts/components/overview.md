@@ -546,3 +546,7 @@ Highest supported level: **1**
 - [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) <small class="blue">experimental</small>
 
 <!-- COMPONENTS END -->
+
+## See Also
+
+- [X3D Specification Component index](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/componentIndex.html)
