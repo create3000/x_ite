@@ -118,7 +118,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-### SFBool [ ] **colorSpaceConversion**
+### SFBool [ ] **colorSpaceConversion** TRUE
 {: #field-colorSpaceConversion }
 
 Field *colorSpaceConversion*.
