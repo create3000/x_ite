@@ -36,6 +36,7 @@ The StaticGroup node belongs to the **Grouping** component and requires at least
 - SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
 - SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
 - MFNode \[ \] [children](#mfnode---children---x3dchildnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

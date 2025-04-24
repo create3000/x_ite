@@ -44,6 +44,7 @@ The TextureBackground node belongs to the **EnvironmentalEffects** component and
 - SFNode \[in, out\] [rightTexture](#sfnode-in-out-righttexture-null-x3dtexture2dnode-multitexture)
 - SFNode \[in, out\] [topTexture](#sfnode-in-out-toptexture-null-x3dtexture2dnode-multitexture)
 - SFNode \[in, out\] [bottomTexture](#sfnode-in-out-bottomtexture-null-x3dtexture2dnode-multitexture)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

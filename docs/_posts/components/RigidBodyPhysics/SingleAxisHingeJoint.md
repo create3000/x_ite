@@ -41,6 +41,7 @@ The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and 
 - SFFloat \[out\] [angleRate](#sffloat-out-anglerate)
 - SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
 - SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

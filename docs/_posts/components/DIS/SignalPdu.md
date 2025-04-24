@@ -66,6 +66,7 @@ The SignalPdu node belongs to the **DIS** component and requires at least suppor
 - SFTime \[out\] [timestamp](#sftime-out-timestamp)
 - SFVec3d \[in, out\] [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--)
 - MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

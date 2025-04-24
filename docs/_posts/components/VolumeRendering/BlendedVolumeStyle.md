@@ -38,6 +38,7 @@ The BlendedVolumeStyle node belongs to the **VolumeRendering** component and req
 - SFNode \[in, out\] [weightTransferFunction2](#sfnode-in-out-weighttransferfunction2-null-x3dtexture2dnode)
 - SFNode \[in, out\] [renderStyle](#sfnode-in-out-renderstyle-null-x3dcomposablevolumerenderstylenode)
 - SFNode \[in, out\] [voxels](#sfnode-in-out-voxels-null-x3dtexture3dnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

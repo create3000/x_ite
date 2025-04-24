@@ -45,6 +45,7 @@ The CADPart node belongs to the **CADGeometry** component and requires at least 
 - MFNode \[in\] [addChildren](#mfnode-in-addchildren)
 - MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---cadface)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

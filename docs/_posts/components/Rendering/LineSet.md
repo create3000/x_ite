@@ -35,6 +35,7 @@ The LineSet node belongs to the **Rendering** component and requires at least su
 - SFNode \[in, out\] [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard)
 - SFNode \[in, out\] [normal](#sfnode-in-out-normal-null-x3dnormalnode)
 - SFNode \[in, out\] [coord](#sfnode-in-out-coord-null-x3dcoordinatenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

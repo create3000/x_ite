@@ -45,6 +45,7 @@ The TwoSidedMaterial node belongs to the **Shape** component and requires at lea
 - SFColor \[in, out\] [backEmissiveColor](#sfcolor-in-out-backemissivecolor-0-0-0-0-1)
 - SFFloat \[in, out\] [backShininess](#sffloat-in-out-backshininess-02-0-1)
 - SFFloat \[in, out\] [backTransparency](#sffloat-in-out-backtransparency-0-0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

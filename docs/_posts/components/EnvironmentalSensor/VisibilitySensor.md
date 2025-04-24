@@ -37,6 +37,7 @@ The VisibilitySensor node belongs to the **EnvironmentalSensor** component and r
 - SFTime \[out\] [enterTime](#sftime-out-entertime)
 - SFTime \[out\] [exitTime](#sftime-out-exittime)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -36,6 +36,7 @@ The GeoPositionInterpolator node belongs to the **Geospatial** component and req
 - MFVec3d \[in, out\] [keyValue](#mfvec3d-in-out-keyvalue--)
 - SFVec3f \[out\] [value_changed](#sfvec3f-out-value_changed)
 - SFVec3d \[out\] [geovalue_changed](#sfvec3d-out-geovalue_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

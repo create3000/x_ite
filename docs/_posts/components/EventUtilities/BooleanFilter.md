@@ -32,6 +32,7 @@ The BooleanFilter node belongs to the **EventUtilities** component and requires 
 - SFBool \[out\] [inputTrue](#sfbool-out-inputtrue)
 - SFBool \[out\] [inputFalse](#sfbool-out-inputfalse)
 - SFBool \[out\] [inputNegate](#sfbool-out-inputnegate)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

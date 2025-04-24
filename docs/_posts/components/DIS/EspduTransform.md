@@ -125,6 +125,7 @@ The EspduTransform node belongs to the **DIS** component and requires at least s
 - SFBool \[in, out\] [rtpHeaderExpected](#sfbool-in-out-rtpheaderexpected-false)
 - SFVec3d \[in, out\] [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--)
 - MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

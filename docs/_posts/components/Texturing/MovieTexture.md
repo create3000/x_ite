@@ -55,6 +55,7 @@ The MovieTexture node belongs to the **Texturing** component and requires at lea
 - SFBool \[ \] [repeatS](#sfbool---repeats-true)
 - SFBool \[ \] [repeatT](#sfbool---repeatt-true)
 - SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

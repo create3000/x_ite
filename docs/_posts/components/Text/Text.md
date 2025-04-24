@@ -36,6 +36,7 @@ The Text node belongs to the **Text** component and requires at least support le
 - SFVec2f \[out\] [textBounds](#sfvec2f-out-textbounds)
 - MFVec2f \[out\] [lineBounds](#mfvec2f-out-linebounds)
 - SFNode \[in, out\] [fontStyle](#sfnode-in-out-fontstyle-null-x3dfontstylenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

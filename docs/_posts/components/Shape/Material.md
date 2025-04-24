@@ -52,6 +52,7 @@ The Material node belongs to the **Shape** component and requires at least suppo
 - SFString \[in, out\] [normalTextureMapping](#sfstring-in-out-normaltexturemapping-)
 - SFNode \[in, out\] [normalTexture](#sfnode-in-out-normaltexture-null-x3dsingletexturenode)
 - SFFloat \[in, out\] [transparency](#sffloat-in-out-transparency-0-0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

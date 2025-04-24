@@ -43,6 +43,7 @@ The IsoSurfaceVolumeData node belongs to the **VolumeRendering** component and r
 - MFNode \[in, out\] [renderStyle](#mfnode-in-out-renderstyle---x3dvolumerenderstylenode)
 - SFNode \[in, out\] [gradients](#sfnode-in-out-gradients-null-x3dtexture3dnode)
 - SFNode \[in, out\] [voxels](#sfnode-in-out-voxels-null-x3dtexture3dnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

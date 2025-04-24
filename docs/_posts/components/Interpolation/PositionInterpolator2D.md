@@ -33,6 +33,7 @@ The PositionInterpolator2D node belongs to the **Interpolation** component and r
 - MFFloat \[in, out\] [key](#mffloat-in-out-key----)
 - MFVec2f \[in, out\] [keyValue](#mfvec2f-in-out-keyvalue----)
 - SFVec2f \[out\] [value_changed](#sfvec2f-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

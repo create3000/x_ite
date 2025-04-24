@@ -61,6 +61,7 @@ The HAnimHumanoid node belongs to the **HAnim** component and requires at least 
 - SFNode \[in, out\] [skinNormal](#sfnode-in-out-skinnormal-null-x3dnormalnode)
 - SFNode \[in, out\] [skinCoord](#sfnode-in-out-skincoord-null-x3dcoordinatenode)
 - MFNode \[in, out\] [skin](#mfnode-in-out-skin---x3dchildnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -35,6 +35,7 @@ The DISEntityManager node belongs to the **DIS** component and requires at least
 - SFInt32 \[in, out\] [siteID](#sfint32-in-out-siteid-0-0-65535)
 - MFNode \[out\] [addedEntities](#mfnode-out-addedentities)
 - MFNode \[out\] [removedEntities](#mfnode-out-removedentities)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

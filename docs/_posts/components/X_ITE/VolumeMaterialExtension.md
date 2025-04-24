@@ -36,6 +36,7 @@ The VolumeMaterialExtension node belongs to the **X_ITE** component and requires
 - SFNode \[in, out\] [thicknessTexture](#sfnode-in-out-thicknesstexture-null-x3dsingletexturenode)
 - SFFloat \[in, out\] [attenuationDistance](#sffloat-in-out-attenuationdistance-1000000-0)
 - SFColor \[in, out\] [attenuationColor](#sfcolor-in-out-attenuationcolor-1-1-1-0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

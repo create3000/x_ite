@@ -38,6 +38,7 @@ The ChannelSplitter node belongs to the **Sound** component and requires at leas
 - SFString \[in, out\] [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
 - MFNode \[in, out\] [outputs](#mfnode-in-out-outputs---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

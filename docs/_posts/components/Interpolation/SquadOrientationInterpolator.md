@@ -34,6 +34,7 @@ The SquadOrientationInterpolator node belongs to the **Interpolation** component
 - MFFloat \[in, out\] [key](#mffloat-in-out-key----)
 - MFRotation \[in, out\] [keyValue](#mfrotation-in-out-keyvalue----)
 - SFRotation \[out\] [value_changed](#sfrotation-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

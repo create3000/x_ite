@@ -36,6 +36,7 @@ The SplinePositionInterpolator node belongs to the **Interpolation** component a
 - MFVec3f \[in, out\] [keyVelocity](#mfvec3f-in-out-keyvelocity----)
 - SFBool \[in, out\] [normalizeVelocity](#sfbool-in-out-normalizevelocity-false)
 - SFVec3f \[out\] [value_changed](#sfvec3f-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

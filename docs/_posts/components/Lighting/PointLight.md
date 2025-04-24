@@ -42,6 +42,7 @@ The PointLight node belongs to the **Lighting** component and requires at least 
 - SFFloat \[in, out\] [shadowIntensity](#sffloat-in-out-shadowintensity-1-0-1)
 - SFFloat \[in, out\] [shadowBias](#sffloat-in-out-shadowbias-0005-0-1-small-classbluenon-standard)
 - SFInt32 \[ \] [shadowMapSize](#sfint32---shadowmapsize-1024-0-small-classbluenon-standard)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

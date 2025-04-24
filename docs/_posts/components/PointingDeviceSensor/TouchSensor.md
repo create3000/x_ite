@@ -39,6 +39,7 @@ The TouchSensor node belongs to the **PointingDeviceSensor** component and requi
 - SFBool \[out\] [isOver](#sfbool-out-isover)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFTime \[out\] [touchTime](#sftime-out-touchtime)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

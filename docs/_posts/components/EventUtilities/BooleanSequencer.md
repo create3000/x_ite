@@ -35,6 +35,7 @@ The BooleanSequencer node belongs to the **EventUtilities** component and requir
 - MFFloat \[in, out\] [key](#mffloat-in-out-key----)
 - MFBool \[in, out\] [keyValue](#mfbool-in-out-keyvalue--)
 - SFBool \[out\] [value_changed](#sfbool-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

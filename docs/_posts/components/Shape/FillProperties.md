@@ -32,6 +32,7 @@ The FillProperties node belongs to the **Shape** component and requires at least
 - SFBool \[in, out\] [hatched](#sfbool-in-out-hatched-true)
 - SFInt32 \[in, out\] [hatchStyle](#sfint32-in-out-hatchstyle-1-0)
 - SFColor \[in, out\] [hatchColor](#sfcolor-in-out-hatchcolor-1-1-1-0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

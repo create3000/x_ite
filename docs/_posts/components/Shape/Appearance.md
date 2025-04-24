@@ -41,6 +41,7 @@ The Appearance node belongs to the **Shape** component and requires at least sup
 - MFNode \[in, out\] [shaders](#mfnode-in-out-shaders---x3dshadernode)
 - SFNode \[in, out\] [blendMode](#sfnode-in-out-blendmode-null-blendmode-small-classbluenon-standard)
 - SFNode \[in, out\] [depthMode](#sfnode-in-out-depthmode-null-depthmode-small-classbluenon-standard)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

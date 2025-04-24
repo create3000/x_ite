@@ -42,6 +42,7 @@ The UniversalJoint node belongs to the **RigidBodyPhysics** component and requir
 - SFVec3f \[out\] [body2AnchorPoint](#sfvec3f-out-body2anchorpoint)
 - SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
 - SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

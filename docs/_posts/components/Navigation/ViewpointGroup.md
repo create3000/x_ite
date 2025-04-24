@@ -34,6 +34,7 @@ The ViewpointGroup node belongs to the **Navigation** component and requires at 
 - SFVec3f \[in, out\] [size](#sfvec3f-in-out-size-0-0-0--)
 - SFVec3f \[in, out\] [center](#sfvec3f-in-out-center-0-0-0--)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3dviewpointnode--viewpointgroup)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

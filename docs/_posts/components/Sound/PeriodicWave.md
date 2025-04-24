@@ -34,6 +34,7 @@ The PeriodicWave node belongs to the **Sound** component and requires at least s
 - SFString \[in, out\] [type](#sfstring-in-out-type-square-sine-square-sawtooth-triangle-custom)
 - MFFloat \[in, out\] [optionsReal](#mffloat-in-out-optionsreal----)
 - MFFloat \[in, out\] [optionsImag](#mffloat-in-out-optionsimag----)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

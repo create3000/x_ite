@@ -40,6 +40,7 @@ The NavigationInfo node belongs to the **Navigation** component and requires at 
 - SFBool \[out\] [transitionComplete](#sfbool-out-transitioncomplete)
 - SFBool \[out\] [isBound](#sfbool-out-isbound)
 - SFTime \[out\] [bindTime](#sftime-out-bindtime)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

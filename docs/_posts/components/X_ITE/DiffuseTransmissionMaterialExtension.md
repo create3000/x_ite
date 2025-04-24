@@ -37,6 +37,7 @@ The DiffuseTransmissionMaterialExtension node belongs to the **X_ITE** component
 - SFColor \[in, out\] [diffuseTransmissionColor](#sfcolor-in-out-diffusetransmissioncolor-1-1-1-0-1)
 - SFString \[in, out\] [diffuseTransmissionColorTextureMapping](#sfstring-in-out-diffusetransmissioncolortexturemapping-)
 - SFNode \[in, out\] [diffuseTransmissionColorTexture](#sfnode-in-out-diffusetransmissioncolortexture-null-x3dsingletexturenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

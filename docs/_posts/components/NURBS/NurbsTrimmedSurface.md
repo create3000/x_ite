@@ -47,6 +47,7 @@ The NurbsTrimmedSurface node belongs to the **NURBS** component and requires at 
 - MFNode \[in\] [addTrimmingContour](#mfnode-in-addtrimmingcontour)
 - MFNode \[in\] [removeTrimmingContour](#mfnode-in-removetrimmingcontour)
 - MFNode \[in, out\] [trimmingContour](#mfnode-in-out-trimmingcontour---contour2d)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

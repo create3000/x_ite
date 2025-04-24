@@ -46,6 +46,7 @@ The TimeSensor node belongs to the **Time** component and requires at least supp
 - SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
 - SFFloat \[out\] [fraction_changed](#sffloat-out-fraction_changed)
 - SFTime \[out\] [time](#sftime-out-time)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

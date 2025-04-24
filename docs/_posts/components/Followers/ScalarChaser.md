@@ -37,6 +37,7 @@ The ScalarChaser node belongs to the **Followers** component and requires at lea
 - SFTime \[ \] [duration](#sftime---duration-1-0)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFFloat \[out\] [value_changed](#sffloat-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

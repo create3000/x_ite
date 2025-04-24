@@ -38,6 +38,7 @@ The CollisionSpace node belongs to the **RigidBodyPhysics** component and requir
 - SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
 - SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
 - MFNode \[in, out\] [collidables](#mfnode-in-out-collidables---x3dnbodycollisionspacenode-x3dnbodycollidablenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

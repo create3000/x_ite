@@ -39,6 +39,7 @@ The ClearcoatMaterialExtension node belongs to the **X_ITE** component and requi
 - SFNode \[in, out\] [clearcoatRoughnessTexture](#sfnode-in-out-clearcoatroughnesstexture-null-x3dsingletexturenode)
 - SFString \[in, out\] [clearcoatNormalTextureMapping](#sfstring-in-out-clearcoatnormaltexturemapping-)
 - SFNode \[in, out\] [clearcoatNormalTexture](#sfnode-in-out-clearcoatnormaltexture-null-x3dsingletexturenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

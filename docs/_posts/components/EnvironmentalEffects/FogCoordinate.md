@@ -29,6 +29,7 @@ The FogCoordinate node belongs to the **EnvironmentalEffects** component and req
 
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - MFFloat \[in, out\] [depth](#mffloat-in-out-depth---0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

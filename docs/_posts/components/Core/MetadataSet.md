@@ -33,6 +33,7 @@ The MetadataSet node belongs to the **Core** component and requires at least sup
 - SFString \[in, out\] [name](#sfstring-in-out-name-)
 - SFString \[in, out\] [reference](#sfstring-in-out-reference-)
 - MFNode \[in, out\] [value](#mfnode-in-out-value---x3dmetadataobject)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

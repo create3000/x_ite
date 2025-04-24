@@ -37,6 +37,7 @@ The DepthMode node belongs to the **X_ITE** component and its default container 
 - SFBool \[in, out\] [depthTest](#sfbool-in-out-depthtest-true)
 - SFString \[in, out\] [depthFunction](#sfstring-in-out-depthfunction-less_equal-never-less-equal-less_equal-greater-not_equal-greater_equal-always)
 - SFBool \[in, out\] [depthMask](#sfbool-in-out-depthmask-true)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

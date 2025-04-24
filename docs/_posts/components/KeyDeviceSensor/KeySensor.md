@@ -40,6 +40,7 @@ The KeySensor node belongs to the **KeyDeviceSensor** component and requires at 
 - SFString \[out\] [keyPress](#sfstring-out-keypress)
 - SFString \[out\] [keyRelease](#sfstring-out-keyrelease)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

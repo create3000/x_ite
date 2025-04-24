@@ -38,6 +38,7 @@ The VolumeEmitter node belongs to the **ParticleSystems** component and requires
 - SFFloat \[in, out\] [surfaceArea](#sffloat-in-out-surfacearea-0-0)
 - MFInt32 \[ \] [coordIndex](#mfint32---coordindex--1-0-or--1)
 - SFNode \[in, out\] [coord](#sfnode-in-out-coord-null-x3dcoordinatenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

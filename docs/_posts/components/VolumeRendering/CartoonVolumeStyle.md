@@ -34,6 +34,7 @@ The CartoonVolumeStyle node belongs to the **VolumeRendering** component and req
 - SFColorRGBA \[in, out\] [orthogonalColor](#sfcolorrgba-in-out-orthogonalcolor-1-1-1-1-0-1)
 - SFColorRGBA \[in, out\] [parallelColor](#sfcolorrgba-in-out-parallelcolor-0-0-0-1-0-1)
 - SFNode \[in, out\] [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

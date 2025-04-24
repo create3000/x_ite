@@ -42,6 +42,7 @@ The Extrusion node belongs to the **Geometry3D** component and requires at least
 - MFRotation \[ \] [orientation](#mfrotation---orientation-0-0-1-0--1-1-or--)
 - MFVec2f \[ \] [scale](#mfvec2f---scale-1-1-0)
 - MFVec3f \[ \] [spine](#mfvec3f---spine--0-0-0-0-1-0---)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -30,6 +30,7 @@ The CoordinateDouble node belongs to the **Rendering** component and requires at
 
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - MFVec3d \[in, out\] [point](#mfvec3d-in-out-point----)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

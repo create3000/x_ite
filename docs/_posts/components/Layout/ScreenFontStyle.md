@@ -37,6 +37,7 @@ The ScreenFontStyle node belongs to the **Layout** component and requires at lea
 - SFBool \[in, out\] [leftToRight](#sfbool-in-out-lefttoright-true)
 - SFBool \[in, out\] [topToBottom](#sfbool-in-out-toptobottom-true)
 - MFString \[in, out\] [justify](#mfstring-in-out-justify-begin-begin-end-first-middle-)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -54,6 +54,7 @@ The ParticleSystem node belongs to the **ParticleSystems** component and require
 - SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
 - SFNode \[in, out\] [appearance](#sfnode-in-out-appearance-null-x3dappearancenode)
 - SFNode \[in, out\] [geometry](#sfnode-in-out-geometry-null-x3dgeometrynode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

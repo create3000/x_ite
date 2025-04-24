@@ -37,6 +37,7 @@ The ListenerPointSource node belongs to the **Sound** component and requires at 
 - SFRotation \[in, out\] [orientation](#sfrotation-in-out-orientation-0-0-1-0--1-1-or--)
 - SFFloat \[in, out\] [interauralDistance](#sffloat-in-out-interauraldistance-0-0-small-classrednot-supported)
 - SFBool \[in, out\] [dopplerEnabled](#sfbool-in-out-dopplerenabled-false-small-classrednot-supported)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

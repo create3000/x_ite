@@ -38,6 +38,7 @@ The DISEntityTypeMapping node belongs to the **DIS** component and requires at l
 - SFInt32 \[ \] [kind](#sfint32---kind-0-0-255)
 - SFInt32 \[ \] [specific](#sfint32---specific-0-0-255)
 - SFInt32 \[ \] [subcategory](#sfint32---subcategory-0-0-255)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

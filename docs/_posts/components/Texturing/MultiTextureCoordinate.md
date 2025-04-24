@@ -30,6 +30,7 @@ The MultiTextureCoordinate node belongs to the **Texturing** component and requi
 
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - MFNode \[in, out\] [texCoord](#mfnode-in-out-texcoord---x3dtexturecoordinatenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

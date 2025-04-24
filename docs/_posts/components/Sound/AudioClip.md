@@ -50,6 +50,7 @@ The AudioClip node belongs to the **Sound** component and requires at least supp
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
 - SFTime \[out\] [duration_changed](#sftime-out-duration_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

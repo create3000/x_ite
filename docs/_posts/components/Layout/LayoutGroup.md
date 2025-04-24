@@ -38,6 +38,7 @@ The LayoutGroup node belongs to the **Layout** component and requires at least s
 - MFNode \[in\] [addChildren](#mfnode-in-addchildren)
 - MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3dchildnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

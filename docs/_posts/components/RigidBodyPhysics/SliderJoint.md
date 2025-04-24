@@ -39,6 +39,7 @@ The SliderJoint node belongs to the **RigidBodyPhysics** component and requires 
 - SFFloat \[out\] [separationRate](#sffloat-out-separationrate-small-classrednot-supported)
 - SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
 - SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

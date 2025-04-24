@@ -39,6 +39,7 @@ The ScalarDamper node belongs to the **Followers** component and requires at lea
 - SFFloat \[in, out\] [tolerance](#sffloat-in-out-tolerance--1--1-or-0)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFFloat \[out\] [value_changed](#sffloat-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

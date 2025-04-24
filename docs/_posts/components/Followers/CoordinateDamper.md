@@ -39,6 +39,7 @@ The CoordinateDamper node belongs to the **Followers** component and requires at
 - SFFloat \[in, out\] [tolerance](#sffloat-in-out-tolerance--1--1-or-0)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - MFVec3f \[out\] [value_changed](#mfvec3f-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -34,6 +34,7 @@ The ProgramShader node belongs to the **Shaders** component and requires at leas
 - SFBool \[out\] [isValid](#sfbool-out-isvalid)
 - SFString \[ \] [language](#sfstring---language--cgglslhlsl)
 - MFNode \[in, out\] [programs](#mfnode-in-out-programs---shaderprogram)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

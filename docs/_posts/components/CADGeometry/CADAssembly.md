@@ -40,6 +40,7 @@ The CADAssembly node belongs to the **CADGeometry** component and requires at le
 - MFNode \[in\] [addChildren](#mfnode-in-addchildren)
 - MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3dproductstructurechildnode-x3dgroupingnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

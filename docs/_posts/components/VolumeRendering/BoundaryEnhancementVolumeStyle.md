@@ -33,6 +33,7 @@ The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** compo
 - SFFloat \[in, out\] [retainedOpacity](#sffloat-in-out-retainedopacity-02-0-1)
 - SFFloat \[in, out\] [boundaryOpacity](#sffloat-in-out-boundaryopacity-09-0-1)
 - SFFloat \[in, out\] [opacityFactor](#sffloat-in-out-opacityfactor-2-0)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

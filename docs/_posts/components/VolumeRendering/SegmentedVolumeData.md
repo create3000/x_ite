@@ -38,6 +38,7 @@ The SegmentedVolumeData node belongs to the **VolumeRendering** component and re
 - SFNode \[in, out\] [segmentIdentifiers](#sfnode-in-out-segmentidentifiers-null-x3dtexture3dnode)
 - MFNode \[in, out\] [renderStyle](#mfnode-in-out-renderstyle---x3dvolumerenderstylenode)
 - SFNode \[in, out\] [voxels](#sfnode-in-out-voxels-null-x3dtexture3dnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

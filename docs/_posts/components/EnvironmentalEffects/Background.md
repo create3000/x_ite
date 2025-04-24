@@ -44,6 +44,7 @@ The Background node belongs to the **EnvironmentalEffects** component and requir
 - SFFloat \[in, out\] [transparency](#sffloat-in-out-transparency-0-0-1)
 - SFBool \[out\] [isBound](#sfbool-out-isbound)
 - SFTime \[out\] [bindTime](#sftime-out-bindtime)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

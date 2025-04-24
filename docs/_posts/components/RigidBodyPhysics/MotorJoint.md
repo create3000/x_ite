@@ -54,6 +54,7 @@ The MotorJoint node belongs to the **RigidBodyPhysics** component and requires a
 - SFFloat \[out\] [motor3AngleRate](#sffloat-out-motor3anglerate)
 - SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
 - SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -32,6 +32,7 @@ The PointProperties node belongs to the **Shape** component and requires at leas
 - SFFloat \[in, out\] [pointSizeMinValue](#sffloat-in-out-pointsizeminvalue-1-0)
 - SFFloat \[in, out\] [pointSizeMaxValue](#sffloat-in-out-pointsizemaxvalue-1-0)
 - SFVec3f \[in, out\] [attenuation](#sfvec3f-in-out-attenuation-1-0-0-0)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -40,6 +40,7 @@ The AudioDestination node belongs to the **Sound** component and requires at lea
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFInt32 \[out\] [maxChannelCount](#sfint32-out-maxchannelcount-2-0)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

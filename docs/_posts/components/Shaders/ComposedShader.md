@@ -37,6 +37,7 @@ The ComposedShader node belongs to the **Shaders** component and requires at lea
 - SFBool \[out\] [isValid](#sfbool-out-isvalid)
 - SFString \[ \] [language](#sfstring---language--cgglslhlsl)
 - MFNode \[in, out\] [parts](#mfnode-in-out-parts---shaderpart)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

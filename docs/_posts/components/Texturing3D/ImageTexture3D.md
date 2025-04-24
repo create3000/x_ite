@@ -43,6 +43,7 @@ The ImageTexture3D node belongs to the **Texturing3D** component and requires at
 - SFBool \[ \] [repeatT](#sfbool---repeatt-false)
 - SFBool \[ \] [repeatR](#sfbool---repeatr-false)
 - SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

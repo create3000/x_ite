@@ -36,6 +36,7 @@ The SplineScalarInterpolator node belongs to the **Interpolation** component and
 - MFFloat \[in, out\] [keyVelocity](#mffloat-in-out-keyvelocity----)
 - SFBool \[in, out\] [normalizeVelocity](#sfbool-in-out-normalizevelocity-false)
 - SFFloat \[out\] [value_changed](#sffloat-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

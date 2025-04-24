@@ -33,6 +33,7 @@ The ArcClose2D node belongs to the **Geometry2D** component and requires at leas
 - SFFloat \[ \] [endAngle](#sffloat---endangle-2--2-2)
 - SFFloat \[ \] [radius](#sffloat---radius-1-0)
 - SFBool \[ \] [solid](#sfbool---solid-false)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

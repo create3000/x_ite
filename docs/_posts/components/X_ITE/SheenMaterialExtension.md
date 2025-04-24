@@ -37,6 +37,7 @@ The SheenMaterialExtension node belongs to the **X_ITE** component and requires 
 - SFFloat \[in, out\] [sheenRoughness](#sffloat-in-out-sheenroughness-0-0)
 - SFString \[in, out\] [sheenRoughnessTextureMapping](#sfstring-in-out-sheenroughnesstexturemapping-)
 - SFNode \[in, out\] [sheenRoughnessTexture](#sfnode-in-out-sheenroughnesstexture-null-x3dsingletexturenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -39,6 +39,7 @@ The GeoMetadata node belongs to the **Geospatial** component and requires at lea
 - SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
 - MFString \[in, out\] [summary](#mfstring-in-out-summary--)
 - MFNode \[in, out\] [data](#mfnode-in-out-data--)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

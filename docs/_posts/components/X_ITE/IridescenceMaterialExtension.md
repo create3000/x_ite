@@ -39,6 +39,7 @@ The IridescenceMaterialExtension node belongs to the **X_ITE** component and req
 - SFFloat \[in, out\] [iridescenceThicknessMaximum](#sffloat-in-out-iridescencethicknessmaximum-400-0)
 - SFString \[in, out\] [iridescenceThicknessTextureMapping](#sfstring-in-out-iridescencethicknesstexturemapping-)
 - SFNode \[in, out\] [iridescenceThicknessTexture](#sfnode-in-out-iridescencethicknesstexture-null-x3dsingletexturenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

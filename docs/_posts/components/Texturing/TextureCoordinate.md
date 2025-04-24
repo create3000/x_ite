@@ -32,6 +32,7 @@ The TextureCoordinate node belongs to the **Texturing** component and requires a
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - SFString \[in, out\] [mapping](#sfstring-in-out-mapping-)
 - MFVec2f \[in, out\] [point](#mfvec2f-in-out-point----)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

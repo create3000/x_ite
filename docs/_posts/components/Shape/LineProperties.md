@@ -31,6 +31,7 @@ The LineProperties node belongs to the **Shape** component and requires at least
 - SFBool \[in, out\] [applied](#sfbool-in-out-applied-true)
 - SFInt32 \[in, out\] [linetype](#sfint32-in-out-linetype-1-1)
 - SFFloat \[in, out\] [linewidthScaleFactor](#sffloat-in-out-linewidthscalefactor-0--)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

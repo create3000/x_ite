@@ -45,6 +45,7 @@ The Gain node belongs to the **Sound** component and requires at least support l
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -36,6 +36,7 @@ The MultiTexture node belongs to the **Texturing** component and requires at lea
 - MFString \[in, out\] [source](#mfstring-in-out-source--)
 - MFString \[in, out\] [function](#mfstring-in-out-function--)
 - MFNode \[in, out\] [texture](#mfnode-in-out-texture---x3dtexturenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

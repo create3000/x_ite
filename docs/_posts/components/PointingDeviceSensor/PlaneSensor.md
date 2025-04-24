@@ -42,6 +42,7 @@ The PlaneSensor node belongs to the **PointingDeviceSensor** component and requi
 - SFVec3f \[out\] [translation_changed](#sfvec3f-out-translation_changed)
 - SFBool \[out\] [isOver](#sfbool-out-isover)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

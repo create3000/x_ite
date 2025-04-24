@@ -39,6 +39,7 @@ The ImageCubeMapTexture node belongs to the **CubeMapTexturing** component and r
 - SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
 - SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
 - SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

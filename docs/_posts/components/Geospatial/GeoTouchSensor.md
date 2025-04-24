@@ -42,6 +42,7 @@ The GeoTouchSensor node belongs to the **Geospatial** component and requires at 
 - SFBool \[out\] [isOver](#sfbool-out-isover)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFTime \[out\] [touchTime](#sftime-out-touchtime)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

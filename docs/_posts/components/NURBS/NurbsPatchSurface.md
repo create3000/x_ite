@@ -44,6 +44,7 @@ The NurbsPatchSurface node belongs to the **NURBS** component and requires at le
 - MFDouble \[in, out\] [weight](#mfdouble-in-out-weight---0)
 - SFNode \[in, out\] [texCoord](#sfnode-in-out-texcoord-null-x3dtexturecoordinatenodenurbstexturecoordinate)
 - SFNode \[in, out\] [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -38,6 +38,7 @@ The CADFace node belongs to the **CADGeometry** component and requires at least 
 - SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
 - SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
 - SFNode \[in, out\] [shape](#sfnode-in-out-shape-null-x3dshapenode-lod-transform)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

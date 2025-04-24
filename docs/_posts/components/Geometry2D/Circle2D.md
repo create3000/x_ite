@@ -29,6 +29,7 @@ The Circle2D node belongs to the **Geometry2D** component and requires at least 
 
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - SFFloat \[ \] [radius](#sffloat---radius-1-0)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

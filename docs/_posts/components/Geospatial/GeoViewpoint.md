@@ -47,6 +47,7 @@ The GeoViewpoint node belongs to the **Geospatial** component and requires at le
 - SFBool \[out\] [isBound](#sfbool-out-isbound)
 - SFTime \[out\] [bindTime](#sftime-out-bindtime)
 - SFNode \[in, out\] [navigationInfo](#sfnode-in-out-navigationinfo-null-navigationinfo)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

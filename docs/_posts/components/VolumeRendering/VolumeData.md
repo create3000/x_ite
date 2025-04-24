@@ -36,6 +36,7 @@ The VolumeData node belongs to the **VolumeRendering** component and requires at
 - SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
 - SFNode \[in, out\] [renderStyle](#sfnode-in-out-renderstyle-null-x3dvolumerenderstylenode)
 - SFNode \[in, out\] [voxels](#sfnode-in-out-voxels-null-x3dtexture3dnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

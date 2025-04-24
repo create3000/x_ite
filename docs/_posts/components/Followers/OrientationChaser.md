@@ -37,6 +37,7 @@ The OrientationChaser node belongs to the **Followers** component and requires a
 - SFTime \[ \] [duration](#sftime---duration-1-0)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFRotation \[out\] [value_changed](#sfrotation-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

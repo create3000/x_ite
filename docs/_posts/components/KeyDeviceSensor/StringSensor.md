@@ -36,6 +36,7 @@ The StringSensor node belongs to the **KeyDeviceSensor** component and requires 
 - SFString \[out\] [enteredText](#sfstring-out-enteredtext)
 - SFString \[out\] [finalText](#sfstring-out-finaltext)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

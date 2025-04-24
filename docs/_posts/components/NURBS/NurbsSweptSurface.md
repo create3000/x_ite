@@ -33,6 +33,7 @@ The NurbsSweptSurface node belongs to the **NURBS** component and requires at le
 - SFBool \[ \] [ccw](#sfbool---ccw-true)
 - SFNode \[in, out\] [crossSectionCurve](#sfnode-in-out-crosssectioncurve-null-x3dnurbscontrolcurvenode)
 - SFNode \[in, out\] [trajectoryCurve](#sfnode-in-out-trajectorycurve-null-nurbscurve)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

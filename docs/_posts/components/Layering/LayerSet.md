@@ -30,6 +30,7 @@ The LayerSet node belongs to the **Layering** component and requires at least su
 - SFInt32 \[in, out\] [activeLayer](#sfint32-in-out-activelayer-0-0)
 - MFInt32 \[in, out\] [order](#mfint32-in-out-order--0--0)
 - MFNode \[in, out\] [layers](#mfnode-in-out-layers---x3dlayernode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

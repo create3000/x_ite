@@ -34,6 +34,7 @@ The TransmissionMaterialExtension node belongs to the **X_ITE** component and re
 - SFFloat \[in, out\] [transmission](#sffloat-in-out-transmission-0-0)
 - SFString \[in, out\] [transmissionTextureMapping](#sfstring-in-out-transmissiontexturemapping-)
 - SFNode \[in, out\] [transmissionTexture](#sfnode-in-out-transmissiontexture-null-x3dsingletexturenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

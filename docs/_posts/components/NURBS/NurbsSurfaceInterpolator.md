@@ -39,6 +39,7 @@ The NurbsSurfaceInterpolator node belongs to the **NURBS** component and require
 - SFNode \[in, out\] [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode)
 - SFVec3f \[out\] [normal_changed](#sfvec3f-out-normal_changed)
 - SFVec3f \[out\] [position_changed](#sfvec3f-out-position_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

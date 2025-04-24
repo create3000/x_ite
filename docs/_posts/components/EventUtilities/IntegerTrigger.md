@@ -32,6 +32,7 @@ The IntegerTrigger node belongs to the **EventUtilities** component and requires
 - SFBool \[in\] [set_boolean](#sfbool-in-set_boolean)
 - SFInt32 \[in, out\] [integerKey](#sfint32-in-out-integerkey--1--)
 - SFInt32 \[out\] [triggerValue](#sfint32-out-triggervalue)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

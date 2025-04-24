@@ -34,6 +34,7 @@ The SurfaceEmitter node belongs to the **ParticleSystems** component and require
 - SFFloat \[in, out\] [mass](#sffloat-in-out-mass-0-0)
 - SFFloat \[in, out\] [surfaceArea](#sffloat-in-out-surfacearea-0-0)
 - SFNode \[ \] [surface](#sfnode---surface-null-x3dgeometrynode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

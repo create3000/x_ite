@@ -39,6 +39,7 @@ The SphereSensor node belongs to the **PointingDeviceSensor** component and requ
 - SFRotation \[out\] [rotation_changed](#sfrotation-out-rotation_changed)
 - SFBool \[out\] [isOver](#sfbool-out-isover)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

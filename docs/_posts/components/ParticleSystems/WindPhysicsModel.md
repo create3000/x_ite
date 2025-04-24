@@ -33,6 +33,7 @@ The WindPhysicsModel node belongs to the **ParticleSystems** component and requi
 - SFFloat \[in, out\] [speed](#sffloat-in-out-speed-01-0)
 - SFFloat \[in, out\] [gustiness](#sffloat-in-out-gustiness-01-0)
 - SFFloat \[in, out\] [turbulence](#sffloat-in-out-turbulence-0-0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

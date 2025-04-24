@@ -30,6 +30,7 @@ The Rectangle2D node belongs to the **Geometry2D** component and requires at lea
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - SFVec2f \[ \] [size](#sfvec2f---size-2-2-0)
 - SFBool \[ \] [solid](#sfbool---solid-false)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

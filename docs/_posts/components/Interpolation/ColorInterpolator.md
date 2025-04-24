@@ -33,6 +33,7 @@ The ColorInterpolator node belongs to the **Interpolation** component and requir
 - MFFloat \[in, out\] [key](#mffloat-in-out-key----)
 - MFColor \[in, out\] [keyValue](#mfcolor-in-out-keyvalue---0-1)
 - SFColor \[out\] [value_changed](#sfcolor-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

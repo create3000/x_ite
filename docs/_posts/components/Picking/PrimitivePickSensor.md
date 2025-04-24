@@ -40,6 +40,7 @@ The PrimitivePickSensor node belongs to the **Picking** component and requires a
 - SFNode \[in, out\] [pickingGeometry](#sfnode-in-out-pickinggeometry-null-conecylinderspherebox)
 - MFNode \[in, out\] [pickTarget](#mfnode-in-out-picktarget---x3dgroupingnodex3dshapenodeinline)
 - MFNode \[out\] [pickedGeometry](#mfnode-out-pickedgeometry)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

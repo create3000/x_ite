@@ -34,6 +34,7 @@ The GeneratedCubeMapTexture node belongs to the **CubeMapTexturing** component a
 - SFString \[in, out\] [update](#sfstring-in-out-update-none-nonenext_frame_onlyalways)
 - SFInt32 \[ \] [size](#sfint32---size-128-0)
 - SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

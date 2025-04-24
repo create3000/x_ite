@@ -47,6 +47,7 @@ The GeoLOD node belongs to the **Geospatial** component and requires at least su
 - SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
 - MFNode \[ \] [rootNode](#mfnode---rootnode---x3dchildnode)
 - MFNode \[out\] [children](#mfnode-out-children)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -43,6 +43,7 @@ The Contact node belongs to the **RigidBodyPhysics** component and requires at l
 - SFNode \[in, out\] [geometry2](#sfnode-in-out-geometry2-null-x3dnbodycollidablenode)
 - SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
 - SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

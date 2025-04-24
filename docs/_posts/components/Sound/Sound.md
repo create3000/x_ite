@@ -42,6 +42,7 @@ The Sound node belongs to the **Sound** component and requires at least support 
 - SFFloat \[in, out\] [priority](#sffloat-in-out-priority-0-0-1)
 - SFNode \[in, out\] [source](#sfnode-in-out-source-null-x3dsoundsourcenode)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -33,6 +33,7 @@ The ScalarInterpolator node belongs to the **Interpolation** component and requi
 - MFFloat \[in, out\] [key](#mffloat-in-out-key----)
 - MFFloat \[in, out\] [keyValue](#mffloat-in-out-keyvalue----)
 - SFFloat \[out\] [value_changed](#sffloat-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

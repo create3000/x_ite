@@ -29,6 +29,7 @@ The ContourPolyline2D node belongs to the **NURBS** component and requires at le
 
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - MFVec2d \[in, out\] [controlPoint](#mfvec2d-in-out-controlpoint----)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -35,6 +35,7 @@ The IntegerSequencer node belongs to the **EventUtilities** component and requir
 - MFFloat \[in, out\] [key](#mffloat-in-out-key----)
 - MFInt32 \[in, out\] [keyValue](#mfint32-in-out-keyvalue----)
 - SFInt32 \[out\] [value_changed](#sfint32-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

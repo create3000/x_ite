@@ -35,6 +35,7 @@ The NurbsCurve node belongs to the **NURBS** component and requires at least sup
 - MFDouble \[ \] [knot](#mfdouble---knot----)
 - MFDouble \[in, out\] [weight](#mfdouble-in-out-weight---0)
 - SFNode \[in, out\] [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

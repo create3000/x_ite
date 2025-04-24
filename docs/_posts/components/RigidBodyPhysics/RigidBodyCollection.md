@@ -48,6 +48,7 @@ The RigidBodyCollection node belongs to the **RigidBodyPhysics** component and r
 - SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
 - SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
 - SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

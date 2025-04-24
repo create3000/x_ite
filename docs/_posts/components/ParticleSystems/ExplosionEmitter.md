@@ -34,6 +34,7 @@ The ExplosionEmitter node belongs to the **ParticleSystems** component and requi
 - SFFloat \[in, out\] [variation](#sffloat-in-out-variation-025-0)
 - SFFloat \[in, out\] [mass](#sffloat-in-out-mass-0-0)
 - SFFloat \[in, out\] [surfaceArea](#sffloat-in-out-surfacearea-0-0)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

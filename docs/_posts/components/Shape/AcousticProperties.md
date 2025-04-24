@@ -34,6 +34,7 @@ The AcousticProperties node belongs to the **Shape** component and requires at l
 - SFFloat \[in, out\] [specular](#sffloat-in-out-specular-0-0-1)
 - SFFloat \[in, out\] [refraction](#sffloat-in-out-refraction-0-0-1)
 - SFFloat \[in, out\] [absorption](#sffloat-in-out-absorption-0-0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

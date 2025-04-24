@@ -35,6 +35,7 @@ The AnisotropyMaterialExtension node belongs to the **X_ITE** component and requ
 - SFFloat \[in, out\] [anisotropyRotation](#sffloat-in-out-anisotropyrotation-0--)
 - SFString \[in, out\] [anisotropyTextureMapping](#sfstring-in-out-anisotropytexturemapping-)
 - SFNode \[in, out\] [anisotropyTexture](#sfnode-in-out-anisotropytexture-null-x3dsingletexturenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

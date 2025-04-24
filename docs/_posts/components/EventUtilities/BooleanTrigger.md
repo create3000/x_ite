@@ -31,6 +31,7 @@ The BooleanTrigger node belongs to the **EventUtilities** component and requires
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - SFTime \[in\] [set_triggerTime](#sftime-in-set_triggertime--)
 - SFBool \[out\] [triggerTrue](#sfbool-out-triggertrue)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

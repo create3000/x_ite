@@ -36,6 +36,7 @@ The LocalFog node belongs to the **EnvironmentalEffects** component and requires
 - SFColor \[in, out\] [color](#sfcolor-in-out-color-1-1-1-0-1)
 - SFFloat \[in, out\] [visibilityStart](#sffloat-in-out-visibilitystart-0-0-small-classbluenon-standard)
 - SFFloat \[in, out\] [visibilityRange](#sffloat-in-out-visibilityrange-0-0--)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -31,6 +31,7 @@ The Arc2D node belongs to the **Geometry2D** component and requires at least sup
 - SFFloat \[ \] [startAngle](#sffloat---startangle-0--2-2)
 - SFFloat \[ \] [endAngle](#sffloat---endangle-2--2-2)
 - SFFloat \[ \] [radius](#sffloat---radius-1-0)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

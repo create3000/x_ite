@@ -33,6 +33,7 @@ The MetadataFloat node belongs to the **Core** component and requires at least s
 - SFString \[in, out\] [name](#sfstring-in-out-name-)
 - SFString \[in, out\] [reference](#sfstring-in-out-reference-)
 - MFFloat \[in, out\] [value](#mffloat-in-out-value--)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

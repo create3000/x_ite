@@ -54,6 +54,7 @@ The SpecularGlossinessMaterial node belongs to the **X_ITE** component and requi
 - SFNode \[in, out\] [normalTexture](#sfnode-in-out-normaltexture-null-x3dsingletexturenode)
 - SFFloat \[in, out\] [transparency](#sffloat-in-out-transparency-0-0-1)
 - MFNode \[in, out\] [extensions](#mfnode-in-out-extensions---x3dmaterialextensionnode-small-classbluenon-standard)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -37,6 +37,7 @@ The ColorChaser node belongs to the **Followers** component and requires at leas
 - SFTime \[ \] [duration](#sftime---duration-1-0)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFColor \[out\] [value_changed](#sfcolor-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

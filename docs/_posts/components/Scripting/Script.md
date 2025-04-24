@@ -39,6 +39,7 @@ The Script node belongs to the **Scripting** component and requires at least sup
 - SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
 - SFBool \[ \] [directOutput](#sfbool---directoutput-false)
 - SFBool \[ \] [mustEvaluate](#sfbool---mustevaluate-false)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

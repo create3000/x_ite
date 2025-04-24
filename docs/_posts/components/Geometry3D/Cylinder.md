@@ -34,6 +34,7 @@ The Cylinder node belongs to the **Geometry3D** component and requires at least 
 - SFFloat \[ \] [height](#sffloat---height-2-0)
 - SFFloat \[ \] [radius](#sffloat---radius-1-0)
 - SFBool \[ \] [solid](#sfbool---solid-true)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

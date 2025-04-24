@@ -38,6 +38,7 @@ The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component an
 - SFNode \[in, out\] [topTexture](#sfnode-in-out-toptexture-null-x3dtexture2dnode)
 - SFNode \[in, out\] [bottomTexture](#sfnode-in-out-bottomtexture-null-x3dtexture2dnode)
 - SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

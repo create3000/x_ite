@@ -34,6 +34,7 @@ The NurbsOrientationInterpolator node belongs to the **NURBS** component and req
 - MFDouble \[in, out\] [weight](#mfdouble-in-out-weight----)
 - SFNode \[in, out\] [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode)
 - SFRotation \[out\] [value_changed](#sfrotation-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

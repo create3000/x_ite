@@ -47,6 +47,7 @@ The GeoElevationGrid node belongs to the **Geospatial** component and requires a
 - SFNode \[in, out\] [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard)
 - SFNode \[in, out\] [normal](#sfnode-in-out-normal-null-x3dnormalnode)
 - MFDouble \[ \] [height](#mfdouble---height--0-0---)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

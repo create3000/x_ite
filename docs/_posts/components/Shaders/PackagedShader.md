@@ -41,6 +41,7 @@ The PackagedShader node belongs to the **Shaders** component and requires at lea
 - MFString \[in, out\] [url](#mfstring-in-out-url---uri)
 - SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
 - SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

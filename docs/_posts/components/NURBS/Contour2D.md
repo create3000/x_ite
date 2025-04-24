@@ -30,6 +30,7 @@ The Contour2D node belongs to the **NURBS** component and requires at least supp
 - MFNode \[in\] [addChildren](#mfnode-in-addchildren)
 - MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---nurbscurve2dcontourpolyline2d)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

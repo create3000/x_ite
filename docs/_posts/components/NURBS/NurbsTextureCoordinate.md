@@ -35,6 +35,7 @@ The NurbsTextureCoordinate node belongs to the **NURBS** component and requires 
 - MFDouble \[ \] [vKnot](#mfdouble---vknot----)
 - MFDouble \[in, out\] [weight](#mfdouble-in-out-weight---0)
 - MFVec2f \[in, out\] [controlPoint](#mfvec2f-in-out-controlpoint----)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -31,6 +31,7 @@ The ProjectionVolumeStyle node belongs to the **VolumeRendering** component and 
 - SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
 - SFString \[in, out\] [type](#sfstring-in-out-type-max-maxminaverage)
 - SFFloat \[in, out\] [intensityThreshold](#sffloat-in-out-intensitythreshold-0-0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

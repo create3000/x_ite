@@ -40,6 +40,7 @@ The ProximitySensor node belongs to the **EnvironmentalSensor** component and re
 - SFVec3f \[out\] [position_changed](#sfvec3f-out-position_changed)
 - SFRotation \[out\] [orientation_changed](#sfrotation-out-orientation_changed)
 - SFVec3f \[out\] [centerOfRotation_changed](#sfvec3f-out-centerofrotation_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

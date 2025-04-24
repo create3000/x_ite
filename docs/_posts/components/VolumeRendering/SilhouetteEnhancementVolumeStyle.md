@@ -34,6 +34,7 @@ The SilhouetteEnhancementVolumeStyle node belongs to the **VolumeRendering** com
 - SFFloat \[in, out\] [silhouetteBoundaryOpacity](#sffloat-in-out-silhouetteboundaryopacity-0-0-1)
 - SFFloat \[in, out\] [silhouetteSharpness](#sffloat-in-out-silhouettesharpness-05-0)
 - SFNode \[in, out\] [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

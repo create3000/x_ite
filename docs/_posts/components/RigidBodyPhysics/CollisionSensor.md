@@ -35,6 +35,7 @@ The CollisionSensor node belongs to the **RigidBodyPhysics** component and requi
 - MFNode \[out\] [intersections](#mfnode-out-intersections-x3dnbodycollidablenode)
 - MFNode \[out\] [contacts](#mfnode-out-contacts-contact)
 - SFNode \[in, out\] [collider](#sfnode-in-out-collider-null-collisioncollection)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

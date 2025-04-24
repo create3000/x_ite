@@ -44,6 +44,7 @@ The Viewpoint node belongs to the **Navigation** component and requires at least
 - SFBool \[out\] [isBound](#sfbool-out-isbound)
 - SFTime \[out\] [bindTime](#sftime-out-bindtime)
 - SFNode \[in, out\] [navigationInfo](#sfnode-in-out-navigationinfo-null-navigationinfo)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

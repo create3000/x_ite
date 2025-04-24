@@ -35,6 +35,7 @@ The Layout node belongs to the **Layout** component and requires at least suppor
 - MFString \[in, out\] [sizeUnits](#mfstring-in-out-sizeunits--world-world--worldfractionpixel)
 - MFFloat \[in, out\] [size](#mffloat-in-out-size--1-1--0)
 - MFString \[in, out\] [scaleMode](#mfstring-in-out-scalemode--none-none--nonefractionstretchpixel)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

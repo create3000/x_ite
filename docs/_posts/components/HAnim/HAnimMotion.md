@@ -47,6 +47,7 @@ The HAnimMotion node belongs to the **HAnim** component and requires at least su
 - SFTime \[out\] [cycleTime](#sftime-out-cycletime)
 - SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
 - SFInt32 \[out\] [frameCount](#sfint32-out-framecount)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

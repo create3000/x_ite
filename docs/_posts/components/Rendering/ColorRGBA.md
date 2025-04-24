@@ -30,6 +30,7 @@ The ColorRGBA node belongs to the **Rendering** component and requires at least 
 
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - MFColorRGBA \[in, out\] [color](#mfcolorrgba-in-out-color---0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

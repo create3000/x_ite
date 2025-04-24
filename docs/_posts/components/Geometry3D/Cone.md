@@ -33,6 +33,7 @@ The Cone node belongs to the **Geometry3D** component and requires at least supp
 - SFFloat \[ \] [height](#sffloat---height-2-0)
 - SFFloat \[ \] [bottomRadius](#sffloat---bottomradius-1-0)
 - SFBool \[ \] [solid](#sfbool---solid-true)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

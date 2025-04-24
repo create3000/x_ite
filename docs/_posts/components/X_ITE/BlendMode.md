@@ -39,6 +39,7 @@ The BlendMode node belongs to the **X_ITE** component and its default container 
 - SFString \[in, out\] [destinationAlphaFactor](#sfstring-in-out-destinationalphafactor-one_minus_src_alpha)
 - SFString \[in, out\] [colorEquation](#sfstring-in-out-colorequation-func_add)
 - SFString \[in, out\] [alphaEquation](#sfstring-in-out-alphaequation-func_add)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

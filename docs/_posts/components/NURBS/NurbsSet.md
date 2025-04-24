@@ -39,6 +39,7 @@ The NurbsSet node belongs to the **NURBS** component and requires at least suppo
 - MFNode \[in\] [addGeometry](#mfnode-in-addgeometry)
 - MFNode \[in\] [removeGeometry](#mfnode-in-removegeometry)
 - MFNode \[in, out\] [geometry](#mfnode-in-out-geometry---x3dnurbssurfacegeometrynode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

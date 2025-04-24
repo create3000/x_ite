@@ -37,6 +37,7 @@ The SpecularMaterialExtension node belongs to the **X_ITE** component and requir
 - SFColor \[in, out\] [specularColor](#sfcolor-in-out-specularcolor-1-1-1-0)
 - SFString \[in, out\] [specularColorTextureMapping](#sfstring-in-out-specularcolortexturemapping-)
 - SFNode \[in, out\] [specularColorTexture](#sfnode-in-out-specularcolortexture-null-x3dsingletexturenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

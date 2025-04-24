@@ -33,6 +33,7 @@ The TextureCoordinateGenerator node belongs to the **Texturing** component and r
 - SFString \[in, out\] [mapping](#sfstring-in-out-mapping-)
 - SFString \[in, out\] [mode](#sfstring-in-out-mode-sphere-spherecameraspacenormalcameraspacepositioncameraspacereflectionvectorsphere-localcoordcoord-eyenoisenoise-eyesphere-reflectsphere-reflect-local)
 - MFFloat \[in, out\] [parameter](#mffloat-in-out-parameter--)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

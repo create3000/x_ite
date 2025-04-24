@@ -327,7 +327,7 @@ sub reorder_fields {
    $string = "";
    $string .= $fields -> {$_ -> [1]} foreach @sourceFields;
 
-   $file =~ s/(## Fields\n+(?:-.*?\n)*\n*)/$1$string/so;
+   $file =~ s/(## Fields\n+(?:-.*?\n+)*)(?:\{:.*?\})?/$1$string/so;
 
    return $file;
 }
@@ -374,7 +374,7 @@ sub fields_list {
    $string .= "{: .fields }\n";
    $string .= "\n";
 
-   $file =~ s/(## Fields\n+(?:-.*?\n)*\n*)/$1$string/so;
+   $file =~ s/(## Fields\n+)(?:-.*?\n+)*(?:\{:.*?\})?/$1$string/so;
 
    return $file;
 }

@@ -39,6 +39,7 @@ The Fog node belongs to the **EnvironmentalEffects** component and requires at l
 - SFFloat \[in, out\] [visibilityRange](#sffloat-in-out-visibilityrange-0-0)
 - SFBool \[out\] [isBound](#sfbool-out-isbound)
 - SFTime \[out\] [bindTime](#sftime-out-bindtime)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

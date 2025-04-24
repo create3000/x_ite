@@ -45,6 +45,7 @@ The ElevationGrid node belongs to the **Geometry3D** component and requires at l
 - SFNode \[in, out\] [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard)
 - SFNode \[in, out\] [normal](#sfnode-in-out-normal-null-x3dnormalnode)
 - MFFloat \[ \] [height](#mffloat---height----)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

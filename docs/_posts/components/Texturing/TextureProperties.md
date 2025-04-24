@@ -38,6 +38,7 @@ The TextureProperties node belongs to the **Texturing** component and requires a
 - SFString \[in, out\] [boundaryModeR](#sfstring-in-out-boundarymoder-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat)
 - SFString \[in, out\] [textureCompression](#sfstring-in-out-texturecompression-default-default-fastest-high-low-medium-nicest)
 - SFFloat \[in, out\] [texturePriority](#sffloat-in-out-texturepriority-0-0-1)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

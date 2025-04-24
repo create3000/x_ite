@@ -31,6 +31,7 @@ The EaseInEaseOut node belongs to the **Interpolation** component and requires a
 - MFFloat \[in, out\] [key](#mffloat-in-out-key----)
 - MFVec2f \[in, out\] [easeInEaseOut](#mfvec2f-in-out-easeineaseout----)
 - SFFloat \[out\] [modifiedFraction_changed](#sffloat-out-modifiedfraction_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

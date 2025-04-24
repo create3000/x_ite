@@ -39,6 +39,7 @@ The GeoLocation node belongs to the **Geospatial** component and requires at lea
 - MFNode \[in\] [addChildren](#mfnode-in-addchildren)
 - MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3dchildnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -40,6 +40,7 @@ The TransformSensor node belongs to the **EnvironmentalSensor** component and re
 - SFVec3f \[out\] [position_changed](#sfvec3f-out-position_changed)
 - SFRotation \[out\] [orientation_changed](#sfrotation-out-orientation_changed)
 - SFNode \[in, out\] [targetObject](#sfnode-in-out-targetobject-null-x3dgroupingnodex3dshapenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -47,6 +47,7 @@ The SpatialSound node belongs to the **Sound** component and requires at least s
 - SFBool \[in, out\] [dopplerEnabled](#sfbool-in-out-dopplerenabled-false-small-classrednot-supported)
 - SFFloat \[in, out\] [priority](#sffloat-in-out-priority-0-0-1)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

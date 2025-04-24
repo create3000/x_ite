@@ -30,6 +30,7 @@ The TriangleSet2D node belongs to the **Geometry2D** component and requires at l
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - MFVec2f \[in, out\] [vertices](#mfvec2f-in-out-vertices----)
 - SFBool \[ \] [solid](#sfbool---solid-false)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -34,6 +34,7 @@ The NurbsPositionInterpolator node belongs to the **NURBS** component and requir
 - MFDouble \[in, out\] [weight](#mfdouble-in-out-weight----)
 - SFNode \[in, out\] [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode)
 - SFVec3f \[out\] [value_changed](#sfvec3f-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

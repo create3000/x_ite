@@ -37,6 +37,7 @@ The ComposedTexture3D node belongs to the **Texturing3D** component and requires
 - SFBool \[ \] [repeatR](#sfbool---repeatr-false)
 - SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
 - MFNode \[in, out\] [texture](#mfnode-in-out-texture---x3dtexture2dnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

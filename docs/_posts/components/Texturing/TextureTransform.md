@@ -35,6 +35,7 @@ The TextureTransform node belongs to the **Texturing** component and requires at
 - SFFloat \[in, out\] [rotation](#sffloat-in-out-rotation-0--)
 - SFVec2f \[in, out\] [scale](#sfvec2f-in-out-scale-1-1--)
 - SFVec2f \[in, out\] [center](#sfvec2f-in-out-center-0-0--)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -33,6 +33,7 @@ The NurbsSwungSurface node belongs to the **NURBS** component and requires at le
 - SFBool \[ \] [ccw](#sfbool---ccw-true)
 - SFNode \[in, out\] [profileCurve](#sfnode-in-out-profilecurve-null-x3dnurbscontrolcurvenode)
 - SFNode \[in, out\] [trajectoryCurve](#sfnode-in-out-trajectorycurve-null-x3dnurbscontrolcurvenode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

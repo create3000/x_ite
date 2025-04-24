@@ -30,6 +30,7 @@ The Sphere node belongs to the **Geometry3D** component and requires at least su
 - SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
 - SFFloat \[ \] [radius](#sffloat---radius-1-0)
 - SFBool \[ \] [solid](#sfbool---solid-true)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

@@ -43,6 +43,7 @@ The LinePickSensor node belongs to the **Picking** component and requires at lea
 - SFNode \[in, out\] [pickingGeometry](#sfnode-in-out-pickinggeometry-null-indexedlinesetlineset)
 - MFNode \[in, out\] [pickTarget](#mfnode-in-out-picktarget---x3dgroupingnodex3dshapenodeinline)
 - MFNode \[out\] [pickedGeometry](#mfnode-out-pickedgeometry)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

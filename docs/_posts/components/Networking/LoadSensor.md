@@ -38,6 +38,7 @@ The LoadSensor node belongs to the **Networking** component and requires at leas
 - SFFloat \[out\] [progress](#sffloat-out-progress)
 - SFTime \[out\] [loadTime](#sftime-out-loadtime)
 - MFNode \[in, out\] [children](#mfnode-in-out-children---x3durlobject)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

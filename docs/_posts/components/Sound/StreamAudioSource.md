@@ -41,6 +41,7 @@ The StreamAudioSource node belongs to the **Sound** component and requires at le
 - SFBool \[out\] [isPaused](#sfbool-out-ispaused)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

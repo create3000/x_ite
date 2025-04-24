@@ -35,6 +35,7 @@ The ShadedVolumeStyle node belongs to the **VolumeRendering** component and requ
 - SFString \[ \] [phaseFunction](#sfstring---phasefunction-henyey-greenstein-henyey-greensteinnone)
 - SFNode \[in, out\] [material](#sfnode-in-out-material-null-x3dmaterialnode)
 - SFNode \[in, out\] [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

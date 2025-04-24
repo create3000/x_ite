@@ -39,6 +39,7 @@ The PositionDamper node belongs to the **Followers** component and requires at l
 - SFTime \[in, out\] [tau](#sftime-in-out-tau-03-0)
 - SFVec3f \[out\] [value_changed](#sfvec3f-out-value_changed)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

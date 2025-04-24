@@ -33,6 +33,7 @@ The HAnimDisplacer node belongs to the **HAnim** component and requires at least
 - SFFloat \[in, out\] [weight](#sffloat-in-out-weight-0--)
 - MFInt32 \[in, out\] [coordIndex](#mfint32-in-out-coordindex---0-or--1)
 - MFVec3f \[in, out\] [displacements](#mfvec3f-in-out-displacements--)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 

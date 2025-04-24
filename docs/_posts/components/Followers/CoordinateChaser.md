@@ -37,6 +37,7 @@ The CoordinateChaser node belongs to the **Followers** component and requires at
 - SFTime \[ \] [duration](#sftime---duration-1-0)
 - SFBool \[out\] [isActive](#sfbool-out-isactive)
 - MFVec3f \[out\] [value_changed](#mfvec3f-out-value_changed)
+{: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
