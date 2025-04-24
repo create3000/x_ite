@@ -61,7 +61,7 @@ import DEVELOPMENT  from "../DEVELOPMENT.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r]+/gy,
+   whitespaces: /[\x20\n\t\r,]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
    comment: /#.*?(?=[\n\r]|$)/gy,
    untilEndOfLine: /[^\r\n]+/gy,
