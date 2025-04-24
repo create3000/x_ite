@@ -89,17 +89,27 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
       this ._size   .addFieldInterest (this .proximitySensor ._size);
       this ._center .addFieldInterest (this .proximitySensor ._center);
 
+      this .proximitySensor ._isActive .addInterest ("set_active__", this);
+
       this .proximitySensor ._size   = this ._size;
       this .proximitySensor ._center = this ._center;
 
       this .proximitySensor .setup ();
 
       this .set_size__ ();
+      this .set_active__ ();
       this .set_children__ ();
    },
    set_size__ ()
    {
       this .proximitySensor ._enabled = !this ._size .getValue () .equals (Vector3 .Zero);
+   },
+   set_active__ ()
+   {
+      const proximitySensor = this .proximitySensor;
+
+      this .active    = proximitySensor ._isActive .getValue () || !proximitySensor ._enabled .getValue ();
+      this .displayed = this ._displayed .getValue () && this .active;
    },
    set_children__ ()
    {
@@ -143,12 +153,7 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
    },
    getDisplayed ()
    {
-      if (!this ._displayed .getValue ())
-         return false;
-
-      const proximitySensor = this .proximitySensor;
-
-      return proximitySensor ._isActive .getValue () || !proximitySensor ._enabled .getValue ();
+      return this .displayed;
    },
    traverse (type, renderObject)
    {
@@ -170,7 +175,7 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
          }
          case TraverseType .DISPLAY:
          {
-            if (proximitySensor ._isActive .getValue () || !proximitySensor ._enabled .getValue ())
+            if (this .active)
             {
                for (const viewpointGroup of this .viewpointGroups)
                   viewpointGroup .traverse (type, renderObject);
