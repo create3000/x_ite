@@ -30,15 +30,16 @@ The SquadOrientationInterpolator node belongs to the **Interpolation** component
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFFloat | \[in\] | [set_fraction](#sffloat-in-set_fraction--) |  |
-| SFBool | \[in, out\] | [closed](#sfbool-in-out-closed-false) | FALSE |
-| MFFloat | \[in, out\] | [key](#mffloat-in-out-key----) | \[ \] |
-| MFRotation | \[in, out\] | [keyValue](#mfrotation-in-out-keyvalue----) | \[ \] |
-| SFRotation | \[out\] | [value_changed](#sfrotation-out-value_changed) |  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in] | [set_fraction](#field-set_fraction) |  |
+| SFBool | [in, out] | [closed](#field-closed) | FALSE |
+| MFFloat | [in, out] | [key](#field-key) | [ ] |
+| MFRotation | [in, out] | [keyValue](#field-keyValue) | [ ] |
+| SFRotation | [out] | [value_changed](#field-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -47,6 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
+{: #field-set_fraction }
 
 *set_fraction* selects input key for corresponding use of keyValue, keyVelocity values for output computation.
 
@@ -59,10 +61,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [in, out] **closed** FALSE
+{: #field-closed }
 
 Input/Output field *closed*.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+{: #field-key }
 
 Definition parameters for nonlinear-interpolation function time intervals, listed in non-decreasing order and corresponding to keyValue, keyVelocity array values.
 
@@ -76,6 +80,7 @@ Definition parameters for nonlinear-interpolation function time intervals, liste
 - Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFRotation [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
+{: #field-keyValue }
 
 Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
 
@@ -84,6 +89,7 @@ Output values for nonlinear interpolation, each corresponding to an input-fracti
 - Number of keys must match number of keyValues!
 
 ### SFRotation [out] **value_changed**
+{: #field-value_changed }
 
 Nonlinearly interpolated output value computed by using current time fraction along with corresponding key, keyValue and keyVelocity values.
 

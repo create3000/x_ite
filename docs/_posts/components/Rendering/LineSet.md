@@ -29,17 +29,18 @@ The LineSet node belongs to the **Rendering** component and requires at least su
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| MFInt32 | \[in, out\] | [vertexCount](#mfint32-in-out-vertexcount---2) | \[ \] |
-| MFNode | \[in, out\] | [attrib](#mfnode-in-out-attrib---x3dvertexattributenode) | \[ \] |
-| SFNode | \[in, out\] | [fogCoord](#sfnode-in-out-fogcoord-null-fogcoordinate) | NULL  |
-| SFNode | \[in, out\] | [color](#sfnode-in-out-color-null-x3dcolornode) | NULL  |
-| SFNode | \[in, out\] | [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard) | NULL  |
-| SFNode | \[in, out\] | [normal](#sfnode-in-out-normal-null-x3dnormalnode) | NULL  |
-| SFNode | \[in, out\] | [coord](#sfnode-in-out-coord-null-x3dcoordinatenode) | NULL  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFInt32 | [in, out] | [vertexCount](#field-vertexCount) | [ ] |
+| MFNode | [in, out] | [attrib](#field-attrib) | [ ] |
+| SFNode | [in, out] | [fogCoord](#field-fogCoord) | NULL  |
+| SFNode | [in, out] | [color](#field-color) | NULL  |
+| SFNode | [in, out] | [tangent](#field-tangent) | NULL  |
+| SFNode | [in, out] | [normal](#field-normal) | NULL  |
+| SFNode | [in, out] | [coord](#field-coord) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -48,10 +49,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFInt32 [in, out] **vertexCount** [ ] <small>[2,∞)</small>
+{: #field-vertexCount }
 
 Vertices at a time.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
+{: #field-attrib }
 
 Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
@@ -60,18 +63,22 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 - [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shaders.html#Pervertexattributes)
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
+{: #field-fogCoord }
 
 Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
+{: #field-color }
 
 Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
+{: #field-tangent }
 
 Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
+{: #field-normal }
 
 Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
@@ -84,6 +91,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 - *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
+{: #field-coord }
 
 Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 

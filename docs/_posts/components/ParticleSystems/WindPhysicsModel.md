@@ -29,15 +29,16 @@ The WindPhysicsModel node belongs to the **ParticleSystems** component and requi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
-| SFVec3f | \[in, out\] | [direction](#sfvec3f-in-out-direction-1-0-0--) | 1 0 0  |
-| SFFloat | \[in, out\] | [speed](#sffloat-in-out-speed-01-0) | 0 |
-| SFFloat | \[in, out\] | [gustiness](#sffloat-in-out-gustiness-01-0) | 0 |
-| SFFloat | \[in, out\] | [turbulence](#sffloat-in-out-turbulence-0-0-1) | 0  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFVec3f | [in, out] | [direction](#field-direction) | 1 0 0  |
+| SFFloat | [in, out] | [speed](#field-speed) | 0 |
+| SFFloat | [in, out] | [gustiness](#field-gustiness) | 0 |
+| SFFloat | [in, out] | [turbulence](#field-turbulence) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -46,18 +47,22 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFVec3f [in, out] **direction** 1 0 0 <small>(-∞,∞)</small>
+{: #field-direction }
 
 *direction* in which wind is traveling in the form of a normalized, unit vector.
 
 ### SFFloat [in, out] **speed** 0.1 <small>[0,∞)</small>
+{: #field-speed }
 
 Initial linear *speed* (default is m/s) imparted to all particles along their direction of movement.
 
 ### SFFloat [in, out] **gustiness** 0.1 <small>[0,∞)</small>
+{: #field-gustiness }
 
 *gustiness* specifies how much wind speed varies from the average speed.
 
@@ -66,6 +71,7 @@ Initial linear *speed* (default is m/s) imparted to all particles along their di
 - Wind speed variation is calculated once per frame and applied equally to all particles.
 
 ### SFFloat [in, out] **turbulence** 0 <small>[0,1]</small>
+{: #field-turbulence }
 
 *turbulence* field specifies how much the wind acts directly in line with the direction, and how much variation is applied in directions other than the wind direction.
 

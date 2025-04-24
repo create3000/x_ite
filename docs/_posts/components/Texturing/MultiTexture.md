@@ -30,17 +30,18 @@ The MultiTexture node belongs to the **Texturing** component and requires at lea
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
-| SFColor | \[in, out\] | [color](#sfcolor-in-out-color-1-1-1-0-1) | 1 1 1  |
-| SFFloat | \[in, out\] | [alpha](#sffloat-in-out-alpha-1-0-1) | 1  |
-| MFString | \[in, out\] | [mode](#mfstring-in-out-mode--) | \[ \] |
-| MFString | \[in, out\] | [source](#mfstring-in-out-source--) | \[ \] |
-| MFString | \[in, out\] | [function](#mfstring-in-out-function--) | \[ \] |
-| MFNode | \[in, out\] | [texture](#mfnode-in-out-texture---x3dtexturenode) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFColor | [in, out] | [color](#field-color) | 1 1 1  |
+| SFFloat | [in, out] | [alpha](#field-alpha) | 1  |
+| MFString | [in, out] | [mode](#field-mode) | [ ] |
+| MFString | [in, out] | [source](#field-source) | [ ] |
+| MFString | [in, out] | [function](#field-function) | [ ] |
+| MFNode | [in, out] | [texture](#field-texture) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -49,6 +50,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -57,6 +59,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
+{: #field-color }
 
 The *color* field defines the RGB base values for mode operations.
 
@@ -65,10 +68,12 @@ The *color* field defines the RGB base values for mode operations.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFFloat [in, out] **alpha** 1 <small>[0,1]</small>
+{: #field-alpha }
 
 The *alpha* field defines the *alpha* (1-transparency) base value for mode operations.
 
 ### MFString [in, out] **mode** [ ]
+{: #field-mode }
 
 *mode* field indicates the type of blending operation, both for color and for alpha channel.
 
@@ -82,6 +87,7 @@ The *alpha* field defines the *alpha* (1-transparency) base value for mode opera
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### MFString [in, out] **source** [ ]
+{: #field-source }
 
 *source* field determines whether each image *source* is treated as DIFFUSE, SPECULAR or a multiplicative FACTOR. Empty string value "" indicates that no *source* modifier is applied for that stage.
 
@@ -91,6 +97,7 @@ The *alpha* field defines the *alpha* (1-transparency) base value for mode opera
 - [X3D Architecture Table 18.4 Values for the *source* field](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#t-ValuesForSourceField) for further details.
 
 ### MFString [in, out] **function** [ ]
+{: #field-function }
 
 *function* operators COMPLEMENT or ALPHAREPLICATE can be applied after the mode blending operation. Empty string value "" indicates that no *function* operation is applied for that stage.
 
@@ -100,6 +107,7 @@ The *alpha* field defines the *alpha* (1-transparency) base value for mode opera
 - [X3D Architecture Table 18.5 Values for the *function* field](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#t-ValuesForFunctionField) for further details.
 
 ### MFNode [in, out] **texture** [ ] <small>[X3DTextureNode]</small>
+{: #field-texture }
 
 Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/)) that map image(s) to surface geometry, defining each of the different *texture* channels.
 

@@ -29,35 +29,36 @@ The DoubleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| MFString | \[in, out\] | [forceOutput](#mfstring-in-out-forceoutput-none-all-none-) | "NONE"  |
-| SFVec3f | \[in, out\] | [anchorPoint](#sfvec3f-in-out-anchorpoint-0-0-0--) | 0 0 0  |
-| SFVec3f | \[in, out\] | [axis1](#sfvec3f-in-out-axis1-1-0-0--) | 1 0 0  |
-| SFVec3f | \[in, out\] | [axis2](#sfvec3f-in-out-axis2-0-1-0--) | 0 1 0  |
-| SFFloat | \[in, out\] | [minAngle1](#sffloat-in-out-minangle1------small-classrednot-supported) | -π  |
-| SFFloat | \[in, out\] | [maxAngle1](#sffloat-in-out-maxangle1----small-classrednot-supported) | π  |
-| SFFloat | \[in, out\] | [desiredAngularVelocity1](#sffloat-in-out-desiredangularvelocity1-0---small-classrednot-supported) | 0  |
-| SFFloat | \[in, out\] | [desiredAngularVelocity2](#sffloat-in-out-desiredangularvelocity2-0---small-classrednot-supported) | 0  |
-| SFFloat | \[in, out\] | [maxTorque1](#sffloat-in-out-maxtorque1-0---small-classrednot-supported) | 0  |
-| SFFloat | \[in, out\] | [maxTorque2](#sffloat-in-out-maxtorque2-0---small-classrednot-supported) | 0  |
-| SFFloat | \[in, out\] | [stop1Bounce](#sffloat-in-out-stop1bounce-0-0-1span-classred-not-supportedspan) | 0  |
-| SFFloat | \[in, out\] | [stop1ConstantForceMix](#sffloat-in-out-stop1constantforcemix-0001-0-span-classred-not-supportedspan) | 0 |
-| SFFloat | \[in, out\] | [stop1ErrorCorrection](#sffloat-in-out-stop1errorcorrection-08-0-1span-classred-not-supportedspan) | 0 |
-| SFFloat | \[in, out\] | [suspensionForce](#sffloat-in-out-suspensionforce-0-0-span-classred-not-supportedspan) | 0  |
-| SFFloat | \[in, out\] | [suspensionErrorCorrection](#sffloat-in-out-suspensionerrorcorrection-08-0-1span-classred-not-supportedspan) | 0 |
-| SFVec3f | \[out\] | [body1AnchorPoint](#sfvec3f-out-body1anchorpoint) |  |
-| SFVec3f | \[out\] | [body2AnchorPoint](#sfvec3f-out-body2anchorpoint) |  |
-| SFVec3f | \[out\] | [body1Axis](#sfvec3f-out-body1axis) |  |
-| SFVec3f | \[out\] | [body2Axis](#sfvec3f-out-body2axis) |  |
-| SFFloat | \[out\] | [hinge1Angle](#sffloat-out-hinge1angle) |  |
-| SFFloat | \[out\] | [hinge2Angle](#sffloat-out-hinge2angle) |  |
-| SFFloat | \[out\] | [hinge1AngleRate](#sffloat-out-hinge1anglerate) |  |
-| SFFloat | \[out\] | [hinge2AngleRate](#sffloat-out-hinge2anglerate) |  |
-| SFNode | \[in, out\] | [body1](#sfnode-in-out-body1-null-rigidbody) | NULL  |
-| SFNode | \[in, out\] | [body2](#sfnode-in-out-body2-null-rigidbody) | NULL  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFString | [in, out] | [forceOutput](#field-forceOutput) | "NONE"  |
+| SFVec3f | [in, out] | [anchorPoint](#field-anchorPoint) | 0 0 0  |
+| SFVec3f | [in, out] | [axis1](#field-axis1) | 1 0 0  |
+| SFVec3f | [in, out] | [axis2](#field-axis2) | 0 1 0  |
+| SFFloat | [in, out] | [minAngle1](#field-minAngle1) | -π  |
+| SFFloat | [in, out] | [maxAngle1](#field-maxAngle1) | π  |
+| SFFloat | [in, out] | [desiredAngularVelocity1](#field-desiredAngularVelocity1) | 0  |
+| SFFloat | [in, out] | [desiredAngularVelocity2](#field-desiredAngularVelocity2) | 0  |
+| SFFloat | [in, out] | [maxTorque1](#field-maxTorque1) | 0  |
+| SFFloat | [in, out] | [maxTorque2](#field-maxTorque2) | 0  |
+| SFFloat | [in, out] | [stop1Bounce](#field-stop1Bounce) | 0  |
+| SFFloat | [in, out] | [stop1ConstantForceMix](#field-stop1ConstantForceMix) | 0 |
+| SFFloat | [in, out] | [stop1ErrorCorrection](#field-stop1ErrorCorrection) | 0 |
+| SFFloat | [in, out] | [suspensionForce](#field-suspensionForce) | 0  |
+| SFFloat | [in, out] | [suspensionErrorCorrection](#field-suspensionErrorCorrection) | 0 |
+| SFVec3f | [out] | [body1AnchorPoint](#field-body1AnchorPoint) |  |
+| SFVec3f | [out] | [body2AnchorPoint](#field-body2AnchorPoint) |  |
+| SFVec3f | [out] | [body1Axis](#field-body1Axis) |  |
+| SFVec3f | [out] | [body2Axis](#field-body2Axis) |  |
+| SFFloat | [out] | [hinge1Angle](#field-hinge1Angle) |  |
+| SFFloat | [out] | [hinge2Angle](#field-hinge2Angle) |  |
+| SFFloat | [out] | [hinge1AngleRate](#field-hinge1AngleRate) |  |
+| SFFloat | [out] | [hinge2AngleRate](#field-hinge2AngleRate) |  |
+| SFNode | [in, out] | [body1](#field-body1) | NULL  |
+| SFNode | [in, out] | [body2](#field-body2) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -66,14 +67,17 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL", "NONE", ...]</small>
+{: #field-forceOutput }
 
 *forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 
 ### SFVec3f [in, out] **anchorPoint** 0 0 0 <small>(-∞,∞)</small>
+{: #field-anchorPoint }
 
 *anchorPoint* is joint center, specified in world coordinates.
 
 ### SFVec3f [in, out] **axis1** 1 0 0 <small>(-∞,∞)</small>
+{: #field-axis1 }
 
 *axis1* defines axis vector of joint connection to body1.
 
@@ -82,6 +86,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - 0 0 0 means motor disabled about this axis.
 
 ### SFVec3f [in, out] **axis2** 0 1 0 <small>(-∞,∞)</small>
+{: #field-axis2 }
 
 *axis2* defines axis vector of joint connection to body2.
 
@@ -90,30 +95,37 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - 0 0 0 means motor disabled about this axis.
 
 ### SFFloat [in, out] **minAngle1** -π <small>π [-π,π]</small> <small class="red">not supported</small>
+{: #field-minAngle1 }
 
 *minAngle1* is minimum rotation angle for hinge.
 
 ### SFFloat [in, out] **maxAngle1** π <small>[-π,π]</small> <small class="red">not supported</small>
+{: #field-maxAngle1 }
 
 *maxAngle1* is maximum rotation angle for hinge.
 
 ### SFFloat [in, out] **desiredAngularVelocity1** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
+{: #field-desiredAngularVelocity1 }
 
 *desiredAngularVelocity1* is goal rotation rate for hinge connection to body1.
 
 ### SFFloat [in, out] **desiredAngularVelocity2** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
+{: #field-desiredAngularVelocity2 }
 
 *desiredAngularVelocity2* is goal rotation rate for hinge connection to body2.
 
 ### SFFloat [in, out] **maxTorque1** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
+{: #field-maxTorque1 }
 
 *maxTorque1* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity1.
 
 ### SFFloat [in, out] **maxTorque2** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
+{: #field-maxTorque2 }
 
 *maxTorque2* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity2.
 
 ### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]<span class="red"> not supported</span></small>
+{: #field-stop1Bounce }
 
 *stop1Bounce* is velocity factor for bounce back once stop point is reached.
 
@@ -122,6 +134,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stop1ConstantForceMix** 0.001 <small>[0,∞)<span class="red"> not supported</span></small>
+{: #field-stop1ConstantForceMix }
 
 *stop1ConstantForceMix* value applies a constant force value to make colliding surfaces appear to be somewhat soft.
 
@@ -131,6 +144,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - 0 means no stop adjustment, 1 means springier stop response.
 
 ### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
+{: #field-stop1ErrorCorrection }
 
 *stop1ErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
@@ -139,6 +153,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFFloat [in, out] **suspensionForce** 0 <small>[0,∞)<span class="red"> not supported</span></small>
+{: #field-suspensionForce }
 
 *suspensionForce* describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
 
@@ -148,6 +163,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - 0 means no stop adjustment, 1 means springier stop response.
 
 ### SFFloat [in, out] **suspensionErrorCorrection** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
+{: #field-suspensionErrorCorrection }
 
 *suspensionErrorCorrection* describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
 
@@ -157,6 +173,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - 0 means no stop adjustment, 1 means springier stop response.
 
 ### SFVec3f [out] **body1AnchorPoint**
+{: #field-body1AnchorPoint }
 
 *body1AnchorPoint* describes anchorPoint position relative to local coordinate reference frame.
 
@@ -169,6 +186,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **body2AnchorPoint**
+{: #field-body2AnchorPoint }
 
 *body2AnchorPoint* describes anchorPoint position relative to local coordinate reference frame.
 
@@ -181,6 +199,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **body1Axis**
+{: #field-body1Axis }
 
 *body1Axis* describes report the current location of the anchor point relative to the corresponding body. This can be used to determine if the joint has broken.
 
@@ -189,6 +208,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **body2Axis**
+{: #field-body2Axis }
 
 Body1Axis describes report the current location of the anchor point relative to the corresponding body. This can be used to determine if the joint has broken.
 
@@ -197,26 +217,32 @@ Body1Axis describes report the current location of the anchor point relative to 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **hinge1Angle**
+{: #field-hinge1Angle }
 
 Output field *hinge1Angle*.
 
 ### SFFloat [out] **hinge2Angle**
+{: #field-hinge2Angle }
 
 Output field *hinge2Angle*.
 
 ### SFFloat [out] **hinge1AngleRate**
+{: #field-hinge1AngleRate }
 
 Output field *hinge1AngleRate*.
 
 ### SFFloat [out] **hinge2AngleRate**
+{: #field-hinge2AngleRate }
 
 Output field *hinge2AngleRate*.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
+{: #field-body1 }
 
 The *body1* and body2 fields indicate the two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes connected by this joint.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
+{: #field-body2 }
 
 The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes connected by this joint.
 

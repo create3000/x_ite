@@ -30,11 +30,12 @@ The MultiTextureTransform node belongs to the **Texturing** component and requir
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| MFNode | \[in, out\] | [textureTransform](#mfnode-in-out-texturetransform---x3dtexturetransformnode) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFNode | [in, out] | [textureTransform](#field-textureTransform) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -43,6 +44,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFNode [in, out] **textureTransform** [ ] <small>[X3DTextureTransformNode]</small>
+{: #field-textureTransform }
 
 Zero or more contained [TextureTransform](/x_ite/components/texturing/texturetransform/) nodes, for each of the different texture channels, that define 2D transformation applied to texture coordinates.
 

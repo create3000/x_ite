@@ -32,18 +32,19 @@ The IridescenceMaterialExtension node belongs to the **X_ITE** component and req
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFFloat | \[in, out\] | [iridescence](#sffloat-in-out-iridescence-0-0) | 0  |
-| SFString | \[in, out\] | [iridescenceTextureMapping](#sfstring-in-out-iridescencetexturemapping-) | "" |
-| SFNode | \[in, out\] | [iridescenceTexture](#sfnode-in-out-iridescencetexture-null-x3dsingletexturenode) | NULL  |
-| SFFloat | \[in, out\] | [iridescenceIndexOfRefraction](#sffloat-in-out-iridescenceindexofrefraction-13-1) | 1 |
-| SFFloat | \[in, out\] | [iridescenceThicknessMinimum](#sffloat-in-out-iridescencethicknessminimum-100-0) | 100  |
-| SFFloat | \[in, out\] | [iridescenceThicknessMaximum](#sffloat-in-out-iridescencethicknessmaximum-400-0) | 400  |
-| SFString | \[in, out\] | [iridescenceThicknessTextureMapping](#sfstring-in-out-iridescencethicknesstexturemapping-) | "" |
-| SFNode | \[in, out\] | [iridescenceThicknessTexture](#sfnode-in-out-iridescencethicknesstexture-null-x3dsingletexturenode) | NULL  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in, out] | [iridescence](#field-iridescence) | 0  |
+| SFString | [in, out] | [iridescenceTextureMapping](#field-iridescenceTextureMapping) | "" |
+| SFNode | [in, out] | [iridescenceTexture](#field-iridescenceTexture) | NULL  |
+| SFFloat | [in, out] | [iridescenceIndexOfRefraction](#field-iridescenceIndexOfRefraction) | 1 |
+| SFFloat | [in, out] | [iridescenceThicknessMinimum](#field-iridescenceThicknessMinimum) | 100  |
+| SFFloat | [in, out] | [iridescenceThicknessMaximum](#field-iridescenceThicknessMaximum) | 400  |
+| SFString | [in, out] | [iridescenceThicknessTextureMapping](#field-iridescenceThicknessTextureMapping) | "" |
+| SFNode | [in, out] | [iridescenceThicknessTexture](#field-iridescenceThicknessTexture) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -52,34 +53,42 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in, out] **iridescence** 0 <small>[0,∞)</small>
+{: #field-iridescence }
 
 The iridescence intensity factor.
 
 ### SFString [in, out] **iridescenceTextureMapping** ""
+{: #field-iridescenceTextureMapping }
 
 Input/Output field *iridescenceTextureMapping*.
 
 ### SFNode [in, out] **iridescenceTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-iridescenceTexture }
 
 The iridescence intensity texture.
 
 ### SFFloat [in, out] **iridescenceIndexOfRefraction** 1.3 <small>[1,∞)</small>
+{: #field-iridescenceIndexOfRefraction }
 
 The index of refraction of the dielectric thin-film layer.
 
 ### SFFloat [in, out] **iridescenceThicknessMinimum** 100 <small>[0,∞)</small>
+{: #field-iridescenceThicknessMinimum }
 
 The minimum thickness of the thin-film layer given in nanometers.
 
 ### SFFloat [in, out] **iridescenceThicknessMaximum** 400 <small>[0,∞)</small>
+{: #field-iridescenceThicknessMaximum }
 
 The maximum thickness of the thin-film layer given in nanometers.
 
 ### SFString [in, out] **iridescenceThicknessTextureMapping** ""
+{: #field-iridescenceThicknessTextureMapping }
 
 Input/Output field *iridescenceThicknessTextureMapping*.
 
 ### SFNode [in, out] **iridescenceThicknessTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-iridescenceThicknessTexture }
 
 The thickness texture of the thin-film layer.
 

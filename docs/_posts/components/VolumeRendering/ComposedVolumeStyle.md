@@ -30,12 +30,13 @@ The ComposedVolumeStyle node belongs to the **VolumeRendering** component and re
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
-| MFNode | \[in, out\] | [renderStyle](#mfnode-in-out-renderstyle---x3dcomposablevolumerenderstylenode) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| MFNode | [in, out] | [renderStyle](#field-renderStyle) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -44,10 +45,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### MFNode [in, out] **renderStyle** [ ] <small>[X3DComposableVolumeRenderStyleNode]</small>
+{: #field-renderStyle }
 
 List of contributing rendering style nodes or node references that can be applied to the object. Each rendering style is applied strictly in the order declared, starting with the first rendering style in the *renderStyle* field.
 

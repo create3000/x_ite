@@ -343,28 +343,16 @@ sub fields_list {
 
    $fields = { };
 
-   #sfvec3f---bboxsize--1--1--1-0-or-1-1-1
-   #sfvec3f-bboxsize--1--1--1-0-or-1-1-1
-
-   #mfstring-in-out-type--examine-any--examine-walk-fly-plane_create3000githubio-lookat-explore-any-none
-   #mfstring-in-out-type--examine-any--examine-walk-fly-plane_create3000githubio-lookat-explore-any-none
-
-
    foreach $field (@sourceFields)
    {
       if ($file =~ m/###\s*((\w+)\s+(\[.*?\])\s+(\*\*$field->[1]\*\*)[ ]*(\[.*?\]|[ \da-zA-Z"\-+\/π]*).*?)\n/)
       {
          $text = "| $2 | $3 | $4 | $5 |";
-         $slug = lc ($1);
+         $slug = $1;
 
          $slug =~ s/<\/?small>//sgo;
-         $slug =~ s/[()]|[^\x00-\x7F]//sgo;
-         $slug =~ s/^[\s,]+|[\s,]+$//sgo;
-         $slug =~ s/[\s,]+/-/sgo;
-         $slug =~ s/[^a-zA-Z\d-_]//sgo;
 
-         $text =~ s/([\[\]])/\\$1/sgo;
-         $text =~ s/\*\*(.*?)\*\*/[$1](#$slug)/so;
+         $text =~ s/\*\*(.*?)\*\*/[$1](#field-$field->[1])/so;
          $fields -> {$field -> [1]} = $text;
       }
    }
@@ -565,6 +553,7 @@ sub update_field {
    # print "'$string'";
 
    $file =~ s/(###.*?\*\*$name\*\*.*?\n).*?\n((?:###|##)\s+)/$1$string$2/s if $string;
+   $file =~ s/(###.*?\*\*$name\*\*.*?\n)(?:\{:.*?\}\n)?/$1\{: \#field-$name \}\n/s;
 
    return $file;
 }

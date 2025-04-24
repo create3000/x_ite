@@ -30,31 +30,32 @@ The HAnimJoint node belongs to the **HAnim** component and requires at least sup
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
-| SFString | \[in, out\] | [name](#sfstring-in-out-name-) | "" |
-| SFVec3f | \[in, out\] | [translation](#sfvec3f-in-out-translation-0-0-0--) | 0 0 0  |
-| SFRotation | \[in, out\] | [rotation](#sfrotation-in-out-rotation-0-0-1-0---or--1-1) | 0 0 1 0  |
-| SFVec3f | \[in, out\] | [scale](#sfvec3f-in-out-scale-1-1-1-0) | 1 1 1  |
-| SFRotation | \[in, out\] | [scaleOrientation](#sfrotation-in-out-scaleorientation-0-0-1-0---or--1-1) | 0 0 1 0  |
-| SFVec3f | \[in, out\] | [center](#sfvec3f-in-out-center-0-0-0--) | 0 0 0  |
-| MFFloat | \[in, out\] | [llimit](#mffloat-in-out-llimit--0-0-0---) | \[ 0, 0, 0 \] |
-| MFFloat | \[in, out\] | [ulimit](#mffloat-in-out-ulimit--0-0-0---) | \[ 0, 0, 0 \] |
-| SFRotation | \[in, out\] | [limitOrientation](#sfrotation-in-out-limitorientation-0-0-1-0---or--1-1) | 0 0 1 0  |
-| MFFloat | \[in, out\] | [stiffness](#mffloat-in-out-stiffness--0-0-0--0-1) | \[ 0, 0, 0 \] |
-| MFInt32 | \[in, out\] | [skinCoordIndex](#mfint32-in-out-skincoordindex---0) | \[ \] |
-| MFFloat | \[in, out\] | [skinCoordWeight](#mffloat-in-out-skincoordweight--) | \[ \] |
-| MFNode | \[in, out\] | [displacers](#mfnode-in-out-displacers---hanimdisplacer) | \[ \] |
-| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
-| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
-| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
-| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
-| MFNode | \[in\] | [addChildren](#mfnode-in-addchildren) |  |
-| MFNode | \[in\] | [removeChildren](#mfnode-in-removechildren) |  |
-| MFNode | \[in, out\] | [children](#mfnode-in-out-children---hanimjoint-hanimsegment-hanimsite) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFString | [in, out] | [name](#field-name) | "" |
+| SFVec3f | [in, out] | [translation](#field-translation) | 0 0 0  |
+| SFRotation | [in, out] | [rotation](#field-rotation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [scale](#field-scale) | 1 1 1  |
+| SFRotation | [in, out] | [scaleOrientation](#field-scaleOrientation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [center](#field-center) | 0 0 0  |
+| MFFloat | [in, out] | [llimit](#field-llimit) | [ 0, 0, 0 ] |
+| MFFloat | [in, out] | [ulimit](#field-ulimit) | [ 0, 0, 0 ] |
+| SFRotation | [in, out] | [limitOrientation](#field-limitOrientation) | 0 0 1 0  |
+| MFFloat | [in, out] | [stiffness](#field-stiffness) | [ 0, 0, 0 ] |
+| MFInt32 | [in, out] | [skinCoordIndex](#field-skinCoordIndex) | [ ] |
+| MFFloat | [in, out] | [skinCoordWeight](#field-skinCoordWeight) | [ ] |
+| MFNode | [in, out] | [displacers](#field-displacers) | [ ] |
+| SFBool | [in, out] | [visible](#field-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
+| MFNode | [in] | [addChildren](#field-addChildren) |  |
+| MFNode | [in] | [removeChildren](#field-removeChildren) |  |
+| MFNode | [in, out] | [children](#field-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -63,6 +64,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -71,6 +73,7 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [in, out] **name** ""
+{: #field-name }
 
 Unique *name* attribute must be defined so that HAnimJoint node can be identified at run time for animation purposes.
 
@@ -89,6 +92,7 @@ Unique *name* attribute must be defined so that HAnimJoint node can be identifie
 - [Note precise spelling of special HAnimJoint *name*='humanoid_root' according to](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#TheBody)
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
+{: #field-translation }
 
 Position of children relative to local coordinate system.
 
@@ -101,6 +105,7 @@ Position of children relative to local coordinate system.
 - Usually HAnimJoint position is controlled by the center field, not the *translation* field.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #field-rotation }
 
 Orientation of children relative to local coordinate system.
 
@@ -109,14 +114,17 @@ Orientation of children relative to local coordinate system.
 - Default pose is typically empty (or an identity *rotation*) to avoid distorted body animations.
 
 ### SFVec3f [in, out] **scale** 1 1 1 <small>(0,∞)</small>
+{: #field-scale }
 
 Non-uniform x-y-z *scale* of child coordinate system, adjusted by center and scaleOrientation.
 
 ### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #field-scaleOrientation }
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
+{: #field-center }
 
 Translation offset from origin of local coordinate system.
 
@@ -125,6 +133,7 @@ Translation offset from origin of local coordinate system.
 - Usually HAnimJoint position is controlled by the *center* field, not the translation field.
 
 ### MFFloat [in, out] **llimit** [ 0, 0, 0 ] <small>(-∞,∞)</small>
+{: #field-llimit }
 
 Lower limit for minimum joint rotation in radians.
 
@@ -138,6 +147,7 @@ Lower limit for minimum joint rotation in radians.
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
 ### MFFloat [in, out] **ulimit** [ 0, 0, 0 ] <small>(-∞,∞)</small>
+{: #field-ulimit }
 
 Upper limit for maximum joint rotation in radians.
 
@@ -151,10 +161,12 @@ Upper limit for maximum joint rotation in radians.
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
 ### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #field-limitOrientation }
 
 Orientation of upper/lower rotation limits, relative to HAnimJoint center.
 
 ### MFFloat [in, out] **stiffness** [ 0, 0, 0 ] <small>[0,1]</small>
+{: #field-stiffness }
 
 A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X, Y, or Z for entries 0, 1 and 2 of the *stiffness* field). Thus a *stiffness* value of zero means that no rotation scaling occurs, while a *stiffness* value of one means that no rotation occurs regardless of any provided rotation.
 
@@ -168,6 +180,7 @@ A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X,
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
 ### MFInt32 [in, out] **skinCoordIndex** [ ] <small>[0,∞)</small>
+{: #field-skinCoordIndex }
 
 [Coordinate](/x_ite/components/rendering/coordinate/) index values referencing which vertices are influenced by the HAnimJoint.
 
@@ -181,6 +194,7 @@ A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X,
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### MFFloat [in, out] **skinCoordWeight** [ ]
+{: #field-skinCoordWeight }
 
 Weight deformation values for the corresponding values in the skinCoordIndex field.
 
@@ -189,6 +203,7 @@ Weight deformation values for the corresponding values in the skinCoordIndex fie
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
+{: #field-displacers }
 
 The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) objects for a particular HAnimJoint object.
 
@@ -197,6 +212,7 @@ The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisp
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### SFBool [in, out] **visible** TRUE
+{: #field-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -206,6 +222,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #field-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -214,6 +231,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #field-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -225,6 +243,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #field-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -235,14 +254,17 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### MFNode [in] **addChildren**
+{: #field-addChildren }
 
 Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
+{: #field-removeChildren }
 
 Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[HAnimJoint,HAnimSegment,HAnimSite]</small>
+{: #field-children }
 
 Grouping nodes contain an ordered list of *children* nodes.
 

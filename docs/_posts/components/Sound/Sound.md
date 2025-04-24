@@ -30,23 +30,24 @@ The Sound node belongs to the **Sound** component and requires at least support 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
-| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
-| SFBool | \[ \] | [spatialize](#sfbool---spatialize-true) | TRUE |
-| SFFloat | \[in, out\] | [intensity](#sffloat-in-out-intensity-1-0-1) | 1  |
-| SFVec3f | \[in, out\] | [location](#sfvec3f-in-out-location-0-0-0--) | 0 0 0  |
-| SFVec3f | \[in, out\] | [direction](#sfvec3f-in-out-direction-0-0-1--) | 0 0 1  |
-| SFFloat | \[in, out\] | [minBack](#sffloat-in-out-minback-1-0) | 1  |
-| SFFloat | \[in, out\] | [minFront](#sffloat-in-out-minfront-1-0) | 1  |
-| SFFloat | \[in, out\] | [maxBack](#sffloat-in-out-maxback-10-0) | 10  |
-| SFFloat | \[in, out\] | [maxFront](#sffloat-in-out-maxfront-10-0) | 10  |
-| SFFloat | \[in, out\] | [priority](#sffloat-in-out-priority-0-0-1) | 0  |
-| SFNode | \[in, out\] | [source](#sfnode-in-out-source-null-x3dsoundsourcenode) | NULL  |
-| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFBool | [ ] | [spatialize](#field-spatialize) | TRUE |
+| SFFloat | [in, out] | [intensity](#field-intensity) | 1  |
+| SFVec3f | [in, out] | [location](#field-location) | 0 0 0  |
+| SFVec3f | [in, out] | [direction](#field-direction) | 0 0 1  |
+| SFFloat | [in, out] | [minBack](#field-minBack) | 1  |
+| SFFloat | [in, out] | [minFront](#field-minFront) | 1  |
+| SFFloat | [in, out] | [maxBack](#field-maxBack) | 10  |
+| SFFloat | [in, out] | [maxFront](#field-maxFront) | 10  |
+| SFFloat | [in, out] | [priority](#field-priority) | 0  |
+| SFNode | [in, out] | [source](#field-source) | NULL  |
+| MFNode | [in, out] | [children](#field-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -55,6 +56,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -64,10 +66,12 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFBool [ ] **spatialize** TRUE
+{: #field-spatialize }
 
 Whether to *spatialize* sound playback relative to viewer.
 
@@ -76,10 +80,12 @@ Whether to *spatialize* sound playback relative to viewer.
 - Only effective within the auralization volume.
 
 ### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
+{: #field-intensity }
 
 Factor [0,1] adjusting loudness (decibels) of emitted sound.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
+{: #field-location }
 
 Position of sound ellipsoid center, relative to local coordinate system.
 
@@ -88,10 +94,12 @@ Position of sound ellipsoid center, relative to local coordinate system.
 - Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize height.
 
 ### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
+{: #field-direction }
 
 *direction* of sound axis, relative to local coordinate system.
 
 ### SFFloat [in, out] **minBack** 1 <small>[0,∞)</small>
+{: #field-minBack }
 
 Inner (full loudness) ellipsoid distance along back direction.
 
@@ -100,6 +108,7 @@ Inner (full loudness) ellipsoid distance along back direction.
 - Ensure *minBack* \<= maxBack.
 
 ### SFFloat [in, out] **minFront** 1 <small>[0,∞)</small>
+{: #field-minFront }
 
 Inner (full loudness) ellipsoid distance along front direction.
 
@@ -108,6 +117,7 @@ Inner (full loudness) ellipsoid distance along front direction.
 - Ensure *minFront* \<= maxFront.
 
 ### SFFloat [in, out] **maxBack** 10 <small>[0,∞)</small>
+{: #field-maxBack }
 
 Outer (zero loudness)ellipsoid distance along back direction.
 
@@ -116,6 +126,7 @@ Outer (zero loudness)ellipsoid distance along back direction.
 - Ensure minBack \<= *maxBack*.
 
 ### SFFloat [in, out] **maxFront** 10 <small>[0,∞)</small>
+{: #field-maxFront }
 
 Outer (zero loudness)ellipsoid distance along front direction.
 
@@ -124,10 +135,12 @@ Outer (zero loudness)ellipsoid distance along front direction.
 - Ensure minFront \<= *maxFront*.
 
 ### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
+{: #field-priority }
 
 Player hint [0,1] if needed to choose which sounds to play.
 
 ### SFNode [in, out] **source** NULL <small>[X3DSoundSourceNode]</small>
+{: #field-source }
 
 Sound *source* for the Sound node, either an [AudioClip](/x_ite/components/sound/audioclip/) node or a [MovieTexture](/x_ite/components/texturing/movietexture/) node.
 
@@ -136,6 +149,7 @@ Sound *source* for the Sound node, either an [AudioClip](/x_ite/components/sound
 - If *source* field is not specified, the Sound node does not emit audio.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+{: #field-children }
 
 Input/Output field *children*.
 

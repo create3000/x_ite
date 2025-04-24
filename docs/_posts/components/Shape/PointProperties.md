@@ -29,14 +29,15 @@ The PointProperties node belongs to the **Shape** component and requires at leas
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFFloat | \[in, out\] | [pointSizeScaleFactor](#sffloat-in-out-pointsizescalefactor-1-1) | 1  |
-| SFFloat | \[in, out\] | [pointSizeMinValue](#sffloat-in-out-pointsizeminvalue-1-0) | 1  |
-| SFFloat | \[in, out\] | [pointSizeMaxValue](#sffloat-in-out-pointsizemaxvalue-1-0) | 1  |
-| SFVec3f | \[in, out\] | [attenuation](#sfvec3f-in-out-attenuation-1-0-0-0) | 1 0 0  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in, out] | [pointSizeScaleFactor](#field-pointSizeScaleFactor) | 1  |
+| SFFloat | [in, out] | [pointSizeMinValue](#field-pointSizeMinValue) | 1  |
+| SFFloat | [in, out] | [pointSizeMaxValue](#field-pointSizeMaxValue) | 1  |
+| SFVec3f | [in, out] | [attenuation](#field-attenuation) | 1 0 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -45,6 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in, out] **pointSizeScaleFactor** 1 <small>(1,∞)</small>
+{: #field-pointSizeScaleFactor }
 
 Nominal rendered point size is a browser-dependent minimum renderable point size, which is then multiplied by an additional *pointSizeScaleFactor* (which is greater than or equal to 1).
 
@@ -53,6 +55,7 @@ Nominal rendered point size is a browser-dependent minimum renderable point size
 - Additional sizing modifications are determined by pointSizeMinValue, pointSizeMaxValue, and attenuation array.
 
 ### SFFloat [in, out] **pointSizeMinValue** 1 <small>[0,∞)</small>
+{: #field-pointSizeMinValue }
 
 *pointSizeMinValue* is minimum allowed scaling factor on nominal browser point scaling.
 
@@ -61,6 +64,7 @@ Nominal rendered point size is a browser-dependent minimum renderable point size
 - Maintain *pointSizeMinValue* \<= pointSizeMaxValue.
 
 ### SFFloat [in, out] **pointSizeMaxValue** 1 <small>(0,∞)</small>
+{: #field-pointSizeMaxValue }
 
 *pointSizeMaxValue* is maximum allowed scaling factor on nominal browser point scaling.
 
@@ -69,6 +73,7 @@ Nominal rendered point size is a browser-dependent minimum renderable point size
 - Maintain pointSizeMinValue \<= *pointSizeMaxValue*.
 
 ### SFVec3f [in, out] **attenuation** 1 0 0 <small>(0,∞)</small>
+{: #field-attenuation }
 
 Are set to default values if undefined. Together these parameters define *attenuation* factor 1/(a + b×r + c×r^2) where r is the distance from observer position (current viewpoint) to each point.
 

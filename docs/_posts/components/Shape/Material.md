@@ -31,32 +31,33 @@ The Material node belongs to the **Shape** component and requires at least suppo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFFloat | \[in, out\] | [ambientIntensity](#sffloat-in-out-ambientintensity-02-0-1) | 0 |
-| SFString | \[in, out\] | [ambientTextureMapping](#sfstring-in-out-ambienttexturemapping-) | "" |
-| SFNode | \[in, out\] | [ambientTexture](#sfnode-in-out-ambienttexture-null-x3dsingletexturenode) | NULL  |
-| SFColor | \[in, out\] | [diffuseColor](#sfcolor-in-out-diffusecolor-08-08-08-0-1) | 0 |
-| SFString | \[in, out\] | [diffuseTextureMapping](#sfstring-in-out-diffusetexturemapping-) | "" |
-| SFNode | \[in, out\] | [diffuseTexture](#sfnode-in-out-diffusetexture-null-x3dsingletexturenode) | NULL  |
-| SFColor | \[in, out\] | [specularColor](#sfcolor-in-out-specularcolor-0-0-0-0-1) | 0 0 0  |
-| SFString | \[in, out\] | [specularTextureMapping](#sfstring-in-out-speculartexturemapping-) | "" |
-| SFNode | \[in, out\] | [specularTexture](#sfnode-in-out-speculartexture-null-x3dsingletexturenode) | NULL  |
-| SFColor | \[in, out\] | [emissiveColor](#sfcolor-in-out-emissivecolor-0-0-0-0-1) | 0 0 0  |
-| SFString | \[in, out\] | [emissiveTextureMapping](#sfstring-in-out-emissivetexturemapping-) | "" |
-| SFNode | \[in, out\] | [emissiveTexture](#sfnode-in-out-emissivetexture-null-x3dsingletexturenode) | NULL  |
-| SFFloat | \[in, out\] | [shininess](#sffloat-in-out-shininess-02-0-1) | 0 |
-| SFString | \[in, out\] | [shininessTextureMapping](#sfstring-in-out-shininesstexturemapping-) | "" |
-| SFNode | \[in, out\] | [shininessTexture](#sfnode-in-out-shininesstexture-null-x3dsingletexturenode) | NULL  |
-| SFFloat | \[in, out\] | [occlusionStrength](#sffloat-in-out-occlusionstrength-1-0-1) | 1  |
-| SFString | \[in, out\] | [occlusionTextureMapping](#sfstring-in-out-occlusiontexturemapping-) | "" |
-| SFNode | \[in, out\] | [occlusionTexture](#sfnode-in-out-occlusiontexture-null-x3dsingletexturenode) | NULL  |
-| SFFloat | \[in, out\] | [normalScale](#sffloat-in-out-normalscale-1-0) | 1  |
-| SFString | \[in, out\] | [normalTextureMapping](#sfstring-in-out-normaltexturemapping-) | "" |
-| SFNode | \[in, out\] | [normalTexture](#sfnode-in-out-normaltexture-null-x3dsingletexturenode) | NULL  |
-| SFFloat | \[in, out\] | [transparency](#sffloat-in-out-transparency-0-0-1) | 0  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in, out] | [ambientIntensity](#field-ambientIntensity) | 0 |
+| SFString | [in, out] | [ambientTextureMapping](#field-ambientTextureMapping) | "" |
+| SFNode | [in, out] | [ambientTexture](#field-ambientTexture) | NULL  |
+| SFColor | [in, out] | [diffuseColor](#field-diffuseColor) | 0 |
+| SFString | [in, out] | [diffuseTextureMapping](#field-diffuseTextureMapping) | "" |
+| SFNode | [in, out] | [diffuseTexture](#field-diffuseTexture) | NULL  |
+| SFColor | [in, out] | [specularColor](#field-specularColor) | 0 0 0  |
+| SFString | [in, out] | [specularTextureMapping](#field-specularTextureMapping) | "" |
+| SFNode | [in, out] | [specularTexture](#field-specularTexture) | NULL  |
+| SFColor | [in, out] | [emissiveColor](#field-emissiveColor) | 0 0 0  |
+| SFString | [in, out] | [emissiveTextureMapping](#field-emissiveTextureMapping) | "" |
+| SFNode | [in, out] | [emissiveTexture](#field-emissiveTexture) | NULL  |
+| SFFloat | [in, out] | [shininess](#field-shininess) | 0 |
+| SFString | [in, out] | [shininessTextureMapping](#field-shininessTextureMapping) | "" |
+| SFNode | [in, out] | [shininessTexture](#field-shininessTexture) | NULL  |
+| SFFloat | [in, out] | [occlusionStrength](#field-occlusionStrength) | 1  |
+| SFString | [in, out] | [occlusionTextureMapping](#field-occlusionTextureMapping) | "" |
+| SFNode | [in, out] | [occlusionTexture](#field-occlusionTexture) | NULL  |
+| SFFloat | [in, out] | [normalScale](#field-normalScale) | 1  |
+| SFString | [in, out] | [normalTextureMapping](#field-normalTextureMapping) | "" |
+| SFNode | [in, out] | [normalTexture](#field-normalTexture) | NULL  |
+| SFFloat | [in, out] | [transparency](#field-transparency) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -65,6 +66,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
+{: #field-ambientIntensity }
 
 How much ambient omnidirectional light is reflected from all light sources. Interchange profile
 
@@ -73,6 +75,7 @@ How much ambient omnidirectional light is reflected from all light sources. Inte
 - This field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **ambientTextureMapping** ""
+{: #field-ambientTextureMapping }
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
@@ -81,6 +84,7 @@ The mapping label identifies which texture coordinates and transformations are u
 - [TODO support planned to perform multiple-node mapping validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFNode [in, out] **ambientTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-ambientTexture }
 
 When applying ambientIntensity for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
@@ -90,6 +94,7 @@ When applying ambientIntensity for this material node, the contained texture pro
 - Contained texture node must include `containerField='ambientTexture'`
 
 ### SFColor [in, out] **diffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
+{: #field-diffuseColor }
 
 How much direct, angle-dependent light is reflected from all light sources.
 
@@ -98,6 +103,7 @@ How much direct, angle-dependent light is reflected from all light sources.
 - Only emissiveColor affects [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/) and [PointSet](/x_ite/components/rendering/pointset/).
 
 ### SFString [in, out] **diffuseTextureMapping** ""
+{: #field-diffuseTextureMapping }
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
@@ -106,6 +112,7 @@ The mapping label identifies which texture coordinates and transformations are u
 - [TODO support planned to perform multiple-node mapping validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFNode [in, out] **diffuseTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-diffuseTexture }
 
 When applying diffuseColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
@@ -115,6 +122,7 @@ When applying diffuseColor for this material node, the contained texture provide
 - Contained texture node must include `containerField='diffuseTexture'`
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
+{: #field-specularColor }
 
 Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
 
@@ -123,6 +131,7 @@ Specular highlights are brightness reflections (example: shiny spots on an apple
 - This field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **specularTextureMapping** ""
+{: #field-specularTextureMapping }
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
@@ -131,6 +140,7 @@ The mapping label identifies which texture coordinates and transformations are u
 - [TODO support planned to perform multiple-node mapping validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-specularTexture }
 
 When applying specularColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
@@ -140,6 +150,7 @@ When applying specularColor for this material node, the contained texture provid
 - Contained texture node must include `containerField='specularTexture'`
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
+{: #field-emissiveColor }
 
 How much glowing light is emitted from this object.
 
@@ -154,6 +165,7 @@ How much glowing light is emitted from this object.
 - Bright *emissiveColor* values can wash out other colors and some textures.
 
 ### SFString [in, out] **emissiveTextureMapping** ""
+{: #field-emissiveTextureMapping }
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
@@ -162,6 +174,7 @@ The mapping label identifies which texture coordinates and transformations are u
 - [TODO support planned to perform multiple-node mapping validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFNode [in, out] **emissiveTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-emissiveTexture }
 
 When applying emissiveColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
@@ -171,6 +184,7 @@ When applying emissiveColor for this material node, the contained texture provid
 - Contained texture node must include `containerField='emissiveTexture'`
 
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
+{: #field-shininess }
 
 Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
 
@@ -179,6 +193,7 @@ Lower *shininess* values provide soft specular glows, while higher values result
 - This field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **shininessTextureMapping** ""
+{: #field-shininessTextureMapping }
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
@@ -187,6 +202,7 @@ The mapping label identifies which texture coordinates and transformations are u
 - [TODO support planned to perform multiple-node mapping validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFNode [in, out] **shininessTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-shininessTexture }
 
 When applying shininess for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
@@ -196,6 +212,7 @@ When applying shininess for this material node, the contained texture provides P
 - Contained texture node must include `containerField='shininessTexture'`
 
 ### SFFloat [in, out] **occlusionStrength** 1 <small>[0,1]</small>
+{: #field-occlusionStrength }
 
 *occlusionStrength* indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting.
 
@@ -205,6 +222,7 @@ When applying shininess for this material node, the contained texture provides P
 - Https://en.wikipedia.org/wiki/Ambient_occlusion
 
 ### SFString [in, out] **occlusionTextureMapping** ""
+{: #field-occlusionTextureMapping }
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
@@ -213,6 +231,7 @@ The mapping label identifies which texture coordinates and transformations are u
 - [TODO support planned to perform multiple-node mapping validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFNode [in, out] **occlusionTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-occlusionTexture }
 
 When applying occlusionStrength for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
@@ -222,6 +241,7 @@ When applying occlusionStrength for this material node, the contained texture pr
 - Contained texture node must include `containerField='occlusionTexture'`
 
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
+{: #field-normalScale }
 
 *normalScale* controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
 
@@ -231,6 +251,7 @@ When applying occlusionStrength for this material node, the contained texture pr
 - [NormalTexture techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping)
 
 ### SFString [in, out] **normalTextureMapping** ""
+{: #field-normalTextureMapping }
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
@@ -239,6 +260,7 @@ The mapping label identifies which texture coordinates and transformations are u
 - [TODO support planned to perform multiple-node mapping validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFNode [in, out] **normalTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-normalTexture }
 
 When applying normalScale for this material node, the contained texture modulates the texture across the surface.
 
@@ -249,6 +271,7 @@ When applying normalScale for this material node, the contained texture modulate
 - Contained texture node must include `containerField='normalTexture'`
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
+{: #field-transparency }
 
 How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
 

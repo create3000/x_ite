@@ -28,13 +28,14 @@ The Contour2D node belongs to the **NURBS** component and requires at least supp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| MFNode | \[in\] | [addChildren](#mfnode-in-addchildren) |  |
-| MFNode | \[in\] | [removeChildren](#mfnode-in-removechildren) |  |
-| MFNode | \[in, out\] | [children](#mfnode-in-out-children---nurbscurve2dcontourpolyline2d) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFNode | [in] | [addChildren](#field-addChildren) |  |
+| MFNode | [in] | [removeChildren](#field-removeChildren) |  |
+| MFNode | [in, out] | [children](#field-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -43,14 +44,17 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFNode [in] **addChildren**
+{: #field-addChildren }
 
 Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
+{: #field-removeChildren }
 
 Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[NurbsCurve2D|ContourPolyline2D]</small>
+{: #field-children }
 
 The *children* form a closed loop with first point of first child repeated as last point of last child, and the last point of a segment repeated as first point of the consecutive one.
 

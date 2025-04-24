@@ -32,14 +32,15 @@ The AnisotropyMaterialExtension node belongs to the **X_ITE** component and requ
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFFloat | \[in, out\] | [anisotropyStrength](#sffloat-in-out-anisotropystrength-0-0) | 0  |
-| SFFloat | \[in, out\] | [anisotropyRotation](#sffloat-in-out-anisotropyrotation-0--) | 0  |
-| SFString | \[in, out\] | [anisotropyTextureMapping](#sfstring-in-out-anisotropytexturemapping-) | "" |
-| SFNode | \[in, out\] | [anisotropyTexture](#sfnode-in-out-anisotropytexture-null-x3dsingletexturenode) | NULL  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in, out] | [anisotropyStrength](#field-anisotropyStrength) | 0  |
+| SFFloat | [in, out] | [anisotropyRotation](#field-anisotropyRotation) | 0  |
+| SFString | [in, out] | [anisotropyTextureMapping](#field-anisotropyTextureMapping) | "" |
+| SFNode | [in, out] | [anisotropyTexture](#field-anisotropyTexture) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -48,18 +49,22 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in, out] **anisotropyStrength** 0 <small>[0,∞)</small>
+{: #field-anisotropyStrength }
 
 The anisotropy strength. When the anisotropy texture is present, this value is multiplied by the texture's blue channel.
 
 ### SFFloat [in, out] **anisotropyRotation** 0 <small>(-∞,∞)</small>
+{: #field-anisotropyRotation }
 
 The rotation of the anisotropy in tangent, bitangent space, measured in radians counter-clockwise from the tangent. When the anisotropy texture is present, this value provides additional rotation to the vectors in the texture.
 
 ### SFString [in, out] **anisotropyTextureMapping** ""
+{: #field-anisotropyTextureMapping }
 
 Input/Output field *anisotropyTextureMapping*.
 
 ### SFNode [in, out] **anisotropyTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-anisotropyTexture }
 
 The anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength.
 

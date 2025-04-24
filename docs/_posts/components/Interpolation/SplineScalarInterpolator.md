@@ -30,17 +30,18 @@ The SplineScalarInterpolator node belongs to the **Interpolation** component and
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFFloat | \[in\] | [set_fraction](#sffloat-in-set_fraction--) |  |
-| SFBool | \[in, out\] | [closed](#sfbool-in-out-closed-false) | FALSE |
-| MFFloat | \[in, out\] | [key](#mffloat-in-out-key----) | \[ \] |
-| MFFloat | \[in, out\] | [keyValue](#mffloat-in-out-keyvalue----) | \[ \] |
-| MFFloat | \[in, out\] | [keyVelocity](#mffloat-in-out-keyvelocity----) | \[ \] |
-| SFBool | \[in, out\] | [normalizeVelocity](#sfbool-in-out-normalizevelocity-false) | FALSE |
-| SFFloat | \[out\] | [value_changed](#sffloat-out-value_changed) |  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in] | [set_fraction](#field-set_fraction) |  |
+| SFBool | [in, out] | [closed](#field-closed) | FALSE |
+| MFFloat | [in, out] | [key](#field-key) | [ ] |
+| MFFloat | [in, out] | [keyValue](#field-keyValue) | [ ] |
+| MFFloat | [in, out] | [keyVelocity](#field-keyVelocity) | [ ] |
+| SFBool | [in, out] | [normalizeVelocity](#field-normalizeVelocity) | FALSE |
+| SFFloat | [out] | [value_changed](#field-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -49,6 +50,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
+{: #field-set_fraction }
 
 *set_fraction* selects input key for corresponding use of keyValue, keyVelocity values for output computation.
 
@@ -61,6 +63,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [in, out] **closed** FALSE
+{: #field-closed }
 
 Whether or not the curve is *closed* (i.e. matching end values), with continuous velocity vectors as the interpolator transitions from the last key to the first key.
 
@@ -70,6 +73,7 @@ Whether or not the curve is *closed* (i.e. matching end values), with continuous
 - If keyValues at first and last key are not identical, the *closed* field is ignored.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+{: #field-key }
 
 Definition parameters for nonlinear-interpolation function time intervals, listed in non-decreasing order and corresponding to keyValue, keyVelocity array values.
 
@@ -83,6 +87,7 @@ Definition parameters for nonlinear-interpolation function time intervals, liste
 - Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFFloat [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
+{: #field-keyValue }
 
 Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
 
@@ -91,6 +96,7 @@ Output values for nonlinear interpolation, each corresponding to an input-fracti
 - Number of keys must match number of keyValues!
 
 ### MFFloat [in, out] **keyVelocity** [ ] <small>(-∞,∞)</small>
+{: #field-keyVelocity }
 
 Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
 
@@ -99,6 +105,7 @@ Output values for nonlinear interpolation, each corresponding to an input-fracti
 - Number of keys must match number of *keyVelocity* values!
 
 ### SFBool [in, out] **normalizeVelocity** FALSE
+{: #field-normalizeVelocity }
 
 *normalizeVelocity* field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
 
@@ -107,6 +114,7 @@ Output values for nonlinear interpolation, each corresponding to an input-fracti
 - [X3D 19.2.3 Non-linear interpolation](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/interpolators.html#NonlinearInterpolation)
 
 ### SFFloat [out] **value_changed**
+{: #field-value_changed }
 
 Nonlinearly interpolated output value computed by using current time fraction along with corresponding key, keyValue and keyVelocity values.
 

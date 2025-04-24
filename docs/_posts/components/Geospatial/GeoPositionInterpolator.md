@@ -30,17 +30,18 @@ The GeoPositionInterpolator node belongs to the **Geospatial** component and req
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFNode | \[ \] | [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated) | NULL  |
-| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
-| SFFloat | \[in\] | [set_fraction](#sffloat-in-set_fraction--) |  |
-| MFFloat | \[in, out\] | [key](#mffloat-in-out-key----) | \[ \] |
-| MFVec3d | \[in, out\] | [keyValue](#mfvec3d-in-out-keyvalue--) | \[ \] |
-| SFVec3f | \[out\] | [value_changed](#sfvec3f-out-value_changed) |  |
-| SFVec3d | \[out\] | [geovalue_changed](#sfvec3d-out-geovalue_changed) |  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFNode | [ ] | [geoOrigin](#field-geoOrigin) | NULL  |
+| MFString | [ ] | [geoSystem](#field-geoSystem) | [ "GD", "WE" ] |
+| SFFloat | [in] | [set_fraction](#field-set_fraction) |  |
+| MFFloat | [in, out] | [key](#field-key) | [ ] |
+| MFVec3d | [in, out] | [keyValue](#field-keyValue) | [ ] |
+| SFVec3f | [out] | [value_changed](#field-value_changed) |  |
+| SFVec3d | [out] | [geovalue_changed](#field-geovalue_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -49,6 +50,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
+{: #field-geoOrigin }
 
 Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
@@ -61,6 +63,7 @@ Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that 
 - XML validation requires placement as first child node following contained metadata nodes (if any).
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
+{: #field-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 
@@ -75,6 +78,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 - Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
+{: #field-set_fraction }
 
 *set_fraction* selects input key for corresponding keyValue output.
 
@@ -87,6 +91,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+{: #field-key }
 
 Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
 
@@ -100,6 +105,7 @@ Definition values for linear-interpolation function input intervals, listed in n
 - Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFVec3d [in, out] **keyValue** [ ]
+{: #field-keyValue }
 
 Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
 
@@ -112,6 +118,7 @@ Output values for linear interpolation, each corresponding to an input-fraction 
 - Number of keys must match number of keyValues!
 
 ### SFVec3f [out] **value_changed**
+{: #field-value_changed }
 
 Linearly interpolated output value determined by current key time and corresponding keyValue pair.
 
@@ -124,6 +131,7 @@ Linearly interpolated output value determined by current key time and correspond
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3d [out] **geovalue_changed**
+{: #field-geovalue_changed }
 
 Interpolated coordinate in the geographic coordinate system specified by geoSystem
 

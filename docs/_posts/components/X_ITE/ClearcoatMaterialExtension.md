@@ -32,18 +32,19 @@ The ClearcoatMaterialExtension node belongs to the **X_ITE** component and requi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFFloat | \[in, out\] | [clearcoat](#sffloat-in-out-clearcoat-0-0) | 0  |
-| SFString | \[in, out\] | [clearcoatTextureMapping](#sfstring-in-out-clearcoattexturemapping-) | "" |
-| SFNode | \[in, out\] | [clearcoatTexture](#sfnode-in-out-clearcoattexture-null-x3dsingletexturenode) | NULL  |
-| SFFloat | \[in, out\] | [clearcoatRoughness](#sffloat-in-out-clearcoatroughness-0-0) | 0  |
-| SFString | \[in, out\] | [clearcoatRoughnessTextureMapping](#sfstring-in-out-clearcoatroughnesstexturemapping-) | "" |
-| SFNode | \[in, out\] | [clearcoatRoughnessTexture](#sfnode-in-out-clearcoatroughnesstexture-null-x3dsingletexturenode) | NULL  |
-| SFString | \[in, out\] | [clearcoatNormalTextureMapping](#sfstring-in-out-clearcoatnormaltexturemapping-) | "" |
-| SFNode | \[in, out\] | [clearcoatNormalTexture](#sfnode-in-out-clearcoatnormaltexture-null-x3dsingletexturenode) | NULL  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in, out] | [clearcoat](#field-clearcoat) | 0  |
+| SFString | [in, out] | [clearcoatTextureMapping](#field-clearcoatTextureMapping) | "" |
+| SFNode | [in, out] | [clearcoatTexture](#field-clearcoatTexture) | NULL  |
+| SFFloat | [in, out] | [clearcoatRoughness](#field-clearcoatRoughness) | 0  |
+| SFString | [in, out] | [clearcoatRoughnessTextureMapping](#field-clearcoatRoughnessTextureMapping) | "" |
+| SFNode | [in, out] | [clearcoatRoughnessTexture](#field-clearcoatRoughnessTexture) | NULL  |
+| SFString | [in, out] | [clearcoatNormalTextureMapping](#field-clearcoatNormalTextureMapping) | "" |
+| SFNode | [in, out] | [clearcoatNormalTexture](#field-clearcoatNormalTexture) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -52,34 +53,42 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in, out] **clearcoat** 0 <small>[0,∞)</small>
+{: #field-clearcoat }
 
 The clearcoat layer intensity.
 
 ### SFString [in, out] **clearcoatTextureMapping** ""
+{: #field-clearcoatTextureMapping }
 
 Input/Output field *clearcoatTextureMapping*.
 
 ### SFNode [in, out] **clearcoatTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-clearcoatTexture }
 
 The clearcoat layer intensity texture.
 
 ### SFFloat [in, out] **clearcoatRoughness** 0 <small>[0,∞)</small>
+{: #field-clearcoatRoughness }
 
 The clearcoat layer roughness.
 
 ### SFString [in, out] **clearcoatRoughnessTextureMapping** ""
+{: #field-clearcoatRoughnessTextureMapping }
 
 Input/Output field *clearcoatRoughnessTextureMapping*.
 
 ### SFNode [in, out] **clearcoatRoughnessTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-clearcoatRoughnessTexture }
 
 The clearcoat layer roughness texture.
 
 ### SFString [in, out] **clearcoatNormalTextureMapping** ""
+{: #field-clearcoatNormalTextureMapping }
 
 Input/Output field *clearcoatNormalTextureMapping*.
 
 ### SFNode [in, out] **clearcoatNormalTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-clearcoatNormalTexture }
 
 The clearcoat normal map texture.
 

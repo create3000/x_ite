@@ -29,29 +29,30 @@ The HAnimMotion node belongs to the **HAnim** component and requires at least su
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
-| SFString | \[in, out\] | [name](#sfstring-in-out-name-) | "" |
-| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
-| SFInt32 | \[in, out\] | [loa](#sfint32-in-out-loa--1--1-4) | -1  |
-| SFString | \[in, out\] | [joints](#sfstring-in-out-joints-) | "" |
-| MFBool | \[in, out\] | [channelsEnabled](#mfbool-in-out-channelsenabled--) | \[ \] |
-| SFString | \[in, out\] | [channels](#sfstring-in-out-channels-) | "" |
-| MFFloat | \[in, out\] | [values](#mffloat-in-out-values----) | \[ \] |
-| SFBool | \[in, out\] | [loop](#sfbool-in-out-loop-false) | FALSE |
-| SFBool | \[in\] | [next](#sfbool-in-next) |  |
-| SFBool | \[in\] | [previous](#sfbool-in-previous) |  |
-| SFInt32 | \[in, out\] | [frameIndex](#sfint32-in-out-frameindex-0-0) | 0  |
-| SFTime | \[in, out\] | [frameDuration](#sftime-in-out-frameduration-01-0) | 0 |
-| SFInt32 | \[in, out\] | [frameIncrement](#sfint32-in-out-frameincrement-1--) | 1  |
-| SFInt32 | \[in, out\] | [startFrame](#sfint32-in-out-startframe-0-0) | 0  |
-| SFInt32 | \[in, out\] | [endFrame](#sfint32-in-out-endframe-0-0) | 0  |
-| SFTime | \[out\] | [cycleTime](#sftime-out-cycletime) |  |
-| SFTime | \[out\] | [elapsedTime](#sftime-out-elapsedtime) |  |
-| SFInt32 | \[out\] | [frameCount](#sfint32-out-framecount) |  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFString | [in, out] | [name](#field-name) | "" |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFInt32 | [in, out] | [loa](#field-loa) | -1  |
+| SFString | [in, out] | [joints](#field-joints) | "" |
+| MFBool | [in, out] | [channelsEnabled](#field-channelsEnabled) | [ ] |
+| SFString | [in, out] | [channels](#field-channels) | "" |
+| MFFloat | [in, out] | [values](#field-values) | [ ] |
+| SFBool | [in, out] | [loop](#field-loop) | FALSE |
+| SFBool | [in] | [next](#field-next) |  |
+| SFBool | [in] | [previous](#field-previous) |  |
+| SFInt32 | [in, out] | [frameIndex](#field-frameIndex) | 0  |
+| SFTime | [in, out] | [frameDuration](#field-frameDuration) | 0 |
+| SFInt32 | [in, out] | [frameIncrement](#field-frameIncrement) | 1  |
+| SFInt32 | [in, out] | [startFrame](#field-startFrame) | 0  |
+| SFInt32 | [in, out] | [endFrame](#field-endFrame) | 0  |
+| SFTime | [out] | [cycleTime](#field-cycleTime) |  |
+| SFTime | [out] | [elapsedTime](#field-elapsedTime) |  |
+| SFInt32 | [out] | [frameCount](#field-frameCount) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -60,6 +61,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -68,14 +70,17 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [in, out] **name** ""
+{: #field-name }
 
 Unique *name* attribute must be defined so that HAnimMotion node can be identified at run time for animation purposes.
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
+{: #field-loa }
 
 Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
 
@@ -85,6 +90,7 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 - [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation)
 
 ### SFString [in, out] **joints** ""
+{: #field-joints }
 
 *joints* field lists names of *joints* that raw motion data is to be applied to. The number and order of the names in the *joints* field shall match the number and order of the channels field information, and the number and order of the sets of values in the values field for each frame of the animation.
 
@@ -94,10 +100,12 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 - The joint name IGNORED shall be used for channel of motion data that is not used for any joint.
 
 ### MFBool [in, out] **channelsEnabled** [ ]
+{: #field-channelsEnabled }
 
 Boolean values for each channel indicating whether enabled.
 
 ### SFString [in, out] **channels** ""
+{: #field-channels }
 
 List of number of *channels* for transformation, followed by transformation type of each channel of data. Each value is space or comma separated.
 
@@ -106,14 +114,17 @@ List of number of *channels* for transformation, followed by transformation type
 - *channels* are enabled by default, unless otherwise indicated by channelsEnabled field.
 
 ### MFFloat [in, out] **values** [ ] <small>(-∞,∞)</small>
+{: #field-values }
 
 *values* field contains all transformation *values*, ordered first by frame, then by joint, and then by transformation Sets of floats in the *values* array matching the order listed in joints and channels fields.
 
 ### SFBool [in, out] **loop** FALSE
+{: #field-loop }
 
 Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFBool [in] **next**
+{: #field-next }
 
 Send *next* output value in values array, using/updating various frame values as appropriate.
 
@@ -126,6 +137,7 @@ Send *next* output value in values array, using/updating various frame values as
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [in] **previous**
+{: #field-previous }
 
 Send *previous* output value in values array, using/updating various frame values as appropriate.
 
@@ -138,6 +150,7 @@ Send *previous* output value in values array, using/updating various frame value
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFInt32 [in, out] **frameIndex** 0 <small>[0,∞)</small>
+{: #field-frameIndex }
 
 *frameIndex* indicates index of current frame. Note that *frameIndex* can be modified whether the Motion node is enabled or not, and becomes effective when the next animation cycle occurs. Thus the *frameIndex* value indicates the frame currently (or next) being processed.
 
@@ -146,10 +159,12 @@ Send *previous* output value in values array, using/updating various frame value
 - *frameIndex* starts at 0 and is no greater than (frameCount - 1). Values less than 0 are reset as 0. Values greater or equal to frameCount are stored as (frameCount - 1). Thus the value of *frameIndex* shall be greater than or equal to zero, and less than frameCount.
 
 ### SFTime [in, out] **frameDuration** 0.1 <small>(0,∞)</small>
+{: #field-frameDuration }
 
 *frameDuration* specifies the duration of each frame in seconds.
 
 ### SFInt32 [in, out] **frameIncrement** 1 <small>(-∞,∞)</small>
+{: #field-frameIncrement }
 
 *frameIncrement* field controls whether playback direction is forwards or backwards, and also whether frames are skipped (for example, subsampled replay). For a single animation step, the next frameIndex value equals (frameIndex + *frameIncrement*) modulo frameCount.
 
@@ -158,6 +173,7 @@ Send *previous* output value in values array, using/updating various frame value
 - Note that setting *frameIncrement* to 0 prevents automatic advancement of frameIndex and pauses animation of HAnimMotion node.
 
 ### SFInt32 [in, out] **startFrame** 0 <small>[0,∞)</small>
+{: #field-startFrame }
 
 *startFrame* indicates initial index of animated frame. Note that *startFrame* can precede, equal or follow endFrame.
 
@@ -166,6 +182,7 @@ Send *previous* output value in values array, using/updating various frame value
 - *startFrame* starts at 0 and is no greater than (frameCount - 1).
 
 ### SFInt32 [in, out] **endFrame** 0 <small>[0,∞)</small>
+{: #field-endFrame }
 
 *endFrame* indicates final index of animated frame. Note that *endFrame* can precede, equal or follow *endFrame*. The default *endFrame* value is reset to (frameCount - 1) whenever frameCount is changed.
 
@@ -174,6 +191,7 @@ Send *previous* output value in values array, using/updating various frame value
 - *endFrame* starts at 0 and is no greater than (frameCount - 1).
 
 ### SFTime [out] **cycleTime**
+{: #field-cycleTime }
 
 *cycleTime* sends a time event at initial starting time and at beginning of each new cycle.
 
@@ -186,6 +204,7 @@ Send *previous* output value in values array, using/updating various frame value
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **elapsedTime**
+{: #field-elapsedTime }
 
 *elapsedTime* is computed elapsed time since the Motion object was activated and running, counting all traversed frames (as if frameIndex equaled 1) and multiplied by frameDuration, cumulative in seconds.
 
@@ -198,6 +217,7 @@ Send *previous* output value in values array, using/updating various frame value
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFInt32 [out] **frameCount**
+{: #field-frameCount }
 
 *frameCount* is computed at run time and indicates the total number of frames present in the animation, equaling the number of sets of channel data rows present in the values array.
 

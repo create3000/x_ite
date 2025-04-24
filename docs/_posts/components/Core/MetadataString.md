@@ -31,13 +31,14 @@ The MetadataString node belongs to the **Core** component and requires at least 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [name](#sfstring-in-out-name-) | "" |
-| SFString | \[in, out\] | [reference](#sfstring-in-out-reference-) | "" |
-| MFString | \[in, out\] | [value](#mfstring-in-out-value--) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [name](#field-name) | "" |
+| SFString | [in, out] | [reference](#field-reference) | "" |
+| MFString | [in, out] | [value](#field-value) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), MetadataString or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -46,6 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **name** ""
+{: #field-name }
 
 Depending on the metadata vocabulary, the attribute *name* is usually required for metadata nodes.
 
@@ -59,10 +61,12 @@ Depending on the metadata vocabulary, the attribute *name* is usually required f
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
 ### SFString [in, out] **reference** ""
+{: #field-reference }
 
 Reference to the metadata standard or definition defining this particular metadata value.
 
 ### MFString [in, out] **value** [ ]
+{: #field-value }
 
 The *value* attribute is a strictly typed data array providing relevant metadata information.
 

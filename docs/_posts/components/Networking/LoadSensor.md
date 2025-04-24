@@ -31,18 +31,19 @@ The LoadSensor node belongs to the **Networking** component and requires at leas
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
-| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
-| SFTime | \[in, out\] | [timeOut](#sftime-in-out-timeout-0-0) | 0  |
-| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
-| SFBool | \[out\] | [isLoaded](#sfbool-out-isloaded) |  |
-| SFFloat | \[out\] | [progress](#sffloat-out-progress) |  |
-| SFTime | \[out\] | [loadTime](#sftime-out-loadtime) |  |
-| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3durlobject) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFTime | [in, out] | [timeOut](#field-timeOut) | 0  |
+| SFBool | [out] | [isActive](#field-isActive) |  |
+| SFBool | [out] | [isLoaded](#field-isLoaded) |  |
+| SFFloat | [out] | [progress](#field-progress) |  |
+| SFTime | [out] | [loadTime](#field-loadTime) |  |
+| MFNode | [in, out] | [children](#field-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -51,6 +52,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the node.
 
@@ -59,14 +61,17 @@ Author-provided prose that describes intended purpose of the node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFTime [in, out] **timeOut** 0 <small>(0,∞)</small>
+{: #field-timeOut }
 
 Time in seconds of maximum load duration prior to declaring failure. Default value zero means use browser defaults.
 
 ### SFBool [out] **isActive**
+{: #field-isActive }
 
 *isActive* true/false events are sent when sensing starts/stops.
 
@@ -75,6 +80,7 @@ Time in seconds of maximum load duration prior to declaring failure. Default val
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isLoaded**
+{: #field-isLoaded }
 
 Notify when all watchList child nodes are loaded, or at least one has failed. Sends true on successfully loading all watchList child nodes. Sends false on timeOut of any watchList child nodes, failure of any watchList child nodes to load, or no local copies available and no network present.
 
@@ -87,6 +93,7 @@ Notify when all watchList child nodes are loaded, or at least one has failed. Se
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **progress**
+{: #field-progress }
 
 Sends 0.0 on start and 1.0 on completion. Intermediate values are browser dependent and always increasing (may indicate fraction of bytes, fraction of expected time or another metric).
 
@@ -99,6 +106,7 @@ Sends 0.0 on start and 1.0 on completion. Intermediate values are browser depend
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **loadTime**
+{: #field-loadTime }
 
 Time of successful load complete, not sent on failure.
 
@@ -107,6 +115,7 @@ Time of successful load complete, not sent on failure.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DUrlObject]</small>
+{: #field-children }
 
 The *children* field monitors one or more USE nodes that contain a valid url field.
 

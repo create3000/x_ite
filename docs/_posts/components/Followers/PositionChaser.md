@@ -31,17 +31,18 @@ The PositionChaser node belongs to the **Followers** component and requires at l
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFVec3f | \[in\] | [set_value](#sfvec3f-in-set_value--) |  |
-| SFVec3f | \[in\] | [set_destination](#sfvec3f-in-set_destination--) |  |
-| SFVec3f | \[ \] | [initialValue](#sfvec3f---initialvalue-0-0-0--) | 0 0 0  |
-| SFVec3f | \[ \] | [initialDestination](#sfvec3f---initialdestination-0-0-0--) | 0 0 0  |
-| SFTime | \[ \] | [duration](#sftime---duration-1-0) | 1  |
-| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
-| SFVec3f | \[out\] | [value_changed](#sfvec3f-out-value_changed) |  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFVec3f | [in] | [set_value](#field-set_value) |  |
+| SFVec3f | [in] | [set_destination](#field-set_destination) |  |
+| SFVec3f | [ ] | [initialValue](#field-initialValue) | 0 0 0  |
+| SFVec3f | [ ] | [initialDestination](#field-initialDestination) | 0 0 0  |
+| SFTime | [ ] | [duration](#field-duration) | 1  |
+| SFBool | [out] | [isActive](#field-isActive) |  |
+| SFVec3f | [out] | [value_changed](#field-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -50,6 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFVec3f [in] **set_value** <small>(-∞,∞)</small>
+{: #field-set_value }
 
 *set_value* resets current *value* of this node.
 
@@ -58,6 +60,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFVec3f [in] **set_destination** <small>(-∞,∞)</small>
+{: #field-set_destination }
 
 *set_destination* resets *destination* value of this node.
 
@@ -66,14 +69,17 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a *destination* for ROUTE events.
 
 ### SFVec3f [ ] **initialValue** 0 0 0 <small>(-∞,∞)</small>
+{: #field-initialValue }
 
 Initial starting value for this node.
 
 ### SFVec3f [ ] **initialDestination** 0 0 0 <small>(-∞,∞)</small>
+{: #field-initialDestination }
 
 Initial destination value for this node.
 
 ### SFTime [ ] **duration** 1 <small>[0,∞)</small>
+{: #field-duration }
 
 *duration* is the time interval for filter response in seconds.
 
@@ -82,6 +88,7 @@ Initial destination value for this node.
 - *duration* is a nonnegative SFTime *duration* interval, not an absolute clock time.
 
 ### SFBool [out] **isActive**
+{: #field-isActive }
 
 *isActive* true/false events are sent when follower-node computation starts/stops.
 
@@ -90,6 +97,7 @@ Initial destination value for this node.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **value_changed**
+{: #field-value_changed }
 
 Computed output value that approaches within tolerance of destination value, as determined by elapsed time, order and tau.
 

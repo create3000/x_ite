@@ -30,14 +30,15 @@ The OrientationInterpolator node belongs to the **Interpolation** component and 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFFloat | \[in\] | [set_fraction](#sffloat-in-set_fraction--) |  |
-| MFFloat | \[in, out\] | [key](#mffloat-in-out-key----) | \[ \] |
-| MFRotation | \[in, out\] | [keyValue](#mfrotation-in-out-keyvalue----1-1-or--) | \[ \] |
-| SFRotation | \[out\] | [value_changed](#sfrotation-out-value_changed) |  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in] | [set_fraction](#field-set_fraction) |  |
+| MFFloat | [in, out] | [key](#field-key) | [ ] |
+| MFRotation | [in, out] | [keyValue](#field-keyValue) | [ ] |
+| SFRotation | [out] | [value_changed](#field-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -46,6 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
+{: #field-set_fraction }
 
 *set_fraction* selects input key for corresponding keyValue output.
 
@@ -58,6 +60,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+{: #field-key }
 
 Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
 
@@ -71,6 +74,7 @@ Definition values for linear-interpolation function input intervals, listed in n
 - Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFRotation [in, out] **keyValue** [ ] <small>[-1,1] or (-∞,∞)</small>
+{: #field-keyValue }
 
 Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
 
@@ -83,6 +87,7 @@ Output values for linear interpolation, each corresponding to an input-fraction 
 - Number of keys must match number of keyValues!
 
 ### SFRotation [out] **value_changed**
+{: #field-value_changed }
 
 Linearly interpolated output value determined by current key time and corresponding keyValue pair.
 

@@ -29,13 +29,14 @@ The ProjectionVolumeStyle node belongs to the **VolumeRendering** component and 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
-| SFString | \[in, out\] | [type](#sfstring-in-out-type-max-maxminaverage) | "MAX"  |
-| SFFloat | \[in, out\] | [intensityThreshold](#sffloat-in-out-intensitythreshold-0-0-1) | 0  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFString | [in, out] | [type](#field-type) | "MAX"  |
+| SFFloat | [in, out] | [intensityThreshold](#field-intensityThreshold) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -44,10 +45,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFString [in, out] **type** "MAX" <small>["MAX"|"MIN"|"AVERAGE"]</small>
+{: #field-type }
 
 If *type*=MAX then Maximum Intensity Projection (MIP) or Least MIP (LMIP) algorithm is used to generate output color. If *type*=MIN then Minimum Intensity Projection algorithm is used. If *type*=AVERAGE then all voxels along ray are averaged.
 
@@ -60,6 +63,7 @@ If *type*=MAX then Maximum Intensity Projection (MIP) or Least MIP (LMIP) algori
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFFloat [in, out] **intensityThreshold** 0 <small>[0,1]</small>
+{: #field-intensityThreshold }
 
 Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
 

@@ -34,59 +34,60 @@ The TransmitterPdu node belongs to the **DIS** component and requires at least s
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
-| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
-| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
-| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
-| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
-| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
-| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
-| SFString | \[in, out\] | [address](#sfstring-in-out-address-localhost) | "localhost" |
-| SFVec3f | \[in, out\] | [antennaLocation](#sfvec3f-in-out-antennalocation-0-0-0--) | 0 0 0  |
-| SFInt32 | \[in, out\] | [antennaPatternLength](#sfint32-in-out-antennapatternlength-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [antennaPatternType](#sfint32-in-out-antennapatterntype-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [applicationID](#sfint32-in-out-applicationid-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [cryptoKeyID](#sfint32-in-out-cryptokeyid-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [cryptoSystem](#sfint32-in-out-cryptosystem-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [entityID](#sfint32-in-out-entityid-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [frequency](#sfint32-in-out-frequency) |  |
-| SFInt32 | \[in, out\] | [inputSource](#sfint32-in-out-inputsource-0-0-255) | 0  |
-| SFInt32 | \[in, out\] | [lengthOfModulationParameters](#sfint32-in-out-lengthofmodulationparameters-0-0-255) | 0  |
-| SFInt32 | \[in, out\] | [modulationTypeDetail](#sfint32-in-out-modulationtypedetail-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [modulationTypeMajor](#sfint32-in-out-modulationtypemajor-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [modulationTypeSpreadSpectrum](#sfint32-in-out-modulationtypespreadspectrum-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [modulationTypeSystem](#sfint32-in-out-modulationtypesystem-0-0-65535) | 0  |
-| SFString | \[in, out\] | [multicastRelayHost](#sfstring-in-out-multicastrelayhost-) | "" |
-| SFInt32 | \[in, out\] | [multicastRelayPort](#sfint32-in-out-multicastrelayport-0-0-65535) | 0  |
-| SFString | \[in, out\] | [networkMode](#sfstring-in-out-networkmode-standalone-standalonenetworkreadernetworkwriter) | "standAlone"  |
-| SFInt32 | \[in, out\] | [port](#sfint32-in-out-port-0-0-65535) | 0  |
-| SFFloat | \[in, out\] | [power](#sffloat-in-out-power-0-0) | 0  |
-| SFInt32 | \[in, out\] | [radioEntityTypeCategory](#sfint32-in-out-radioentitytypecategory-0-0-255) | 0  |
-| SFInt32 | \[in, out\] | [radioEntityTypeCountry](#sfint32-in-out-radioentitytypecountry-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [radioEntityTypeDomain](#sfint32-in-out-radioentitytypedomain-0-0-255) | 0  |
-| SFInt32 | \[in, out\] | [radioEntityTypeKind](#sfint32-in-out-radioentitytypekind-0-0-255) | 0  |
-| SFInt32 | \[in, out\] | [radioEntityTypeNomenclature](#sfint32-in-out-radioentitytypenomenclature-0-0-255) | 0  |
-| SFInt32 | \[in, out\] | [radioEntityTypeNomenclatureVersion](#sfint32-in-out-radioentitytypenomenclatureversion-0-0-65535) | 0  |
-| SFInt32 | \[in, out\] | [radioID](#sfint32-in-out-radioid-0-0-255) | 0  |
-| SFTime | \[in, out\] | [readInterval](#sftime-in-out-readinterval-01-0) | 0 |
-| SFVec3f | \[in, out\] | [relativeAntennaLocation](#sfvec3f-in-out-relativeantennalocation-0-0-0--) | 0 0 0  |
-| SFBool | \[in, out\] | [rtpHeaderExpected](#sfbool-in-out-rtpheaderexpected-false) | FALSE |
-| SFInt32 | \[in, out\] | [siteID](#sfint32-in-out-siteid-0-0-65535) | 0  |
-| SFFloat | \[in, out\] | [transmitFrequencyBandwidth](#sffloat-in-out-transmitfrequencybandwidth-0--) | 0  |
-| SFInt32 | \[in, out\] | [transmitState](#sfint32-in-out-transmitstate-0-0-255) | 0  |
-| SFInt32 | \[in, out\] | [whichGeometry](#sfint32-in-out-whichgeometry-1--1) | 1  |
-| SFTime | \[in, out\] | [writeInterval](#sftime-in-out-writeinterval-1-0) | 1  |
-| SFBool | \[out\] | [isNetworkReader](#sfbool-out-isnetworkreader) |  |
-| SFBool | \[out\] | [isNetworkWriter](#sfbool-out-isnetworkwriter) |  |
-| SFBool | \[out\] | [isRtpHeaderHeard](#sfbool-out-isrtpheaderheard) |  |
-| SFBool | \[out\] | [isStandAlone](#sfbool-out-isstandalone) |  |
-| SFTime | \[out\] | [timestamp](#sftime-out-timestamp) |  |
-| SFVec3d | \[in, out\] | [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--) | 0 0 0  |
-| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [visible](#field-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFBool | [out] | [isActive](#field-isActive) |  |
+| SFString | [in, out] | [address](#field-address) | "localhost" |
+| SFVec3f | [in, out] | [antennaLocation](#field-antennaLocation) | 0 0 0  |
+| SFInt32 | [in, out] | [antennaPatternLength](#field-antennaPatternLength) | 0  |
+| SFInt32 | [in, out] | [antennaPatternType](#field-antennaPatternType) | 0  |
+| SFInt32 | [in, out] | [applicationID](#field-applicationID) | 0  |
+| SFInt32 | [in, out] | [cryptoKeyID](#field-cryptoKeyID) | 0  |
+| SFInt32 | [in, out] | [cryptoSystem](#field-cryptoSystem) | 0  |
+| SFInt32 | [in, out] | [entityID](#field-entityID) | 0  |
+| SFInt32 | [in, out] | [frequency](#field-frequency) |  |
+| SFInt32 | [in, out] | [inputSource](#field-inputSource) | 0  |
+| SFInt32 | [in, out] | [lengthOfModulationParameters](#field-lengthOfModulationParameters) | 0  |
+| SFInt32 | [in, out] | [modulationTypeDetail](#field-modulationTypeDetail) | 0  |
+| SFInt32 | [in, out] | [modulationTypeMajor](#field-modulationTypeMajor) | 0  |
+| SFInt32 | [in, out] | [modulationTypeSpreadSpectrum](#field-modulationTypeSpreadSpectrum) | 0  |
+| SFInt32 | [in, out] | [modulationTypeSystem](#field-modulationTypeSystem) | 0  |
+| SFString | [in, out] | [multicastRelayHost](#field-multicastRelayHost) | "" |
+| SFInt32 | [in, out] | [multicastRelayPort](#field-multicastRelayPort) | 0  |
+| SFString | [in, out] | [networkMode](#field-networkMode) | "standAlone"  |
+| SFInt32 | [in, out] | [port](#field-port) | 0  |
+| SFFloat | [in, out] | [power](#field-power) | 0  |
+| SFInt32 | [in, out] | [radioEntityTypeCategory](#field-radioEntityTypeCategory) | 0  |
+| SFInt32 | [in, out] | [radioEntityTypeCountry](#field-radioEntityTypeCountry) | 0  |
+| SFInt32 | [in, out] | [radioEntityTypeDomain](#field-radioEntityTypeDomain) | 0  |
+| SFInt32 | [in, out] | [radioEntityTypeKind](#field-radioEntityTypeKind) | 0  |
+| SFInt32 | [in, out] | [radioEntityTypeNomenclature](#field-radioEntityTypeNomenclature) | 0  |
+| SFInt32 | [in, out] | [radioEntityTypeNomenclatureVersion](#field-radioEntityTypeNomenclatureVersion) | 0  |
+| SFInt32 | [in, out] | [radioID](#field-radioID) | 0  |
+| SFTime | [in, out] | [readInterval](#field-readInterval) | 0 |
+| SFVec3f | [in, out] | [relativeAntennaLocation](#field-relativeAntennaLocation) | 0 0 0  |
+| SFBool | [in, out] | [rtpHeaderExpected](#field-rtpHeaderExpected) | FALSE |
+| SFInt32 | [in, out] | [siteID](#field-siteID) | 0  |
+| SFFloat | [in, out] | [transmitFrequencyBandwidth](#field-transmitFrequencyBandwidth) | 0  |
+| SFInt32 | [in, out] | [transmitState](#field-transmitState) | 0  |
+| SFInt32 | [in, out] | [whichGeometry](#field-whichGeometry) | 1  |
+| SFTime | [in, out] | [writeInterval](#field-writeInterval) | 1  |
+| SFBool | [out] | [isNetworkReader](#field-isNetworkReader) |  |
+| SFBool | [out] | [isNetworkWriter](#field-isNetworkWriter) |  |
+| SFBool | [out] | [isRtpHeaderHeard](#field-isRtpHeaderHeard) |  |
+| SFBool | [out] | [isStandAlone](#field-isStandAlone) |  |
+| SFTime | [out] | [timestamp](#field-timestamp) |  |
+| SFVec3d | [in, out] | [geoCoords](#field-geoCoords) | 0 0 0  |
+| MFString | [ ] | [geoSystem](#field-geoSystem) | [ "GD", "WE" ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -95,6 +96,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the node.
 
@@ -103,6 +105,7 @@ Author-provided prose that describes intended purpose of the node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **visible** TRUE
+{: #field-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -112,6 +115,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #field-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -120,6 +124,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #field-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -131,6 +136,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #field-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -141,10 +147,12 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables the sensor node.
 
 ### SFBool [out] **isActive**
+{: #field-isActive }
 
 Confirm whether there has been a recent network update.
 
@@ -153,74 +161,92 @@ Confirm whether there has been a recent network update.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFString [in, out] **address** "localhost"
+{: #field-address }
 
 Multicast network *address*, or else 'localhost'. Example: 224.2.181.145.
 
 ### SFVec3f [in, out] **antennaLocation** 0 0 0 <small>(-∞,∞)</small>
+{: #field-antennaLocation }
 
 World coordinates for antenna location.
 
 ### SFInt32 [in, out] **antennaPatternLength** 0 <small>[0,65535]</small>
+{: #field-antennaPatternLength }
 
 Input/Output field *antennaPatternLength*.
 
 ### SFInt32 [in, out] **antennaPatternType** 0 <small>[0,65535]</small>
+{: #field-antennaPatternType }
 
 Antenna shape pattern: 0 for omnidirectional, 1 for beam, 2 for spherical harmonic (deprecated), or optional higher value
 
 ### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
+{: #field-applicationID }
 
 Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
 ### SFInt32 [in, out] **cryptoKeyID** 0 <small>[0,65535]</small>
+{: #field-cryptoKeyID }
 
 Nonzero value corresponding to the simulated cryptographic key. Enumerations value 0 indicates plain (unencrypted) communications.
 
 ### SFInt32 [in, out] **cryptoSystem** 0 <small>[0,65535]</small>
+{: #field-cryptoSystem }
 
 Indicates type of crypto system being used, even if the encryption equipment is not keyed. Value 0 for No Encryption Device, higher enumerations values correspond to other specific equipment.
 
 ### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
+{: #field-entityID }
 
 EntityID unique ID for entity within that application.
 
 ### SFInt32 [in, out] **frequency**
+{: #field-frequency }
 
 Transmission *frequency* in Hz. If the radio is in *frequency* hopping mode, this field may be set to the center of the *frequency* hopping band currently in use, or to some other appropriate value.
 
 ### SFInt32 [in, out] **inputSource** 0 <small>[0,255]</small>
+{: #field-inputSource }
 
 Source of transmission input. Enumerations value 0 for Other, 1 for Pilot, 2 for Copilot, 3 for First Officer, 4 for Driver, 5 for Loader, 6 for Gunner, 7 for Commander, 8 for Digital Data Device, 9 for Intercom, 10 for Audio Jammer, 11 for Data Jammer, 12 for GPS Jammer, 13 for GPS Meaconer (masking beacon).
 
 ### SFInt32 [in, out] **lengthOfModulationParameters** 0 <small>[0,255]</small>
+{: #field-lengthOfModulationParameters }
 
 Input/Output field *lengthOfModulationParameters*.
 
 ### SFInt32 [in, out] **modulationTypeDetail** 0 <small>[0,65535]</small>
+{: #field-modulationTypeDetail }
 
 Integer enumeration containing detailed information depending on the major modulation type.
 
 ### SFInt32 [in, out] **modulationTypeMajor** 0 <small>[0,65535]</small>
+{: #field-modulationTypeMajor }
 
 Integer enumeration containing major classification of the modulation type. Enumerations value 0 for No Statement, 1 for Amplitude, 2 for Amplitude and Angle, 3 for Angle, 4 for Combination, 5 for Pulse, 6 for Unmodulated, 7 for Carrier Phase Shift Modulation (CPSM).
 
 ### SFInt32 [in, out] **modulationTypeSpreadSpectrum** 0 <small>[0,65535]</small>
+{: #field-modulationTypeSpreadSpectrum }
 
 Indicates the spread spectrum technique or combination of spread spectrum techniques in use.
 
 ### SFInt32 [in, out] **modulationTypeSystem** 0 <small>[0,65535]</small>
+{: #field-modulationTypeSystem }
 
 Specifies radio system associated with this Transmitter PDU and used to interpret other fields whose values depend on a specific radio system.
 
 ### SFString [in, out] **multicastRelayHost** ""
+{: #field-multicastRelayHost }
 
 Fallback server address if multicast not available locally. For example: track.nps.edu.
 
 ### SFInt32 [in, out] **multicastRelayPort** 0 <small>[0,65535]</small>
+{: #field-multicastRelayPort }
 
 Fallback server port if multicast not available locally. For example: 8010.
 
 ### SFString [in, out] **networkMode** "standAlone" <small>["standAlone"|"networkReader"|"networkWriter"]</small>
+{: #field-networkMode }
 
 Whether this entity is ignoring the network, sending DIS packets to the network, or receiving DIS packets from the network. (1) standAlone: ignore network but still respond to events in local scene. (2) networkReader: listen to network and read PDU packets at readInterval, act as remotely linked copy of entity. (3) networkWriter: send PDU packets to network at writeInterval, act as master entity. Default value "standAlone" ensures that DIS network activation within a scene as networkReader or networkWriter is intentional.
 
@@ -230,42 +256,52 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 - Network activity may have associated security issues.
 
 ### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
+{: #field-port }
 
 Multicast network *port*, for example: 3000.
 
 ### SFFloat [in, out] **power** 0 <small>(0,∞)</small>
+{: #field-power }
 
 Power that radio would be capable of outputting if on and transmitting, independent of actual transmit state of the radio.
 
 ### SFInt32 [in, out] **radioEntityTypeCategory** 0 <small>[0,255]</small>
+{: #field-radioEntityTypeCategory }
 
 Integer enumeration containing EntityType of transmitter radio. Enumerations value: 0 for Other, 1 for Generic Radio or Simple Intercom, 2 for HAVE QUICK, 3 for HAVE QUICK II, 4 for HAVE QUICK IIA, 5 for SINCGARS, 6 for CCTT SINCGARS, 7 for EPLRS (Enhanced Position Location Reporting System), 8 for JTIDS/MIDS, 9 for Link 11, 10 for Link 11B, 11 for L-Band SATCOM, 12 for Enhanced SINCGARS 7.3, 13 for Navigation Aid.
 
 ### SFInt32 [in, out] **radioEntityTypeCountry** 0 <small>[0,65535]</small>
+{: #field-radioEntityTypeCountry }
 
 Integer enumerations value for country to which the design of the entity or its design specification is attributed.
 
 ### SFInt32 [in, out] **radioEntityTypeDomain** 0 <small>[0,255]</small>
+{: #field-radioEntityTypeDomain }
 
 Integer enumerations value for domain in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
 
 ### SFInt32 [in, out] **radioEntityTypeKind** 0 <small>[0,255]</small>
+{: #field-radioEntityTypeKind }
 
 Integer enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
 
 ### SFInt32 [in, out] **radioEntityTypeNomenclature** 0 <small>[0,255]</small>
+{: #field-radioEntityTypeNomenclature }
 
 Integer enumerations value indicating nomenclature (name) for a particular emitter. See DIS enumerations reference for value/name pairs.
 
 ### SFInt32 [in, out] **radioEntityTypeNomenclatureVersion** 0 <small>[0,65535]</small>
+{: #field-radioEntityTypeNomenclatureVersion }
 
 Named equipment version number.
 
 ### SFInt32 [in, out] **radioID** 0 <small>[0,255]</small>
+{: #field-radioID }
 
 Identifies a particular radio within a given entity.
 
 ### SFTime [in, out] **readInterval** 0.1 <small>(0,∞)</small>
+{: #field-readInterval }
 
 Seconds between read updates, 0 means no reading.
 
@@ -274,30 +310,37 @@ Seconds between read updates, 0 means no reading.
 - *readInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFVec3f [in, out] **relativeAntennaLocation** 0 0 0 <small>(-∞,∞)</small>
+{: #field-relativeAntennaLocation }
 
 Relative coordinates for antenna location.
 
 ### SFBool [in, out] **rtpHeaderExpected** FALSE
+{: #field-rtpHeaderExpected }
 
 Whether RTP headers are prepended to DIS PDUs.
 
 ### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
+{: #field-siteID }
 
 Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### SFFloat [in, out] **transmitFrequencyBandwidth** 0 <small>(-∞,∞)</small>
+{: #field-transmitFrequencyBandwidth }
 
 Bandwidth of the particular transmitter measured between the half-power (-3 dB) points (this value represents total bandwidth, not the deviation from the center frequency).
 
 ### SFInt32 [in, out] **transmitState** 0 <small>[0,255]</small>
+{: #field-transmitState }
 
 Specify radio transmission state where enumerations value 0 is for off, value 1 for powered but not transmitting, or value 1 is for powered and transmitting,
 
 ### SFInt32 [in, out] **whichGeometry** 1 <small>[-1,∞)</small>
+{: #field-whichGeometry }
 
 Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
 
 ### SFTime [in, out] **writeInterval** 1 <small>[0,∞)</small>
+{: #field-writeInterval }
 
 Seconds between write updates, 0 means no writing (sending).
 
@@ -306,6 +349,7 @@ Seconds between write updates, 0 means no writing (sending).
 - *writeInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFBool [out] **isNetworkReader**
+{: #field-isNetworkReader }
 
 Whether networkMode='remote' (listen to network as copy of remote entity).
 
@@ -314,6 +358,7 @@ Whether networkMode='remote' (listen to network as copy of remote entity).
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isNetworkWriter**
+{: #field-isNetworkWriter }
 
 Whether networkMode='master' (output to network as master entity at writeInterval).
 
@@ -322,6 +367,7 @@ Whether networkMode='master' (output to network as master entity at writeInterva
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isRtpHeaderHeard**
+{: #field-isRtpHeaderHeard }
 
 Whether incoming DIS packets have an RTP header prepended.
 
@@ -330,6 +376,7 @@ Whether incoming DIS packets have an RTP header prepended.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isStandAlone**
+{: #field-isStandAlone }
 
 Whether networkMode='local' (ignore network but still respond to local events).
 
@@ -338,6 +385,7 @@ Whether networkMode='local' (ignore network but still respond to local events).
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **timestamp**
+{: #field-timestamp }
 
 DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 
@@ -346,6 +394,7 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
+{: #field-geoCoords }
 
 Geographic location (specified in current geoSystem coordinates) for children geometry (specified in relative coordinate system, in meters).
 
@@ -358,6 +407,7 @@ Geographic location (specified in current geoSystem coordinates) for children ge
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
+{: #field-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 

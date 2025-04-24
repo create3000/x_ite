@@ -31,18 +31,19 @@ The ChannelSelector node belongs to the **Sound** component and requires at leas
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
-| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
-| SFFloat | \[in, out\] | [gain](#sffloat-in-out-gain-1--) | 1  |
-| SFInt32 | \[in, out\] | [channelSelection](#sfint32-in-out-channelselection-0-0) | 0  |
-| SFInt32 | \[in, out\] | [channelCount](#sfint32-in-out-channelcount) |  |
-| SFString | \[in, out\] | [channelCountMode](#sfstring-in-out-channelcountmode-max-max-clamped-max-explicit) | "MAX"  |
-| SFString | \[in, out\] | [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete) | "SPEAKERS"  |
-| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFFloat | [in, out] | [gain](#field-gain) | 1  |
+| SFInt32 | [in, out] | [channelSelection](#field-channelSelection) | 0  |
+| SFInt32 | [in, out] | [channelCount](#field-channelCount) |  |
+| SFString | [in, out] | [channelCountMode](#field-channelCountMode) | "MAX"  |
+| SFString | [in, out] | [channelInterpretation](#field-channelInterpretation) | "SPEAKERS"  |
+| MFNode | [in, out] | [children](#field-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -51,6 +52,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -59,10 +61,12 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
+{: #field-gain }
 
 The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
@@ -75,10 +79,12 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - Decibel values shall not be used.
 
 ### SFInt32 [in, out] **channelSelection** 0 <small>[0,∞)</small>
+{: #field-channelSelection }
 
 *channelSelection* is single channel of interest from those provided by input nodes.
 
 ### SFInt32 [in, out] **channelCount**
+{: #field-channelCount }
 
 *channelCount* reports number of channels provided by input nodes.
 
@@ -87,6 +93,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
+{: #field-channelCountMode }
 
 *channelCountMode* determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
 
@@ -95,6 +102,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode)
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
+{: #field-channelInterpretation }
 
 *channelInterpretation* determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
 
@@ -103,6 +111,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+{: #field-children }
 
 The *children* field specifies audio-graph sound sources providing input signals for this node. If multiple input signals are provided by the inputs *children* field, all channels are mixed together and merged prior to presentation.
 

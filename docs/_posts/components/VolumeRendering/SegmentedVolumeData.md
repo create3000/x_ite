@@ -30,19 +30,20 @@ The SegmentedVolumeData node belongs to the **VolumeRendering** component and re
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFVec3f | \[in, out\] | [dimensions](#sfvec3f-in-out-dimensions-1-1-1-0) | 1 1 1  |
-| MFBool | \[in, out\] | [segmentEnabled](#mfbool-in-out-segmentenabled--) | \[ \] |
-| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
-| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
-| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
-| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
-| SFNode | \[in, out\] | [segmentIdentifiers](#sfnode-in-out-segmentidentifiers-null-x3dtexture3dnode) | NULL  |
-| MFNode | \[in, out\] | [renderStyle](#mfnode-in-out-renderstyle---x3dvolumerenderstylenode) | \[ \] |
-| SFNode | \[in, out\] | [voxels](#sfnode-in-out-voxels-null-x3dtexture3dnode) | NULL  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFVec3f | [in, out] | [dimensions](#field-dimensions) | 1 1 1  |
+| MFBool | [in, out] | [segmentEnabled](#field-segmentEnabled) | [ ] |
+| SFBool | [in, out] | [visible](#field-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
+| SFNode | [in, out] | [segmentIdentifiers](#field-segmentIdentifiers) | NULL  |
+| MFNode | [in, out] | [renderStyle](#field-renderStyle) | [ ] |
+| SFNode | [in, out] | [voxels](#field-voxels) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -51,10 +52,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
+{: #field-dimensions }
 
 Actual-size X-Y-Z *dimensions* of volume data in local coordinate system.
 
 ### MFBool [in, out] **segmentEnabled** [ ]
+{: #field-segmentEnabled }
 
 Array of boolean values that indicates whether to draw each segment, with indices corresponding to the segment identifier.
 
@@ -63,6 +66,7 @@ Array of boolean values that indicates whether to draw each segment, with indice
 - If a segment index is found greater than the array length, it shall be rendered.
 
 ### SFBool [in, out] **visible** TRUE
+{: #field-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -72,6 +76,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #field-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -80,6 +85,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #field-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -91,6 +97,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #field-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -101,6 +108,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFNode [in, out] **segmentIdentifiers** NULL <small>[X3DTexture3DNode]</small>
+{: #field-segmentIdentifiers }
 
 Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) holds component texture that provides corresponding segment identifier.
 
@@ -113,6 +121,7 @@ Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturi
 - If *segmentIdentifiers* texture is not identical in size to the main voxels, it shall be ignored.
 
 ### MFNode [in, out] **renderStyle** [ ] <small>[X3DVolumeRenderStyleNode]</small>
+{: #field-renderStyle }
 
 Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurface that define specific rendering technique for this volumetric object.
 
@@ -121,6 +130,7 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 - If not defined, no default renderStyle is defined.
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
+{: #field-voxels }
 
 Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 

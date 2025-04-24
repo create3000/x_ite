@@ -32,11 +32,12 @@ The Tangent node belongs to the **Rendering** component and requires at least su
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| MFVec4f | \[in, out\] | [vector](#mfvec4f-in-out-vector----1-1) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFVec4f | [in, out] | [vector](#field-vector) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -45,6 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFVec4f [in, out] **vector** [ ] <small>[-1,1]</small>
+{: #field-vector }
 
 A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
 

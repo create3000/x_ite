@@ -29,16 +29,17 @@ The ViewpointGroup node belongs to the **Navigation** component and requires at 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
-| SFBool | \[in, out\] | [displayed](#sfbool-in-out-displayed-true) | TRUE |
-| SFBool | \[in, out\] | [retainUserOffsets](#sfbool-in-out-retainuseroffsets-false) | FALSE |
-| SFVec3f | \[in, out\] | [size](#sfvec3f-in-out-size-0-0-0--) | 0 0 0  |
-| SFVec3f | \[in, out\] | [center](#sfvec3f-in-out-center-0-0-0--) | 0 0 0  |
-| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dviewpointnode--viewpointgroup) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [displayed](#field-displayed) | TRUE |
+| SFBool | [in, out] | [retainUserOffsets](#field-retainUserOffsets) | FALSE |
+| SFVec3f | [in, out] | [size](#field-size) | 0 0 0  |
+| SFVec3f | [in, out] | [center](#field-center) | 0 0 0  |
+| MFNode | [in, out] | [children](#field-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -47,6 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 [Text](/x_ite/components/text/text/) *description* or navigation hint to identify this ViewpointGroup.
 
@@ -60,14 +62,17 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - Without *description*, this ViewpointGroup is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
 
 ### SFBool [in, out] **displayed** TRUE
+{: #field-displayed }
 
 *displayed* determines whether this ViewpointGroup is *displayed* in the current viewpoint list.
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
+{: #field-retainUserOffsets }
 
 Retain (true) or reset to zero (false) any prior user navigation offsets from defined viewpoint position, orientation.
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>(-∞,∞)</small>
+{: #field-size }
 
 *size* of Proximity box around center location, oriented within local transformation frame, within which ViewpointGroup is usable and displayed on viewpoint list.
 
@@ -76,10 +81,12 @@ Retain (true) or reset to zero (false) any prior user navigation offsets from de
 - *size* 0 0 0 specifies that ViewpointGroup is always usable and displayable.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
+{: #field-center }
 
 *center* specifies *center* point of proximity box within which ViewpointGroup is usable and displayed on viewpoint list.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DViewpointNode | ViewpointGroup]</small>
+{: #field-children }
 
 ViewpointGroup contains [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes that each have `containerField='children'` default value.
 

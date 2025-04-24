@@ -30,18 +30,19 @@ The Shape node belongs to the **Shape** component and requires at least support 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFBool | \[in, out\] | [pointerEvents](#sfbool-in-out-pointerevents-true-small-classbluenon-standard) | TRUE  |
-| SFBool | \[in, out\] | [castShadow](#sfbool-in-out-castshadow-true) | TRUE |
-| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
-| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
-| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
-| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
-| SFNode | \[in, out\] | [appearance](#sfnode-in-out-appearance-null-x3dappearancenode) | NULL  |
-| SFNode | \[in, out\] | [geometry](#sfnode-in-out-geometry-null-x3dgeometrynode) | NULL  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [pointerEvents](#field-pointerEvents) | TRUE  |
+| SFBool | [in, out] | [castShadow](#field-castShadow) | TRUE |
+| SFBool | [in, out] | [visible](#field-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
+| SFNode | [in, out] | [appearance](#field-appearance) | NULL  |
+| SFNode | [in, out] | [geometry](#field-geometry) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -50,10 +51,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
+{: #field-pointerEvents }
 
 *pointerEvents* defines whether this Shape becomes target for pointer events.
 
 ### SFBool [in, out] **castShadow** TRUE
+{: #field-castShadow }
 
 *castShadow* defines whether this Shape casts shadows as produced by lighting nodes.
 
@@ -63,6 +66,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - If prior X3D3 content is loaded into an X3D4 model, then legacy Shape nodes have shadows set to true.
 
 ### SFBool [in, out] **visible** TRUE
+{: #field-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -72,6 +76,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #field-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -80,6 +85,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #field-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -91,6 +97,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #field-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -101,10 +108,12 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFNode [in, out] **appearance** NULL <small>[X3DAppearanceNode]</small>
+{: #field-appearance }
 
 Single contained [Appearance](/x_ite/components/shape/appearance/) node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry.
 
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
+{: #field-geometry }
 
 Single contained *geometry* node that is rendered according to corresponding appearance.
 

@@ -31,13 +31,14 @@ The TextureCoordinateGenerator node belongs to the **Texturing** component and r
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [mapping](#sfstring-in-out-mapping-) | "" |
-| SFString | \[in, out\] | [mode](#sfstring-in-out-mode-sphere-spherecameraspacenormalcameraspacepositioncameraspacereflectionvectorsphere-localcoordcoord-eyenoisenoise-eyesphere-reflectsphere-reflect-local) | "SPHERE"  |
-| MFFloat | \[in, out\] | [parameter](#mffloat-in-out-parameter--) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [mapping](#field-mapping) | "" |
+| SFString | [in, out] | [mode](#field-mode) | "SPHERE"  |
+| MFFloat | [in, out] | [parameter](#field-parameter) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -46,6 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **mapping** ""
+{: #field-mapping }
 
 The *mapping* label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
@@ -54,6 +56,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 - [TODO support planned to perform multiple-node *mapping* validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFString [in, out] **mode** "SPHERE" <small>["SPHERE"|"CAMERASPACENORMAL"|"CAMERASPACEPOSITION"|"CAMERASPACEREFLECTIONVECTOR"|"SPHERE-LOCAL"|"COORD"|"COORD-EYE"|"NOISE"|"NOISE-EYE"|"SPHERE-REFLECT"|"SPHERE-REFLECT-LOCAL"]</small>
+{: #field-mode }
 
 Parameter field defines the algorithm used to compute texture coordinates.
 
@@ -66,6 +69,7 @@ Parameter field defines the algorithm used to compute texture coordinates.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### MFFloat [in, out] **parameter** [ ]
+{: #field-parameter }
 
 *parameter* array contains scale and translation (x y z) values for Perlin NOISE mode, *parameter*[0] contains index of refraction for SPHERE-REFLECT mode, *parameter*[0] contains index of refraction and *parameter*[1 to 3] contains the eye point in local coordinates for SPHERE-REFLECT-LOCAL mode.
 

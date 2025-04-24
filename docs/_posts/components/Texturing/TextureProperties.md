@@ -28,21 +28,22 @@ The TextureProperties node belongs to the **Texturing** component and requires a
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFColorRGBA | \[in, out\] | [borderColor](#sfcolorrgba-in-out-bordercolor-0-0-0-0-0-1) | 0 0 0 0  |
-| SFInt32 | \[in, out\] | [borderWidth](#sfint32-in-out-borderwidth-0-0-1) | 0  |
-| SFFloat | \[in, out\] | [anisotropicDegree](#sffloat-in-out-anisotropicdegree-1-1) | 1  |
-| SFBool | \[ \] | [generateMipMaps](#sfbool---generatemipmaps-false) | FALSE |
-| SFString | \[in, out\] | [minificationFilter](#sfstring-in-out-minificationfilter-default-avg_pixel-avg_pixel_avg_mipmap-avg_pixel_nearest_mipmap-default-fastest-nearest_pixel-nearest_pixel_avg_mipmap-nearest_pixel_nearest_mipmap-nicest) | "DEFAULT"  |
-| SFString | \[in, out\] | [magnificationFilter](#sfstring-in-out-magnificationfilter-default-avg_pixel-default-fastest-nearest_pixel-nicest) | "DEFAULT"  |
-| SFString | \[in, out\] | [boundaryModeS](#sfstring-in-out-boundarymodes-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat) | "REPEAT"  |
-| SFString | \[in, out\] | [boundaryModeT](#sfstring-in-out-boundarymodet-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat) | "REPEAT"  |
-| SFString | \[in, out\] | [boundaryModeR](#sfstring-in-out-boundarymoder-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat) | "REPEAT"  |
-| SFString | \[in, out\] | [textureCompression](#sfstring-in-out-texturecompression-default-default-fastest-high-low-medium-nicest) | "DEFAULT"  |
-| SFFloat | \[in, out\] | [texturePriority](#sffloat-in-out-texturepriority-0-0-1) | 0  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFColorRGBA | [in, out] | [borderColor](#field-borderColor) | 0 0 0 0  |
+| SFInt32 | [in, out] | [borderWidth](#field-borderWidth) | 0  |
+| SFFloat | [in, out] | [anisotropicDegree](#field-anisotropicDegree) | 1  |
+| SFBool | [ ] | [generateMipMaps](#field-generateMipMaps) | FALSE |
+| SFString | [in, out] | [minificationFilter](#field-minificationFilter) | "DEFAULT"  |
+| SFString | [in, out] | [magnificationFilter](#field-magnificationFilter) | "DEFAULT"  |
+| SFString | [in, out] | [boundaryModeS](#field-boundaryModeS) | "REPEAT"  |
+| SFString | [in, out] | [boundaryModeT](#field-boundaryModeT) | "REPEAT"  |
+| SFString | [in, out] | [boundaryModeR](#field-boundaryModeR) | "REPEAT"  |
+| SFString | [in, out] | [textureCompression](#field-textureCompression) | "DEFAULT"  |
+| SFFloat | [in, out] | [texturePriority](#field-texturePriority) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -51,6 +52,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFColorRGBA [in, out] **borderColor** 0 0 0 0 <small>[0,1]</small>
+{: #field-borderColor }
 
 *borderColor* defines border pixel color.
 
@@ -59,10 +61,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFInt32 [in, out] **borderWidth** 0 <small>[0,1]</small>
+{: #field-borderWidth }
 
 *borderWidth* number of pixels for texture border.
 
 ### SFFloat [in, out] **anisotropicDegree** 1 <small>[1,∞)</small>
+{: #field-anisotropicDegree }
 
 *anisotropicDegree* defines minimum degree of anisotropy to account for in texture filtering (1=no effect for symmetric filtering, otherwise provide higher value). At least 2-to-1 anisotropy is often supported in low-level graphics rendering software and hardware, relative to horizontal and vertical directions.
 
@@ -72,6 +76,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [OpenGL EXT_texture_filter_anisotropic](https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_filter_anisotropic.txt)
 
 ### SFBool [ ] **generateMipMaps** FALSE
+{: #field-generateMipMaps }
 
 Determines whether MIPMAPs are generated for texture images.
 
@@ -87,6 +92,7 @@ Determines whether MIPMAPs are generated for texture images.
 - Must declare *generateMipMaps*='true' for minificationFilter modes with MIPMAP in their value.
 
 ### SFString [in, out] **minificationFilter** "DEFAULT" <small>["AVG_PIXEL", "AVG_PIXEL_AVG_MIPMAP", "AVG_PIXEL_NEAREST_MIPMAP", "DEFAULT", "FASTEST", "NEAREST_PIXEL", "NEAREST_PIXEL_AVG_MIPMAP", "NEAREST_PIXEL_NEAREST_MIPMAP", "NICEST"]</small>
+{: #field-minificationFilter }
 
 *minificationFilter* indicates texture filter when image is larger than screen space representation.
 
@@ -99,6 +105,7 @@ Determines whether MIPMAPs are generated for texture images.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **magnificationFilter** "DEFAULT" <small>["AVG_PIXEL", "DEFAULT", "FASTEST", "NEAREST_PIXEL", "NICEST"]</small>
+{: #field-magnificationFilter }
 
 *magnificationFilter* indicates texture filter when image is smaller than screen space representation.
 
@@ -111,6 +118,7 @@ Determines whether MIPMAPs are generated for texture images.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **boundaryModeS** "REPEAT" <small>["CLAMP", "CLAMP_TO_EDGE", "CLAMP_TO_BOUNDARY", "MIRRORED_REPEAT", "REPEAT"]</small>
+{: #field-boundaryModeS }
 
 *boundaryModeS* describes handling of texture-coordinate boundaries.
 
@@ -123,6 +131,7 @@ Determines whether MIPMAPs are generated for texture images.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **boundaryModeT** "REPEAT" <small>["CLAMP", "CLAMP_TO_EDGE", "CLAMP_TO_BOUNDARY", "MIRRORED_REPEAT", "REPEAT"]</small>
+{: #field-boundaryModeT }
 
 *boundaryModeT* describes handling of texture-coordinate boundaries.
 
@@ -135,6 +144,7 @@ Determines whether MIPMAPs are generated for texture images.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **boundaryModeR** "REPEAT" <small>["CLAMP", "CLAMP_TO_EDGE", "CLAMP_TO_BOUNDARY", "MIRRORED_REPEAT", "REPEAT"]</small>
+{: #field-boundaryModeR }
 
 *boundaryModeR* describes handling of texture-coordinate boundaries.
 
@@ -147,6 +157,7 @@ Determines whether MIPMAPs are generated for texture images.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **textureCompression** "DEFAULT" <small>["DEFAULT", "FASTEST", "HIGH", "LOW", "MEDIUM", "NICEST"]</small>
+{: #field-textureCompression }
 
 *textureCompression* indicates compression algorithm selection mode.
 
@@ -160,6 +171,7 @@ Determines whether MIPMAPs are generated for texture images.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFFloat [in, out] **texturePriority** 0 <small>[0,1]</small>
+{: #field-texturePriority }
 
 *texturePriority* defines relative priority for this texture when allocating texture memory, an important rendering resource in graphics-card hardware. Default value 0 is lowest, 1 is highest.
 

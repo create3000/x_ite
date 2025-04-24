@@ -30,26 +30,27 @@ The SpotLight node belongs to the **Lighting** component and requires at least s
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFBool | \[in, out\] | [global](#sfbool-in-out-global-true) | TRUE |
-| SFBool | \[in, out\] | [on](#sfbool-in-out-on-true) | TRUE |
-| SFColor | \[in, out\] | [color](#sfcolor-in-out-color-1-1-1-0-1) | 1 1 1  |
-| SFFloat | \[in, out\] | [intensity](#sffloat-in-out-intensity-1-0) | 1  |
-| SFFloat | \[in, out\] | [ambientIntensity](#sffloat-in-out-ambientintensity-0-0-1) | 0  |
-| SFVec3f | \[in, out\] | [attenuation](#sfvec3f-in-out-attenuation-1-0-0-0) | 1 0 0  |
-| SFVec3f | \[in, out\] | [location](#sfvec3f-in-out-location-0-0-0--) | 0 0 0  |
-| SFVec3f | \[in, out\] | [direction](#sfvec3f-in-out-direction-0-0--1--) | 0 0 -1  |
-| SFFloat | \[in, out\] | [radius](#sffloat-in-out-radius-100-0) | 100  |
-| SFFloat | \[in, out\] | [beamWidth](#sffloat-in-out-beamwidth-316-0-2) | π |
-| SFFloat | \[in, out\] | [cutOffAngle](#sffloat-in-out-cutoffangle-2-0-2) | π/2  |
-| SFBool | \[in, out\] | [shadows](#sfbool-in-out-shadows-false) | FALSE |
-| SFColor | \[in, out\] | [shadowColor](#sfcolor-in-out-shadowcolor-0-0-0-0-1-small-classbluenon-standard) | 0 0 0  |
-| SFFloat | \[in, out\] | [shadowIntensity](#sffloat-in-out-shadowintensity-1-0-1) | 1  |
-| SFFloat | \[in, out\] | [shadowBias](#sffloat-in-out-shadowbias-0005-0-1-small-classbluenon-standard) | 0 |
-| SFInt32 | \[ \] | [shadowMapSize](#sfint32---shadowmapsize-1024-0-small-classbluenon-standard) | 1024  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [global](#field-global) | TRUE |
+| SFBool | [in, out] | [on](#field-on) | TRUE |
+| SFColor | [in, out] | [color](#field-color) | 1 1 1  |
+| SFFloat | [in, out] | [intensity](#field-intensity) | 1  |
+| SFFloat | [in, out] | [ambientIntensity](#field-ambientIntensity) | 0  |
+| SFVec3f | [in, out] | [attenuation](#field-attenuation) | 1 0 0  |
+| SFVec3f | [in, out] | [location](#field-location) | 0 0 0  |
+| SFVec3f | [in, out] | [direction](#field-direction) | 0 0 -1  |
+| SFFloat | [in, out] | [radius](#field-radius) | 100  |
+| SFFloat | [in, out] | [beamWidth](#field-beamWidth) | π |
+| SFFloat | [in, out] | [cutOffAngle](#field-cutOffAngle) | π/2  |
+| SFBool | [in, out] | [shadows](#field-shadows) | FALSE |
+| SFColor | [in, out] | [shadowColor](#field-shadowColor) | 0 0 0  |
+| SFFloat | [in, out] | [shadowIntensity](#field-shadowIntensity) | 1  |
+| SFFloat | [in, out] | [shadowBias](#field-shadowBias) | 0 |
+| SFInt32 | [ ] | [shadowMapSize](#field-shadowMapSize) | 1024  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -58,6 +59,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **global** TRUE
+{: #field-global }
 
 Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
@@ -66,10 +68,12 @@ Global lights illuminate all objects within their volume of lighting influence. 
 - [DirectionalLight](/x_ite/components/lighting/directionallight/) default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](/x_ite/components/lighting/pointlight/) and SpotLight default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
+{: #field-on }
 
 Enables/disables this light source.
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
+{: #field-color }
 
 *color* of light, applied to colors of objects.
 
@@ -78,14 +82,17 @@ Enables/disables this light source.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFFloat [in, out] **intensity** 1 <small>[0,∞)</small>
+{: #field-intensity }
 
 Brightness of direct emission from the light.
 
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
+{: #field-ambientIntensity }
 
 Brightness of ambient (nondirectional background) emission from the light.
 
 ### SFVec3f [in, out] **attenuation** 1 0 0 <small>[0,∞)</small>
+{: #field-attenuation }
 
 Constant, linear-distance and squared-distance dropoff factors as radial distance increases from the source.
 
@@ -94,18 +101,22 @@ Constant, linear-distance and squared-distance dropoff factors as radial distanc
 - *attenuation* = 1/max(*attenuation*[0] + *attenuation*[1] ⨯ r + *attenuation*[2] ⨯ r2 , 1)
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
+{: #field-location }
 
 Position of light relative to local coordinate system.
 
 ### SFVec3f [in, out] **direction** 0 0 -1 <small>(-∞,∞)</small>
+{: #field-direction }
 
 Orientation vector of light relative to local coordinate system.
 
 ### SFFloat [in, out] **radius** 100 <small>[0,∞)</small>
+{: #field-radius }
 
 Maximum effective distance of light relative to local light position, affected by ancestor scaling.
 
 ### SFFloat [in, out] **beamWidth** π*3/16 <small>(0,π/2]</small>
+{: #field-beamWidth }
 
 Inner conical solid angle (in radians) where light source has uniform full intensity.
 
@@ -119,6 +130,7 @@ Inner conical solid angle (in radians) where light source has uniform full inten
 - If *beamWidth* \> cutOffAngle, then *beamWidth* is reset to equal cutOffAngle.
 
 ### SFFloat [in, out] **cutOffAngle** π/2 <small>(0,π/2]</small>
+{: #field-cutOffAngle }
 
 Outer conical solid angle (in radians) where light source intensity becomes zero.
 
@@ -132,22 +144,27 @@ Outer conical solid angle (in radians) where light source intensity becomes zero
 - If beamWidth \> *cutOffAngle*, then beamWidth is reset to equal *cutOffAngle*.
 
 ### SFBool [in, out] **shadows** FALSE
+{: #field-shadows }
 
 *shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
 
 ### SFColor [in, out] **shadowColor** 0 0 0 <small>[0,1]</small> <small class="blue">non-standard</small>
+{: #field-shadowColor }
 
 Color of shadow, applied to colors of objects.
 
 ### SFFloat [in, out] **shadowIntensity** 1 <small>[0,1]</small>
+{: #field-shadowIntensity }
 
 *shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
 
 ### SFFloat [in, out] **shadowBias** 0.005 <small>[0,1]</small> <small class="blue">non-standard</small>
+{: #field-shadowBias }
 
 The shadowBias value controls the visibility of *shadow acne*.
 
 ### SFInt32 [ ] **shadowMapSize** 1024 <small>[0,∞)</small> <small class="blue">non-standard</small>
+{: #field-shadowMapSize }
 
 Size of the shadow map in pixels, must be power of two.
 

@@ -29,19 +29,20 @@ The ScreenFontStyle node belongs to the **Layout** component and requires at lea
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [language](#sfstring-in-out-language-) | "" |
-| MFString | \[in, out\] | [family](#mfstring-in-out-family-serif-string-or-uri) | "SERIF"  |
-| SFString | \[in, out\] | [style](#sfstring-in-out-style-plain-plainbolditalicbolditalic) | "PLAIN"  |
-| SFFloat | \[in, out\] | [pointSize](#sffloat-in-out-pointsize-12-0) | 12  |
-| SFFloat | \[in, out\] | [spacing](#sffloat-in-out-spacing-1-0) | 1  |
-| SFBool | \[in, out\] | [horizontal](#sfbool-in-out-horizontal-true) | TRUE |
-| SFBool | \[in, out\] | [leftToRight](#sfbool-in-out-lefttoright-true) | TRUE |
-| SFBool | \[in, out\] | [topToBottom](#sfbool-in-out-toptobottom-true) | TRUE |
-| MFString | \[in, out\] | [justify](#mfstring-in-out-justify-begin-begin-end-first-middle-) | "BEGIN"  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [language](#field-language) | "" |
+| MFString | [in, out] | [family](#field-family) | "SERIF"  |
+| SFString | [in, out] | [style](#field-style) | "PLAIN"  |
+| SFFloat | [in, out] | [pointSize](#field-pointSize) | 12  |
+| SFFloat | [in, out] | [spacing](#field-spacing) | 1  |
+| SFBool | [in, out] | [horizontal](#field-horizontal) | TRUE |
+| SFBool | [in, out] | [leftToRight](#field-leftToRight) | TRUE |
+| SFBool | [in, out] | [topToBottom](#field-topToBottom) | TRUE |
+| MFString | [in, out] | [justify](#field-justify) | "BEGIN"  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -50,6 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **language** ""
+{: #field-language }
 
 Language codes consist of a primary code and a (possibly empty) series of subcodes. [ *language*-code = primary-code ( "-" subcode )* ] Two-letter primary codes are reserved for *language* abbreviations. Two-letter primary codes include en (English), fr (French), de (German), it (Italian), nl (Dutch), el (Greek), es (Spanish), pt (Portuguese), ar (Arabic), he (Hebrew), ru (Russian), zh (Chinese), ja (Japanese), hi (Hindi), ur (Urdu), and sa (Sanskrit). Any two-letter subcode is understood to be a country code.
 
@@ -66,6 +68,7 @@ Language codes consist of a primary code and a (possibly empty) series of subcod
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### MFString [in, out] **family** "SERIF" <small>String or [URI]</small>
+{: #field-family }
 
 Array of quoted font *family* names in preference order, browsers use the first supported *family*.
 
@@ -85,6 +88,7 @@ Array of quoted font *family* names in preference order, browsers use the first 
 - Font *family* support often varies.
 
 ### SFString [in, out] **style** "PLAIN" <small>["PLAIN"|"BOLD"|"ITALIC"|"BOLDITALIC"|""]</small>
+{: #field-style }
 
 Pick one of four values for text *style* (PLAIN or BOLD or ITALIC or BOLDITALIC).
 
@@ -104,6 +108,7 @@ Pick one of four values for text *style* (PLAIN or BOLD or ITALIC or BOLDITALIC)
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFFloat [in, out] **pointSize** 12 <small>(0,∞)</small>
+{: #field-pointSize }
 
 *pointSize* field specifies the size of text in points. Nominal height (in local coordinate system) of text glyphs, also sets default spacing between adjacent lines of text.
 
@@ -113,6 +118,7 @@ Pick one of four values for text *style* (PLAIN or BOLD or ITALIC or BOLDITALIC)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFFloat [in, out] **spacing** 1 <small>[0,∞)</small>
+{: #field-spacing }
 
 Adjustment factor for line *spacing* between adjacent lines of text.
 
@@ -121,6 +127,7 @@ Adjustment factor for line *spacing* between adjacent lines of text.
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **horizontal** TRUE
+{: #field-horizontal }
 
 Whether text direction is *horizontal* (true) or vertical (false).
 
@@ -131,6 +138,7 @@ Whether text direction is *horizontal* (true) or vertical (false).
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **leftToRight** TRUE
+{: #field-leftToRight }
 
 Whether text direction is left-to-right (true) or right-to-left (false).
 
@@ -141,6 +149,7 @@ Whether text direction is left-to-right (true) or right-to-left (false).
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **topToBottom** TRUE
+{: #field-topToBottom }
 
 Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 
@@ -151,6 +160,7 @@ Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### MFString [in, out] **justify** "BEGIN" <small>["BEGIN", "END", "FIRST", "MIDDLE", ""]</small>
+{: #field-justify }
 
 The *justify* field determines horizontal and vertical alignment of text layout, relative to the origin of the object coordinate system.
 

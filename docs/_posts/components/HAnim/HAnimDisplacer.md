@@ -29,15 +29,16 @@ The HAnimDisplacer node belongs to the **HAnim** component and requires at least
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
-| SFString | \[in, out\] | [name](#sfstring-in-out-name-) | "" |
-| SFFloat | \[in, out\] | [weight](#sffloat-in-out-weight-0--) | 0  |
-| MFInt32 | \[in, out\] | [coordIndex](#mfint32-in-out-coordindex---0-or--1) | \[ \] |
-| MFVec3f | \[in, out\] | [displacements](#mfvec3f-in-out-displacements--) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFString | [in, out] | [name](#field-name) | "" |
+| SFFloat | [in, out] | [weight](#field-weight) | 0  |
+| MFInt32 | [in, out] | [coordIndex](#field-coordIndex) | [ ] |
+| MFVec3f | [in, out] | [displacements](#field-displacements) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -46,6 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -54,6 +56,7 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [in, out] **name** ""
+{: #field-name }
 
 Unique *name* attribute must be defined so that HAnimDisplacer node can be identified at run time for animation purposes.
 
@@ -72,6 +75,7 @@ Unique *name* attribute must be defined so that HAnimDisplacer node can be ident
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
 ### SFFloat [in, out] **weight** 0 <small>(-∞,∞)</small>
+{: #field-weight }
 
 The weigh factor has typical range [0,1] and defines the scale factor applied to displacement values before adding them to neutral vertex positions.
 
@@ -80,6 +84,7 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 - Apply a non-zero *weight* factor to see the effect of HAnimDisplacer displacements.
 
 ### MFInt32 [in, out] **coordIndex** [ ] <small>[0,∞) or -1</small>
+{: #field-coordIndex }
 
 Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or HAnimBody/[HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) coordinate array for the mesh of vertices affected by this HAnimDisplacer. Values start at index 0.
 
@@ -88,6 +93,7 @@ Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hani
 - -1 sentinel values are not allowed.
 
 ### MFVec3f [in, out] **displacements** [ ]
+{: #field-displacements }
 
 *displacements* are a set of SFVec3f values added to neutral/resting position of each of the corresponding [HAnimSegment](/x_ite/components/hanim/hanimsegment/) vertices (or [HAnimJoint](/x_ite/components/hanim/hanimjoint/)/[HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) vertices) referenced by coordIndex field.
 

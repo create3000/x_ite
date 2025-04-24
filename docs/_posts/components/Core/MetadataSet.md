@@ -31,13 +31,14 @@ The MetadataSet node belongs to the **Core** component and requires at least sup
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFString | \[in, out\] | [name](#sfstring-in-out-name-) | "" |
-| SFString | \[in, out\] | [reference](#sfstring-in-out-reference-) | "" |
-| MFNode | \[in, out\] | [value](#mfnode-in-out-value---x3dmetadataobject) | \[ \] |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [name](#field-name) | "" |
+| SFString | [in, out] | [reference](#field-reference) | "" |
+| MFNode | [in, out] | [value](#field-value) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or MetadataSet node.
 
@@ -46,6 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **name** ""
+{: #field-name }
 
 Depending on the metadata vocabulary, the attribute *name* is usually required for metadata nodes.
 
@@ -59,10 +61,12 @@ Depending on the metadata vocabulary, the attribute *name* is usually required f
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
 ### SFString [in, out] **reference** ""
+{: #field-reference }
 
 Reference to the metadata standard or definition defining this particular metadata value.
 
 ### MFNode [in, out] **value** [ ] <small>[X3DMetadataObject]</small>
+{: #field-value }
 
 The *value* field provides a list of X3DMetadataObject nodes whose meaning is determined by the name field.
 

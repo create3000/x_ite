@@ -30,18 +30,19 @@ The CollidableShape node belongs to the **RigidBodyPhysics** component and requi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
-| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
-| SFVec3f | \[in, out\] | [translation](#sfvec3f-in-out-translation-0-0-0--) | 0 0 0  |
-| SFRotation | \[in, out\] | [rotation](#sfrotation-in-out-rotation-0-0-1-0-0-1) | 0 0 1 0  |
-| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
-| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
-| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
-| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
-| SFNode | \[ \] | [shape](#sfnode---shape-null-shape) | NULL  |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFVec3f | [in, out] | [translation](#field-translation) | 0 0 0  |
+| SFRotation | [in, out] | [rotation](#field-rotation) | 0 0 1 0  |
+| SFBool | [in, out] | [visible](#field-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
+| SFNode | [ ] | [shape](#field-shape) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -50,10 +51,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
+{: #field-translation }
 
 Position (x, y, z in meters) of children relative to local coordinate system.
 
@@ -62,6 +65,7 @@ Position (x, y, z in meters) of children relative to local coordinate system.
 - The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then *translation*.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[0,1]</small>
+{: #field-rotation }
 
 Orientation (axis, angle in radians) of children relative to local coordinate system.
 
@@ -70,6 +74,7 @@ Orientation (axis, angle in radians) of children relative to local coordinate sy
 - The order of operation is first apply the center offset, then scaleOrientation and scale, then *rotation*, then restore the center offset, then translation.
 
 ### SFBool [in, out] **visible** TRUE
+{: #field-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -79,6 +84,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #field-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -87,6 +93,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #field-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -98,6 +105,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #field-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -108,6 +116,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFNode [ ] **shape** NULL <small>[Shape]</small>
+{: #field-shape }
 
 The *shape* field provides a geometry proxy for specifying which geometry best represents the collidable object.
 
