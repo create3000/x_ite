@@ -33,17 +33,17 @@ The FontLibrary node belongs to the **Text** component and requires at least lev
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFString | [in, out] | [family](#field-family) | "" |
-| SFBool | [in, out] | [load](#field-load) | TRUE |
-| MFString | [in, out] | [url](#field-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#field-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#field-autoRefreshTimeLimit) | 3600  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFString | [in, out] | [family](#fields-family) | "" |
+| SFBool | [in, out] | [load](#fields-load) | TRUE |
+| MFString | [in, out] | [url](#fields-url) | [ ] |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -52,7 +52,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -61,12 +61,12 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [in, out] **family** ""
-{: #field-family }
+{: #fields-family }
 
 Input/Output field *family*.
 
 ### SFBool [in, out] **load** TRUE
-{: #field-load }
+{: #fields-load }
 
 *load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
@@ -76,7 +76,7 @@ Input/Output field *family*.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
-{: #field-url }
+{: #fields-url }
 
 Location and filename of font. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
 
@@ -92,7 +92,7 @@ Location and filename of font. Multiple locations are more reliable, and includi
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
-{: #field-autoRefresh }
+{: #fields-autoRefresh }
 
 *autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
@@ -106,7 +106,7 @@ Location and filename of font. Multiple locations are more reliable, and includi
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
-{: #field-autoRefreshTimeLimit }
+{: #fields-autoRefreshTimeLimit }
 
 *autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
