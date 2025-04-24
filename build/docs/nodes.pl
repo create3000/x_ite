@@ -345,11 +345,12 @@ sub fields_list {
 
    foreach $field (@sourceFields)
    {
-      if ($file =~ m/###\s*(\w+)\s+(\[.*?\])\s+(\*\*$field->[1]\*\*)[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/)
-      {
-         $text = "| $1 | $2 | $3 | $4 |";
+      $name = $field -> [1];
 
-         $text =~ s/\*\*(.*?)\*\*/[$1](#field-$field->[1])/so;
+      if ($file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/)
+      {
+         $text = "| $1 | $2 | [$name](#field-$name) | $3 |";
+
          $fields -> {$field -> [1]} = $text;
       }
    }
