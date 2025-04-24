@@ -32,23 +32,23 @@ The CylinderSensor node belongs to the **PointingDeviceSensor** component and re
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFRotation | [in, out] | [axisRotation](#field-axisRotation) | 0 0 1 0  |
-| SFFloat | [in, out] | [diskAngle](#field-diskAngle) | 0.26179167  |
-| SFFloat | [in, out] | [minAngle](#field-minAngle) | 0  |
-| SFFloat | [in, out] | [maxAngle](#field-maxAngle) | -1  |
-| SFFloat | [in, out] | [offset](#field-offset) | 0  |
-| SFBool | [in, out] | [autoOffset](#field-autoOffset) | TRUE |
-| SFVec3f | [out] | [trackPoint_changed](#field-trackPoint_changed) |  |
-| SFRotation | [out] | [rotation_changed](#field-rotation_changed) |  |
-| SFBool | [out] | [isOver](#field-isOver) |  |
-| SFBool | [out] | [isActive](#field-isActive) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFRotation | [in, out] | [axisRotation](#fields-axisRotation) | 0 0 1 0  |
+| SFFloat | [in, out] | [diskAngle](#fields-diskAngle) | 0.26179167  |
+| SFFloat | [in, out] | [minAngle](#fields-minAngle) | 0  |
+| SFFloat | [in, out] | [maxAngle](#fields-maxAngle) | -1  |
+| SFFloat | [in, out] | [offset](#fields-offset) | 0  |
+| SFBool | [in, out] | [autoOffset](#fields-autoOffset) | TRUE |
+| SFVec3f | [out] | [trackPoint_changed](#fields-trackPoint_changed) |  |
+| SFRotation | [out] | [rotation_changed](#fields-rotation_changed) |  |
+| SFBool | [out] | [isOver](#fields-isOver) |  |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -57,7 +57,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -67,17 +67,17 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFRotation [in, out] **axisRotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
-{: #field-axisRotation }
+{: #fields-axisRotation }
 
 *axisRotation* determines local sensor coordinate system by rotating the local coordinate system.
 
 ### SFFloat [in, out] **diskAngle** 0.26179167 <small>[0,π/2]</small>
-{: #field-diskAngle }
+{: #fields-diskAngle }
 
 Help decide rotation behavior from initial relative bearing of pointer drag: acute angle whether cylinder sides or end-cap disks of virtual-geometry sensor are used for manipulation.
 
@@ -86,7 +86,7 @@ Help decide rotation behavior from initial relative bearing of pointer drag: acu
 - *diskAngle* 0 forces disk-like behavior, *diskAngle* 1.570796 (90 degrees) forces cylinder-like behavior.
 
 ### SFFloat [in, out] **minAngle** 0 <small>[-2π,2π]</small>
-{: #field-minAngle }
+{: #fields-minAngle }
 
 Clamps rotation_changed events within range of min/max values
 
@@ -96,7 +96,7 @@ Clamps rotation_changed events within range of min/max values
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **maxAngle** -1 <small>[-2π,2π]</small>
-{: #field-maxAngle }
+{: #fields-maxAngle }
 
 Clamps rotation_changed events within range of min/max values
 
@@ -106,7 +106,7 @@ Clamps rotation_changed events within range of min/max values
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **offset** 0 <small>(-∞,∞)</small>
-{: #field-offset }
+{: #fields-offset }
 
 Sends event and remembers last value sensed.
 
@@ -115,12 +115,12 @@ Sends event and remembers last value sensed.
 - ROUTE connecting rotation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
 
 ### SFBool [in, out] **autoOffset** TRUE
-{: #field-autoOffset }
+{: #fields-autoOffset }
 
 Determines whether previous offset values are remembered/accumulated.
 
 ### SFVec3f [out] **trackPoint_changed**
-{: #field-trackPoint_changed }
+{: #fields-trackPoint_changed }
 
 *trackPoint_changed* events give intersection point of bearing with sensor's virtual geometry.
 
@@ -130,7 +130,7 @@ Determines whether previous offset values are remembered/accumulated.
 - *trackPoint_changed* events represent unclamped intersection points on plane surface. Browsers can interpret drags off of the surface in various ways. Note that translation_changed events are clamped by minPosition/maxPosition and thus may be preferable.
 
 ### SFRotation [out] **rotation_changed**
-{: #field-rotation_changed }
+{: #fields-rotation_changed }
 
 *rotation_changed* events equal sum of relative bearing changes plus offset value about Y-axis in local coordinate system.
 
@@ -139,7 +139,7 @@ Determines whether previous offset values are remembered/accumulated.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isOver**
-{: #field-isOver }
+{: #fields-isOver }
 
 Hover over geometry by aiming the mouse (or pointing device) to generate *isOver* events. Sensor sends output event *isOver*=true event when pointing device moves over sensor's geometry, and later sends output event *isOver*=false event when pointing device moves off.
 
@@ -148,7 +148,7 @@ Hover over geometry by aiming the mouse (or pointing device) to generate *isOver
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
-{: #field-isActive }
+{: #fields-isActive }
 
 Select geometry by activating the pointing device (for example, clicking the mouse) to generate *isActive* events. Output event *isActive*=true is sent when geometry is selected (for example, when primary mouse button is pressed), output event *isActive*=false is sent when geometry is deselected (for example, when primary mouse button is released).
 

@@ -28,19 +28,19 @@ The NurbsTextureCoordinate node belongs to the **NURBS** component and requires 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFInt32 | [ ] | [uOrder](#field-uOrder) | 3  |
-| SFInt32 | [ ] | [vOrder](#field-vOrder) | 3  |
-| SFInt32 | [ ] | [uDimension](#field-uDimension) | 0  |
-| SFInt32 | [ ] | [vDimension](#field-vDimension) | 0  |
-| MFDouble | [ ] | [uKnot](#field-uKnot) | [ ] |
-| MFDouble | [ ] | [vKnot](#field-vKnot) | [ ] |
-| MFDouble | [in, out] | [weight](#field-weight) | [ ] |
-| MFVec2f | [in, out] | [controlPoint](#field-controlPoint) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3  |
+| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3  |
+| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0  |
+| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0  |
+| MFDouble | [ ] | [uKnot](#fields-uKnot) | [ ] |
+| MFDouble | [ ] | [vKnot](#fields-vKnot) | [ ] |
+| MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
+| MFVec2f | [in, out] | [controlPoint](#fields-controlPoint) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -49,37 +49,37 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFInt32 [ ] **uOrder** 3 <small>[2,∞)</small>
-{: #field-uOrder }
+{: #fields-uOrder }
 
 Define order of surface by polynomials of degree = order-1.
 
 ### SFInt32 [ ] **vOrder** 3 <small>[2,∞)</small>
-{: #field-vOrder }
+{: #fields-vOrder }
 
 Define order of surface by polynomials of degree = order-1.
 
 ### SFInt32 [ ] **uDimension** 0 <small>[0,∞)</small>
-{: #field-uDimension }
+{: #fields-uDimension }
 
 Number of control points in u dimension.
 
 ### SFInt32 [ ] **vDimension** 0 <small>[0,∞)</small>
-{: #field-vDimension }
+{: #fields-vDimension }
 
 Number of control points in v dimension.
 
 ### MFDouble [ ] **uKnot** [ ] <small>(-∞,∞)</small>
-{: #field-uKnot }
+{: #fields-uKnot }
 
 Knot vector, where size = number of control points + order of curve.
 
 ### MFDouble [ ] **vKnot** [ ] <small>(-∞,∞)</small>
-{: #field-vKnot }
+{: #fields-vKnot }
 
 Knot vector, where size = number of control points + order of curve.
 
 ### MFDouble [in, out] **weight** [ ] <small>(0,∞)</small>
-{: #field-weight }
+{: #fields-weight }
 
 Output values for linear interpolation, each corresponding to knots.
 
@@ -88,7 +88,7 @@ Output values for linear interpolation, each corresponding to knots.
 - Number of weights must match number of knots!
 
 ### MFVec2f [in, out] **controlPoint** [ ] <small>(-∞,∞)</small>
-{: #field-controlPoint }
+{: #fields-controlPoint }
 
 *controlPoint* defines a set of control points of dimension uDimension by vDimension, and defines a mesh where the points do not have uniform spacing.
 

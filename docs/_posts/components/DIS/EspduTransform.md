@@ -33,104 +33,104 @@ The EspduTransform node belongs to the **DIS** component and requires at least s
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFBool | [in, out] | [visible](#field-visible) | TRUE |
-| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
-| MFNode | [in] | [addChildren](#field-addChildren) |  |
-| MFNode | [in] | [removeChildren](#field-removeChildren) |  |
-| MFNode | [in, out] | [children](#field-children) | [ ] |
-| SFBool | [out] | [isActive](#field-isActive) |  |
-| SFFloat | [in] | [set_articulationParameterValue0](#field-set_articulationParameterValue0) |  |
-| SFFloat | [in] | [set_articulationParameterValue1](#field-set_articulationParameterValue1) |  |
-| SFFloat | [in] | [set_articulationParameterValue2](#field-set_articulationParameterValue2) |  |
-| SFFloat | [in] | [set_articulationParameterValue3](#field-set_articulationParameterValue3) |  |
-| SFFloat | [in] | [set_articulationParameterValue4](#field-set_articulationParameterValue4) |  |
-| SFFloat | [in] | [set_articulationParameterValue5](#field-set_articulationParameterValue5) |  |
-| SFFloat | [in] | [set_articulationParameterValue6](#field-set_articulationParameterValue6) |  |
-| SFFloat | [in] | [set_articulationParameterValue7](#field-set_articulationParameterValue7) |  |
-| SFString | [in, out] | [address](#field-address) | "localhost" |
-| SFInt32 | [in, out] | [applicationID](#field-applicationID) | 0  |
-| SFInt32 | [in, out] | [articulationParameterCount](#field-articulationParameterCount) | 0  |
-| MFInt32 | [in, out] | [articulationParameterDesignatorArray](#field-articulationParameterDesignatorArray) | [ ] |
-| MFInt32 | [in, out] | [articulationParameterChangeIndicatorArray](#field-articulationParameterChangeIndicatorArray) | [ ] |
-| MFInt32 | [in, out] | [articulationParameterIdPartAttachedToArray](#field-articulationParameterIdPartAttachedToArray) | [ ] |
-| MFInt32 | [in, out] | [articulationParameterTypeArray](#field-articulationParameterTypeArray) | [ ] |
-| MFFloat | [in, out] | [articulationParameterArray](#field-articulationParameterArray) | [ ] |
-| SFVec3f | [in, out] | [center](#field-center) | 0 0 0  |
-| SFInt32 | [in, out] | [collisionType](#field-collisionType) | 0  |
-| SFInt32 | [in, out] | [deadReckoning](#field-deadReckoning) | 0  |
-| SFVec3f | [in, out] | [detonationLocation](#field-detonationLocation) | 0 0 0  |
-| SFVec3f | [in, out] | [detonationRelativeLocation](#field-detonationRelativeLocation) | 0 0 0  |
-| SFInt32 | [in, out] | [detonationResult](#field-detonationResult) | 0  |
-| SFInt32 | [in, out] | [entityCategory](#field-entityCategory) | 0  |
-| SFInt32 | [in, out] | [entityCountry](#field-entityCountry) | 0  |
-| SFInt32 | [in, out] | [entityDomain](#field-entityDomain) | 0  |
-| SFInt32 | [in, out] | [entityExtra](#field-entityExtra) | 0  |
-| SFInt32 | [in, out] | [entityID](#field-entityID) | 0  |
-| SFInt32 | [in, out] | [entityKind](#field-entityKind) | 0  |
-| SFInt32 | [in, out] | [entitySpecific](#field-entitySpecific) | 0  |
-| SFInt32 | [in, out] | [entitySubcategory](#field-entitySubcategory) | 0  |
-| SFInt32 | [in, out] | [eventApplicationID](#field-eventApplicationID) | 0  |
-| SFInt32 | [in, out] | [eventEntityID](#field-eventEntityID) | 0  |
-| SFInt32 | [in, out] | [eventNumber](#field-eventNumber) | 0  |
-| SFInt32 | [in, out] | [eventSiteID](#field-eventSiteID) | 0  |
-| SFBool | [in, out] | [fired1](#field-fired1) | FALSE |
-| SFBool | [in, out] | [fired2](#field-fired2) | FALSE |
-| SFInt32 | [in, out] | [fireMissionIndex](#field-fireMissionIndex) | 0  |
-| SFFloat | [in, out] | [firingRange](#field-firingRange) | 0  |
-| SFInt32 | [in, out] | [firingRate](#field-firingRate) | 0  |
-| SFInt32 | [in, out] | [forceID](#field-forceID) | 0  |
-| SFInt32 | [in, out] | [fuse](#field-fuse) | 0  |
-| SFVec3f | [in, out] | [linearVelocity](#field-linearVelocity) | 0 0 0  |
-| SFVec3f | [in, out] | [linearAcceleration](#field-linearAcceleration) | 0 0 0  |
-| SFString | [in, out] | [marking](#field-marking) | "" |
-| SFString | [in, out] | [multicastRelayHost](#field-multicastRelayHost) | "" |
-| SFInt32 | [in, out] | [multicastRelayPort](#field-multicastRelayPort) | 0  |
-| SFInt32 | [in, out] | [munitionApplicationID](#field-munitionApplicationID) | 0  |
-| SFVec3f | [in, out] | [munitionEndPoint](#field-munitionEndPoint) | 0 0 0  |
-| SFInt32 | [in, out] | [munitionEntityID](#field-munitionEntityID) | 0  |
-| SFInt32 | [in, out] | [munitionQuantity](#field-munitionQuantity) | 0  |
-| SFInt32 | [in, out] | [munitionSiteID](#field-munitionSiteID) | 0  |
-| SFVec3f | [in, out] | [munitionStartPoint](#field-munitionStartPoint) | 0 0 0  |
-| SFString | [in, out] | [networkMode](#field-networkMode) | "standAlone"  |
-| SFInt32 | [in, out] | [port](#field-port) | 0  |
-| SFTime | [in, out] | [readInterval](#field-readInterval) | 0.1  |
-| SFRotation | [in, out] | [rotation](#field-rotation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [scale](#field-scale) | 1 1 1  |
-| SFRotation | [in, out] | [scaleOrientation](#field-scaleOrientation) | 0 0 1 0  |
-| SFInt32 | [in, out] | [siteID](#field-siteID) | 0  |
-| SFVec3f | [in, out] | [translation](#field-translation) | 0 0 0  |
-| SFInt32 | [in, out] | [warhead](#field-warhead) | 0  |
-| SFTime | [in, out] | [writeInterval](#field-writeInterval) | 1  |
-| SFFloat | [out] | [articulationParameterValue0_changed](#field-articulationParameterValue0_changed) |  |
-| SFFloat | [out] | [articulationParameterValue1_changed](#field-articulationParameterValue1_changed) |  |
-| SFFloat | [out] | [articulationParameterValue2_changed](#field-articulationParameterValue2_changed) |  |
-| SFFloat | [out] | [articulationParameterValue3_changed](#field-articulationParameterValue3_changed) |  |
-| SFFloat | [out] | [articulationParameterValue4_changed](#field-articulationParameterValue4_changed) |  |
-| SFFloat | [out] | [articulationParameterValue5_changed](#field-articulationParameterValue5_changed) |  |
-| SFFloat | [out] | [articulationParameterValue6_changed](#field-articulationParameterValue6_changed) |  |
-| SFFloat | [out] | [articulationParameterValue7_changed](#field-articulationParameterValue7_changed) |  |
-| SFTime | [out] | [collideTime](#field-collideTime) |  |
-| SFTime | [out] | [detonateTime](#field-detonateTime) |  |
-| SFTime | [out] | [firedTime](#field-firedTime) |  |
-| SFBool | [out] | [isCollided](#field-isCollided) |  |
-| SFBool | [out] | [isDetonated](#field-isDetonated) |  |
-| SFBool | [out] | [isNetworkReader](#field-isNetworkReader) |  |
-| SFBool | [out] | [isNetworkWriter](#field-isNetworkWriter) |  |
-| SFBool | [out] | [isRtpHeaderHeard](#field-isRtpHeaderHeard) |  |
-| SFBool | [out] | [isStandAlone](#field-isStandAlone) |  |
-| SFTime | [out] | [timestamp](#field-timestamp) |  |
-| SFBool | [in, out] | [rtpHeaderExpected](#field-rtpHeaderExpected) | FALSE |
-| SFVec3d | [in, out] | [geoCoords](#field-geoCoords) | 0 0 0  |
-| MFString | [ ] | [geoSystem](#field-geoSystem) | [ "GD", "WE" ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [in] | [addChildren](#fields-addChildren) |  |
+| MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| SFFloat | [in] | [set_articulationParameterValue0](#fields-set_articulationParameterValue0) |  |
+| SFFloat | [in] | [set_articulationParameterValue1](#fields-set_articulationParameterValue1) |  |
+| SFFloat | [in] | [set_articulationParameterValue2](#fields-set_articulationParameterValue2) |  |
+| SFFloat | [in] | [set_articulationParameterValue3](#fields-set_articulationParameterValue3) |  |
+| SFFloat | [in] | [set_articulationParameterValue4](#fields-set_articulationParameterValue4) |  |
+| SFFloat | [in] | [set_articulationParameterValue5](#fields-set_articulationParameterValue5) |  |
+| SFFloat | [in] | [set_articulationParameterValue6](#fields-set_articulationParameterValue6) |  |
+| SFFloat | [in] | [set_articulationParameterValue7](#fields-set_articulationParameterValue7) |  |
+| SFString | [in, out] | [address](#fields-address) | "localhost" |
+| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0  |
+| SFInt32 | [in, out] | [articulationParameterCount](#fields-articulationParameterCount) | 0  |
+| MFInt32 | [in, out] | [articulationParameterDesignatorArray](#fields-articulationParameterDesignatorArray) | [ ] |
+| MFInt32 | [in, out] | [articulationParameterChangeIndicatorArray](#fields-articulationParameterChangeIndicatorArray) | [ ] |
+| MFInt32 | [in, out] | [articulationParameterIdPartAttachedToArray](#fields-articulationParameterIdPartAttachedToArray) | [ ] |
+| MFInt32 | [in, out] | [articulationParameterTypeArray](#fields-articulationParameterTypeArray) | [ ] |
+| MFFloat | [in, out] | [articulationParameterArray](#fields-articulationParameterArray) | [ ] |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFInt32 | [in, out] | [collisionType](#fields-collisionType) | 0  |
+| SFInt32 | [in, out] | [deadReckoning](#fields-deadReckoning) | 0  |
+| SFVec3f | [in, out] | [detonationLocation](#fields-detonationLocation) | 0 0 0  |
+| SFVec3f | [in, out] | [detonationRelativeLocation](#fields-detonationRelativeLocation) | 0 0 0  |
+| SFInt32 | [in, out] | [detonationResult](#fields-detonationResult) | 0  |
+| SFInt32 | [in, out] | [entityCategory](#fields-entityCategory) | 0  |
+| SFInt32 | [in, out] | [entityCountry](#fields-entityCountry) | 0  |
+| SFInt32 | [in, out] | [entityDomain](#fields-entityDomain) | 0  |
+| SFInt32 | [in, out] | [entityExtra](#fields-entityExtra) | 0  |
+| SFInt32 | [in, out] | [entityID](#fields-entityID) | 0  |
+| SFInt32 | [in, out] | [entityKind](#fields-entityKind) | 0  |
+| SFInt32 | [in, out] | [entitySpecific](#fields-entitySpecific) | 0  |
+| SFInt32 | [in, out] | [entitySubcategory](#fields-entitySubcategory) | 0  |
+| SFInt32 | [in, out] | [eventApplicationID](#fields-eventApplicationID) | 0  |
+| SFInt32 | [in, out] | [eventEntityID](#fields-eventEntityID) | 0  |
+| SFInt32 | [in, out] | [eventNumber](#fields-eventNumber) | 0  |
+| SFInt32 | [in, out] | [eventSiteID](#fields-eventSiteID) | 0  |
+| SFBool | [in, out] | [fired1](#fields-fired1) | FALSE |
+| SFBool | [in, out] | [fired2](#fields-fired2) | FALSE |
+| SFInt32 | [in, out] | [fireMissionIndex](#fields-fireMissionIndex) | 0  |
+| SFFloat | [in, out] | [firingRange](#fields-firingRange) | 0  |
+| SFInt32 | [in, out] | [firingRate](#fields-firingRate) | 0  |
+| SFInt32 | [in, out] | [forceID](#fields-forceID) | 0  |
+| SFInt32 | [in, out] | [fuse](#fields-fuse) | 0  |
+| SFVec3f | [in, out] | [linearVelocity](#fields-linearVelocity) | 0 0 0  |
+| SFVec3f | [in, out] | [linearAcceleration](#fields-linearAcceleration) | 0 0 0  |
+| SFString | [in, out] | [marking](#fields-marking) | "" |
+| SFString | [in, out] | [multicastRelayHost](#fields-multicastRelayHost) | "" |
+| SFInt32 | [in, out] | [multicastRelayPort](#fields-multicastRelayPort) | 0  |
+| SFInt32 | [in, out] | [munitionApplicationID](#fields-munitionApplicationID) | 0  |
+| SFVec3f | [in, out] | [munitionEndPoint](#fields-munitionEndPoint) | 0 0 0  |
+| SFInt32 | [in, out] | [munitionEntityID](#fields-munitionEntityID) | 0  |
+| SFInt32 | [in, out] | [munitionQuantity](#fields-munitionQuantity) | 0  |
+| SFInt32 | [in, out] | [munitionSiteID](#fields-munitionSiteID) | 0  |
+| SFVec3f | [in, out] | [munitionStartPoint](#fields-munitionStartPoint) | 0 0 0  |
+| SFString | [in, out] | [networkMode](#fields-networkMode) | "standAlone"  |
+| SFInt32 | [in, out] | [port](#fields-port) | 0  |
+| SFTime | [in, out] | [readInterval](#fields-readInterval) | 0.1  |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
+| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0  |
+| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0  |
+| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
+| SFInt32 | [in, out] | [warhead](#fields-warhead) | 0  |
+| SFTime | [in, out] | [writeInterval](#fields-writeInterval) | 1  |
+| SFFloat | [out] | [articulationParameterValue0_changed](#fields-articulationParameterValue0_changed) |  |
+| SFFloat | [out] | [articulationParameterValue1_changed](#fields-articulationParameterValue1_changed) |  |
+| SFFloat | [out] | [articulationParameterValue2_changed](#fields-articulationParameterValue2_changed) |  |
+| SFFloat | [out] | [articulationParameterValue3_changed](#fields-articulationParameterValue3_changed) |  |
+| SFFloat | [out] | [articulationParameterValue4_changed](#fields-articulationParameterValue4_changed) |  |
+| SFFloat | [out] | [articulationParameterValue5_changed](#fields-articulationParameterValue5_changed) |  |
+| SFFloat | [out] | [articulationParameterValue6_changed](#fields-articulationParameterValue6_changed) |  |
+| SFFloat | [out] | [articulationParameterValue7_changed](#fields-articulationParameterValue7_changed) |  |
+| SFTime | [out] | [collideTime](#fields-collideTime) |  |
+| SFTime | [out] | [detonateTime](#fields-detonateTime) |  |
+| SFTime | [out] | [firedTime](#fields-firedTime) |  |
+| SFBool | [out] | [isCollided](#fields-isCollided) |  |
+| SFBool | [out] | [isDetonated](#fields-isDetonated) |  |
+| SFBool | [out] | [isNetworkReader](#fields-isNetworkReader) |  |
+| SFBool | [out] | [isNetworkWriter](#fields-isNetworkWriter) |  |
+| SFBool | [out] | [isRtpHeaderHeard](#fields-isRtpHeaderHeard) |  |
+| SFBool | [out] | [isStandAlone](#fields-isStandAlone) |  |
+| SFTime | [out] | [timestamp](#fields-timestamp) |  |
+| SFBool | [in, out] | [rtpHeaderExpected](#fields-rtpHeaderExpected) | FALSE |
+| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0  |
+| MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -139,7 +139,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the node.
 
@@ -148,12 +148,12 @@ Author-provided prose that describes intended purpose of the node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables the sensor node.
 
 ### SFBool [in, out] **visible** TRUE
-{: #field-visible }
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -163,7 +163,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
-{: #field-bboxDisplay }
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -172,7 +172,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
-{: #field-bboxSize }
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -184,7 +184,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
-{: #field-bboxCenter }
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -195,17 +195,17 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### MFNode [in] **addChildren**
-{: #field-addChildren }
+{: #fields-addChildren }
 
 Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
-{: #field-removeChildren }
+{: #fields-removeChildren }
 
 Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
-{: #field-children }
+{: #fields-children }
 
 Grouping nodes contain an ordered list of *children* nodes.
 
@@ -217,7 +217,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#GroupingAndChildrenNodes)
 
 ### SFBool [out] **isActive**
-{: #field-isActive }
+{: #fields-isActive }
 
 Have we received a network update recently?
 
@@ -226,7 +226,7 @@ Have we received a network update recently?
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [in] **set_articulationParameterValue0** <small>(-∞,∞)</small>
-{: #field-set_articulationParameterValue0 }
+{: #fields-set_articulationParameterValue0 }
 
 Set element of user-defined payload array.
 
@@ -235,7 +235,7 @@ Set element of user-defined payload array.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFFloat [in] **set_articulationParameterValue1** <small>(-∞,∞)</small>
-{: #field-set_articulationParameterValue1 }
+{: #fields-set_articulationParameterValue1 }
 
 Set element of user-defined payload array.
 
@@ -244,7 +244,7 @@ Set element of user-defined payload array.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFFloat [in] **set_articulationParameterValue2** <small>(-∞,∞)</small>
-{: #field-set_articulationParameterValue2 }
+{: #fields-set_articulationParameterValue2 }
 
 Set element of user-defined payload array.
 
@@ -253,7 +253,7 @@ Set element of user-defined payload array.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFFloat [in] **set_articulationParameterValue3** <small>(-∞,∞)</small>
-{: #field-set_articulationParameterValue3 }
+{: #fields-set_articulationParameterValue3 }
 
 Set element of user-defined payload array.
 
@@ -262,7 +262,7 @@ Set element of user-defined payload array.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFFloat [in] **set_articulationParameterValue4** <small>(-∞,∞)</small>
-{: #field-set_articulationParameterValue4 }
+{: #fields-set_articulationParameterValue4 }
 
 Set element of user-defined payload array.
 
@@ -271,7 +271,7 @@ Set element of user-defined payload array.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFFloat [in] **set_articulationParameterValue5** <small>(-∞,∞)</small>
-{: #field-set_articulationParameterValue5 }
+{: #fields-set_articulationParameterValue5 }
 
 Set element of user-defined payload array.
 
@@ -280,7 +280,7 @@ Set element of user-defined payload array.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFFloat [in] **set_articulationParameterValue6** <small>(-∞,∞)</small>
-{: #field-set_articulationParameterValue6 }
+{: #fields-set_articulationParameterValue6 }
 
 Set element of user-defined payload array.
 
@@ -289,7 +289,7 @@ Set element of user-defined payload array.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFFloat [in] **set_articulationParameterValue7** <small>(-∞,∞)</small>
-{: #field-set_articulationParameterValue7 }
+{: #fields-set_articulationParameterValue7 }
 
 Set element of user-defined payload array.
 
@@ -298,42 +298,42 @@ Set element of user-defined payload array.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFString [in, out] **address** "localhost"
-{: #field-address }
+{: #fields-address }
 
 Multicast network *address*, or else 'localhost'; Example: 224.2.181.145.
 
 ### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
-{: #field-applicationID }
+{: #fields-applicationID }
 
 Simulation/exercise *applicationID* is unique for application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
 ### SFInt32 [in, out] **articulationParameterCount** 0 <small>[0,78]</small>
-{: #field-articulationParameterCount }
+{: #fields-articulationParameterCount }
 
 Number of articulated parameters attached to this entity state PDU.
 
 ### MFInt32 [in, out] **articulationParameterDesignatorArray** [ ] <small>[0,255]</small>
-{: #field-articulationParameterDesignatorArray }
+{: #fields-articulationParameterDesignatorArray }
 
 Array of designators for each articulated parameter.
 
 ### MFInt32 [in, out] **articulationParameterChangeIndicatorArray** [ ] <small>[0,255]</small>
-{: #field-articulationParameterChangeIndicatorArray }
+{: #fields-articulationParameterChangeIndicatorArray }
 
 Array of change counters, each incremented when an articulated parameter is updated.#IMPLIED]
 
 ### MFInt32 [in, out] **articulationParameterIdPartAttachedToArray** [ ] <small>[0,65535]</small>
-{: #field-articulationParameterIdPartAttachedToArray }
+{: #fields-articulationParameterIdPartAttachedToArray }
 
 Array of ID parts that each articulated parameter is attached to.
 
 ### MFInt32 [in, out] **articulationParameterTypeArray** [ ]
-{: #field-articulationParameterTypeArray }
+{: #fields-articulationParameterTypeArray }
 
 Array of type enumerations for each articulated parameter element.
 
 ### MFFloat [in, out] **articulationParameterArray** [ ] <small>(-∞,∞)</small>
-{: #field-articulationParameterArray }
+{: #fields-articulationParameterArray }
 
 Information required for representation of the entity's visual appearance and position of its articulated parts.
 
@@ -342,87 +342,87 @@ Information required for representation of the entity's visual appearance and po
 - Renamed as Variable Parameter in IEEE DIS 2012 revised standard.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
-{: #field-center }
+{: #fields-center }
 
 Translation offset from origin of local coordinate system.
 
 ### SFInt32 [in, out] **collisionType** 0 <small>[0,255]</small>
-{: #field-collisionType }
+{: #fields-collisionType }
 
 Integer enumeration for type of collision: ELASTIC or INELASTIC.
 
 ### SFInt32 [in, out] **deadReckoning** 0 <small>[0,255]</small>
-{: #field-deadReckoning }
+{: #fields-deadReckoning }
 
 Dead reckoning algorithm being used to project position/orientation with velocities/accelerations.
 
 ### SFVec3f [in, out] **detonationLocation** 0 0 0 <small>(-∞,∞)</small>
-{: #field-detonationLocation }
+{: #fields-detonationLocation }
 
 World coordinates for *detonationLocation*
 
 ### SFVec3f [in, out] **detonationRelativeLocation** 0 0 0 <small>(-∞,∞)</small>
-{: #field-detonationRelativeLocation }
+{: #fields-detonationRelativeLocation }
 
 Relative coordinates for detonation location
 
 ### SFInt32 [in, out] **detonationResult** 0 <small>[0,255]</small>
-{: #field-detonationResult }
+{: #fields-detonationResult }
 
 Integer enumeration for type of detonation and result that occurred., if any.
 
 ### SFInt32 [in, out] **entityCategory** 0 <small>[0,255]</small>
-{: #field-entityCategory }
+{: #fields-entityCategory }
 
 Integer enumerations value for main category that describes the entity, semantics of each code varies according to domain. See DIS Enumerations values.
 
 ### SFInt32 [in, out] **entityCountry** 0 <small>[0,65535]</small>
-{: #field-entityCountry }
+{: #fields-entityCountry }
 
 Integer enumerations value for country to which the design of the entity or its design specification is attributed.
 
 ### SFInt32 [in, out] **entityDomain** 0 <small>[0,255]</small>
-{: #field-entityDomain }
+{: #fields-entityDomain }
 
 Integer enumerations value for domain in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
 
 ### SFInt32 [in, out] **entityExtra** 0 <small>[0,255]</small>
-{: #field-entityExtra }
+{: #fields-entityExtra }
 
 Any extra information required to describe a particular entity. The contents of this field shall depend on the type of entity represented.
 
 ### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
-{: #field-entityID }
+{: #fields-entityID }
 
 Simulation/exercise *entityID* is a unique ID for a single entity within that application.
 
 ### SFInt32 [in, out] **entityKind** 0 <small>[0,255]</small>
-{: #field-entityKind }
+{: #fields-entityKind }
 
 Integer enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
 
 ### SFInt32 [in, out] **entitySpecific** 0 <small>[0,255]</small>
-{: #field-entitySpecific }
+{: #fields-entitySpecific }
 
 Specific information about an entity based on the Subcategory field. See DIS Enumerations values.
 
 ### SFInt32 [in, out] **entitySubcategory** 0 <small>[0,255]</small>
-{: #field-entitySubcategory }
+{: #fields-entitySubcategory }
 
 Integer enumerations value for particular subcategory to which an entity belongs based on the category field. See DIS Enumerations values.
 
 ### SFInt32 [in, out] **eventApplicationID** 0 <small>[0,65535]</small>
-{: #field-eventApplicationID }
+{: #fields-eventApplicationID }
 
 Simulation/exercise *eventApplicationID* is unique for events generated from application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
 ### SFInt32 [in, out] **eventEntityID** 0 <small>[0,65535]</small>
-{: #field-eventEntityID }
+{: #fields-eventEntityID }
 
 For a given event, simulation/exercise entityID is a unique ID for a single entity within that application.
 
 ### SFInt32 [in, out] **eventNumber** 0 <small>[0,65355]</small>
-{: #field-eventNumber }
+{: #fields-eventNumber }
 
 Sequential number of each event issued by an application.
 
@@ -431,102 +431,102 @@ Sequential number of each event issued by an application.
 - Reuse of numbers may be necessary during long simulation exercises.
 
 ### SFInt32 [in, out] **eventSiteID** 0 <small>[0,65535]</small>
-{: #field-eventSiteID }
+{: #fields-eventSiteID }
 
 Simulation/exercise siteID of the participating LAN or organization.
 
 ### SFBool [in, out] **fired1** FALSE
-{: #field-fired1 }
+{: #fields-fired1 }
 
 Has the primary weapon (Fire PDU) been fired?
 
 ### SFBool [in, out] **fired2** FALSE
-{: #field-fired2 }
+{: #fields-fired2 }
 
 Has the secondary weapon (Fire PDU) been fired?
 
 ### SFInt32 [in, out] **fireMissionIndex** 0 <small>[0,65535]</small>
-{: #field-fireMissionIndex }
+{: #fields-fireMissionIndex }
 
 Input/Output field *fireMissionIndex*.
 
 ### SFFloat [in, out] **firingRange** 0 <small>(0,∞)</small>
-{: #field-firingRange }
+{: #fields-firingRange }
 
 Range (three dimension, straight-line distance) that the firing entity's fire control system has assumed for computing the fire control solution if a weapon and if the value is known
 
 ### SFInt32 [in, out] **firingRate** 0 <small>[0,65535]</small>
-{: #field-firingRate }
+{: #fields-firingRate }
 
 Rate at which munitions are fired.
 
 ### SFInt32 [in, out] **forceID** 0 <small>[0,255]</small>
-{: #field-forceID }
+{: #fields-forceID }
 
 *forceID* determines the team membership of the issuing entity, and whether FRIENDLY OPPOSING or NEUTRAL or OTHER.
 
 ### SFInt32 [in, out] **fuse** 0 <small>[0,65535]</small>
-{: #field-fuse }
+{: #fields-fuse }
 
 Integer enumerations value for type of *fuse* on the munition.
 
 ### SFVec3f [in, out] **linearVelocity** 0 0 0 <small>(-∞,∞)</small>
-{: #field-linearVelocity }
+{: #fields-linearVelocity }
 
 Velocity of the entity relative to the rotating Earth in either world or entity coordinates, depending on the dead reckoning algorithm used.
 
 ### SFVec3f [in, out] **linearAcceleration** 0 0 0 <small>(-∞,∞)</small>
-{: #field-linearAcceleration }
+{: #fields-linearAcceleration }
 
 Acceleration of the entity relative to the rotating Earth in either world or entity coordinates, depending on the dead reckoning algorithm used.
 
 ### SFString [in, out] **marking** ""
-{: #field-marking }
+{: #fields-marking }
 
 Maximum of 11 characters for simple entity label.
 
 ### SFString [in, out] **multicastRelayHost** ""
-{: #field-multicastRelayHost }
+{: #fields-multicastRelayHost }
 
 Fallback server address if multicast not available locally. Example: track.nps.edu.
 
 ### SFInt32 [in, out] **multicastRelayPort** 0 <small>[0,65535]</small>
-{: #field-multicastRelayPort }
+{: #fields-multicastRelayPort }
 
 Fallback server port if multicast not available locally. Example: 8010.
 
 ### SFInt32 [in, out] **munitionApplicationID** 0 <small>[0,65535]</small>
-{: #field-munitionApplicationID }
+{: #fields-munitionApplicationID }
 
 *munitionApplicationID*, unique for application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
 ### SFVec3f [in, out] **munitionEndPoint** 0 0 0 <small>(-∞,∞)</small>
-{: #field-munitionEndPoint }
+{: #fields-munitionEndPoint }
 
 Final point of the munition path from firing weapon to detonation or impact, in exercise coordinates.
 
 ### SFInt32 [in, out] **munitionEntityID** 0 <small>[0,65535]</small>
-{: #field-munitionEntityID }
+{: #fields-munitionEntityID }
 
 *munitionEntityID* is unique ID for entity firing munition within that application.
 
 ### SFInt32 [in, out] **munitionQuantity** 0 <small>[0,65535]</small>
-{: #field-munitionQuantity }
+{: #fields-munitionQuantity }
 
 Quantity of munitions fired.
 
 ### SFInt32 [in, out] **munitionSiteID** 0 <small>[0,65535]</small>
-{: #field-munitionSiteID }
+{: #fields-munitionSiteID }
 
 Munition siteID of the participating LAN or organization.
 
 ### SFVec3f [in, out] **munitionStartPoint** 0 0 0 <small>(-∞,∞)</small>
-{: #field-munitionStartPoint }
+{: #fields-munitionStartPoint }
 
 Initial point of the munition path from firing weapon to detonation or impact, in exercise coordinates.
 
 ### SFString [in, out] **networkMode** "standAlone" <small>["standAlone"|"networkReader"|"networkWriter"]</small>
-{: #field-networkMode }
+{: #fields-networkMode }
 
 Whether this entity is ignoring the network, sending DIS packets to the network, or receiving DIS packets from the network. (1) standAlone: ignore network but still respond to events in local scene. (2) networkReader: listen to network and read PDU packets at readInterval, act as remotely linked copy of entity. (3) networkWriter: send PDU packets to network at writeInterval, act as master entity. Default value "standAlone" ensures that DIS network activation within a scene as networkReader or networkWriter is intentional.
 
@@ -536,12 +536,12 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 - Network activity may have associated security issues.
 
 ### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
-{: #field-port }
+{: #fields-port }
 
 Network connection *port* number (EXAMPLE 3000) for sending or receiving DIS messages. Example: 3000.
 
 ### SFTime [in, out] **readInterval** 0.1 <small>[0,∞)</small>
-{: #field-readInterval }
+{: #fields-readInterval }
 
 Seconds between read updates, 0 means no reading.
 
@@ -550,37 +550,37 @@ Seconds between read updates, 0 means no reading.
 - *readInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
-{: #field-rotation }
+{: #fields-rotation }
 
 Orientation of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
 
 ### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞,∞)</small>
-{: #field-scale }
+{: #fields-scale }
 
 Non-uniform x-y-z *scale* of child coordinate system, adjusted by center and scaleOrientation.
 
 ### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
-{: #field-scaleOrientation }
+{: #fields-scaleOrientation }
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
 ### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
-{: #field-siteID }
+{: #fields-siteID }
 
 Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
-{: #field-translation }
+{: #fields-translation }
 
 Position of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
 
 ### SFInt32 [in, out] **warhead** 0 <small>[0,65535]</small>
-{: #field-warhead }
+{: #fields-warhead }
 
 Integer enumerations value for type of *warhead* on the munition.
 
 ### SFTime [in, out] **writeInterval** 1 <small>[0,∞)</small>
-{: #field-writeInterval }
+{: #fields-writeInterval }
 
 Seconds between write updates, 0 means no writing (sending).
 
@@ -589,7 +589,7 @@ Seconds between write updates, 0 means no writing (sending).
 - *writeInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFFloat [out] **articulationParameterValue0_changed**
-{: #field-articulationParameterValue0_changed }
+{: #fields-articulationParameterValue0_changed }
 
 Get element of user-defined payload array.
 
@@ -598,7 +598,7 @@ Get element of user-defined payload array.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **articulationParameterValue1_changed**
-{: #field-articulationParameterValue1_changed }
+{: #fields-articulationParameterValue1_changed }
 
 Get element of user-defined payload array.
 
@@ -607,12 +607,12 @@ Get element of user-defined payload array.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **articulationParameterValue2_changed**
-{: #field-articulationParameterValue2_changed }
+{: #fields-articulationParameterValue2_changed }
 
 Get element of user-defined payload array.
 
 ### SFFloat [out] **articulationParameterValue3_changed**
-{: #field-articulationParameterValue3_changed }
+{: #fields-articulationParameterValue3_changed }
 
 Get element of user-defined payload array.
 
@@ -621,7 +621,7 @@ Get element of user-defined payload array.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **articulationParameterValue4_changed**
-{: #field-articulationParameterValue4_changed }
+{: #fields-articulationParameterValue4_changed }
 
 Get element of user-defined payload array.
 
@@ -630,7 +630,7 @@ Get element of user-defined payload array.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **articulationParameterValue5_changed**
-{: #field-articulationParameterValue5_changed }
+{: #fields-articulationParameterValue5_changed }
 
 Get element of user-defined payload array.
 
@@ -639,7 +639,7 @@ Get element of user-defined payload array.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **articulationParameterValue6_changed**
-{: #field-articulationParameterValue6_changed }
+{: #fields-articulationParameterValue6_changed }
 
 Get element of user-defined payload array.
 
@@ -648,7 +648,7 @@ Get element of user-defined payload array.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **articulationParameterValue7_changed**
-{: #field-articulationParameterValue7_changed }
+{: #fields-articulationParameterValue7_changed }
 
 Get element of user-defined payload array.
 
@@ -657,7 +657,7 @@ Get element of user-defined payload array.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **collideTime**
-{: #field-collideTime }
+{: #fields-collideTime }
 
 When were we collided with?
 
@@ -666,12 +666,12 @@ When were we collided with?
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **detonateTime**
-{: #field-detonateTime }
+{: #fields-detonateTime }
 
 When were we detonated?
 
 ### SFTime [out] **firedTime**
-{: #field-firedTime }
+{: #fields-firedTime }
 
 When did we shoot a weapon (Fire PDU)?
 
@@ -680,7 +680,7 @@ When did we shoot a weapon (Fire PDU)?
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isCollided**
-{: #field-isCollided }
+{: #fields-isCollided }
 
 Has a matching CollisionPDU reported a collision?
 
@@ -689,7 +689,7 @@ Has a matching CollisionPDU reported a collision?
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isDetonated**
-{: #field-isDetonated }
+{: #fields-isDetonated }
 
 Has a matching DetonationPDU reported a detonation?
 
@@ -698,7 +698,7 @@ Has a matching DetonationPDU reported a detonation?
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isNetworkReader**
-{: #field-isNetworkReader }
+{: #fields-isNetworkReader }
 
 Whether networkMode='remote' (listen to network as copy of remote entity).
 
@@ -707,7 +707,7 @@ Whether networkMode='remote' (listen to network as copy of remote entity).
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isNetworkWriter**
-{: #field-isNetworkWriter }
+{: #fields-isNetworkWriter }
 
 Whether networkMode='master' (output to network as master entity at writeInterval).
 
@@ -716,7 +716,7 @@ Whether networkMode='master' (output to network as master entity at writeInterva
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isRtpHeaderHeard**
-{: #field-isRtpHeaderHeard }
+{: #fields-isRtpHeaderHeard }
 
 Whether incoming DIS packets have an RTP header prepended.
 
@@ -725,7 +725,7 @@ Whether incoming DIS packets have an RTP header prepended.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isStandAlone**
-{: #field-isStandAlone }
+{: #fields-isStandAlone }
 
 Whether networkMode='local' (ignore network but still respond to local events).
 
@@ -734,7 +734,7 @@ Whether networkMode='local' (ignore network but still respond to local events).
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **timestamp**
-{: #field-timestamp }
+{: #fields-timestamp }
 
 DIS *timestamp* received from latest PDU update, converted to X3D SFTime units.
 
@@ -743,12 +743,12 @@ DIS *timestamp* received from latest PDU update, converted to X3D SFTime units.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [in, out] **rtpHeaderExpected** FALSE
-{: #field-rtpHeaderExpected }
+{: #fields-rtpHeaderExpected }
 
 Whether RTP headers are prepended to DIS PDUs.
 
 ### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
-{: #field-geoCoords }
+{: #fields-geoCoords }
 
 Geographic location (specified in current geoSystem coordinates) for children geometry (specified in relative coordinate system, in meters).
 
@@ -761,7 +761,7 @@ Geographic location (specified in current geoSystem coordinates) for children ge
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
-{: #field-geoSystem }
+{: #fields-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 

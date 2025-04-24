@@ -30,17 +30,17 @@ The ShadedVolumeStyle node belongs to the **VolumeRendering** component and requ
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFBool | [in, out] | [lighting](#field-lighting) | FALSE |
-| SFBool | [in, out] | [shadows](#field-shadows) | FALSE |
-| SFString | [ ] | [phaseFunction](#field-phaseFunction) | "Henyey-Greenstein"  |
-| SFNode | [in, out] | [material](#field-material) | NULL  |
-| SFNode | [in, out] | [surfaceNormals](#field-surfaceNormals) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFBool | [in, out] | [lighting](#fields-lighting) | FALSE |
+| SFBool | [in, out] | [shadows](#fields-shadows) | FALSE |
+| SFString | [ ] | [phaseFunction](#fields-phaseFunction) | "Henyey-Greenstein"  |
+| SFNode | [in, out] | [material](#fields-material) | NULL  |
+| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -49,22 +49,22 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFBool [in, out] **lighting** FALSE
-{: #field-lighting }
+{: #fields-lighting }
 
 Whether rendering calculates and applies shading effects to visual output.
 
 ### SFBool [in, out] **shadows** FALSE
-{: #field-shadows }
+{: #fields-shadows }
 
 Whether rendering calculates and applies *shadows* to visual output (using global illumination model).
 
 ### SFString [ ] **phaseFunction** "Henyey-Greenstein" <small>["Henyey-Greenstein"|"NONE"|...]</small>
-{: #field-phaseFunction }
+{: #fields-phaseFunction }
 
 Define scattering model for implementations using global illumination (NONE or Henyey-Greenstein phase function).#10;
 
@@ -73,12 +73,12 @@ Define scattering model for implementations using global illumination (NONE or H
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFNode [in, out] **material** NULL <small>[X3DMaterialNode]</small>
-{: #field-material }
+{: #fields-material }
 
 Colour and opacity is determined based on whether a value has been specified for the *material* field.
 
 ### SFNode [in, out] **surfaceNormals** NULL <small>[X3DTexture3DNode]</small>
-{: #field-surfaceNormals }
+{: #fields-surfaceNormals }
 
 The *surfaceNormals* field contains a 3D texture with at least three component values. Each voxel in the texture represents the surface normal direction for the corresponding voxel in the base data source.
 

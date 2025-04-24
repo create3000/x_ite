@@ -32,16 +32,16 @@ The LocalFog node belongs to the **EnvironmentalEffects** component and requires
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFString | [in, out] | [fogType](#field-fogType) | "LINEAR"  |
-| SFColor | [in, out] | [color](#field-color) | 1 1 1  |
-| SFFloat | [in, out] | [visibilityStart](#field-visibilityStart) | 0  |
-| SFFloat | [in, out] | [visibilityRange](#field-visibilityRange) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFString | [in, out] | [fogType](#fields-fogType) | "LINEAR"  |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
+| SFFloat | [in, out] | [visibilityStart](#fields-visibilityStart) | 0  |
+| SFFloat | [in, out] | [visibilityRange](#fields-visibilityRange) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -50,12 +50,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFString [in, out] **fogType** "LINEAR" <small>["LINEAR"|"EXPONENTIAL"]</small>
-{: #field-fogType }
+{: #fields-fogType }
 
 Specifies algorithm for rate of increasing [Fog](/x_ite/components/environmentaleffects/fog/), either LINEAR or EXPONENTIAL.
 
@@ -68,7 +68,7 @@ Specifies algorithm for rate of increasing [Fog](/x_ite/components/environmental
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
-{: #field-color }
+{: #fields-color }
 
 [Fog](/x_ite/components/environmentaleffects/fog/) *color*.
 
@@ -78,12 +78,12 @@ Specifies algorithm for rate of increasing [Fog](/x_ite/components/environmental
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFFloat [in, out] **visibilityStart** 0 <small>[0,∞)</small> <small class="blue">non-standard</small>
-{: #field-visibilityStart }
+{: #fields-visibilityStart }
 
 Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
 
 ### SFFloat [in, out] **visibilityRange** 0 <small>[0,-∞)</small>
-{: #field-visibilityRange }
+{: #fields-visibilityRange }
 
 Distance in meters where objects are totally obscured by the fog, using local coordinate system.
 

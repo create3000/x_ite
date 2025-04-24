@@ -32,17 +32,17 @@ The PixelTexture3D node belongs to the **Texturing3D** component and requires at
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| MFInt32 | [in, out] | [image](#field-image) | [ 0, 0, 0, 0 ] |
-| SFBool | [ ] | [repeatS](#field-repeatS) | FALSE |
-| SFBool | [ ] | [repeatT](#field-repeatT) | FALSE |
-| SFBool | [ ] | [repeatR](#field-repeatR) | FALSE |
-| SFNode | [ ] | [textureProperties](#field-textureProperties) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| MFInt32 | [in, out] | [image](#fields-image) | [ 0, 0, 0, 0 ] |
+| SFBool | [ ] | [repeatS](#fields-repeatS) | FALSE |
+| SFBool | [ ] | [repeatT](#fields-repeatT) | FALSE |
+| SFBool | [ ] | [repeatR](#fields-repeatR) | FALSE |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -51,7 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -60,7 +60,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### MFInt32 [in, out] **image** [ 0, 0, 0, 0 ]
-{: #field-image }
+{: #fields-image }
 
 *image* describes raw data for this 3D texture: number of components to the *image* [0,4], width, height and depth of the texture, followed by (width x height x depth) pixel values.
 
@@ -69,22 +69,22 @@ Author-provided prose that describes intended purpose of the url asset.
 - The order of initial values in [PixelTexture](/x_ite/components/texturing/pixeltexture/) and PixelTexture3D *image* arrays are different.
 
 ### SFBool [ ] **repeatS** FALSE
-{: #field-repeatS }
+{: #fields-repeatS }
 
 Whether to repeat texture along S axis horizontally from left to right.
 
 ### SFBool [ ] **repeatT** FALSE
-{: #field-repeatT }
+{: #fields-repeatT }
 
 Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFBool [ ] **repeatR** FALSE
-{: #field-repeatR }
+{: #fields-repeatR }
 
 Whether to repeat texture along R axis from front to back.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
-{: #field-textureProperties }
+{: #fields-textureProperties }
 
 Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 

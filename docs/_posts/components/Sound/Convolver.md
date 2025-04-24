@@ -31,29 +31,29 @@ The Convolver node belongs to the **Sound** component and requires at least supp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFInt32 | [in, out] | [numberOfChannels](#field-numberOfChannels) | 0  |
-| MFFloat | [in, out] | [buffer](#field-buffer) | [ ] |
-| SFFloat | [in, out] | [gain](#field-gain) | 1  |
-| SFTime | [in, out] | [tailTime](#field-tailTime) | 0  |
-| SFBool | [in, out] | [normalize](#field-normalize) | FALSE |
-| SFInt32 | [in, out] | [channelCount](#field-channelCount) |  |
-| SFString | [in, out] | [channelCountMode](#field-channelCountMode) | "MAX"  |
-| SFString | [in, out] | [channelInterpretation](#field-channelInterpretation) | "SPEAKERS"  |
-| SFTime | [in, out] | [startTime](#field-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#field-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#field-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#field-stopTime) | 0  |
-| SFBool | [out] | [isPaused](#field-isPaused) |  |
-| SFBool | [out] | [isActive](#field-isActive) |  |
-| SFTime | [out] | [elapsedTime](#field-elapsedTime) |  |
-| MFNode | [in, out] | [children](#field-children) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFInt32 | [in, out] | [numberOfChannels](#fields-numberOfChannels) | 0  |
+| MFFloat | [in, out] | [buffer](#fields-buffer) | [ ] |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
+| SFTime | [in, out] | [tailTime](#fields-tailTime) | 0  |
+| SFBool | [in, out] | [normalize](#fields-normalize) | FALSE |
+| SFInt32 | [in, out] | [channelCount](#fields-channelCount) |  |
+| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX"  |
+| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS"  |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFBool | [out] | [isPaused](#fields-isPaused) |  |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -62,7 +62,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -71,17 +71,17 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
-{: #field-numberOfChannels }
+{: #fields-numberOfChannels }
 
 Input/Output field *numberOfChannels*.
 
 ### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
-{: #field-buffer }
+{: #fields-buffer }
 
 *buffer* is a memory-resident audio asset that can contain one or more channels. *buffer* data format is non-interleaved 32-bit floating-point linear PCM values with a normal range of [−1,1], but values are not limited to this range.
 
@@ -90,7 +90,7 @@ Input/Output field *numberOfChannels*.
 - [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation)
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
-{: #field-gain }
+{: #fields-gain }
 
 The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
@@ -103,17 +103,17 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - Decibel values shall not be used.
 
 ### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
-{: #field-tailTime }
+{: #fields-tailTime }
 
 *tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
 ### SFBool [in, out] **normalize** FALSE
-{: #field-normalize }
+{: #fields-normalize }
 
 *normalize* controls whether or not the impulse response from the buffer is scaled by an equal-power normalization when the buffer field is set
 
 ### SFInt32 [in, out] **channelCount**
-{: #field-channelCount }
+{: #fields-channelCount }
 
 *channelCount* reports number of channels provided by input nodes.
 
@@ -122,7 +122,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
-{: #field-channelCountMode }
+{: #fields-channelCountMode }
 
 *channelCountMode* determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
 
@@ -131,7 +131,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode)
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
-{: #field-channelInterpretation }
+{: #fields-channelInterpretation }
 
 *channelInterpretation* determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
 
@@ -140,7 +140,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
-{: #field-startTime }
+{: #fields-startTime }
 
 Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -149,7 +149,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
-{: #field-resumeTime }
+{: #fields-resumeTime }
 
 When *resumeTime* becomes \<= time now, isPaused becomes false and [AudioClip](/x_ite/components/sound/audioclip/) becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -158,7 +158,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and [AudioClip](/
 - ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
-{: #field-pauseTime }
+{: #fields-pauseTime }
 
 When time now \>= *pauseTime*, isPaused becomes true and [AudioClip](/x_ite/components/sound/audioclip/) becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -167,7 +167,7 @@ When time now \>= *pauseTime*, isPaused becomes true and [AudioClip](/x_ite/comp
 - ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
-{: #field-stopTime }
+{: #fields-stopTime }
 
 Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -181,7 +181,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - An active [TimeSensor](/x_ite/components/time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
-{: #field-isPaused }
+{: #fields-isPaused }
 
 *isPaused* true/false events are sent when [AudioClip](/x_ite/components/sound/audioclip/) is paused/resumed.
 
@@ -190,7 +190,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
-{: #field-isActive }
+{: #fields-isActive }
 
 *isActive* true/false events are sent when playback starts/stops.
 
@@ -199,7 +199,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **elapsedTime**
-{: #field-elapsedTime }
+{: #fields-elapsedTime }
 
 Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activated/running, cumulative in seconds, and not counting any paused time.
 
@@ -212,7 +212,7 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
-{: #field-children }
+{: #fields-children }
 
 The *children* field specifies audio-graph sound sources providing input signals for this node. If multiple input signals are provided by the inputs *children* field, all channels are mixed together and merged prior to presentation.
 

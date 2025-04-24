@@ -30,29 +30,29 @@ The SpatialSound node belongs to the **Sound** component and requires at least s
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFBool | [ ] | [spatialize](#field-spatialize) | TRUE |
-| SFFloat | [in, out] | [intensity](#field-intensity) | 1  |
-| SFVec3f | [in, out] | [location](#field-location) | 0 0 0  |
-| SFVec3f | [in, out] | [direction](#field-direction) | 0 0 1  |
-| SFFloat | [in, out] | [gain](#field-gain) | 1  |
-| SFFloat | [in, out] | [coneOuterGain](#field-coneOuterGain) | 0  |
-| SFFloat | [in, out] | [coneInnerAngle](#field-coneInnerAngle) | 6.2832  |
-| SFFloat | [in, out] | [coneOuterAngle](#field-coneOuterAngle) | 6.2832  |
-| SFString | [in, out] | [distanceModel](#field-distanceModel) | "INVERSE"  |
-| SFFloat | [in, out] | [maxDistance](#field-maxDistance) | 10000  |
-| SFFloat | [in, out] | [referenceDistance](#field-referenceDistance) | 1  |
-| SFFloat | [in, out] | [rolloffFactor](#field-rolloffFactor) | 1  |
-| SFBool | [in, out] | [enableHRTF](#field-enableHRTF) | FALSE |
-| SFBool | [in, out] | [dopplerEnabled](#field-dopplerEnabled) | FALSE  |
-| SFFloat | [in, out] | [priority](#field-priority) | 0  |
-| MFNode | [in, out] | [children](#field-children) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFBool | [ ] | [spatialize](#fields-spatialize) | TRUE |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
+| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
+| SFFloat | [in, out] | [coneOuterGain](#fields-coneOuterGain) | 0  |
+| SFFloat | [in, out] | [coneInnerAngle](#fields-coneInnerAngle) | 6.2832  |
+| SFFloat | [in, out] | [coneOuterAngle](#fields-coneOuterAngle) | 6.2832  |
+| SFString | [in, out] | [distanceModel](#fields-distanceModel) | "INVERSE"  |
+| SFFloat | [in, out] | [maxDistance](#fields-maxDistance) | 10000  |
+| SFFloat | [in, out] | [referenceDistance](#fields-referenceDistance) | 1  |
+| SFFloat | [in, out] | [rolloffFactor](#fields-rolloffFactor) | 1  |
+| SFBool | [in, out] | [enableHRTF](#fields-enableHRTF) | FALSE |
+| SFBool | [in, out] | [dopplerEnabled](#fields-dopplerEnabled) | FALSE  |
+| SFFloat | [in, out] | [priority](#fields-priority) | 0  |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -61,7 +61,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -70,12 +70,12 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFBool [ ] **spatialize** TRUE
-{: #field-spatialize }
+{: #fields-spatialize }
 
 Whether to *spatialize* sound playback relative to viewer.
 
@@ -84,12 +84,12 @@ Whether to *spatialize* sound playback relative to viewer.
 - Only effective within the auralization volume.
 
 ### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
-{: #field-intensity }
+{: #fields-intensity }
 
 Factor [0,1] adjusting loudness (decibels) of emitted sound.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
-{: #field-location }
+{: #fields-location }
 
 Position of sound ellipsoid center, relative to local coordinate system.
 
@@ -98,12 +98,12 @@ Position of sound ellipsoid center, relative to local coordinate system.
 - Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize height.
 
 ### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
-{: #field-direction }
+{: #fields-direction }
 
 *direction* of sound axis, relative to local coordinate system.
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
-{: #field-gain }
+{: #fields-gain }
 
 The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
@@ -116,12 +116,12 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - Decibel values shall not be used.
 
 ### SFFloat [in, out] **coneOuterGain** 0 <small>(-∞,∞)</small>
-{: #field-coneOuterGain }
+{: #fields-coneOuterGain }
 
 *coneOuterGain* is minimum gain value found outside coneOuterAngle.
 
 ### SFFloat [in, out] **coneInnerAngle** 6.2832 <small>[0,2π]</small>
-{: #field-coneInnerAngle }
+{: #fields-coneInnerAngle }
 
 *coneInnerAngle* is centered along direction and defines the inner conical volume, inside of which no source gain reduction occurs.
 
@@ -131,7 +131,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-AudioPannerListenerRelationships)
 
 ### SFFloat [in, out] **coneOuterAngle** 6.2832 <small>[0,2π]</small>
-{: #field-coneOuterAngle }
+{: #fields-coneOuterAngle }
 
 *coneOuterAngle* is centered along direction and defines an outer conical volume, within which the sound gain decreases linearly from full gain to coneOuterGain. Outside of *coneOuterAngle*, gain equals coneOuterGain.
 
@@ -141,7 +141,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-AudioPannerListenerRelationships)
 
 ### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
-{: #field-distanceModel }
+{: #fields-distanceModel }
 
 *distanceModel* determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
 
@@ -150,12 +150,12 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-distancemodeltype)
 
 ### SFFloat [in, out] **maxDistance** 10000 <small>[0,∞)</small>
-{: #field-maxDistance }
+{: #fields-maxDistance }
 
 *maxDistance* is the maximum distance where sound is renderable between source and listener, after which no reduction in sound volume occurs.
 
 ### SFFloat [in, out] **referenceDistance** 1 <small>[0,∞)</small>
-{: #field-referenceDistance }
+{: #fields-referenceDistance }
 
 *referenceDistance* for reducing volume as source moves further from the listener. For distances less than this value, volume is not reduced.
 
@@ -164,7 +164,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-refdistance)
 
 ### SFFloat [in, out] **rolloffFactor** 1 <small>[0,∞)</small>
-{: #field-rolloffFactor }
+{: #fields-rolloffFactor }
 
 *rolloffFactor* indicates how quickly volume is reduced as source moves further from listener.
 
@@ -173,7 +173,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-rollofffactor)
 
 ### SFBool [in, out] **enableHRTF** FALSE
-{: #field-enableHRTF }
+{: #fields-enableHRTF }
 
 *enableHRTF* enables/disables Head Related Transfer Function (HRTF) auralization, if available. SpatialSound enabledHRTF=true corresponds to panningModelType HRTF, enabledHRTF=false corresponds to panningModelType equalpower.
 
@@ -183,7 +183,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [Wikipedia HRTF](https://en.wikipedia.org/wiki/3D_sound_localization#Head-related_Transfer_Function_(HRTF))
 
 ### SFBool [in, out] **dopplerEnabled** FALSE <small class="red">not supported</small>
-{: #field-dopplerEnabled }
+{: #fields-dopplerEnabled }
 
 *dopplerEnabled* enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
 
@@ -193,12 +193,12 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect)
 
 ### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
-{: #field-priority }
+{: #fields-priority }
 
 Player hint [0,1] if needed to choose which sounds to play.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
-{: #field-children }
+{: #fields-children }
 
 The *children* field specifies audio-graph sound sources providing input signals for this node. If multiple input signals are provided by the inputs *children* field, all channels are mixed together and merged prior to presentation.
 

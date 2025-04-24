@@ -32,17 +32,17 @@ The SheenMaterialExtension node belongs to the **X_ITE** component and requires 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFColor | [in, out] | [sheenColor](#field-sheenColor) | 0 0 0  |
-| SFString | [in, out] | [sheenColorTextureMapping](#field-sheenColorTextureMapping) | "" |
-| SFNode | [in, out] | [sheenColorTexture](#field-sheenColorTexture) | NULL  |
-| SFFloat | [in, out] | [sheenRoughness](#field-sheenRoughness) | 0  |
-| SFString | [in, out] | [sheenRoughnessTextureMapping](#field-sheenRoughnessTextureMapping) | "" |
-| SFNode | [in, out] | [sheenRoughnessTexture](#field-sheenRoughnessTexture) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFColor | [in, out] | [sheenColor](#fields-sheenColor) | 0 0 0  |
+| SFString | [in, out] | [sheenColorTextureMapping](#fields-sheenColorTextureMapping) | "" |
+| SFNode | [in, out] | [sheenColorTexture](#fields-sheenColorTexture) | NULL  |
+| SFFloat | [in, out] | [sheenRoughness](#fields-sheenRoughness) | 0  |
+| SFString | [in, out] | [sheenRoughnessTextureMapping](#fields-sheenRoughnessTextureMapping) | "" |
+| SFNode | [in, out] | [sheenRoughnessTexture](#fields-sheenRoughnessTexture) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -51,32 +51,32 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFColor [in, out] **sheenColor** 0 0 0 <small>[0,1]</small>
-{: #field-sheenColor }
+{: #fields-sheenColor }
 
 The sheen color in linear space.
 
 ### SFString [in, out] **sheenColorTextureMapping** ""
-{: #field-sheenColorTextureMapping }
+{: #fields-sheenColorTextureMapping }
 
 Input/Output field *sheenColorTextureMapping*.
 
 ### SFNode [in, out] **sheenColorTexture** NULL <small>[X3DSingleTextureNode]</small>
-{: #field-sheenColorTexture }
+{: #fields-sheenColorTexture }
 
 The sheen color (RGB). The sheen color is in sRGB transfer function.
 
 ### SFFloat [in, out] **sheenRoughness** 0 <small>[0,∞)</small>
-{: #field-sheenRoughness }
+{: #fields-sheenRoughness }
 
 The sheen roughness.
 
 ### SFString [in, out] **sheenRoughnessTextureMapping** ""
-{: #field-sheenRoughnessTextureMapping }
+{: #fields-sheenRoughnessTextureMapping }
 
 Input/Output field *sheenRoughnessTextureMapping*.
 
 ### SFNode [in, out] **sheenRoughnessTexture** NULL <small>[X3DSingleTextureNode]</small>
-{: #field-sheenRoughnessTexture }
+{: #fields-sheenRoughnessTexture }
 
 The sheen roughness (Alpha) texture.
 

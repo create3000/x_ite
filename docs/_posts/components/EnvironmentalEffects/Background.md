@@ -31,25 +31,25 @@ The Background node belongs to the **EnvironmentalEffects** component and requir
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in] | [set_bind](#field-set_bind) |  |
-| MFString | [in, out] | [frontUrl](#field-frontUrl) | [ ] |
-| MFString | [in, out] | [backUrl](#field-backUrl) | [ ] |
-| MFString | [in, out] | [leftUrl](#field-leftUrl) | [ ] |
-| MFString | [in, out] | [rightUrl](#field-rightUrl) | [ ] |
-| MFString | [in, out] | [topUrl](#field-topUrl) | [ ] |
-| MFString | [in, out] | [bottomUrl](#field-bottomUrl) | [ ] |
-| MFFloat | [in, out] | [skyAngle](#field-skyAngle) | [ ] |
-| MFColor | [in, out] | [skyColor](#field-skyColor) | 0 0 0  |
-| MFFloat | [in, out] | [groundAngle](#field-groundAngle) | [ ] |
-| MFColor | [in, out] | [groundColor](#field-groundColor) | [ ] |
-| SFFloat | [in, out] | [transparency](#field-transparency) | 0  |
-| SFBool | [out] | [isBound](#field-isBound) |  |
-| SFTime | [out] | [bindTime](#field-bindTime) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in] | [set_bind](#fields-set_bind) |  |
+| MFString | [in, out] | [frontUrl](#fields-frontUrl) | [ ] |
+| MFString | [in, out] | [backUrl](#fields-backUrl) | [ ] |
+| MFString | [in, out] | [leftUrl](#fields-leftUrl) | [ ] |
+| MFString | [in, out] | [rightUrl](#fields-rightUrl) | [ ] |
+| MFString | [in, out] | [topUrl](#fields-topUrl) | [ ] |
+| MFString | [in, out] | [bottomUrl](#fields-bottomUrl) | [ ] |
+| MFFloat | [in, out] | [skyAngle](#fields-skyAngle) | [ ] |
+| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0  |
+| MFFloat | [in, out] | [groundAngle](#fields-groundAngle) | [ ] |
+| MFColor | [in, out] | [groundColor](#fields-groundColor) | [ ] |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFBool | [out] | [isBound](#fields-isBound) |  |
+| SFTime | [out] | [bindTime](#fields-bindTime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -58,7 +58,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **set_bind**
-{: #field-set_bind }
+{: #fields-set_bind }
 
 Input event *set_bind*=true makes this node active, input event *set_bind*=false makes this node inactive. Thus setting *set_bind* true/false will pop/push (enable/disable) this node.
 
@@ -71,7 +71,7 @@ Input event *set_bind*=true makes this node active, input event *set_bind*=false
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFString [in, out] **frontUrl** [ ] <small>[URI]</small>
-{: #field-frontUrl }
+{: #fields-frontUrl }
 
 Image background panorama between ground/sky backdrop and scene's geometry.
 
@@ -87,7 +87,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https url addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### MFString [in, out] **backUrl** [ ] <small>[URI]</small>
-{: #field-backUrl }
+{: #fields-backUrl }
 
 Image background panorama between ground/sky backdrop and scene's geometry.
 
@@ -103,7 +103,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https url addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### MFString [in, out] **leftUrl** [ ] <small>[URI]</small>
-{: #field-leftUrl }
+{: #fields-leftUrl }
 
 Image background panorama between ground/sky backdrop and scene's geometry.
 
@@ -119,7 +119,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https url addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### MFString [in, out] **rightUrl** [ ] <small>[URI]</small>
-{: #field-rightUrl }
+{: #fields-rightUrl }
 
 Image background panorama between ground/sky backdrop and scene's geometry.
 
@@ -135,7 +135,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https url addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### MFString [in, out] **topUrl** [ ] <small>[URI]</small>
-{: #field-topUrl }
+{: #fields-topUrl }
 
 Image background panorama between ground/sky backdrop and scene's geometry.
 
@@ -151,7 +151,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https url addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### MFString [in, out] **bottomUrl** [ ] <small>[URI]</small>
-{: #field-bottomUrl }
+{: #fields-bottomUrl }
 
 Image background panorama between ground/sky backdrop and scene's geometry.
 
@@ -167,7 +167,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https url addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### MFFloat [in, out] **skyAngle** [ ] <small>[0,π]</small>
-{: #field-skyAngle }
+{: #fields-skyAngle }
 
 The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (horizon) to π=3.14159 (nadir).
 
@@ -182,7 +182,7 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 - Colors at *skyAngle*=0 are ignored. Interchange profile
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
-{: #field-skyColor }
+{: #fields-skyColor }
 
 [Color](/x_ite/components/rendering/color/) of the sky at various angles on the sky sphere. First value is color of sky at 0.0 radians representing the zenith (straight up).
 
@@ -197,7 +197,7 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 - You must have one more *skyColor* value than skyAngle values. Interchange profile
 
 ### MFFloat [in, out] **groundAngle** [ ] <small>[0,π/2]</small>
-{: #field-groundAngle }
+{: #fields-groundAngle }
 
 The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 (horizon).
 
@@ -212,7 +212,7 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 - Colors at *groundAngle*=0 are ignored. Interchange profile
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
-{: #field-groundColor }
+{: #fields-groundColor }
 
 [Color](/x_ite/components/rendering/color/) of the ground at the various angles on the ground partial sphere. First value is color of ground at 0.0 radians representing the nadir (straight down).
 
@@ -227,7 +227,7 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 - You must have one more *groundColor* value than groundAngle values. Interchange profile
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
-{: #field-transparency }
+{: #fields-transparency }
 
 How "clear" the background is, allows underlying page to show through: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
 
@@ -236,7 +236,7 @@ How "clear" the background is, allows underlying page to show through: 1.0 is co
 - *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ### SFBool [out] **isBound**
-{: #field-isBound }
+{: #fields-isBound }
 
 Event true sent when node becomes active, event false sent when unbound by another node.
 
@@ -249,7 +249,7 @@ Event true sent when node becomes active, event false sent when unbound by anoth
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **bindTime**
-{: #field-bindTime }
+{: #fields-bindTime }
 
 Event sent when node becomes active/inactive.
 

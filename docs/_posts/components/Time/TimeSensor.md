@@ -33,25 +33,25 @@ The TimeSensor node belongs to the **Time** component and requires at least supp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFTime | [in, out] | [cycleInterval](#field-cycleInterval) | 1  |
-| SFBool | [in, out] | [loop](#field-loop) | FALSE |
-| SFTime | [in, out] | [startTime](#field-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#field-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#field-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#field-stopTime) | 0  |
-| SFBool | [out] | [isPaused](#field-isPaused) |  |
-| SFBool | [out] | [isActive](#field-isActive) |  |
-| SFTime | [out] | [cycleTime](#field-cycleTime) |  |
-| SFTime | [out] | [elapsedTime](#field-elapsedTime) |  |
-| SFFloat | [out] | [fraction_changed](#field-fraction_changed) |  |
-| SFTime | [out] | [time](#field-time) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFTime | [in, out] | [cycleInterval](#fields-cycleInterval) | 1  |
+| SFBool | [in, out] | [loop](#fields-loop) | FALSE |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFBool | [out] | [isPaused](#fields-isPaused) |  |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| SFTime | [out] | [cycleTime](#fields-cycleTime) |  |
+| SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
+| SFFloat | [out] | [fraction_changed](#fields-fraction_changed) |  |
+| SFTime | [out] | [time](#fields-time) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -60,7 +60,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -69,12 +69,12 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFTime [in, out] **cycleInterval** 1 <small>(0,∞)</small>
-{: #field-cycleInterval }
+{: #fields-cycleInterval }
 
 *cycleInterval* is loop duration in seconds. Interchange profile
 
@@ -88,12 +88,12 @@ Enables/disables node operation.
 - An active TimeSensor node ignores set_cycleInterval and set_startTime events.
 
 ### SFBool [in, out] **loop** FALSE
-{: #field-loop }
+{: #fields-loop }
 
 Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
-{: #field-startTime }
+{: #fields-startTime }
 
 When time now \>= *startTime*, isActive becomes true and TimeSensor becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -102,7 +102,7 @@ When time now \>= *startTime*, isActive becomes true and TimeSensor becomes acti
 - ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
-{: #field-resumeTime }
+{: #fields-resumeTime }
 
 When *resumeTime* becomes \<= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -115,7 +115,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and TimeSensor be
 - Not supported in VRML97.
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
-{: #field-pauseTime }
+{: #fields-pauseTime }
 
 When time now \>= *pauseTime*, isPaused becomes true and TimeSensor becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -128,7 +128,7 @@ When time now \>= *pauseTime*, isPaused becomes true and TimeSensor becomes paus
 - Not supported in VRML97.
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
-{: #field-stopTime }
+{: #fields-stopTime }
 
 When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -142,7 +142,7 @@ When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor beco
 - An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
-{: #field-isPaused }
+{: #fields-isPaused }
 
 *isPaused* true/false events are sent when TimeSensor is paused/resumed.
 
@@ -152,7 +152,7 @@ When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor beco
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
-{: #field-isActive }
+{: #fields-isActive }
 
 *isActive* true/false events are sent when TimeSensor starts/stops running.
 
@@ -161,7 +161,7 @@ When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor beco
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **cycleTime**
-{: #field-cycleTime }
+{: #fields-cycleTime }
 
 *cycleTime* sends a time outputOnly at startTime, and also at the beginning of each new cycle (useful for synchronization with other time-based objects).
 
@@ -175,7 +175,7 @@ When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor beco
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **elapsedTime**
-{: #field-elapsedTime }
+{: #fields-elapsedTime }
 
 Current elapsed time since TimeSensor activated/running, cumulative in seconds, and not counting any paused time.
 
@@ -189,7 +189,7 @@ Current elapsed time since TimeSensor activated/running, cumulative in seconds, 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **fraction_changed**
-{: #field-fraction_changed }
+{: #fields-fraction_changed }
 
 *fraction_changed* continuously sends value in range [0,1] showing time progress in the current cycle.
 
@@ -198,7 +198,7 @@ Current elapsed time since TimeSensor activated/running, cumulative in seconds, 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **time**
-{: #field-time }
+{: #fields-time }
 
 Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) in seconds for a given simulation tick.
 

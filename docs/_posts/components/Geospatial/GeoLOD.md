@@ -32,27 +32,27 @@ The GeoLOD node belongs to the **Geospatial** component and requires at least su
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#field-geoOrigin) | NULL  |
-| MFString | [ ] | [geoSystem](#field-geoSystem) | [ "GD", "WE" ] |
-| MFString | [ ] | [rootUrl](#field-rootUrl) | [ ] |
-| MFString | [ ] | [child1Url](#field-child1Url) | [ ] |
-| MFString | [ ] | [child2Url](#field-child2Url) | [ ] |
-| MFString | [ ] | [child3Url](#field-child3Url) | [ ] |
-| MFString | [ ] | [child4Url](#field-child4Url) | [ ] |
-| SFVec3d | [ ] | [center](#field-center) | 0 0 0  |
-| SFFloat | [ ] | [range](#field-range) | 10  |
-| SFInt32 | [out] | [level_changed](#field-level_changed) |  |
-| SFBool | [in, out] | [visible](#field-visible) | TRUE |
-| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
-| MFNode | [ ] | [rootNode](#field-rootNode) | [ ] |
-| MFNode | [out] | [children](#field-children) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
+| MFString | [ ] | [rootUrl](#fields-rootUrl) | [ ] |
+| MFString | [ ] | [child1Url](#fields-child1Url) | [ ] |
+| MFString | [ ] | [child2Url](#fields-child2Url) | [ ] |
+| MFString | [ ] | [child3Url](#fields-child3Url) | [ ] |
+| MFString | [ ] | [child4Url](#fields-child4Url) | [ ] |
+| SFVec3d | [ ] | [center](#fields-center) | 0 0 0  |
+| SFFloat | [ ] | [range](#fields-range) | 10  |
+| SFInt32 | [out] | [level_changed](#fields-level_changed) |  |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [ ] | [rootNode](#fields-rootNode) | [ ] |
+| MFNode | [out] | [children](#fields-children) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -61,7 +61,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
-{: #field-geoOrigin }
+{: #fields-geoOrigin }
 
 Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
@@ -74,7 +74,7 @@ Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that 
 - XML validation requires placement as first child node following contained metadata nodes (if any).
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
-{: #field-geoSystem }
+{: #fields-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 
@@ -89,7 +89,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 - Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ### MFString [ ] **rootUrl** [ ] <small>[URI]</small>
-{: #field-rootUrl }
+{: #fields-rootUrl }
 
 Url for scene providing geometry for the root tile.
 
@@ -98,32 +98,32 @@ Url for scene providing geometry for the root tile.
 - Either rootNode or *rootUrl* can specify root tile, but specifying both is an error.
 
 ### MFString [ ] **child1Url** [ ] <small>[URI]</small>
-{: #field-child1Url }
+{: #fields-child1Url }
 
 Quadtree geometry loaded when viewer is within range.
 
 ### MFString [ ] **child2Url** [ ] <small>[URI]</small>
-{: #field-child2Url }
+{: #fields-child2Url }
 
 Quadtree geometry loaded when viewer is within range.
 
 ### MFString [ ] **child3Url** [ ] <small>[URI]</small>
-{: #field-child3Url }
+{: #fields-child3Url }
 
 Quadtree geometry loaded when viewer is within range.
 
 ### MFString [ ] **child4Url** [ ] <small>[URI]</small>
-{: #field-child4Url }
+{: #fields-child4Url }
 
 Quadtree geometry loaded when viewer is within range.
 
 ### SFVec3d [ ] **center** 0 0 0 <small>(-∞,∞)</small>
-{: #field-center }
+{: #fields-center }
 
 Viewer range from geographic-coordinates *center* triggers quadtree loading/unloading.
 
 ### SFFloat [ ] **range** 10 <small>[0,∞)</small>
-{: #field-range }
+{: #fields-range }
 
 Viewer *range* from geographic-coordinates center triggers quadtree loading/unloading.
 
@@ -132,7 +132,7 @@ Viewer *range* from geographic-coordinates center triggers quadtree loading/unlo
 - Not setting *range* values indicates that level switching can be optimized automatically based on performance.
 
 ### SFInt32 [out] **level_changed**
-{: #field-level_changed }
+{: #fields-level_changed }
 
 Output event that reports when the new children outputOnly event is generated, with value 0 or 1, where 0 indicates the rootNode field and 1 indicates the nodes specified by the child1Url, child2Url, child3Url, and child4Url fields.
 
@@ -141,7 +141,7 @@ Output event that reports when the new children outputOnly event is generated, w
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [in, out] **visible** TRUE
-{: #field-visible }
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -151,7 +151,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
-{: #field-bboxDisplay }
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -160,7 +160,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
-{: #field-bboxSize }
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -172,7 +172,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
-{: #field-bboxCenter }
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -183,7 +183,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### MFNode [ ] **rootNode** [ ] <small>[X3DChildNode]</small>
-{: #field-rootNode }
+{: #fields-rootNode }
 
 Geometry for the root tile.
 
@@ -192,7 +192,7 @@ Geometry for the root tile.
 - Either *rootNode* or rootUrl can specify root tile, but specifying both is an error.
 
 ### MFNode [out] **children**
-{: #field-children }
+{: #fields-children }
 
 The outputOnly *children* field exposes a portion of the scene graph for the currently loaded set of nodes. The value returned as an event is an MFNode containing the currently selected tile. This will either be the node specified by the rootNode field or the nodes specified by the child1Url, child2Url, child3Url, and child4Url fields. The GeoLOD node shall generate a new *children* output event each time the scene graph is changed (EXAMPLE whenever nodes are loaded or unloaded).
 

@@ -29,25 +29,25 @@ The Extrusion node belongs to the **Geometry3D** component and requires at least
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| MFVec2f | [in] | [set_crossSection](#field-set_crossSection) |  |
-| MFRotation | [in] | [set_orientation](#field-set_orientation) |  |
-| MFVec2f | [in] | [set_scale](#field-set_scale) |  |
-| MFVec3f | [in] | [set_spine](#field-set_spine) |  |
-| SFBool | [ ] | [beginCap](#field-beginCap) | TRUE |
-| SFBool | [ ] | [endCap](#field-endCap) | TRUE |
-| SFBool | [ ] | [solid](#field-solid) | TRUE |
-| SFBool | [ ] | [ccw](#field-ccw) | TRUE |
-| SFBool | [ ] | [convex](#field-convex) | TRUE |
-| SFFloat | [ ] | [creaseAngle](#field-creaseAngle) | 0  |
-| MFVec2f | [ ] | [crossSection](#field-crossSection) | [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] |
-| MFRotation | [ ] | [orientation](#field-orientation) | 0 0 1 0  |
-| MFVec2f | [ ] | [scale](#field-scale) | 1 1  |
-| MFVec3f | [ ] | [spine](#field-spine) | [ 0 0 0, 0 1 0 ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| MFVec2f | [in] | [set_crossSection](#fields-set_crossSection) |  |
+| MFRotation | [in] | [set_orientation](#fields-set_orientation) |  |
+| MFVec2f | [in] | [set_scale](#fields-set_scale) |  |
+| MFVec3f | [in] | [set_spine](#fields-set_spine) |  |
+| SFBool | [ ] | [beginCap](#fields-beginCap) | TRUE |
+| SFBool | [ ] | [endCap](#fields-endCap) | TRUE |
+| SFBool | [ ] | [solid](#fields-solid) | TRUE |
+| SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
+| SFBool | [ ] | [convex](#fields-convex) | TRUE |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| MFVec2f | [ ] | [crossSection](#fields-crossSection) | [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] |
+| MFRotation | [ ] | [orientation](#fields-orientation) | 0 0 1 0  |
+| MFVec2f | [ ] | [scale](#fields-scale) | 1 1  |
+| MFVec3f | [ ] | [spine](#fields-spine) | [ 0 0 0, 0 1 0 ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -56,7 +56,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFVec2f [in] **set_crossSection** <small>(-∞,∞)</small>
-{: #field-set_crossSection }
+{: #fields-set_crossSection }
 
 The *crossSection* array defines a silhouette outline of the outer Extrusion surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
 
@@ -70,7 +70,7 @@ The *crossSection* array defines a silhouette outline of the outer Extrusion sur
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFRotation [in] **set_orientation** <small>[-1,1] or (-∞,∞)</small>
-{: #field-set_orientation }
+{: #fields-set_orientation }
 
 The *orientation* array is a list of axis-angle 4-tuple values applied at each spine-aligned cross-section plane.
 
@@ -85,7 +85,7 @@ The *orientation* array is a list of axis-angle 4-tuple values applied at each s
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFVec2f [in] **set_scale** <small>(0,∞)</small>
-{: #field-set_scale }
+{: #fields-set_scale }
 
 *scale* is a list of 2D-*scale* parameters applied at each spine-aligned cross-section plane.
 
@@ -100,7 +100,7 @@ The *orientation* array is a list of axis-angle 4-tuple values applied at each s
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFVec3f [in] **set_spine** <small>(-∞,∞)</small>
-{: #field-set_spine }
+{: #fields-set_spine }
 
 The *spine* array defines a center-line sequence of 3D points that define a piecewise-linear curve forming a series of connected vertices. The *spine* is set of points along which a 2D crossSection is extruded, scaled and oriented.
 
@@ -116,7 +116,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [ ] **beginCap** TRUE
-{: #field-beginCap }
+{: #fields-beginCap }
 
 Whether beginning cap is drawn (similar to [Cylinder](/x_ite/components/geometry3d/cylinder/) top cap).
 
@@ -125,7 +125,7 @@ Whether beginning cap is drawn (similar to [Cylinder](/x_ite/components/geometry
 - Since this field has accessType initializeOnly, the value cannot be changed after initial creation.
 
 ### SFBool [ ] **endCap** TRUE
-{: #field-endCap }
+{: #fields-endCap }
 
 Whether end cap is drawn (similar to [Cylinder](/x_ite/components/geometry3d/cylinder/) bottom cap).
 
@@ -134,7 +134,7 @@ Whether end cap is drawn (similar to [Cylinder](/x_ite/components/geometry3d/cyl
 - Since this field has accessType initializeOnly, the value cannot be changed after initial creation.
 
 ### SFBool [ ] **solid** TRUE
-{: #field-solid }
+{: #fields-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
@@ -149,7 +149,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
-{: #field-ccw }
+{: #fields-ccw }
 
 The *ccw* field indicates counterclockwise ordering of vertex-coordinates orientation.
 
@@ -163,7 +163,7 @@ The *ccw* field indicates counterclockwise ordering of vertex-coordinates orient
 - Consistent and correct ordering of left-handed or right-handed point sequences is important throughout the coord array of point values.
 
 ### SFBool [ ] **convex** TRUE
-{: #field-convex }
+{: #fields-convex }
 
 The *convex* field is a hint to renderers whether all polygons in a shape are *convex* (true), or possibly concave (false). A *convex* polygon is planar, does not intersect itself, and has all interior angles \< 180 degrees.
 
@@ -179,7 +179,7 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 - Concave or inverted geometry may be invisible when using default value *convex*=true, since some renderers use more-efficient algorithms to perform tessellation that may inadvertently fail on concave geometry.
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
-{: #field-creaseAngle }
+{: #fields-creaseAngle }
 
 *creaseAngle* defines angle (in radians) where adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment.
 
@@ -189,7 +189,7 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### MFVec2f [ ] **crossSection** [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] <small>(-∞,∞)</small>
-{: #field-crossSection }
+{: #fields-crossSection }
 
 The *crossSection* array defines a silhouette outline of the outer Extrusion surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
 
@@ -204,7 +204,7 @@ The *crossSection* array defines a silhouette outline of the outer Extrusion sur
 - Avoid self-intersecting polygon line segments, otherwise defined geometry is irregular and rendering results are undefined (especially for end caps).
 
 ### MFRotation [ ] **orientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
-{: #field-orientation }
+{: #fields-orientation }
 
 The *orientation* array is a list of axis-angle 4-tuple values applied at each spine-aligned cross-section plane.
 
@@ -214,7 +214,7 @@ The *orientation* array is a list of axis-angle 4-tuple values applied at each s
 - Number of values must all match for 3-tuple spine points, 2-tuple scale values, and 4-tuple *orientation* values.
 
 ### MFVec2f [ ] **scale** 1 1 <small>(0,∞)</small>
-{: #field-scale }
+{: #fields-scale }
 
 *scale* is a list of 2D-*scale* parameters applied at each spine-aligned cross-section plane.
 
@@ -228,7 +228,7 @@ The *orientation* array is a list of axis-angle 4-tuple values applied at each s
 - Zero or negative *scale* values not allowed.
 
 ### MFVec3f [ ] **spine** [ 0 0 0, 0 1 0 ] <small>(-∞,∞)</small>
-{: #field-spine }
+{: #fields-spine }
 
 The *spine* array defines a center-line sequence of 3D points that define a piecewise-linear curve forming a series of connected vertices. The *spine* is set of points along which a 2D crossSection is extruded, scaled and oriented.
 

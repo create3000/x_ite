@@ -29,15 +29,15 @@ The BooleanFilter node belongs to the **EventUtilities** component and requires 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in] | [set_boolean](#field-set_boolean) |  |
-| SFBool | [out] | [inputTrue](#field-inputTrue) |  |
-| SFBool | [out] | [inputFalse](#field-inputFalse) |  |
-| SFBool | [out] | [inputNegate](#field-inputNegate) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in] | [set_boolean](#fields-set_boolean) |  |
+| SFBool | [out] | [inputTrue](#fields-inputTrue) |  |
+| SFBool | [out] | [inputFalse](#fields-inputFalse) |  |
+| SFBool | [out] | [inputNegate](#fields-inputNegate) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -46,7 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **set_boolean**
-{: #field-set_boolean }
+{: #fields-set_boolean }
 
 *set_boolean* is the input value to be filtered.
 
@@ -55,7 +55,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [out] **inputTrue**
-{: #field-inputTrue }
+{: #fields-inputTrue }
 
 *inputTrue* only passes a true value, which occurs when set_boolean input is true.
 
@@ -64,7 +64,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - *inputTrue* is an output event that can only provide a value of true.
 
 ### SFBool [out] **inputFalse**
-{: #field-inputFalse }
+{: #fields-inputFalse }
 
 *inputFalse* only passes a false value, which occurs when set_boolean is false.
 
@@ -73,7 +73,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - *inputFalse* is an output event that can only provide a value of false.
 
 ### SFBool [out] **inputNegate**
-{: #field-inputNegate }
+{: #fields-inputNegate }
 
 *inputNegate* is an output event that provides an opposite value by negating set_boolean input.
 

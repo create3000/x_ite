@@ -31,25 +31,25 @@ The Viewpoint node belongs to the **Navigation** component and requires at least
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in] | [set_bind](#field-set_bind) |  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFVec3f | [in, out] | [position](#field-position) | 0 0 10  |
-| SFRotation | [in, out] | [orientation](#field-orientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [centerOfRotation](#field-centerOfRotation) | 0 0 0  |
-| SFFloat | [in, out] | [fieldOfView](#field-fieldOfView) | π/4  |
-| SFFloat | [in, out] | [nearDistance](#field-nearDistance) | -1  |
-| SFFloat | [in, out] | [farDistance](#field-farDistance) | -1  |
-| SFBool | [in, out] | [viewAll](#field-viewAll) | FALSE |
-| SFBool | [in, out] | [jump](#field-jump) | TRUE |
-| SFBool | [in, out] | [retainUserOffsets](#field-retainUserOffsets) | FALSE |
-| SFBool | [out] | [isBound](#field-isBound) |  |
-| SFTime | [out] | [bindTime](#field-bindTime) |  |
-| SFNode | [in, out] | [navigationInfo](#field-navigationInfo) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in] | [set_bind](#fields-set_bind) |  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFVec3f | [in, out] | [position](#fields-position) | 0 0 10  |
+| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0  |
+| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4  |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFBool | [in, out] | [viewAll](#fields-viewAll) | FALSE |
+| SFBool | [in, out] | [jump](#fields-jump) | TRUE |
+| SFBool | [in, out] | [retainUserOffsets](#fields-retainUserOffsets) | FALSE |
+| SFBool | [out] | [isBound](#fields-isBound) |  |
+| SFTime | [out] | [bindTime](#fields-bindTime) |  |
+| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -58,7 +58,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **set_bind**
-{: #field-set_bind }
+{: #fields-set_bind }
 
 Sending event *set_bind*=true makes this node active. Sending event *set_bind*=false makes this node inactive. Thus setting *set_bind* to true/false will pop/push (enable/disable) this Viewpoint.
 
@@ -71,7 +71,7 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 [Text](/x_ite/components/text/text/) *description* or navigation hint to describe the significance of this model Viewpoint.
 
@@ -88,12 +88,12 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 - Without *description*, this Viewpoint is unlikely to appear on browser Viewpoint menus.
 
 ### SFVec3f [in, out] **position** 0 0 10 <small>(-∞,∞)</small>
-{: #field-position }
+{: #fields-position }
 
 *position* (x, y, z in meters) relative to local coordinate system.
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>[-1,1],(-∞,∞)</small>
-{: #field-orientation }
+{: #fields-orientation }
 
 Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis direction in local coordinate system.
 
@@ -107,12 +107,12 @@ Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis dire
 - For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
 
 ### SFVec3f [in, out] **centerOfRotation** 0 0 0 <small>(-∞,∞)</small>
-{: #field-centerOfRotation }
+{: #fields-centerOfRotation }
 
 *centerOfRotation* specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
 
 ### SFFloat [in, out] **fieldOfView** π/4 <small>(0,π)</small>
-{: #field-fieldOfView }
+{: #fields-fieldOfView }
 
 Preferred minimum viewing angle from this viewpoint in radians, providing minimum height or minimum width (whichever is smaller). Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
 
@@ -127,7 +127,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 - For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness. Interchange profile
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
-{: #field-nearDistance }
+{: #fields-nearDistance }
 
 *nearDistance* defines minimum clipping plane distance necessary for object display.
 
@@ -142,7 +142,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 - *nearDistance* must be less than farDistance.
 
 ### SFFloat [in, out] **farDistance** -1 <small>-1 or (0,∞)</small>
-{: #field-farDistance }
+{: #fields-farDistance }
 
 *farDistance* defines maximum clipping plane distance allowed for object display.
 
@@ -157,7 +157,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 - NearDistance must be less than *farDistance*.
 
 ### SFBool [in, out] **viewAll** FALSE
-{: #field-viewAll }
+{: #fields-viewAll }
 
 Viewpoint is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
 
@@ -171,7 +171,7 @@ Viewpoint is automatically adjusted to view all visible geometry. Typically cent
 - If needed, near and far clipping planes shall be adjusted to allow viewing the entire scene.
 
 ### SFBool [in, out] **jump** TRUE
-{: #field-jump }
+{: #fields-jump }
 
 Transition instantly by jumping, otherwise smoothly adjust offsets in place when changing to this Viewpoint.
 
@@ -185,12 +185,12 @@ Transition instantly by jumping, otherwise smoothly adjust offsets in place when
 - For VR/AR/MR/XR users wearing head-mounted displays, animating transitions between viewpoints may induce motion sickness.
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
-{: #field-retainUserOffsets }
+{: #fields-retainUserOffsets }
 
 Retain (true) or reset to zero (false) any prior user navigation offsets from defined viewpoint position, orientation.
 
 ### SFBool [out] **isBound**
-{: #field-isBound }
+{: #fields-isBound }
 
 Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
 
@@ -203,7 +203,7 @@ Output event true gets sent when node becomes bound and activated, otherwise out
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **bindTime**
-{: #field-bindTime }
+{: #fields-bindTime }
 
 Event sent reporting timestamp when node becomes active/inactive.
 
@@ -212,7 +212,7 @@ Event sent reporting timestamp when node becomes active/inactive.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFNode [in, out] **navigationInfo** NULL <small>[NavigationInfo]</small>
-{: #field-navigationInfo }
+{: #fields-navigationInfo }
 
 The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node for this X3DViewpointNode. The specified [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
 

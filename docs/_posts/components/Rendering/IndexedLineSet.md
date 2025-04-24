@@ -29,22 +29,22 @@ The IndexedLineSet node belongs to the **Rendering** component and requires at l
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| MFInt32 | [in] | [set_colorIndex](#field-set_colorIndex) |  |
-| MFInt32 | [in] | [set_coordIndex](#field-set_coordIndex) |  |
-| SFBool | [ ] | [colorPerVertex](#field-colorPerVertex) | TRUE |
-| MFInt32 | [ ] | [colorIndex](#field-colorIndex) | [ ] |
-| MFInt32 | [ ] | [coordIndex](#field-coordIndex) | [ ] |
-| MFNode | [in, out] | [attrib](#field-attrib) | [ ] |
-| SFNode | [in, out] | [fogCoord](#field-fogCoord) | NULL  |
-| SFNode | [in, out] | [color](#field-color) | NULL  |
-| SFNode | [in, out] | [tangent](#field-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#field-normal) | NULL  |
-| SFNode | [in, out] | [coord](#field-coord) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| MFInt32 | [in] | [set_colorIndex](#fields-set_colorIndex) |  |
+| MFInt32 | [in] | [set_coordIndex](#fields-set_coordIndex) |  |
+| SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
+| MFInt32 | [ ] | [colorIndex](#fields-colorIndex) | [ ] |
+| MFInt32 | [ ] | [coordIndex](#fields-coordIndex) | [ ] |
+| MFNode | [in, out] | [attrib](#fields-attrib) | [ ] |
+| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL  |
+| SFNode | [in, out] | [color](#fields-color) | NULL  |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -53,7 +53,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
-{: #field-set_colorIndex }
+{: #fields-set_colorIndex }
 
 *colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
 
@@ -69,7 +69,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
-{: #field-set_coordIndex }
+{: #fields-set_coordIndex }
 
 *coordIndex* indices provide the order in which coordinates are applied to construct each polyline. Order starts at index 0, commas are optional between sets.
 
@@ -83,7 +83,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [ ] **colorPerVertex** TRUE
-{: #field-colorPerVertex }
+{: #fields-colorPerVertex }
 
 Whether [Color](/x_ite/components/rendering/color/) node color values are applied to each point vertex (true) or per polyline (false).
 
@@ -92,7 +92,7 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
-{: #field-colorIndex }
+{: #fields-colorIndex }
 
 *colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
 
@@ -108,7 +108,7 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 - If child [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node is not provided, then geometry is rendered using corresponding [Appearance](/x_ite/components/shape/appearance/) and material/texture values.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
-{: #field-coordIndex }
+{: #fields-coordIndex }
 
 *coordIndex* indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets, use -1 to separate indices for each polyline.
 
@@ -122,7 +122,7 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 - *coordIndex* is required in order to connect contained coordinate point values.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
-{: #field-attrib }
+{: #fields-attrib }
 
 Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
@@ -131,22 +131,22 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 - [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shaders.html#Pervertexattributes)
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
-{: #field-fogCoord }
+{: #fields-fogCoord }
 
 Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
-{: #field-color }
+{: #fields-color }
 
 Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
-{: #field-tangent }
+{: #fields-tangent }
 
 Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
-{: #field-normal }
+{: #fields-normal }
 
 Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
@@ -159,7 +159,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 - *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
-{: #field-coord }
+{: #fields-coord }
 
 Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 

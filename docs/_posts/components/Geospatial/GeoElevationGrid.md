@@ -29,30 +29,30 @@ The GeoElevationGrid node belongs to the **Geospatial** component and requires a
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#field-geoOrigin) | NULL  |
-| MFString | [ ] | [geoSystem](#field-geoSystem) | [ "GD", "WE" ] |
-| MFDouble | [in] | [set_height](#field-set_height) |  |
-| SFVec3d | [ ] | [geoGridOrigin](#field-geoGridOrigin) | 0 0 0  |
-| SFInt32 | [ ] | [xDimension](#field-xDimension) | 0  |
-| SFInt32 | [ ] | [zDimension](#field-zDimension) | 0  |
-| SFDouble | [ ] | [xSpacing](#field-xSpacing) | 1  |
-| SFDouble | [ ] | [zSpacing](#field-zSpacing) | 1  |
-| SFFloat | [in, out] | [yScale](#field-yScale) | 1  |
-| SFBool | [ ] | [solid](#field-solid) | TRUE |
-| SFBool | [ ] | [ccw](#field-ccw) | TRUE |
-| SFDouble | [ ] | [creaseAngle](#field-creaseAngle) | 0  |
-| SFBool | [ ] | [colorPerVertex](#field-colorPerVertex) | TRUE |
-| SFBool | [ ] | [normalPerVertex](#field-normalPerVertex) | TRUE |
-| SFNode | [in, out] | [color](#field-color) | NULL  |
-| SFNode | [in, out] | [texCoord](#field-texCoord) | NULL  |
-| SFNode | [in, out] | [tangent](#field-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#field-normal) | NULL  |
-| MFDouble | [ ] | [height](#field-height) | [ 0, 0 ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
+| MFDouble | [in] | [set_height](#fields-set_height) |  |
+| SFVec3d | [ ] | [geoGridOrigin](#fields-geoGridOrigin) | 0 0 0  |
+| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0  |
+| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0  |
+| SFDouble | [ ] | [xSpacing](#fields-xSpacing) | 1  |
+| SFDouble | [ ] | [zSpacing](#fields-zSpacing) | 1  |
+| SFFloat | [in, out] | [yScale](#fields-yScale) | 1  |
+| SFBool | [ ] | [solid](#fields-solid) | TRUE |
+| SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
+| SFDouble | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
+| SFBool | [ ] | [normalPerVertex](#fields-normalPerVertex) | TRUE |
+| SFNode | [in, out] | [color](#fields-color) | NULL  |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
+| MFDouble | [ ] | [height](#fields-height) | [ 0, 0 ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -61,7 +61,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
-{: #field-geoOrigin }
+{: #fields-geoOrigin }
 
 Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
@@ -74,7 +74,7 @@ Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that 
 - XML validation requires placement as first child node following contained metadata nodes (if any).
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
-{: #field-geoSystem }
+{: #fields-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 
@@ -89,7 +89,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 - Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ### MFDouble [in] **set_height** <small>(-∞,∞)</small>
-{: #field-set_height }
+{: #fields-set_height }
 
 Contains xDimension rows * zDimension columns floating-point values for elevation above ellipsoid.
 
@@ -104,12 +104,12 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFVec3d [ ] **geoGridOrigin** 0 0 0 <small>(-∞,∞)</small>
-{: #field-geoGridOrigin }
+{: #fields-geoGridOrigin }
 
 Geographic coordinate for southwest (lower-left) corner of height dataset.
 
 ### SFInt32 [ ] **xDimension** 0 <small>(0,∞)</small>
-{: #field-xDimension }
+{: #fields-xDimension }
 
 Number of elements in the height array along east-west X direction.
 
@@ -122,7 +122,7 @@ Number of elements in the height array along east-west X direction.
 - *xDimension* \< 2 means that GeoElevationGrid contains no quadrilaterals.
 
 ### SFInt32 [ ] **zDimension** 0 <small>(0,∞)</small>
-{: #field-zDimension }
+{: #fields-zDimension }
 
 Number of elements in the height array along north-south Z direction.
 
@@ -135,7 +135,7 @@ Number of elements in the height array along north-south Z direction.
 - *zDimension* \< 2 means that GeoElevationGrid contains no quadrilaterals.
 
 ### SFDouble [ ] **xSpacing** 1 <small>[0,∞)</small>
-{: #field-xSpacing }
+{: #fields-xSpacing }
 
 Distance between grid-array vertices along east-west X direction.
 
@@ -145,7 +145,7 @@ Distance between grid-array vertices along east-west X direction.
 - When geoSystem is UTM, *xSpacing* is number of eastings (meters).
 
 ### SFDouble [ ] **zSpacing** 1 <small>[0,∞)</small>
-{: #field-zSpacing }
+{: #fields-zSpacing }
 
 Distance between grid-array vertices along north-south Z direction.
 
@@ -155,12 +155,12 @@ Distance between grid-array vertices along north-south Z direction.
 - When geoSystem is UTM, *zSpacing* is number of northings (meters).
 
 ### SFFloat [in, out] **yScale** 1 <small>[0,∞)</small>
-{: #field-yScale }
+{: #fields-yScale }
 
 Vertical exaggeration of displayed data produced from the height array.
 
 ### SFBool [ ] **solid** TRUE
-{: #field-solid }
+{: #fields-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
@@ -175,7 +175,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
-{: #field-ccw }
+{: #fields-ccw }
 
 *ccw* defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
 
@@ -189,7 +189,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Consistent and correct ordering of left-handed or right-handed point sequences is important throughout the coord array of point values.
 
 ### SFDouble [ ] **creaseAngle** 0 <small>[0,∞)</small>
-{: #field-creaseAngle }
+{: #fields-creaseAngle }
 
 *creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment.
 
@@ -203,7 +203,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Note type double, unlike [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) *creaseAngle*.
 
 ### SFBool [ ] **colorPerVertex** TRUE
-{: #field-colorPerVertex }
+{: #fields-colorPerVertex }
 
 Whether [Color](/x_ite/components/rendering/color/) node color values are applied to each point vertex (true) or per quadrilateral (false).
 
@@ -212,7 +212,7 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFBool [ ] **normalPerVertex** TRUE
-{: #field-normalPerVertex }
+{: #fields-normalPerVertex }
 
 Whether [Normal](/x_ite/components/rendering/normal/) node vector values are applied to each point vertex (true) or per quadrilateral (false).
 
@@ -221,22 +221,22 @@ Whether [Normal](/x_ite/components/rendering/normal/) node vector values are app
 - If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
-{: #field-color }
+{: #fields-color }
 
 Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
-{: #field-texCoord }
+{: #fields-texCoord }
 
 Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
-{: #field-tangent }
+{: #fields-tangent }
 
 Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
-{: #field-normal }
+{: #fields-normal }
 
 Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
@@ -249,7 +249,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 - *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### MFDouble [ ] **height** [ 0, 0 ] <small>(-∞,∞)</small>
-{: #field-height }
+{: #fields-height }
 
 Contains xDimension rows * zDimension columns floating-point values for elevation above ellipsoid.
 

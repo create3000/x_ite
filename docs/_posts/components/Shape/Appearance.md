@@ -29,24 +29,24 @@ The Appearance node belongs to the **Shape** component and requires at least sup
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [alphaMode](#field-alphaMode) | "AUTO"  |
-| SFFloat | [in, out] | [alphaCutoff](#field-alphaCutoff) | 0.5  |
-| SFNode | [in, out] | [acousticProperties](#field-acousticProperties) | NULL  |
-| SFNode | [in, out] | [pointProperties](#field-pointProperties) | NULL  |
-| SFNode | [in, out] | [lineProperties](#field-lineProperties) | NULL  |
-| SFNode | [in, out] | [fillProperties](#field-fillProperties) | NULL  |
-| SFNode | [in, out] | [material](#field-material) | NULL  |
-| SFNode | [in, out] | [backMaterial](#field-backMaterial) | NULL  |
-| SFNode | [in, out] | [texture](#field-texture) | NULL  |
-| SFNode | [in, out] | [textureTransform](#field-textureTransform) | NULL  |
-| MFNode | [in, out] | [shaders](#field-shaders) | [ ] |
-| SFNode | [in, out] | [blendMode](#field-blendMode) | NULL  |
-| SFNode | [in, out] | [depthMode](#field-depthMode) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [alphaMode](#fields-alphaMode) | "AUTO"  |
+| SFFloat | [in, out] | [alphaCutoff](#fields-alphaCutoff) | 0.5  |
+| SFNode | [in, out] | [acousticProperties](#fields-acousticProperties) | NULL  |
+| SFNode | [in, out] | [pointProperties](#fields-pointProperties) | NULL  |
+| SFNode | [in, out] | [lineProperties](#fields-lineProperties) | NULL  |
+| SFNode | [in, out] | [fillProperties](#fields-fillProperties) | NULL  |
+| SFNode | [in, out] | [material](#fields-material) | NULL  |
+| SFNode | [in, out] | [backMaterial](#fields-backMaterial) | NULL  |
+| SFNode | [in, out] | [texture](#fields-texture) | NULL  |
+| SFNode | [in, out] | [textureTransform](#fields-textureTransform) | NULL  |
+| MFNode | [in, out] | [shaders](#fields-shaders) | [ ] |
+| SFNode | [in, out] | [blendMode](#fields-blendMode) | NULL  |
+| SFNode | [in, out] | [depthMode](#fields-depthMode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -55,7 +55,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **alphaMode** "AUTO" <small>["AUTO"|"OPAQUE"|"MASK"|"BLEND"]</small>
-{: #field-alphaMode }
+{: #fields-alphaMode }
 
 Provides options for control of alpha transparency handling for textures. AUTO means [Material](/x_ite/components/shape/material/) transparency is applied to texture transparency for full backwards compatility with X3D3, OPAQUE means ignore alpha transparency to render texture as opaque, MASK means alpha-testing of pixels as fully transparent when alpha value is less than alphaCutoff and fully opaque when alpha value is greater than or equal to alphaCutoff, BLEND combines partial transparency of textures and materials.
 
@@ -64,7 +64,7 @@ Provides options for control of alpha transparency handling for textures. AUTO m
 - [GlTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage)
 
 ### SFFloat [in, out] **alphaCutoff** 0.5 <small>[0,1]</small>
-{: #field-alphaCutoff }
+{: #fields-alphaCutoff }
 
 Threshold value used for pixel rendering either transparent or opaque, used when alphaMode="MASK".
 
@@ -73,27 +73,27 @@ Threshold value used for pixel rendering either transparent or opaque, used when
 - [GlTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage)
 
 ### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
-{: #field-acousticProperties }
+{: #fields-acousticProperties }
 
 Single contained *acousticProperties* node that can specify additional acoustic attributes applied to associated surface geometry.
 
 ### SFNode [in, out] **pointProperties** NULL <small>[PointProperties]</small>
-{: #field-pointProperties }
+{: #fields-pointProperties }
 
 Single contained [PointProperties](/x_ite/components/shape/pointproperties/) node that can specify additional visual attributes applied to corresponding point geometry.
 
 ### SFNode [in, out] **lineProperties** NULL <small>[LineProperties]</small>
-{: #field-lineProperties }
+{: #fields-lineProperties }
 
 Single contained [LineProperties](/x_ite/components/shape/lineproperties/) node that can specify additional visual attributes applied to corresponding line geometry.
 
 ### SFNode [in, out] **fillProperties** NULL <small>[FillProperties]</small>
-{: #field-fillProperties }
+{: #fields-fillProperties }
 
 Single contained [FillProperties](/x_ite/components/shape/fillproperties/) node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
 
 ### SFNode [in, out] **material** NULL <small>[X3DMaterialNode]</small>
-{: #field-material }
+{: #fields-material }
 
 Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/), [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) (deprecated), or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
 
@@ -102,7 +102,7 @@ Single contained [Material](/x_ite/components/shape/material/), [PhysicalMateria
 - If *material* is NULL or unspecified, lighting is off (all lights ignored) for this [Shape](/x_ite/components/shape/shape/) and unlit object color is (1, 1, 1).
 
 ### SFNode [in, out] **backMaterial** NULL <small>[X3DOneSidedMaterialNode]</small>
-{: #field-backMaterial }
+{: #fields-backMaterial }
 
 Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to back faces of corresponding geometry.
 
@@ -113,7 +113,7 @@ Single contained [Material](/x_ite/components/shape/material/), [PhysicalMateria
 - If material is NULL or unspecified, lighting is off (all lights ignored) for this [Shape](/x_ite/components/shape/shape/) and unlit object color is (1, 1, 1).
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTextureNode]</small>
-{: #field-texture }
+{: #fields-texture }
 
 Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
 
@@ -125,7 +125,7 @@ Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imag
 - [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texture3D.html)
 
 ### SFNode [in, out] **textureTransform** NULL <small>[X3DTextureTransformNode]</small>
-{: #field-textureTransform }
+{: #fields-textureTransform }
 
 Single contained [TextureTransform](/x_ite/components/texturing/texturetransform/) node that defines 2D transformation applied to texture coordinates.
 
@@ -135,7 +135,7 @@ Single contained [TextureTransform](/x_ite/components/texturing/texturetransform
 - If *textureTransform* array is empty, then this field has no effect.
 
 ### MFNode [in, out] **shaders** [ ] <small>[X3DShaderNode]</small>
-{: #field-shaders }
+{: #fields-shaders }
 
 Zero or more contained programmable shader nodes ([ComposedShader](/x_ite/components/shaders/composedshader/), [PackagedShader](/x_ite/components/shaders/packagedshader/), [ProgramShader](/x_ite/components/shaders/programshader/)) that specify, in order of preference, author-programmed rendering characteristics.
 
@@ -144,12 +144,12 @@ Zero or more contained programmable shader nodes ([ComposedShader](/x_ite/compon
 - [X3D Architecture 31 Programmable *shaders* component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/*shaders*.html)
 
 ### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small class="blue">non-standard</small>
-{: #field-blendMode }
+{: #fields-blendMode }
 
 Single contained [BlendMode](../../x-ite/blendmode) node that defines blend mode properties.
 
 ### SFNode [in, out] **depthMode** NULL <small>[DepthMode]</small> <small class="blue">non-standard</small>
-{: #field-depthMode }
+{: #fields-depthMode }
 
 Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode properties.
 

@@ -32,19 +32,19 @@ The TouchSensor node belongs to the **PointingDeviceSensor** component and requi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFVec2f | [out] | [hitTexCoord_changed](#field-hitTexCoord_changed) |  |
-| SFVec3f | [out] | [hitNormal_changed](#field-hitNormal_changed) |  |
-| SFVec3f | [out] | [hitPoint_changed](#field-hitPoint_changed) |  |
-| SFBool | [out] | [isOver](#field-isOver) |  |
-| SFBool | [out] | [isActive](#field-isActive) |  |
-| SFTime | [out] | [touchTime](#field-touchTime) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFVec2f | [out] | [hitTexCoord_changed](#fields-hitTexCoord_changed) |  |
+| SFVec3f | [out] | [hitNormal_changed](#fields-hitNormal_changed) |  |
+| SFVec3f | [out] | [hitPoint_changed](#fields-hitPoint_changed) |  |
+| SFBool | [out] | [isOver](#fields-isOver) |  |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| SFTime | [out] | [touchTime](#fields-touchTime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -53,7 +53,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -63,12 +63,12 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFVec2f [out] **hitTexCoord_changed**
-{: #field-hitTexCoord_changed }
+{: #fields-hitTexCoord_changed }
 
 When pointing device selects geometry, send event containing texture coordinates of surface at the hitPoint.
 
@@ -77,7 +77,7 @@ When pointing device selects geometry, send event containing texture coordinates
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **hitNormal_changed**
-{: #field-hitNormal_changed }
+{: #fields-hitNormal_changed }
 
 When pointing device selects geometry, send event containing surface normal vector at the hitPoint.
 
@@ -86,7 +86,7 @@ When pointing device selects geometry, send event containing surface normal vect
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **hitPoint_changed**
-{: #field-hitPoint_changed }
+{: #fields-hitPoint_changed }
 
 When pointing device selects geometry, send event containing 3D point on surface of underlying geometry, as measured in reference frame for TouchSensor's local coordinate system.
 
@@ -95,7 +95,7 @@ When pointing device selects geometry, send event containing 3D point on surface
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isOver**
-{: #field-isOver }
+{: #fields-isOver }
 
 Hover over geometry by aiming the mouse (or pointing device) to generate *isOver* events. Sensor sends output event *isOver*=true event when pointing device moves over sensor's geometry, and later sends output event *isOver*=false event when pointing device moves off.
 
@@ -104,7 +104,7 @@ Hover over geometry by aiming the mouse (or pointing device) to generate *isOver
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
-{: #field-isActive }
+{: #fields-isActive }
 
 Select geometry by activating the pointing device (for example, clicking the mouse) to generate *isActive* events. Output event *isActive*=true is sent when pointing device selection is activated, output event *isActive*=false is sent when pointing device is deselected.
 
@@ -113,7 +113,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **touchTime**
-{: #field-touchTime }
+{: #fields-touchTime }
 
 Time event generated when sensor is touched by pointing device, and then deselected by the user.
 

@@ -31,25 +31,25 @@ The NurbsPatchSurface node belongs to the **NURBS** component and requires at le
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFInt32 | [in, out] | [uTessellation](#field-uTessellation) | 0  |
-| SFInt32 | [in, out] | [vTessellation](#field-vTessellation) | 0  |
-| SFBool | [ ] | [solid](#field-solid) | TRUE |
-| SFBool | [ ] | [uClosed](#field-uClosed) | FALSE |
-| SFBool | [ ] | [vClosed](#field-vClosed) | FALSE |
-| SFInt32 | [ ] | [uOrder](#field-uOrder) | 3  |
-| SFInt32 | [ ] | [vOrder](#field-vOrder) | 3  |
-| SFInt32 | [ ] | [uDimension](#field-uDimension) | 0  |
-| SFInt32 | [ ] | [vDimension](#field-vDimension) | 0  |
-| MFDouble | [ ] | [uKnot](#field-uKnot) | [ ] |
-| MFDouble | [ ] | [vKnot](#field-vKnot) | [ ] |
-| MFDouble | [in, out] | [weight](#field-weight) | [ ] |
-| SFNode | [in, out] | [texCoord](#field-texCoord) | NULL  |
-| SFNode | [in, out] | [controlPoint](#field-controlPoint) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFInt32 | [in, out] | [uTessellation](#fields-uTessellation) | 0  |
+| SFInt32 | [in, out] | [vTessellation](#fields-vTessellation) | 0  |
+| SFBool | [ ] | [solid](#fields-solid) | TRUE |
+| SFBool | [ ] | [uClosed](#fields-uClosed) | FALSE |
+| SFBool | [ ] | [vClosed](#fields-vClosed) | FALSE |
+| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3  |
+| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3  |
+| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0  |
+| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0  |
+| MFDouble | [ ] | [uKnot](#fields-uKnot) | [ ] |
+| MFDouble | [ ] | [vKnot](#fields-vKnot) | [ ] |
+| MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
+| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -58,17 +58,17 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFInt32 [in, out] **uTessellation** 0 <small>(-∞,∞)</small>
-{: #field-uTessellation }
+{: #fields-uTessellation }
 
 Hint for surface tessellation.
 
 ### SFInt32 [in, out] **vTessellation** 0 <small>(-∞,∞)</small>
-{: #field-vTessellation }
+{: #fields-vTessellation }
 
 Hint for surface tessellation.
 
 ### SFBool [ ] **solid** TRUE
-{: #field-solid }
+{: #fields-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
@@ -83,57 +83,57 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **uClosed** FALSE
-{: #field-uClosed }
+{: #fields-uClosed }
 
 Whether opposite surface sides are closed (seamless) across u dimension.
 
 ### SFBool [ ] **vClosed** FALSE
-{: #field-vClosed }
+{: #fields-vClosed }
 
 Whether opposite surface sides are closed (seamless) across u dimension.
 
 ### SFInt32 [ ] **uOrder** 3 <small>[2,∞)</small>
-{: #field-uOrder }
+{: #fields-uOrder }
 
 Define order of surface by polynomials of degree = order-1.
 
 ### SFInt32 [ ] **vOrder** 3 <small>[2,∞)</small>
-{: #field-vOrder }
+{: #fields-vOrder }
 
 Define order of surface by polynomials of degree = order-1.
 
 ### SFInt32 [ ] **uDimension** 0 <small>[0,∞)</small>
-{: #field-uDimension }
+{: #fields-uDimension }
 
 Number of control points in u dimension.
 
 ### SFInt32 [ ] **vDimension** 0 <small>[0,∞)</small>
-{: #field-vDimension }
+{: #fields-vDimension }
 
 Number of control points in v dimension.
 
 ### MFDouble [ ] **uKnot** [ ] <small>(-∞,∞)</small>
-{: #field-uKnot }
+{: #fields-uKnot }
 
 Knot vector, where size = number of control points + order of curve.
 
 ### MFDouble [ ] **vKnot** [ ] <small>(-∞,∞)</small>
-{: #field-vKnot }
+{: #fields-vKnot }
 
 Knot vector, where size = number of control points + order of curve.
 
 ### MFDouble [in, out] **weight** [ ] <small>(0,∞)</small>
-{: #field-weight }
+{: #fields-weight }
 
 Vector assigning relative *weight* value to each control point.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode|NurbsTextureCoordinate]</small>
-{: #field-texCoord }
+{: #fields-texCoord }
 
 Single contained [NurbsTextureCoordinate](/x_ite/components/nurbs/nurbstexturecoordinate/), [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
-{: #field-controlPoint }
+{: #fields-controlPoint }
 
 Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 

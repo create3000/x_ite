@@ -30,13 +30,13 @@ The BooleanTrigger node belongs to the **EventUtilities** component and requires
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFTime | [in] | [set_triggerTime](#field-set_triggerTime) |  |
-| SFBool | [out] | [triggerTrue](#field-triggerTrue) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFTime | [in] | [set_triggerTime](#fields-set_triggerTime) |  |
+| SFBool | [out] | [triggerTrue](#fields-triggerTrue) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -45,7 +45,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFTime [in] **set_triggerTime** <small>(-∞,∞)</small>
-{: #field-set_triggerTime }
+{: #fields-set_triggerTime }
 
 *set_triggerTime* provides input time event, typical event sent is [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime.
 
@@ -54,7 +54,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [out] **triggerTrue**
-{: #field-triggerTrue }
+{: #fields-triggerTrue }
 
 *triggerTrue* outputs a true value whenever a triggerTime event is received.
 

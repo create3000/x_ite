@@ -32,16 +32,16 @@ The PixelTexture node belongs to the **Texturing** component and requires at lea
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFImage | [in, out] | [image](#field-image) | 0 0 0 |
-| SFBool | [ ] | [repeatS](#field-repeatS) | TRUE |
-| SFBool | [ ] | [repeatT](#field-repeatT) | TRUE |
-| SFNode | [ ] | [textureProperties](#field-textureProperties) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFImage | [in, out] | [image](#fields-image) | 0 0 0 |
+| SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
+| SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -50,7 +50,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -59,7 +59,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFImage [in, out] **image** 0 0 0
-{: #field-image }
+{: #fields-image }
 
 Defines *image*: width, height, number_of_components per each pixel value, and list of pixel_values. Note that width and height are pixel count, and allowed values for RGBA number_of_components in each pixel value are 1 (intensity), 2 (intensity alpha), 3 (red green blue), 4 (red green blue alpha-opacity).
 
@@ -74,17 +74,17 @@ Defines *image*: width, height, number_of_components per each pixel value, and l
 - The order of initial values in PixelTexture and [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) *image* arrays are different. Example: intensity [1 2 1 0xFF 0x00] Example: intensity-alpha [2 2 1 0 255 255 0] Example: red-green-blue [2 4 3 0xFF0000 0xFF00 0 0 0 0 0xFFFFFF 0xFFFF00] Example: red-green-blue-alpha [2 2 4 0xFFFFFFAA 0xFFFF00AA 0x11111111AA 0x787800AA]
 
 ### SFBool [ ] **repeatS** TRUE
-{: #field-repeatS }
+{: #fields-repeatS }
 
 Whether to repeat texture along S axis horizontally from left to right.
 
 ### SFBool [ ] **repeatT** TRUE
-{: #field-repeatT }
+{: #fields-repeatT }
 
 Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
-{: #field-textureProperties }
+{: #fields-textureProperties }
 
 Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 

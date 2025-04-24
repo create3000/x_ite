@@ -28,14 +28,14 @@ The LayerSet node belongs to the **Layering** component and requires at least su
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFInt32 | [in, out] | [activeLayer](#field-activeLayer) | 0  |
-| MFInt32 | [in, out] | [order](#field-order) | [ 0 ] |
-| MFNode | [in, out] | [layers](#field-layers) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFInt32 | [in, out] | [activeLayer](#fields-activeLayer) | 0  |
+| MFInt32 | [in, out] | [order](#fields-order) | [ 0 ] |
+| MFNode | [in, out] | [layers](#fields-layers) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -44,7 +44,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFInt32 [in, out] **activeLayer** 0 <small>(0,∞)</small>
-{: #field-activeLayer }
+{: #fields-activeLayer }
 
 *activeLayer* field specifies the layer in which navigation takes place.
 
@@ -53,7 +53,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - Nodes that are not part of a layer are considered to be in layer 0.
 
 ### MFInt32 [in, out] **order** [ 0 ] <small>(0,∞)</small>
-{: #field-order }
+{: #fields-order }
 
 The *order* list defines the *order* in which layers are rendered. Each value corresponds to the ordinals of the layers.
 
@@ -67,7 +67,7 @@ The *order* list defines the *order* in which layers are rendered. Each value co
 - Layers that are not included in the *order* list are not rendered.
 
 ### MFNode [in, out] **layers** [ ] <small>[X3DLayerNode]</small>
-{: #field-layers }
+{: #fields-layers }
 
 The *layers* list defines a list of [Layer](/x_ite/components/layering/layer/) nodes that contain the constituent parts of the scene. Each layer is assigned an ordinal number depending on its position in this contained list of nodes.
 

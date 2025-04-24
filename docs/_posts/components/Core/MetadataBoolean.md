@@ -31,14 +31,14 @@ The MetadataBoolean node belongs to the **Core** component and requires at least
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [name](#field-name) | "" |
-| SFString | [in, out] | [reference](#field-reference) | "" |
-| MFBool | [in, out] | [value](#field-value) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [name](#fields-name) | "" |
+| SFString | [in, out] | [reference](#fields-reference) | "" |
+| MFBool | [in, out] | [value](#fields-value) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a MetadataBoolean, [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -47,7 +47,7 @@ Information about this node can be contained in a MetadataBoolean, [MetadataDoub
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **name** ""
-{: #field-name }
+{: #fields-name }
 
 Depending on the metadata vocabulary, the attribute *name* is usually required for metadata nodes.
 
@@ -61,12 +61,12 @@ Depending on the metadata vocabulary, the attribute *name* is usually required f
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
 ### SFString [in, out] **reference** ""
-{: #field-reference }
+{: #fields-reference }
 
 Reference to the metadata standard or definition defining this particular metadata value.
 
 ### MFBool [in, out] **value** [ ]
-{: #field-value }
+{: #fields-value }
 
 The *value* attribute is a strictly typed data array providing relevant metadata information.
 

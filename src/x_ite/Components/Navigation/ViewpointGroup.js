@@ -89,17 +89,27 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
       this ._size   .addFieldInterest (this .proximitySensor ._size);
       this ._center .addFieldInterest (this .proximitySensor ._center);
 
+      this .proximitySensor ._isActive .addInterest ("set_active__", this);
+
       this .proximitySensor ._size   = this ._size;
       this .proximitySensor ._center = this ._center;
 
       this .proximitySensor .setup ();
 
       this .set_size__ ();
+      this .set_active__ ();
       this .set_children__ ();
    },
    set_size__ ()
    {
       this .proximitySensor ._enabled = !this ._size .getValue () .equals (Vector3 .Zero);
+   },
+   set_active__ ()
+   {
+      const proximitySensor = this .proximitySensor;
+
+      this .active    = proximitySensor ._isActive .getValue () || !proximitySensor ._enabled .getValue ();
+      this .displayed = this ._displayed .getValue () && this .active;
    },
    set_children__ ()
    {
@@ -138,36 +148,34 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
          }
       }
 
-      this .setCameraObject (this .cameraObjects .length);
-      this .setVisibleObject (this .cameraObjects .length);
+      this .setCameraObject  (this .cameraObjects   .length);
+      this .setVisibleObject (this .viewpointGroups .length);
+   },
+   getDisplayed ()
+   {
+      return this .displayed;
    },
    traverse (type, renderObject)
    {
       const proximitySensor = this .proximitySensor;
 
+      proximitySensor .traverse (type, renderObject);
+
       switch (type)
       {
          case TraverseType .CAMERA:
          {
-            proximitySensor .traverse (type, renderObject);
+            renderObject .getViewpointGroups () .push (this);
 
-            if (proximitySensor ._isActive .getValue () || !proximitySensor ._enabled .getValue ())
-            {
-               renderObject .getViewpointGroups () .push (this);
+            for (const cameraObject of this .cameraObjects)
+               cameraObject .traverse (type, renderObject);
 
-               for (const cameraObject of this .cameraObjects)
-                  cameraObject .traverse (type, renderObject);
-
-               renderObject .getViewpointGroups () .pop ();
-            }
-
+            renderObject .getViewpointGroups () .pop ();
             return;
          }
          case TraverseType .DISPLAY:
          {
-            proximitySensor .traverse (type, renderObject);
-
-            if (proximitySensor ._isActive .getValue () || !proximitySensor ._enabled .getValue ())
+            if (this .active)
             {
                for (const viewpointGroup of this .viewpointGroups)
                   viewpointGroup .traverse (type, renderObject);

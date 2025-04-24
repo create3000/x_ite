@@ -29,28 +29,28 @@ The ElevationGrid node belongs to the **Geometry3D** component and requires at l
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| MFFloat | [in] | [set_height](#field-set_height) |  |
-| SFInt32 | [ ] | [xDimension](#field-xDimension) | 0  |
-| SFInt32 | [ ] | [zDimension](#field-zDimension) | 0  |
-| SFFloat | [ ] | [xSpacing](#field-xSpacing) | 1  |
-| SFFloat | [ ] | [zSpacing](#field-zSpacing) | 1  |
-| SFBool | [ ] | [solid](#field-solid) | TRUE |
-| SFBool | [ ] | [ccw](#field-ccw) | TRUE |
-| SFFloat | [ ] | [creaseAngle](#field-creaseAngle) | 0  |
-| SFBool | [ ] | [colorPerVertex](#field-colorPerVertex) | TRUE |
-| SFBool | [ ] | [normalPerVertex](#field-normalPerVertex) | TRUE |
-| MFNode | [in, out] | [attrib](#field-attrib) | [ ] |
-| SFNode | [in, out] | [fogCoord](#field-fogCoord) | NULL  |
-| SFNode | [in, out] | [color](#field-color) | NULL  |
-| SFNode | [in, out] | [texCoord](#field-texCoord) | NULL  |
-| SFNode | [in, out] | [tangent](#field-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#field-normal) | NULL  |
-| MFFloat | [ ] | [height](#field-height) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| MFFloat | [in] | [set_height](#fields-set_height) |  |
+| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0  |
+| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0  |
+| SFFloat | [ ] | [xSpacing](#fields-xSpacing) | 1  |
+| SFFloat | [ ] | [zSpacing](#fields-zSpacing) | 1  |
+| SFBool | [ ] | [solid](#fields-solid) | TRUE |
+| SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
+| SFBool | [ ] | [normalPerVertex](#fields-normalPerVertex) | TRUE |
+| MFNode | [in, out] | [attrib](#fields-attrib) | [ ] |
+| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL  |
+| SFNode | [in, out] | [color](#fields-color) | NULL  |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
+| MFFloat | [ ] | [height](#fields-height) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -59,7 +59,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFFloat [in] **set_height** <small>(-∞,∞)</small>
-{: #field-set_height }
+{: #fields-set_height }
 
 Grid array of *height* vertices with upward direction along +Y axis, with xDimension rows and zDimension columns.
 
@@ -73,7 +73,7 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFInt32 [ ] **xDimension** 0 <small>[0,∞)</small>
-{: #field-xDimension }
+{: #fields-xDimension }
 
 Number of elements in the height array along X direction.
 
@@ -86,7 +86,7 @@ Number of elements in the height array along X direction.
 - *xDimension* \< 2 means that ElevationGrid contains no quadrilaterals.
 
 ### SFInt32 [ ] **zDimension** 0 <small>[0,∞)</small>
-{: #field-zDimension }
+{: #fields-zDimension }
 
 Number of elements in the height array along Z direction.
 
@@ -99,7 +99,7 @@ Number of elements in the height array along Z direction.
 - *zDimension* \< 2 means that ElevationGrid contains no quadrilaterals.
 
 ### SFFloat [ ] **xSpacing** 1 <small>(0,∞)</small>
-{: #field-xSpacing }
+{: #fields-xSpacing }
 
 Meters distance between grid-array vertices along X direction.
 
@@ -108,7 +108,7 @@ Meters distance between grid-array vertices along X direction.
 - Total horizontal x-axis distance equals (xDimension-1) * *xSpacing*.
 
 ### SFFloat [ ] **zSpacing** 1 <small>(0,∞)</small>
-{: #field-zSpacing }
+{: #fields-zSpacing }
 
 Meters distance between grid-array vertices along Z direction.
 
@@ -117,7 +117,7 @@ Meters distance between grid-array vertices along Z direction.
 - Total lateral z-axis distance equals (zDimension-1) * *zSpacing*.
 
 ### SFBool [ ] **solid** TRUE
-{: #field-solid }
+{: #fields-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
@@ -132,7 +132,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
-{: #field-ccw }
+{: #fields-ccw }
 
 *ccw* defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
 
@@ -146,7 +146,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Consistent and correct ordering of left-handed or right-handed point sequences is important throughout the coord array of point values.
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
-{: #field-creaseAngle }
+{: #fields-creaseAngle }
 
 *creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment.
 
@@ -156,7 +156,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFBool [ ] **colorPerVertex** TRUE
-{: #field-colorPerVertex }
+{: #fields-colorPerVertex }
 
 Whether [Color](/x_ite/components/rendering/color/) node color values are applied to each point vertex (true) or per quadrilateral (false).
 
@@ -165,7 +165,7 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFBool [ ] **normalPerVertex** TRUE
-{: #field-normalPerVertex }
+{: #fields-normalPerVertex }
 
 Whether [Normal](/x_ite/components/rendering/normal/) node vector values are applied to each point vertex (true) or per quadrilateral (false).
 
@@ -174,7 +174,7 @@ Whether [Normal](/x_ite/components/rendering/normal/) node vector values are app
 - If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
-{: #field-attrib }
+{: #fields-attrib }
 
 Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
@@ -183,27 +183,27 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 - [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shaders.html#Pervertexattributes)
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
-{: #field-fogCoord }
+{: #fields-fogCoord }
 
 Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
-{: #field-color }
+{: #fields-color }
 
 Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
-{: #field-texCoord }
+{: #fields-texCoord }
 
 Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
-{: #field-tangent }
+{: #fields-tangent }
 
 Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
-{: #field-normal }
+{: #fields-normal }
 
 Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
@@ -216,7 +216,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 - *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### MFFloat [ ] **height** [ ] <small>(-∞,∞)</small>
-{: #field-height }
+{: #fields-height }
 
 Grid array of *height* vertices with upward direction along +Y axis, with xDimension rows and zDimension columns.
 

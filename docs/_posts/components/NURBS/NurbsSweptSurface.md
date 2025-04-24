@@ -30,15 +30,15 @@ The NurbsSweptSurface node belongs to the **NURBS** component and requires at le
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [ ] | [solid](#field-solid) | TRUE |
-| SFBool | [ ] | [ccw](#field-ccw) | TRUE |
-| SFNode | [in, out] | [crossSectionCurve](#field-crossSectionCurve) | NULL  |
-| SFNode | [in, out] | [trajectoryCurve](#field-trajectoryCurve) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [ ] | [solid](#fields-solid) | TRUE |
+| SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
+| SFNode | [in, out] | [crossSectionCurve](#fields-crossSectionCurve) | NULL  |
+| SFNode | [in, out] | [trajectoryCurve](#fields-trajectoryCurve) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -47,7 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [ ] **solid** TRUE
-{: #field-solid }
+{: #fields-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
@@ -62,7 +62,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
-{: #field-ccw }
+{: #fields-ccw }
 
 *ccw* defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
 
@@ -76,12 +76,12 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Consistent and correct ordering of left-handed or right-handed point sequences is important throughout the coord array of point values.
 
 ### SFNode [in, out] **crossSectionCurve** NULL <small>[X3DNurbsControlCurveNode]</small>
-{: #field-crossSectionCurve }
+{: #fields-crossSectionCurve }
 
 Defines cross-section of the surface traced about the trajectoryCurve axis.
 
 ### SFNode [in, out] **trajectoryCurve** NULL <small>[NurbsCurve]</small>
-{: #field-trajectoryCurve }
+{: #fields-trajectoryCurve }
 
 Describes the center-line path using a [NurbsCurve](/x_ite/components/nurbs/nurbscurve/) node, oriented so that it is defined counterclockwise when looking down the −Y axis, thus defining a concept of inside and outside.
 

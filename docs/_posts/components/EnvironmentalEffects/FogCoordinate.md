@@ -29,12 +29,12 @@ The FogCoordinate node belongs to the **EnvironmentalEffects** component and req
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| MFFloat | [in, out] | [depth](#field-depth) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| MFFloat | [in, out] | [depth](#fields-depth) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -43,7 +43,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFFloat [in, out] **depth** [ ] <small>[0,1]</small>
-{: #field-depth }
+{: #fields-depth }
 
 *depth* contains a set of 3D coordinate (triplet) point values.
 
