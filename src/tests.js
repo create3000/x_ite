@@ -27,7 +27,7 @@ const X_ITE_TESTS = [
    { path: "Core/units.x3dv" },
    { path: "Core/VisibleObjects.x3d" },
    { component: "EnvironmentalEffects" },
-   { path: "EnvironmentalEffects/BackgroundClipPlane.x3dv" },
+   { path: "EnvironmentalEffects/BackgroundClipPlane.x3d" },
    { path: "EnvironmentalEffects/CustomBackground.x3d" },
    { path: "EnvironmentalEffects/FogCoordinate.x3d" },
    { path: "EnvironmentalEffects/FogScale.x3d" },
