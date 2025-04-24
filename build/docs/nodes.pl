@@ -317,7 +317,7 @@ sub reorder_fields {
       }
       else
       {
-         $accesType = $inOut -> {$field -> [0]};
+         $accessType = $inOut -> {$field -> [0]};
 
          $fields -> {$field -> [1]} = "### $field->[2] [$accessType] **$field->[1]**\n\n";
       }
