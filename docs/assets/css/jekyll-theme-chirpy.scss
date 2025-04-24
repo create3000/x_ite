@@ -9,6 +9,10 @@
 
 /* append your custom style below */
 
+/*
+ * Common rules start here
+ */
+
 @mixin x_ite-dark-scheme {
   /* Colors */
 
@@ -44,6 +48,7 @@
   --h4-color-strong: rgb(130, 173, 241);
   --h4-color-strong-writable: rgb(175, 206, 255);
 
+  --color-filter: filter: brightness(0) saturate(100%) invert(78%) sepia(0%) saturate(301%) hue-rotate(279deg) brightness(92%) contrast(89%);
   --example-background-color: rgba(0, 0, 0, 0.471);
   --playground-console-background: rgba(0, 0, 0, 0.2);
   --button-background-color: black;
@@ -82,6 +87,7 @@
   --h4-color-strong: rgb(10, 80, 144);
   --h4-color-strong-writable: rgb(97, 29, 163);
 
+  --color-filter: filter: brightness(0) saturate(100%) invert(22%) sepia(7%) saturate(669%) hue-rotate(201deg) brightness(89%) contrast(97%);
   --example-background-color: rgba(235, 235, 255, 0.644);
   --playground-console-background: rgb(0, 0, 0, 0.02);
   --button-background-color: white;
@@ -115,6 +121,24 @@
 
 html {
   overflow: auto;
+}
+
+/* rouge console */
+
+/* rest of text */
+.language-console .highlight pre,
+.language-console .highlight .o {
+  @extend .na;
+}
+
+/* $ */
+.language-console .highlight .gp {
+  @extend .k;
+}
+
+/* some parameter */
+.language-console .highlight .nb {
+  @extend .mf;
 }
 
 /* append your custom style below */
@@ -288,27 +312,6 @@ x3d-canvas.xr-button-tl::part(xr-button) {
   left: 10px;
 }
 
-/* teaser */
-
-.content .teaser {
-    aspect-ratio: 16 / 5;
-}
-
-.content .teaser::part(surface) {
-  cursor: default !important;
-}
-
-.content .mascot-wrapper {
-  position: relative;
-}
-
-.content .mascot {
-  pointer-events: none;
-  aspect-ratio: 780 / 280;
-  position: absolute;
-  transform: translateY(-70%);
-}
-
 /* */
 
 span[data-label-text="X3D" i],
@@ -323,6 +326,24 @@ span[data-label-text="VRML" i] {
 
 .badge-link img {
   display: inline;
+}
+
+input[type=checkbox] {
+  cursor: pointer;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  mask-image: url(../img/icons/xmark.svg);
+  mask-repeat: no-repeat;
+  mask-size: 16px 16px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--text-color);
+}
+
+input[type=checkbox]:checked {
+  mask-image: url(../img/icons/check.svg);
+  background-color: var(--system-green);
 }
 
 input[type=button].button,
@@ -500,12 +521,43 @@ select.select option {
 
 /* Patreon link  */
 
-.patreon {
+.content .patreon {
   display: block;
   border: 1px solid !important;
   border-radius: .625rem;
   padding: .5rem;
   text-align: center;
+}
+
+/* Documentation */
+
+.content .fields {
+  font-size: 0.85rem;
+}
+
+/*
+ * Website specify rules start here
+ */
+
+/* teaser */
+
+.content .teaser {
+    aspect-ratio: 16 / 5;
+}
+
+.content .teaser::part(surface) {
+  cursor: default !important;
+}
+
+.content .mascot-wrapper {
+  position: relative;
+}
+
+.content .mascot {
+  pointer-events: none;
+  aspect-ratio: 780 / 280;
+  position: absolute;
+  transform: translateY(-70%);
 }
 
 /* table examples */

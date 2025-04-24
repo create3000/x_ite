@@ -201,7 +201,7 @@ Object .assign (X3DNetworkingContext .prototype,
       else
       {
          if (loadingDisplay !== this [_loadingDisplay])
-            this .getNotification () ._string = string;
+            this .setDescription (string);
       }
 
       this [_loadingDisplay] = loadingDisplay;

@@ -21,6 +21,8 @@ Simple, fast and efficient, our X3D tutorials give you all the tips and tricks t
   - First let's go over to the »Hello World« tutorial, which displays a simple earth and the text »Hello World!«.
 - [A Quick Overview: Basic Nodes](/x_ite/tutorials/basic-nodes/)
   - Here are the basic nodes described, which are often used in an X3D world.
+- [How to Navigate in a Scene](/x_ite/tutorials/how-to-navigate-in-a-scene/)
+  - Explains all viewers that can be used.
 
 Shapes, Geometry, and Appearance
 

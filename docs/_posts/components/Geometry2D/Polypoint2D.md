@@ -15,7 +15,7 @@ tags: [Polypoint2D, Geometry2D]
 
 Polypoint2D is a geometry node that defines a set of 2D points in X-Y plane.
 
-The Polypoint2D node belongs to the **Geometry2D** component and requires at least level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The Polypoint2D node belongs to the **Geometry2D** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,14 @@ The Polypoint2D node belongs to the **Geometry2D** component and requires at lea
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFVec2f | [in, out] | [point](#field-point) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -36,6 +43,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFVec2f [in, out] **point** [ ] <small>(-∞,∞)</small>
+{: #field-point }
 
 2D coordinates of vertices.
 

@@ -15,7 +15,7 @@ tags: [AcousticProperties, Shape]
 
 AcousticProperties specifies the interaction of sound waves with characteristics of geometric objects in the scene. Acoustic coefficient values are expected to fully account for physical and structural characteristics of associated geometry such as width, height, thickness, shape, softness and/or hardness, and density variations.
 
-The AcousticProperties node belongs to the **Shape** component and requires at least level **5,** its default container field is *acousticProperties.* It is available from X3D version 4.0 or higher.
+The AcousticProperties node belongs to the **Shape** component and requires at least support level **5,** its default container field is *acousticProperties.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,19 @@ The AcousticProperties node belongs to the **Shape** component and requires at l
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFFloat | [in, out] | [diffuse](#field-diffuse) | 0  |
+| SFFloat | [in, out] | [specular](#field-specular) | 0  |
+| SFFloat | [in, out] | [refraction](#field-refraction) | 0  |
+| SFFloat | [in, out] | [absorption](#field-absorption) | 0  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -36,6 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -44,18 +57,22 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFFloat [in, out] **diffuse** 0 <small>[0,1]</small>
+{: #field-diffuse }
 
 *diffuse* coefficient of sound reflection indicates how much of the incident sound energy is reflected back in multiple directions.
 
 ### SFFloat [in, out] **specular** 0 <small>[0,1]</small>
+{: #field-specular }
 
 *specular* coefficient of sound reflection striking a plane surface, directly reflected back into space, where angle of reflection equals angle of incidence.
 
 ### SFFloat [in, out] **refraction** 0 <small>[0,1]</small>
+{: #field-refraction }
 
 [Sound](/x_ite/components/sound/sound/) *refraction* coefficient of a medium, which determines change in propagation direction of sound wave when obliquely crossing boundary between two mediums where its speed is different.
 
@@ -64,6 +81,7 @@ Enables/disables node operation.
 - [Relationships described by Snell's Law](https://en.wikipedia.org/wiki/Snell%27s_law)
 
 ### SFFloat [in, out] **absorption** 0 <small>[0,1]</small>
+{: #field-absorption }
 
 Specifies the sound *absorption* coefficient of a surface, meaning the ratio of sound intensity not reflected by a surface.
 

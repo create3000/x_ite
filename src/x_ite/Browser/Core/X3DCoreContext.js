@@ -61,6 +61,8 @@ import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
 import _                   from "../../../locale/gettext.js";
 
+import "./Fonts.js";
+
 const WEBGL_VERSION = 2;
 
 const
@@ -72,7 +74,6 @@ const
    _context             = Symbol (),
    _splashScreen        = Symbol (),
    _localStorage        = Symbol (),
-   _mobile              = Symbol (),
    _browserTimings      = Symbol (),
    _browserOptions      = Symbol (),
    _browserProperties   = Symbol (),
@@ -108,7 +109,7 @@ function X3DCoreContext (element)
    {
       const shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
-      const stylesheets = [new Promise (resolve =>
+      const stylesheet = new Promise (resolve =>
       {
          $("<link/>")
             .on ("load", resolve)
@@ -117,49 +118,27 @@ function X3DCoreContext (element)
             .attr ("rel", "stylesheet")
             .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
             .appendTo (shadow);
-      })];
-
-      if (instanceId === 0)
-      {
-         // Fonts (@font-face rules) must be declared outside the shadow root,
-         // so we add a stylesheet with fonts to the x3d-canvas element itself.
-         // https://issues.chromium.org/41085401
-
-         stylesheets .push (new Promise (async resolve =>
-         {
-            // A newly constructed custom element must not have child nodes.
-            await $.sleep (0);
-
-            $("<link/>")
-               .on ("load error", resolve)
-               .attr ("integrity", "integrity-ptsans-css")
-               .attr ("crossorigin", "anonymous")
-               .attr ("rel", "stylesheet")
-               .attr ("href", URLs .getFontsURL ("PT_Sans/PTSans.css"))
-               .appendTo (element);
-         }));
-      }
+      });
 
       this [_shadow] = shadow .append (browser .hide ());
 
-      Promise .all (stylesheets) .then (() => browser .show ());
+      stylesheet .then (() => browser .show ());
    }
    else
    {
       this [_shadow] = element .prepend (browser);
    }
 
-   $("<div></div>") .addClass ("x_ite-private-x_ite") .html (this .getName () + "<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
+   $("<div></div>") .addClass ("x_ite-private-x_ite") .html (`${this .getName ()}<b>X3D</b>`) .appendTo (progress);
    $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
    $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
    this [_instanceId]   = ++ instanceId;
-   this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_instanceId] + ").");
-   this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
+   this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
    this [_element]      = element;
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>") .attr ("part", "canvas") .addClass ("x_ite-private-canvas") .prependTo (surface);
-   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true", this [_mobile]);
+   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true");
    this [_splashScreen] = splashScreen;
 
    this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
@@ -229,10 +208,6 @@ Object .assign (X3DCoreContext .prototype,
    {
       return this [_context];
    },
-   getMobile ()
-   {
-      return this [_mobile];
-   },
    getLocalStorage ()
    {
       return this [_localStorage];
@@ -262,7 +237,7 @@ Object .assign (X3DCoreContext .prototype,
       return this [_contextMenu];
    },
    getPrivateScene ()
-{
+   {
       // X3DScene for default nodes.
 
       return this [_privateScene] ??= (() =>
@@ -541,7 +516,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "POINT");
-                  this .getNotification () ._string = "Shading: Pointset";
+                  this .setDescription ("Shading: Pointset");
                }
             }
 
@@ -555,7 +530,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "WIREFRAME");
-                  this .getNotification () ._string = "Shading: Wireframe";
+                  this .setDescription ("Shading: Wireframe");
                }
             }
 
@@ -569,7 +544,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "FLAT");
-                  this .getNotification () ._string = "Shading: Flat";
+                  this .setDescription ("Shading: Flat");
                }
             }
 
@@ -583,7 +558,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "GOURAUD");
-                  this .getNotification () ._string = "Shading: Gouraud";
+                  this .setDescription ("Shading: Gouraud");
                }
             }
 
@@ -597,7 +572,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   event .preventDefault ();
                   this .setBrowserOption ("Shading", "PHONG");
-                  this .getNotification () ._string = "Shading: Phong";
+                  this .setDescription ("Shading: Phong");
                }
             }
 
@@ -616,7 +591,7 @@ Object .assign (X3DCoreContext .prototype,
                   else
                      this .beginUpdate ();
 
-                  this .getNotification () ._string = this .getLive () .getValue () ? "Begin Update" : "End Update";
+                  this .setDescription (this .isLive () ? "Begin Update" : "End Update");
                }
             }
 
@@ -747,7 +722,7 @@ Object .assign (X3DCoreContext .prototype,
 
                this .copyToClipboard (text) .then (() =>
                {
-                  this .getNotification () ._string = _ ("Viewpoint copied to clipboard.");
+                  this .setDescription (_("Viewpoint copied to clipboard."));
 
                   console .log ("Viewpoint copied to clipboard.");
                   console .debug (text);
@@ -809,9 +784,9 @@ Object .assign (X3DCoreContext .prototype,
    },
    dispose ()
    {
-      this .getElement ()
-         .prop ("browser", null)
-         .off (".X3DCoreContext .ContextMenu");
+      this .getElement () .off (".X3DCoreContext .ContextMenu");
+
+      delete this .getElement () [0] .browser;
 
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ?.();
       this [_shadow] .find ("*") .remove ();

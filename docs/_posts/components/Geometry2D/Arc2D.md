@@ -15,7 +15,7 @@ tags: [Arc2D, Geometry2D]
 
 Arc2D is a line-based geometry node that defines a linear circular arc with center (0,0) in X-Y plane, with angles measured starting at positive x-axis and sweeping towards positive y-axis.
 
-The Arc2D node belongs to the **Geometry2D** component and requires at least level **2,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The Arc2D node belongs to the **Geometry2D** component and requires at least support level **2,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,16 @@ The Arc2D node belongs to the **Geometry2D** component and requires at least lev
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [ ] | [startAngle](#field-startAngle) | 0  |
+| SFFloat | [ ] | [endAngle](#field-endAngle) | π/2  |
+| SFFloat | [ ] | [radius](#field-radius) | 1  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -36,6 +45,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [ ] **startAngle** 0 <small>[-2π,2π]</small>
+{: #field-startAngle }
 
 Arc extends from *startAngle* counterclockwise to endAngle, in radians.
 
@@ -49,6 +59,7 @@ Arc extends from *startAngle* counterclockwise to endAngle, in radians.
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFFloat [ ] **endAngle** π/2 <small>[-2π,2π]</small>
+{: #field-endAngle }
 
 Arc extends from startAngle counterclockwise to *endAngle*, in radians.
 
@@ -62,6 +73,7 @@ Arc extends from startAngle counterclockwise to *endAngle*, in radians.
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFFloat [ ] **radius** 1 <small>(0,∞)</small>
+{: #field-radius }
 
 Circle *radius*, of which the arc is a portion.
 

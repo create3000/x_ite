@@ -15,7 +15,7 @@ tags: [SpecularMaterialExtension, X_ITE]
 
 SpecularMaterialExtension is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../specularglossinessmaterial/) nodes. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
 
-The SpecularMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
+The SpecularMaterialExtension node belongs to the **X_ITE** component and requires at least support level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -30,7 +30,19 @@ The SpecularMaterialExtension node belongs to the **X_ITE** component and requir
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in, out] | [specular](#field-specular) | 1  |
+| SFString | [in, out] | [specularTextureMapping](#field-specularTextureMapping) | "" |
+| SFNode | [in, out] | [specularTexture](#field-specularTexture) | NULL  |
+| SFColor | [in, out] | [specularColor](#field-specularColor) | 1 1 1  |
+| SFString | [in, out] | [specularColorTextureMapping](#field-specularColorTextureMapping) | "" |
+| SFNode | [in, out] | [specularColorTexture](#field-specularColorTexture) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -39,26 +51,32 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in, out] **specular** 1 <small>[0,∞)</small>
+{: #field-specular }
 
 The strength of the specular reflection.
 
 ### SFString [in, out] **specularTextureMapping** ""
+{: #field-specularTextureMapping }
 
 Input/Output field *specularTextureMapping*.
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-specularTexture }
 
  texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
 
 ### SFColor [in, out] **specularColor** 1 1 1 <small>[0,∞)</small>
+{: #field-specularColor }
 
 The F0 color of the specular reflection (linear RGB).
 
 ### SFString [in, out] **specularColorTextureMapping** ""
+{: #field-specularColorTextureMapping }
 
 Input/Output field *specularColorTextureMapping*.
 
 ### SFNode [in, out] **specularColorTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-specularColorTexture }
 
 A texture that defines the F0 color of the specular reflection, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by specularColorFactor.
 

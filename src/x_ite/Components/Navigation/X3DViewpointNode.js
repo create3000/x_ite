@@ -179,12 +179,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    set_bound__ ()
    {
-      const browser = this .getBrowser ();
-
       if (this ._isBound .getValue ())
-         browser .getNotification () ._string = this ._description;
+         this .getBrowser () .setDescription (this ._description);
       else
-         this .timeSensor ._stopTime = browser .getCurrentTime ();
+         this .timeSensor ._stopTime = Date .now () / 1000;
    },
    set_active__ (navigationInfoNode, active)
    {
@@ -205,7 +203,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       return this .descriptions;
    },
-   setInterpolators () { },
+   setInterpolators ()
+   { },
    getPosition ()
    {
       return this ._position .getValue ();
@@ -404,8 +403,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          navigationInfoNode ._transitionStart = true;
 
          this .timeSensor ._cycleInterval = transitionTime;
-         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._stopTime      = Date .now () / 1000;
+         this .timeSensor ._startTime     = Date .now () / 1000;
 
          this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
 
@@ -441,7 +440,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    transitionStop ()
    {
-      this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._stopTime = Date .now () / 1000;
       this .timeSensor ._isActive .removeInterest ("set_active__", this);
    },
    resetUserOffsets ()
@@ -524,8 +523,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    lookAt (layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false)
    {
-      if (this .checkTransition ("lookAt"))
-         return;
+      this .timeSensor ._description = "lookAt";
 
       const
          offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
@@ -533,8 +531,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       layerNode .getNavigationInfo () ._transitionStart = true;
 
       this .timeSensor ._cycleInterval = transitionTime;
-      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._stopTime      = Date .now () / 1000;
+      this .timeSensor ._startTime     = Date .now () / 1000;
 
       this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
@@ -573,8 +571,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       layerNode .getNavigationInfo () ._transitionStart = true;
 
       this .timeSensor ._cycleInterval = 1;
-      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._stopTime      = Date .now () / 1000;
+      this .timeSensor ._startTime     = Date .now () / 1000;
 
       this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 

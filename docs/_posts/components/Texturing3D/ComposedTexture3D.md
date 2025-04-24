@@ -15,7 +15,7 @@ tags: [ComposedTexture3D, Texturing3D]
 
 ComposedTexture3D defines a 3D image-based texture map as a collection of 2D texture sources at various depths.
 
-The ComposedTexture3D node belongs to the **Texturing3D** component and requires at least level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
+The ComposedTexture3D node belongs to the **Texturing3D** component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -30,7 +30,19 @@ The ComposedTexture3D node belongs to the **Texturing3D** component and requires
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [ ] | [repeatS](#field-repeatS) | FALSE |
+| SFBool | [ ] | [repeatT](#field-repeatT) | FALSE |
+| SFBool | [ ] | [repeatR](#field-repeatR) | FALSE |
+| SFNode | [ ] | [textureProperties](#field-textureProperties) | NULL  |
+| MFNode | [in, out] | [texture](#field-texture) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -39,6 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -47,22 +60,27 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [ ] **repeatS** FALSE
+{: #field-repeatS }
 
 Whether to repeat texture along S axis horizontally from left to right.
 
 ### SFBool [ ] **repeatT** FALSE
+{: #field-repeatT }
 
 Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFBool [ ] **repeatR** FALSE
+{: #field-repeatR }
 
 Whether to repeat texture along R axis from front to back.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
+{: #field-textureProperties }
 
 Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ### MFNode [in, out] **texture** [ ] <small>[X3DTexture2DNode]</small>
+{: #field-texture }
 
 Collection of 2D *texture* sources.
 

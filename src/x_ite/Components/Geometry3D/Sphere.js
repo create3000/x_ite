@@ -67,16 +67,7 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prot
 {
    set_live__ ()
    {
-      X3DGeometryNode .prototype .set_live__ .call (this);
-
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
-
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getSphereOptions () .addInterest ("requestRebuild", this);
-      else
-         browser .getSphereOptions () .removeInterest ("requestRebuild", this);
+      this .connectOptions (this .getBrowser () .getSphereOptions ());
    },
    build ()
    {

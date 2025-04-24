@@ -15,7 +15,7 @@ tags: [NurbsSwungSurface, NURBS]
 
 NurbsSwungSurface contains a profileCurve and a trajectoryCurve [X3DNurbsControlCurveNode].
 
-The NurbsSwungSurface node belongs to the **NURBS** component and requires at least level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The NurbsSwungSurface node belongs to the **NURBS** component and requires at least support level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,17 @@ The NurbsSwungSurface node belongs to the **NURBS** component and requires at le
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [ ] | [solid](#field-solid) | TRUE |
+| SFBool | [ ] | [ccw](#field-ccw) | TRUE |
+| SFNode | [in, out] | [profileCurve](#field-profileCurve) | NULL  |
+| SFNode | [in, out] | [trajectoryCurve](#field-trajectoryCurve) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [ ] **solid** TRUE
+{: #field-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
@@ -51,6 +62,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
+{: #field-ccw }
 
 *ccw* defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
 
@@ -64,10 +76,12 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Consistent and correct ordering of left-handed or right-handed point sequences is important throughout the coord array of point values.
 
 ### SFNode [in, out] **profileCurve** NULL <small>[X3DNurbsControlCurveNode]</small>
+{: #field-profileCurve }
 
 2D curve in the yz-plane that describes the cross-sectional shape of the object.
 
 ### SFNode [in, out] **trajectoryCurve** NULL <small>[X3DNurbsControlCurveNode]</small>
+{: #field-trajectoryCurve }
 
 2D curve in the xz-plane that describes path over which to trace the cross-section.
 

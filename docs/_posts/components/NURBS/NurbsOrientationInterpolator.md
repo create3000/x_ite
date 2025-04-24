@@ -15,7 +15,7 @@ tags: [NurbsOrientationInterpolator, NURBS]
 
 NurbsOrientationInterpolator describes a 3D NURBS curve and outputs interpolated orientation values.
 
-The NurbsOrientationInterpolator node belongs to the **NURBS** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The NurbsOrientationInterpolator node belongs to the **NURBS** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,19 @@ The NurbsOrientationInterpolator node belongs to the **NURBS** component and req
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in] | [set_fraction](#field-set_fraction) |  |
+| SFInt32 | [in, out] | [order](#field-order) | 3  |
+| MFDouble | [in, out] | [knot](#field-knot) | [ ] |
+| MFDouble | [in, out] | [weight](#field-weight) | [ ] |
+| SFNode | [in, out] | [controlPoint](#field-controlPoint) | NULL  |
+| SFRotation | [out] | [value_changed](#field-value_changed) |  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -36,6 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
+{: #field-set_fraction }
 
 Setting *fraction* in range [0,1] selects input key for corresponding keyValue output, computing a 3D position on the curve.
 
@@ -48,14 +61,17 @@ Setting *fraction* in range [0,1] selects input key for corresponding keyValue o
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFInt32 [in, out] **order** 3 <small>(2,∞)</small>
+{: #field-order }
 
 Define *order* of surface by polynomials of degree = *order*-1.
 
 ### MFDouble [in, out] **knot** [ ] <small>(-∞,∞)</small>
+{: #field-knot }
 
 *knot* vector, where size = number of control points + order of curve.
 
 ### MFDouble [in, out] **weight** [ ] <small>(-∞,∞)</small>
+{: #field-weight }
 
 Output values for computational interpolation, each corresponding to knots.
 
@@ -64,10 +80,12 @@ Output values for computational interpolation, each corresponding to knots.
 - Number of weights must match number of knots!
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
+{: #field-controlPoint }
 
 Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 
 ### SFRotation [out] **value_changed**
+{: #field-value_changed }
 
 Computationaly interpolated output value determined by current key time and corresponding keyValue pair.
 

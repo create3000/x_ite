@@ -7,6 +7,26 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v11.5 Series
+
+*Leipzig, 6th April 2025:* This series comes improvements in [Sunrize](/sunrize/).
+
+### Sunrize
+
+* Objects can now directly be selected in the browser window.
+* New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
+* New »View all objects in active layer.« button in the Dashboard.
+* Other bug fixes.
+
+### X_ITE
+
+* New icon concept for context menu, timings and notifications.
+* Fixed various minor bugs in [MovieTexture](/x_ite/components/texturing/movietexture/).
+* Fixed issue with animation getting stuck when in transition, viewAll or lookAt animation.
+* Fixed issue with [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) sending »old« *touchTime* values.
+* Fixed issue in normal calculations in rare cases.
+* Other bug fixes.
+
 ## X_ITE v11.4 Series
 
 *Leipzig, 23rd March 2025:* This series comes with a lot of small but important changes and features.
@@ -563,7 +583,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Better control of navigation with mouse and trackpad on macOS and tablet devices.
 - Fixed examine viewer rotation when multiple layer with viewport are present.
-- Emulate middle mouse button when pressing Alt/Option key.
+- Emulate middle mouse button when pressing *Alt-or-Option*-key.
 - Fixed bug in IndexedTriangleFanSet.
 - Updated Shape component to level 5.
 - Fix bug in rotation axis/angle calculation.

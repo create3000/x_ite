@@ -15,7 +15,7 @@ tags: [CoordinateInterpolator, Interpolation]
 
 CoordinateInterpolator linearly interpolates among a list of 3-tuple MFVec3f arrays, producing a single MFVec3f array that is fractional average between two nearest arrays in the list. Authors can ROUTE value_changed output events (an array of 3-tuple SFVec3f values) to a Coordinate node's point field, or to another MFVec3f field.
 
-The CoordinateInterpolator node belongs to the **Interpolation** component and requires at least level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The CoordinateInterpolator node belongs to the **Interpolation** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,17 @@ The CoordinateInterpolator node belongs to the **Interpolation** component and r
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in] | [set_fraction](#field-set_fraction) |  |
+| MFFloat | [in, out] | [key](#field-key) | [ ] |
+| MFVec3f | [in, out] | [keyValue](#field-keyValue) | [ ] |
+| MFVec3f | [out] | [value_changed](#field-value_changed) |  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
+{: #field-set_fraction }
 
 *set_fraction* selects input key for corresponding keyValue output.
 
@@ -49,6 +60,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+{: #field-key }
 
 Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
 
@@ -63,6 +75,7 @@ Definition values for linear-interpolation function input intervals, listed in n
 - Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFVec3f [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
+{: #field-keyValue }
 
 Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
 
@@ -73,6 +86,7 @@ Output values for linear interpolation, each corresponding to an input-fraction 
 - *keyValue*/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
 
 ### MFVec3f [out] **value_changed**
+{: #field-value_changed }
 
 Linearly interpolated output value determined by current key time and corresponding keyValue pair.
 

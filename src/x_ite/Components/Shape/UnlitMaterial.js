@@ -66,12 +66,12 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
       this ._emissiveTexture .addInterest ("set_transparent__", this);
-      
+
       this .set_transparent__ ();
    },
    getMaterialKey ()
    {
-      return "0";
+      return 0;
    },
    getTextureIndices: (() =>
    {

@@ -77,9 +77,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
    },
    mousewheel (event)
-   {
-      // event .preventDefault () must be done in the all viewers.
-   },
+   { },
    mousedown (event)
    {
       const
@@ -88,7 +86,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       browser .getElement () .focus ();
 
-      if (browser .getShiftKey () && browser .getControlKey ())
+      if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
 
       if (event .button === 0)
@@ -105,6 +103,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
          if (browser .buttonPressEvent (x, y))
          {
+            // Stop event propagation.
+
             event .preventDefault ();
             event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
 
@@ -119,10 +119,14 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    mouseup (event)
    {
-      event .preventDefault ();
-
       if (event .button !== 0)
          return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
+
+      // Handle button release.
 
       const
          browser = this .getBrowser (),
@@ -141,12 +145,21 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    dblclick (event)
    {
-      if (this .over)
-         event .stopImmediatePropagation ();
+      if (!this .over)
+         return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
    },
    mousemove (event)
    {
+      // Stop event propagation.
+
       event .preventDefault ();
+
+      // Motion.
 
       const browser = this .getBrowser ();
 

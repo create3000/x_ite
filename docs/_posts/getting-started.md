@@ -620,7 +620,7 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 
 CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the JavaScript file in the script element directly from the [jsDelivr](https://www.jsdelivr.com) or [UNPKG](https://www.unpkg.com) CDN domain.
 
-If you are going to use X_ITE in a production environment, you should use a fixed version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions), and here a list of all [CDNs](/x_ite/releases/).
+If you are going to use X_ITE in a production environment, you should always use a **fixed** version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions), and here a list of all [CDNs](/x_ite/releases/).
 
 #### jsDelivr CDN
 
@@ -695,7 +695,7 @@ x3d-canvas {
 </html>
 ```
 
-To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. Once X_ITE has loaded successfully, a new HTML element \<x3d-canvas\> will be available on your page. You can style the \<x3d-canvas\> element with CSS just like any other HTML element, and you can place it anywhere in the DOM tree. Once the scene is displayed, you may wonder [how to navigate in the scene](/x_ite/tutorials/how-to-navigate-in-a-scene/).
+To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. Once X_ITE has loaded successfully, a new HTML element \<x3d-canvas\> will be available on your page. You can style the \<x3d-canvas\> element with CSS just like any other HTML element, and you can place it anywhere in the DOM tree. Once the scene is displayed, you may wonder [how to navigate in a the scene](/x_ite/tutorials/how-to-navigate-in-a-scene/).
 
 >**Tip:** To test a page locally on your desktop computer, [setup a localhost server](/x_ite/setup-a-localhost-server/) to load files via *src* attribute or Inline node, or [directly combine HTML with X3D](/x_ite/dom-integration/).
 {: .prompt-tip }

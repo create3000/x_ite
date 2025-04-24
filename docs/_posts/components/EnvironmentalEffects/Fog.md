@@ -15,7 +15,7 @@ tags: [Fog, EnvironmentalEffects]
 
 Fog simulates atmospheric effects by blending distant objects with fog color.
 
-The Fog node belongs to the **EnvironmentalEffects** component and requires at least level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Fog node belongs to the **EnvironmentalEffects** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -26,11 +26,25 @@ The Fog node belongs to the **EnvironmentalEffects** component and requires at l
       + Fog (X3DFogObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in] | [set_bind](#field-set_bind) |  |
+| SFString | [in, out] | [fogType](#field-fogType) | "LINEAR"  |
+| SFColor | [in, out] | [color](#field-color) | 1 1 1  |
+| SFFloat | [in, out] | [visibilityStart](#field-visibilityStart) | 0  |
+| SFFloat | [in, out] | [visibilityRange](#field-visibilityRange) | 0  |
+| SFBool | [out] | [isBound](#field-isBound) |  |
+| SFTime | [out] | [bindTime](#field-bindTime) |  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -39,6 +53,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **set_bind**
+{: #field-set_bind }
 
 Receiving event *set_bind*=true activates and binds this node at the top of the binding stack. Receiving event *set_bind*=false deactivates and unbinds this node from the top of the binding stack. Thus setting *set_bind* to true/false will enable/disable the effect of this node.
 
@@ -51,6 +66,7 @@ Receiving event *set_bind*=true activates and binds this node at the top of the 
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFString [in, out] **fogType** "LINEAR" <small>["LINEAR"|"EXPONENTIAL"]</small>
+{: #field-fogType }
 
 Specifies algorithm for rate of increasing Fog, either LINEAR or EXPONENTIAL.
 
@@ -63,6 +79,7 @@ Specifies algorithm for rate of increasing Fog, either LINEAR or EXPONENTIAL.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
+{: #field-color }
 
 Fog *color*.
 
@@ -71,11 +88,13 @@ Fog *color*.
 - Match [Background](/x_ite/components/environmentaleffects/background/) *color* to make objects fade away.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
-### SFFloat [in, out] **visibilityStart** 0 <small>[0,∞)</small> <small class="blue">non standard</small>
+### SFFloat [in, out] **visibilityStart** 0 <small>[0,∞)</small> <small class="blue">non-standard</small>
+{: #field-visibilityStart }
 
 Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
 
 ### SFFloat [in, out] **visibilityRange** 0 <small>[0,∞)</small>
+{: #field-visibilityRange }
 
 Distance in meters where objects are totally obscured by the fog, using local coordinate system.
 
@@ -84,6 +103,7 @@ Distance in meters where objects are totally obscured by the fog, using local co
 - *visibilityRange* 0 disables Fog.
 
 ### SFBool [out] **isBound**
+{: #field-isBound }
 
 Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
 
@@ -96,6 +116,7 @@ Output event true gets sent when node becomes bound and activated, otherwise out
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **bindTime**
+{: #field-bindTime }
 
 Event sent reporting timestamp when node becomes active/inactive.
 

@@ -15,7 +15,7 @@ tags: [GeneratedCubeMapTexture, CubeMapTexturing]
 
 GeneratedCubeMapTexture is a texture node that defines a cubic environment map that sources its data from internally generated images. The viewpoint of the generated texture is the location and orientation of the associated geometry in world space.
 
-The GeneratedCubeMapTexture node belongs to the **CubeMapTexturing** component and requires at least level **3,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
+The GeneratedCubeMapTexture node belongs to the **CubeMapTexturing** component and requires at least support level **3,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,17 @@ The GeneratedCubeMapTexture node belongs to the **CubeMapTexturing** component a
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFString | [in, out] | [update](#field-update) | "NONE"  |
+| SFInt32 | [ ] | [size](#field-size) | 128  |
+| SFNode | [ ] | [textureProperties](#field-textureProperties) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -38,6 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -46,6 +57,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [in, out] **update** "NONE" <small>["NONE"|"NEXT_FRAME_ONLY"|"ALWAYS"]</small>
+{: #field-update }
 
 *update* controls regeneration of the texture.
 
@@ -55,10 +67,12 @@ Author-provided prose that describes intended purpose of the url asset.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFInt32 [ ] **size** 128 <small>(0,∞)</small>
+{: #field-size }
 
 *size* indicates the resolution of the generated images in number of pixels per side.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
+{: #field-textureProperties }
 
 Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 

@@ -15,7 +15,7 @@ tags: [ForcePhysicsModel, ParticleSystems]
 
 ForcePhysicsModel applies a constant force value to the particles.
 
-The ForcePhysicsModel node belongs to the **ParticleSystems** component and requires at least level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
+The ForcePhysicsModel node belongs to the **ParticleSystems** component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,15 @@ The ForcePhysicsModel node belongs to the **ParticleSystems** component and requ
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFVec3f | [in, out] | [force](#field-force) | 0 -9.8 0  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -36,10 +44,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFVec3f [in, out] **force** 0 -9.8 0 <small>(∞,∞)</small>
+{: #field-force }
 
 *force* field indicates strength and direction of the propelling *force* on the particles (for example, default is Earth's gravity).
 

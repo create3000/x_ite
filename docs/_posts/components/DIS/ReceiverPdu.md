@@ -15,7 +15,7 @@ tags: [ReceiverPdu, DIS]
 
 ReceiverPdu is a networked Protocol Data Unit (PDU) information node that transmits the state of radio frequency (RF) receivers modeled in a simulation.
 
-The ReceiverPdu node belongs to the **DIS** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The ReceiverPdu node belongs to the **DIS** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -27,11 +27,51 @@ The ReceiverPdu node belongs to the **DIS** component and requires at least leve
         + ReceiverPdu (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [visible](#field-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFBool | [out] | [isActive](#field-isActive) |  |
+| SFString | [in, out] | [address](#field-address) | "localhost" |
+| SFInt32 | [in, out] | [applicationID](#field-applicationID) | 0  |
+| SFInt32 | [in, out] | [entityID](#field-entityID) | 0  |
+| SFString | [in, out] | [multicastRelayHost](#field-multicastRelayHost) | "" |
+| SFInt32 | [in, out] | [multicastRelayPort](#field-multicastRelayPort) | 0  |
+| SFString | [in, out] | [networkMode](#field-networkMode) | "standAlone"  |
+| SFInt32 | [in, out] | [port](#field-port) | 0  |
+| SFInt32 | [in, out] | [radioID](#field-radioID) | 0  |
+| SFTime | [in, out] | [readInterval](#field-readInterval) | 0.1  |
+| SFFloat | [in, out] | [receivedPower](#field-receivedPower) | 0  |
+| SFInt32 | [in, out] | [receiverState](#field-receiverState) | 0  |
+| SFBool | [in, out] | [rtpHeaderExpected](#field-rtpHeaderExpected) | FALSE |
+| SFInt32 | [in, out] | [siteID](#field-siteID) | 0  |
+| SFInt32 | [in, out] | [transmitterApplicationID](#field-transmitterApplicationID) | 0  |
+| SFInt32 | [in, out] | [transmitterEntityID](#field-transmitterEntityID) | 0  |
+| SFInt32 | [in, out] | [transmitterRadioID](#field-transmitterRadioID) | 0  |
+| SFInt32 | [in, out] | [transmitterSiteID](#field-transmitterSiteID) | 0  |
+| SFInt32 | [in, out] | [whichGeometry](#field-whichGeometry) | 1  |
+| SFTime | [in, out] | [writeInterval](#field-writeInterval) | 1  |
+| SFBool | [out] | [isNetworkReader](#field-isNetworkReader) |  |
+| SFBool | [out] | [isNetworkWriter](#field-isNetworkWriter) |  |
+| SFBool | [out] | [isRtpHeaderHeard](#field-isRtpHeaderHeard) |  |
+| SFBool | [out] | [isStandAlone](#field-isStandAlone) |  |
+| SFTime | [out] | [timestamp](#field-timestamp) |  |
+| SFVec3d | [in, out] | [geoCoords](#field-geoCoords) | 0 0 0  |
+| MFString | [ ] | [geoSystem](#field-geoSystem) | [ "GD", "WE" ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -40,6 +80,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the node.
 
@@ -48,6 +89,7 @@ Author-provided prose that describes intended purpose of the node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **visible** TRUE
+{: #field-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -57,6 +99,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #field-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -65,6 +108,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #field-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -76,6 +120,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #field-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -86,10 +131,12 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables the sensor node.
 
 ### SFBool [out] **isActive**
+{: #field-isActive }
 
 Confirm whether there has been a recent network update.
 
@@ -98,26 +145,32 @@ Confirm whether there has been a recent network update.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFString [in, out] **address** "localhost"
+{: #field-address }
 
 Multicast network *address*, or else 'localhost'; Example: 224.2.181.145.
 
 ### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
+{: #field-applicationID }
 
 Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
 ### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
+{: #field-entityID }
 
 EntityID unique ID for entity within that application.
 
 ### SFString [in, out] **multicastRelayHost** ""
+{: #field-multicastRelayHost }
 
 Fallback server address if multicast not available locally. For example: track.nps.edu.
 
 ### SFInt32 [in, out] **multicastRelayPort** 0 <small>[0,65535]</small>
+{: #field-multicastRelayPort }
 
 Fallback server port if multicast not available locally. For example: 8010.
 
 ### SFString [in, out] **networkMode** "standAlone" <small>["standAlone"|"networkReader"|"networkWriter"]</small>
+{: #field-networkMode }
 
 Whether this entity is ignoring the network, sending DIS packets to the network, or receiving DIS packets from the network. (1) standAlone: ignore network but still respond to events in local scene. (2) networkReader: listen to network and read PDU packets at readInterval, act as remotely linked copy of entity. (3) networkWriter: send PDU packets to network at writeInterval, act as master entity. Default value "standAlone" ensures that DIS network activation within a scene as networkReader or networkWriter is intentional.
 
@@ -127,14 +180,17 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 - Network activity may have associated security issues.
 
 ### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
+{: #field-port }
 
 Multicast network *port*, for example: 3000.
 
 ### SFInt32 [in, out] **radioID** 0 <small>[0,65535]</small>
+{: #field-radioID }
 
 Identifies a particular radio within a given entity.
 
 ### SFTime [in, out] **readInterval** 0.1 <small>(0,∞)</small>
+{: #field-readInterval }
 
 Seconds between read updates, 0 means no reading.
 
@@ -143,42 +199,52 @@ Seconds between read updates, 0 means no reading.
 - *readInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFFloat [in, out] **receivedPower** 0 <small>(0,∞)</small>
+{: #field-receivedPower }
 
 *receivedPower* indicates radio frequency (RF) power received, in units of decibel-milliwatts (dBm), after applying any propagation loss and antenna gain
 
 ### SFInt32 [in, out] **receiverState** 0 <small>[0,65535]</small>
+{: #field-receiverState }
 
 *receiverState* indicates if receiver is currently idle or busy via one of these enumerated values: 0 = off, 1 = on but not receiving, or 2 = on and receiving.
 
 ### SFBool [in, out] **rtpHeaderExpected** FALSE
+{: #field-rtpHeaderExpected }
 
 Whether RTP headers are prepended to DIS PDUs.
 
 ### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
+{: #field-siteID }
 
 Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### SFInt32 [in, out] **transmitterApplicationID** 0 <small>[0,65535]</small>
+{: #field-transmitterApplicationID }
 
 Simulation/exercise *transmitterApplicationID* is unique for transmitter application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
 ### SFInt32 [in, out] **transmitterEntityID** 0 <small>[0,65535]</small>
+{: #field-transmitterEntityID }
 
 Simulation/exercise *transmitterEntityID* is a unique ID for a single entity within that application.
 
 ### SFInt32 [in, out] **transmitterRadioID** 0 <small>[0,65535]</small>
+{: #field-transmitterRadioID }
 
 Identifies a particular radio within a given entity.
 
 ### SFInt32 [in, out] **transmitterSiteID** 0 <small>[0,65535]</small>
+{: #field-transmitterSiteID }
 
 Simulation/exercise *transmitterSiteID* of the participating LAN or organization.
 
 ### SFInt32 [in, out] **whichGeometry** 1 <small>[-1,∞)</small>
+{: #field-whichGeometry }
 
 Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
 
 ### SFTime [in, out] **writeInterval** 1 <small>(0,∞)</small>
+{: #field-writeInterval }
 
 Seconds between write updates, 0 means no writing (sending).
 
@@ -187,6 +253,7 @@ Seconds between write updates, 0 means no writing (sending).
 - *writeInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFBool [out] **isNetworkReader**
+{: #field-isNetworkReader }
 
 Whether networkMode='remote' (listen to network as copy of remote entity).
 
@@ -195,6 +262,7 @@ Whether networkMode='remote' (listen to network as copy of remote entity).
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isNetworkWriter**
+{: #field-isNetworkWriter }
 
 Whether networkMode='master' (output to network as master entity at writeInterval).
 
@@ -203,6 +271,7 @@ Whether networkMode='master' (output to network as master entity at writeInterva
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isRtpHeaderHeard**
+{: #field-isRtpHeaderHeard }
 
 Whether incoming DIS packets have an RTP header prepended.
 
@@ -211,6 +280,7 @@ Whether incoming DIS packets have an RTP header prepended.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isStandAlone**
+{: #field-isStandAlone }
 
 Whether networkMode='local' (ignore network but still respond to local events).
 
@@ -219,6 +289,7 @@ Whether networkMode='local' (ignore network but still respond to local events).
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **timestamp**
+{: #field-timestamp }
 
 DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 
@@ -227,6 +298,7 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
+{: #field-geoCoords }
 
 Geographic location (specified in current geoSystem coordinates) for children geometry (specified in relative coordinate system, in meters).
 
@@ -239,6 +311,7 @@ Geographic location (specified in current geoSystem coordinates) for children ge
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
+{: #field-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 

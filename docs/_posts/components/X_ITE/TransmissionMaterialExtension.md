@@ -15,7 +15,7 @@ tags: [TransmissionMaterialExtension, X_ITE]
 
 TransmissionMaterialExtension is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../specularglossinessmaterial/) nodes. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
 
-The TransmissionMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
+The TransmissionMaterialExtension node belongs to the **X_ITE** component and requires at least support level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -30,7 +30,16 @@ The TransmissionMaterialExtension node belongs to the **X_ITE** component and re
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in, out] | [transmission](#field-transmission) | 0  |
+| SFString | [in, out] | [transmissionTextureMapping](#field-transmissionTextureMapping) | "" |
+| SFNode | [in, out] | [transmissionTexture](#field-transmissionTexture) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -39,14 +48,17 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in, out] **transmission** 0 <small>[0,∞)</small>
+{: #field-transmission }
 
 The base percentage of light that is transmitted through the surface.
 
 ### SFString [in, out] **transmissionTextureMapping** ""
+{: #field-transmissionTextureMapping }
 
 Input/Output field *transmissionTextureMapping*.
 
 ### SFNode [in, out] **transmissionTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-transmissionTexture }
 
 A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor.
 

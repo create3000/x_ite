@@ -91,10 +91,9 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       this ._pitch .addInterest ("set_speed__", this);
 
       this .video
-         .on ("abort error", this .setError .bind (this))
-         .on ("suspend stalled", this .setTimeout .bind (this))
          .attr ("crossorigin", "anonymous")
-         .attr ("preload", "auto");
+         .attr ("preload", "auto")
+         .attr ("playsinline", "");
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -114,17 +113,18 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    loadData ()
    {
-      this .setMediaElement (null);
-      this .urlStack .setValue (this ._url);
-      this .video .on ("loadeddata", this .setVideo .bind (this));
+      this .urlStack .assign (this ._url);
       this .loadNext ();
    },
    loadNext ()
    {
+      this .clearTimeout ();
+
       if (this .urlStack .length === 0)
       {
-         this .video .off ("loadeddata");
+         this .video .off ("abort error suspend stalled loadeddata");
          this ._duration_changed = -1;
+         this .setMediaElement (null);
          this .clearTexture ();
          this .setLoadState (X3DConstants .FAILED_STATE);
          return;
@@ -152,18 +152,23 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       }
       else
       {
-         this .video .attr ("src", this .URL);
-         this .video .get (0) .load ();
+         this .video
+            .on ("abort error", this .setError .bind (this))
+            .on ("suspend stalled", this .setTimeout .bind (this))
+            .on ("loadeddata", this .setVideo .bind (this))
+            .attr ("src", this .URL)
+            .get (0) .load ();
       }
    },
    setTimeout (event)
    {
-      setTimeout (() =>
-      {
-         if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-            this .setError (event);
-      },
-      30_000);
+      this .clearTimeout ();
+
+      this .timeoutId = setTimeout (() => this .setError (event), 30_000);
+   },
+   clearTimeout ()
+   {
+      clearTimeout (this .timeoutId);
    },
    setError (event)
    {
@@ -182,13 +187,15 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
                console .info (`Done loading movie '${decodeURI (this .URL)}'.`);
          }
 
-         this .video .off ("loadeddata");
-
          const
             gl     = this .getBrowser () .getContext (),
             video  = this .video [0],
             width  = video .videoWidth,
             height = video .videoHeight;
+
+         this .video .off ("abort error suspend stalled loadeddata");
+
+         this .clearTimeout ();
 
          if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
             throw new Error ("The movie texture is a non power-of-two texture.");
@@ -227,6 +234,12 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
+   set_gain__ ()
+   {
+      X3DSoundSourceNode .prototype .set_gain__ .call (this);
+
+      this .video .prop ("muted", this ._gain .getValue () === 0);
+   },
    set_speed__ ()
    {
       const media = this .getMediaElement ();
@@ -234,15 +247,23 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       if (!media)
          return;
 
-      media .playbackRate   = this ._speed .getValue () * Math .max (this ._pitch .getValue (), 0);
+      try
+      {
+         // Chrome throws an error if playbackRate is negative.
+         media .playbackRate = this ._speed .getValue () * Math .max (this ._pitch .getValue (), 0);
+      }
+      catch (error)
+      {
+         console .error (error .message);
+
+         media .playbackRate = 1;
+      }
+
       media .preservesPitch = this ._pitch .getValue () === 1;
    },
    set_time ()
    {
       X3DSoundSourceNode .prototype .set_time .call (this);
-
-      if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-         return;
 
       const media = this .getMediaElement ();
 
@@ -282,7 +303,7 @@ Object .defineProperties (MovieTexture,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isPaused",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "elapsedTime",          new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",     new Fields .SFTime (-1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",     new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),

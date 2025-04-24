@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       // See: 29.2.2 Script execution
       await this .unloadData ();
 
-      new FileLoader (this) .loadDocument (this ._url, data =>
+      new FileLoader (this) .loadDocument (this ._url, async data =>
       {
          if (data === null)
          {
@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          }
          else
          {
-            this .initialize__ ($.decodeText (data));
+            await this .initialize__ ($.decodeText (data));
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
       });

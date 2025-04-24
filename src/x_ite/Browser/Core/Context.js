@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import MOBILE      from "../../MOBILE.js";
 import DEVELOPMENT from "../../DEVELOPMENT.js";
 
 const Context =
@@ -53,9 +54,9 @@ const Context =
       "WEBGL_debug_renderer_info",
       "WEBGL_polygon_mode",
    ]),
-   create (canvas, version, preserveDrawingBuffer, mobile)
+   create (canvas, version, preserveDrawingBuffer)
    {
-      const options = { preserveDrawingBuffer }; // TODO: xrCompatible: true
+      const options = { preserveDrawingBuffer };
 
       let gl = null;
 
@@ -149,18 +150,19 @@ const Context =
       gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
       gl .HAS_FEATURE_FRAG_DEPTH    = gl .getVersion () >= 2 || !! gl .getExtension ("EXT_frag_depth");
 
-      if (mobile)
+      if (MOBILE)
       {
-         {
-            const ext = gl .getExtension ("EXT_color_buffer_half_float");
+         // At least on iOS and Samsung Galaxy, float 32 textures are not supported.
+         // We use half float textures instead.
 
-            // Use defineProperty to overwrite property.
-            Object .defineProperty (gl, "RGBA32F",
-            {
-               value: gl .getVersion () === 1 ? ext .RGBA16F_EXT : gl .RGBA16F,
-               enumerable: true,
-            });
-         }
+         const ext = gl .getExtension ("EXT_color_buffer_half_float");
+
+         // Use defineProperty to overwrite property.
+         Object .defineProperty (gl, "RGBA32F",
+         {
+            value: gl .getVersion () === 1 ? ext .RGBA16F_EXT : gl .RGBA16F,
+            enumerable: true,
+         });
       }
 
       return gl;

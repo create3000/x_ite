@@ -1,4 +1,8 @@
 export default /* glsl */ `
+
+// Originally from:
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/tonemapping.glsl
+
 const float GAMMA     = 2.2;
 const float INV_GAMMA = 1.0 / GAMMA;
 

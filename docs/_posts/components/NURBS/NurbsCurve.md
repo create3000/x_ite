@@ -15,7 +15,7 @@ tags: [NurbsCurve, NURBS]
 
 NurbsCurve is a 3D curve analogous to NurbsPatchSurface.
 
-The NurbsCurve node belongs to the **NURBS** component and requires at least level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The NurbsCurve node belongs to the **NURBS** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,19 @@ The NurbsCurve node belongs to the **NURBS** component and requires at least lev
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFInt32 | [in, out] | [tessellation](#field-tessellation) | 0  |
+| SFBool | [ ] | [closed](#field-closed) | FALSE |
+| SFInt32 | [ ] | [order](#field-order) | 3  |
+| MFDouble | [ ] | [knot](#field-knot) | [ ] |
+| MFDouble | [in, out] | [weight](#field-weight) | [ ] |
+| SFNode | [in, out] | [controlPoint](#field-controlPoint) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,26 +49,32 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFInt32 [in, out] **tessellation** 0 <small>(-∞,∞)</small>
+{: #field-tessellation }
 
 Hint for surface *tessellation*.
 
 ### SFBool [ ] **closed** FALSE
+{: #field-closed }
 
 Whether or not the curve is *closed* (i.e. matching end values).
 
 ### SFInt32 [ ] **order** 3 <small>[2,∞)</small>
+{: #field-order }
 
 Define *order* of surface by polynomials of degree = *order*-1.
 
 ### MFDouble [ ] **knot** [ ] <small>(-∞,∞)</small>
+{: #field-knot }
 
 *knot* vector, where size = number of control points + order of curve.
 
 ### MFDouble [in, out] **weight** [ ] <small>(0,∞)</small>
+{: #field-weight }
 
 Vector assigning relative *weight* value to each control point.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
+{: #field-controlPoint }
 
 Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 

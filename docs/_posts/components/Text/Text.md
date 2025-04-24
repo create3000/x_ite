@@ -15,7 +15,7 @@ tags: [Text, Text]
 
 Text is a 2D (flat) geometry node that can contain multiple lines of string values. Layout and styling is controlled by a contained FontStyle node.
 
-The Text node belongs to the **Text** component and requires at least level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Text node belongs to the **Text** component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,21 @@ The Text node belongs to the **Text** component and requires at least level **1,
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFString | [in, out] | [string](#field-string) | [ ] |
+| MFFloat | [in, out] | [length](#field-length) | [ ] |
+| SFFloat | [in, out] | [maxExtent](#field-maxExtent) | 0  |
+| SFBool | [ ] | [solid](#field-solid) | FALSE |
+| SFVec3f | [out] | [origin](#field-origin) |  |
+| SFVec2f | [out] | [textBounds](#field-textBounds) |  |
+| MFVec2f | [out] | [lineBounds](#field-lineBounds) |  |
+| SFNode | [in, out] | [fontStyle](#field-fontStyle) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -36,6 +50,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFString [in, out] **string** [ ]
+{: #field-string }
 
 Single or multiple *string* values to present as Text. Each value in the *string* array (including empty strings) gets displayed on a separate line.
 
@@ -47,14 +62,17 @@ Single or multiple *string* values to present as Text. Each value in the *string
 - [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html)
 
 ### MFFloat [in, out] **length** [ ] <small>[0,∞)</small>
+{: #field-length }
 
 Array of *length* values for each text string in the local coordinate system. Each string is stretched or compressed to fit.
 
 ### SFFloat [in, out] **maxExtent** 0 <small>[0,∞)</small>
+{: #field-maxExtent }
 
 Limits/compresses all text strings if max string length is longer than *maxExtent*, as measured in local coordinate system.
 
 ### SFBool [ ] **solid** FALSE
+{: #field-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
@@ -70,6 +88,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - *solid* false not supported in VRML97.
 
 ### SFVec3f [out] **origin**
+{: #field-origin }
 
 *origin* of the text local coordinate system, in units of the coordinate system in which the Text node is embedded. The value of the *origin* field represents the upper left corner of the textBounds.
 
@@ -78,6 +97,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec2f [out] **textBounds**
+{: #field-textBounds }
 
 2D bounding box value for all lines of text in the local coordinate system.
 
@@ -86,6 +106,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### MFVec2f [out] **lineBounds**
+{: #field-lineBounds }
 
 Array of 2D bounding box values for each line of text in the local coordinate system.
 
@@ -94,6 +115,7 @@ Array of 2D bounding box values for each line of text in the local coordinate sy
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFNode [in, out] **fontStyle** NULL <small>[X3DFontStyleNode]</small>
+{: #field-fontStyle }
 
 The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle/) or [ScreenFontStyle](/x_ite/components/layout/screenfontstyle/) node defining size, family, and style for presented text.
 

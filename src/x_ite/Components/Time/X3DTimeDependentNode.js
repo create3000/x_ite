@@ -306,11 +306,13 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
          this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
       }
    },
-   addTimeout (name, callback, time)
+   addTimeout (name, callback, startTime)
    {
+      const ms = (startTime - this .getBrowser () .getCurrentTime ()) * 1000;
+
       this .removeTimeout (name);
 
-      this .timeouts .set (name, setTimeout (this .processTimeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000));
+      this .timeouts .set (name, setTimeout (() => this .processTimeout (callback), ms));
    },
    removeTimeout (name)
    {
@@ -326,7 +328,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       if (!(this .getLive () .getValue ()))
          return;
 
-      this .getBrowser () .advanceTime ();
+      this .getBrowser () .advanceOnlyTime ();
 
       this [callback] ();
    },

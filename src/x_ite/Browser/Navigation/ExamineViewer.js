@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       this .rotationChaser .setup ();
 
       this .timeSensor ._loop     = true;
-      this .timeSensor ._stopTime = browser .getCurrentTime ();
+      this .timeSensor ._stopTime = Date .now () / 1000;
       this .timeSensor .setup ();
 
       this .timeSensor ._fraction_changed  .addInterest ("spin", this);
@@ -180,11 +180,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          case 0:
          {
-            // Start rotate.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Start rotate.
 
             this .button = event .button;
 
@@ -205,11 +205,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
-            // Start pan.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Start pan.
 
             this .button = event .button;
 
@@ -241,11 +241,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          case 0:
          {
-            // End rotate.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // End rotate.
 
             this .getBrowser () .setCursor ("DEFAULT");
 
@@ -257,11 +257,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
-            // End pan.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // End pan.
 
             this .getBrowser () .setCursor ("DEFAULT");
 
@@ -273,8 +273,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    dblclick (event)
    {
       // Stop event propagation.
+
       event .preventDefault ();
-      event .stopImmediatePropagation ();
+
+      // Look at.
 
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
@@ -289,11 +291,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          case 0:
          {
-            // Rotate view around Viewpoint.centerOfRotation.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Rotate view around Viewpoint.centerOfRotation.
 
             this .rotate (x, y);
 
@@ -302,13 +304,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             // Move view along center plane.
 
-            // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
             this .pan (x, y);
-
             break;
          }
       }
@@ -323,7 +325,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       // Stop event propagation.
 
       event .preventDefault ();
-      event .stopImmediatePropagation ();
 
       // Change viewpoint position.
 
@@ -639,7 +640,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .axis .negate ();
 
          this .timeSensor ._cycleInterval = Math .PI / (angle * SPIN_FACTOR * 25);
-         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = Date .now () / 1000;
 
          const lookAtRotation = viewpoint .getLookAtRotation (userPosition, userCenterOfRotation);
 
@@ -656,7 +657,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    {
       const browser = this .getBrowser ();
 
-      this .timeSensor ._stopTime = browser .getCurrentTime ();
+      this .timeSensor ._stopTime = Date .now () / 1000;
       browser .prepareEvents () .removeInterest ("spin", this);
    },
    spin: (() =>

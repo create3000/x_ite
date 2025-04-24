@@ -601,7 +601,7 @@ Returns the node type name.
 
 #### **removeFieldCallback** (key: any, name: string): void
 
-Removes a field callback function associated with *key* and *name* of field.
+Removes a field callback function associated with *key* and *name* from the field.
 
 #### **toVRMLString** (options: Options): string
 

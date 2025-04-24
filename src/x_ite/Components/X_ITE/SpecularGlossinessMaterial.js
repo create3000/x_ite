@@ -66,7 +66,6 @@ function SpecularGlossinessMaterial (executionContext)
 
    this .addType (X3DConstants .SpecularGlossinessMaterial);
 
-   this .materialKey        = "4/";
    this .diffuseColorArray  = new Float32Array (3);
    this .specularColorArray = new Float32Array (3);
    this .extensionNodes     = [ ];

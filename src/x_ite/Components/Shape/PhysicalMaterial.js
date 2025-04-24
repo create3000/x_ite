@@ -60,7 +60,6 @@ function PhysicalMaterial (executionContext)
 
    this .addType (X3DConstants .PhysicalMaterial);
 
-   this .materialKey    = "3/";
    this .baseColorArray = new Float32Array (3);
    this .extensionNodes = [ ];
 }

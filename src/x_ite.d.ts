@@ -200,9 +200,28 @@ declare namespace X3D
        */
       setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
       /**
+       * Adds a browser option callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the browser option to which the callback should be connected. The callback is called when the property has been changed.
+       */
+      addBrowserOptionCallback <T extends keyof BrowserOption> (key: any, name: T, callback: (value: BrowserOption [T]) => void): void;
+      /**
+       * Removes a browser option callback function associated with *key* and *name* from the browser option.
+       */
+      removeBrowserOptionCallback <T extends keyof BrowserOption> (key: any, name: T): void;
+      /**
        * Returns a rendering property with the corresponding *name*.
        */
       getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
+      /**
+       * Adds a rendering property callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the rendering property to which the callback should be connected. The callback is called when the property has been changed.
+       */
+      addRenderingPropertyCallback <T extends keyof RenderingProperty> (key: any, name: T, callback: (value: RenderingProperty [T]) => void): void;
+      /**
+       * Removes a rendering property callback function associated with *key* and *name* from the rendering property.
+       */
+      removeRenderingPropertyCallback <T extends keyof RenderingProperty> (key: any, name: T): void;
+      /**
+       * Returns context menu object.
+       */
       getContextMenu (): ContextMenu;
       /**
        * Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event can be any value listed below:
@@ -213,8 +232,8 @@ declare namespace X3D
        * - X3DConstants .SHUTDOWN_EVENT
        * - X3DConstants .INITIALIZED_ERROR
        */
-      addBrowserCallback (key: any, callback: (event: number) => void): void;
       addBrowserCallback (key: any, event: number, callback: (event: number) => void): void;
+      addBrowserCallback (key: any, callback: (event: number) => void): void;
       /**
        * Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callback associated whit key are removed.
        */
@@ -242,8 +261,8 @@ declare namespace X3D
       /**
        * Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
        */
-      changeViewpoint (name: string): void;
       changeViewpoint (layer: SFNode, name: string): void;
+      changeViewpoint (name: string): void;
       /**
        * Start processing events.
        */
@@ -376,14 +395,14 @@ declare namespace X3D
       LogarithmicDepthBuffer:       boolean,
       MetadataReference:            string,
       Multisampling:                number,
+      Mute:                         boolean,
       Notifications:                boolean,
       OrderIndependentTransparency: boolean,
       StraightenHorizon:            boolean,
       TextCompression:              "CHAR_SPACING" | "SCALING",
       Timings:                      boolean,
       ToneMapping:                  ToneMappingTypes,
-      XRButton:                     boolean,
-      XRSessionMode:                "NONE" | "IMMERSIVE_VR",
+      XRSessionMode:                "NONE" | "IMMERSIVE_VR" | "IMMERSIVE_AR",
    };
 
    type ColorSpaceTypes   = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
@@ -400,10 +419,12 @@ declare namespace X3D
       ColorDepth:             number,
       TextureMemory:          number,
       ContentScale:           number,
+      LogarithmicDepthBuffer: boolean,
       MaxAnisotropicDegree:   number,
       MaxSamples:             number,
       Multisampling:          number,
-      LogarithmicDepthBuffer: boolean,
+      PixelsPerPoint:         number,
+      XRSession:              boolean,
    }
 
    class ContextMenu
@@ -1988,15 +2009,15 @@ declare namespace X3D
       static readonly typeName: "SFNode";
 
       /**
+       * Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the field to which the callback should be connected. The callback is called when the field has been changed.
+       */
+      addFieldCallback (key: any, name: string, callback: (value: unknown) => void): void;
+      /**
        * Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. The callback is called when the field has been changed.
        *
        * The callback has a signature of `function (value)`, where value is the current value of the field.
        */
       addFieldCallback (key: any, callback: (value: this) => void): void;
-      /**
-       * Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the field to which the callback should be connected. The callback is called when the field has been changed.
-       */
-      addFieldCallback (key: any, name: string, callback: (value: unknown) => void): void;
       /**
        * Returns the corresponding X3DFieldDefinition object associated with *name*.
        */
@@ -2034,7 +2055,7 @@ declare namespace X3D
        */
       removeFieldCallback (key: any): void;
       /**
-       * Removes a field callback function associated with *key* and *name* of field.
+       * Removes a field callback function associated with *key* and *name* from the field.
        */
       removeFieldCallback (key: any, name: string): void;
       /**

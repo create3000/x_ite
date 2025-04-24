@@ -15,7 +15,7 @@ tags: [DISEntityTypeMapping, DIS]
 
 DISEntityTypeMapping provides a best-match mapping from DIS ESPDU entity type information to a specific X3D model, thus providing a visual and behavioral representation that best matches the entity type. Fields are processed in order: kind, domain, country, category, subcategory, specific, extra.
 
-The DISEntityTypeMapping node belongs to the **DIS** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The DISEntityTypeMapping node belongs to the **DIS** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -25,7 +25,25 @@ The DISEntityTypeMapping node belongs to the **DIS** component and requires at l
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [load](#field-load) | TRUE |
+| MFString | [in, out] | [url](#field-url) | [ ] |
+| SFTime | [in, out] | [autoRefresh](#field-autoRefresh) | 0  |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#field-autoRefreshTimeLimit) | 3600  |
+| SFInt32 | [ ] | [category](#field-category) | 0  |
+| SFInt32 | [ ] | [country](#field-country) | 0  |
+| SFInt32 | [ ] | [domain](#field-domain) | 0  |
+| SFInt32 | [ ] | [extra](#field-extra) | 0  |
+| SFInt32 | [ ] | [kind](#field-kind) | 0  |
+| SFInt32 | [ ] | [specific](#field-specific) | 0  |
+| SFInt32 | [ ] | [subcategory](#field-subcategory) | 0  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -34,6 +52,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -42,6 +61,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **load** TRUE
+{: #field-load }
 
 *load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
@@ -51,6 +71,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
+{: #field-url }
 
 Local and/or online addresses of X3D model of interest, for example: "ExtrusionExampleShip.x3d" "https://www.web3d.org/x3d/content/examples/Basic/course/ExtrusionExampleShip.x3d"
 
@@ -67,6 +88,7 @@ Local and/or online addresses of X3D model of interest, for example: "ExtrusionE
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
+{: #field-autoRefresh }
 
 *autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
@@ -80,6 +102,7 @@ Local and/or online addresses of X3D model of interest, for example: "ExtrusionE
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
+{: #field-autoRefreshTimeLimit }
 
 *autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
@@ -92,30 +115,37 @@ Local and/or online addresses of X3D model of interest, for example: "ExtrusionE
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFInt32 [ ] **category** 0 <small>[0,255]</small>
+{: #field-category }
 
 Integer enumerations value for main *category* that describes the entity, semantics of each code varies according to domain. See DIS Enumerations values.
 
 ### SFInt32 [ ] **country** 0 <small>[0,0,65535]</small>
+{: #field-country }
 
 Integer enumerations value for *country* to which the design of the entity or its design specification is attributed.
 
 ### SFInt32 [ ] **domain** 0 <small>[0,255]</small>
+{: #field-domain }
 
 Integer enumerations value for *domain* in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
 
 ### SFInt32 [ ] **extra** 0 <small>[0,255]</small>
+{: #field-extra }
 
 Any *extra* information required to describe a particular entity. The contents of this field shall depend on the type of entity represented.
 
 ### SFInt32 [ ] **kind** 0 <small>[0,255]</small>
+{: #field-kind }
 
 Integer enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
 
 ### SFInt32 [ ] **specific** 0 <small>[0,255]</small>
+{: #field-specific }
 
 Specific information about an entity based on the subcategory field. See DIS Enumerations values.
 
 ### SFInt32 [ ] **subcategory** 0 <small>[0,255]</small>
+{: #field-subcategory }
 
 Integer enumerations value for particular *subcategory* to which an entity belongs based on the category field. See DIS Enumerations values.
 

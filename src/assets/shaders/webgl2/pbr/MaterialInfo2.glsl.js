@@ -2,6 +2,9 @@ import MaterialTextures from "../../MaterialTextures.js";
 
 export default /* glsl */ `
 
+// Originally from:
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/material_info.glsl
+
 struct MaterialInfo
 {
    float ior;

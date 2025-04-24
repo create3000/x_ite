@@ -470,7 +470,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       if (field .isTainted ())
       {
-         field .setModificationTime (Date .now ());
+         field .setModificationTime (Date .now () / 1000);
          return;
       }
 
@@ -488,7 +488,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       const browser = this [_browser];
 
-      field .setModificationTime (Date .now ());
+      field .setModificationTime (Date .now () / 1000);
 
       // Register for processEvent
 
@@ -507,6 +507,8 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    addNodeEvent ()
    {
+      this .setModificationTime (Date .now () / 1000);
+
       if (this .isTainted ())
          return;
 

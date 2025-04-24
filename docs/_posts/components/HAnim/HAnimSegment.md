@@ -15,7 +15,7 @@ tags: [HAnimSegment, HAnim]
 
 HAnimSegment node contains Shape geometry for each body segment, providing a visual representation of the skeleton segment. Parent/child translation and rotation relationships are defined in ancestor/descendant HAnimSegment nodes. HAnimSegment contains Coordinate or CoordinateDouble with `containerField='coord',` HAnimDisplacer with `containerField='displacers'` and Shape or grouping nodes with `containerField='children'.`
 
-The HAnimSegment node belongs to the **HAnim** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The HAnimSegment node belongs to the **HAnim** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,27 @@ The HAnimSegment node belongs to the **HAnim** component and requires at least l
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFString | [in, out] | [name](#field-name) | "" |
+| SFFloat | [in, out] | [mass](#field-mass) | 0  |
+| SFVec3f | [in, out] | [centerOfMass](#field-centerOfMass) | 0 0 0  |
+| MFFloat | [in, out] | [momentsOfInertia](#field-momentsOfInertia) | [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] |
+| MFNode | [in, out] | [displacers](#field-displacers) | [ ] |
+| SFNode | [in, out] | [coord](#field-coord) | NULL  |
+| SFBool | [in, out] | [visible](#field-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
+| MFNode | [in] | [addChildren](#field-addChildren) |  |
+| MFNode | [in] | [removeChildren](#field-removeChildren) |  |
+| MFNode | [in, out] | [children](#field-children) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +57,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -45,6 +66,7 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [in, out] **name** ""
+{: #field-name }
 
 Unique *name* attribute must be defined so that HAnimSegment node can be identified at run time for animation purposes.
 
@@ -63,6 +85,7 @@ Unique *name* attribute must be defined so that HAnimSegment node can be identif
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches. Examples: sacrum pelvis l_thigh l_calf etc. as listed in HAnim Specification.
 
 ### SFFloat [in, out] **mass** 0 <small>[0,∞)</small>
+{: #field-mass }
 
 Total *mass* of the segment, 0 if not available, defined in *mass* base units (default is kilograms).
 
@@ -72,14 +95,17 @@ Total *mass* of the segment, 0 if not available, defined in *mass* base units (d
 - [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#Standardunitscoordinates)
 
 ### SFVec3f [in, out] **centerOfMass** 0 0 0 <small>(-∞,∞)</small>
+{: #field-centerOfMass }
 
 Location within segment of center of mass.
 
 ### MFFloat [in, out] **momentsOfInertia** [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] <small>[0,∞)</small>
+{: #field-momentsOfInertia }
 
 3x3 moments of inertia matrix. default: 0 0 0 0 0 0 0 0 0.
 
 ### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
+{: #field-displacers }
 
 The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) objects for a particular HAnimSegment object.
 
@@ -88,6 +114,7 @@ The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisp
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with [HAnimJoint](/x_ite/components/hanim/hanimjoint/) HAnimSegment and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
+{: #field-coord }
 
 The *coord* field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) for the paarent HAnimSegment object. The coordinates are given the same name as the HAnim Segment object, but with "_coords" appended to the name (for example, "skull_coords").
 
@@ -96,6 +123,7 @@ The *coord* field is used for HAnimSegment objects that have deformable meshes a
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with [HAnimJoint](/x_ite/components/hanim/hanimjoint/) HAnimSegment and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### SFBool [in, out] **visible** TRUE
+{: #field-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -105,6 +133,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #field-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -113,6 +142,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #field-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -124,6 +154,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #field-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -134,14 +165,17 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### MFNode [in] **addChildren**
+{: #field-addChildren }
 
 Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
+{: #field-removeChildren }
 
 Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
+{: #field-children }
 
 Grouping nodes contain an ordered list of *children* nodes.
 

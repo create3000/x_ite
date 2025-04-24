@@ -15,7 +15,7 @@ tags: [Layout, Layout]
 
 Layout node is used as layout field of LayoutLayer and LayoutGroup nodes. Layout provides all parameters required to define the size, location and scale of a 2D rectangular region.
 
-The Layout node belongs to the **Layout** component and requires at least level **1,** its default container field is *layout.* It is available from X3D version 3.2 or higher.
+The Layout node belongs to the **Layout** component and requires at least support level **1,** its default container field is *layout.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,19 @@ The Layout node belongs to the **Layout** component and requires at least level 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFString | [in, out] | [align](#field-align) | [ "CENTER", "CENTER" ] |
+| MFString | [in, out] | [offsetUnits](#field-offsetUnits) | [ "WORLD", "WORLD" ] |
+| MFFloat | [in, out] | [offset](#field-offset) | [ 0, 0 ] |
+| MFString | [in, out] | [sizeUnits](#field-sizeUnits) | [ "WORLD", "WORLD" ] |
+| MFFloat | [in, out] | [size](#field-size) | [ 1, 1 ] |
+| MFString | [in, out] | [scaleMode](#field-scaleMode) | [ "NONE", "NONE" ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +49,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFString [in, out] **align** [ "CENTER", "CENTER" ] <small>["LEFT"|"CENTER"|"RIGHT"]</small>
+{: #field-align }
 
 The *align* field values *align* the sized rectangle to an edge or center of the parent rectangle. Two quoted string values are provided. The first value is for horizontal direction (LEFT or CENTER or RIGHT) and the second value is for vertical direction (BOTTOM or CENTER or TOP). Examples: "CENTER" "CENTER" (default value), "LEFT" "TOP" or "RIGHT" "BOTTOM".
 
@@ -50,6 +63,7 @@ The *align* field values *align* the sized rectangle to an edge or center of the
 - If the *align* field has only one value, that value shall be "CENTER" and apply both horizontally and vertically.
 
 ### MFString [in, out] **offsetUnits** [ "WORLD", "WORLD" ] <small>["WORLD"|"FRACTION"|"PIXEL"]</small>
+{: #field-offsetUnits }
 
 The *offsetUnits* field values are used to interprete the offset values. Two quoted string values are provided. The first value is for horizontal offset, and the second value is for vertical offset. Examples: "WORLD" "WORLD" (default value), "FRACTION" "FRACTION" or "PIXEL" "PIXEL".
 
@@ -63,6 +77,7 @@ The *offsetUnits* field values are used to interprete the offset values. Two quo
 - If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
 ### MFFloat [in, out] **offset** [ 0, 0 ] <small>(-∞,∞)</small>
+{: #field-offset }
 
 The values of the *offset* field are used to translate the location of this rectangle after the initial alignment. The offsetUnits field specifies how to interpret the *offset* field.
 
@@ -71,6 +86,7 @@ The values of the *offset* field are used to translate the location of this rect
 - If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
 ### MFString [in, out] **sizeUnits** [ "WORLD", "WORLD" ] <small>["WORLD"|"FRACTION"|"PIXEL"]</small>
+{: #field-sizeUnits }
 
 The *sizeUnits* field values are used to interprete the offset values. Two quoted string values are provided. The first value is for horizontal size, and the second value is for vertical size. Examples: "WORLD" "WORLD" (default value), "FRACTION" "FRACTION" or "PIXEL" "PIXEL".
 
@@ -84,6 +100,7 @@ The *sizeUnits* field values are used to interprete the offset values. Two quote
 - If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
 ### MFFloat [in, out] **size** [ 1, 1 ] <small>(0,∞)</small>
+{: #field-size }
 
 The two values in the *size* field define the width and height of the layout rectangle. The sizeUnits field specifies how to interpret the *size* values.
 
@@ -92,6 +109,7 @@ The two values in the *size* field define the width and height of the layout rec
 - If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
 ### MFString [in, out] **scaleMode** [ "NONE", "NONE" ] <small>["NONE"|"FRACTION"|"STRETCH"|"PIXEL"]</small>
+{: #field-scaleMode }
 
 The *scaleMode* field specifies how the scale of the parent is modified. Two quoted string values are provided. The first value is for horizontal scale and the second value is for vertical scale. Examples: "NONE" "NONE" (default value), "FRACTION" "FRACTION", "STRETCH" "STRETCH" or "PIXEL" "PIXEL".
 

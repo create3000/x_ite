@@ -49,6 +49,7 @@ import VERSION              from "../BROWSER_VERSION.js";
 import X3DFieldDefinition   from "../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../Base/FieldDefinitionArray.js";
 import Fields               from "../Fields.js";
+import SFNodeCache          from "../Fields/SFNodeCache.js";
 import Components           from "../Components.js";
 import X3DBrowserContext    from "./X3DBrowserContext.js";
 import DOMIntegration       from "./DOMIntegration.js";
@@ -830,10 +831,30 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this .getBrowserOptions () .getField (name) .getValue ();
    },
+   /*
+   addBrowserOptionCallback (key, name, callback)
+   {
+      return this .getBrowserOptions () .getField (name) .addFieldCallback (key, callback);
+   },
+   removeBrowserOptionCallback (key, name)
+   {
+      return this .getBrowserOptions () .getField (name) .removeFieldCallback (key);
+   },
+   */
    getRenderingProperty (name)
    {
       return this .getRenderingProperties () .getField (name) .getValue ();
    },
+   /*
+   addRenderingPropertyCallback (key, name, callback)
+   {
+      return this .getRenderingProperties () .getField (name) .addFieldCallback (key, callback);
+   },
+   removeRenderingPropertyCallback (key, name)
+   {
+      return this .getRenderingProperties () .getField (name) .removeFieldCallback (key);
+   },
+   */
    viewAll (layerNode, transitionTime = 1)
    {
       if (arguments .length === 1 && typeof layerNode === "number")
@@ -929,7 +950,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    beginUpdate ()
    {
       this .setLive (true);
-      this .advanceTime ();
+      this .advanceOnlyTime ();
       this .addBrowserEvent ();
    },
    endUpdate ()

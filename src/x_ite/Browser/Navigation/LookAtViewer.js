@@ -131,7 +131,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
             // Stop event propagation.
 
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Look around.
 
             this .button = event .button;
 
@@ -141,9 +142,6 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
             $(document) .on ("touchmove.LookAtViewer" + this .getId (), this .touchmove .bind (this));
 
             this .getActiveViewpoint () .transitionStop ();
-
-            // Look around.
-
             this .trackballProjectToSphere (x, y, this .fromVector);
 
             this ._isActive = true;
@@ -167,7 +165,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
             // Stop event propagation.
 
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Look around.
 
             this ._isActive = false;
             break;
@@ -177,8 +176,10 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    dblclick (event)
    {
       // Stop event propagation.
+
       event .preventDefault ();
-      event .stopImmediatePropagation ();
+
+      // Look at.
 
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
@@ -198,10 +199,10 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          case 0:
          {
             // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
 
-            // Look around
+            event .preventDefault ();
+
+            // Look around.
 
             const toVector = this .trackballProjectToSphere (x, y, this .toVector);
 
@@ -227,7 +228,6 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          // Stop event propagation.
 
          event .preventDefault ();
-         event .stopImmediatePropagation ();
 
          // Change viewpoint position.
 
@@ -299,7 +299,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       // Start dblclick (button 0).
 
-      if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
+      if (Date .now () - this .tapStart < this .dblTapInterval)
       {
          event .button = 1;
          event .pageX  = this .touch1 .x;
@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          this .dblclick (event);
       }
 
-      this .tapStart = this .getBrowser () .getCurrentTime ();
+      this .tapStart = Date .now ();
    },
    touchmove: (() =>
    {

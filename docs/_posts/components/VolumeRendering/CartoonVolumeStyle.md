@@ -15,7 +15,7 @@ tags: [CartoonVolumeStyle, VolumeRendering]
 
 CartoonVolumeStyle generates cartoon-style non-photorealistic rendering of associated volumetric data.
 
-The CartoonVolumeStyle node belongs to the **VolumeRendering** component and requires at least level **3,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The CartoonVolumeStyle node belongs to the **VolumeRendering** component and requires at least support level **3,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,18 @@ The CartoonVolumeStyle node belongs to the **VolumeRendering** component and req
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFInt32 | [in, out] | [colorSteps](#field-colorSteps) | 4  |
+| SFColorRGBA | [in, out] | [orthogonalColor](#field-orthogonalColor) | 1 1 1 1  |
+| SFColorRGBA | [in, out] | [parallelColor](#field-parallelColor) | 0 0 0 1  |
+| SFNode | [in, out] | [surfaceNormals](#field-surfaceNormals) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,10 +48,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFInt32 [in, out] **colorSteps** 4 <small>[1,64]</small>
+{: #field-colorSteps }
 
 Number of distinct colors taken from interpolated colors and used to render the object.
 
@@ -50,6 +63,7 @@ Number of distinct colors taken from interpolated colors and used to render the 
 - ParallelColor and orthogonalColor interpolation is in HSV color space for RGB components, linearly for alpha component.
 
 ### SFColorRGBA [in, out] **orthogonalColor** 1 1 1 1 <small>[0,1]</small>
+{: #field-orthogonalColor }
 
 *orthogonalColor* is used for surface normals that are orthogonal (perpendicular) to viewer's current location.
 
@@ -59,6 +73,7 @@ Number of distinct colors taken from interpolated colors and used to render the 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFColorRGBA [in, out] **parallelColor** 0 0 0 1 <small>[0,1]</small>
+{: #field-parallelColor }
 
 *parallelColor* is used for surface normals that are orthogonal to viewer's current location.
 
@@ -68,6 +83,7 @@ Number of distinct colors taken from interpolated colors and used to render the 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFNode [in, out] **surfaceNormals** NULL <small>[X3DTexture3DNode]</small>
+{: #field-surfaceNormals }
 
 The *surfaceNormals* field contains a 3D texture with at least three component values. Each voxel in the texture represents the surface normal direction for the corresponding voxel in the base data source.
 

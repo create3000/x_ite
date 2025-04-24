@@ -104,7 +104,8 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
             // Stop event propagation.
 
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Start move.
 
             this .button = event .button;
 
@@ -124,13 +125,14 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    },
    mouseup (event)
    {
+      if (event .button !== this .button)
+         return;
+
       // Stop event propagation.
 
       event .preventDefault ();
-      event .stopImmediatePropagation ();
 
-      if (event .button !== this .button)
-         return;
+      // Disable all.
 
       this .button = -1;
 
@@ -152,7 +154,6 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
             // Stop event propagation.
 
             event .preventDefault ();
-            event .stopImmediatePropagation ();
 
             // Move.
 
@@ -179,7 +180,6 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       // Stop event propagation.
 
       event .preventDefault ();
-      event .stopImmediatePropagation ();
 
       // Change viewpoint position.
 

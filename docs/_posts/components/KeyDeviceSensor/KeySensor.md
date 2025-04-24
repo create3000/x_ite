@@ -15,7 +15,7 @@ tags: [KeySensor, KeyDeviceSensor]
 
 KeySensor generates events as the user presses keys on the keyboard. Browser support includes the notion of "keyboard focus".
 
-The KeySensor node belongs to the **KeyDeviceSensor** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The KeySensor node belongs to the **KeyDeviceSensor** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,23 @@ The KeySensor node belongs to the **KeyDeviceSensor** component and requires at 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFBool | [out] | [controlKey](#field-controlKey) |  |
+| SFBool | [out] | [shiftKey](#field-shiftKey) |  |
+| SFBool | [out] | [altKey](#field-altKey) |  |
+| SFInt32 | [out] | [actionKeyPress](#field-actionKeyPress) |  |
+| SFInt32 | [out] | [actionKeyRelease](#field-actionKeyRelease) |  |
+| SFString | [out] | [keyPress](#field-keyPress) |  |
+| SFString | [out] | [keyRelease](#field-keyRelease) |  |
+| SFBool | [out] | [isActive](#field-isActive) |  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -38,6 +54,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the node.
 
@@ -46,10 +63,12 @@ Author-provided prose that describes intended purpose of the node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFBool [out] **controlKey**
+{: #field-controlKey }
 
 *controlKey* generates true event when pressed, false event when released.
 
@@ -58,6 +77,7 @@ Enables/disables node operation.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **shiftKey**
+{: #field-shiftKey }
 
 *shiftKey* generates true event when pressed, false event when released.
 
@@ -66,6 +86,7 @@ Enables/disables node operation.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **altKey**
+{: #field-altKey }
 
 *altKey* generates true event when pressed, false event when released.
 
@@ -74,6 +95,7 @@ Enables/disables node operation.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFInt32 [out] **actionKeyPress**
+{: #field-actionKeyPress }
 
 Action key press gives following values: HOME=000 END=1001 PGUP=1002 PGDN=1003 UP=1004 DOWN=1005 LEFT=1006 RIGHT=1007 F1..F12 = 1008..1019.
 
@@ -82,6 +104,7 @@ Action key press gives following values: HOME=000 END=1001 PGUP=1002 PGDN=1003 U
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFInt32 [out] **actionKeyRelease**
+{: #field-actionKeyRelease }
 
 Action key release gives following values: HOME=000 END=1001 PGUP=1002 PGDN=1003 UP=1004 DOWN=1005 LEFT=1006 RIGHT=1007 F1..F12 = 1008..1019.
 
@@ -90,6 +113,7 @@ Action key release gives following values: HOME=000 END=1001 PGUP=1002 PGDN=1003
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFString [out] **keyPress**
+{: #field-keyPress }
 
 Events generated when user presses character-producing keys on keyboard produces integer UTF-8 character values.
 
@@ -98,6 +122,7 @@ Events generated when user presses character-producing keys on keyboard produces
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFString [out] **keyRelease**
+{: #field-keyRelease }
 
 Events generated when user releases character-producing keys on keyboard produces integer UTF-8 character values.
 
@@ -106,6 +131,7 @@ Events generated when user releases character-producing keys on keyboard produce
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
+{: #field-isActive }
 
 Select geometry by activating the pointing device (for example, clicking the mouse) to generate *isActive* events. Output event *isActive*=true is sent when geometry is selected (for example, when primary mouse button is pressed), output event *isActive*=false is sent when geometry is deselected (for example, when primary mouse button is released).
 

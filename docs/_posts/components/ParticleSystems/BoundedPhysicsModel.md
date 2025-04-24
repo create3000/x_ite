@@ -15,7 +15,7 @@ tags: [BoundedPhysicsModel, ParticleSystems]
 
 BoundedPhysicsModel provides user-defined geometrical boundaries for particle motion. A child geometry node specifies boundaries that constrain the location of the particles.
 
-The BoundedPhysicsModel node belongs to the **ParticleSystems** component and requires at least level **2,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
+The BoundedPhysicsModel node belongs to the **ParticleSystems** component and requires at least support level **2,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,16 @@ The BoundedPhysicsModel node belongs to the **ParticleSystems** component and re
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFFloat | [in, out] | [damping](#field-damping) | 1  |
+| SFNode | [in, out] | [geometry](#field-geometry) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -36,14 +45,17 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
-### SFFloat [in, out] **damping** 1 <small>(-∞,∞)</small> <small class="blue">non standard</small>
+### SFFloat [in, out] **damping** 1 <small>(-∞,∞)</small> <small class="blue">non-standard</small>
+{: #field-damping }
 
 Damping of velocity in the event of a collision.
 
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
+{: #field-geometry }
 
 Single contained *geometry* node provides the *geometry* used for each particle when the parent [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) node has geometryType=GEOMETRY.
 

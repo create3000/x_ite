@@ -15,7 +15,7 @@ tags: [MultiTextureCoordinate, Texturing]
 
 MultiTextureCoordinate contains multiple TextureCoordinate or TextureCoordinateGenerator nodes, for use by a parent polygonal geometry node such as IndexedFaceSet or a Triangle* node. Each of the contained texture coordinate nodes correspond to the multiple texture nodes contained in a sibling Appearance/MultiTexture node.
 
-The MultiTextureCoordinate node belongs to the **Texturing** component and requires at least level **2,** its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
+The MultiTextureCoordinate node belongs to the **Texturing** component and requires at least support level **2,** its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,14 @@ The MultiTextureCoordinate node belongs to the **Texturing** component and requi
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFNode | [in, out] | [texCoord](#field-texCoord) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +44,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFNode [in, out] **texCoord** [ ] <small>[X3DTextureCoordinateNode]</small>
+{: #field-texCoord }
 
 Zero or more contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) or [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) nodes that specify texture coordinates for the different texture channels, used for texture mapping onto corresponding geometry.
 

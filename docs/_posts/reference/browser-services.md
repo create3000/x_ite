@@ -91,25 +91,41 @@ Returns a reference to the corresponding X3DCanvasElement. This property is read
 
 The `getSupportedProfile` service returns a ProfileInfo object of the named profile from the `supportedProfiles` array. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
 
+* [List of supported profiles](/x_ite/profiles/overview/)
+
 #### **getSupportedComponent** (*name: string*): ComponentInfo
 
 The `getSupportedComponent` service returns a ComponentInfo object of the named component from the `supportedComponents` array. The parameter is the name of a component from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component. If it does not support the component, an error is thrown.
+
+* [List of supported components](/x_ite/components/overview/)
 
 #### **getProfile** (*name: string*): ProfileInfo
 
 The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
 
+* [List of supported profiles](/x_ite/profiles/overview/)
+
 #### **getComponent** (*name: string, level?: number*): ComponentInfo
 
 The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only return a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
+
+* [List of supported components](/x_ite/components/overview/)
 
 #### **createScene** (*profile: ProfileInfo, ... components: ComponentInfo []*): Promise\<X3DScene\>
 
 The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
 
-#### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non standard</small>
+```js
+const profile    = browser .getProfile ("Interactive");
+const components = [browser .getComponent ("..."), browser .getComponent ("...")];
+const scene      = await browser .createScene (profile, ... components);
+```
+
+<!--
+#### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non-standard</small>
 
 Loads all components, external and internal, specified by `args`. If the argument is a `string`, the name of a component must be given.
+-->
 
 #### **replaceWorld** (*scene: X3DScene*): Promise\<void\>
 
@@ -275,115 +291,115 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>AutoUpdate</td>
-         <td>Whether the update control of the browser should be done automatically or not. <small class="blue">non standard</small></td>
+         <td>Whether the update control of the browser should be done automatically or not. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>Cache</td>
-         <td>Whether or not files should be cached. <small class="blue">non standard</small></td>
+         <td>Whether or not files should be cached. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>ColorSpace</td>
-         <td>The color space in which color calculations take place. <small class="blue">non standard</small></td>
+         <td>The color space in which color calculations take place. <small class="blue">non-standard</small></td>
          <td>SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR</td>
          <td>LINEAR_WHEN_PHYSICAL_MATERIAL</td>
       </tr>
       <tr>
          <td>ContentScale</td>
-         <td>Factor with which the internal canvas size should be scaled. If set to -1, window.devicePixelRatio is used. <small class="blue">non standard</small></td>
+         <td>Factor with which the internal canvas size should be scaled. If set to -1, window.devicePixelRatio is used. <small class="blue">non-standard</small></td>
          <td>Float</td>
          <td>1</td>
       </tr>
       <tr>
          <td>ContextMenu</td>
-         <td>Whether or not the context menu can be displayed. <small class="blue">non standard</small></td>
+         <td>Whether or not the context menu can be displayed. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>Debug</td>
-         <td>Whether or not debug message should be printed into the console. <small class="blue">non standard</small></td>
+         <td>Whether or not debug message should be printed into the console. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>Exposure</td>
-         <td>The exposure of an image describes the amount of light that is captured. This option only works with PhysicalMaterial node and SpecularGlossinessMaterial node. <small class="blue">non standard</small></td>
+         <td>The exposure of an image describes the amount of light that is captured. This option only works with PhysicalMaterial node and SpecularGlossinessMaterial node. <small class="blue">non-standard</small></td>
          <td>Float</td>
          <td>1</td>
       </tr>
       <tr>
          <td>Gravity</td>
-         <td>Default is gravity of Earth. <small class="blue">non standard</small></td>
+         <td>Default is gravity of Earth. <small class="blue">non-standard</small></td>
          <td>Float</td>
          <td>9.80665</td>
       </tr>
       <tr>
          <td>LoadUrlObjects</td>
-         <td>Wether X3DUrlObject should be loaded. <small class="blue">non standard</small></td>
+         <td>Wether X3DUrlObject should be loaded. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>LogarithmicDepthBuffer</td>
-         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. <small class="blue">non standard</small></td>
+         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>Multisampling</td>
-         <td>Number of samples used for multisampling. <small class="blue">non standard</small></td>
+         <td>Number of samples used for multisampling. <small class="blue">non-standard</small></td>
          <td>Integer</td>
          <td>4</td>
       </tr>
       <tr>
          <td>Mute</td>
-         <td>Whether to mute all audio. <small class="blue">non standard</small></td>
+         <td>Whether to mute all audio. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>Notifications</td>
-         <td>Whether or not notifications should be displayed. <small class="blue">non standard</small></td>
+         <td>Whether or not notifications should be displayed. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>OrderIndependentTransparency</td>
-         <td>Whether to use order independent transparency rendering technique. <small class="blue">non standard</small></td>
+         <td>Whether to use order independent transparency rendering technique. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>StraightenHorizon</td>
-         <td>Whether the Examine Viewer should straighten the horizon when navigating. <small class="blue">non standard</small></td>
+         <td>Whether the Examine Viewer should straighten the horizon when navigating. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>TextCompression</td>
-         <td>Controls how Text.<em>length</em> and Text.<em>maxExtent</em> are handled. Either by adjusting char spacing or by scaling text letters. <small class="blue">non standard</small></td>
+         <td>Controls how Text.<em>length</em> and Text.<em>maxExtent</em> are handled. Either by adjusting char spacing or by scaling text letters. <small class="blue">non-standard</small></td>
          <td>CHAR_SPACING, SCALING</td>
          <td>CHAR_SPACING</td>
       </tr>
       <tr>
          <td>Timings</td>
-         <td>Whether browser timings should be displayed. <small class="blue">non standard</small></td>
+         <td>Whether browser timings should be displayed. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>ToneMapping</td>
-         <td>Whether tone mapping should be applied. <small class="blue">non standard</small></td>
+         <td>Whether tone mapping should be applied. <small class="blue">non-standard</small></td>
          <td>NONE, ACES_NARKOWICZ, ACES_HILL, ACES_HILL_EXPOSURE_BOOST, KHR_PBR_NEUTRAL</td>
          <td>KHR_PBR_NEUTRAL</td>
       </tr>
       <tr>
          <td>XRSessionMode</td>
-         <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a>. <small class="blue">non standard</small></td>
+         <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a>. <small class="blue">non-standard</small></td>
          <td>NONE, IMMERSIVE_AR, IMMERSIVE_VR</td>
          <td>IMMERSIVE_VR</td>
       </tr>
@@ -393,6 +409,16 @@ Returns a browser option with the corresponding *name*.
 #### **setBrowserOption** (*name: string, value: any*): void
 
 Sets a browser option with the corresponding *name* to the given value.
+
+<!--
+#### **addBrowserOptionCallback** (*key: any, name: string, callback: (value: unknown) => void*): void
+
+Adds a browser option callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the browser option to which the callback should be connected. The callback is called when the property has been changed.
+
+#### **removeBrowserOptionCallback** (*key: any, name: string*): void
+
+Removes a browser option callback function associated with *key* and *name* from the browser option.
+-->
 
 #### **getRenderingProperty** (*name: string*): any
 
@@ -447,35 +473,57 @@ Returns a rendering property with the corresponding *name*.
       <tr>
          <td>ContentScale</td>
          <td>Boolean</td>
-         <td>Currently used factor to scale content. <small class="blue">non standard</small></td>
-      </tr>
-      <tr>
-         <td>MaxAnisotropicDegree</td>
-         <td>Float</td>
-         <td>The maximum number of available anisotropy. <small class="blue">non standard</small></td>
-      </tr>
-      <tr>
-         <td>MaxSamples</td>
-         <td>Integer</td>
-         <td>The maximum number of samples supported for doing multisampling. <small class="blue">non standard</small></td>
-      </tr>
-      <tr>
-         <td>Multisampling</td>
-         <td>Integer</td>
-         <td>Number of samples currently used by multisampling. <small class="blue">non standard</small></td>
-      </tr>
-      <tr>
-         <td>PixelsPerPoint</td>
-         <td>Float</td>
-         <td>Number of pixels per point. <small class="blue">non standard</small></td>
+         <td>Currently used factor to scale content. <small class="blue">non-standard</small></td>
       </tr>
       <tr>
          <td>LogarithmicDepthBuffer</td>
          <td>Boolean</td>
-         <td>True or false if the logarithmic depth buffer is currently enabled or not. <small class="blue">non standard</small></td>
+         <td>True or false if the logarithmic depth buffer is currently enabled or not. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>MaxAnisotropicDegree</td>
+         <td>Float</td>
+         <td>The maximum number of available anisotropy. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>MaxSamples</td>
+         <td>Integer</td>
+         <td>The maximum number of samples supported for doing multisampling. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>Multisampling</td>
+         <td>Integer</td>
+         <td>Number of samples currently used by multisampling. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>PixelsPerPoint</td>
+         <td>Float</td>
+         <td>Number of pixels per point. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>XRSession</td>
+         <td>Boolean</td>
+         <td>True if a WebXR session is active, otherwise false. <small class="blue">non-standard</small></td>
       </tr>
    </tbody>
 </table>
+
+<!--
+#### **addRenderingPropertyCallback** (*key: any, name: string, callback: (value: unknown) => void*): void
+
+Adds a rendering property callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the rendering property to which the callback should be connected. The callback is called when the property has been changed.
+
+```js
+browser .addRenderingPropertyCallback ("check", "XRSession", value =>
+{
+   console .log (`User ${value ? "entered" : "leaved"} WebXR.`);
+});
+```
+
+#### **removeRenderingPropertyCallback** (*key: any, name: string*): void
+
+Removes a rendering property callback function associated with *key* and *name* from the rendering property.
+-->
 
 #### **addBrowserCallback** (*key: any, [event?: number,] callback: (event: number) => void*): void
 
@@ -493,7 +541,7 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 
 Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callbacks associated with key will be removed.
 
-#### **viewAll** (*[layer?: SFNode,] transitionTime?: number = 1*): void <small><span class="blue">non standard</span></small>
+#### **viewAll** (*[layer?: SFNode,] transitionTime?: number = 1*): void <small><span class="blue">non-standard</span></small>
 
 Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layerNode* is omitted, the active layer is used.
 

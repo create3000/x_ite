@@ -1,4 +1,8 @@
 export default /* glsl */ `
+
+// Originally from:
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/ibl.glsl
+
 #if defined (X3D_USE_IBL)
 
 uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;
@@ -140,8 +144,7 @@ getTransmissionSample (in vec2 fragCoord, const in float roughness, const in flo
    #endif
 }
 
-vec3
-getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float perceptualRoughness, const in vec3 baseColor, const in vec3 f0, const in vec3 f90, const in vec3 position, const in mat4 modelMatrix, const in mat4 projMatrix, const in float ior, const in float thickness, const in vec3 attenuationColor, const in float attenuationDistance, const in float dispersion)
+vec3 getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float perceptualRoughness, const in vec3 baseColor, const in vec3 position, const in mat4 modelMatrix, const in mat4 projMatrix, const in float ior, const in float thickness, const in vec3 attenuationColor, const in float attenuationDistance, const in float dispersion)
 {
    #if defined (X3D_DISPERSION_MATERIAL_EXT)
       // Dispersion will spread out the ior values for each r,g,b channel
@@ -186,19 +189,7 @@ getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float percept
 
    vec3 attenuatedColor = applyVolumeAttenuation (transmittedLight, transmissionRayLength, attenuationColor, attenuationDistance);
 
-   // Sample GGX LUT to get the specular component.
-   float NdotV           = clamp (dot(n, v), 0.0, 1.0);
-   vec2  brdfSamplePoint = clamp (vec2 (NdotV, perceptualRoughness), vec2 (0.0), vec2 (1.0));
-
-   #if __VERSION__ == 100
-      vec2 brdf = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
-   #else
-      vec2 brdf = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
-   #endif
-
-   vec3 specularColor = f0 * brdf .x + f90 * brdf .y;
-
-   return (1.0 - specularColor) * attenuatedColor * baseColor;
+   return attenuatedColor * baseColor;
 }
 #endif
 

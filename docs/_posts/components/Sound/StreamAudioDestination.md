@@ -15,7 +15,7 @@ tags: [StreamAudioDestination, Sound]
 
 StreamAudioDestination node represents the final audio destination via a media stream.
 
-The StreamAudioDestination node belongs to the **Sound** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The StreamAudioDestination node belongs to the **Sound** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,23 @@ The StreamAudioDestination node belongs to the **Sound** component and requires 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFFloat | [in, out] | [gain](#field-gain) | 1  |
+| SFString | [in, out] | [mediaDeviceID](#field-mediaDeviceID) |  |
+| MFString | [in, out] | [streamIdentifier](#field-streamIdentifier) | [ ] |
+| SFInt32 | [in, out] | [channelCount](#field-channelCount) |  |
+| SFString | [in, out] | [channelCountMode](#field-channelCountMode) | "MAX"  |
+| SFString | [in, out] | [channelInterpretation](#field-channelInterpretation) | "SPEAKERS"  |
+| SFBool | [out] | [isActive](#field-isActive) |  |
+| MFNode | [in, out] | [children](#field-children) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -38,6 +54,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -46,10 +63,12 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
+{: #field-gain }
 
 The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
@@ -62,10 +81,12 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - Decibel values shall not be used.
 
 ### SFString [in, out] **mediaDeviceID**
+{: #field-mediaDeviceID }
 
 *mediaDeviceID* field provides ID parameter functionality. (TODO experimental)
 
 ### MFString [in, out] **streamIdentifier** [ ]
+{: #field-streamIdentifier }
 
 Stream identification TBD
 
@@ -74,6 +95,7 @@ Stream identification TBD
 - [W3C Media Capture and Streams](https://www.w3.org/TR/mediacapture-streams)
 
 ### SFInt32 [in, out] **channelCount**
+{: #field-channelCount }
 
 *channelCount* reports number of channels provided by input nodes.
 
@@ -82,6 +104,7 @@ Stream identification TBD
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
+{: #field-channelCountMode }
 
 *channelCountMode* determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
 
@@ -90,6 +113,7 @@ Stream identification TBD
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode)
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
+{: #field-channelInterpretation }
 
 *channelInterpretation* determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
 
@@ -98,6 +122,7 @@ Stream identification TBD
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
 
 ### SFBool [out] **isActive**
+{: #field-isActive }
 
 *isActive* true/false events are sent when playback starts/stops.
 
@@ -106,6 +131,7 @@ Stream identification TBD
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+{: #field-children }
 
 The *children* field specifies audio-graph sound sources providing input signals for this node. If multiple input signals are provided by the inputs *children* field, all channels are mixed together and merged prior to presentation.
 

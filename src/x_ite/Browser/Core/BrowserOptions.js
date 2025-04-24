@@ -229,11 +229,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .localStorage .PrimitiveQuality = primitiveQuality;
       this .primitiveQuality               = $.enum (PrimitiveQuality, primitiveQuality) ?? PrimitiveQuality .MEDIUM;
 
-      if (typeof browser .setPrimitiveQuality2D === "function")
-         browser .setPrimitiveQuality2D (this .primitiveQuality);
-
-      if (typeof browser .setPrimitiveQuality3D === "function")
-         browser .setPrimitiveQuality3D (this .primitiveQuality);
+      browser .setPrimitiveQuality2D ?.(this .primitiveQuality);
+      browser .setPrimitiveQuality3D ?.(this .primitiveQuality);
    },
    set_TextureQuality__ (value)
    {
@@ -244,18 +241,11 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .localStorage .TextureQuality = textureQuality;
       this .textureQuality               = $.enum (TextureQuality, textureQuality) ?? TextureQuality .MEDIUM;
 
-      if (typeof browser .setTextureQuality === "function")
-         browser .setTextureQuality (this .textureQuality);
+      browser .setTextureQuality ?.(this .textureQuality);
    },
    set_Shading__: (() =>
    {
-      const strings = {
-         [Shading .POINT]:     "POINT",
-         [Shading .WIREFRAME]: "WIREFRAME",
-         [Shading .FLAT]:      "FLAT",
-         [Shading .GOURAUD]:   "GOURAUD",
-         [Shading .PHONG]:     "PHONG",
-      };
+      const strings = new Map (Object .entries (Shading) .map (entry => entry .reverse ()));
 
       return function (value)
       {
@@ -265,7 +255,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
          this .shading = $.enum (Shading, shading) ?? Shading .GOURAUD;
 
-         browser .getRenderingProperties () ._Shading = strings [this .shading];
+         browser .getRenderingProperties () ._Shading = strings .get (this .shading);
          browser .setShading (this .shading);
       };
    })(),

@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
          this ._isOver = over;
 
          if (over)
-            this .getBrowser () .getNotification () ._string = this ._description;
+            this .getBrowser () .setDescription (this ._description);
       }
    },
    set_active__ (active, hit)

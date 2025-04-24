@@ -98,6 +98,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_children__ ()
    {
+      this .setChild (X3DCast (X3DConstants .X3DChildNode, this ._shape));
+   },
+   setChild (childNode)
+   {
       // Remove node.
 
       if (this .childNode)
@@ -132,8 +136,6 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       this .bboxObject      = null;
 
       // Add node.
-
-      const childNode = X3DCast (X3DConstants .X3DChildNode, this ._shape);
 
       if (childNode)
       {

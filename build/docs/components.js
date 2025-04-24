@@ -9,6 +9,7 @@ const
 const
    components = path .resolve ("./", "src/x_ite/Components"),
    posts      = path .resolve ("./", "docs/_posts/"),
+   prof       = path .resolve ("./", "docs/_posts/profiles"),
    comp       = path .resolve ("./", "docs/_posts/components"),
    nav        = path .resolve ("./", "docs/_data/nav");
 
@@ -84,9 +85,18 @@ function updateComponents (supported)
       count = 0,
       all   = 0;
 
+   const supportedComponents = sh (`cat`, `src/x_ite/Configuration/SupportedComponents.js`);
+
    for (const [component, nodes] of createIndex ())
    {
-      list += `##${supported ? "#" : ""} ${component}\n\n`;
+      list += `### ${component}\n\n`;
+
+      const title = supportedComponents .match (new RegExp (`add\\s\\("${component}".*?title:\\s*"(.*?)"`, "s")) [1]
+      const level = supportedComponents .match (new RegExp (`add\\s\\("${component}".*?level:\\s*(\\d)`, "s")) [1];
+
+      list += `${title}<br>\n`;
+      list += `Highest supported level: **${level}**\n`;
+      list += `{: .small }\n\n`;
 
       for (const node of nodes .sort ())
       {
@@ -165,6 +175,43 @@ function updateComponents (supported)
 
 //    fs .writeFileSync (md, text);
 // }
+
+function updateProfiles ()
+{
+   let list = "\n\n";
+
+   const supportedProfiles = sh (`cat`, `src/x_ite/Configuration/SupportedProfiles.js`);
+
+   supportedProfiles .match (/add\s*\("(.*?)"/sg) .sort () .forEach (m =>
+   {
+      m = m .match (/add\s*\("(.*?)"/s);
+
+      list += `### ${m [1]}\n\n`;
+
+      const title = supportedProfiles .match (new RegExp (`add\\s\\("${m [1]}".*?title:\\s*"(.*?)"`, "s")) [1]
+
+      list += `${title}\n`;
+      list += `{: .small }\n\n`;
+
+      supportedProfiles .match (new RegExp (`"${m [1]}".*?components:\\s*\\[\\s*(.*?)\\s*\\]`, "s")) [1] .split ("\n") .map (c => c.match (/"(.*?)",\s*(\d)/s)) .sort ((a, b) => a [1] .localeCompare (b [1], "en")) .forEach (([_, component, level]) =>
+      {
+         if (component === "Annotation")
+            return;
+
+         list += `- [${component}](/x_ite/components/overview/#${component .toLowerCase ()}) : **${level}**\n`;
+      });
+
+      list += `\n`;
+   });
+
+   const md = path .resolve (prof, `overview.md`);
+
+   let text = fs .readFileSync (md) .toString ();
+
+   text = text .replace (/<!-- PROFILES BEGIN -->.*?<!-- PROFILES END -->/s, `<!-- PROFILES BEGIN -->${list}<!-- PROFILES END -->`);
+
+   fs .writeFileSync (md, text);
+}
 
 async function addNodeStubs ()
 {
@@ -250,4 +297,5 @@ ${fields}
 updateNav ();
 updateComponents (false);
 updateComponents (true);
+updateProfiles ();
 addNodeStubs ();

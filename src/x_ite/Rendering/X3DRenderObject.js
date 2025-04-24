@@ -120,6 +120,7 @@ Object .assign (X3DRenderObject .prototype,
    {
       const browser = this .getBrowser ();
 
+      browser .getRenderingProperties () ._Shading                 .addInterest ("set_renderKey__", this);
       browser .getRenderingProperties () ._LogarithmicDepthBuffer  .addInterest ("set_renderKey__", this);
       browser .getRenderingProperties () ._XRSession               .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._ColorSpace                   .addInterest ("set_renderKey__", this);
@@ -148,9 +149,10 @@ Object .assign (X3DRenderObject .prototype,
 
       let renderKey = "";
 
-      renderKey += browser .getRenderingProperty ("XRSession") ? 1 : 0;
-      renderKey += this .logarithmicDepthBuffer                ? 1 : 0;
-      renderKey += this .orderIndependentTransparency          ? 1 : 0;
+      renderKey += browser .getRenderingProperty ("Shading") === "FLAT" ? 1 : 0;
+      renderKey += browser .getRenderingProperty ("XRSession")          ? 1 : 0;
+      renderKey += this .logarithmicDepthBuffer                         ? 1 : 0;
+      renderKey += this .orderIndependentTransparency                   ? 1 : 0;
 
       switch (browser .getBrowserOption ("ColorSpace"))
       {
@@ -848,7 +850,7 @@ Object .assign (X3DRenderObject .prototype,
             browser  = this .getBrowser (),
             gl       = browser .getContext (),
             viewport = this .viewVolumes .at (-1) .getViewport (),
-            [x, y]   = browser .getPointer ();
+            { x, y } = browser .getPointer ();
 
          // Configure depth shaders.
 

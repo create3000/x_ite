@@ -34,9 +34,9 @@ The following lists outline the profiles and nodes supported in X_ITE.
 
 ## Supported Profiles
 
-X_ITE has achieved the [X3D Immersive profile](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/immersive.html) support (which matches the VRML97 palette) verified by the X3D consortium at [web3d.org](https://www.web3d.org).
+X_ITE has achieved the [X3D Immersive profile](/x_ite/profiles/overview/#immersive) support (which matches the VRML97 palette) verified by the X3D consortium at [web3d.org](https://www.web3d.org).
 
-Of course, [all other profiles](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/profileIndex.html) can also be used, as a large number of nodes are available.
+Of course, [all other X3D profiles](/x_ite/profiles/overview/) can also be used, as a large number of nodes are available.
 
 ## Supported Components
 
@@ -56,6 +56,10 @@ Missing Nodes:
 
 ### CADGeometry
 
+CAD geometry<br>
+Highest supported level: **2**
+{: .small }
+
 - [CADAssembly](/x_ite/components/cadgeometry/cadassembly/)
 - [CADFace](/x_ite/components/cadgeometry/cadface/)
 - [CADLayer](/x_ite/components/cadgeometry/cadlayer/)
@@ -64,6 +68,10 @@ Missing Nodes:
 - [QuadSet](/x_ite/components/cadgeometry/quadset/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/cadgeometry/quadset/#example)
 
 ### Core
+
+Core<br>
+Highest supported level: **2**
+{: .small }
 
 - [MetadataBoolean](/x_ite/components/core/metadataboolean/)
 - [MetadataDouble](/x_ite/components/core/metadatadouble/)
@@ -75,14 +83,26 @@ Missing Nodes:
 
 ### CubeMapTexturing
 
+Cube map environmental texturing<br>
+Highest supported level: **3**
+{: .small }
+
 - [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/cubemaptexturing/composedcubemaptexture/#example)
 - [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/cubemaptexturing/generatedcubemaptexture/#example)
 - [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/)
 
 ### DIS
 
+Distributed interactive simulation<br>
+Highest supported level: **2**
+{: .small }
+
 
 ### EnvironmentalEffects
+
+Environmental effects<br>
+Highest supported level: **4**
+{: .small }
 
 - [Background](/x_ite/components/environmentaleffects/background/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentaleffects/background/#example)
 - [Fog](/x_ite/components/environmentaleffects/fog/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentaleffects/fog/#example)
@@ -92,11 +112,19 @@ Missing Nodes:
 
 ### EnvironmentalSensor
 
+Environmental sensor<br>
+Highest supported level: **3**
+{: .small }
+
 - [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentalsensor/proximitysensor/#example)
 - [TransformSensor](/x_ite/components/environmentalsensor/transformsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentalsensor/transformsensor/#example)
 - [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/environmentalsensor/visibilitysensor/#example)
 
 ### EventUtilities
+
+Event utilities<br>
+Highest supported level: **1**
+{: .small }
 
 - [BooleanFilter](/x_ite/components/eventutilities/booleanfilter/)
 - [BooleanSequencer](/x_ite/components/eventutilities/booleansequencer/)
@@ -107,6 +135,10 @@ Missing Nodes:
 - [TimeTrigger](/x_ite/components/eventutilities/timetrigger/)
 
 ### Followers
+
+Followers<br>
+Highest supported level: **1**
+{: .small }
 
 - [ColorChaser](/x_ite/components/followers/colorchaser/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/followers/colorchaser/#example)
 - [ColorDamper](/x_ite/components/followers/colordamper/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/followers/colordamper/#example)
@@ -125,6 +157,10 @@ Missing Nodes:
 
 ### Geometry2D
 
+Geometry2D<br>
+Highest supported level: **2**
+{: .small }
+
 - [Arc2D](/x_ite/components/geometry2d/arc2d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry2d/arc2d/#example)
 - [ArcClose2D](/x_ite/components/geometry2d/arcclose2d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry2d/arcclose2d/#example)
 - [Circle2D](/x_ite/components/geometry2d/circle2d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry2d/circle2d/#example)
@@ -136,6 +172,10 @@ Missing Nodes:
 
 ### Geometry3D
 
+Geometry3D<br>
+Highest supported level: **4**
+{: .small }
+
 - [Box](/x_ite/components/geometry3d/box/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/box/#example)
 - [Cone](/x_ite/components/geometry3d/cone/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/cone/#example)
 - [Cylinder](/x_ite/components/geometry3d/cylinder/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/cylinder/#example)
@@ -145,6 +185,10 @@ Missing Nodes:
 - [Sphere](/x_ite/components/geometry3d/sphere/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geometry3d/sphere/#example)
 
 ### Geospatial
+
+Geospatial<br>
+Highest supported level: **2**
+{: .small }
 
 - [GeoCoordinate](/x_ite/components/geospatial/geocoordinate/)
 - [GeoElevationGrid](/x_ite/components/geospatial/geoelevationgrid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geospatial/geoelevationgrid/#example)
@@ -160,12 +204,20 @@ Missing Nodes:
 
 ### Grouping
 
+Grouping<br>
+Highest supported level: **3**
+{: .small }
+
 - [Group](/x_ite/components/grouping/group/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/group/#example)
 - [StaticGroup](/x_ite/components/grouping/staticgroup/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/staticgroup/#example)
 - [Switch](/x_ite/components/grouping/switch/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/switch/#example)
 - [Transform](/x_ite/components/grouping/transform/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/grouping/transform/#example)
 
 ### HAnim
+
+Humanoid animation (HAnim)<br>
+Highest supported level: **3**
+{: .small }
 
 - [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/)
 - [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/hanim/hanimhumanoid/#example)
@@ -175,6 +227,10 @@ Missing Nodes:
 - [HAnimSite](/x_ite/components/hanim/hanimsite/)
 
 ### Interpolation
+
+Interpolation<br>
+Highest supported level: **5**
+{: .small }
 
 - [ColorInterpolator](/x_ite/components/interpolation/colorinterpolator/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/interpolation/colorinterpolator/#example)
 - [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/interpolation/coordinateinterpolator/#example)
@@ -192,16 +248,28 @@ Missing Nodes:
 
 ### KeyDeviceSensor
 
+Key device sensor<br>
+Highest supported level: **2**
+{: .small }
+
 - [KeySensor](/x_ite/components/keydevicesensor/keysensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/keydevicesensor/keysensor/#example)
 - [StringSensor](/x_ite/components/keydevicesensor/stringsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/keydevicesensor/stringsensor/#example)
 
 ### Layering
+
+Layering<br>
+Highest supported level: **1**
+{: .small }
 
 - [Layer](/x_ite/components/layering/layer/)
 - [LayerSet](/x_ite/components/layering/layerset/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/layering/layerset/#example)
 - [Viewport](/x_ite/components/layering/viewport/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/layering/viewport/#example)
 
 ### Layout
+
+Layout<br>
+Highest supported level: **2**
+{: .small }
 
 - [Layout](/x_ite/components/layout/layout/)
 - [LayoutGroup](/x_ite/components/layout/layoutgroup/)
@@ -211,12 +279,20 @@ Missing Nodes:
 
 ### Lighting
 
+Lighting<br>
+Highest supported level: **3**
+{: .small }
+
 - [DirectionalLight](/x_ite/components/lighting/directionallight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/directionallight/#example)
 - [EnvironmentLight](/x_ite/components/lighting/environmentlight/)
 - [PointLight](/x_ite/components/lighting/pointlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/pointlight/#example)
 - [SpotLight](/x_ite/components/lighting/spotlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/spotlight/#example)
 
 ### NURBS
+
+NURBS<br>
+Highest supported level: **4**
+{: .small }
 
 - [Contour2D](/x_ite/components/nurbs/contour2d/)
 - [ContourPolyline2D](/x_ite/components/nurbs/contourpolyline2d/)
@@ -234,6 +310,10 @@ Missing Nodes:
 
 ### Navigation
 
+Navigation<br>
+Highest supported level: **3**
+{: .small }
+
 - [Billboard](/x_ite/components/navigation/billboard/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/navigation/billboard/#example)
 - [Collision](/x_ite/components/navigation/collision/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/navigation/collision/#example)
 - [LOD](/x_ite/components/navigation/lod/)
@@ -244,11 +324,19 @@ Missing Nodes:
 
 ### Networking
 
+Networking<br>
+Highest supported level: **4**
+{: .small }
+
 - [Anchor](/x_ite/components/networking/anchor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/anchor/#example)
 - [Inline](/x_ite/components/networking/inline/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/inline/#example)
 - [LoadSensor](/x_ite/components/networking/loadsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/loadsensor/#example)
 
 ### ParticleSystems
+
+Particle systems<br>
+Highest supported level: **3**
+{: .small }
 
 - [BoundedPhysicsModel](/x_ite/components/particlesystems/boundedphysicsmodel/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/particlesystems/boundedphysicsmodel/#example)
 - [ConeEmitter](/x_ite/components/particlesystems/coneemitter/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/particlesystems/coneemitter/#example)
@@ -263,6 +351,10 @@ Missing Nodes:
 
 ### Picking
 
+Picking<br>
+Highest supported level: **3**
+{: .small }
+
 - [LinePickSensor](/x_ite/components/picking/linepicksensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/picking/linepicksensor/#example)
 - [PickableGroup](/x_ite/components/picking/pickablegroup/)
 - [PointPickSensor](/x_ite/components/picking/pointpicksensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/picking/pointpicksensor/#example)
@@ -271,12 +363,20 @@ Missing Nodes:
 
 ### PointingDeviceSensor
 
+Pointing device sensor<br>
+Highest supported level: **1**
+{: .small }
+
 - [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/pointingdevicesensor/cylindersensor/#example)
 - [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/pointingdevicesensor/planesensor/#example)
 - [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/)
 - [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/pointingdevicesensor/touchsensor/#example)
 
 ### Rendering
+
+Rendering<br>
+Highest supported level: **5**
+{: .small }
 
 - [ClipPlane](/x_ite/components/rendering/clipplane/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rendering/clipplane/#example)
 - [Color](/x_ite/components/rendering/color/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rendering/color/#example)
@@ -297,6 +397,10 @@ Missing Nodes:
 
 ### RigidBodyPhysics
 
+Rigid body physics<br>
+Highest supported level: **2**
+{: .small }
+
 - [BallJoint](/x_ite/components/rigidbodyphysics/balljoint/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rigidbodyphysics/balljoint/#example)
 - [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/)
 - [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rigidbodyphysics/collidableshape/#example)
@@ -312,9 +416,17 @@ Missing Nodes:
 
 ### Scripting
 
+Scripting<br>
+Highest supported level: **1**
+{: .small }
+
 - [Script](/x_ite/components/scripting/script/)
 
 ### Shaders
+
+Programmable shaders<br>
+Highest supported level: **1**
+{: .small }
 
 - [ComposedShader](/x_ite/components/shaders/composedshader/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shaders/composedshader/#example)
 - [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shaders/floatvertexattribute/#example)
@@ -323,6 +435,10 @@ Missing Nodes:
 - [ShaderPart](/x_ite/components/shaders/shaderpart/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shaders/shaderpart/#example)
 
 ### Shape
+
+Shape<br>
+Highest supported level: **4**
+{: .small }
 
 - [AcousticProperties](/x_ite/components/shape/acousticproperties/)
 - [Appearance](/x_ite/components/shape/appearance/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shape/appearance/#example)
@@ -336,6 +452,10 @@ Missing Nodes:
 - [UnlitMaterial](/x_ite/components/shape/unlitmaterial/)
 
 ### Sound
+
+Sound<br>
+Highest supported level: **3**
+{: .small }
 
 - [Analyser](/x_ite/components/sound/analyser/)
 - [AudioClip](/x_ite/components/sound/audioclip/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/sound/audioclip/#example)
@@ -359,16 +479,27 @@ Missing Nodes:
 
 ### Text
 
-- [FontLibrary](/x_ite/components/text/fontlibrary/) <small class="blue">experimental</small>
+Text<br>
+Highest supported level: **1**
+{: .small }
+
 - [FontStyle](/x_ite/components/text/fontstyle/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/fontstyle/#example)
 - [Text](/x_ite/components/text/text/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/text/#example)
 
 ### TextureProjection
 
+Texture Projection<br>
+Highest supported level: **2**
+{: .small }
+
 - [TextureProjector](/x_ite/components/textureprojection/textureprojector/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/textureprojection/textureprojector/#example)
 - [TextureProjectorParallel](/x_ite/components/textureprojection/textureprojectorparallel/)
 
 ### Texturing
+
+Texturing<br>
+Highest supported level: **4**
+{: .small }
 
 - [ImageTexture](/x_ite/components/texturing/imagetexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing/imagetexture/#example)
 - [MovieTexture](/x_ite/components/texturing/movietexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing/movietexture/#example)
@@ -383,6 +514,10 @@ Missing Nodes:
 
 ### Texturing3D
 
+Texturing3D<br>
+Highest supported level: **2**
+{: .small }
+
 - [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/)
 - [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing3d/imagetexture3d/#example)
 - [ImageTextureAtlas](/x_ite/components/texturing3d/imagetextureatlas/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing3d/imagetextureatlas/#example) <small class="blue">experimental</small>
@@ -394,9 +529,17 @@ Missing Nodes:
 
 ### Time
 
+Time<br>
+Highest supported level: **2**
+{: .small }
+
 - [TimeSensor](/x_ite/components/time/timesensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/time/timesensor/#example)
 
 ### VolumeRendering
+
+Volume rendering<br>
+Highest supported level: **4**
+{: .small }
 
 - [BlendedVolumeStyle](/x_ite/components/volumerendering/blendedvolumestyle/)
 - [BoundaryEnhancementVolumeStyle](/x_ite/components/volumerendering/boundaryenhancementvolumestyle/)
@@ -413,6 +556,10 @@ Missing Nodes:
 - [VolumeData](/x_ite/components/volumerendering/volumedata/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/volumerendering/volumedata/#example)
 
 ### X_ITE
+
+X_ITE<br>
+Highest supported level: **1**
+{: .small }
 
 - [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) <small class="blue">experimental</small>
 - [BlendMode](/x_ite/components/x-ite/blendmode/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/blendmode/#example) <small class="blue">experimental</small>

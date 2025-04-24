@@ -1,6 +1,6 @@
 {
   "name": "x_ite",
-  "version": "11.5.0",
+  "version": "11.5.3",
   "description": "X_ITE X3D Browser, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.",
   "main": "dist/x_ite.js",
   "module": "dist/x_ite.mjs",
@@ -66,7 +66,7 @@
     "XML"
   ],
   "author": "Holger Seelig <holger.seelig@gmail.com>",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/create3000/x_ite/issues"
   },
@@ -108,7 +108,7 @@
     "ammojs": "^0.0.2",
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
-    "fast-xml-parser": "^5.2.0",
+    "fast-xml-parser": "^5.2.1",
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
     "jquery": "^3.7.1",
@@ -124,7 +124,7 @@
     "shell-tools": "^1.1.9",
     "string-replace-webpack-plugin": "^0.1.3",
     "terser": "^5.39.0",
-    "webpack": "^5.98.0",
+    "webpack": "^5.99.6",
     "webpack-cli": "^6.0.1",
     "webpack-shell-plugin-next": "^2.3.2",
     "woff2-encoder": "^2.0.0",

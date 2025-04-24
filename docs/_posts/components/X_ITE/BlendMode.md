@@ -31,7 +31,20 @@ The BlendMode node belongs to the **X_ITE** component and its default container 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFColorRGBA | [in, out] | [blendColor](#field-blendColor) | 0 0 0 0  |
+| SFString | [in, out] | [sourceColorFactor](#field-sourceColorFactor) | "SRC |
+| SFString | [in, out] | [sourceAlphaFactor](#field-sourceAlphaFactor) | "ONE" |
+| SFString | [in, out] | [destinationColorFactor](#field-destinationColorFactor) | "ONE |
+| SFString | [in, out] | [destinationAlphaFactor](#field-destinationAlphaFactor) | "ONE |
+| SFString | [in, out] | [colorEquation](#field-colorEquation) | "FUNC |
+| SFString | [in, out] | [alphaEquation](#field-alphaEquation) | "FUNC |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -40,10 +53,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFColorRGBA [in, out] **blendColor** 0 0 0 0 <small>[0,1]</small>
+{: #field-blendColor }
 
 The *blendColor* may be used to calculate the source and destination blending factors.
 
 ### SFString [in, out] **sourceColorFactor** "SRC_ALPHA"
+{: #field-sourceColorFactor }
 
 Specifies how the red, green, and blue source blending factors are computed.
 
@@ -65,18 +80,22 @@ Source and destination parameters must be one of the following symbolic constant
 - ONE_MINUS_CONSTANT_ALPHA
 
 ### SFString [in, out] **sourceAlphaFactor** "ONE"
+{: #field-sourceAlphaFactor }
 
 Specifies how the alpha source blending factors are computed.
 
 ### SFString [in, out] **destinationColorFactor** "ONE_MINUS_SRC_ALPHA"
+{: #field-destinationColorFactor }
 
 Specifies how the red, green, and blue destination blending factors are computed.
 
 ### SFString [in, out] **destinationAlphaFactor** "ONE_MINUS_SRC_ALPHA"
+{: #field-destinationAlphaFactor }
 
 Specifies how the alpha destination blending factors are computed.
 
 ### SFString [in, out] **colorEquation** "FUNC_ADD"
+{: #field-colorEquation }
 
 Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
 
@@ -85,6 +104,7 @@ Specifies the RGB blend equation, how the red, green, and blue components of the
 - FUNC_REVERSE_SUBTRACT
 
 ### SFString [in, out] **alphaEquation** "FUNC_ADD"
+{: #field-alphaEquation }
 
 Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
 

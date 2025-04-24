@@ -15,7 +15,7 @@ tags: [GeoTouchSensor, Geospatial]
 
 GeoTouchSensor returns geographic coordinates for the object being selected. GeoTouchSensor can contain a GeoOrigin node.
 
-The GeoTouchSensor node belongs to the **Geospatial** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The GeoTouchSensor node belongs to the **Geospatial** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -30,7 +30,24 @@ The GeoTouchSensor node belongs to the **Geospatial** component and requires at 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFNode | [ ] | [geoOrigin](#field-geoOrigin) | NULL  |
+| MFString | [ ] | [geoSystem](#field-geoSystem) | [ "GD", "WE" ] |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFVec2f | [out] | [hitTexCoord_changed](#field-hitTexCoord_changed) |  |
+| SFVec3f | [out] | [hitNormal_changed](#field-hitNormal_changed) |  |
+| SFVec3f | [out] | [hitPoint_changed](#field-hitPoint_changed) |  |
+| SFVec3d | [out] | [hitGeoCoord_changed](#field-hitGeoCoord_changed) |  |
+| SFBool | [out] | [isOver](#field-isOver) |  |
+| SFBool | [out] | [isActive](#field-isActive) |  |
+| SFTime | [out] | [touchTime](#field-touchTime) |  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -39,6 +56,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -48,6 +66,7 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
+{: #field-geoOrigin }
 
 Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
@@ -60,6 +79,7 @@ Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that 
 - XML validation requires placement as first child node following contained metadata nodes (if any).
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
+{: #field-geoSystem }
 
 Identifies spatial reference frame: Geodetic (G D), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 
@@ -74,10 +94,12 @@ Identifies spatial reference frame: Geodetic (G D), Geocentric (GC), Universal T
 - Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFVec2f [out] **hitTexCoord_changed**
+{: #field-hitTexCoord_changed }
 
 Output event containing texture coordinates of surface at the hitGeoCoordinate.
 
@@ -86,6 +108,7 @@ Output event containing texture coordinates of surface at the hitGeoCoordinate.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **hitNormal_changed**
+{: #field-hitNormal_changed }
 
 Output event containing surface normal vector at the hitGeoCoordinate.
 
@@ -94,6 +117,7 @@ Output event containing surface normal vector at the hitGeoCoordinate.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **hitPoint_changed**
+{: #field-hitPoint_changed }
 
 Output event containing 3D point on surface of underlying geometry, given in geometry coordinates (not geographic coordinates).
 
@@ -102,6 +126,7 @@ Output event containing 3D point on surface of underlying geometry, given in geo
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3d [out] **hitGeoCoord_changed**
+{: #field-hitGeoCoord_changed }
 
 Output event containing 3D point on surface of underlying geometry, given in GeoTouchSensor's local coordinate system.
 
@@ -110,6 +135,7 @@ Output event containing 3D point on surface of underlying geometry, given in Geo
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isOver**
+{: #field-isOver }
 
 Is pointing device over sensor's geometry?.
 
@@ -118,6 +144,7 @@ Is pointing device over sensor's geometry?.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
+{: #field-isActive }
 
 Select geometry by activating the pointing device (for example, clicking the mouse) to generate *isActive* events. Output event *isActive*=true is sent when geometry is selected (for example, when primary mouse button is pressed), output event *isActive*=false is sent when geometry is deselected (for example, when primary mouse button is released).
 
@@ -126,6 +153,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **touchTime**
+{: #field-touchTime }
 
 Time event generated when touched.
 

@@ -4,33 +4,35 @@
 
 @charset "utf-8";
 
+/*
 @font-face {
-  font-family: "PT Sans";
+  font-family: X_ITE PT Sans;
   font-style: normal;
   font-weight: 400;
-  src: url("assets/fonts/PT_Sans/PTSans-Regular.woff2") format("woff2");
+  src: url(assets/fonts/PT_Sans/PTSans-Regular.woff2);
 }
 
 @font-face {
-  font-family: "PT Sans";
+  font-family: X_ITE PT Sans;
   font-style: normal;
   font-weight: 700;
-  src: url("assets/fonts/PT_Sans/PTSans-Bold.woff2") format("woff2");
+  src: url(assets/fonts/PT_Sans/PTSans-Bold.woff2);
 }
 
 @font-face {
-  font-family: "PT Sans";
+  font-family: X_ITE PT Sans;
   font-style: italic;
   font-weight: 400;
-  src: url("assets/fonts/PT_Sans/PTSans-Italic.woff2") format("woff2");
+  src: url(assets/fonts/PT_Sans/PTSans-Italic.woff2);
 }
 
 @font-face {
-  font-family: "PT Sans";
+  font-family: X_ITE PT Sans;
   font-style: italic;
   font-weight: 700;
-  src: url("assets/fonts/PT_Sans/PTSans-BoldItalic.woff2") format("woff2");
+  src: url(assets/fonts/PT_Sans/PTSans-BoldItalic.woff2);
 }
+*/
 
 :host,
 X3DCanvas {
@@ -51,12 +53,13 @@ X3DCanvas {
   display: none;
 }
 
-:host(.x_ite-fullscreen) {
+:host(.x_ite-fullscreen),
+X3DCanvas.x_ite-fullscreen {
   width: 100vw !important;
   height: 100vh !important;
 }
 
-X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
+X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: none;
 }
 
@@ -115,7 +118,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 5px;
   padding: 5px;
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
   letter-spacing: unset;
   line-height: 1;
@@ -128,8 +131,8 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: relative;
   top: -1px;
   padding: 0 24px 0 20px;
-  background: url("assets/images/icon.bw.png") no-repeat top -0.5px left 0px;
-  image-rendering: pixelated;
+  background: url(assets/images/logo.svg) no-repeat top -1px left 0px;
+  background-size: 17px 17px;
 }
 
 .x_ite-private-browser-timings {
@@ -154,19 +157,13 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 5px;
   padding: 10px 15px 14px 14px;
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-size: 9pt;
   white-space: pre;
   pointer-events: none;
 }
 
-.x_ite-private-browser-timings table,
-.x_ite-private-browser-timings thead,
-.x_ite-private-browser-timings tbody,
-.x_ite-private-browser-timings tfoot,
-.x_ite-private-browser-timings tr,
-.x_ite-private-browser-timings th,
-.x_ite-private-browser-timings td {
+.x_ite-private-browser-timings :is(table, thead, tbody, tfoot, tr, th, td) {
   box-sizing: border-box;
   outline: 0;
   margin: 0;
@@ -185,7 +182,8 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-browser-timings table {
   overflow: hidden;
-  background: url("assets/images/Time.png") no-repeat;
+  background: url(assets/images/schedule.svg) no-repeat 0px -1px;
+  background-size: 17px 17px;
   image-rendering: pixelated;
   width: 100%;
   max-width: 100%;
@@ -233,7 +231,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 0;
   background: rgba(0, 0, 0, 0.38196601);
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-style: italic;
   font-size: 9pt;
   letter-spacing: unset;
@@ -279,10 +277,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 21pt;
 }
 
-.x_ite-private-world-info .x_ite-private-world-info-top,
-.x_ite-private-world-info .x_ite-private-world-info-title,
-.x_ite-private-world-info .x_ite-private-world-info-info,
-.x_ite-private-world-info p {
+.x_ite-private-world-info :is(.x_ite-private-world-info-top, .x_ite-private-world-info-title, .x_ite-private-world-info-info, p) {
   box-sizing: border-box;
   outline: 0;
   margin: 0;
@@ -291,7 +286,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 0;
   background: none;
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-size: inherit;
   font-weight: inherit;
   font-style: normal;
@@ -337,16 +332,16 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-menu.context-menu-list,
 .x_ite-private-menu .context-menu-list {
-  visibility: hidden;
+  overscroll-behavior: none;
   box-sizing: border-box;
   min-width: 120px;
   margin: 0;
   margin-left: 1px;
   border: 4px solid transparent;
   border-radius: 5px;
-  padding: 5px 10px 9px 9px;
+  padding: 5px 10px 4px 9px;
   color: white;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
   white-space: pre;
   line-height: 1.2;
@@ -360,12 +355,9 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-list {
+  display: none;
   position: absolute;
-}
-
-.x_ite-private-menu .context-menu-list {
   top: -13px;
-  /* re-positioned by js */
 }
 
 .x_ite-private-menu .context-menu-background {
@@ -421,11 +413,11 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item:hover:not(.context-menu-not-selectable) {
-  background-color: rgba(255, 69, 58, 0.8);
+  background-color: #d71f1f;
 }
 
-.x_ite-private-menu .context-menu-item:hover>.context-menu-list {
-  visibility: visible;
+.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
+  display: block;
 }
 
 .x_ite-private-menu .context-menu-not-selectable {
@@ -460,13 +452,13 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   height: 0;
 }
 
-.x_ite-private-menu .context-menu-item>span {
+.x_ite-private-menu .context-menu-item > span {
   display: block;
   width: 100%;
   padding: 5px 24px;
 }
 
-.x_ite-private-menu .context-menu-input>label {
+.x_ite-private-menu label {
   cursor: pointer;
   display: block;
   box-sizing: border-box;
@@ -474,37 +466,66 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 5px 24px;
   width: 100%;
   font-size: 10pt;
-  letter-spacing: unset;
-  line-height: 1;
-}
-
-/* vertically align inside labels */
-.x_ite-private-menu .context-menu-input>label>* {
-  vertical-align: top;
-  font-size: 10pt;
   font-weight: normal;
   letter-spacing: unset;
   line-height: 1;
 }
 
-.x_ite-private-menu .context-menu-item>label>input {
+.x_ite-private-menu label:has(>input[type=radio]:checked) {
+  font-weight: bold;
+}
+
+/* vertically align inside labels */
+.x_ite-private-menu label > * {
+  vertical-align: top;
+  font-size: 10pt;
+  letter-spacing: unset;
+  line-height: 1;
+}
+
+.x_ite-private-menu input {
   all: revert;
   cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 /* position checkboxes and radios like icons */
-.x_ite-private-menu .context-menu-input>label>input[type="checkbox"],
-.x_ite-private-menu .context-menu-input>label>input[type="radio"] {
-  accent-color: rgb(255, 69, 58);
+.x_ite-private-menu input[type=checkbox],
+.x_ite-private-menu input[type=radio] {
   display: inline;
-  width: 12px;
+  width: 17px;
+  height: 17px;
   margin: 0;
-  margin-left: -20px;
+  margin-left: -22px;
   padding: 0;
+  display: inline-block;
+  position: absolute;
+  top: 3px;
+  background: url(assets/images/radio_button_unchecked.svg) no-repeat left 0px top 0px;
+  background-size: 17px 17px;
 }
 
-.x_ite-private-menu .context-menu-input>label>span {
-  padding-left: 8px;
+.x_ite-private-menu input:checked {
+  /* orange */
+  filter: brightness(0) saturate(100%) invert(71%) sepia(100%) saturate(1647%) hue-rotate(335deg) brightness(101%) contrast(101%);
+}
+
+.x_ite-private-menu .context-menu-input:hover input:checked {
+  filter: none;
+}
+
+.x_ite-private-menu input[type=checkbox]:checked {
+  background-image: url(assets/images/check_circle.svg);
+}
+
+.x_ite-private-menu input[type=radio]:checked {
+  background-image: url(assets/images/radio_button_checked.svg);
+}
+
+.x_ite-private-menu span {
+  padding-left: 0px;
 }
 
 /* Item styles */
@@ -513,81 +534,85 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-weight: bold;
 }
 
-.x_ite-private-menu .context-menu-selected {
-  font-weight: bold;
-  font-style: italic;
-}
-
 /* Icons */
 
 .x_ite-private-menu .context-menu-icon {
   background-repeat: no-repeat;
   background-position: 2px 3px;
-  image-rendering: pixelated;
+  background-size: 17px 17px;
+}
+
+.x_ite-private-menu .context-menu-icon.x_ite-private-icon-logo {
+  background-image: url(assets/images/logo.svg);
+  background-position: 2px 4px;
 }
 
 .x_ite-private-icon-viewpoint {
-  background: url("assets/images/Viewpoint.png");
+  background-image: url(assets/images/eye_tracking.svg);
 }
 
-.x_ite-private-icon-examine-viewer {
-  background: url("assets/images/ExamineViewer.png");
+.x_ite-private-menu .x_ite-private-viewpoint input {
+  background-image: none;
 }
 
-.x_ite-private-icon-walk-viewer {
-  background: url("assets/images/WalkViewer.png");
+.x_ite-private-menu .x_ite-private-viewpoint input:checked {
+  background-image: url(assets/images/visibility.svg);
 }
 
-.x_ite-private-icon-fly-viewer {
-  background: url("assets/images/FlyViewer.png");
+.x_ite-private-icon-viewer {
+  background-image: url(assets/images/stadia_controller.svg);
 }
 
-.x_ite-private-icon-lookat-viewer {
-  background: url("assets/images/gtk-zoom-in.png");
+.x_ite-private-menu .x_ite-private-examine-viewer :is(input, input:checked) {
+  background-image: url(assets/images/language.svg);
 }
 
-.x_ite-private-icon-plane-viewer {
-  background: url("assets/images/PlaneViewer.png");
+.x_ite-private-menu .x_ite-private-walk-viewer :is(input, input:checked) {
+  background-image: url(assets/images/directions_run.svg);
 }
 
-.x_ite-private-icon-none-viewer {
-  background: url("assets/images/NoneViewer.png");
+.x_ite-private-menu .x_ite-private-fly-viewer :is(input, input:checked) {
+  background-image: url(assets/images/travel.svg);
 }
 
-.x_ite-private-icon-zoom-fit {
-  background: url("assets/images/gtk-zoom-fit.png");
+.x_ite-private-menu .x_ite-private-plane-viewer :is(input, input:checked) {
+  background-image: url(assets/images/border_all.svg);
 }
 
-.x_ite-private-icon-zoom-in {
-  background: url("assets/images/gtk-zoom-in.png");
+.x_ite-private-menu .x_ite-private-lookat-viewer :is(input, input:checked) {
+  background-image: url(assets/images/point_scan.svg);
+}
+
+.x_ite-private-menu .x_ite-private-none-viewer :is(input, input:checked) {
+  background-image: url(assets/images/block.svg);
 }
 
 .x_ite-private-icon-primitive-quality {
-  background: url("assets/images/PrimitiveQuality.png");
+  background-image: url(assets/images/hexagon.svg);
 }
 
 .x_ite-private-icon-texture-quality {
-  background: url("assets/images/TextureQuality.png");
+  background-image: url(assets/images/texture.svg);
 }
 
 .x_ite-private-icon-shading {
-  background: url("assets/images/Shading.png");
+  background-image: url(assets/images/stroke_partial.svg);
 }
 
 .x_ite-private-icon-enter-fullscreen {
-  background: url("assets/images/gtk-fullscreen.png");
+  background-image: url(assets/images/fullscreen.svg);
 }
 
 .x_ite-private-icon-leave-fullscreen {
-  background: url("assets/images/gtk-leave-fullscreen.png");
+  background-image: url(assets/images/fullscreen_exit.svg);
 }
 
 .x_ite-private-icon-world-info {
-  background: url("assets/images/go-next.png");
+  background-image: url(assets/images/globe.svg);
 }
 
-.x_ite-private-icon-help-about {
-  background: url("assets/images/help-about.png");
+.x_ite-private-icon-info {
+  background-image: url(assets/images/info.svg);
 }
 
 /* Spinner */
@@ -608,15 +633,17 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-spinner {
   position: absolute;
-  top: calc(50% - (138px / 2));
-  left: calc(50% - (134px / 2));
-  width: 138px;
-  height: 134px;
-  background: url("assets/images/logo.128.png") no-repeat;
-  image-rendering: optimizeQuality;
+  top: calc(50% - (160px / 2));
+  left: calc(50% - (160px / 2) + 8px);
+  width: 160px;
+  height: 160px;
+  background: url(assets/images/logo.svg) no-repeat;
+  background-size: 160px 160px;
+  opacity: 0.6;
   -webkit-animation: spinner-animation-spin 32s linear infinite;
   -moz-animation: spinner-animation-spin 32s linear infinite;
   animation: spinner-animation-spin 32s linear infinite;
+  transform-origin: 71.5625px 84.0625px; /* calc(458px / 1024px * 160px) calc(539px / 1024px * 160px) */
 }
 
 @-moz-keyframes spinner-animation-spin {
@@ -650,11 +677,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-size: 28pt;
   text-align: center;
   text-shadow: 1px 1px 0 black;
-  font-family: PT Sans, sans-serif;
-}
-
-.x_ite-private-x_ite span.x_ite-private-x3d {
-  font-weight: bold;
+  font-family: X_ITE PT Sans, sans-serif;
 }
 
 .x_ite-private-spinner-text {
@@ -662,7 +685,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-size: 11pt;
   text-align: center;
   text-shadow: 1px 1px 0 black;
-  font-family: PT Sans, sans-serif;
+  font-family: X_ITE PT Sans, sans-serif;
 }
 
 .x_ite-private-progressbar {
@@ -687,7 +710,7 @@ X3DCanvas> :not(.x_ite-private-browser, .x_ite-private-menu) {
   bottom: 10px;
   width: 32px;
   height: 18px;
-  background: url("assets/images/XR.svg");
+  background: url(assets/images/xr.svg);
   cursor: pointer;
   transition: transform .2s ease-in-out;
 }

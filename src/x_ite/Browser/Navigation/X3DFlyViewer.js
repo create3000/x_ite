@@ -138,11 +138,11 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       {
          case 0:
          {
-            // Start walk or fly.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Start walk or fly.
 
             this .button = event .button;
 
@@ -181,11 +181,11 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          }
          case 1:
          {
-            // Start pan.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Start pan.
 
             this .button = event .button;
 
@@ -213,10 +213,14 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    mouseup (event)
    {
-      event .preventDefault ();
-
       if (event .button !== this .button)
          return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
+
+      // Disable all.
 
       this .event  = null;
       this .button = -1;
@@ -245,12 +249,12 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       {
          case 0:
          {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
             if (browser .getControlKey () || browser .getCommandKey () || this .lookAround)
             {
-               // Stop event propagation.
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
-
                // Look around
 
                const toVector = this .trackballProjectToSphere (x, y, this .toVector);
@@ -272,8 +276,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          case 1:
          {
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
 
             // Pan
 
@@ -294,7 +298,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       // Stop event propagation.
 
       event .preventDefault ();
-      event .stopImmediatePropagation ();
 
       // Change viewpoint position.
 

@@ -15,7 +15,7 @@ tags: [Color, Rendering]
 
 Color node defines a set of RGB color values that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Color is only used by ElevationGrid, IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle* and IndexedTriangle* nodes.
 
-The Color node belongs to the **Rendering** component and requires at least level **1,** its default container field is *color.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Color node belongs to the **Rendering** component and requires at least support level **1,** its default container field is *color.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,14 @@ The Color node belongs to the **Rendering** component and requires at least leve
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFColor | [in, out] | [color](#field-color) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +44,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFColor [in, out] **color** [ ] <small>[0,1]</small>
+{: #field-color }
 
 The *color* field defines an array of 3-tuple RGB colors.
 

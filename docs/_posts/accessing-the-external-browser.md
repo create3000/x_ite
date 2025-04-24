@@ -180,8 +180,10 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
+// Get X3DBrowser instance from x3d-canvas with class "browser".
 const Browser = X3D .getBrowser (".browser");
 
+// Fires when scene is loaded.
 Browser .addBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT, init);
 
 function init ()
@@ -195,11 +197,12 @@ function init ()
   $("#change-background") .on ("change", changeBackground);
   $("#spin")              .on ("click",  spin);
 
-  // Add a field callback to be notified when cycleTime is fired. "time" is an arbitrary
-  // string to identify the callback, especially if you want to remove the callback later.
-  timer .addFieldCallback ("time", "cycleTime", value =>
+  // Add a field callback to be notified when cycleTime is fired. "check" is an
+  // arbitrary string to identify the callback, especially if you want to
+  // remove the callback later.
+  timer .addFieldCallback ("check", "cycleTime", value =>
   {
-    console .log ("cycleTime: " + value);
+    console .log (`cycleTime: ${value}`);
   });
 
   changeStyle ();
@@ -208,6 +211,7 @@ function init ()
 
 function center ()
 {
+  // Rebind viewpoint and remove user offsets.
   Browser .changeViewpoint ("Viewpoint");
 }
 

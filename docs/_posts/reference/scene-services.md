@@ -146,6 +146,7 @@ A reference to the ExportedNodesArray object used by this execution context. Thi
 
 ### Methods
 
+<!--
 #### **setProfile** (*profile: ProfileInfo*): void
 
 Replaces the profile of this scene by the given *profile*. A profile of `null` is equivalent to a 'Full' profile.
@@ -161,6 +162,7 @@ Updates the *component*.
 #### **removeComponent** (*name: string*): void
 
 Removes the component with the given *name*.
+-->
 
 #### **updateUnit** (*category: string, name: string, conversionFactor: number*): void
 

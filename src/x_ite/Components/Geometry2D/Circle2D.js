@@ -67,16 +67,7 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode
 {
    set_live__ ()
    {
-      X3DLineGeometryNode .prototype .set_live__ .call (this);
-
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
-
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getCircle2DOptions () .addInterest ("requestRebuild", this);
-      else
-         browser .getCircle2DOptions () .removeInterest ("requestRebuild", this);
+      this .connectOptions (this .getBrowser () .getCircle2DOptions ());
    },
    build ()
    {

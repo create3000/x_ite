@@ -1,6 +1,7 @@
 export default /* glsl */ `
 
-// https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/source/Renderer/shaders/pbr.frag
+// Originally from:
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/pbr.frag
 
 #pragma X3D include "../common/Fragment.glsl"
 #pragma X3D include "../common/Normal.glsl"
@@ -179,8 +180,6 @@ getMaterialColor ()
             v,
             materialInfo .perceptualRoughness,
             baseColor .rgb,
-            materialInfo .f0_dielectric,
-            materialInfo .f90,
             vertex,
             eye (x3d_ModelViewMatrix), // x3d_ModelMatrix
             x3d_ProjectionMatrix,
@@ -294,13 +293,24 @@ getMaterialColor ()
          float l_albedoSheenScaling  = 1.0;
 
          #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-            vec3 diffuse_btdf = lightIntensity * clamp (dot (-n, l), 0.0, 1.0) * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
+            l_diffuse *= 1.0 - materialInfo .diffuseTransmissionFactor;
 
-            #if defined (X3D_VOLUME_MATERIAL_EXT)
-               diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
-            #endif
+            if (dot (n, l) < 0.0)
+            {
+               float diffuseNdotL = clamp (dot (-n, l), 0.0, 1.0);
+               vec3  diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
-            l_diffuse = mix (l_diffuse, diffuse_btdf, materialInfo .diffuseTransmissionFactor);
+               vec3  l_mirror     = normalize (l + 2.0 * n * dot (-l, n)); // Mirror light reflection vector on surface
+               float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
+
+               dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
+
+               #if defined (X3D_VOLUME_MATERIAL_EXT)
+                  diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+               #endif
+
+               l_diffuse += diffuse_btdf * materialInfo .diffuseTransmissionFactor;
+            }
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
          // BTDF (Bidirectional Transmittance Distribution Function)
@@ -312,7 +322,7 @@ getMaterialColor ()
             pointToLight -= transmissionRay;
             l             = normalize (pointToLight);
 
-            vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, materialInfo .f0_dielectric, materialInfo .f90, baseColor .rgb, materialInfo .ior);
+            vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, baseColor .rgb, materialInfo .ior);
 
             #if defined (X3D_VOLUME_MATERIAL_EXT)
                transmittedLight = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);

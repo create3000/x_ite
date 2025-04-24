@@ -46,10 +46,10 @@ export default /* glsl */ `
       in mat3 TBN;
    #endif
 #else
-   const vec3 normal = vec3 (0.0, 0.0, 1.0);
+   vec3 normal = vec3 (0.0, 0.0, 1.0);
 
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      const vec3 localNormal = vec3 (0.0, 0.0, 1.0);
+      vec3 localNormal = vec3 (0.0, 0.0, 1.0);
    #endif
 #endif
 
@@ -82,7 +82,20 @@ in vec3 vertex;
 vec4
 getMaterialColor ();
 
+#if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
+// Generate flat normals for 2D and 3D geometry.
+vec3
+generateNormal (const in vec3 vertex)
+{
+   vec3 dFdxPos = dFdx (vertex);
+   vec3 dFdyPos = dFdy (vertex);
+
+   return normalize (cross (dFdxPos, dFdyPos));
+}
+#endif
+
 #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+// https://learnopengl.com/Guest-Articles/2020/OIT/Weighted-Blended
 float
 weight (const in float z, const in float a)
 {
@@ -93,6 +106,14 @@ weight (const in float z, const in float a)
 void
 fragment_main ()
 {
+   #if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
+      normal = generateNormal (vertex);
+
+      #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+         localNormal = generateNormal (localVertex);
+      #endif
+   #endif
+
    #if defined (X3D_CLIP_PLANES)
       clip ();
    #endif

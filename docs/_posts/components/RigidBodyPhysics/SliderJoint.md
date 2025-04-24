@@ -15,7 +15,7 @@ tags: [SliderJoint, RigidBodyPhysics]
 
 SliderJoint constrains all movement between body1 and body2 along a single axis. Contains two RigidBody nodes (containerField values body1, body2).
 
-The SliderJoint node belongs to the **RigidBodyPhysics** component and requires at least level **2,** its default container field is *joints.* It is available from X3D version 3.2 or higher.
+The SliderJoint node belongs to the **RigidBodyPhysics** component and requires at least support level **2,** its default container field is *joints.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,24 @@ The SliderJoint node belongs to the **RigidBodyPhysics** component and requires 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFString | [in, out] | [forceOutput](#field-forceOutput) | "NONE"  |
+| SFVec3f | [in, out] | [axis](#field-axis) | 0 1 0  |
+| SFFloat | [in, out] | [minSeparation](#field-minSeparation) | 0  |
+| SFFloat | [in, out] | [maxSeparation](#field-maxSeparation) | 1  |
+| SFFloat | [in, out] | [sliderForce](#field-sliderForce) | 0  |
+| SFFloat | [in, out] | [stopBounce](#field-stopBounce) | 0  |
+| SFFloat | [in, out] | [stopErrorCorrection](#field-stopErrorCorrection) | 1  |
+| SFFloat | [out] | [separation](#field-separation) |  |
+| SFFloat | [out] | [separationRate](#field-separationRate) |  |
+| SFNode | [in, out] | [body1](#field-body1) | NULL  |
+| SFNode | [in, out] | [body2](#field-body2) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -36,14 +53,17 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL", "NONE", ...]</small>
+{: #field-forceOutput }
 
 *forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 
 ### SFVec3f [in, out] **axis** 0 1 0 <small>(-∞,∞)</small>
+{: #field-axis }
 
 *axis* is normalized vector specifying direction of motion.
 
 ### SFFloat [in, out] **minSeparation** 0 <small>[0,∞)</small>
+{: #field-minSeparation }
 
 *minSeparation* is minimum separation distance between the two bodies.
 
@@ -52,6 +72,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - If (*minSeparation* is less than maxSeparation) then no stop is effective.
 
 ### SFFloat [in, out] **maxSeparation** 1 <small>[0,∞)</small>
+{: #field-maxSeparation }
 
 *maxSeparation* is maximum separation distance between the two bodies.
 
@@ -60,10 +81,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - If (minSeparation is less than *maxSeparation*) then no stop is effective.
 
 ### SFFloat [in, out] **sliderForce** 0 <small>[-∞,∞)</small> <small class="red">not supported</small>
+{: #field-sliderForce }
 
 *sliderForce* value is used to apply a force (specified in force base units) along the axis of the slider in equal and opposite directions to the two bodies. A positive value applies a force such that the two bodies accelerate away from each other, while a negative value applies a force such that the two bodies accelerate toward each other.
 
 ### SFFloat [in, out] **stopBounce** 0 <small>[0,1]</small> <small class="red">not supported</small>
+{: #field-stopBounce }
 
 *stopBounce* is velocity factor for bounce back once stop point is reached.
 
@@ -72,6 +95,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stopErrorCorrection** 1 <small>[0,1]</small> <small class="red">not supported</small>
+{: #field-stopErrorCorrection }
 
 *stopErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
@@ -80,6 +104,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFFloat [out] **separation** <small class="red">not supported</small>
+{: #field-separation }
 
 *separation* indicates final *separation* distance between the two bodies.
 
@@ -88,6 +113,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **separationRate** <small class="red">not supported</small>
+{: #field-separationRate }
 
 *separationRate* indicates change in separation distance over time between the two bodies.
 
@@ -96,10 +122,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
+{: #field-body1 }
 
 The *body1* and body2 fields indicate the two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes connected by this joint.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
+{: #field-body2 }
 
 The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes connected by this joint.
 

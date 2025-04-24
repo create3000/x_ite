@@ -15,7 +15,7 @@ tags: [IntegerTrigger, EventUtilities]
 
 IntegerTrigger converts set_boolean true input events to an integer value (for example, useful when animating whichChoice in a Switch node).
 
-The IntegerTrigger node belongs to the **EventUtilities** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The IntegerTrigger node belongs to the **EventUtilities** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,16 @@ The IntegerTrigger node belongs to the **EventUtilities** component and requires
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in] | [set_boolean](#field-set_boolean) |  |
+| SFInt32 | [in, out] | [integerKey](#field-integerKey) | -1  |
+| SFInt32 | [out] | [triggerValue](#field-triggerValue) |  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **set_boolean**
+{: #field-set_boolean }
 
 If input event *set_boolean* is true, trigger output of integer value.
 
@@ -49,6 +59,7 @@ If input event *set_boolean* is true, trigger output of integer value.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFInt32 [in, out] **integerKey** -1 <small>(-∞,∞)</small>
+{: #field-integerKey }
 
 *integerKey* is value for output when triggered.
 
@@ -57,6 +68,7 @@ If input event *set_boolean* is true, trigger output of integer value.
 - Directly setting a new value for the *integerKey* field generates a corresponding *integerKey* output event.
 
 ### SFInt32 [out] **triggerValue**
+{: #field-triggerValue }
 
 *triggerValue* provides integer event output matching integerKey when true set_boolean received.
 

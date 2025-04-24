@@ -15,7 +15,7 @@ tags: [NavigationInfo, Navigation]
 
 NavigationInfo describes the user's viewing model, user navigation-interaction modalities, and also dimensional characteristics of the user's (typically invisible) avatar.
 
-The NavigationInfo node belongs to the **Navigation** component and requires at least level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The NavigationInfo node belongs to the **Navigation** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,24 @@ The NavigationInfo node belongs to the **Navigation** component and requires at 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in] | [set_bind](#field-set_bind) |  |
+| MFString | [in, out] | [type](#field-type) | [ "EXAMINE", "ANY" ] |
+| MFFloat | [in, out] | [avatarSize](#field-avatarSize) | [ 0.25, 1.6, 0.75 ] |
+| SFFloat | [in, out] | [speed](#field-speed) | 1  |
+| SFBool | [in, out] | [headlight](#field-headlight) | TRUE |
+| SFFloat | [in, out] | [visibilityLimit](#field-visibilityLimit) | 0  |
+| MFString | [in, out] | [transitionType](#field-transitionType) | "LINEAR"  |
+| SFTime | [in, out] | [transitionTime](#field-transitionTime) | 1  |
+| SFBool | [out] | [transitionComplete](#field-transitionComplete) |  |
+| SFBool | [out] | [isBound](#field-isBound) |  |
+| SFTime | [out] | [bindTime](#field-bindTime) |  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +54,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **set_bind**
+{: #field-set_bind }
 
 Receiving event *set_bind*=true activates and binds this node at the top of the binding stack. Receiving event *set_bind*=false deactivates and unbinds this node from the top of the binding stack. Thus setting *set_bind* to true/false will enable/disable the effect of this node.
 
@@ -49,6 +67,7 @@ Receiving event *set_bind*=true activates and binds this node at the top of the 
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFString [in, out] **type** [ "EXAMINE", "ANY" ] <small>["EXAMINE", "WALK", "FLY", "PLANE_create3000.github.io", "LOOKAT", "EXPLORE", "ANY", "NONE"]</small>
+{: #field-type }
 
 Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLORE" "ANY" "NONE".
 
@@ -61,6 +80,7 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 - This field may be ignored, applying the default value regardless.
 
 ### MFFloat [in, out] **avatarSize** [ 0.25, 1.6, 0.75 ] <small>[0,∞)</small>
+{: #field-avatarSize }
 
 *avatarSize* triplet values define three separate parameters: (a) collisionDistance between user and geometry, i.e. near clipping plane of view frustrum, default 0.25m, (b) viewer height above terrain, default 1.6m, and (c) tallest height viewer can WALK over, default 0.75m.
 
@@ -78,6 +98,7 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 - Data type is MFFloat rather than SFVec3f, be sure that three values are provided in the array since validation tools are typically unable to detect erroneous data prior to run time.
 
 ### SFFloat [in, out] **speed** 1 <small>[0,∞)</small>
+{: #field-speed }
 
 Default rate at which viewer travels through scene, meters/second.
 
@@ -90,10 +111,12 @@ Default rate at which viewer travels through scene, meters/second.
 - Default 1 m/s usually seems slow for ordinary navigation. Interchange profile
 
 ### SFBool [in, out] **headlight** TRUE
+{: #field-headlight }
 
 Enable/disable directional light that always points in the direction the user is looking.
 
 ### SFFloat [in, out] **visibilityLimit** 0 <small>[0,∞)</small>
+{: #field-visibilityLimit }
 
 Geometry beyond the *visibilityLimit* may not be rendered (far clipping plane of the view frustrum).
 
@@ -110,6 +133,7 @@ Geometry beyond the *visibilityLimit* may not be rendered (far clipping plane of
 - Important design thumbrule is to keep (*visibilityLimit* / avatarSize.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing").
 
 ### MFString [in, out] **transitionType** "LINEAR" <small>["TELEPORT"|"LINEAR"|"ANIMATE"]</small>
+{: #field-transitionType }
 
 Camera transition between viewpoints. Enter one or more quoted SFString values: "ANIMATE" "TELEPORT" "LINEAR".
 
@@ -118,6 +142,7 @@ Camera transition between viewpoints. Enter one or more quoted SFString values: 
 - "ANIMATE" behavior is browser-specific, "TELEPORT" is immediate, and "LINEAR" may proceed directly through intervening objects.
 
 ### SFTime [in, out] **transitionTime** 1 <small>[0,∞)</small>
+{: #field-transitionTime }
 
 *transitionTime* defines the expected duration of viewpoint transition in seconds.
 
@@ -127,6 +152,7 @@ Camera transition between viewpoints. Enter one or more quoted SFString values: 
 - This field may be ignored, applying the default value regardless.
 
 ### SFBool [out] **transitionComplete**
+{: #field-transitionComplete }
 
 Event signaling viewpoint transition complete. Interchange profile
 
@@ -139,6 +165,7 @@ Event signaling viewpoint transition complete. Interchange profile
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isBound**
+{: #field-isBound }
 
 Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
 
@@ -151,6 +178,7 @@ Output event true gets sent when node becomes bound and activated, otherwise out
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **bindTime**
+{: #field-bindTime }
 
 Event sent reporting timestamp when node becomes active/inactive.
 
@@ -186,3 +214,4 @@ Event sent reporting timestamp when node becomes active/inactive.
 ## See Also
 
 - [X3D Specification of NavigationInfo Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo)
+- [How to Navigate in a Scene](/x_ite/tutorials/how-to-navigate-in-a-scene/)

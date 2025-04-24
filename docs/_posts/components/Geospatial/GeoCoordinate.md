@@ -15,7 +15,7 @@ tags: [GeoCoordinate, Geospatial]
 
 GeoCoordinate builds geometry as a set of geographic 3D coordinates. These are transformed into a geocentric, curved-earth representation. GeoCoordinate is only used by IndexedFaceSet, IndexedLineSet, LineSet and PointSet. GeoCoordinate can contain a GeoOrigin node.
 
-The GeoCoordinate node belongs to the **Geospatial** component and requires at least level **1,** its default container field is *coord.* It is available from X3D version 3.0 or higher.
+The GeoCoordinate node belongs to the **Geospatial** component and requires at least support level **1,** its default container field is *coord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,16 @@ The GeoCoordinate node belongs to the **Geospatial** component and requires at l
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFNode | [ ] | [geoOrigin](#field-geoOrigin) | NULL  |
+| MFString | [ ] | [geoSystem](#field-geoSystem) | [ "GD", "WE" ] |
+| MFVec3d | [in, out] | [point](#field-point) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
+{: #field-geoOrigin }
 
 Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
@@ -49,6 +59,7 @@ Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that 
 - XML validation requires placement as first child node following contained metadata nodes (if any).
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
+{: #field-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 
@@ -63,6 +74,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 - Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ### MFVec3d [in, out] **point** [ ] <small>(-∞,∞)</small>
+{: #field-point }
 
 *point* contains a set of actual 3D geographic coordinates, provided in geoSystem format can split strings if desired: "x1 y1 z1 x2 y2 z2" or "x1 y1 z1", "x2 y2 z2"
 

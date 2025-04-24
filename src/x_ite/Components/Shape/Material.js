@@ -104,7 +104,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    getMaterialKey ()
    {
-      return "2";
+      return 2;
    },
    getTextureIndices: (() =>
    {
@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
          switch (this .getMaterialKey ())
          {
-            case "1":
+            case 1:
             {
                if (!renderContext ?.shadows)
                {
@@ -236,7 +236,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
                // Proceed with next case:
             }
-            case "2":
+            case 2:
                var shaderNode = browser .createShader ("Phong", "Default", "Phong", options);
                break;
          }
@@ -318,9 +318,9 @@ function getMaterialKey ()
    switch (this .getBrowser () .getBrowserOptions () .getShading ())
    {
       default:
-         return "1";
+         return 1;
       case Shading .PHONG:
-         return "2";
+         return 2;
    }
 }
 

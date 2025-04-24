@@ -15,7 +15,7 @@ tags: [IndexedTriangleSet, Rendering]
 
 IndexedTriangleSet is a geometry node containing a Coordinate or CoordinateDouble node, and can also contain Color or ColorRGBA, Normal and TextureCoordinate nodes.
 
-The IndexedTriangleSet node belongs to the **Rendering** component and requires at least level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The IndexedTriangleSet node belongs to the **Rendering** component and requires at least support level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,26 @@ The IndexedTriangleSet node belongs to the **Rendering** component and requires 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| MFInt32 | [in] | [set_index](#field-set_index) |  |
+| SFBool | [ ] | [solid](#field-solid) | TRUE |
+| SFBool | [ ] | [ccw](#field-ccw) | TRUE |
+| SFBool | [ ] | [colorPerVertex](#field-colorPerVertex) | TRUE |
+| SFBool | [ ] | [normalPerVertex](#field-normalPerVertex) | TRUE |
+| MFInt32 | [ ] | [index](#field-index) | [ ] |
+| MFNode | [in, out] | [attrib](#field-attrib) | [ ] |
+| SFNode | [in, out] | [fogCoord](#field-fogCoord) | NULL  |
+| SFNode | [in, out] | [color](#field-color) | NULL  |
+| SFNode | [in, out] | [texCoord](#field-texCoord) | NULL  |
+| SFNode | [in, out] | [tangent](#field-tangent) | NULL  |
+| SFNode | [in, out] | [normal](#field-normal) | NULL  |
+| SFNode | [in, out] | [coord](#field-coord) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +56,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFInt32 [in] **set_index** <small>[0,∞)</small>
+{: #field-set_index }
 
 *index* list specifies triangles by connecting [Coordinate](/x_ite/components/rendering/coordinate/) vertices.
 
@@ -49,6 +69,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - -1 sentinel values are not allowed.
 
 ### SFBool [ ] **solid** TRUE
+{: #field-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
@@ -63,6 +84,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
+{: #field-ccw }
 
 *ccw* defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
 
@@ -76,6 +98,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Consistent and correct ordering of left-handed or right-handed point sequences is important throughout the coord array of point values.
 
 ### SFBool [ ] **colorPerVertex** TRUE
+{: #field-colorPerVertex }
 
 Whether [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to each point vertex (true) or to each polygon face (false).
 
@@ -89,6 +112,7 @@ Whether [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/compon
 - If child [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node is not provided, then geometry is rendered using corresponding [Appearance](/x_ite/components/shape/appearance/) and material/texture values.
 
 ### SFBool [ ] **normalPerVertex** TRUE
+{: #field-normalPerVertex }
 
 Whether [Normal](/x_ite/components/rendering/normal/) node vector values are applied to each point vertex (true) or to each polygon face (false).
 
@@ -97,6 +121,7 @@ Whether [Normal](/x_ite/components/rendering/normal/) node vector values are app
 - If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### MFInt32 [ ] **index** [ ] <small>[0,∞)</small>
+{: #field-index }
 
 *index* list specifies triangles by connecting [Coordinate](/x_ite/components/rendering/coordinate/) vertices.
 
@@ -105,6 +130,7 @@ Whether [Normal](/x_ite/components/rendering/normal/) node vector values are app
 - -1 sentinel values are not allowed.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
+{: #field-attrib }
 
 Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
@@ -113,22 +139,27 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 - [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shaders.html#Pervertexattributes)
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
+{: #field-fogCoord }
 
 Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
+{: #field-color }
 
 Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
+{: #field-texCoord }
 
 Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
-### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
+### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
+{: #field-tangent }
 
 Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
+{: #field-normal }
 
 Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
@@ -141,6 +172,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 - *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
+{: #field-coord }
 
 Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 

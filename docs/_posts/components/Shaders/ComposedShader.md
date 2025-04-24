@@ -15,7 +15,7 @@ tags: [ComposedShader, Shaders]
 
 ComposedShader defines a shader where the individual source files are assembled from contained ShaderPart program sections. All access to shading capabilities is defined through a single interface that applies to all parts.
 
-The ComposedShader node belongs to the **Shaders** component and requires at least level **1,** its default container field is *shaders.* It is available from X3D version 3.0 or higher.
+The ComposedShader node belongs to the **Shaders** component and requires at least support level **1,** its default container field is *shaders.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -26,11 +26,23 @@ The ComposedShader node belongs to the **Shaders** component and requires at lea
       + ComposedShader (X3DProgrammableShaderObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in] | [activate](#field-activate) |  |
+| SFBool | [out] | [isSelected](#field-isSelected) |  |
+| SFBool | [out] | [isValid](#field-isValid) |  |
+| SFString | [ ] | [language](#field-language) | ""  |
+| MFNode | [in, out] | [parts](#field-parts) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -39,6 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **activate**
+{: #field-activate }
 
 *activate* forces the shader to *activate* the contained objects.
 
@@ -47,6 +60,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [out] **isSelected**
+{: #field-isSelected }
 
 *isSelected* indicates this shader instance is selected for use by browser
 
@@ -55,6 +69,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isValid**
+{: #field-isValid }
 
 *isValid* indicates whether current shader objects can be run as a shader program.
 
@@ -63,6 +78,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFString [ ] **language** "" <small>["Cg"|"GLSL"|"HLSL"|...]</small>
+{: #field-language }
 
 The *language* field indicates to the X3D player which shading *language* is used. The *language* field may be used to optionally determine the *language* type if no MIME-type information is available.
 
@@ -71,6 +87,7 @@ The *language* field indicates to the X3D player which shading *language* is use
 - Recognized values include "Cg" "GLSL" "HLSL".
 
 ### MFNode [in, out] **parts** [ ] <small>[ShaderPart]</small>
+{: #field-parts }
 
 ComposedShader can contain multiple [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes in the *parts* field.
 

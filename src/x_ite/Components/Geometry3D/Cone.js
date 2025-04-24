@@ -70,16 +70,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .protot
 {
    set_live__ ()
    {
-      X3DGeometryNode .prototype .set_live__ .call (this);
-
-      const
-         browser      = this .getBrowser (),
-         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
-
-      if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getConeOptions () .addInterest ("requestRebuild", this);
-      else
-         browser .getConeOptions () .removeInterest ("requestRebuild", this);
+      this .connectOptions (this .getBrowser () .getConeOptions ());
    },
    build ()
    {

@@ -15,7 +15,7 @@ tags: [VisibilitySensor, EnvironmentalSensor]
 
 VisibilitySensor detects when user can see a specific object or region as they navigate the world. The region sensed for visibility to the user is bounded by a rectangular box.
 
-The VisibilitySensor node belongs to the **EnvironmentalSensor** component and requires at least level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The VisibilitySensor node belongs to the **EnvironmentalSensor** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,20 @@ The VisibilitySensor node belongs to the **EnvironmentalSensor** component and r
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFVec3f | [in, out] | [size](#field-size) | 0 0 0  |
+| SFVec3f | [in, out] | [center](#field-center) | 0 0 0  |
+| SFTime | [out] | [enterTime](#field-enterTime) |  |
+| SFTime | [out] | [exitTime](#field-exitTime) |  |
+| SFBool | [out] | [isActive](#field-isActive) |  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -38,6 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the node.
 
@@ -46,18 +60,22 @@ Author-provided prose that describes intended purpose of the node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>[0,∞)</small>
+{: #field-size }
 
 *size* of visibility box around center location, oriented within local transformation frame.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
+{: #field-center }
 
 Translation offset from origin of local coordinate system.
 
 ### SFTime [out] **enterTime**
+{: #field-enterTime }
 
 Time event generated when user's camera enters visibility region for sensor.
 
@@ -66,6 +84,7 @@ Time event generated when user's camera enters visibility region for sensor.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **exitTime**
+{: #field-exitTime }
 
 Time event generated when user's camera exits visibility region for sensor.
 
@@ -74,6 +93,7 @@ Time event generated when user's camera exits visibility region for sensor.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
+{: #field-isActive }
 
 *isActive* true/false events are sent when triggering the sensor. *isActive*=true when entering visibility region, *isActive*=false when exiting visibility region.
 

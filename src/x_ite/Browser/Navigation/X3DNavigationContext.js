@@ -76,8 +76,8 @@ Object .assign (X3DNavigationContext .prototype,
    {
       this ._viewer .addInterest ("set_viewer__", this);
 
-      this .initialized () .addInterest ("set_world__",    this);
       this .shutdown ()    .addInterest ("remove_world__", this);
+      this .initialized () .addInterest ("set_world__",    this);
 
       this [_headlightContainer] = this .createHeadlight ();
       this [_viewerNode] .setup ();
@@ -170,39 +170,23 @@ Object .assign (X3DNavigationContext .prototype,
    },
    set_activeNavigationInfo__ ()
    {
-      const activeNavigationInfo = this ._activeNavigationInfo .getValue ();
+      this ._activeNavigationInfo .getValue () ?._viewer .removeFieldInterest (this ._viewer);
 
-      activeNavigationInfo ?._viewer .removeFieldInterest (this ._viewer);
+      this ._activeNavigationInfo = this ._activeLayer .getValue () ?.getNavigationInfo ();
 
-      if (this ._activeLayer .getValue ())
-      {
-         this ._activeNavigationInfo = this ._activeLayer .getValue () .getNavigationInfo ();
+      this ._activeNavigationInfo .getValue () ?._viewer .addFieldInterest (this ._viewer);
 
-         if (this ._activeNavigationInfo .getValue () === activeNavigationInfo)
-            return;
-
-         this ._activeNavigationInfo .getValue () ._viewer .addFieldInterest (this ._viewer);
-
-         this ._viewer = this ._activeNavigationInfo .getValue () ._viewer;
-      }
-      else
-      {
-         this ._activeNavigationInfo = null;
-         this ._viewer               = "NONE";
-      }
+      this ._viewer = this ._activeNavigationInfo .getValue () ?._viewer ?? "NONE";
    },
    set_activeViewpoint__ ()
    {
-      this ._activeViewpoint = this ._activeLayer .getValue () ?.getViewpoint () ?? null;
+      this ._activeViewpoint = this ._activeLayer .getValue () ?.getViewpoint ();
    },
    set_viewer__ (viewer)
    {
       const navigationInfo = this ._activeNavigationInfo .getValue ();
 
-      if (navigationInfo)
-         this ._availableViewers = navigationInfo ._availableViewers;
-      else
-         this ._availableViewers .length = 0;
+      this ._availableViewers = navigationInfo ?._availableViewers ?? [ ];
 
       // Create viewer node.
 

@@ -15,7 +15,7 @@ tags: [BoundaryEnhancementVolumeStyle, VolumeRendering]
 
 BoundaryEnhancementVolumeStyle provides boundary enhancement for the volume rendering style.
 
-The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** component and requires at least level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** component and requires at least support level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,17 @@ The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** compo
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
+| SFFloat | [in, out] | [retainedOpacity](#field-retainedOpacity) | 0.2  |
+| SFFloat | [in, out] | [boundaryOpacity](#field-boundaryOpacity) | 0.9  |
+| SFFloat | [in, out] | [opacityFactor](#field-opacityFactor) | 2  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,18 +47,22 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #field-enabled }
 
 Enables/disables node operation.
 
 ### SFFloat [in, out] **retainedOpacity** 0.2 <small>[0,1]</small>
+{: #field-retainedOpacity }
 
 *retainedOpacity* k_gc is the amount of initial opacity to mix into the output
 
 ### SFFloat [in, out] **boundaryOpacity** 0.9 <small>[0,1]</small>
+{: #field-boundaryOpacity }
 
 *boundaryOpacity* k_gs is the factored amount of the gradient enhancement to use.
 
 ### SFFloat [in, out] **opacityFactor** 2 <small>[0,∞)</small>
+{: #field-opacityFactor }
 
 *opacityFactor* k_ge is the power function to control the slope of the opacity curve to highlight the set of data.
 

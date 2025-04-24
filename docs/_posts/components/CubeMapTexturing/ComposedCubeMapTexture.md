@@ -15,7 +15,7 @@ tags: [ComposedCubeMapTexture, CubeMapTexturing]
 
 ComposedCubeMapTexture is a texture node that defines a cubic environment map source as an explicit set of images drawn from individual 2D texture nodes.
 
-The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component and requires at least level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
+The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,21 @@ The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component an
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFString | [in, out] | [description](#field-description) | "" |
+| SFNode | [in, out] | [frontTexture](#field-frontTexture) | NULL  |
+| SFNode | [in, out] | [backTexture](#field-backTexture) | NULL  |
+| SFNode | [in, out] | [leftTexture](#field-leftTexture) | NULL  |
+| SFNode | [in, out] | [rightTexture](#field-rightTexture) | NULL  |
+| SFNode | [in, out] | [topTexture](#field-topTexture) | NULL  |
+| SFNode | [in, out] | [bottomTexture](#field-bottomTexture) | NULL  |
+| SFNode | [ ] | [textureProperties](#field-textureProperties) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -38,6 +52,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #field-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -46,6 +61,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFNode [in, out] **frontTexture** NULL <small>[X3DTexture2DNode]</small>
+{: #field-frontTexture }
 
 Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
 
@@ -55,6 +71,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 - [Field originally named 'front' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **backTexture** NULL <small>[X3DTexture2DNode]</small>
+{: #field-backTexture }
 
 Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
 
@@ -64,6 +81,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 - [Field originally named 'back' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **leftTexture** NULL <small>[X3DTexture2DNode]</small>
+{: #field-leftTexture }
 
 Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodese).
 
@@ -73,6 +91,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 - [Field originally named 'left' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **rightTexture** NULL <small>[X3DTexture2DNode]</small>
+{: #field-rightTexture }
 
 Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
 
@@ -82,6 +101,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 - [Field originally named 'right' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **topTexture** NULL <small>[X3DTexture2DNode]</small>
+{: #field-topTexture }
 
 Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
 
@@ -91,6 +111,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 - [Field originally named 'top' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **bottomTexture** NULL <small>[X3DTexture2DNode]</small>
+{: #field-bottomTexture }
 
 Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/), other texture nodes).
 
@@ -100,6 +121,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 - [Field originally named 'bottom' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
+{: #field-textureProperties }
 
 Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 

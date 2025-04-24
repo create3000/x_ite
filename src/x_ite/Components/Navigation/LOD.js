@@ -95,11 +95,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    { },
    removeChildren ()
    { },
-   set_children__ ()
-   {
-      this .set_level__ (Math .min (this ._level_changed .getValue (), this ._children .length - 1));
-   },
-   set_level__ (level)
+   setChild (childNode)
    {
       // Remove node.
 
@@ -136,58 +132,66 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
       // Add node.
 
-      if (level >= 0 && level < this ._children .length)
+      if (childNode)
       {
-         const childNode = X3DCast (X3DConstants .X3DChildNode, this ._children [level]);
+         childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
+         childNode ._isPointingObject  .addInterest ("requestRebuild", this);
+         childNode ._isCameraObject    .addInterest ("requestRebuild", this);
+         childNode ._isPickableObject  .addInterest ("requestRebuild", this);
+         childNode ._isCollisionObject .addInterest ("requestRebuild", this);
+         childNode ._isShadowObject    .addInterest ("requestRebuild", this);
+         childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
 
-         if (childNode)
+         this .childNode = childNode;
+
+         if (childNode .isVisible ())
          {
-            childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
-            childNode ._isPointingObject  .addInterest ("requestRebuild", this);
-            childNode ._isCameraObject    .addInterest ("requestRebuild", this);
-            childNode ._isPickableObject  .addInterest ("requestRebuild", this);
-            childNode ._isCollisionObject .addInterest ("requestRebuild", this);
-            childNode ._isShadowObject    .addInterest ("requestRebuild", this);
-            childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
+            if (childNode .isBoundedObject ())
+               this .boundedObject = childNode;
 
-            this .childNode = childNode;
+            if (childNode .isPointingObject ())
+               this .pointingObject = childNode;
 
-            if (childNode .isVisible ())
-            {
-               if (childNode .isBoundedObject ())
-                  this .boundedObject = childNode;
+            if (childNode .isCameraObject ())
+               this .cameraObject = childNode;
 
-               if (childNode .isPointingObject ())
-                  this .pointingObject = childNode;
+            if (childNode .isPickableObject ())
+               this .pickableObject = childNode;
 
-               if (childNode .isCameraObject ())
-                  this .cameraObject = childNode;
+            if (childNode .isCollisionObject ())
+               this .collisionObject = childNode;
 
-               if (childNode .isPickableObject ())
-                  this .pickableObject = childNode;
+            if (childNode .isShadowObject ())
+               this .shadowObject = childNode;
 
-               if (childNode .isCollisionObject ())
-                  this .collisionObject = childNode;
+            if (childNode .isVisibleObject ())
+               this .visibleObject = childNode;
+         }
 
-               if (childNode .isShadowObject ())
-                  this .shadowObject = childNode;
+         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+         {
+            childNode ._display     .addInterest ("requestRebuild", this);
+            childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
-               if (childNode .isVisibleObject ())
-                  this .visibleObject = childNode;
-            }
-
-            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-            {
-               childNode ._display     .addInterest ("requestRebuild", this);
-               childNode ._bboxDisplay .addInterest ("requestRebuild", this);
-
-               if (childNode .isBBoxVisible ())
-                  this .bboxObject = childNode;
-            }
+            if (childNode .isBBoxVisible ())
+               this .bboxObject = childNode;
          }
       }
 
       this .set_objects__ ();
+   },
+   set_children__ ()
+   {
+      const level = Math .min (this ._level_changed .getValue (), this ._children .length - 1);
+
+      if (level >= 0 && level < this ._children .length)
+      {
+         this .setChild (X3DCast (X3DConstants .X3DChildNode, this ._children [level]))
+      }
+      else
+      {
+         this .setChild (null);
+      }
    },
    set_boundedObjects__ ()
    {
@@ -325,7 +329,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
                   {
                      this ._level_changed = level;
 
-                     this .set_level__ (Math .min (level, this ._children .length - 1));
+                     this .set_children__ ();
                   }
                }
 

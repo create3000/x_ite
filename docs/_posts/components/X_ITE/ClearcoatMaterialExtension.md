@@ -15,7 +15,7 @@ tags: [ClearcoatMaterialExtension, X_ITE]
 
 ClearcoatMaterialExtension is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../specularglossinessmaterial/) nodes. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
 
-The ClearcoatMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
+The ClearcoatMaterialExtension node belongs to the **X_ITE** component and requires at least support level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -30,7 +30,21 @@ The ClearcoatMaterialExtension node belongs to the **X_ITE** component and requi
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
+| SFFloat | [in, out] | [clearcoat](#field-clearcoat) | 0  |
+| SFString | [in, out] | [clearcoatTextureMapping](#field-clearcoatTextureMapping) | "" |
+| SFNode | [in, out] | [clearcoatTexture](#field-clearcoatTexture) | NULL  |
+| SFFloat | [in, out] | [clearcoatRoughness](#field-clearcoatRoughness) | 0  |
+| SFString | [in, out] | [clearcoatRoughnessTextureMapping](#field-clearcoatRoughnessTextureMapping) | "" |
+| SFNode | [in, out] | [clearcoatRoughnessTexture](#field-clearcoatRoughnessTexture) | NULL  |
+| SFString | [in, out] | [clearcoatNormalTextureMapping](#field-clearcoatNormalTextureMapping) | "" |
+| SFNode | [in, out] | [clearcoatNormalTexture](#field-clearcoatNormalTexture) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #field-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -39,34 +53,42 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in, out] **clearcoat** 0 <small>[0,∞)</small>
+{: #field-clearcoat }
 
 The clearcoat layer intensity.
 
 ### SFString [in, out] **clearcoatTextureMapping** ""
+{: #field-clearcoatTextureMapping }
 
 Input/Output field *clearcoatTextureMapping*.
 
 ### SFNode [in, out] **clearcoatTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-clearcoatTexture }
 
 The clearcoat layer intensity texture.
 
 ### SFFloat [in, out] **clearcoatRoughness** 0 <small>[0,∞)</small>
+{: #field-clearcoatRoughness }
 
 The clearcoat layer roughness.
 
 ### SFString [in, out] **clearcoatRoughnessTextureMapping** ""
+{: #field-clearcoatRoughnessTextureMapping }
 
 Input/Output field *clearcoatRoughnessTextureMapping*.
 
 ### SFNode [in, out] **clearcoatRoughnessTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-clearcoatRoughnessTexture }
 
 The clearcoat layer roughness texture.
 
 ### SFString [in, out] **clearcoatNormalTextureMapping** ""
+{: #field-clearcoatNormalTextureMapping }
 
 Input/Output field *clearcoatNormalTextureMapping*.
 
 ### SFNode [in, out] **clearcoatNormalTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #field-clearcoatNormalTexture }
 
 The clearcoat normal map texture.
 

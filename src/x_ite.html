@@ -38,20 +38,26 @@ const
 Browser .contextMenu .userMenu = () =>
 {
    return {
-      "transforms": {
-         "name": "CSS Transforms",
-         "items": {
+      transforms: {
+         name: "CSS Transforms",
+         items: {
             "default": {
-               "name": "Default",
-               "callback": () => $("#transforms") .css ("transform", "matrix(1, 0, 0, 1, 0, 0)"),
+               name: "Default",
+               type: "radio",
+               selected: $("#transforms") .css ("transform") === "none",
+               callback: () => $("#transforms") .css ("transform", "none"),
             },
             "75 %": {
-               "name": "75 %",
-               "callback": () => $("#transforms") .css ("transform", "matrix(0.75, 0, 0, 0.75, 0, 0)"),
+               name: "75 %",
+               type: "radio",
+               selected: $("#transforms") .css ("transform") .includes ("0.75"),
+               callback: () => $("#transforms") .css ("transform", "matrix(0.75, 0, 0, 0.75, 0, 0)"),
             },
             "50 %": {
-               "name": "50 %",
-               "callback": () => $("#transforms") .css ("transform", "matrix(0.5, 0, 0, 0.5, 0, 0)"),
+               name: "50 %",
+               type: "radio",
+               selected: $("#transforms") .css ("transform") .includes ("0.5"),
+               callback: () => $("#transforms") .css ("transform", "matrix(0.5, 0, 0, 0.5, 0, 0)"),
             },
          },
       },
