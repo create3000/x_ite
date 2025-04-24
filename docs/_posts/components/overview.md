@@ -9,7 +9,7 @@ X3D components are modular groups of related functionality in the X3D standard. 
 
 They are the building blocks of [X3D profiles](/x_ite/profiles/overview/), and you can also reference them individually to declare what features your scene uses.
 
-Each component also has a support level, which indicates how advanced its use is. For example, [Shape](/x_ite/components/shape/shape/) at level **1** gives basic shape functionality; higher levels may include more complex features.
+Each component also has a support level, which indicates how advanced its use is. For example, component [Shape](/x_ite/components/overview/#shape) at level **1** gives basic shape functionality; higher levels may include more complex features.
 
 ## Component Index
 
