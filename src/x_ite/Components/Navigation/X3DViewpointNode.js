@@ -625,23 +625,33 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       if (type !== TraverseType .CAMERA)
          return;
 
+      // Handle NavigationInfo node.
+
       this .navigationInfoNode ?.traverse (type, renderObject);
+
+      // Check if the viewpoint is displayed.
 
       this .descriptions .length = 0;
 
-      if (this ._description .getValue ())
+      const description = this ._description .getValue ();
+
+      if (description)
       {
          if (renderObject .getViewpointGroups () .every (viewpointGroupNode => viewpointGroupNode .getDisplayed ()))
          {
             for (const viewpointGroupNode of renderObject .getViewpointGroups ())
             {
-               if (viewpointGroupNode ._description .getValue ())
-                  this .descriptions .push (viewpointGroupNode ._description .getValue ());
+               const description = viewpointGroupNode ._description .getValue ();
+
+               if (description)
+                  this .descriptions .push (description);
             }
 
-            this .descriptions .push (this ._description .getValue ());
+            this .descriptions .push (description);
          }
       }
+
+      // Add the viewpoint to the list of available viewpoints.
 
       renderObject .getLayer () .getViewpoints () .push (this);
 
