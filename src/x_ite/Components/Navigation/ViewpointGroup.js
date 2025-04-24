@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
          }
       }
 
-      this .setCameraObject (this .cameraObjects .length);
+      this .setCameraObject  (this .cameraObjects   .length);
       this .setVisibleObject (this .viewpointGroups .length);
    },
    getDisplayed ()
