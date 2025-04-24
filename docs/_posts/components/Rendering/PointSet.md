@@ -27,13 +27,15 @@ The PointSet node belongs to the **Rendering** component and requires at least s
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFNode \[in, out\] [attrib](#mfnode-in-out-attrib---x3dvertexattributenode)
-- SFNode \[in, out\] [fogCoord](#sfnode-in-out-fogcoord-null-fogcoordinate)
-- SFNode \[in, out\] [color](#sfnode-in-out-color-null-x3dcolornode)
-- SFNode \[in, out\] [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard)
-- SFNode \[in, out\] [normal](#sfnode-in-out-normal-null-x3dnormalnode)
-- SFNode \[in, out\] [coord](#sfnode-in-out-coord-null-x3dcoordinatenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFNode | \[in, out\] | [attrib](#mfnode-in-out-attrib---x3dvertexattributenode) | \[ \] |
+| SFNode | \[in, out\] | [fogCoord](#sfnode-in-out-fogcoord-null-fogcoordinate) | NULL  |
+| SFNode | \[in, out\] | [color](#sfnode-in-out-color-null-x3dcolornode) | NULL  |
+| SFNode | \[in, out\] | [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard) | NULL  |
+| SFNode | \[in, out\] | [normal](#sfnode-in-out-normal-null-x3dnormalnode) | NULL  |
+| SFNode | \[in, out\] | [coord](#sfnode-in-out-coord-null-x3dcoordinatenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

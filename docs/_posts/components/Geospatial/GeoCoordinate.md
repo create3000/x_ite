@@ -28,10 +28,12 @@ The GeoCoordinate node belongs to the **Geospatial** component and requires at l
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
-- MFVec3d \[in, out\] [point](#mfvec3d-in-out-point----)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFNode | \[ \] | [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated) | NULL  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| MFVec3d | \[in, out\] | [point](#mfvec3d-in-out-point----) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

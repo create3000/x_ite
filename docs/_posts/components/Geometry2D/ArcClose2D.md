@@ -27,12 +27,14 @@ The ArcClose2D node belongs to the **Geometry2D** component and requires at leas
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[ \] [closureType](#sfstring---closuretype-pie-piechord)
-- SFFloat \[ \] [startAngle](#sffloat---startangle-0--2-2)
-- SFFloat \[ \] [endAngle](#sffloat---endangle-2--2-2)
-- SFFloat \[ \] [radius](#sffloat---radius-1-0)
-- SFBool \[ \] [solid](#sfbool---solid-false)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[ \] | [closureType](#sfstring---closuretype-pie-piechord) | "PIE"  |
+| SFFloat | \[ \] | [startAngle](#sffloat---startangle-0--2-2) | 0  |
+| SFFloat | \[ \] | [endAngle](#sffloat---endangle-2--2-2) | π/2  |
+| SFFloat | \[ \] | [radius](#sffloat---radius-1-0) | 1  |
+| SFBool | \[ \] | [solid](#sfbool---solid-false) | FALSE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

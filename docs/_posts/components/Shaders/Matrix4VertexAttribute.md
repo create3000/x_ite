@@ -28,9 +28,11 @@ The Matrix4VertexAttribute node belongs to the **Shaders** component and require
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[ \] [name](#sfstring---name-)
-- MFMatrix4f \[in, out\] [value](#mfmatrix4f-in-out-value----)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[ \] | [name](#sfstring---name-) | "" |
+| MFMatrix4f | \[in, out\] | [value](#mfmatrix4f-in-out-value----) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -27,8 +27,10 @@ The Polypoint2D node belongs to the **Geometry2D** component and requires at lea
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFVec2f \[in, out\] [point](#mfvec2f-in-out-point----)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFVec2f | \[in, out\] | [point](#mfvec2f-in-out-point----) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

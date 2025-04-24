@@ -27,16 +27,18 @@ The LayoutLayer node belongs to the **Layout** component and requires at least s
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [pickable](#sfbool-in-out-pickable-true)
-- MFString \[in, out\] [objectType](#mfstring-in-out-objecttype-all-all-none-terrain-)
-- SFBool \[in, out\] [pointerEvents](#sfbool-in-out-pointerevents-true-small-classbluenon-standard)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFNode \[in, out\] [layout](#sfnode-in-out-layout-null-x3dlayoutnode)
-- SFNode \[in, out\] [viewport](#sfnode-in-out-viewport-null-x3dviewportnode)
-- MFNode \[in\] [addChildren](#mfnode-in-addchildren)
-- MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
-- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dchildnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [pickable](#sfbool-in-out-pickable-true) | TRUE |
+| MFString | \[in, out\] | [objectType](#mfstring-in-out-objecttype-all-all-none-terrain-) | "ALL"  |
+| SFBool | \[in, out\] | [pointerEvents](#sfbool-in-out-pointerevents-true-small-classbluenon-standard) | TRUE  |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFNode | \[in, out\] | [layout](#sfnode-in-out-layout-null-x3dlayoutnode) | NULL  |
+| SFNode | \[in, out\] | [viewport](#sfnode-in-out-viewport-null-x3dviewportnode) | NULL  |
+| MFNode | \[in\] | [addChildren](#mfnode-in-addchildren) |  |
+| MFNode | \[in\] | [removeChildren](#mfnode-in-removechildren) |  |
+| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dchildnode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

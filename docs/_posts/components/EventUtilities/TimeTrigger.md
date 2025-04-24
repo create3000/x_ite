@@ -28,9 +28,11 @@ The TimeTrigger node belongs to the **EventUtilities** component and requires at
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in\] [set_boolean](#sfbool-in-set_boolean)
-- SFTime \[out\] [triggerTime](#sftime-out-triggertime)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in\] | [set_boolean](#sfbool-in-set_boolean) |  |
+| SFTime | \[out\] | [triggerTime](#sftime-out-triggertime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

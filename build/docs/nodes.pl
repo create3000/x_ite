@@ -327,7 +327,7 @@ sub reorder_fields {
    $string = "";
    $string .= $fields -> {$_ -> [1]} foreach @sourceFields;
 
-   $file =~ s/(## Fields\n+(?:-.*?\n+)*)(?:\{:.*?\})?/$1$string/so;
+   $file =~ s/(## Fields\n+.*?\{:.*?\}\n+)/$1$string/so;
 
    return $file;
 }
@@ -352,10 +352,10 @@ sub fields_list {
 
    foreach $field (@sourceFields)
    {
-      if ($file =~ m/###\s*(.*?\*\*$field->[1]\*\*)(.*?)\n/)
+      if ($file =~ m/###\s*((\w+)\s+(\[.*?\])\s+(\*\*$field->[1]\*\*)[ ]*(\[.*?\]|[ \da-zA-Z"\-+\/π]*).*?)\n/)
       {
-         $text = $1;
-         $slug = lc ($1 . $2);
+         $text = "| $2 | $3 | $4 | $5 |";
+         $slug = lc ($1);
 
          $slug =~ s/<\/?small>//sgo;
          $slug =~ s/[()]|[^\x00-\x7F]//sgo;
@@ -370,11 +370,13 @@ sub fields_list {
    }
 
    $string = "";
-   $string .= "- " . $fields -> {$_ -> [1]} . "\n" foreach @sourceFields;
+   $string .= "| Type | Access Type | Name | Default Value |\n";
+   $string .= "| ---- | ----------- | ---- | ------------- |\n";
+   $string .= $fields -> {$_ -> [1]} . "\n" foreach @sourceFields;
    $string .= "{: .fields }\n";
    $string .= "\n";
 
-   $file =~ s/(## Fields\n+)(?:-.*?\n+)*(?:\{:.*?\})?/$1$string/so;
+   $file =~ s/(## Fields\n+).*?\{:.*?\}\n+/$1$string/so;
 
    return $file;
 }

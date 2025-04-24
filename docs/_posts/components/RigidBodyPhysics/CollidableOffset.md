@@ -31,15 +31,17 @@ The CollidableOffset node belongs to the **RigidBodyPhysics** component and requ
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFVec3f \[in, out\] [translation](#sfvec3f-in-out-translation-0-0-0--)
-- SFRotation \[in, out\] [rotation](#sfrotation-in-out-rotation-0-0-1-0-0-1)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
-- SFNode \[ \] [collidable](#sfnode---collidable-null-x3dnbodycollidablenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFVec3f | \[in, out\] | [translation](#sfvec3f-in-out-translation-0-0-0--) | 0 0 0  |
+| SFRotation | \[in, out\] | [rotation](#sfrotation-in-out-rotation-0-0-1-0-0-1) | 0 0 1 0  |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
+| SFNode | \[ \] | [collidable](#sfnode---collidable-null-x3dnbodycollidablenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -27,18 +27,20 @@ The NurbsSurfaceInterpolator node belongs to the **NURBS** component and require
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFVec2f \[in\] [set_fraction](#sfvec2f-in-set_fraction--)
-- SFInt32 \[ \] [uOrder](#sfint32---uorder-3-2)
-- SFInt32 \[ \] [vOrder](#sfint32---vorder-3-2)
-- SFInt32 \[ \] [uDimension](#sfint32---udimension-0-0)
-- SFInt32 \[ \] [vDimension](#sfint32---vdimension-0-0)
-- MFDouble \[ \] [uKnot](#mfdouble---uknot----)
-- MFDouble \[ \] [vKnot](#mfdouble---vknot----)
-- MFDouble \[in, out\] [weight](#mfdouble-in-out-weight----)
-- SFNode \[in, out\] [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode)
-- SFVec3f \[out\] [normal_changed](#sfvec3f-out-normal_changed)
-- SFVec3f \[out\] [position_changed](#sfvec3f-out-position_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFVec2f | \[in\] | [set_fraction](#sfvec2f-in-set_fraction--) |  |
+| SFInt32 | \[ \] | [uOrder](#sfint32---uorder-3-2) | 3  |
+| SFInt32 | \[ \] | [vOrder](#sfint32---vorder-3-2) | 3  |
+| SFInt32 | \[ \] | [uDimension](#sfint32---udimension-0-0) | 0  |
+| SFInt32 | \[ \] | [vDimension](#sfint32---vdimension-0-0) | 0  |
+| MFDouble | \[ \] | [uKnot](#mfdouble---uknot----) | \[ \] |
+| MFDouble | \[ \] | [vKnot](#mfdouble---vknot----) | \[ \] |
+| MFDouble | \[in, out\] | [weight](#mfdouble-in-out-weight----) | \[ \] |
+| SFNode | \[in, out\] | [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode) | NULL  |
+| SFVec3f | \[out\] | [normal_changed](#sfvec3f-out-normal_changed) |  |
+| SFVec3f | \[out\] | [position_changed](#sfvec3f-out-position_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

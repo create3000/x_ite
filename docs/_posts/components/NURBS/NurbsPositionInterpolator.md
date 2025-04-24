@@ -27,13 +27,15 @@ The NurbsPositionInterpolator node belongs to the **NURBS** component and requir
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in\] [set_fraction](#sffloat-in-set_fraction--)
-- SFInt32 \[in, out\] [order](#sfint32-in-out-order-3-2)
-- MFDouble \[in, out\] [knot](#mfdouble-in-out-knot----)
-- MFDouble \[in, out\] [weight](#mfdouble-in-out-weight----)
-- SFNode \[in, out\] [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode)
-- SFVec3f \[out\] [value_changed](#sfvec3f-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in\] | [set_fraction](#sffloat-in-set_fraction--) |  |
+| SFInt32 | \[in, out\] | [order](#sfint32-in-out-order-3-2) | 3  |
+| MFDouble | \[in, out\] | [knot](#mfdouble-in-out-knot----) | \[ \] |
+| MFDouble | \[in, out\] | [weight](#mfdouble-in-out-weight----) | \[ \] |
+| SFNode | \[in, out\] | [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode) | NULL  |
+| SFVec3f | \[out\] | [value_changed](#sfvec3f-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

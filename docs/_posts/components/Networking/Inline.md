@@ -30,17 +30,19 @@ The Inline node belongs to the **Networking** component and requires at least su
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [global](#sfbool-in-out-global-false)
-- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
-- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
-- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
-- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [global](#sfbool-in-out-global-false) | FALSE |
+| SFBool | \[in, out\] | [load](#sfbool-in-out-load-true) | TRUE |
+| MFString | \[in, out\] | [url](#mfstring-in-out-url---uri) | \[ \] |
+| SFTime | \[in, out\] | [autoRefresh](#sftime-in-out-autorefresh-0-0) | 0  |
+| SFTime | \[in, out\] | [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0) | 3600  |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

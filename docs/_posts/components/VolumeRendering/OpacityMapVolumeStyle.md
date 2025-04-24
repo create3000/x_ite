@@ -28,9 +28,11 @@ The OpacityMapVolumeStyle node belongs to the **VolumeRendering** component and 
 
 ## Fields
 
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFNode \[in, out\] [transferFunction](#sfnode-in-out-transferfunction-null-x3dtexture2dnode-x3dtexture3dnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFNode | \[in, out\] | [transferFunction](#sfnode-in-out-transferfunction-null-x3dtexture2dnode-x3dtexture3dnode) | NULL  |
 {: .fields }
 
 ### SFBool [in, out] **enabled** TRUE

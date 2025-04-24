@@ -32,40 +32,42 @@ The SignalPdu node belongs to the **DIS** component and requires at least suppor
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFString \[in, out\] [address](#sfstring-in-out-address-localhost)
-- SFInt32 \[in, out\] [applicationID](#sfint32-in-out-applicationid-0-0-65535)
-- MFInt32 \[in, out\] [data](#mfint32-in-out-data---0-255)
-- SFInt32 \[in, out\] [dataLength](#sfint32-in-out-datalength-0-0-65535)
-- SFInt32 \[in, out\] [encodingScheme](#sfint32-in-out-encodingscheme-0-0-65535)
-- SFInt32 \[in, out\] [entityID](#sfint32-in-out-entityid-0-0-65535)
-- SFString \[in, out\] [multicastRelayHost](#sfstring-in-out-multicastrelayhost-)
-- SFInt32 \[in, out\] [multicastRelayPort](#sfint32-in-out-multicastrelayport)
-- SFString \[in, out\] [networkMode](#sfstring-in-out-networkmode-standalone-standalonenetworkreadernetworkwriter)
-- SFInt32 \[in, out\] [port](#sfint32-in-out-port-0-0-65535)
-- SFInt32 \[in, out\] [radioID](#sfint32-in-out-radioid-0-0-65535)
-- SFTime \[in, out\] [readInterval](#sftime-in-out-readinterval-01-0)
-- SFBool \[in, out\] [rtpHeaderExpected](#sfbool-in-out-rtpheaderexpected-false)
-- SFInt32 \[in, out\] [sampleRate](#sfint32-in-out-samplerate-0-0-65535)
-- SFInt32 \[in, out\] [samples](#sfint32-in-out-samples-0-0-65535)
-- SFInt32 \[in, out\] [siteID](#sfint32-in-out-siteid-0-0-65535)
-- SFInt32 \[in, out\] [tdlType](#sfint32-in-out-tdltype-0-0-65535)
-- SFInt32 \[in, out\] [whichGeometry](#sfint32-in-out-whichgeometry-1--1)
-- SFTime \[in, out\] [writeInterval](#sftime-in-out-writeinterval-1-0)
-- SFBool \[out\] [isNetworkReader](#sfbool-out-isnetworkreader)
-- SFBool \[out\] [isNetworkWriter](#sfbool-out-isnetworkwriter)
-- SFBool \[out\] [isRtpHeaderHeard](#sfbool-out-isrtpheaderheard)
-- SFBool \[out\] [isStandAlone](#sfbool-out-isstandalone)
-- SFTime \[out\] [timestamp](#sftime-out-timestamp)
-- SFVec3d \[in, out\] [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFString | \[in, out\] | [address](#sfstring-in-out-address-localhost) | "localhost" |
+| SFInt32 | \[in, out\] | [applicationID](#sfint32-in-out-applicationid-0-0-65535) | 0  |
+| MFInt32 | \[in, out\] | [data](#mfint32-in-out-data---0-255) | \[ \] |
+| SFInt32 | \[in, out\] | [dataLength](#sfint32-in-out-datalength-0-0-65535) | 0  |
+| SFInt32 | \[in, out\] | [encodingScheme](#sfint32-in-out-encodingscheme-0-0-65535) | 0  |
+| SFInt32 | \[in, out\] | [entityID](#sfint32-in-out-entityid-0-0-65535) | 0  |
+| SFString | \[in, out\] | [multicastRelayHost](#sfstring-in-out-multicastrelayhost-) | "" |
+| SFInt32 | \[in, out\] | [multicastRelayPort](#sfint32-in-out-multicastrelayport) |  |
+| SFString | \[in, out\] | [networkMode](#sfstring-in-out-networkmode-standalone-standalonenetworkreadernetworkwriter) | "standAlone"  |
+| SFInt32 | \[in, out\] | [port](#sfint32-in-out-port-0-0-65535) | 0  |
+| SFInt32 | \[in, out\] | [radioID](#sfint32-in-out-radioid-0-0-65535) | 0  |
+| SFTime | \[in, out\] | [readInterval](#sftime-in-out-readinterval-01-0) | 0 |
+| SFBool | \[in, out\] | [rtpHeaderExpected](#sfbool-in-out-rtpheaderexpected-false) | FALSE |
+| SFInt32 | \[in, out\] | [sampleRate](#sfint32-in-out-samplerate-0-0-65535) | 0  |
+| SFInt32 | \[in, out\] | [samples](#sfint32-in-out-samples-0-0-65535) | 0  |
+| SFInt32 | \[in, out\] | [siteID](#sfint32-in-out-siteid-0-0-65535) | 0  |
+| SFInt32 | \[in, out\] | [tdlType](#sfint32-in-out-tdltype-0-0-65535) | 0  |
+| SFInt32 | \[in, out\] | [whichGeometry](#sfint32-in-out-whichgeometry-1--1) | 1  |
+| SFTime | \[in, out\] | [writeInterval](#sftime-in-out-writeinterval-1-0) | 1  |
+| SFBool | \[out\] | [isNetworkReader](#sfbool-out-isnetworkreader) |  |
+| SFBool | \[out\] | [isNetworkWriter](#sfbool-out-isnetworkwriter) |  |
+| SFBool | \[out\] | [isRtpHeaderHeard](#sfbool-out-isrtpheaderheard) |  |
+| SFBool | \[out\] | [isStandAlone](#sfbool-out-isstandalone) |  |
+| SFTime | \[out\] | [timestamp](#sftime-out-timestamp) |  |
+| SFVec3d | \[in, out\] | [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--) | 0 0 0  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

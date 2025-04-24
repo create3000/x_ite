@@ -29,14 +29,16 @@ The ChannelMerger node belongs to the **Sound** component and requires at least 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFFloat \[in, out\] [gain](#sffloat-in-out-gain-1--)
-- SFInt32 \[in, out\] [channelCount](#sfint32-in-out-channelcount)
-- SFString \[in, out\] [channelCountMode](#sfstring-in-out-channelcountmode-max-max-clamped-max-explicit)
-- SFString \[in, out\] [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete)
-- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFFloat | \[in, out\] | [gain](#sffloat-in-out-gain-1--) | 1  |
+| SFInt32 | \[in, out\] | [channelCount](#sfint32-in-out-channelcount) |  |
+| SFString | \[in, out\] | [channelCountMode](#sfstring-in-out-channelcountmode-max-max-clamped-max-explicit) | "MAX"  |
+| SFString | \[in, out\] | [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete) | "SPEAKERS"  |
+| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

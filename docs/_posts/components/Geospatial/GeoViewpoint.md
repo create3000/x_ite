@@ -29,24 +29,26 @@ The GeoViewpoint node belongs to the **Geospatial** component and requires at le
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
-- SFBool \[in\] [set_bind](#sfbool-in-set_bind)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFVec3d \[in, out\] [position](#sfvec3d-in-out-position-0-0-100000--)
-- SFRotation \[in, out\] [orientation](#sfrotation-in-out-orientation-0-0-1-0---or--1-1)
-- SFVec3d \[in, out\] [centerOfRotation](#sfvec3d-in-out-centerofrotation-0-0-0--)
-- SFFloat \[in, out\] [fieldOfView](#sffloat-in-out-fieldofview-4-0)
-- SFFloat \[in, out\] [nearDistance](#sffloat-in-out-neardistance--1--1-or-0)
-- SFFloat \[in, out\] [farDistance](#sffloat-in-out-fardistance--1--1-or-0)
-- SFBool \[in, out\] [viewAll](#sfbool-in-out-viewall-false)
-- SFBool \[in, out\] [jump](#sfbool-in-out-jump-true)
-- SFBool \[in, out\] [retainUserOffsets](#sfbool-in-out-retainuseroffsets-false)
-- SFFloat \[ \] [speedFactor](#sffloat---speedfactor-1-0)
-- SFBool \[out\] [isBound](#sfbool-out-isbound)
-- SFTime \[out\] [bindTime](#sftime-out-bindtime)
-- SFNode \[in, out\] [navigationInfo](#sfnode-in-out-navigationinfo-null-navigationinfo)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFNode | \[ \] | [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated) | NULL  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| SFBool | \[in\] | [set_bind](#sfbool-in-set_bind) |  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFVec3d | \[in, out\] | [position](#sfvec3d-in-out-position-0-0-100000--) | 0 0 100000  |
+| SFRotation | \[in, out\] | [orientation](#sfrotation-in-out-orientation-0-0-1-0---or--1-1) | 0 0 1 0  |
+| SFVec3d | \[in, out\] | [centerOfRotation](#sfvec3d-in-out-centerofrotation-0-0-0--) | 0 0 0  |
+| SFFloat | \[in, out\] | [fieldOfView](#sffloat-in-out-fieldofview-4-0) | π/4  |
+| SFFloat | \[in, out\] | [nearDistance](#sffloat-in-out-neardistance--1--1-or-0) | -1  |
+| SFFloat | \[in, out\] | [farDistance](#sffloat-in-out-fardistance--1--1-or-0) | -1  |
+| SFBool | \[in, out\] | [viewAll](#sfbool-in-out-viewall-false) | FALSE |
+| SFBool | \[in, out\] | [jump](#sfbool-in-out-jump-true) | TRUE |
+| SFBool | \[in, out\] | [retainUserOffsets](#sfbool-in-out-retainuseroffsets-false) | FALSE |
+| SFFloat | \[ \] | [speedFactor](#sffloat---speedfactor-1-0) | 1  |
+| SFBool | \[out\] | [isBound](#sfbool-out-isbound) |  |
+| SFTime | \[out\] | [bindTime](#sftime-out-bindtime) |  |
+| SFNode | \[in, out\] | [navigationInfo](#sfnode-in-out-navigationinfo-null-navigationinfo) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

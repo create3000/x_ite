@@ -28,8 +28,10 @@ The MultiTextureTransform node belongs to the **Texturing** component and requir
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFNode \[in, out\] [textureTransform](#mfnode-in-out-texturetransform---x3dtexturetransformnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFNode | \[in, out\] | [textureTransform](#mfnode-in-out-texturetransform---x3dtexturetransformnode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

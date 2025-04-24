@@ -29,14 +29,16 @@ The PositionChaser node belongs to the **Followers** component and requires at l
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFVec3f \[in\] [set_value](#sfvec3f-in-set_value--)
-- SFVec3f \[in\] [set_destination](#sfvec3f-in-set_destination--)
-- SFVec3f \[ \] [initialValue](#sfvec3f---initialvalue-0-0-0--)
-- SFVec3f \[ \] [initialDestination](#sfvec3f---initialdestination-0-0-0--)
-- SFTime \[ \] [duration](#sftime---duration-1-0)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFVec3f \[out\] [value_changed](#sfvec3f-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFVec3f | \[in\] | [set_value](#sfvec3f-in-set_value--) |  |
+| SFVec3f | \[in\] | [set_destination](#sfvec3f-in-set_destination--) |  |
+| SFVec3f | \[ \] | [initialValue](#sfvec3f---initialvalue-0-0-0--) | 0 0 0  |
+| SFVec3f | \[ \] | [initialDestination](#sfvec3f---initialdestination-0-0-0--) | 0 0 0  |
+| SFTime | \[ \] | [duration](#sftime---duration-1-0) | 1  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFVec3f | \[out\] | [value_changed](#sfvec3f-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

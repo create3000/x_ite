@@ -29,10 +29,12 @@ The TextureCoordinateGenerator node belongs to the **Texturing** component and r
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [mapping](#sfstring-in-out-mapping-)
-- SFString \[in, out\] [mode](#sfstring-in-out-mode-sphere-spherecameraspacenormalcameraspacepositioncameraspacereflectionvectorsphere-localcoordcoord-eyenoisenoise-eyesphere-reflectsphere-reflect-local)
-- MFFloat \[in, out\] [parameter](#mffloat-in-out-parameter--)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [mapping](#sfstring-in-out-mapping-) | "" |
+| SFString | \[in, out\] | [mode](#sfstring-in-out-mode-sphere-spherecameraspacenormalcameraspacepositioncameraspacereflectionvectorsphere-localcoordcoord-eyenoisenoise-eyesphere-reflectsphere-reflect-local) | "SPHERE"  |
+| MFFloat | \[in, out\] | [parameter](#mffloat-in-out-parameter--) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

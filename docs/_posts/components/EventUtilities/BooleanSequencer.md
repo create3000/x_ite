@@ -28,13 +28,15 @@ The BooleanSequencer node belongs to the **EventUtilities** component and requir
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in\] [set_fraction](#sffloat-in-set_fraction--)
-- SFBool \[in\] [previous](#sfbool-in-previous)
-- SFBool \[in\] [next](#sfbool-in-next)
-- MFFloat \[in, out\] [key](#mffloat-in-out-key----)
-- MFBool \[in, out\] [keyValue](#mfbool-in-out-keyvalue--)
-- SFBool \[out\] [value_changed](#sfbool-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in\] | [set_fraction](#sffloat-in-set_fraction--) |  |
+| SFBool | \[in\] | [previous](#sfbool-in-previous) |  |
+| SFBool | \[in\] | [next](#sfbool-in-next) |  |
+| MFFloat | \[in, out\] | [key](#mffloat-in-out-key----) | \[ \] |
+| MFBool | \[in, out\] | [keyValue](#mfbool-in-out-keyvalue--) | \[ \] |
+| SFBool | \[out\] | [value_changed](#sfbool-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

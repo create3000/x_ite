@@ -31,21 +31,23 @@ The TimeSensor node belongs to the **Time** component and requires at least supp
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFTime \[in, out\] [cycleInterval](#sftime-in-out-cycleinterval-1-0)
-- SFBool \[in, out\] [loop](#sfbool-in-out-loop-false)
-- SFTime \[in, out\] [startTime](#sftime-in-out-starttime-0--)
-- SFTime \[in, out\] [resumeTime](#sftime-in-out-resumetime-0--)
-- SFTime \[in, out\] [pauseTime](#sftime-in-out-pausetime-0--)
-- SFTime \[in, out\] [stopTime](#sftime-in-out-stoptime-0--)
-- SFBool \[out\] [isPaused](#sfbool-out-ispaused)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFTime \[out\] [cycleTime](#sftime-out-cycletime)
-- SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
-- SFFloat \[out\] [fraction_changed](#sffloat-out-fraction_changed)
-- SFTime \[out\] [time](#sftime-out-time)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFTime | \[in, out\] | [cycleInterval](#sftime-in-out-cycleinterval-1-0) | 1  |
+| SFBool | \[in, out\] | [loop](#sfbool-in-out-loop-false) | FALSE |
+| SFTime | \[in, out\] | [startTime](#sftime-in-out-starttime-0--) | 0  |
+| SFTime | \[in, out\] | [resumeTime](#sftime-in-out-resumetime-0--) | 0  |
+| SFTime | \[in, out\] | [pauseTime](#sftime-in-out-pausetime-0--) | 0  |
+| SFTime | \[in, out\] | [stopTime](#sftime-in-out-stoptime-0--) | 0  |
+| SFBool | \[out\] | [isPaused](#sfbool-out-ispaused) |  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFTime | \[out\] | [cycleTime](#sftime-out-cycletime) |  |
+| SFTime | \[out\] | [elapsedTime](#sftime-out-elapsedtime) |  |
+| SFFloat | \[out\] | [fraction_changed](#sffloat-out-fraction_changed) |  |
+| SFTime | \[out\] | [time](#sftime-out-time) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

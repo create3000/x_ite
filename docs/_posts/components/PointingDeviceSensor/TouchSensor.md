@@ -30,15 +30,17 @@ The TouchSensor node belongs to the **PointingDeviceSensor** component and requi
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFVec2f \[out\] [hitTexCoord_changed](#sfvec2f-out-hittexcoord_changed)
-- SFVec3f \[out\] [hitNormal_changed](#sfvec3f-out-hitnormal_changed)
-- SFVec3f \[out\] [hitPoint_changed](#sfvec3f-out-hitpoint_changed)
-- SFBool \[out\] [isOver](#sfbool-out-isover)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFTime \[out\] [touchTime](#sftime-out-touchtime)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFVec2f | \[out\] | [hitTexCoord_changed](#sfvec2f-out-hittexcoord_changed) |  |
+| SFVec3f | \[out\] | [hitNormal_changed](#sfvec3f-out-hitnormal_changed) |  |
+| SFVec3f | \[out\] | [hitPoint_changed](#sfvec3f-out-hitpoint_changed) |  |
+| SFBool | \[out\] | [isOver](#sfbool-out-isover) |  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFTime | \[out\] | [touchTime](#sftime-out-touchtime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

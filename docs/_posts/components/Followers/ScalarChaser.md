@@ -29,14 +29,16 @@ The ScalarChaser node belongs to the **Followers** component and requires at lea
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in\] [set_value](#sffloat-in-set_value--)
-- SFFloat \[in\] [set_destination](#sffloat-in-set_destination--)
-- SFFloat \[ \] [initialValue](#sffloat---initialvalue-0--)
-- SFFloat \[ \] [initialDestination](#sffloat---initialdestination-0--)
-- SFTime \[ \] [duration](#sftime---duration-1-0)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFFloat \[out\] [value_changed](#sffloat-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in\] | [set_value](#sffloat-in-set_value--) |  |
+| SFFloat | \[in\] | [set_destination](#sffloat-in-set_destination--) |  |
+| SFFloat | \[ \] | [initialValue](#sffloat---initialvalue-0--) | 0  |
+| SFFloat | \[ \] | [initialDestination](#sffloat---initialdestination-0--) | 0  |
+| SFTime | \[ \] | [duration](#sftime---duration-1-0) | 1  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFFloat | \[out\] | [value_changed](#sffloat-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

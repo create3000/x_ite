@@ -31,14 +31,16 @@ The Fog node belongs to the **EnvironmentalEffects** component and requires at l
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in\] [set_bind](#sfbool-in-set_bind)
-- SFString \[in, out\] [fogType](#sfstring-in-out-fogtype-linear-linearexponential)
-- SFColor \[in, out\] [color](#sfcolor-in-out-color-1-1-1-0-1)
-- SFFloat \[in, out\] [visibilityStart](#sffloat-in-out-visibilitystart-0-0-small-classbluenon-standard)
-- SFFloat \[in, out\] [visibilityRange](#sffloat-in-out-visibilityrange-0-0)
-- SFBool \[out\] [isBound](#sfbool-out-isbound)
-- SFTime \[out\] [bindTime](#sftime-out-bindtime)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in\] | [set_bind](#sfbool-in-set_bind) |  |
+| SFString | \[in, out\] | [fogType](#sfstring-in-out-fogtype-linear-linearexponential) | "LINEAR"  |
+| SFColor | \[in, out\] | [color](#sfcolor-in-out-color-1-1-1-0-1) | 1 1 1  |
+| SFFloat | \[in, out\] | [visibilityStart](#sffloat-in-out-visibilitystart-0-0-small-classbluenon-standard) | 0  |
+| SFFloat | \[in, out\] | [visibilityRange](#sffloat-in-out-visibilityrange-0-0) | 0  |
+| SFBool | \[out\] | [isBound](#sfbool-out-isbound) |  |
+| SFTime | \[out\] | [bindTime](#sftime-out-bindtime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

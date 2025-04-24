@@ -28,14 +28,16 @@ The MultiTexture node belongs to the **Texturing** component and requires at lea
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFColor \[in, out\] [color](#sfcolor-in-out-color-1-1-1-0-1)
-- SFFloat \[in, out\] [alpha](#sffloat-in-out-alpha-1-0-1)
-- MFString \[in, out\] [mode](#mfstring-in-out-mode--)
-- MFString \[in, out\] [source](#mfstring-in-out-source--)
-- MFString \[in, out\] [function](#mfstring-in-out-function--)
-- MFNode \[in, out\] [texture](#mfnode-in-out-texture---x3dtexturenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFColor | \[in, out\] | [color](#sfcolor-in-out-color-1-1-1-0-1) | 1 1 1  |
+| SFFloat | \[in, out\] | [alpha](#sffloat-in-out-alpha-1-0-1) | 1  |
+| MFString | \[in, out\] | [mode](#mfstring-in-out-mode--) | \[ \] |
+| MFString | \[in, out\] | [source](#mfstring-in-out-source--) | \[ \] |
+| MFString | \[in, out\] | [function](#mfstring-in-out-function--) | \[ \] |
+| MFNode | \[in, out\] | [texture](#mfnode-in-out-texture---x3dtexturenode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

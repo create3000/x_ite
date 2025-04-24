@@ -30,12 +30,14 @@ The PixelTexture node belongs to the **Texturing** component and requires at lea
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFImage \[in, out\] [image](#sfimage-in-out-image-0-0-0)
-- SFBool \[ \] [repeatS](#sfbool---repeats-true)
-- SFBool \[ \] [repeatT](#sfbool---repeatt-true)
-- SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFImage | \[in, out\] | [image](#sfimage-in-out-image-0-0-0) | 0 0 0 |
+| SFBool | \[ \] | [repeatS](#sfbool---repeats-true) | TRUE |
+| SFBool | \[ \] | [repeatT](#sfbool---repeatt-true) | TRUE |
+| SFNode | \[ \] | [textureProperties](#sfnode---textureproperties-null-textureproperties) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

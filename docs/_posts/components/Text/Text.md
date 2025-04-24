@@ -27,15 +27,17 @@ The Text node belongs to the **Text** component and requires at least support le
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFString \[in, out\] [string](#mfstring-in-out-string--)
-- MFFloat \[in, out\] [length](#mffloat-in-out-length---0)
-- SFFloat \[in, out\] [maxExtent](#sffloat-in-out-maxextent-0-0)
-- SFBool \[ \] [solid](#sfbool---solid-false)
-- SFVec3f \[out\] [origin](#sfvec3f-out-origin)
-- SFVec2f \[out\] [textBounds](#sfvec2f-out-textbounds)
-- MFVec2f \[out\] [lineBounds](#mfvec2f-out-linebounds)
-- SFNode \[in, out\] [fontStyle](#sfnode-in-out-fontstyle-null-x3dfontstylenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFString | \[in, out\] | [string](#mfstring-in-out-string--) | \[ \] |
+| MFFloat | \[in, out\] | [length](#mffloat-in-out-length---0) | \[ \] |
+| SFFloat | \[in, out\] | [maxExtent](#sffloat-in-out-maxextent-0-0) | 0  |
+| SFBool | \[ \] | [solid](#sfbool---solid-false) | FALSE |
+| SFVec3f | \[out\] | [origin](#sfvec3f-out-origin) |  |
+| SFVec2f | \[out\] | [textBounds](#sfvec2f-out-textbounds) |  |
+| MFVec2f | \[out\] | [lineBounds](#mfvec2f-out-linebounds) |  |
+| SFNode | \[in, out\] | [fontStyle](#sfnode-in-out-fontstyle-null-x3dfontstylenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

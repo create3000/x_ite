@@ -28,21 +28,23 @@ The GeoTransform node belongs to the **Geospatial** component and requires at le
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFVec3f \[in, out\] [translation](#sfvec3f-in-out-translation-0-0-0--)
-- SFRotation \[in, out\] [rotation](#sfrotation-in-out-rotation-0-0-1-0--1-1-or--)
-- SFVec3f \[in, out\] [scale](#sfvec3f-in-out-scale-1-1-1-0)
-- SFRotation \[in, out\] [scaleOrientation](#sfrotation-in-out-scaleorientation-0-0-1-0--1-1-or--)
-- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
-- SFVec3d \[in, out\] [geoCenter](#sfvec3d-in-out-geocenter-0-0-0--)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
-- MFNode \[in\] [addChildren](#mfnode-in-addchildren)
-- MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
-- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dchildnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFVec3f | \[in, out\] | [translation](#sfvec3f-in-out-translation-0-0-0--) | 0 0 0  |
+| SFRotation | \[in, out\] | [rotation](#sfrotation-in-out-rotation-0-0-1-0--1-1-or--) | 0 0 1 0  |
+| SFVec3f | \[in, out\] | [scale](#sfvec3f-in-out-scale-1-1-1-0) | 1 1 1  |
+| SFRotation | \[in, out\] | [scaleOrientation](#sfrotation-in-out-scaleorientation-0-0-1-0--1-1-or--) | 0 0 1 0  |
+| SFNode | \[ \] | [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated) | NULL  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| SFVec3d | \[in, out\] | [geoCenter](#sfvec3d-in-out-geocenter-0-0-0--) | 0 0 0  |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
+| MFNode | \[in\] | [addChildren](#mfnode-in-addchildren) |  |
+| MFNode | \[in\] | [removeChildren](#mfnode-in-removechildren) |  |
+| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dchildnode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

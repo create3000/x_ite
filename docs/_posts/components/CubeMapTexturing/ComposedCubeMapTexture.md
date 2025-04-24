@@ -29,15 +29,17 @@ The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component an
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFNode \[in, out\] [frontTexture](#sfnode-in-out-fronttexture-null-x3dtexture2dnode)
-- SFNode \[in, out\] [backTexture](#sfnode-in-out-backtexture-null-x3dtexture2dnode)
-- SFNode \[in, out\] [leftTexture](#sfnode-in-out-lefttexture-null-x3dtexture2dnode)
-- SFNode \[in, out\] [rightTexture](#sfnode-in-out-righttexture-null-x3dtexture2dnode)
-- SFNode \[in, out\] [topTexture](#sfnode-in-out-toptexture-null-x3dtexture2dnode)
-- SFNode \[in, out\] [bottomTexture](#sfnode-in-out-bottomtexture-null-x3dtexture2dnode)
-- SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFNode | \[in, out\] | [frontTexture](#sfnode-in-out-fronttexture-null-x3dtexture2dnode) | NULL  |
+| SFNode | \[in, out\] | [backTexture](#sfnode-in-out-backtexture-null-x3dtexture2dnode) | NULL  |
+| SFNode | \[in, out\] | [leftTexture](#sfnode-in-out-lefttexture-null-x3dtexture2dnode) | NULL  |
+| SFNode | \[in, out\] | [rightTexture](#sfnode-in-out-righttexture-null-x3dtexture2dnode) | NULL  |
+| SFNode | \[in, out\] | [topTexture](#sfnode-in-out-toptexture-null-x3dtexture2dnode) | NULL  |
+| SFNode | \[in, out\] | [bottomTexture](#sfnode-in-out-bottomtexture-null-x3dtexture2dnode) | NULL  |
+| SFNode | \[ \] | [textureProperties](#sfnode---textureproperties-null-textureproperties) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

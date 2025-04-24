@@ -28,10 +28,12 @@ The IntegerTrigger node belongs to the **EventUtilities** component and requires
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in\] [set_boolean](#sfbool-in-set_boolean)
-- SFInt32 \[in, out\] [integerKey](#sfint32-in-out-integerkey--1--)
-- SFInt32 \[out\] [triggerValue](#sfint32-out-triggervalue)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in\] | [set_boolean](#sfbool-in-set_boolean) |  |
+| SFInt32 | \[in, out\] | [integerKey](#sfint32-in-out-integerkey--1--) | -1  |
+| SFInt32 | \[out\] | [triggerValue](#sfint32-out-triggervalue) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

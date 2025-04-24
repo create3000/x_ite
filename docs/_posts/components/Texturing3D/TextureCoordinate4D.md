@@ -29,9 +29,11 @@ The TextureCoordinate4D node belongs to the **Texturing3D** component and requir
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [mapping](#sfstring-in-out-mapping-)
-- MFVec4f \[in, out\] [point](#mfvec4f-in-out-point----)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [mapping](#sfstring-in-out-mapping-) | "" |
+| MFVec4f | \[in, out\] | [point](#mfvec4f-in-out-point----) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

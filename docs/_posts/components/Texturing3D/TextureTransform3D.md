@@ -29,12 +29,14 @@ The TextureTransform3D node belongs to the **Texturing3D** component and require
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [mapping](#sfstring-in-out-mapping-)
-- SFVec3f \[in, out\] [translation](#sfvec3f-in-out-translation-0-0-0--)
-- SFRotation \[in, out\] [rotation](#sfrotation-in-out-rotation-0-0-1-0--)
-- SFVec3f \[in, out\] [scale](#sfvec3f-in-out-scale-1-1-1--)
-- SFVec3f \[in, out\] [center](#sfvec3f-in-out-center-0-0-0--)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [mapping](#sfstring-in-out-mapping-) | "" |
+| SFVec3f | \[in, out\] | [translation](#sfvec3f-in-out-translation-0-0-0--) | 0 0 0  |
+| SFRotation | \[in, out\] | [rotation](#sfrotation-in-out-rotation-0-0-1-0--) | 0 0 1 0  |
+| SFVec3f | \[in, out\] | [scale](#sfvec3f-in-out-scale-1-1-1--) | 1 1 1  |
+| SFVec3f | \[in, out\] | [center](#sfvec3f-in-out-center-0-0-0--) | 0 0 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

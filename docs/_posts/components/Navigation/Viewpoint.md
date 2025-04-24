@@ -29,21 +29,23 @@ The Viewpoint node belongs to the **Navigation** component and requires at least
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in\] [set_bind](#sfbool-in-set_bind)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFVec3f \[in, out\] [position](#sfvec3f-in-out-position-0-0-10--)
-- SFRotation \[in, out\] [orientation](#sfrotation-in-out-orientation-0-0-1-0--1-1--)
-- SFVec3f \[in, out\] [centerOfRotation](#sfvec3f-in-out-centerofrotation-0-0-0--)
-- SFFloat \[in, out\] [fieldOfView](#sffloat-in-out-fieldofview-4-0)
-- SFFloat \[in, out\] [nearDistance](#sffloat-in-out-neardistance--1--1-or-0)
-- SFFloat \[in, out\] [farDistance](#sffloat-in-out-fardistance--1--1-or-0)
-- SFBool \[in, out\] [viewAll](#sfbool-in-out-viewall-false)
-- SFBool \[in, out\] [jump](#sfbool-in-out-jump-true)
-- SFBool \[in, out\] [retainUserOffsets](#sfbool-in-out-retainuseroffsets-false)
-- SFBool \[out\] [isBound](#sfbool-out-isbound)
-- SFTime \[out\] [bindTime](#sftime-out-bindtime)
-- SFNode \[in, out\] [navigationInfo](#sfnode-in-out-navigationinfo-null-navigationinfo)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in\] | [set_bind](#sfbool-in-set_bind) |  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFVec3f | \[in, out\] | [position](#sfvec3f-in-out-position-0-0-10--) | 0 0 10  |
+| SFRotation | \[in, out\] | [orientation](#sfrotation-in-out-orientation-0-0-1-0--1-1--) | 0 0 1 0  |
+| SFVec3f | \[in, out\] | [centerOfRotation](#sfvec3f-in-out-centerofrotation-0-0-0--) | 0 0 0  |
+| SFFloat | \[in, out\] | [fieldOfView](#sffloat-in-out-fieldofview-4-0) | π/4  |
+| SFFloat | \[in, out\] | [nearDistance](#sffloat-in-out-neardistance--1--1-or-0) | -1  |
+| SFFloat | \[in, out\] | [farDistance](#sffloat-in-out-fardistance--1--1-or-0) | -1  |
+| SFBool | \[in, out\] | [viewAll](#sfbool-in-out-viewall-false) | FALSE |
+| SFBool | \[in, out\] | [jump](#sfbool-in-out-jump-true) | TRUE |
+| SFBool | \[in, out\] | [retainUserOffsets](#sfbool-in-out-retainuseroffsets-false) | FALSE |
+| SFBool | \[out\] | [isBound](#sfbool-out-isbound) |  |
+| SFTime | \[out\] | [bindTime](#sftime-out-bindtime) |  |
+| SFNode | \[in, out\] | [navigationInfo](#sfnode-in-out-navigationinfo-null-navigationinfo) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

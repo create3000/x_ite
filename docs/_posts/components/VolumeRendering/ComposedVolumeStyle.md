@@ -28,9 +28,11 @@ The ComposedVolumeStyle node belongs to the **VolumeRendering** component and re
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- MFNode \[in, out\] [renderStyle](#mfnode-in-out-renderstyle---x3dcomposablevolumerenderstylenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| MFNode | \[in, out\] | [renderStyle](#mfnode-in-out-renderstyle---x3dcomposablevolumerenderstylenode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

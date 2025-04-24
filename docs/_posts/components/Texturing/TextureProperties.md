@@ -26,18 +26,20 @@ The TextureProperties node belongs to the **Texturing** component and requires a
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFColorRGBA \[in, out\] [borderColor](#sfcolorrgba-in-out-bordercolor-0-0-0-0-0-1)
-- SFInt32 \[in, out\] [borderWidth](#sfint32-in-out-borderwidth-0-0-1)
-- SFFloat \[in, out\] [anisotropicDegree](#sffloat-in-out-anisotropicdegree-1-1)
-- SFBool \[ \] [generateMipMaps](#sfbool---generatemipmaps-false)
-- SFString \[in, out\] [minificationFilter](#sfstring-in-out-minificationfilter-default-avg_pixel-avg_pixel_avg_mipmap-avg_pixel_nearest_mipmap-default-fastest-nearest_pixel-nearest_pixel_avg_mipmap-nearest_pixel_nearest_mipmap-nicest)
-- SFString \[in, out\] [magnificationFilter](#sfstring-in-out-magnificationfilter-default-avg_pixel-default-fastest-nearest_pixel-nicest)
-- SFString \[in, out\] [boundaryModeS](#sfstring-in-out-boundarymodes-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat)
-- SFString \[in, out\] [boundaryModeT](#sfstring-in-out-boundarymodet-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat)
-- SFString \[in, out\] [boundaryModeR](#sfstring-in-out-boundarymoder-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat)
-- SFString \[in, out\] [textureCompression](#sfstring-in-out-texturecompression-default-default-fastest-high-low-medium-nicest)
-- SFFloat \[in, out\] [texturePriority](#sffloat-in-out-texturepriority-0-0-1)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFColorRGBA | \[in, out\] | [borderColor](#sfcolorrgba-in-out-bordercolor-0-0-0-0-0-1) | 0 0 0 0  |
+| SFInt32 | \[in, out\] | [borderWidth](#sfint32-in-out-borderwidth-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [anisotropicDegree](#sffloat-in-out-anisotropicdegree-1-1) | 1  |
+| SFBool | \[ \] | [generateMipMaps](#sfbool---generatemipmaps-false) | FALSE |
+| SFString | \[in, out\] | [minificationFilter](#sfstring-in-out-minificationfilter-default-avg_pixel-avg_pixel_avg_mipmap-avg_pixel_nearest_mipmap-default-fastest-nearest_pixel-nearest_pixel_avg_mipmap-nearest_pixel_nearest_mipmap-nicest) | "DEFAULT"  |
+| SFString | \[in, out\] | [magnificationFilter](#sfstring-in-out-magnificationfilter-default-avg_pixel-default-fastest-nearest_pixel-nicest) | "DEFAULT"  |
+| SFString | \[in, out\] | [boundaryModeS](#sfstring-in-out-boundarymodes-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat) | "REPEAT"  |
+| SFString | \[in, out\] | [boundaryModeT](#sfstring-in-out-boundarymodet-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat) | "REPEAT"  |
+| SFString | \[in, out\] | [boundaryModeR](#sfstring-in-out-boundarymoder-repeat-clamp-clamp_to_edge-clamp_to_boundary-mirrored_repeat-repeat) | "REPEAT"  |
+| SFString | \[in, out\] | [textureCompression](#sfstring-in-out-texturecompression-default-default-fastest-high-low-medium-nicest) | "DEFAULT"  |
+| SFFloat | \[in, out\] | [texturePriority](#sffloat-in-out-texturepriority-0-0-1) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

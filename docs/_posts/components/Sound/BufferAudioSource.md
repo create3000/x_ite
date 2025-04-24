@@ -29,34 +29,36 @@ The BufferAudioSource node belongs to the **Sound** component and requires at le
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
-- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
-- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
-- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
-- SFInt32 \[in, out\] [numberOfChannels](#sfint32-in-out-numberofchannels-0-0)
-- SFFloat \[in, out\] [sampleRate](#sffloat-in-out-samplerate-0-0)
-- SFInt32 \[in, out\] [bufferLength](#sfint32-in-out-bufferlength)
-- MFFloat \[in, out\] [buffer](#mffloat-in-out-buffer---1-1)
-- SFTime \[out\] [bufferDuration](#sftime-out-bufferduration-0-0)
-- SFFloat \[in, out\] [gain](#sffloat-in-out-gain-1--)
-- SFFloat \[in, out\] [detune](#sffloat-in-out-detune-0-0)
-- SFFloat \[in, out\] [playbackRate](#sffloat-in-out-playbackrate-1--)
-- SFTime \[in, out\] [loopStart](#sftime-in-out-loopstart-0-0)
-- SFTime \[in, out\] [loopEnd](#sftime-in-out-loopend-0-0)
-- SFInt32 \[in, out\] [channelCount](#sfint32-in-out-channelcount)
-- SFString \[in, out\] [channelCountMode](#sfstring-in-out-channelcountmode-max-max-clamped-max-explicit)
-- SFString \[in, out\] [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete)
-- SFBool \[in, out\] [loop](#sfbool-in-out-loop-false)
-- SFTime \[in, out\] [startTime](#sftime-in-out-starttime-0--)
-- SFTime \[in, out\] [resumeTime](#sftime-in-out-resumetime-0--)
-- SFTime \[in, out\] [pauseTime](#sftime-in-out-pausetime-0--)
-- SFTime \[in, out\] [stopTime](#sftime-in-out-stoptime-0--)
-- SFBool \[out\] [isPaused](#sfbool-out-ispaused)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFBool | \[in, out\] | [load](#sfbool-in-out-load-true) | TRUE |
+| MFString | \[in, out\] | [url](#mfstring-in-out-url---uri) | \[ \] |
+| SFTime | \[in, out\] | [autoRefresh](#sftime-in-out-autorefresh-0-0) | 0  |
+| SFTime | \[in, out\] | [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0) | 3600  |
+| SFInt32 | \[in, out\] | [numberOfChannels](#sfint32-in-out-numberofchannels-0-0) | 0  |
+| SFFloat | \[in, out\] | [sampleRate](#sffloat-in-out-samplerate-0-0) | 0  |
+| SFInt32 | \[in, out\] | [bufferLength](#sfint32-in-out-bufferlength) |  |
+| MFFloat | \[in, out\] | [buffer](#mffloat-in-out-buffer---1-1) | \[ \] |
+| SFTime | \[out\] | [bufferDuration](#sftime-out-bufferduration-0-0) | 0  |
+| SFFloat | \[in, out\] | [gain](#sffloat-in-out-gain-1--) | 1  |
+| SFFloat | \[in, out\] | [detune](#sffloat-in-out-detune-0-0) | 0  |
+| SFFloat | \[in, out\] | [playbackRate](#sffloat-in-out-playbackrate-1--) | 1  |
+| SFTime | \[in, out\] | [loopStart](#sftime-in-out-loopstart-0-0) | 0  |
+| SFTime | \[in, out\] | [loopEnd](#sftime-in-out-loopend-0-0) | 0  |
+| SFInt32 | \[in, out\] | [channelCount](#sfint32-in-out-channelcount) |  |
+| SFString | \[in, out\] | [channelCountMode](#sfstring-in-out-channelcountmode-max-max-clamped-max-explicit) | "MAX"  |
+| SFString | \[in, out\] | [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete) | "SPEAKERS"  |
+| SFBool | \[in, out\] | [loop](#sfbool-in-out-loop-false) | FALSE |
+| SFTime | \[in, out\] | [startTime](#sftime-in-out-starttime-0--) | 0  |
+| SFTime | \[in, out\] | [resumeTime](#sftime-in-out-resumetime-0--) | 0  |
+| SFTime | \[in, out\] | [pauseTime](#sftime-in-out-pausetime-0--) | 0  |
+| SFTime | \[in, out\] | [stopTime](#sftime-in-out-stoptime-0--) | 0  |
+| SFBool | \[out\] | [isPaused](#sfbool-out-ispaused) |  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFTime | \[out\] | [elapsedTime](#sftime-out-elapsedtime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

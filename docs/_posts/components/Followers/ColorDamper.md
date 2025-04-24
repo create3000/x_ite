@@ -29,16 +29,18 @@ The ColorDamper node belongs to the **Followers** component and requires at leas
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFColor \[in\] [set_value](#sfcolor-in-set_value-0-1)
-- SFColor \[in\] [set_destination](#sfcolor-in-set_destination-0-1)
-- SFColor \[ \] [initialValue](#sfcolor---initialvalue-08-08-08-0-1)
-- SFColor \[ \] [initialDestination](#sfcolor---initialdestination-08-08-08-0-1)
-- SFInt32 \[ \] [order](#sfint32---order-3-05)
-- SFTime \[in, out\] [tau](#sftime-in-out-tau-03-0)
-- SFFloat \[in, out\] [tolerance](#sffloat-in-out-tolerance--1--1-or-0)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFColor \[out\] [value_changed](#sfcolor-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFColor | \[in\] | [set_value](#sfcolor-in-set_value-0-1) |  |
+| SFColor | \[in\] | [set_destination](#sfcolor-in-set_destination-0-1) |  |
+| SFColor | \[ \] | [initialValue](#sfcolor---initialvalue-08-08-08-0-1) | 0 |
+| SFColor | \[ \] | [initialDestination](#sfcolor---initialdestination-08-08-08-0-1) | 0 |
+| SFInt32 | \[ \] | [order](#sfint32---order-3-05) | 3  |
+| SFTime | \[in, out\] | [tau](#sftime-in-out-tau-03-0) | 0 |
+| SFFloat | \[in, out\] | [tolerance](#sffloat-in-out-tolerance--1--1-or-0) | -1  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFColor | \[out\] | [value_changed](#sfcolor-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

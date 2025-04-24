@@ -28,17 +28,19 @@ The GeoLocation node belongs to the **Geospatial** component and requires at lea
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
-- SFVec3d \[in, out\] [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
-- MFNode \[in\] [addChildren](#mfnode-in-addchildren)
-- MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
-- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dchildnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFNode | \[ \] | [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated) | NULL  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| SFVec3d | \[in, out\] | [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--) | 0 0 0  |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
+| MFNode | \[in\] | [addChildren](#mfnode-in-addchildren) |  |
+| MFNode | \[in\] | [removeChildren](#mfnode-in-removechildren) |  |
+| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dchildnode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -28,13 +28,15 @@ The ShadedVolumeStyle node belongs to the **VolumeRendering** component and requ
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFBool \[in, out\] [lighting](#sfbool-in-out-lighting-false)
-- SFBool \[in, out\] [shadows](#sfbool-in-out-shadows-false)
-- SFString \[ \] [phaseFunction](#sfstring---phasefunction-henyey-greenstein-henyey-greensteinnone)
-- SFNode \[in, out\] [material](#sfnode-in-out-material-null-x3dmaterialnode)
-- SFNode \[in, out\] [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFBool | \[in, out\] | [lighting](#sfbool-in-out-lighting-false) | FALSE |
+| SFBool | \[in, out\] | [shadows](#sfbool-in-out-shadows-false) | FALSE |
+| SFString | \[ \] | [phaseFunction](#sfstring---phasefunction-henyey-greenstein-henyey-greensteinnone) | "Henyey-Greenstein"  |
+| SFNode | \[in, out\] | [material](#sfnode-in-out-material-null-x3dmaterialnode) | NULL  |
+| SFNode | \[in, out\] | [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

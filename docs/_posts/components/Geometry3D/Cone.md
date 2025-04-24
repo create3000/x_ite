@@ -27,12 +27,14 @@ The Cone node belongs to the **Geometry3D** component and requires at least supp
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [side](#sfbool-in-out-side-true)
-- SFBool \[in, out\] [bottom](#sfbool-in-out-bottom-true)
-- SFFloat \[ \] [height](#sffloat---height-2-0)
-- SFFloat \[ \] [bottomRadius](#sffloat---bottomradius-1-0)
-- SFBool \[ \] [solid](#sfbool---solid-true)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [side](#sfbool-in-out-side-true) | TRUE |
+| SFBool | \[in, out\] | [bottom](#sfbool-in-out-bottom-true) | TRUE |
+| SFFloat | \[ \] | [height](#sffloat---height-2-0) | 2  |
+| SFFloat | \[ \] | [bottomRadius](#sffloat---bottomradius-1-0) | 1  |
+| SFBool | \[ \] | [solid](#sfbool---solid-true) | TRUE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

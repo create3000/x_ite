@@ -532,10 +532,8 @@ select.select option {
 /* Documentation */
 
 .content .fields {
-  box-shadow: var(--language-border-color) 0 0 0 1px;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
+  width: 100%;
+  font-size: 0.85rem;
 }
 
 /*

@@ -29,14 +29,16 @@ The OrientationChaser node belongs to the **Followers** component and requires a
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFRotation \[in\] [set_value](#sfrotation-in-set_value--1-1-or--)
-- SFRotation \[in\] [set_destination](#sfrotation-in-set_destination--1-1-or--)
-- SFRotation \[ \] [initialValue](#sfrotation---initialvalue-0-1-0-0--1-1-or--)
-- SFRotation \[ \] [initialDestination](#sfrotation---initialdestination-0-1-0-0--1-1-or--)
-- SFTime \[ \] [duration](#sftime---duration-1-0)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFRotation \[out\] [value_changed](#sfrotation-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFRotation | \[in\] | [set_value](#sfrotation-in-set_value--1-1-or--) |  |
+| SFRotation | \[in\] | [set_destination](#sfrotation-in-set_destination--1-1-or--) |  |
+| SFRotation | \[ \] | [initialValue](#sfrotation---initialvalue-0-1-0-0--1-1-or--) | 0 1 0 0  |
+| SFRotation | \[ \] | [initialDestination](#sfrotation---initialdestination-0-1-0-0--1-1-or--) | 0 1 0 0  |
+| SFTime | \[ \] | [duration](#sftime---duration-1-0) | 1  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFRotation | \[out\] | [value_changed](#sfrotation-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

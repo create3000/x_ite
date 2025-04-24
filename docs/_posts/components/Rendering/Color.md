@@ -28,8 +28,10 @@ The Color node belongs to the **Rendering** component and requires at least supp
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFColor \[in, out\] [color](#mfcolor-in-out-color---0-1)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFColor | \[in, out\] | [color](#mfcolor-in-out-color---0-1) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

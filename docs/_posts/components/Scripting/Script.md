@@ -31,14 +31,16 @@ The Script node belongs to the **Scripting** component and requires at least sup
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
-- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
-- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
-- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
-- SFBool \[ \] [directOutput](#sfbool---directoutput-false)
-- SFBool \[ \] [mustEvaluate](#sfbool---mustevaluate-false)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [load](#sfbool-in-out-load-true) | TRUE |
+| MFString | \[in, out\] | [url](#mfstring-in-out-url---uri) | \[ \] |
+| SFTime | \[in, out\] | [autoRefresh](#sftime-in-out-autorefresh-0-0) | 0  |
+| SFTime | \[in, out\] | [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0) | 3600  |
+| SFBool | \[ \] | [directOutput](#sfbool---directoutput-false) | FALSE |
+| SFBool | \[ \] | [mustEvaluate](#sfbool---mustevaluate-false) | FALSE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

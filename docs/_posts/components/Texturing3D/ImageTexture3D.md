@@ -33,16 +33,18 @@ The ImageTexture3D node belongs to the **Texturing3D** component and requires at
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
-- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
-- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
-- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
-- SFBool \[ \] [repeatS](#sfbool---repeats-false)
-- SFBool \[ \] [repeatT](#sfbool---repeatt-false)
-- SFBool \[ \] [repeatR](#sfbool---repeatr-false)
-- SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [load](#sfbool-in-out-load-true) | TRUE |
+| MFString | \[in, out\] | [url](#mfstring-in-out-url---uri) | \[ \] |
+| SFTime | \[in, out\] | [autoRefresh](#sftime-in-out-autorefresh-0-0) | 0  |
+| SFTime | \[in, out\] | [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0) | 3600  |
+| SFBool | \[ \] | [repeatS](#sfbool---repeats-false) | FALSE |
+| SFBool | \[ \] | [repeatT](#sfbool---repeatt-false) | FALSE |
+| SFBool | \[ \] | [repeatR](#sfbool---repeatr-false) | FALSE |
+| SFNode | \[ \] | [textureProperties](#sfnode---textureproperties-null-textureproperties) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

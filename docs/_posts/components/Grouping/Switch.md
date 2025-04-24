@@ -28,15 +28,17 @@ The Switch node belongs to the **Grouping** component and requires at least supp
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFInt32 \[in, out\] [whichChoice](#sfint32-in-out-whichchoice--1--1)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
-- MFNode \[in\] [addChildren](#mfnode-in-addchildren)
-- MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
-- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dchildnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFInt32 | \[in, out\] | [whichChoice](#sfint32-in-out-whichchoice--1--1) | -1  |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
+| MFNode | \[in\] | [addChildren](#mfnode-in-addchildren) |  |
+| MFNode | \[in\] | [removeChildren](#mfnode-in-removechildren) |  |
+| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dchildnode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

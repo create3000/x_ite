@@ -29,13 +29,15 @@ The ShaderPart node belongs to the **Shaders** component and requires at least s
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFString \[ \] [type](#sfstring---type-vertex-vertexfragment)
-- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
-- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
-- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
-- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFString | \[ \] | [type](#sfstring---type-vertex-vertexfragment) | "VERTEX"  |
+| SFBool | \[in, out\] | [load](#sfbool-in-out-load-true) | TRUE |
+| MFString | \[in, out\] | [url](#mfstring-in-out-url---uri) | \[ \] |
+| SFTime | \[in, out\] | [autoRefresh](#sftime-in-out-autorefresh-0-0) | 0  |
+| SFTime | \[in, out\] | [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0) | 3600  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

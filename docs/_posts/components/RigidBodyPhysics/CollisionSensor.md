@@ -28,13 +28,15 @@ The CollisionSensor node belongs to the **RigidBodyPhysics** component and requi
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- MFNode \[out\] [intersections](#mfnode-out-intersections-x3dnbodycollidablenode)
-- MFNode \[out\] [contacts](#mfnode-out-contacts-contact)
-- SFNode \[in, out\] [collider](#sfnode-in-out-collider-null-collisioncollection)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| MFNode | \[out\] | [intersections](#mfnode-out-intersections-x3dnbodycollidablenode) |  |
+| MFNode | \[out\] | [contacts](#mfnode-out-contacts-contact) |  |
+| SFNode | \[in, out\] | [collider](#sfnode-in-out-collider-null-collisioncollection) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

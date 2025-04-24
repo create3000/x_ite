@@ -27,13 +27,15 @@ The SurfaceEmitter node belongs to the **ParticleSystems** component and require
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [on](#sfbool-in-out-on-true)
-- SFFloat \[in, out\] [speed](#sffloat-in-out-speed-0-0)
-- SFFloat \[in, out\] [variation](#sffloat-in-out-variation-025-0)
-- SFFloat \[in, out\] [mass](#sffloat-in-out-mass-0-0)
-- SFFloat \[in, out\] [surfaceArea](#sffloat-in-out-surfacearea-0-0)
-- SFNode \[ \] [surface](#sfnode---surface-null-x3dgeometrynode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [on](#sfbool-in-out-on-true) | TRUE |
+| SFFloat | \[in, out\] | [speed](#sffloat-in-out-speed-0-0) | 0  |
+| SFFloat | \[in, out\] | [variation](#sffloat-in-out-variation-025-0) | 0 |
+| SFFloat | \[in, out\] | [mass](#sffloat-in-out-mass-0-0) | 0  |
+| SFFloat | \[in, out\] | [surfaceArea](#sffloat-in-out-surfacearea-0-0) | 0  |
+| SFNode | \[ \] | [surface](#sfnode---surface-null-x3dgeometrynode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -28,11 +28,13 @@ The NurbsSwungSurface node belongs to the **NURBS** component and requires at le
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[ \] [solid](#sfbool---solid-true)
-- SFBool \[ \] [ccw](#sfbool---ccw-true)
-- SFNode \[in, out\] [profileCurve](#sfnode-in-out-profilecurve-null-x3dnurbscontrolcurvenode)
-- SFNode \[in, out\] [trajectoryCurve](#sfnode-in-out-trajectorycurve-null-x3dnurbscontrolcurvenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[ \] | [solid](#sfbool---solid-true) | TRUE |
+| SFBool | \[ \] | [ccw](#sfbool---ccw-true) | TRUE |
+| SFNode | \[in, out\] | [profileCurve](#sfnode-in-out-profilecurve-null-x3dnurbscontrolcurvenode) | NULL  |
+| SFNode | \[in, out\] | [trajectoryCurve](#sfnode-in-out-trajectorycurve-null-x3dnurbscontrolcurvenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

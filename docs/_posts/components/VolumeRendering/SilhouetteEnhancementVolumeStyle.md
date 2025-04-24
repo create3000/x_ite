@@ -28,12 +28,14 @@ The SilhouetteEnhancementVolumeStyle node belongs to the **VolumeRendering** com
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFFloat \[in, out\] [silhouetteRetainedOpacity](#sffloat-in-out-silhouetteretainedopacity-1-0-1)
-- SFFloat \[in, out\] [silhouetteBoundaryOpacity](#sffloat-in-out-silhouetteboundaryopacity-0-0-1)
-- SFFloat \[in, out\] [silhouetteSharpness](#sffloat-in-out-silhouettesharpness-05-0)
-- SFNode \[in, out\] [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFFloat | \[in, out\] | [silhouetteRetainedOpacity](#sffloat-in-out-silhouetteretainedopacity-1-0-1) | 1  |
+| SFFloat | \[in, out\] | [silhouetteBoundaryOpacity](#sffloat-in-out-silhouetteboundaryopacity-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [silhouetteSharpness](#sffloat-in-out-silhouettesharpness-05-0) | 0 |
+| SFNode | \[in, out\] | [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

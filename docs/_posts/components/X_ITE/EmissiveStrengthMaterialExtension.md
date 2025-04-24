@@ -30,8 +30,10 @@ The EmissiveStrengthMaterialExtension node belongs to the **X_ITE** component an
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in, out\] [emissiveStrength](#sffloat-in-out-emissivestrength-1-0)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in, out\] | [emissiveStrength](#sffloat-in-out-emissivestrength-1-0) | 1  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

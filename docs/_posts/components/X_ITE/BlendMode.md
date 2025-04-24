@@ -31,14 +31,16 @@ The BlendMode node belongs to the **X_ITE** component and its default container 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFColorRGBA \[in, out\] [blendColor](#sfcolorrgba-in-out-blendcolor-0-0-0-0-0-1)
-- SFString \[in, out\] [sourceColorFactor](#sfstring-in-out-sourcecolorfactor-src_alpha)
-- SFString \[in, out\] [sourceAlphaFactor](#sfstring-in-out-sourcealphafactor-one)
-- SFString \[in, out\] [destinationColorFactor](#sfstring-in-out-destinationcolorfactor-one_minus_src_alpha)
-- SFString \[in, out\] [destinationAlphaFactor](#sfstring-in-out-destinationalphafactor-one_minus_src_alpha)
-- SFString \[in, out\] [colorEquation](#sfstring-in-out-colorequation-func_add)
-- SFString \[in, out\] [alphaEquation](#sfstring-in-out-alphaequation-func_add)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFColorRGBA | \[in, out\] | [blendColor](#sfcolorrgba-in-out-blendcolor-0-0-0-0-0-1) | 0 0 0 0  |
+| SFString | \[in, out\] | [sourceColorFactor](#sfstring-in-out-sourcecolorfactor-src_alpha) | "SRC |
+| SFString | \[in, out\] | [sourceAlphaFactor](#sfstring-in-out-sourcealphafactor-one) | "ONE" |
+| SFString | \[in, out\] | [destinationColorFactor](#sfstring-in-out-destinationcolorfactor-one_minus_src_alpha) | "ONE |
+| SFString | \[in, out\] | [destinationAlphaFactor](#sfstring-in-out-destinationalphafactor-one_minus_src_alpha) | "ONE |
+| SFString | \[in, out\] | [colorEquation](#sfstring-in-out-colorequation-func_add) | "FUNC |
+| SFString | \[in, out\] | [alphaEquation](#sfstring-in-out-alphaequation-func_add) | "FUNC |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

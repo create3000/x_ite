@@ -27,18 +27,20 @@ The SliderJoint node belongs to the **RigidBodyPhysics** component and requires 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFString \[in, out\] [forceOutput](#mfstring-in-out-forceoutput-none-all-none-)
-- SFVec3f \[in, out\] [axis](#sfvec3f-in-out-axis-0-1-0--)
-- SFFloat \[in, out\] [minSeparation](#sffloat-in-out-minseparation-0-0)
-- SFFloat \[in, out\] [maxSeparation](#sffloat-in-out-maxseparation-1-0)
-- SFFloat \[in, out\] [sliderForce](#sffloat-in-out-sliderforce-0---small-classrednot-supported)
-- SFFloat \[in, out\] [stopBounce](#sffloat-in-out-stopbounce-0-0-1-small-classrednot-supported)
-- SFFloat \[in, out\] [stopErrorCorrection](#sffloat-in-out-stoperrorcorrection-1-0-1-small-classrednot-supported)
-- SFFloat \[out\] [separation](#sffloat-out-separation-small-classrednot-supported)
-- SFFloat \[out\] [separationRate](#sffloat-out-separationrate-small-classrednot-supported)
-- SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
-- SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFString | \[in, out\] | [forceOutput](#mfstring-in-out-forceoutput-none-all-none-) | "NONE"  |
+| SFVec3f | \[in, out\] | [axis](#sfvec3f-in-out-axis-0-1-0--) | 0 1 0  |
+| SFFloat | \[in, out\] | [minSeparation](#sffloat-in-out-minseparation-0-0) | 0  |
+| SFFloat | \[in, out\] | [maxSeparation](#sffloat-in-out-maxseparation-1-0) | 1  |
+| SFFloat | \[in, out\] | [sliderForce](#sffloat-in-out-sliderforce-0---small-classrednot-supported) | 0  |
+| SFFloat | \[in, out\] | [stopBounce](#sffloat-in-out-stopbounce-0-0-1-small-classrednot-supported) | 0  |
+| SFFloat | \[in, out\] | [stopErrorCorrection](#sffloat-in-out-stoperrorcorrection-1-0-1-small-classrednot-supported) | 1  |
+| SFFloat | \[out\] | [separation](#sffloat-out-separation-small-classrednot-supported) |  |
+| SFFloat | \[out\] | [separationRate](#sffloat-out-separationrate-small-classrednot-supported) |  |
+| SFNode | \[in, out\] | [body1](#sfnode-in-out-body1-null-rigidbody) | NULL  |
+| SFNode | \[in, out\] | [body2](#sfnode-in-out-body2-null-rigidbody) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

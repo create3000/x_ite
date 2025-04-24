@@ -27,9 +27,11 @@ The ClipPlane node belongs to the **Rendering** component and requires at least 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFVec4f \[in, out\] [plane](#sfvec4f-in-out-plane-0-1-0-0-0-1-or--)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFVec4f | \[in, out\] | [plane](#sfvec4f-in-out-plane-0-1-0-0-0-1-or--) | 0 1 0 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

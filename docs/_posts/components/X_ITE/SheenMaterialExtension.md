@@ -30,13 +30,15 @@ The SheenMaterialExtension node belongs to the **X_ITE** component and requires 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFColor \[in, out\] [sheenColor](#sfcolor-in-out-sheencolor-0-0-0-0-1)
-- SFString \[in, out\] [sheenColorTextureMapping](#sfstring-in-out-sheencolortexturemapping-)
-- SFNode \[in, out\] [sheenColorTexture](#sfnode-in-out-sheencolortexture-null-x3dsingletexturenode)
-- SFFloat \[in, out\] [sheenRoughness](#sffloat-in-out-sheenroughness-0-0)
-- SFString \[in, out\] [sheenRoughnessTextureMapping](#sfstring-in-out-sheenroughnesstexturemapping-)
-- SFNode \[in, out\] [sheenRoughnessTexture](#sfnode-in-out-sheenroughnesstexture-null-x3dsingletexturenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFColor | \[in, out\] | [sheenColor](#sfcolor-in-out-sheencolor-0-0-0-0-1) | 0 0 0  |
+| SFString | \[in, out\] | [sheenColorTextureMapping](#sfstring-in-out-sheencolortexturemapping-) | "" |
+| SFNode | \[in, out\] | [sheenColorTexture](#sfnode-in-out-sheencolortexture-null-x3dsingletexturenode) | NULL  |
+| SFFloat | \[in, out\] | [sheenRoughness](#sffloat-in-out-sheenroughness-0-0) | 0  |
+| SFString | \[in, out\] | [sheenRoughnessTextureMapping](#sfstring-in-out-sheenroughnesstexturemapping-) | "" |
+| SFNode | \[in, out\] | [sheenRoughnessTexture](#sfnode-in-out-sheenroughnesstexture-null-x3dsingletexturenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

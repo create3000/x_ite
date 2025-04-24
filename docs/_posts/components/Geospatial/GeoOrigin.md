@@ -26,10 +26,12 @@ The GeoOrigin node belongs to the **Geospatial** component and requires at least
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
-- SFVec3d \[in, out\] [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--)
-- SFBool \[ \] [rotateYUp](#sfbool---rotateyup-false)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| SFVec3d | \[in, out\] | [geoCoords](#sfvec3d-in-out-geocoords-0-0-0--) | 0 0 0  |
+| SFBool | \[ \] | [rotateYUp](#sfbool---rotateyup-false) | FALSE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -28,12 +28,14 @@ The PeriodicWave node belongs to the **Sound** component and requires at least s
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFString \[in, out\] [type](#sfstring-in-out-type-square-sine-square-sawtooth-triangle-custom)
-- MFFloat \[in, out\] [optionsReal](#mffloat-in-out-optionsreal----)
-- MFFloat \[in, out\] [optionsImag](#mffloat-in-out-optionsimag----)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFString | \[in, out\] | [type](#sfstring-in-out-type-square-sine-square-sawtooth-triangle-custom) | "SQUARE"  |
+| MFFloat | \[in, out\] | [optionsReal](#mffloat-in-out-optionsreal----) | \[ \] |
+| MFFloat | \[in, out\] | [optionsImag](#mffloat-in-out-optionsimag----) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

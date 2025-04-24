@@ -27,10 +27,12 @@ The ProjectionVolumeStyle node belongs to the **VolumeRendering** component and 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFString \[in, out\] [type](#sfstring-in-out-type-max-maxminaverage)
-- SFFloat \[in, out\] [intensityThreshold](#sffloat-in-out-intensitythreshold-0-0-1)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFString | \[in, out\] | [type](#sfstring-in-out-type-max-maxminaverage) | "MAX"  |
+| SFFloat | \[in, out\] | [intensityThreshold](#sffloat-in-out-intensitythreshold-0-0-1) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

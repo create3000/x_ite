@@ -28,13 +28,15 @@ The Layout node belongs to the **Layout** component and requires at least suppor
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFString \[in, out\] [align](#mfstring-in-out-align--center-center--leftcenterright)
-- MFString \[in, out\] [offsetUnits](#mfstring-in-out-offsetunits--world-world--worldfractionpixel)
-- MFFloat \[in, out\] [offset](#mffloat-in-out-offset--0-0---)
-- MFString \[in, out\] [sizeUnits](#mfstring-in-out-sizeunits--world-world--worldfractionpixel)
-- MFFloat \[in, out\] [size](#mffloat-in-out-size--1-1--0)
-- MFString \[in, out\] [scaleMode](#mfstring-in-out-scalemode--none-none--nonefractionstretchpixel)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFString | \[in, out\] | [align](#mfstring-in-out-align--center-center--leftcenterright) | \[ "CENTER", "CENTER" \] |
+| MFString | \[in, out\] | [offsetUnits](#mfstring-in-out-offsetunits--world-world--worldfractionpixel) | \[ "WORLD", "WORLD" \] |
+| MFFloat | \[in, out\] | [offset](#mffloat-in-out-offset--0-0---) | \[ 0, 0 \] |
+| MFString | \[in, out\] | [sizeUnits](#mfstring-in-out-sizeunits--world-world--worldfractionpixel) | \[ "WORLD", "WORLD" \] |
+| MFFloat | \[in, out\] | [size](#mffloat-in-out-size--1-1--0) | \[ 1, 1 \] |
+| MFString | \[in, out\] | [scaleMode](#mfstring-in-out-scalemode--none-none--nonefractionstretchpixel) | \[ "NONE", "NONE" \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

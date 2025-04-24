@@ -27,9 +27,11 @@ The BooleanToggle node belongs to the **EventUtilities** component and requires 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in\] [set_boolean](#sfbool-in-set_boolean)
-- SFBool \[in, out\] [toggle](#sfbool-in-out-toggle-false)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in\] | [set_boolean](#sfbool-in-set_boolean) |  |
+| SFBool | \[in, out\] | [toggle](#sfbool-in-out-toggle-false) | FALSE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

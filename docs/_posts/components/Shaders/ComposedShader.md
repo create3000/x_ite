@@ -31,12 +31,14 @@ The ComposedShader node belongs to the **Shaders** component and requires at lea
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in\] [activate](#sfbool-in-activate)
-- SFBool \[out\] [isSelected](#sfbool-out-isselected)
-- SFBool \[out\] [isValid](#sfbool-out-isvalid)
-- SFString \[ \] [language](#sfstring---language--cgglslhlsl)
-- MFNode \[in, out\] [parts](#mfnode-in-out-parts---shaderpart)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in\] | [activate](#sfbool-in-activate) |  |
+| SFBool | \[out\] | [isSelected](#sfbool-out-isselected) |  |
+| SFBool | \[out\] | [isValid](#sfbool-out-isvalid) |  |
+| SFString | \[ \] | [language](#sfstring---language--cgglslhlsl) | ""  |
+| MFNode | \[in, out\] | [parts](#mfnode-in-out-parts---shaderpart) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

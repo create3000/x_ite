@@ -28,8 +28,10 @@ The Coordinate node belongs to the **Rendering** component and requires at least
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFVec3f \[in, out\] [point](#mfvec3f-in-out-point----)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFVec3f | \[in, out\] | [point](#mfvec3f-in-out-point----) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

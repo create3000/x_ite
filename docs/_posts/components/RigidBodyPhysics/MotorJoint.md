@@ -27,33 +27,35 @@ The MotorJoint node belongs to the **RigidBodyPhysics** component and requires a
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[ \] [autoCalc](#sfbool---autocalc-false)
-- MFString \[in, out\] [forceOutput](#mfstring-in-out-forceoutput-none-all-none-)
-- SFFloat \[in, out\] [axis1Angle](#sffloat-in-out-axis1angle-0---)
-- SFFloat \[in, out\] [axis2Angle](#sffloat-in-out-axis2angle-0---)
-- SFFloat \[in, out\] [axis3Angle](#sffloat-in-out-axis3angle-0---)
-- SFFloat \[in, out\] [axis1Torque](#sffloat-in-out-axis1torque-0--)
-- SFFloat \[in, out\] [axis2Torque](#sffloat-in-out-axis2torque-0--)
-- SFFloat \[in, out\] [axis3Torque](#sffloat-in-out-axis3torque-0--)
-- SFInt32 \[in, out\] [enabledAxes](#sfint32-in-out-enabledaxes-1-0-3)
-- SFVec3f \[in, out\] [motor1Axis](#sfvec3f-in-out-motor1axis-1-0-0--)
-- SFVec3f \[in, out\] [motor2Axis](#sfvec3f-in-out-motor2axis-0-1-0--)
-- SFVec3f \[in, out\] [motor3Axis](#sfvec3f-in-out-motor3axis-0-0-1--)
-- SFFloat \[in, out\] [stop1Bounce](#sffloat-in-out-stop1bounce-0-0-1)
-- SFFloat \[in, out\] [stop2Bounce](#sffloat-in-out-stop2bounce-0-0-1)
-- SFFloat \[in, out\] [stop3Bounce](#sffloat-in-out-stop3bounce-0-0-1)
-- SFFloat \[in, out\] [stop1ErrorCorrection](#sffloat-in-out-stop1errorcorrection-08-0-1)
-- SFFloat \[in, out\] [stop2ErrorCorrection](#sffloat-in-out-stop2errorcorrection-08-0-1)
-- SFFloat \[in, out\] [stop3ErrorCorrection](#sffloat-in-out-stop3errorcorrection-08-0-1)
-- SFFloat \[out\] [motor1Angle](#sffloat-out-motor1angle)
-- SFFloat \[out\] [motor2Angle](#sffloat-out-motor2angle)
-- SFFloat \[out\] [motor3Angle](#sffloat-out-motor3angle)
-- SFFloat \[out\] [motor1AngleRate](#sffloat-out-motor1anglerate)
-- SFFloat \[out\] [motor2AngleRate](#sffloat-out-motor2anglerate)
-- SFFloat \[out\] [motor3AngleRate](#sffloat-out-motor3anglerate)
-- SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
-- SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[ \] | [autoCalc](#sfbool---autocalc-false) | FALSE |
+| MFString | \[in, out\] | [forceOutput](#mfstring-in-out-forceoutput-none-all-none-) | "NONE"  |
+| SFFloat | \[in, out\] | [axis1Angle](#sffloat-in-out-axis1angle-0---) | 0  |
+| SFFloat | \[in, out\] | [axis2Angle](#sffloat-in-out-axis2angle-0---) | 0  |
+| SFFloat | \[in, out\] | [axis3Angle](#sffloat-in-out-axis3angle-0---) | 0  |
+| SFFloat | \[in, out\] | [axis1Torque](#sffloat-in-out-axis1torque-0--) | 0  |
+| SFFloat | \[in, out\] | [axis2Torque](#sffloat-in-out-axis2torque-0--) | 0  |
+| SFFloat | \[in, out\] | [axis3Torque](#sffloat-in-out-axis3torque-0--) | 0  |
+| SFInt32 | \[in, out\] | [enabledAxes](#sfint32-in-out-enabledaxes-1-0-3) | 1  |
+| SFVec3f | \[in, out\] | [motor1Axis](#sfvec3f-in-out-motor1axis-1-0-0--) | 1 0 0  |
+| SFVec3f | \[in, out\] | [motor2Axis](#sfvec3f-in-out-motor2axis-0-1-0--) | 0 1 0  |
+| SFVec3f | \[in, out\] | [motor3Axis](#sfvec3f-in-out-motor3axis-0-0-1--) | 0 0 1  |
+| SFFloat | \[in, out\] | [stop1Bounce](#sffloat-in-out-stop1bounce-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [stop2Bounce](#sffloat-in-out-stop2bounce-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [stop3Bounce](#sffloat-in-out-stop3bounce-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [stop1ErrorCorrection](#sffloat-in-out-stop1errorcorrection-08-0-1) | 0 |
+| SFFloat | \[in, out\] | [stop2ErrorCorrection](#sffloat-in-out-stop2errorcorrection-08-0-1) | 0 |
+| SFFloat | \[in, out\] | [stop3ErrorCorrection](#sffloat-in-out-stop3errorcorrection-08-0-1) | 0 |
+| SFFloat | \[out\] | [motor1Angle](#sffloat-out-motor1angle) |  |
+| SFFloat | \[out\] | [motor2Angle](#sffloat-out-motor2angle) |  |
+| SFFloat | \[out\] | [motor3Angle](#sffloat-out-motor3angle) |  |
+| SFFloat | \[out\] | [motor1AngleRate](#sffloat-out-motor1anglerate) |  |
+| SFFloat | \[out\] | [motor2AngleRate](#sffloat-out-motor2anglerate) |  |
+| SFFloat | \[out\] | [motor3AngleRate](#sffloat-out-motor3anglerate) |  |
+| SFNode | \[in, out\] | [body1](#sfnode-in-out-body1-null-rigidbody) | NULL  |
+| SFNode | \[in, out\] | [body2](#sfnode-in-out-body2-null-rigidbody) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

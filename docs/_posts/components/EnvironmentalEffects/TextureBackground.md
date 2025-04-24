@@ -29,21 +29,23 @@ The TextureBackground node belongs to the **EnvironmentalEffects** component and
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in\] [set_bind](#sfbool-in-set_bind)
-- MFFloat \[in, out\] [skyAngle](#mffloat-in-out-skyangle---0-)
-- MFColor \[in, out\] [skyColor](#mfcolor-in-out-skycolor-0-0-0-0-1)
-- MFFloat \[in, out\] [groundAngle](#mffloat-in-out-groundangle---0-2)
-- MFColor \[in, out\] [groundColor](#mfcolor-in-out-groundcolor---0-1)
-- SFFloat \[in, out\] [transparency](#sffloat-in-out-transparency-0-0-1)
-- SFBool \[out\] [isBound](#sfbool-out-isbound)
-- SFTime \[out\] [bindTime](#sftime-out-bindtime)
-- SFNode \[in, out\] [frontTexture](#sfnode-in-out-fronttexture-null-x3dtexture2dnode-multitexture)
-- SFNode \[in, out\] [backTexture](#sfnode-in-out-backtexture-null-x3dtexture2dnode-multitexture)
-- SFNode \[in, out\] [leftTexture](#sfnode-in-out-lefttexture-null-x3dtexture2dnode-multitexture)
-- SFNode \[in, out\] [rightTexture](#sfnode-in-out-righttexture-null-x3dtexture2dnode-multitexture)
-- SFNode \[in, out\] [topTexture](#sfnode-in-out-toptexture-null-x3dtexture2dnode-multitexture)
-- SFNode \[in, out\] [bottomTexture](#sfnode-in-out-bottomtexture-null-x3dtexture2dnode-multitexture)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in\] | [set_bind](#sfbool-in-set_bind) |  |
+| MFFloat | \[in, out\] | [skyAngle](#mffloat-in-out-skyangle---0-) | \[ \] |
+| MFColor | \[in, out\] | [skyColor](#mfcolor-in-out-skycolor-0-0-0-0-1) | 0 0 0  |
+| MFFloat | \[in, out\] | [groundAngle](#mffloat-in-out-groundangle---0-2) | \[ \] |
+| MFColor | \[in, out\] | [groundColor](#mfcolor-in-out-groundcolor---0-1) | \[ \] |
+| SFFloat | \[in, out\] | [transparency](#sffloat-in-out-transparency-0-0-1) | 0  |
+| SFBool | \[out\] | [isBound](#sfbool-out-isbound) |  |
+| SFTime | \[out\] | [bindTime](#sftime-out-bindtime) |  |
+| SFNode | \[in, out\] | [frontTexture](#sfnode-in-out-fronttexture-null-x3dtexture2dnode-multitexture) | NULL  |
+| SFNode | \[in, out\] | [backTexture](#sfnode-in-out-backtexture-null-x3dtexture2dnode-multitexture) | NULL  |
+| SFNode | \[in, out\] | [leftTexture](#sfnode-in-out-lefttexture-null-x3dtexture2dnode-multitexture) | NULL  |
+| SFNode | \[in, out\] | [rightTexture](#sfnode-in-out-righttexture-null-x3dtexture2dnode-multitexture) | NULL  |
+| SFNode | \[in, out\] | [topTexture](#sfnode-in-out-toptexture-null-x3dtexture2dnode-multitexture) | NULL  |
+| SFNode | \[in, out\] | [bottomTexture](#sfnode-in-out-bottomtexture-null-x3dtexture2dnode-multitexture) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

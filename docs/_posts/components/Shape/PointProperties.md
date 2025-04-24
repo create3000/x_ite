@@ -27,11 +27,13 @@ The PointProperties node belongs to the **Shape** component and requires at leas
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in, out\] [pointSizeScaleFactor](#sffloat-in-out-pointsizescalefactor-1-1)
-- SFFloat \[in, out\] [pointSizeMinValue](#sffloat-in-out-pointsizeminvalue-1-0)
-- SFFloat \[in, out\] [pointSizeMaxValue](#sffloat-in-out-pointsizemaxvalue-1-0)
-- SFVec3f \[in, out\] [attenuation](#sfvec3f-in-out-attenuation-1-0-0-0)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in, out\] | [pointSizeScaleFactor](#sffloat-in-out-pointsizescalefactor-1-1) | 1  |
+| SFFloat | \[in, out\] | [pointSizeMinValue](#sffloat-in-out-pointsizeminvalue-1-0) | 1  |
+| SFFloat | \[in, out\] | [pointSizeMaxValue](#sffloat-in-out-pointsizemaxvalue-1-0) | 1  |
+| SFVec3f | \[in, out\] | [attenuation](#sfvec3f-in-out-attenuation-1-0-0-0) | 1 0 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

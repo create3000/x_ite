@@ -28,18 +28,20 @@ The NavigationInfo node belongs to the **Navigation** component and requires at 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in\] [set_bind](#sfbool-in-set_bind)
-- MFString \[in, out\] [type](#mfstring-in-out-type--examine-any--examine-walk-fly-plane_create3000githubio-lookat-explore-any-none)
-- MFFloat \[in, out\] [avatarSize](#mffloat-in-out-avatarsize--025-16-075--0)
-- SFFloat \[in, out\] [speed](#sffloat-in-out-speed-1-0)
-- SFBool \[in, out\] [headlight](#sfbool-in-out-headlight-true)
-- SFFloat \[in, out\] [visibilityLimit](#sffloat-in-out-visibilitylimit-0-0)
-- MFString \[in, out\] [transitionType](#mfstring-in-out-transitiontype-linear-teleportlinearanimate)
-- SFTime \[in, out\] [transitionTime](#sftime-in-out-transitiontime-1-0)
-- SFBool \[out\] [transitionComplete](#sfbool-out-transitioncomplete)
-- SFBool \[out\] [isBound](#sfbool-out-isbound)
-- SFTime \[out\] [bindTime](#sftime-out-bindtime)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in\] | [set_bind](#sfbool-in-set_bind) |  |
+| MFString | \[in, out\] | [type](#mfstring-in-out-type--examine-any--examine-walk-fly-plane_create3000githubio-lookat-explore-any-none) | \[ "EXAMINE", "ANY" \] |
+| MFFloat | \[in, out\] | [avatarSize](#mffloat-in-out-avatarsize--025-16-075--0) | \[ 0.25, 1.6, 0.75 \] |
+| SFFloat | \[in, out\] | [speed](#sffloat-in-out-speed-1-0) | 1  |
+| SFBool | \[in, out\] | [headlight](#sfbool-in-out-headlight-true) | TRUE |
+| SFFloat | \[in, out\] | [visibilityLimit](#sffloat-in-out-visibilitylimit-0-0) | 0  |
+| MFString | \[in, out\] | [transitionType](#mfstring-in-out-transitiontype-linear-teleportlinearanimate) | "LINEAR"  |
+| SFTime | \[in, out\] | [transitionTime](#sftime-in-out-transitiontime-1-0) | 1  |
+| SFBool | \[out\] | [transitionComplete](#sfbool-out-transitioncomplete) |  |
+| SFBool | \[out\] | [isBound](#sfbool-out-isbound) |  |
+| SFTime | \[out\] | [bindTime](#sftime-out-bindtime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

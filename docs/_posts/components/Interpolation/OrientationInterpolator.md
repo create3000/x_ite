@@ -28,11 +28,13 @@ The OrientationInterpolator node belongs to the **Interpolation** component and 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in\] [set_fraction](#sffloat-in-set_fraction--)
-- MFFloat \[in, out\] [key](#mffloat-in-out-key----)
-- MFRotation \[in, out\] [keyValue](#mfrotation-in-out-keyvalue----1-1-or--)
-- SFRotation \[out\] [value_changed](#sfrotation-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in\] | [set_fraction](#sffloat-in-set_fraction--) |  |
+| MFFloat | \[in, out\] | [key](#mffloat-in-out-key----) | \[ \] |
+| MFRotation | \[in, out\] | [keyValue](#mfrotation-in-out-keyvalue----1-1-or--) | \[ \] |
+| SFRotation | \[out\] | [value_changed](#sfrotation-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

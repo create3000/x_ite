@@ -30,8 +30,10 @@ The DispersionMaterialExtension node belongs to the **X_ITE** component and requ
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in, out\] [dispersion](#sffloat-in-out-dispersion-0-0)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in, out\] | [dispersion](#sffloat-in-out-dispersion-0-0) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

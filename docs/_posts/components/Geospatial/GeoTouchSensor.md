@@ -30,18 +30,20 @@ The GeoTouchSensor node belongs to the **Geospatial** component and requires at 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFVec2f \[out\] [hitTexCoord_changed](#sfvec2f-out-hittexcoord_changed)
-- SFVec3f \[out\] [hitNormal_changed](#sfvec3f-out-hitnormal_changed)
-- SFVec3f \[out\] [hitPoint_changed](#sfvec3f-out-hitpoint_changed)
-- SFVec3d \[out\] [hitGeoCoord_changed](#sfvec3d-out-hitgeocoord_changed)
-- SFBool \[out\] [isOver](#sfbool-out-isover)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFTime \[out\] [touchTime](#sftime-out-touchtime)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFNode | \[ \] | [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated) | NULL  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFVec2f | \[out\] | [hitTexCoord_changed](#sfvec2f-out-hittexcoord_changed) |  |
+| SFVec3f | \[out\] | [hitNormal_changed](#sfvec3f-out-hitnormal_changed) |  |
+| SFVec3f | \[out\] | [hitPoint_changed](#sfvec3f-out-hitpoint_changed) |  |
+| SFVec3d | \[out\] | [hitGeoCoord_changed](#sfvec3d-out-hitgeocoord_changed) |  |
+| SFBool | \[out\] | [isOver](#sfbool-out-isover) |  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFTime | \[out\] | [touchTime](#sftime-out-touchtime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

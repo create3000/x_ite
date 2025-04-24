@@ -28,21 +28,23 @@ The HAnimSegment node belongs to the **HAnim** component and requires at least s
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFString \[in, out\] [name](#sfstring-in-out-name-)
-- SFFloat \[in, out\] [mass](#sffloat-in-out-mass-0-0)
-- SFVec3f \[in, out\] [centerOfMass](#sfvec3f-in-out-centerofmass-0-0-0--)
-- MFFloat \[in, out\] [momentsOfInertia](#mffloat-in-out-momentsofinertia--0-0-0-0-0-0-0-0-0--0)
-- MFNode \[in, out\] [displacers](#mfnode-in-out-displacers---hanimdisplacer)
-- SFNode \[in, out\] [coord](#sfnode-in-out-coord-null-x3dcoordinatenode)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
-- MFNode \[in\] [addChildren](#mfnode-in-addchildren)
-- MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
-- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dchildnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFString | \[in, out\] | [name](#sfstring-in-out-name-) | "" |
+| SFFloat | \[in, out\] | [mass](#sffloat-in-out-mass-0-0) | 0  |
+| SFVec3f | \[in, out\] | [centerOfMass](#sfvec3f-in-out-centerofmass-0-0-0--) | 0 0 0  |
+| MFFloat | \[in, out\] | [momentsOfInertia](#mffloat-in-out-momentsofinertia--0-0-0-0-0-0-0-0-0--0) | \[ 0, 0, 0, 0, 0, 0, 0, 0, 0 \] |
+| MFNode | \[in, out\] | [displacers](#mfnode-in-out-displacers---hanimdisplacer) | \[ \] |
+| SFNode | \[in, out\] | [coord](#sfnode-in-out-coord-null-x3dcoordinatenode) | NULL  |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
+| MFNode | \[in\] | [addChildren](#mfnode-in-addchildren) |  |
+| MFNode | \[in\] | [removeChildren](#mfnode-in-removechildren) |  |
+| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dchildnode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

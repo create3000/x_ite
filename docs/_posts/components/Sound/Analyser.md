@@ -29,31 +29,33 @@ The Analyser node belongs to the **Sound** component and requires at least suppo
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFInt32 \[in, out\] [fftSize](#sfint32-in-out-fftsize-2048-0)
-- SFFloat \[in, out\] [minDecibels](#sffloat-in-out-mindecibels--100--)
-- SFFloat \[in, out\] [maxDecibels](#sffloat-in-out-maxdecibels--30--)
-- SFFloat \[in, out\] [smoothingTimeConstant](#sffloat-in-out-smoothingtimeconstant-080)
-- SFInt32 \[out\] [frequencyBinCount](#sfint32-out-frequencybincount-1024-0)
-- MFInt32 \[out\] [byteFrequencyData](#mfint32-out-bytefrequencydata)
-- MFInt32 \[out\] [byteTimeDomainData](#mfint32-out-bytetimedomaindata)
-- MFFloat \[out\] [floatFrequencyData](#mffloat-out-floatfrequencydata)
-- MFFloat \[out\] [floatTimeDomainData](#mffloat-out-floattimedomaindata)
-- SFFloat \[in, out\] [gain](#sffloat-in-out-gain-1--)
-- SFTime \[in, out\] [tailTime](#sftime-in-out-tailtime-0-0)
-- SFInt32 \[in, out\] [channelCount](#sfint32-in-out-channelcount)
-- SFString \[in, out\] [channelCountMode](#sfstring-in-out-channelcountmode-max-max-clamped-max-explicit)
-- SFString \[in, out\] [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete)
-- SFTime \[in, out\] [startTime](#sftime-in-out-starttime-0--)
-- SFTime \[in, out\] [resumeTime](#sftime-in-out-resumetime-0--)
-- SFTime \[in, out\] [pauseTime](#sftime-in-out-pausetime-0--)
-- SFTime \[in, out\] [stopTime](#sftime-in-out-stoptime-0--)
-- SFBool \[out\] [isPaused](#sfbool-out-ispaused)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
-- MFNode \[in, out\] [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFInt32 | \[in, out\] | [fftSize](#sfint32-in-out-fftsize-2048-0) | 2048  |
+| SFFloat | \[in, out\] | [minDecibels](#sffloat-in-out-mindecibels--100--) | -100  |
+| SFFloat | \[in, out\] | [maxDecibels](#sffloat-in-out-maxdecibels--30--) | -30  |
+| SFFloat | \[in, out\] | [smoothingTimeConstant](#sffloat-in-out-smoothingtimeconstant-080) | 0 |
+| SFInt32 | \[out\] | [frequencyBinCount](#sfint32-out-frequencybincount-1024-0) | 1024  |
+| MFInt32 | \[out\] | [byteFrequencyData](#mfint32-out-bytefrequencydata) |  |
+| MFInt32 | \[out\] | [byteTimeDomainData](#mfint32-out-bytetimedomaindata) |  |
+| MFFloat | \[out\] | [floatFrequencyData](#mffloat-out-floatfrequencydata) |  |
+| MFFloat | \[out\] | [floatTimeDomainData](#mffloat-out-floattimedomaindata) |  |
+| SFFloat | \[in, out\] | [gain](#sffloat-in-out-gain-1--) | 1  |
+| SFTime | \[in, out\] | [tailTime](#sftime-in-out-tailtime-0-0) | 0  |
+| SFInt32 | \[in, out\] | [channelCount](#sfint32-in-out-channelcount) |  |
+| SFString | \[in, out\] | [channelCountMode](#sfstring-in-out-channelcountmode-max-max-clamped-max-explicit) | "MAX"  |
+| SFString | \[in, out\] | [channelInterpretation](#sfstring-in-out-channelinterpretation-speakers-speakers-discrete) | "SPEAKERS"  |
+| SFTime | \[in, out\] | [startTime](#sftime-in-out-starttime-0--) | 0  |
+| SFTime | \[in, out\] | [resumeTime](#sftime-in-out-resumetime-0--) | 0  |
+| SFTime | \[in, out\] | [pauseTime](#sftime-in-out-pausetime-0--) | 0  |
+| SFTime | \[in, out\] | [stopTime](#sftime-in-out-stoptime-0--) | 0  |
+| SFBool | \[out\] | [isPaused](#sfbool-out-ispaused) |  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFTime | \[out\] | [elapsedTime](#sftime-out-elapsedtime) |  |
+| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3dsoundchannelnode-x3dsoundprocessingnode-x3dsoundsourcenode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

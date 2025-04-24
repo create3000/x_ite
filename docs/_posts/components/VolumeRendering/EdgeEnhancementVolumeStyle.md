@@ -28,11 +28,13 @@ The EdgeEnhancementVolumeStyle node belongs to the **VolumeRendering** component
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFColorRGBA \[in, out\] [edgeColor](#sfcolorrgba-in-out-edgecolor-0-0-0-1-0-1)
-- SFFloat \[in, out\] [gradientThreshold](#sffloat-in-out-gradientthreshold-04-0-)
-- SFNode \[in, out\] [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFColorRGBA | \[in, out\] | [edgeColor](#sfcolorrgba-in-out-edgecolor-0-0-0-1-0-1) | 0 0 0 1  |
+| SFFloat | \[in, out\] | [gradientThreshold](#sffloat-in-out-gradientthreshold-04-0-) | 0 |
+| SFNode | \[in, out\] | [surfaceNormals](#sfnode-in-out-surfacenormals-null-x3dtexture3dnode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

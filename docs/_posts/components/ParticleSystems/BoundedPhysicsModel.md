@@ -27,10 +27,12 @@ The BoundedPhysicsModel node belongs to the **ParticleSystems** component and re
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFFloat \[in, out\] [damping](#sffloat-in-out-damping-1---small-classbluenon-standard)
-- SFNode \[in, out\] [geometry](#sfnode-in-out-geometry-null-x3dgeometrynode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFFloat | \[in, out\] | [damping](#sffloat-in-out-damping-1---small-classbluenon-standard) | 1  |
+| SFNode | \[in, out\] | [geometry](#sfnode-in-out-geometry-null-x3dgeometrynode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

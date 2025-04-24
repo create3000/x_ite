@@ -30,13 +30,15 @@ The SpecularMaterialExtension node belongs to the **X_ITE** component and requir
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in, out\] [specular](#sffloat-in-out-specular-1-0)
-- SFString \[in, out\] [specularTextureMapping](#sfstring-in-out-speculartexturemapping-)
-- SFNode \[in, out\] [specularTexture](#sfnode-in-out-speculartexture-null-x3dsingletexturenode)
-- SFColor \[in, out\] [specularColor](#sfcolor-in-out-specularcolor-1-1-1-0)
-- SFString \[in, out\] [specularColorTextureMapping](#sfstring-in-out-specularcolortexturemapping-)
-- SFNode \[in, out\] [specularColorTexture](#sfnode-in-out-specularcolortexture-null-x3dsingletexturenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in, out\] | [specular](#sffloat-in-out-specular-1-0) | 1  |
+| SFString | \[in, out\] | [specularTextureMapping](#sfstring-in-out-speculartexturemapping-) | "" |
+| SFNode | \[in, out\] | [specularTexture](#sfnode-in-out-speculartexture-null-x3dsingletexturenode) | NULL  |
+| SFColor | \[in, out\] | [specularColor](#sfcolor-in-out-specularcolor-1-1-1-0) | 1 1 1  |
+| SFString | \[in, out\] | [specularColorTextureMapping](#sfstring-in-out-specularcolortexturemapping-) | "" |
+| SFNode | \[in, out\] | [specularColorTexture](#sfnode-in-out-specularcolortexture-null-x3dsingletexturenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

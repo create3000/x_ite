@@ -27,26 +27,28 @@ The GeoElevationGrid node belongs to the **Geospatial** component and requires a
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
-- MFDouble \[in\] [set_height](#mfdouble-in-set_height--)
-- SFVec3d \[ \] [geoGridOrigin](#sfvec3d---geogridorigin-0-0-0--)
-- SFInt32 \[ \] [xDimension](#sfint32---xdimension-0-0)
-- SFInt32 \[ \] [zDimension](#sfint32---zdimension-0-0)
-- SFDouble \[ \] [xSpacing](#sfdouble---xspacing-1-0)
-- SFDouble \[ \] [zSpacing](#sfdouble---zspacing-1-0)
-- SFFloat \[in, out\] [yScale](#sffloat-in-out-yscale-1-0)
-- SFBool \[ \] [solid](#sfbool---solid-true)
-- SFBool \[ \] [ccw](#sfbool---ccw-true)
-- SFDouble \[ \] [creaseAngle](#sfdouble---creaseangle-0-0)
-- SFBool \[ \] [colorPerVertex](#sfbool---colorpervertex-true)
-- SFBool \[ \] [normalPerVertex](#sfbool---normalpervertex-true)
-- SFNode \[in, out\] [color](#sfnode-in-out-color-null-x3dcolornode)
-- SFNode \[in, out\] [texCoord](#sfnode-in-out-texcoord-null-x3dtexturecoordinatenode)
-- SFNode \[in, out\] [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard)
-- SFNode \[in, out\] [normal](#sfnode-in-out-normal-null-x3dnormalnode)
-- MFDouble \[ \] [height](#mfdouble---height--0-0---)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFNode | \[ \] | [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated) | NULL  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| MFDouble | \[in\] | [set_height](#mfdouble-in-set_height--) |  |
+| SFVec3d | \[ \] | [geoGridOrigin](#sfvec3d---geogridorigin-0-0-0--) | 0 0 0  |
+| SFInt32 | \[ \] | [xDimension](#sfint32---xdimension-0-0) | 0  |
+| SFInt32 | \[ \] | [zDimension](#sfint32---zdimension-0-0) | 0  |
+| SFDouble | \[ \] | [xSpacing](#sfdouble---xspacing-1-0) | 1  |
+| SFDouble | \[ \] | [zSpacing](#sfdouble---zspacing-1-0) | 1  |
+| SFFloat | \[in, out\] | [yScale](#sffloat-in-out-yscale-1-0) | 1  |
+| SFBool | \[ \] | [solid](#sfbool---solid-true) | TRUE |
+| SFBool | \[ \] | [ccw](#sfbool---ccw-true) | TRUE |
+| SFDouble | \[ \] | [creaseAngle](#sfdouble---creaseangle-0-0) | 0  |
+| SFBool | \[ \] | [colorPerVertex](#sfbool---colorpervertex-true) | TRUE |
+| SFBool | \[ \] | [normalPerVertex](#sfbool---normalpervertex-true) | TRUE |
+| SFNode | \[in, out\] | [color](#sfnode-in-out-color-null-x3dcolornode) | NULL  |
+| SFNode | \[in, out\] | [texCoord](#sfnode-in-out-texcoord-null-x3dtexturecoordinatenode) | NULL  |
+| SFNode | \[in, out\] | [tangent](#sfnode-in-out-tangent-null-tangent-small-classbluenon-standard) | NULL  |
+| SFNode | \[in, out\] | [normal](#sfnode-in-out-normal-null-x3dnormalnode) | NULL  |
+| MFDouble | \[ \] | [height](#mfdouble---height--0-0---) | \[ 0, 0 \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

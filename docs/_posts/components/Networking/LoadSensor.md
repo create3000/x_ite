@@ -29,15 +29,17 @@ The LoadSensor node belongs to the **Networking** component and requires at leas
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFTime \[in, out\] [timeOut](#sftime-in-out-timeout-0-0)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFBool \[out\] [isLoaded](#sfbool-out-isloaded)
-- SFFloat \[out\] [progress](#sffloat-out-progress)
-- SFTime \[out\] [loadTime](#sftime-out-loadtime)
-- MFNode \[in, out\] [children](#mfnode-in-out-children---x3durlobject)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFTime | \[in, out\] | [timeOut](#sftime-in-out-timeout-0-0) | 0  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFBool | \[out\] | [isLoaded](#sfbool-out-isloaded) |  |
+| SFFloat | \[out\] | [progress](#sffloat-out-progress) |  |
+| SFTime | \[out\] | [loadTime](#sftime-out-loadtime) |  |
+| MFNode | \[in, out\] | [children](#mfnode-in-out-children---x3durlobject) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

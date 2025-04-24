@@ -31,12 +31,14 @@ The DepthMode node belongs to the **X_ITE** component and its default container 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFVec2f \[in, out\] [polygonOffset](#sfvec2f-in-out-polygonoffset-0-0--)
-- SFVec2f \[in, out\] [depthRange](#sfvec2f-in-out-depthrange-0-1-0-1)
-- SFBool \[in, out\] [depthTest](#sfbool-in-out-depthtest-true)
-- SFString \[in, out\] [depthFunction](#sfstring-in-out-depthfunction-less_equal-never-less-equal-less_equal-greater-not_equal-greater_equal-always)
-- SFBool \[in, out\] [depthMask](#sfbool-in-out-depthmask-true)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFVec2f | \[in, out\] | [polygonOffset](#sfvec2f-in-out-polygonoffset-0-0--) | 0 0  |
+| SFVec2f | \[in, out\] | [depthRange](#sfvec2f-in-out-depthrange-0-1-0-1) | 0 1  |
+| SFBool | \[in, out\] | [depthTest](#sfbool-in-out-depthtest-true) | TRUE |
+| SFString | \[in, out\] | [depthFunction](#sfstring-in-out-depthfunction-less_equal-never-less-equal-less_equal-greater-not_equal-greater_equal-always) | "LESS |
+| SFBool | \[in, out\] | [depthMask](#sfbool-in-out-depthmask-true) | TRUE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

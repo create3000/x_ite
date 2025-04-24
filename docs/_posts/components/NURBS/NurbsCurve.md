@@ -28,13 +28,15 @@ The NurbsCurve node belongs to the **NURBS** component and requires at least sup
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFInt32 \[in, out\] [tessellation](#sfint32-in-out-tessellation-0--)
-- SFBool \[ \] [closed](#sfbool---closed-false)
-- SFInt32 \[ \] [order](#sfint32---order-3-2)
-- MFDouble \[ \] [knot](#mfdouble---knot----)
-- MFDouble \[in, out\] [weight](#mfdouble-in-out-weight---0)
-- SFNode \[in, out\] [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFInt32 | \[in, out\] | [tessellation](#sfint32-in-out-tessellation-0--) | 0  |
+| SFBool | \[ \] | [closed](#sfbool---closed-false) | FALSE |
+| SFInt32 | \[ \] | [order](#sfint32---order-3-2) | 3  |
+| MFDouble | \[ \] | [knot](#mfdouble---knot----) | \[ \] |
+| MFDouble | \[in, out\] | [weight](#mfdouble-in-out-weight---0) | \[ \] |
+| SFNode | \[in, out\] | [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

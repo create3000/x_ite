@@ -29,13 +29,15 @@ The StringSensor node belongs to the **KeyDeviceSensor** component and requires 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFBool \[in, out\] [deletionAllowed](#sfbool-in-out-deletionallowed-true)
-- SFString \[out\] [enteredText](#sfstring-out-enteredtext)
-- SFString \[out\] [finalText](#sfstring-out-finaltext)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFBool | \[in, out\] | [deletionAllowed](#sfbool-in-out-deletionallowed-true) | TRUE |
+| SFString | \[out\] | [enteredText](#sfstring-out-enteredtext) |  |
+| SFString | \[out\] | [finalText](#sfstring-out-finaltext) |  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -30,11 +30,13 @@ The AnisotropyMaterialExtension node belongs to the **X_ITE** component and requ
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in, out\] [anisotropyStrength](#sffloat-in-out-anisotropystrength-0-0)
-- SFFloat \[in, out\] [anisotropyRotation](#sffloat-in-out-anisotropyrotation-0--)
-- SFString \[in, out\] [anisotropyTextureMapping](#sfstring-in-out-anisotropytexturemapping-)
-- SFNode \[in, out\] [anisotropyTexture](#sfnode-in-out-anisotropytexture-null-x3dsingletexturenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in, out\] | [anisotropyStrength](#sffloat-in-out-anisotropystrength-0-0) | 0  |
+| SFFloat | \[in, out\] | [anisotropyRotation](#sffloat-in-out-anisotropyrotation-0--) | 0  |
+| SFString | \[in, out\] | [anisotropyTextureMapping](#sfstring-in-out-anisotropytexturemapping-) | "" |
+| SFNode | \[in, out\] | [anisotropyTexture](#sfnode-in-out-anisotropytexture-null-x3dsingletexturenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -27,16 +27,18 @@ The PolylineEmitter node belongs to the **ParticleSystems** component and requir
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFInt32 \[in\] [set_coordIndex](#mfint32-in-set_coordindex-0-or--1)
-- SFBool \[in, out\] [on](#sfbool-in-out-on-true)
-- SFVec3f \[in, out\] [direction](#sfvec3f-in-out-direction-0-1-0--)
-- SFFloat \[in, out\] [speed](#sffloat-in-out-speed-0-0)
-- SFFloat \[in, out\] [variation](#sffloat-in-out-variation-025-0)
-- SFFloat \[in, out\] [mass](#sffloat-in-out-mass-0-0)
-- SFFloat \[in, out\] [surfaceArea](#sffloat-in-out-surfacearea-0-0)
-- MFInt32 \[ \] [coordIndex](#mfint32---coordindex--1-0-or--1)
-- SFNode \[in, out\] [coord](#sfnode-in-out-coord-null-x3dcoordinatenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFInt32 | \[in\] | [set_coordIndex](#mfint32-in-set_coordindex-0-or--1) |  |
+| SFBool | \[in, out\] | [on](#sfbool-in-out-on-true) | TRUE |
+| SFVec3f | \[in, out\] | [direction](#sfvec3f-in-out-direction-0-1-0--) | 0 1 0  |
+| SFFloat | \[in, out\] | [speed](#sffloat-in-out-speed-0-0) | 0  |
+| SFFloat | \[in, out\] | [variation](#sffloat-in-out-variation-025-0) | 0 |
+| SFFloat | \[in, out\] | [mass](#sffloat-in-out-mass-0-0) | 0  |
+| SFFloat | \[in, out\] | [surfaceArea](#sffloat-in-out-surfacearea-0-0) | 0  |
+| MFInt32 | \[ \] | [coordIndex](#mfint32---coordindex--1-0-or--1) | -1  |
+| SFNode | \[in, out\] | [coord](#sfnode-in-out-coord-null-x3dcoordinatenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

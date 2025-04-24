@@ -29,25 +29,27 @@ The PhysicalMaterial node belongs to the **Shape** component and requires at lea
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFColor \[in, out\] [baseColor](#sfcolor-in-out-basecolor-1-1-1-0-1)
-- SFString \[in, out\] [baseTextureMapping](#sfstring-in-out-basetexturemapping-)
-- SFNode \[in, out\] [baseTexture](#sfnode-in-out-basetexture-null-x3dsingletexturenode)
-- SFColor \[in, out\] [emissiveColor](#sfcolor-in-out-emissivecolor-0-0-0-0-1)
-- SFString \[in, out\] [emissiveTextureMapping](#sfstring-in-out-emissivetexturemapping-)
-- SFNode \[in, out\] [emissiveTexture](#sfnode-in-out-emissivetexture-null-x3dsingletexturenode)
-- SFFloat \[in, out\] [metallic](#sffloat-in-out-metallic-1-0-1)
-- SFFloat \[in, out\] [roughness](#sffloat-in-out-roughness-1-0-1)
-- SFString \[in, out\] [metallicRoughnessTextureMapping](#sfstring-in-out-metallicroughnesstexturemapping-)
-- SFNode \[in, out\] [metallicRoughnessTexture](#sfnode-in-out-metallicroughnesstexture-null-x3dsingletexturenode)
-- SFFloat \[in, out\] [occlusionStrength](#sffloat-in-out-occlusionstrength-1-0-1)
-- SFString \[in, out\] [occlusionTextureMapping](#sfstring-in-out-occlusiontexturemapping-)
-- SFNode \[in, out\] [occlusionTexture](#sfnode-in-out-occlusiontexture-null-x3dsingletexturenode)
-- SFFloat \[in, out\] [normalScale](#sffloat-in-out-normalscale-1-0)
-- SFString \[in, out\] [normalTextureMapping](#sfstring-in-out-normaltexturemapping-)
-- SFNode \[in, out\] [normalTexture](#sfnode-in-out-normaltexture-null-x3dsingletexturenode)
-- SFFloat \[in, out\] [transparency](#sffloat-in-out-transparency-0-0-1)
-- MFNode \[in, out\] [extensions](#mfnode-in-out-extensions---x3dmaterialextensionnode-small-classbluenon-standard)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFColor | \[in, out\] | [baseColor](#sfcolor-in-out-basecolor-1-1-1-0-1) | 1 1 1  |
+| SFString | \[in, out\] | [baseTextureMapping](#sfstring-in-out-basetexturemapping-) | "" |
+| SFNode | \[in, out\] | [baseTexture](#sfnode-in-out-basetexture-null-x3dsingletexturenode) | NULL  |
+| SFColor | \[in, out\] | [emissiveColor](#sfcolor-in-out-emissivecolor-0-0-0-0-1) | 0 0 0  |
+| SFString | \[in, out\] | [emissiveTextureMapping](#sfstring-in-out-emissivetexturemapping-) | "" |
+| SFNode | \[in, out\] | [emissiveTexture](#sfnode-in-out-emissivetexture-null-x3dsingletexturenode) | NULL  |
+| SFFloat | \[in, out\] | [metallic](#sffloat-in-out-metallic-1-0-1) | 1  |
+| SFFloat | \[in, out\] | [roughness](#sffloat-in-out-roughness-1-0-1) | 1  |
+| SFString | \[in, out\] | [metallicRoughnessTextureMapping](#sfstring-in-out-metallicroughnesstexturemapping-) | "" |
+| SFNode | \[in, out\] | [metallicRoughnessTexture](#sfnode-in-out-metallicroughnesstexture-null-x3dsingletexturenode) | NULL  |
+| SFFloat | \[in, out\] | [occlusionStrength](#sffloat-in-out-occlusionstrength-1-0-1) | 1  |
+| SFString | \[in, out\] | [occlusionTextureMapping](#sfstring-in-out-occlusiontexturemapping-) | "" |
+| SFNode | \[in, out\] | [occlusionTexture](#sfnode-in-out-occlusiontexture-null-x3dsingletexturenode) | NULL  |
+| SFFloat | \[in, out\] | [normalScale](#sffloat-in-out-normalscale-1-0) | 1  |
+| SFString | \[in, out\] | [normalTextureMapping](#sfstring-in-out-normaltexturemapping-) | "" |
+| SFNode | \[in, out\] | [normalTexture](#sfnode-in-out-normaltexture-null-x3dsingletexturenode) | NULL  |
+| SFFloat | \[in, out\] | [transparency](#sffloat-in-out-transparency-0-0-1) | 0  |
+| MFNode | \[in, out\] | [extensions](#mfnode-in-out-extensions---x3dmaterialextensionnode-small-classbluenon-standard) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

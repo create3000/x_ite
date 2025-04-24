@@ -32,24 +32,26 @@ The AudioClip node belongs to the **Sound** component and requires at least supp
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFBool \[in, out\] [load](#sfbool-in-out-load-true)
-- MFString \[in, out\] [url](#mfstring-in-out-url---uri)
-- SFTime \[in, out\] [autoRefresh](#sftime-in-out-autorefresh-0-0)
-- SFTime \[in, out\] [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0)
-- SFFloat \[in, out\] [gain](#sffloat-in-out-gain-1--)
-- SFFloat \[in, out\] [pitch](#sffloat-in-out-pitch-1-0)
-- SFBool \[in, out\] [loop](#sfbool-in-out-loop-false)
-- SFTime \[in, out\] [startTime](#sftime-in-out-starttime-0--)
-- SFTime \[in, out\] [resumeTime](#sftime-in-out-resumetime-0--)
-- SFTime \[in, out\] [pauseTime](#sftime-in-out-pausetime-0--)
-- SFTime \[in, out\] [stopTime](#sftime-in-out-stoptime-0--)
-- SFBool \[out\] [isPaused](#sfbool-out-ispaused)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
-- SFTime \[out\] [duration_changed](#sftime-out-duration_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFBool | \[in, out\] | [load](#sfbool-in-out-load-true) | TRUE |
+| MFString | \[in, out\] | [url](#mfstring-in-out-url---uri) | \[ \] |
+| SFTime | \[in, out\] | [autoRefresh](#sftime-in-out-autorefresh-0-0) | 0  |
+| SFTime | \[in, out\] | [autoRefreshTimeLimit](#sftime-in-out-autorefreshtimelimit-3600-0) | 3600  |
+| SFFloat | \[in, out\] | [gain](#sffloat-in-out-gain-1--) | 1  |
+| SFFloat | \[in, out\] | [pitch](#sffloat-in-out-pitch-1-0) | 1  |
+| SFBool | \[in, out\] | [loop](#sfbool-in-out-loop-false) | FALSE |
+| SFTime | \[in, out\] | [startTime](#sftime-in-out-starttime-0--) | 0  |
+| SFTime | \[in, out\] | [resumeTime](#sftime-in-out-resumetime-0--) | 0  |
+| SFTime | \[in, out\] | [pauseTime](#sftime-in-out-pausetime-0--) | 0  |
+| SFTime | \[in, out\] | [stopTime](#sftime-in-out-stoptime-0--) | 0  |
+| SFBool | \[out\] | [isPaused](#sfbool-out-ispaused) |  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFTime | \[out\] | [elapsedTime](#sftime-out-elapsedtime) |  |
+| SFTime | \[out\] | [duration_changed](#sftime-out-duration_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

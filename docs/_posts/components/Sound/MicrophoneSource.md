@@ -29,18 +29,20 @@ The MicrophoneSource node belongs to the **Sound** component and requires at lea
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFFloat \[in, out\] [gain](#sffloat-in-out-gain-1--)
-- SFString \[in, out\] [mediaDeviceID](#sfstring-in-out-mediadeviceid-)
-- SFTime \[in, out\] [startTime](#sftime-in-out-starttime-0--)
-- SFTime \[in, out\] [resumeTime](#sftime-in-out-resumetime-0--)
-- SFTime \[in, out\] [pauseTime](#sftime-in-out-pausetime-0--)
-- SFTime \[in, out\] [stopTime](#sftime-in-out-stoptime-0--)
-- SFBool \[out\] [isPaused](#sfbool-out-ispaused)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFTime \[out\] [elapsedTime](#sftime-out-elapsedtime)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFFloat | \[in, out\] | [gain](#sffloat-in-out-gain-1--) | 1  |
+| SFString | \[in, out\] | [mediaDeviceID](#sfstring-in-out-mediadeviceid-) | "" |
+| SFTime | \[in, out\] | [startTime](#sftime-in-out-starttime-0--) | 0  |
+| SFTime | \[in, out\] | [resumeTime](#sftime-in-out-resumetime-0--) | 0  |
+| SFTime | \[in, out\] | [pauseTime](#sftime-in-out-pausetime-0--) | 0  |
+| SFTime | \[in, out\] | [stopTime](#sftime-in-out-stoptime-0--) | 0  |
+| SFBool | \[out\] | [isPaused](#sfbool-out-ispaused) |  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFTime | \[out\] | [elapsedTime](#sftime-out-elapsedtime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

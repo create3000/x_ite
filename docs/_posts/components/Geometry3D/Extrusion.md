@@ -27,21 +27,23 @@ The Extrusion node belongs to the **Geometry3D** component and requires at least
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFVec2f \[in\] [set_crossSection](#mfvec2f-in-set_crosssection--)
-- MFRotation \[in\] [set_orientation](#mfrotation-in-set_orientation--1-1-or--)
-- MFVec2f \[in\] [set_scale](#mfvec2f-in-set_scale-0)
-- MFVec3f \[in\] [set_spine](#mfvec3f-in-set_spine--)
-- SFBool \[ \] [beginCap](#sfbool---begincap-true)
-- SFBool \[ \] [endCap](#sfbool---endcap-true)
-- SFBool \[ \] [solid](#sfbool---solid-true)
-- SFBool \[ \] [ccw](#sfbool---ccw-true)
-- SFBool \[ \] [convex](#sfbool---convex-true)
-- SFFloat \[ \] [creaseAngle](#sffloat---creaseangle-0-0)
-- MFVec2f \[ \] [crossSection](#mfvec2f---crosssection--1-1-1--1--1--1--1-1-1-1---)
-- MFRotation \[ \] [orientation](#mfrotation---orientation-0-0-1-0--1-1-or--)
-- MFVec2f \[ \] [scale](#mfvec2f---scale-1-1-0)
-- MFVec3f \[ \] [spine](#mfvec3f---spine--0-0-0-0-1-0---)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFVec2f | \[in\] | [set_crossSection](#mfvec2f-in-set_crosssection--) |  |
+| MFRotation | \[in\] | [set_orientation](#mfrotation-in-set_orientation--1-1-or--) |  |
+| MFVec2f | \[in\] | [set_scale](#mfvec2f-in-set_scale-0) |  |
+| MFVec3f | \[in\] | [set_spine](#mfvec3f-in-set_spine--) |  |
+| SFBool | \[ \] | [beginCap](#sfbool---begincap-true) | TRUE |
+| SFBool | \[ \] | [endCap](#sfbool---endcap-true) | TRUE |
+| SFBool | \[ \] | [solid](#sfbool---solid-true) | TRUE |
+| SFBool | \[ \] | [ccw](#sfbool---ccw-true) | TRUE |
+| SFBool | \[ \] | [convex](#sfbool---convex-true) | TRUE |
+| SFFloat | \[ \] | [creaseAngle](#sffloat---creaseangle-0-0) | 0  |
+| MFVec2f | \[ \] | [crossSection](#mfvec2f---crosssection--1-1-1--1--1--1--1-1-1-1---) | \[ 1 1, 1 -1, -1 -1, -1 1, 1 1 \] |
+| MFRotation | \[ \] | [orientation](#mfrotation---orientation-0-0-1-0--1-1-or--) | 0 0 1 0  |
+| MFVec2f | \[ \] | [scale](#mfvec2f---scale-1-1-0) | 1 1  |
+| MFVec3f | \[ \] | [spine](#mfvec3f---spine--0-0-0-0-1-0---) | \[ 0 0 0, 0 1 0 \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

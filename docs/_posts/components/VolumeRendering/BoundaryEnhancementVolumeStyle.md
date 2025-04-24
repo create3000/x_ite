@@ -28,11 +28,13 @@ The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** compo
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFFloat \[in, out\] [retainedOpacity](#sffloat-in-out-retainedopacity-02-0-1)
-- SFFloat \[in, out\] [boundaryOpacity](#sffloat-in-out-boundaryopacity-09-0-1)
-- SFFloat \[in, out\] [opacityFactor](#sffloat-in-out-opacityfactor-2-0)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFFloat | \[in, out\] | [retainedOpacity](#sffloat-in-out-retainedopacity-02-0-1) | 0 |
+| SFFloat | \[in, out\] | [boundaryOpacity](#sffloat-in-out-boundaryopacity-09-0-1) | 0 |
+| SFFloat | \[in, out\] | [opacityFactor](#sffloat-in-out-opacityfactor-2-0) | 2  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

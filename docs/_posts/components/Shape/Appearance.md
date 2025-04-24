@@ -27,20 +27,22 @@ The Appearance node belongs to the **Shape** component and requires at least sup
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [alphaMode](#sfstring-in-out-alphamode-auto-autoopaquemaskblend)
-- SFFloat \[in, out\] [alphaCutoff](#sffloat-in-out-alphacutoff-05-0-1)
-- SFNode \[in, out\] [acousticProperties](#sfnode-in-out-acousticproperties-null-acousticproperties)
-- SFNode \[in, out\] [pointProperties](#sfnode-in-out-pointproperties-null-pointproperties)
-- SFNode \[in, out\] [lineProperties](#sfnode-in-out-lineproperties-null-lineproperties)
-- SFNode \[in, out\] [fillProperties](#sfnode-in-out-fillproperties-null-fillproperties)
-- SFNode \[in, out\] [material](#sfnode-in-out-material-null-x3dmaterialnode)
-- SFNode \[in, out\] [backMaterial](#sfnode-in-out-backmaterial-null-x3donesidedmaterialnode)
-- SFNode \[in, out\] [texture](#sfnode-in-out-texture-null-x3dtexturenode)
-- SFNode \[in, out\] [textureTransform](#sfnode-in-out-texturetransform-null-x3dtexturetransformnode)
-- MFNode \[in, out\] [shaders](#mfnode-in-out-shaders---x3dshadernode)
-- SFNode \[in, out\] [blendMode](#sfnode-in-out-blendmode-null-blendmode-small-classbluenon-standard)
-- SFNode \[in, out\] [depthMode](#sfnode-in-out-depthmode-null-depthmode-small-classbluenon-standard)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [alphaMode](#sfstring-in-out-alphamode-auto-autoopaquemaskblend) | "AUTO"  |
+| SFFloat | \[in, out\] | [alphaCutoff](#sffloat-in-out-alphacutoff-05-0-1) | 0 |
+| SFNode | \[in, out\] | [acousticProperties](#sfnode-in-out-acousticproperties-null-acousticproperties) | NULL  |
+| SFNode | \[in, out\] | [pointProperties](#sfnode-in-out-pointproperties-null-pointproperties) | NULL  |
+| SFNode | \[in, out\] | [lineProperties](#sfnode-in-out-lineproperties-null-lineproperties) | NULL  |
+| SFNode | \[in, out\] | [fillProperties](#sfnode-in-out-fillproperties-null-fillproperties) | NULL  |
+| SFNode | \[in, out\] | [material](#sfnode-in-out-material-null-x3dmaterialnode) | NULL  |
+| SFNode | \[in, out\] | [backMaterial](#sfnode-in-out-backmaterial-null-x3donesidedmaterialnode) | NULL  |
+| SFNode | \[in, out\] | [texture](#sfnode-in-out-texture-null-x3dtexturenode) | NULL  |
+| SFNode | \[in, out\] | [textureTransform](#sfnode-in-out-texturetransform-null-x3dtexturetransformnode) | NULL  |
+| MFNode | \[in, out\] | [shaders](#mfnode-in-out-shaders---x3dshadernode) | \[ \] |
+| SFNode | \[in, out\] | [blendMode](#sfnode-in-out-blendmode-null-blendmode-small-classbluenon-standard) | NULL  |
+| SFNode | \[in, out\] | [depthMode](#sfnode-in-out-depthmode-null-depthmode-small-classbluenon-standard) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

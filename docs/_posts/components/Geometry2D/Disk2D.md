@@ -27,10 +27,12 @@ The Disk2D node belongs to the **Geometry2D** component and requires at least su
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[ \] [innerRadius](#sffloat---innerradius-0-0)
-- SFFloat \[ \] [outerRadius](#sffloat---outerradius-1-0)
-- SFBool \[ \] [solid](#sfbool---solid-false)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[ \] | [innerRadius](#sffloat---innerradius-0-0) | 0  |
+| SFFloat | \[ \] | [outerRadius](#sffloat---outerradius-1-0) | 1  |
+| SFBool | \[ \] | [solid](#sfbool---solid-false) | FALSE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

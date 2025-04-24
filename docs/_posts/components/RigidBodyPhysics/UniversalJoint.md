@@ -27,21 +27,23 @@ The UniversalJoint node belongs to the **RigidBodyPhysics** component and requir
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFString \[in, out\] [forceOutput](#mfstring-in-out-forceoutput-none-all-none-)
-- SFVec3f \[in, out\] [anchorPoint](#sfvec3f-in-out-anchorpoint-0-0-0--)
-- SFVec3f \[in, out\] [axis1](#sfvec3f-in-out-axis1-1-0-0--)
-- SFVec3f \[in, out\] [axis2](#sfvec3f-in-out-axis2-0-1-0--)
-- SFFloat \[in, out\] [stop1Bounce](#sffloat-in-out-stop1bounce-0-0-1)
-- SFFloat \[in, out\] [stop2Bounce](#sffloat-in-out-stop2bounce-0-0-1)
-- SFFloat \[in, out\] [stop1ErrorCorrection](#sffloat-in-out-stop1errorcorrection-08-0-1)
-- SFFloat \[in, out\] [stop2ErrorCorrection](#sffloat-in-out-stop2errorcorrection-08-0-1)
-- SFVec3f \[out\] [body1Axis](#sfvec3f-out-body1axis)
-- SFVec3f \[out\] [body2Axis](#sfvec3f-out-body2axis)
-- SFVec3f \[out\] [body1AnchorPoint](#sfvec3f-out-body1anchorpoint)
-- SFVec3f \[out\] [body2AnchorPoint](#sfvec3f-out-body2anchorpoint)
-- SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
-- SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFString | \[in, out\] | [forceOutput](#mfstring-in-out-forceoutput-none-all-none-) | "NONE"  |
+| SFVec3f | \[in, out\] | [anchorPoint](#sfvec3f-in-out-anchorpoint-0-0-0--) | 0 0 0  |
+| SFVec3f | \[in, out\] | [axis1](#sfvec3f-in-out-axis1-1-0-0--) | 1 0 0  |
+| SFVec3f | \[in, out\] | [axis2](#sfvec3f-in-out-axis2-0-1-0--) | 0 1 0  |
+| SFFloat | \[in, out\] | [stop1Bounce](#sffloat-in-out-stop1bounce-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [stop2Bounce](#sffloat-in-out-stop2bounce-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [stop1ErrorCorrection](#sffloat-in-out-stop1errorcorrection-08-0-1) | 0 |
+| SFFloat | \[in, out\] | [stop2ErrorCorrection](#sffloat-in-out-stop2errorcorrection-08-0-1) | 0 |
+| SFVec3f | \[out\] | [body1Axis](#sfvec3f-out-body1axis) |  |
+| SFVec3f | \[out\] | [body2Axis](#sfvec3f-out-body2axis) |  |
+| SFVec3f | \[out\] | [body1AnchorPoint](#sfvec3f-out-body1anchorpoint) |  |
+| SFVec3f | \[out\] | [body2AnchorPoint](#sfvec3f-out-body2anchorpoint) |  |
+| SFNode | \[in, out\] | [body1](#sfnode-in-out-body1-null-rigidbody) | NULL  |
+| SFNode | \[in, out\] | [body2](#sfnode-in-out-body2-null-rigidbody) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

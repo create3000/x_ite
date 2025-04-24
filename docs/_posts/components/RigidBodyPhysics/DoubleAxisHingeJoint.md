@@ -27,32 +27,34 @@ The DoubleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFString \[in, out\] [forceOutput](#mfstring-in-out-forceoutput-none-all-none-)
-- SFVec3f \[in, out\] [anchorPoint](#sfvec3f-in-out-anchorpoint-0-0-0--)
-- SFVec3f \[in, out\] [axis1](#sfvec3f-in-out-axis1-1-0-0--)
-- SFVec3f \[in, out\] [axis2](#sfvec3f-in-out-axis2-0-1-0--)
-- SFFloat \[in, out\] [minAngle1](#sffloat-in-out-minangle1------small-classrednot-supported)
-- SFFloat \[in, out\] [maxAngle1](#sffloat-in-out-maxangle1----small-classrednot-supported)
-- SFFloat \[in, out\] [desiredAngularVelocity1](#sffloat-in-out-desiredangularvelocity1-0---small-classrednot-supported)
-- SFFloat \[in, out\] [desiredAngularVelocity2](#sffloat-in-out-desiredangularvelocity2-0---small-classrednot-supported)
-- SFFloat \[in, out\] [maxTorque1](#sffloat-in-out-maxtorque1-0---small-classrednot-supported)
-- SFFloat \[in, out\] [maxTorque2](#sffloat-in-out-maxtorque2-0---small-classrednot-supported)
-- SFFloat \[in, out\] [stop1Bounce](#sffloat-in-out-stop1bounce-0-0-1span-classred-not-supportedspan)
-- SFFloat \[in, out\] [stop1ConstantForceMix](#sffloat-in-out-stop1constantforcemix-0001-0-span-classred-not-supportedspan)
-- SFFloat \[in, out\] [stop1ErrorCorrection](#sffloat-in-out-stop1errorcorrection-08-0-1span-classred-not-supportedspan)
-- SFFloat \[in, out\] [suspensionForce](#sffloat-in-out-suspensionforce-0-0-span-classred-not-supportedspan)
-- SFFloat \[in, out\] [suspensionErrorCorrection](#sffloat-in-out-suspensionerrorcorrection-08-0-1span-classred-not-supportedspan)
-- SFVec3f \[out\] [body1AnchorPoint](#sfvec3f-out-body1anchorpoint)
-- SFVec3f \[out\] [body2AnchorPoint](#sfvec3f-out-body2anchorpoint)
-- SFVec3f \[out\] [body1Axis](#sfvec3f-out-body1axis)
-- SFVec3f \[out\] [body2Axis](#sfvec3f-out-body2axis)
-- SFFloat \[out\] [hinge1Angle](#sffloat-out-hinge1angle)
-- SFFloat \[out\] [hinge2Angle](#sffloat-out-hinge2angle)
-- SFFloat \[out\] [hinge1AngleRate](#sffloat-out-hinge1anglerate)
-- SFFloat \[out\] [hinge2AngleRate](#sffloat-out-hinge2anglerate)
-- SFNode \[in, out\] [body1](#sfnode-in-out-body1-null-rigidbody)
-- SFNode \[in, out\] [body2](#sfnode-in-out-body2-null-rigidbody)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFString | \[in, out\] | [forceOutput](#mfstring-in-out-forceoutput-none-all-none-) | "NONE"  |
+| SFVec3f | \[in, out\] | [anchorPoint](#sfvec3f-in-out-anchorpoint-0-0-0--) | 0 0 0  |
+| SFVec3f | \[in, out\] | [axis1](#sfvec3f-in-out-axis1-1-0-0--) | 1 0 0  |
+| SFVec3f | \[in, out\] | [axis2](#sfvec3f-in-out-axis2-0-1-0--) | 0 1 0  |
+| SFFloat | \[in, out\] | [minAngle1](#sffloat-in-out-minangle1------small-classrednot-supported) | -π  |
+| SFFloat | \[in, out\] | [maxAngle1](#sffloat-in-out-maxangle1----small-classrednot-supported) | π  |
+| SFFloat | \[in, out\] | [desiredAngularVelocity1](#sffloat-in-out-desiredangularvelocity1-0---small-classrednot-supported) | 0  |
+| SFFloat | \[in, out\] | [desiredAngularVelocity2](#sffloat-in-out-desiredangularvelocity2-0---small-classrednot-supported) | 0  |
+| SFFloat | \[in, out\] | [maxTorque1](#sffloat-in-out-maxtorque1-0---small-classrednot-supported) | 0  |
+| SFFloat | \[in, out\] | [maxTorque2](#sffloat-in-out-maxtorque2-0---small-classrednot-supported) | 0  |
+| SFFloat | \[in, out\] | [stop1Bounce](#sffloat-in-out-stop1bounce-0-0-1span-classred-not-supportedspan) | 0  |
+| SFFloat | \[in, out\] | [stop1ConstantForceMix](#sffloat-in-out-stop1constantforcemix-0001-0-span-classred-not-supportedspan) | 0 |
+| SFFloat | \[in, out\] | [stop1ErrorCorrection](#sffloat-in-out-stop1errorcorrection-08-0-1span-classred-not-supportedspan) | 0 |
+| SFFloat | \[in, out\] | [suspensionForce](#sffloat-in-out-suspensionforce-0-0-span-classred-not-supportedspan) | 0  |
+| SFFloat | \[in, out\] | [suspensionErrorCorrection](#sffloat-in-out-suspensionerrorcorrection-08-0-1span-classred-not-supportedspan) | 0 |
+| SFVec3f | \[out\] | [body1AnchorPoint](#sfvec3f-out-body1anchorpoint) |  |
+| SFVec3f | \[out\] | [body2AnchorPoint](#sfvec3f-out-body2anchorpoint) |  |
+| SFVec3f | \[out\] | [body1Axis](#sfvec3f-out-body1axis) |  |
+| SFVec3f | \[out\] | [body2Axis](#sfvec3f-out-body2axis) |  |
+| SFFloat | \[out\] | [hinge1Angle](#sffloat-out-hinge1angle) |  |
+| SFFloat | \[out\] | [hinge2Angle](#sffloat-out-hinge2angle) |  |
+| SFFloat | \[out\] | [hinge1AngleRate](#sffloat-out-hinge1anglerate) |  |
+| SFFloat | \[out\] | [hinge2AngleRate](#sffloat-out-hinge2anglerate) |  |
+| SFNode | \[in, out\] | [body1](#sfnode-in-out-body1-null-rigidbody) | NULL  |
+| SFNode | \[in, out\] | [body2](#sfnode-in-out-body2-null-rigidbody) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

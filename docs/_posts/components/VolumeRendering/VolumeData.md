@@ -28,14 +28,16 @@ The VolumeData node belongs to the **VolumeRendering** component and requires at
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFVec3f \[in, out\] [dimensions](#sfvec3f-in-out-dimensions-1-1-1-0)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
-- SFNode \[in, out\] [renderStyle](#sfnode-in-out-renderstyle-null-x3dvolumerenderstylenode)
-- SFNode \[in, out\] [voxels](#sfnode-in-out-voxels-null-x3dtexture3dnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFVec3f | \[in, out\] | [dimensions](#sfvec3f-in-out-dimensions-1-1-1-0) | 1 1 1  |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
+| SFNode | \[in, out\] | [renderStyle](#sfnode-in-out-renderstyle-null-x3dvolumerenderstylenode) | NULL  |
+| SFNode | \[in, out\] | [voxels](#sfnode-in-out-voxels-null-x3dtexture3dnode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

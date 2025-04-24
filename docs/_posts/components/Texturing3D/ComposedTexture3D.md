@@ -30,13 +30,15 @@ The ComposedTexture3D node belongs to the **Texturing3D** component and requires
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[ \] [repeatS](#sfbool---repeats-false)
-- SFBool \[ \] [repeatT](#sfbool---repeatt-false)
-- SFBool \[ \] [repeatR](#sfbool---repeatr-false)
-- SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
-- MFNode \[in, out\] [texture](#mfnode-in-out-texture---x3dtexture2dnode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[ \] | [repeatS](#sfbool---repeats-false) | FALSE |
+| SFBool | \[ \] | [repeatT](#sfbool---repeatt-false) | FALSE |
+| SFBool | \[ \] | [repeatR](#sfbool---repeatr-false) | FALSE |
+| SFNode | \[ \] | [textureProperties](#sfnode---textureproperties-null-textureproperties) | NULL  |
+| MFNode | \[in, out\] | [texture](#mfnode-in-out-texture---x3dtexture2dnode) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

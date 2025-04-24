@@ -30,8 +30,10 @@ The IORMaterialExtension node belongs to the **X_ITE** component and requires at
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in, out\] [indexOfRefraction](#sffloat-in-out-indexofrefraction-15-1)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in, out\] | [indexOfRefraction](#sffloat-in-out-indexofrefraction-15-1) | 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

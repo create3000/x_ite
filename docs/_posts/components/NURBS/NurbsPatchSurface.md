@@ -29,21 +29,23 @@ The NurbsPatchSurface node belongs to the **NURBS** component and requires at le
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFInt32 \[in, out\] [uTessellation](#sfint32-in-out-utessellation-0--)
-- SFInt32 \[in, out\] [vTessellation](#sfint32-in-out-vtessellation-0--)
-- SFBool \[ \] [solid](#sfbool---solid-true)
-- SFBool \[ \] [uClosed](#sfbool---uclosed-false)
-- SFBool \[ \] [vClosed](#sfbool---vclosed-false)
-- SFInt32 \[ \] [uOrder](#sfint32---uorder-3-2)
-- SFInt32 \[ \] [vOrder](#sfint32---vorder-3-2)
-- SFInt32 \[ \] [uDimension](#sfint32---udimension-0-0)
-- SFInt32 \[ \] [vDimension](#sfint32---vdimension-0-0)
-- MFDouble \[ \] [uKnot](#mfdouble---uknot----)
-- MFDouble \[ \] [vKnot](#mfdouble---vknot----)
-- MFDouble \[in, out\] [weight](#mfdouble-in-out-weight---0)
-- SFNode \[in, out\] [texCoord](#sfnode-in-out-texcoord-null-x3dtexturecoordinatenodenurbstexturecoordinate)
-- SFNode \[in, out\] [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFInt32 | \[in, out\] | [uTessellation](#sfint32-in-out-utessellation-0--) | 0  |
+| SFInt32 | \[in, out\] | [vTessellation](#sfint32-in-out-vtessellation-0--) | 0  |
+| SFBool | \[ \] | [solid](#sfbool---solid-true) | TRUE |
+| SFBool | \[ \] | [uClosed](#sfbool---uclosed-false) | FALSE |
+| SFBool | \[ \] | [vClosed](#sfbool---vclosed-false) | FALSE |
+| SFInt32 | \[ \] | [uOrder](#sfint32---uorder-3-2) | 3  |
+| SFInt32 | \[ \] | [vOrder](#sfint32---vorder-3-2) | 3  |
+| SFInt32 | \[ \] | [uDimension](#sfint32---udimension-0-0) | 0  |
+| SFInt32 | \[ \] | [vDimension](#sfint32---vdimension-0-0) | 0  |
+| MFDouble | \[ \] | [uKnot](#mfdouble---uknot----) | \[ \] |
+| MFDouble | \[ \] | [vKnot](#mfdouble---vknot----) | \[ \] |
+| MFDouble | \[in, out\] | [weight](#mfdouble-in-out-weight---0) | \[ \] |
+| SFNode | \[in, out\] | [texCoord](#sfnode-in-out-texcoord-null-x3dtexturecoordinatenodenurbstexturecoordinate) | NULL  |
+| SFNode | \[in, out\] | [controlPoint](#sfnode-in-out-controlpoint-null-x3dcoordinatenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

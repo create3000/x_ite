@@ -28,14 +28,16 @@ The SplineScalarInterpolator node belongs to the **Interpolation** component and
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in\] [set_fraction](#sffloat-in-set_fraction--)
-- SFBool \[in, out\] [closed](#sfbool-in-out-closed-false)
-- MFFloat \[in, out\] [key](#mffloat-in-out-key----)
-- MFFloat \[in, out\] [keyValue](#mffloat-in-out-keyvalue----)
-- MFFloat \[in, out\] [keyVelocity](#mffloat-in-out-keyvelocity----)
-- SFBool \[in, out\] [normalizeVelocity](#sfbool-in-out-normalizevelocity-false)
-- SFFloat \[out\] [value_changed](#sffloat-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in\] | [set_fraction](#sffloat-in-set_fraction--) |  |
+| SFBool | \[in, out\] | [closed](#sfbool-in-out-closed-false) | FALSE |
+| MFFloat | \[in, out\] | [key](#mffloat-in-out-key----) | \[ \] |
+| MFFloat | \[in, out\] | [keyValue](#mffloat-in-out-keyvalue----) | \[ \] |
+| MFFloat | \[in, out\] | [keyVelocity](#mffloat-in-out-keyvelocity----) | \[ \] |
+| SFBool | \[in, out\] | [normalizeVelocity](#sfbool-in-out-normalizevelocity-false) | FALSE |
+| SFFloat | \[out\] | [value_changed](#sffloat-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

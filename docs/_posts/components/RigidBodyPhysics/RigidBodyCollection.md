@@ -27,27 +27,29 @@ The RigidBodyCollection node belongs to the **RigidBodyPhysics** component and r
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- MFNode \[in\] [set_contacts](#mfnode-in-set_contacts-small-classrednot-supported)
-- SFVec3f \[in, out\] [gravity](#sfvec3f-in-out-gravity-0--98-0--)
-- SFBool \[in, out\] [preferAccuracy](#sfbool-in-out-preferaccuracy-false)
-- SFFloat \[in, out\] [errorCorrection](#sffloat-in-out-errorcorrection-08-0-1-small-classrednot-supported)
-- SFInt32 \[in, out\] [iterations](#sfint32-in-out-iterations-10-0)
-- SFFloat \[in, out\] [constantForceMix](#sffloat-in-out-constantforcemix-00001-0-small-classrednot-supported)
-- SFFloat \[in, out\] [maxCorrectionSpeed](#sffloat-in-out-maxcorrectionspeed--1-0-or--1-small-classrednot-supported)
-- SFFloat \[in, out\] [contactSurfaceThickness](#sffloat-in-out-contactsurfacethickness-0-0)
-- SFBool \[in, out\] [autoDisable](#sfbool-in-out-autodisable-false)
-- SFTime \[in, out\] [disableTime](#sftime-in-out-disabletime-0-0-small-classrednot-supported)
-- SFFloat \[in, out\] [disableLinearSpeed](#sffloat-in-out-disablelinearspeed-0-0)
-- SFFloat \[in, out\] [disableAngularSpeed](#sffloat-in-out-disableangularspeed-0-0)
-- SFNode \[ \] [collider](#sfnode---collider-null-collisioncollection)
-- MFNode \[in, out\] [bodies](#mfnode-in-out-bodies---rigidbody)
-- MFNode \[in, out\] [joints](#mfnode-in-out-joints---x3drigidjointnode)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| MFNode | \[in\] | [set_contacts](#mfnode-in-set_contacts-small-classrednot-supported) |  |
+| SFVec3f | \[in, out\] | [gravity](#sfvec3f-in-out-gravity-0--98-0--) | 0 -9 |
+| SFBool | \[in, out\] | [preferAccuracy](#sfbool-in-out-preferaccuracy-false) | FALSE |
+| SFFloat | \[in, out\] | [errorCorrection](#sffloat-in-out-errorcorrection-08-0-1-small-classrednot-supported) | 0 |
+| SFInt32 | \[in, out\] | [iterations](#sfint32-in-out-iterations-10-0) | 10  |
+| SFFloat | \[in, out\] | [constantForceMix](#sffloat-in-out-constantforcemix-00001-0-small-classrednot-supported) | 0 |
+| SFFloat | \[in, out\] | [maxCorrectionSpeed](#sffloat-in-out-maxcorrectionspeed--1-0-or--1-small-classrednot-supported) | -1  |
+| SFFloat | \[in, out\] | [contactSurfaceThickness](#sffloat-in-out-contactsurfacethickness-0-0) | 0  |
+| SFBool | \[in, out\] | [autoDisable](#sfbool-in-out-autodisable-false) | FALSE |
+| SFTime | \[in, out\] | [disableTime](#sftime-in-out-disabletime-0-0-small-classrednot-supported) | 0  |
+| SFFloat | \[in, out\] | [disableLinearSpeed](#sffloat-in-out-disablelinearspeed-0-0) | 0  |
+| SFFloat | \[in, out\] | [disableAngularSpeed](#sffloat-in-out-disableangularspeed-0-0) | 0  |
+| SFNode | \[ \] | [collider](#sfnode---collider-null-collisioncollection) | NULL  |
+| MFNode | \[in, out\] | [bodies](#mfnode-in-out-bodies---rigidbody) | \[ \] |
+| MFNode | \[in, out\] | [joints](#mfnode-in-out-joints---x3drigidjointnode) | \[ \] |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

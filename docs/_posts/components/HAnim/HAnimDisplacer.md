@@ -27,12 +27,14 @@ The HAnimDisplacer node belongs to the **HAnim** component and requires at least
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFString \[in, out\] [name](#sfstring-in-out-name-)
-- SFFloat \[in, out\] [weight](#sffloat-in-out-weight-0--)
-- MFInt32 \[in, out\] [coordIndex](#mfint32-in-out-coordindex---0-or--1)
-- MFVec3f \[in, out\] [displacements](#mfvec3f-in-out-displacements--)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFString | \[in, out\] | [name](#sfstring-in-out-name-) | "" |
+| SFFloat | \[in, out\] | [weight](#sffloat-in-out-weight-0--) | 0  |
+| MFInt32 | \[in, out\] | [coordIndex](#mfint32-in-out-coordindex---0-or--1) | \[ \] |
+| MFVec3f | \[in, out\] | [displacements](#mfvec3f-in-out-displacements--) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

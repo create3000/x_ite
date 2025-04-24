@@ -28,14 +28,16 @@ The GeoPositionInterpolator node belongs to the **Geospatial** component and req
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
-- SFFloat \[in\] [set_fraction](#sffloat-in-set_fraction--)
-- MFFloat \[in, out\] [key](#mffloat-in-out-key----)
-- MFVec3d \[in, out\] [keyValue](#mfvec3d-in-out-keyvalue--)
-- SFVec3f \[out\] [value_changed](#sfvec3f-out-value_changed)
-- SFVec3d \[out\] [geovalue_changed](#sfvec3d-out-geovalue_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFNode | \[ \] | [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated) | NULL  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| SFFloat | \[in\] | [set_fraction](#sffloat-in-set_fraction--) |  |
+| MFFloat | \[in, out\] | [key](#mffloat-in-out-key----) | \[ \] |
+| MFVec3d | \[in, out\] | [keyValue](#mfvec3d-in-out-keyvalue--) | \[ \] |
+| SFVec3f | \[out\] | [value_changed](#sfvec3f-out-value_changed) |  |
+| SFVec3d | \[out\] | [geovalue_changed](#sfvec3d-out-geovalue_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -27,15 +27,17 @@ The ConeEmitter node belongs to the **ParticleSystems** component and requires a
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [on](#sfbool-in-out-on-true)
-- SFVec3f \[in, out\] [position](#sfvec3f-in-out-position-0-0-0--)
-- SFVec3f \[in, out\] [direction](#sfvec3f-in-out-direction-0-1-0--)
-- SFFloat \[in, out\] [angle](#sffloat-in-out-angle-4-0-)
-- SFFloat \[in, out\] [speed](#sffloat-in-out-speed-0-0)
-- SFFloat \[in, out\] [variation](#sffloat-in-out-variation-025-0)
-- SFFloat \[in, out\] [mass](#sffloat-in-out-mass-0-0)
-- SFFloat \[in, out\] [surfaceArea](#sffloat-in-out-surfacearea-0-0)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [on](#sfbool-in-out-on-true) | TRUE |
+| SFVec3f | \[in, out\] | [position](#sfvec3f-in-out-position-0-0-0--) | 0 0 0  |
+| SFVec3f | \[in, out\] | [direction](#sfvec3f-in-out-direction-0-1-0--) | 0 1 0  |
+| SFFloat | \[in, out\] | [angle](#sffloat-in-out-angle-4-0-) | π/4  |
+| SFFloat | \[in, out\] | [speed](#sffloat-in-out-speed-0-0) | 0  |
+| SFFloat | \[in, out\] | [variation](#sffloat-in-out-variation-025-0) | 0 |
+| SFFloat | \[in, out\] | [mass](#sffloat-in-out-mass-0-0) | 0  |
+| SFFloat | \[in, out\] | [surfaceArea](#sffloat-in-out-surfacearea-0-0) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

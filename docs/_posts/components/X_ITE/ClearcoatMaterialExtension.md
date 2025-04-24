@@ -30,15 +30,17 @@ The ClearcoatMaterialExtension node belongs to the **X_ITE** component and requi
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFFloat \[in, out\] [clearcoat](#sffloat-in-out-clearcoat-0-0)
-- SFString \[in, out\] [clearcoatTextureMapping](#sfstring-in-out-clearcoattexturemapping-)
-- SFNode \[in, out\] [clearcoatTexture](#sfnode-in-out-clearcoattexture-null-x3dsingletexturenode)
-- SFFloat \[in, out\] [clearcoatRoughness](#sffloat-in-out-clearcoatroughness-0-0)
-- SFString \[in, out\] [clearcoatRoughnessTextureMapping](#sfstring-in-out-clearcoatroughnesstexturemapping-)
-- SFNode \[in, out\] [clearcoatRoughnessTexture](#sfnode-in-out-clearcoatroughnesstexture-null-x3dsingletexturenode)
-- SFString \[in, out\] [clearcoatNormalTextureMapping](#sfstring-in-out-clearcoatnormaltexturemapping-)
-- SFNode \[in, out\] [clearcoatNormalTexture](#sfnode-in-out-clearcoatnormaltexture-null-x3dsingletexturenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFFloat | \[in, out\] | [clearcoat](#sffloat-in-out-clearcoat-0-0) | 0  |
+| SFString | \[in, out\] | [clearcoatTextureMapping](#sfstring-in-out-clearcoattexturemapping-) | "" |
+| SFNode | \[in, out\] | [clearcoatTexture](#sfnode-in-out-clearcoattexture-null-x3dsingletexturenode) | NULL  |
+| SFFloat | \[in, out\] | [clearcoatRoughness](#sffloat-in-out-clearcoatroughness-0-0) | 0  |
+| SFString | \[in, out\] | [clearcoatRoughnessTextureMapping](#sfstring-in-out-clearcoatroughnesstexturemapping-) | "" |
+| SFNode | \[in, out\] | [clearcoatRoughnessTexture](#sfnode-in-out-clearcoatroughnesstexture-null-x3dsingletexturenode) | NULL  |
+| SFString | \[in, out\] | [clearcoatNormalTextureMapping](#sfstring-in-out-clearcoatnormaltexturemapping-) | "" |
+| SFNode | \[in, out\] | [clearcoatNormalTexture](#sfnode-in-out-clearcoatnormaltexture-null-x3dsingletexturenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

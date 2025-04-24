@@ -29,16 +29,18 @@ The PositionDamper2D node belongs to the **Followers** component and requires at
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFVec2f \[in\] [set_value](#sfvec2f-in-set_value--)
-- SFVec2f \[in\] [set_destination](#sfvec2f-in-set_destination--)
-- SFVec2f \[ \] [initialValue](#sfvec2f---initialvalue-0-0--)
-- SFVec2f \[ \] [initialDestination](#sfvec2f---initialdestination-0-0--)
-- SFInt32 \[ \] [order](#sfint32---order-3-05)
-- SFTime \[in, out\] [tau](#sftime-in-out-tau-03-0)
-- SFFloat \[in, out\] [tolerance](#sffloat-in-out-tolerance--1--1-or-0)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFVec2f \[out\] [value_changed](#sfvec2f-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFVec2f | \[in\] | [set_value](#sfvec2f-in-set_value--) |  |
+| SFVec2f | \[in\] | [set_destination](#sfvec2f-in-set_destination--) |  |
+| SFVec2f | \[ \] | [initialValue](#sfvec2f---initialvalue-0-0--) | 0 0  |
+| SFVec2f | \[ \] | [initialDestination](#sfvec2f---initialdestination-0-0--) | 0 0  |
+| SFInt32 | \[ \] | [order](#sfint32---order-3-05) | 3  |
+| SFTime | \[in, out\] | [tau](#sftime-in-out-tau-03-0) | 0 |
+| SFFloat | \[in, out\] | [tolerance](#sffloat-in-out-tolerance--1--1-or-0) | -1  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFVec2f | \[out\] | [value_changed](#sfvec2f-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

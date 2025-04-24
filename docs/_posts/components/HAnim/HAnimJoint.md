@@ -28,28 +28,30 @@ The HAnimJoint node belongs to the **HAnim** component and requires at least sup
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFString \[in, out\] [name](#sfstring-in-out-name-)
-- SFVec3f \[in, out\] [translation](#sfvec3f-in-out-translation-0-0-0--)
-- SFRotation \[in, out\] [rotation](#sfrotation-in-out-rotation-0-0-1-0---or--1-1)
-- SFVec3f \[in, out\] [scale](#sfvec3f-in-out-scale-1-1-1-0)
-- SFRotation \[in, out\] [scaleOrientation](#sfrotation-in-out-scaleorientation-0-0-1-0---or--1-1)
-- SFVec3f \[in, out\] [center](#sfvec3f-in-out-center-0-0-0--)
-- MFFloat \[in, out\] [llimit](#mffloat-in-out-llimit--0-0-0---)
-- MFFloat \[in, out\] [ulimit](#mffloat-in-out-ulimit--0-0-0---)
-- SFRotation \[in, out\] [limitOrientation](#sfrotation-in-out-limitorientation-0-0-1-0---or--1-1)
-- MFFloat \[in, out\] [stiffness](#mffloat-in-out-stiffness--0-0-0--0-1)
-- MFInt32 \[in, out\] [skinCoordIndex](#mfint32-in-out-skincoordindex---0)
-- MFFloat \[in, out\] [skinCoordWeight](#mffloat-in-out-skincoordweight--)
-- MFNode \[in, out\] [displacers](#mfnode-in-out-displacers---hanimdisplacer)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
-- MFNode \[in\] [addChildren](#mfnode-in-addchildren)
-- MFNode \[in\] [removeChildren](#mfnode-in-removechildren)
-- MFNode \[in, out\] [children](#mfnode-in-out-children---hanimjoint-hanimsegment-hanimsite)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFString | \[in, out\] | [name](#sfstring-in-out-name-) | "" |
+| SFVec3f | \[in, out\] | [translation](#sfvec3f-in-out-translation-0-0-0--) | 0 0 0  |
+| SFRotation | \[in, out\] | [rotation](#sfrotation-in-out-rotation-0-0-1-0---or--1-1) | 0 0 1 0  |
+| SFVec3f | \[in, out\] | [scale](#sfvec3f-in-out-scale-1-1-1-0) | 1 1 1  |
+| SFRotation | \[in, out\] | [scaleOrientation](#sfrotation-in-out-scaleorientation-0-0-1-0---or--1-1) | 0 0 1 0  |
+| SFVec3f | \[in, out\] | [center](#sfvec3f-in-out-center-0-0-0--) | 0 0 0  |
+| MFFloat | \[in, out\] | [llimit](#mffloat-in-out-llimit--0-0-0---) | \[ 0, 0, 0 \] |
+| MFFloat | \[in, out\] | [ulimit](#mffloat-in-out-ulimit--0-0-0---) | \[ 0, 0, 0 \] |
+| SFRotation | \[in, out\] | [limitOrientation](#sfrotation-in-out-limitorientation-0-0-1-0---or--1-1) | 0 0 1 0  |
+| MFFloat | \[in, out\] | [stiffness](#mffloat-in-out-stiffness--0-0-0--0-1) | \[ 0, 0, 0 \] |
+| MFInt32 | \[in, out\] | [skinCoordIndex](#mfint32-in-out-skincoordindex---0) | \[ \] |
+| MFFloat | \[in, out\] | [skinCoordWeight](#mffloat-in-out-skincoordweight--) | \[ \] |
+| MFNode | \[in, out\] | [displacers](#mfnode-in-out-displacers---hanimdisplacer) | \[ \] |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
+| MFNode | \[in\] | [addChildren](#mfnode-in-addchildren) |  |
+| MFNode | \[in\] | [removeChildren](#mfnode-in-removechildren) |  |
+| MFNode | \[in, out\] | [children](#mfnode-in-out-children---hanimjoint-hanimsegment-hanimsite) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

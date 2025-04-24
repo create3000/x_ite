@@ -29,17 +29,19 @@ The TransformSensor node belongs to the **EnvironmentalSensor** component and re
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFVec3f \[in, out\] [size](#sfvec3f-in-out-size-0-0-0-0)
-- SFVec3f \[in, out\] [center](#sfvec3f-in-out-center-0-0-0--)
-- SFTime \[out\] [enterTime](#sftime-out-entertime)
-- SFTime \[out\] [exitTime](#sftime-out-exittime)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFVec3f \[out\] [position_changed](#sfvec3f-out-position_changed)
-- SFRotation \[out\] [orientation_changed](#sfrotation-out-orientation_changed)
-- SFNode \[in, out\] [targetObject](#sfnode-in-out-targetobject-null-x3dgroupingnodex3dshapenode)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFVec3f | \[in, out\] | [size](#sfvec3f-in-out-size-0-0-0-0) | 0 0 0  |
+| SFVec3f | \[in, out\] | [center](#sfvec3f-in-out-center-0-0-0--) | 0 0 0  |
+| SFTime | \[out\] | [enterTime](#sftime-out-entertime) |  |
+| SFTime | \[out\] | [exitTime](#sftime-out-exittime) |  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFVec3f | \[out\] | [position_changed](#sfvec3f-out-position_changed) |  |
+| SFRotation | \[out\] | [orientation_changed](#sfrotation-out-orientation_changed) |  |
+| SFNode | \[in, out\] | [targetObject](#sfnode-in-out-targetobject-null-x3dgroupingnodex3dshapenode) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

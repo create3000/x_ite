@@ -29,18 +29,20 @@ The PointPickSensor node belongs to the **Picking** component and requires at le
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- MFString \[in, out\] [objectType](#mfstring-in-out-objecttype-all-all-none-terrain-)
-- SFString \[in, out\] [matchCriterion](#sfstring-in-out-matchcriterion-match_any-match_anymatch_everymatch_only_one)
-- SFString \[ \] [intersectionType](#sfstring---intersectiontype-bounds-geometrybounds)
-- SFString \[ \] [sortOrder](#sfstring---sortorder-closest-closestallall_sorted)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- MFVec3f \[out\] [pickedPoint](#mfvec3f-out-pickedpoint)
-- SFNode \[in, out\] [pickingGeometry](#sfnode-in-out-pickinggeometry-null-pointset)
-- MFNode \[in, out\] [pickTarget](#mfnode-in-out-picktarget---x3dgroupingnodex3dshapenodeinline)
-- MFNode \[out\] [pickedGeometry](#mfnode-out-pickedgeometry)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| MFString | \[in, out\] | [objectType](#mfstring-in-out-objecttype-all-all-none-terrain-) | "ALL"  |
+| SFString | \[in, out\] | [matchCriterion](#sfstring-in-out-matchcriterion-match_any-match_anymatch_everymatch_only_one) | "MATCH |
+| SFString | \[ \] | [intersectionType](#sfstring---intersectiontype-bounds-geometrybounds) | "BOUNDS"  |
+| SFString | \[ \] | [sortOrder](#sfstring---sortorder-closest-closestallall_sorted) | "CLOSEST"  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| MFVec3f | \[out\] | [pickedPoint](#mfvec3f-out-pickedpoint) |  |
+| SFNode | \[in, out\] | [pickingGeometry](#sfnode-in-out-pickinggeometry-null-pointset) | NULL  |
+| MFNode | \[in, out\] | [pickTarget](#mfnode-in-out-picktarget---x3dgroupingnodex3dshapenodeinline) | \[ \] |
+| MFNode | \[out\] | [pickedGeometry](#mfnode-out-pickedgeometry) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

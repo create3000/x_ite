@@ -30,12 +30,14 @@ The LocalFog node belongs to the **EnvironmentalEffects** component and requires
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFString \[in, out\] [fogType](#sfstring-in-out-fogtype-linear-linearexponential)
-- SFColor \[in, out\] [color](#sfcolor-in-out-color-1-1-1-0-1)
-- SFFloat \[in, out\] [visibilityStart](#sffloat-in-out-visibilitystart-0-0-small-classbluenon-standard)
-- SFFloat \[in, out\] [visibilityRange](#sffloat-in-out-visibilityrange-0-0--)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFString | \[in, out\] | [fogType](#sfstring-in-out-fogtype-linear-linearexponential) | "LINEAR"  |
+| SFColor | \[in, out\] | [color](#sfcolor-in-out-color-1-1-1-0-1) | 1 1 1  |
+| SFFloat | \[in, out\] | [visibilityStart](#sffloat-in-out-visibilitystart-0-0-small-classbluenon-standard) | 0  |
+| SFFloat | \[in, out\] | [visibilityRange](#sffloat-in-out-visibilityrange-0-0--) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

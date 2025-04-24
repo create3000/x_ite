@@ -30,8 +30,10 @@ The Tangent node belongs to the **Rendering** component and requires at least su
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFVec4f \[in, out\] [vector](#mfvec4f-in-out-vector----1-1)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFVec4f | \[in, out\] | [vector](#mfvec4f-in-out-vector----1-1) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

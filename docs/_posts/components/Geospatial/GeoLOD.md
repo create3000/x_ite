@@ -30,23 +30,25 @@ The GeoLOD node belongs to the **Geospatial** component and requires at least su
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFNode \[ \] [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated)
-- MFString \[ \] [geoSystem](#mfstring---geosystem--gd-we-)
-- MFString \[ \] [rootUrl](#mfstring---rooturl---uri)
-- MFString \[ \] [child1Url](#mfstring---child1url---uri)
-- MFString \[ \] [child2Url](#mfstring---child2url---uri)
-- MFString \[ \] [child3Url](#mfstring---child3url---uri)
-- MFString \[ \] [child4Url](#mfstring---child4url---uri)
-- SFVec3d \[ \] [center](#sfvec3d---center-0-0-0--)
-- SFFloat \[ \] [range](#sffloat---range-10-0)
-- SFInt32 \[out\] [level_changed](#sfint32-out-level_changed)
-- SFBool \[in, out\] [visible](#sfbool-in-out-visible-true)
-- SFBool \[in, out\] [bboxDisplay](#sfbool-in-out-bboxdisplay-false)
-- SFVec3f \[ \] [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1)
-- SFVec3f \[ \] [bboxCenter](#sfvec3f---bboxcenter-0-0-0--)
-- MFNode \[ \] [rootNode](#mfnode---rootnode---x3dchildnode)
-- MFNode \[out\] [children](#mfnode-out-children)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFNode | \[ \] | [geoOrigin](#sfnode---geoorigin-null-geoorigin-deprecated) | NULL  |
+| MFString | \[ \] | [geoSystem](#mfstring---geosystem--gd-we-) | \[ "GD", "WE" \] |
+| MFString | \[ \] | [rootUrl](#mfstring---rooturl---uri) | \[ \] |
+| MFString | \[ \] | [child1Url](#mfstring---child1url---uri) | \[ \] |
+| MFString | \[ \] | [child2Url](#mfstring---child2url---uri) | \[ \] |
+| MFString | \[ \] | [child3Url](#mfstring---child3url---uri) | \[ \] |
+| MFString | \[ \] | [child4Url](#mfstring---child4url---uri) | \[ \] |
+| SFVec3d | \[ \] | [center](#sfvec3d---center-0-0-0--) | 0 0 0  |
+| SFFloat | \[ \] | [range](#sffloat---range-10-0) | 10  |
+| SFInt32 | \[out\] | [level_changed](#sfint32-out-level_changed) |  |
+| SFBool | \[in, out\] | [visible](#sfbool-in-out-visible-true) | TRUE |
+| SFBool | \[in, out\] | [bboxDisplay](#sfbool-in-out-bboxdisplay-false) | FALSE |
+| SFVec3f | \[ \] | [bboxSize](#sfvec3f---bboxsize--1--1--1-0-or-1-1-1) | -1 -1 -1  |
+| SFVec3f | \[ \] | [bboxCenter](#sfvec3f---bboxcenter-0-0-0--) | 0 0 0  |
+| MFNode | \[ \] | [rootNode](#mfnode---rootnode---x3dchildnode) | \[ \] |
+| MFNode | \[out\] | [children](#mfnode-out-children) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

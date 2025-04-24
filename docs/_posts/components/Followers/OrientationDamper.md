@@ -29,16 +29,18 @@ The OrientationDamper node belongs to the **Followers** component and requires a
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFRotation \[in\] [set_value](#sfrotation-in-set_value--1-1-or--)
-- SFRotation \[in\] [set_destination](#sfrotation-in-set_destination--1-1-or--)
-- SFRotation \[ \] [initialValue](#sfrotation---initialvalue-0-1-0-0--1-1-or--)
-- SFRotation \[ \] [initialDestination](#sfrotation---initialdestination-0-1-0-0--1-1-or--)
-- SFInt32 \[ \] [order](#sfint32---order-3-05)
-- SFTime \[in, out\] [tau](#sftime-in-out-tau-03-0)
-- SFFloat \[in, out\] [tolerance](#sffloat-in-out-tolerance--1--1-or-0)
-- SFBool \[out\] [isActive](#sfbool-out-isactive)
-- SFRotation \[out\] [value_changed](#sfrotation-out-value_changed)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFRotation | \[in\] | [set_value](#sfrotation-in-set_value--1-1-or--) |  |
+| SFRotation | \[in\] | [set_destination](#sfrotation-in-set_destination--1-1-or--) |  |
+| SFRotation | \[ \] | [initialValue](#sfrotation---initialvalue-0-1-0-0--1-1-or--) | 0 1 0 0  |
+| SFRotation | \[ \] | [initialDestination](#sfrotation---initialdestination-0-1-0-0--1-1-or--) | 0 1 0 0  |
+| SFInt32 | \[ \] | [order](#sfint32---order-3-05) | 3  |
+| SFTime | \[in, out\] | [tau](#sftime-in-out-tau-03-0) | 0 |
+| SFFloat | \[in, out\] | [tolerance](#sffloat-in-out-tolerance--1--1-or-0) | -1  |
+| SFBool | \[out\] | [isActive](#sfbool-out-isactive) |  |
+| SFRotation | \[out\] | [value_changed](#sfrotation-out-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

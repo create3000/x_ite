@@ -31,21 +31,23 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFBool \[in, out\] [global](#sfbool-in-out-global-false)
-- SFBool \[in, out\] [on](#sfbool-in-out-on-true)
-- SFColor \[in, out\] [color](#sfcolor-in-out-color-1-1-1-0-1)
-- SFFloat \[in, out\] [intensity](#sffloat-in-out-intensity-1-0)
-- SFFloat \[in, out\] [ambientIntensity](#sffloat-in-out-ambientintensity-0-0-1)
-- SFRotation \[in, out\] [rotation](#sfrotation-in-out-rotation-0-0-1-0--1-1-or--)
-- MFFloat \[in, out\] [diffuseCoefficients](#mffloat-in-out-diffusecoefficients--)
-- SFNode \[in, out\] [diffuseTexture](#sfnode-in-out-diffusetexture-null-x3denvironmenttexturenode)
-- SFNode \[in, out\] [specularTexture](#sfnode-in-out-speculartexture-null-x3denvironmenttexturenode)
-- SFBool \[in, out\] [shadows](#sfbool-in-out-shadows-false)
-- SFColor \[in, out\] [shadowColor](#sfcolor-in-out-shadowcolor-0-0-0-0-1-small-classbluenon-standard)
-- SFFloat \[in, out\] [shadowIntensity](#sffloat-in-out-shadowintensity-1-0-1)
-- SFFloat \[in, out\] [shadowBias](#sffloat-in-out-shadowbias-0005-0-1-small-classbluenon-standard)
-- SFInt32 \[ \] [shadowMapSize](#sfint32---shadowmapsize-1024-0-small-classbluenon-standard)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFBool | \[in, out\] | [global](#sfbool-in-out-global-false) | FALSE |
+| SFBool | \[in, out\] | [on](#sfbool-in-out-on-true) | TRUE |
+| SFColor | \[in, out\] | [color](#sfcolor-in-out-color-1-1-1-0-1) | 1 1 1  |
+| SFFloat | \[in, out\] | [intensity](#sffloat-in-out-intensity-1-0) | 1  |
+| SFFloat | \[in, out\] | [ambientIntensity](#sffloat-in-out-ambientintensity-0-0-1) | 0  |
+| SFRotation | \[in, out\] | [rotation](#sfrotation-in-out-rotation-0-0-1-0--1-1-or--) | 0 0 1 0  |
+| MFFloat | \[in, out\] | [diffuseCoefficients](#mffloat-in-out-diffusecoefficients--) | \[ \] |
+| SFNode | \[in, out\] | [diffuseTexture](#sfnode-in-out-diffusetexture-null-x3denvironmenttexturenode) | NULL  |
+| SFNode | \[in, out\] | [specularTexture](#sfnode-in-out-speculartexture-null-x3denvironmenttexturenode) | NULL  |
+| SFBool | \[in, out\] | [shadows](#sfbool-in-out-shadows-false) | FALSE |
+| SFColor | \[in, out\] | [shadowColor](#sfcolor-in-out-shadowcolor-0-0-0-0-1-small-classbluenon-standard) | 0 0 0  |
+| SFFloat | \[in, out\] | [shadowIntensity](#sffloat-in-out-shadowintensity-1-0-1) | 1  |
+| SFFloat | \[in, out\] | [shadowBias](#sffloat-in-out-shadowbias-0005-0-1-small-classbluenon-standard) | 0 |
+| SFInt32 | \[ \] | [shadowMapSize](#sfint32---shadowmapsize-1024-0-small-classbluenon-standard) | 1024  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

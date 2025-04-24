@@ -29,26 +29,28 @@ The TextureProjectorParallel node belongs to the **TextureProjection** component
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [global](#sfbool-in-out-global-true)
-- SFBool \[in, out\] [on](#sfbool-in-out-on-true)
-- SFColor \[in, out\] [color](#sfcolor-in-out-color-1-1-1-0-1)
-- SFFloat \[in, out\] [intensity](#sffloat-in-out-intensity-1-0)
-- SFFloat \[in, out\] [ambientIntensity](#sffloat-in-out-ambientintensity-0-0-1)
-- SFVec3f \[in, out\] [location](#sfvec3f-in-out-location-0-0-0--)
-- SFVec3f \[in, out\] [direction](#sfvec3f-in-out-direction-0-0-1--)
-- SFVec3f \[in, out\] [upVector](#sfvec3f-in-out-upvector-0-0-1--)
-- SFVec4f \[in, out\] [fieldOfView](#sfvec4f-in-out-fieldofview--1--1-1-1--)
-- SFFloat \[in, out\] [nearDistance](#sffloat-in-out-neardistance--1--1-or-0)
-- SFFloat \[in, out\] [farDistance](#sffloat-in-out-fardistance--1--1-or-0)
-- SFFloat \[out\] [aspectRatio](#sffloat-out-aspectratio)
-- SFNode \[in, out\] [texture](#sfnode-in-out-texture-null-x3dtexture2dnode)
-- SFBool \[in, out\] [shadows](#sfbool-in-out-shadows-false)
-- SFColor \[in, out\] [shadowColor](#sfcolor-in-out-shadowcolor-0-0-0-0-1-small-classbluenon-standard)
-- SFFloat \[in, out\] [shadowIntensity](#sffloat-in-out-shadowintensity-1-0-1)
-- SFFloat \[in, out\] [shadowBias](#sffloat-in-out-shadowbias-0005-0-1-small-classbluenon-standard)
-- SFInt32 \[ \] [shadowMapSize](#sfint32---shadowmapsize-1024-0-small-classbluenon-standard)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [global](#sfbool-in-out-global-true) | TRUE |
+| SFBool | \[in, out\] | [on](#sfbool-in-out-on-true) | TRUE |
+| SFColor | \[in, out\] | [color](#sfcolor-in-out-color-1-1-1-0-1) | 1 1 1  |
+| SFFloat | \[in, out\] | [intensity](#sffloat-in-out-intensity-1-0) | 1  |
+| SFFloat | \[in, out\] | [ambientIntensity](#sffloat-in-out-ambientintensity-0-0-1) | 0  |
+| SFVec3f | \[in, out\] | [location](#sfvec3f-in-out-location-0-0-0--) | 0 0 0  |
+| SFVec3f | \[in, out\] | [direction](#sfvec3f-in-out-direction-0-0-1--) | 0 0 1  |
+| SFVec3f | \[in, out\] | [upVector](#sfvec3f-in-out-upvector-0-0-1--) | 0 0 1  |
+| SFVec4f | \[in, out\] | [fieldOfView](#sfvec4f-in-out-fieldofview--1--1-1-1--) | -1 -1 1 1  |
+| SFFloat | \[in, out\] | [nearDistance](#sffloat-in-out-neardistance--1--1-or-0) | -1  |
+| SFFloat | \[in, out\] | [farDistance](#sffloat-in-out-fardistance--1--1-or-0) | -1  |
+| SFFloat | \[out\] | [aspectRatio](#sffloat-out-aspectratio) |  |
+| SFNode | \[in, out\] | [texture](#sfnode-in-out-texture-null-x3dtexture2dnode) | NULL  |
+| SFBool | \[in, out\] | [shadows](#sfbool-in-out-shadows-false) | FALSE |
+| SFColor | \[in, out\] | [shadowColor](#sfcolor-in-out-shadowcolor-0-0-0-0-1-small-classbluenon-standard) | 0 0 0  |
+| SFFloat | \[in, out\] | [shadowIntensity](#sffloat-in-out-shadowintensity-1-0-1) | 1  |
+| SFFloat | \[in, out\] | [shadowBias](#sffloat-in-out-shadowbias-0005-0-1-small-classbluenon-standard) | 0 |
+| SFInt32 | \[ \] | [shadowMapSize](#sfint32---shadowmapsize-1024-0-small-classbluenon-standard) | 1024  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

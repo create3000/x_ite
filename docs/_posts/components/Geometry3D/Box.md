@@ -27,9 +27,11 @@ The Box node belongs to the **Geometry3D** component and requires at least suppo
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFVec3f \[ \] [size](#sfvec3f---size-2-2-2-0)
-- SFBool \[ \] [solid](#sfbool---solid-true)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFVec3f | \[ \] | [size](#sfvec3f---size-2-2-2-0) | 2 2 2  |
+| SFBool | \[ \] | [solid](#sfbool---solid-true) | TRUE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

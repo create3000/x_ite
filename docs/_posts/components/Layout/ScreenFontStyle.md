@@ -27,16 +27,18 @@ The ScreenFontStyle node belongs to the **Layout** component and requires at lea
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [language](#sfstring-in-out-language-)
-- MFString \[in, out\] [family](#mfstring-in-out-family-serif-string-or-uri)
-- SFString \[in, out\] [style](#sfstring-in-out-style-plain-plainbolditalicbolditalic)
-- SFFloat \[in, out\] [pointSize](#sffloat-in-out-pointsize-12-0)
-- SFFloat \[in, out\] [spacing](#sffloat-in-out-spacing-1-0)
-- SFBool \[in, out\] [horizontal](#sfbool-in-out-horizontal-true)
-- SFBool \[in, out\] [leftToRight](#sfbool-in-out-lefttoright-true)
-- SFBool \[in, out\] [topToBottom](#sfbool-in-out-toptobottom-true)
-- MFString \[in, out\] [justify](#mfstring-in-out-justify-begin-begin-end-first-middle-)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [language](#sfstring-in-out-language-) | "" |
+| MFString | \[in, out\] | [family](#mfstring-in-out-family-serif-string-or-uri) | "SERIF"  |
+| SFString | \[in, out\] | [style](#sfstring-in-out-style-plain-plainbolditalicbolditalic) | "PLAIN"  |
+| SFFloat | \[in, out\] | [pointSize](#sffloat-in-out-pointsize-12-0) | 12  |
+| SFFloat | \[in, out\] | [spacing](#sffloat-in-out-spacing-1-0) | 1  |
+| SFBool | \[in, out\] | [horizontal](#sfbool-in-out-horizontal-true) | TRUE |
+| SFBool | \[in, out\] | [leftToRight](#sfbool-in-out-lefttoright-true) | TRUE |
+| SFBool | \[in, out\] | [topToBottom](#sfbool-in-out-toptobottom-true) | TRUE |
+| MFString | \[in, out\] | [justify](#mfstring-in-out-justify-begin-begin-end-first-middle-) | "BEGIN"  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

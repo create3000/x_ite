@@ -28,9 +28,11 @@ The WorldInfo node belongs to the **Core** component and requires at least suppo
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [title](#sfstring-in-out-title-)
-- MFString \[in, out\] [info](#mfstring-in-out-info--)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [title](#sfstring-in-out-title-) | "" |
+| MFString | \[in, out\] | [info](#mfstring-in-out-info--) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

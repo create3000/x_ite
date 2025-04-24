@@ -29,10 +29,12 @@ The MetadataInteger node belongs to the **Core** component and requires at least
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [name](#sfstring-in-out-name-)
-- SFString \[in, out\] [reference](#sfstring-in-out-reference-)
-- MFInt32 \[in, out\] [value](#mfint32-in-out-value--)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [name](#sfstring-in-out-name-) | "" |
+| SFString | \[in, out\] | [reference](#sfstring-in-out-reference-) | "" |
+| MFInt32 | \[in, out\] | [value](#mfint32-in-out-value--) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

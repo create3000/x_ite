@@ -29,11 +29,13 @@ The GeneratedCubeMapTexture node belongs to the **CubeMapTexturing** component a
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFString \[in, out\] [update](#sfstring-in-out-update-none-nonenext_frame_onlyalways)
-- SFInt32 \[ \] [size](#sfint32---size-128-0)
-- SFNode \[ \] [textureProperties](#sfnode---textureproperties-null-textureproperties)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFString | \[in, out\] | [update](#sfstring-in-out-update-none-nonenext_frame_onlyalways) | "NONE"  |
+| SFInt32 | \[ \] | [size](#sfint32---size-128-0) | 128  |
+| SFNode | \[ \] | [textureProperties](#sfnode---textureproperties-null-textureproperties) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -26,15 +26,17 @@ The NurbsTextureCoordinate node belongs to the **NURBS** component and requires 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFInt32 \[ \] [uOrder](#sfint32---uorder-3-2)
-- SFInt32 \[ \] [vOrder](#sfint32---vorder-3-2)
-- SFInt32 \[ \] [uDimension](#sfint32---udimension-0-0)
-- SFInt32 \[ \] [vDimension](#sfint32---vdimension-0-0)
-- MFDouble \[ \] [uKnot](#mfdouble---uknot----)
-- MFDouble \[ \] [vKnot](#mfdouble---vknot----)
-- MFDouble \[in, out\] [weight](#mfdouble-in-out-weight---0)
-- MFVec2f \[in, out\] [controlPoint](#mfvec2f-in-out-controlpoint----)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFInt32 | \[ \] | [uOrder](#sfint32---uorder-3-2) | 3  |
+| SFInt32 | \[ \] | [vOrder](#sfint32---vorder-3-2) | 3  |
+| SFInt32 | \[ \] | [uDimension](#sfint32---udimension-0-0) | 0  |
+| SFInt32 | \[ \] | [vDimension](#sfint32---vdimension-0-0) | 0  |
+| MFDouble | \[ \] | [uKnot](#mfdouble---uknot----) | \[ \] |
+| MFDouble | \[ \] | [vKnot](#mfdouble---vknot----) | \[ \] |
+| MFDouble | \[in, out\] | [weight](#mfdouble-in-out-weight---0) | \[ \] |
+| MFVec2f | \[in, out\] | [controlPoint](#mfvec2f-in-out-controlpoint----) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

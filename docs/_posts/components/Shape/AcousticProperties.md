@@ -27,13 +27,15 @@ The AcousticProperties node belongs to the **Shape** component and requires at l
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[in, out\] [description](#sfstring-in-out-description-)
-- SFBool \[in, out\] [enabled](#sfbool-in-out-enabled-true)
-- SFFloat \[in, out\] [diffuse](#sffloat-in-out-diffuse-0-0-1)
-- SFFloat \[in, out\] [specular](#sffloat-in-out-specular-0-0-1)
-- SFFloat \[in, out\] [refraction](#sffloat-in-out-refraction-0-0-1)
-- SFFloat \[in, out\] [absorption](#sffloat-in-out-absorption-0-0-1)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[in, out\] | [description](#sfstring-in-out-description-) | "" |
+| SFBool | \[in, out\] | [enabled](#sfbool-in-out-enabled-true) | TRUE |
+| SFFloat | \[in, out\] | [diffuse](#sffloat-in-out-diffuse-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [specular](#sffloat-in-out-specular-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [refraction](#sffloat-in-out-refraction-0-0-1) | 0  |
+| SFFloat | \[in, out\] | [absorption](#sffloat-in-out-absorption-0-0-1) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

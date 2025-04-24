@@ -28,8 +28,10 @@ The Normal node belongs to the **Rendering** component and requires at least sup
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- MFVec3f \[in, out\] [vector](#mfvec3f-in-out-vector----1-1)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| MFVec3f | \[in, out\] | [vector](#mfvec3f-in-out-vector----1-1) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

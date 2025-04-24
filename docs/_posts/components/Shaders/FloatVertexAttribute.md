@@ -28,10 +28,12 @@ The FloatVertexAttribute node belongs to the **Shaders** component and requires 
 
 ## Fields
 
-- SFNode \[in, out\] [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject)
-- SFString \[ \] [name](#sfstring---name-)
-- SFInt32 \[ \] [numComponents](#sfint32---numcomponents-4-14)
-- MFFloat \[in, out\] [value](#mffloat-in-out-value----)
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | \[in, out\] | [metadata](#sfnode-in-out-metadata-null-x3dmetadataobject) | NULL  |
+| SFString | \[ \] | [name](#sfstring---name-) | "" |
+| SFInt32 | \[ \] | [numComponents](#sfint32---numcomponents-4-14) | 4  |
+| MFFloat | \[in, out\] | [value](#mffloat-in-out-value----) | \[ \] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
