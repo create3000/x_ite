@@ -4,11 +4,15 @@ date: 2025-04-14
 categories: [profiles]
 tags: [Profiles]
 ---
+X3D profiles are predefined feature sets in the X3D standard that group together related components and capabilities. They serve as shortcuts to declare what functionality a particular X3D file requires, making it easier for browsers or tools to know if they support the scene.
+
+## Profile Index
+
 All supported profiles are listed below in alphabetical order with their components and support levels.
 
 <!-- PROFILES BEGIN -->
 
-## CADInterchange
+### CADInterchange
 
 Computer-Aided Design (CAD) interchange
 {: .small }
@@ -24,14 +28,14 @@ Computer-Aided Design (CAD) interchange
 - [Shape](/x_ite/components/overview/#shape) : **2**
 - [Texturing](/x_ite/components/overview/#texturing) : **2**
 
-## Core
+### Core
 
 Core
 {: .small }
 
 - [Core](/x_ite/components/overview/#core) : **1**
 
-## Full
+### Full
 
 Full
 {: .small }
@@ -73,7 +77,7 @@ Full
 - [Time](/x_ite/components/overview/#time) : **2**
 - [VolumeRendering](/x_ite/components/overview/#volumerendering) : **4**
 
-## Immersive
+### Immersive
 
 Immersive
 {: .small }
@@ -99,7 +103,7 @@ Immersive
 - [Texturing](/x_ite/components/overview/#texturing) : **3**
 - [Time](/x_ite/components/overview/#time) : **1**
 
-## Interactive
+### Interactive
 
 Interactive
 {: .small }
@@ -121,7 +125,7 @@ Interactive
 - [Texturing](/x_ite/components/overview/#texturing) : **2**
 - [Time](/x_ite/components/overview/#time) : **1**
 
-## Interchange
+### Interchange
 
 Interchange
 {: .small }
@@ -139,7 +143,7 @@ Interchange
 - [Texturing](/x_ite/components/overview/#texturing) : **2**
 - [Time](/x_ite/components/overview/#time) : **1**
 
-## MPEG-4
+### MPEG-4
 
 MPEG-4 interactive
 {: .small }
@@ -159,7 +163,7 @@ MPEG-4 interactive
 - [Texturing](/x_ite/components/overview/#texturing) : **1**
 - [Time](/x_ite/components/overview/#time) : **1**
 
-## MedicalInterchange
+### MedicalInterchange
 
 Medical interchange
 {: .small }

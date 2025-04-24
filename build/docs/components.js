@@ -89,7 +89,7 @@ function updateComponents (supported)
 
    for (const [component, nodes] of createIndex ())
    {
-      list += `##${supported ? "#" : ""} ${component}\n\n`;
+      list += `### ${component}\n\n`;
 
       const title = supportedComponents .match (new RegExp (`add\\s\\("${component}".*?title:\\s*"(.*?)"`, "s")) [1]
       const level = supportedComponents .match (new RegExp (`add\\s\\("${component}".*?level:\\s*(\\d)`, "s")) [1];
@@ -186,7 +186,7 @@ function updateProfiles ()
    {
       m = m .match (/add\s*\("(.*?)"/s);
 
-      list += `## ${m [1]}\n\n`;
+      list += `### ${m [1]}\n\n`;
 
       const title = supportedProfiles .match (new RegExp (`add\\s\\("${m [1]}".*?title:\\s*"(.*?)"`, "s")) [1]
 
