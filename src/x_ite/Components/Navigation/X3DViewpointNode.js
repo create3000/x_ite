@@ -622,9 +622,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    traverse (type, renderObject)
    {
-      if (type !== TraverseType .CAMERA)
-         return;
-
       // Handle NavigationInfo node.
 
       this .navigationInfoNode ?.traverse (type, renderObject);

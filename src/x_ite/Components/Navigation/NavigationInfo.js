@@ -308,9 +308,6 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    },
    traverse (type, renderObject)
    {
-      if (type !== TraverseType .CAMERA)
-         return;
-
       renderObject .getLayer () .getNavigationInfos () .push (this);
    }
 });

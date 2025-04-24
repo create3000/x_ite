@@ -79,9 +79,6 @@ Object .assign (Object .setPrototypeOf (Fog .prototype, X3DBindableNode .prototy
    },
    traverse (type, renderObject)
    {
-      if (type !== TraverseType .CAMERA)
-         return;
-
       renderObject .getLayer () .getFogs () .push (this);
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());

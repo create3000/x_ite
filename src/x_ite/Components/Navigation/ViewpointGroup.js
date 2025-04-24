@@ -154,12 +154,12 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
    {
       const proximitySensor = this .proximitySensor;
 
+      proximitySensor .traverse (type, renderObject);
+
       switch (type)
       {
          case TraverseType .CAMERA:
          {
-            proximitySensor .traverse (type, renderObject);
-
             renderObject .getViewpointGroups () .push (this);
 
             for (const cameraObject of this .cameraObjects)
@@ -170,8 +170,6 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
          }
          case TraverseType .DISPLAY:
          {
-            proximitySensor .traverse (type, renderObject);
-
             if (proximitySensor ._isActive .getValue () || !proximitySensor ._enabled .getValue ())
             {
                for (const viewpointGroup of this .viewpointGroups)
