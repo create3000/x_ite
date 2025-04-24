@@ -351,7 +351,7 @@ sub fields_list {
 
       if ($file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/)
       {
-         $text = "| $1 | $2 | [$name](#field-$name) | $3 |";
+         $text = "| $1 | $2 | [$name](#fields-$name) | $3 |";
 
          $fields -> {$name} = $text;
       }
@@ -553,7 +553,7 @@ sub update_field {
    # print "'$string'";
 
    $file =~ s/(###.*?\*\*$name\*\*.*?\n).*?\n((?:###|##)\s+)/$1$string$2/s if $string;
-   $file =~ s/(###.*?\*\*$name\*\*.*?\n)(?:\{:.*?\}\n)?/$1\{: \#field-$name \}\n/s;
+   $file =~ s/(###.*?\*\*$name\*\*.*?\n)(?:\{:.*?\}\n)?/$1\{: \#fields-$name \}\n/s;
 
    return $file;
 }

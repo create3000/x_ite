@@ -31,38 +31,38 @@ The BufferAudioSource node belongs to the **Sound** component and requires at le
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFBool | [in, out] | [load](#field-load) | TRUE |
-| MFString | [in, out] | [url](#field-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#field-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#field-autoRefreshTimeLimit) | 3600  |
-| SFInt32 | [in, out] | [numberOfChannels](#field-numberOfChannels) | 0  |
-| SFFloat | [in, out] | [sampleRate](#field-sampleRate) | 0  |
-| SFInt32 | [in, out] | [bufferLength](#field-bufferLength) |  |
-| MFFloat | [in, out] | [buffer](#field-buffer) | [ ] |
-| SFTime | [out] | [bufferDuration](#field-bufferDuration) | 0  |
-| SFFloat | [in, out] | [gain](#field-gain) | 1  |
-| SFFloat | [in, out] | [detune](#field-detune) | 0  |
-| SFFloat | [in, out] | [playbackRate](#field-playbackRate) | 1  |
-| SFTime | [in, out] | [loopStart](#field-loopStart) | 0  |
-| SFTime | [in, out] | [loopEnd](#field-loopEnd) | 0  |
-| SFInt32 | [in, out] | [channelCount](#field-channelCount) |  |
-| SFString | [in, out] | [channelCountMode](#field-channelCountMode) | "MAX"  |
-| SFString | [in, out] | [channelInterpretation](#field-channelInterpretation) | "SPEAKERS"  |
-| SFBool | [in, out] | [loop](#field-loop) | FALSE |
-| SFTime | [in, out] | [startTime](#field-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#field-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#field-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#field-stopTime) | 0  |
-| SFBool | [out] | [isPaused](#field-isPaused) |  |
-| SFBool | [out] | [isActive](#field-isActive) |  |
-| SFTime | [out] | [elapsedTime](#field-elapsedTime) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFBool | [in, out] | [load](#fields-load) | TRUE |
+| MFString | [in, out] | [url](#fields-url) | [ ] |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFInt32 | [in, out] | [numberOfChannels](#fields-numberOfChannels) | 0  |
+| SFFloat | [in, out] | [sampleRate](#fields-sampleRate) | 0  |
+| SFInt32 | [in, out] | [bufferLength](#fields-bufferLength) |  |
+| MFFloat | [in, out] | [buffer](#fields-buffer) | [ ] |
+| SFTime | [out] | [bufferDuration](#fields-bufferDuration) | 0  |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
+| SFFloat | [in, out] | [detune](#fields-detune) | 0  |
+| SFFloat | [in, out] | [playbackRate](#fields-playbackRate) | 1  |
+| SFTime | [in, out] | [loopStart](#fields-loopStart) | 0  |
+| SFTime | [in, out] | [loopEnd](#fields-loopEnd) | 0  |
+| SFInt32 | [in, out] | [channelCount](#fields-channelCount) |  |
+| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX"  |
+| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS"  |
+| SFBool | [in, out] | [loop](#fields-loop) | FALSE |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFBool | [out] | [isPaused](#fields-isPaused) |  |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -71,7 +71,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -80,12 +80,12 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFBool [in, out] **load** TRUE
-{: #field-load }
+{: #fields-load }
 
 *load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
@@ -95,7 +95,7 @@ Enables/disables node operation.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
-{: #field-url }
+{: #fields-url }
 
 Location and filename of sound file. Support for .wav format is required, .midi format is recommended, other formats are optional.
 
@@ -111,7 +111,7 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
-{: #field-autoRefresh }
+{: #fields-autoRefresh }
 
 *autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
@@ -125,7 +125,7 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
-{: #field-autoRefreshTimeLimit }
+{: #fields-autoRefreshTimeLimit }
 
 *autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
@@ -138,12 +138,12 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
-{: #field-numberOfChannels }
+{: #fields-numberOfChannels }
 
 *numberOfChannels* is number of audio channels found in this buffer source.
 
 ### SFFloat [in, out] **sampleRate** 0 <small>[0,∞)</small>
-{: #field-sampleRate }
+{: #fields-sampleRate }
 
 *sampleRate* field is sample-frames per second.
 
@@ -154,12 +154,12 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 - [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency)
 
 ### SFInt32 [in, out] **bufferLength**
-{: #field-bufferLength }
+{: #fields-bufferLength }
 
 *bufferLength* is length of buffer field in sample-frames.
 
 ### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
-{: #field-buffer }
+{: #fields-buffer }
 
 *buffer* is a memory-resident audio asset that can contain one or more channels. *buffer* data format is non-interleaved 32-bit floating-point linear PCM values with a normal range of [−1,1], but values are not limited to this range.
 
@@ -168,7 +168,7 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 - [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation)
 
 ### SFTime [out] **bufferDuration** 0 <small>[0,∞)</small>
-{: #field-bufferDuration }
+{: #fields-bufferDuration }
 
 *bufferDuration* is duration in seconds to use from buffer field.
 
@@ -177,7 +177,7 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 - Duration is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
-{: #field-gain }
+{: #fields-gain }
 
 The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
@@ -190,7 +190,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - Decibel values shall not be used.
 
 ### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
-{: #field-detune }
+{: #fields-detune }
 
 The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
 
@@ -199,7 +199,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 - ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
 
 ### SFFloat [in, out] **playbackRate** 1 <small>(-∞,∞)</small>
-{: #field-playbackRate }
+{: #fields-playbackRate }
 
 *playbackRate* field is speed at which to render the audio stream, and forms a compound field together with detune field
 
@@ -208,7 +208,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 - Negative values play in reverse.
 
 ### SFTime [in, out] **loopStart** 0 <small>[0,∞)</small>
-{: #field-loopStart }
+{: #fields-loopStart }
 
 *loopStart* field is optional playhead position where looping begins if loop=true. If *loopStart* is greater than duration of buffer, looping starts at buffer end.
 
@@ -217,7 +217,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 - *loopStart* represents a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFTime [in, out] **loopEnd** 0 <small>[0,∞)</small>
-{: #field-loopEnd }
+{: #fields-loopEnd }
 
 *loopEnd* field is optional playhead position where looping ends if loop=true. If *loopEnd* value is zero, or if *loopEnd* is greater than duration of buffer, looping ends at buffer end.
 
@@ -226,7 +226,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 - *loopEnd* represents a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFInt32 [in, out] **channelCount**
-{: #field-channelCount }
+{: #fields-channelCount }
 
 *channelCount* reports number of channels provided by input nodes.
 
@@ -235,7 +235,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
-{: #field-channelCountMode }
+{: #fields-channelCountMode }
 
 *channelCountMode* determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
 
@@ -244,7 +244,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode)
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
-{: #field-channelInterpretation }
+{: #fields-channelInterpretation }
 
 *channelInterpretation* determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
 
@@ -253,12 +253,12 @@ The *detune* field forms a compound field together with playbackRate that togeth
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
 
 ### SFBool [in, out] **loop** FALSE
-{: #field-loop }
+{: #fields-loop }
 
 Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
-{: #field-startTime }
+{: #fields-startTime }
 
 Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -267,7 +267,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
-{: #field-resumeTime }
+{: #fields-resumeTime }
 
 When *resumeTime* becomes \<= time now, isPaused becomes false and [AudioClip](/x_ite/components/sound/audioclip/) becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -276,7 +276,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and [AudioClip](/
 - ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
-{: #field-pauseTime }
+{: #fields-pauseTime }
 
 When time now \>= *pauseTime*, isPaused becomes true and [AudioClip](/x_ite/components/sound/audioclip/) becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -285,7 +285,7 @@ When time now \>= *pauseTime*, isPaused becomes true and [AudioClip](/x_ite/comp
 - ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
-{: #field-stopTime }
+{: #fields-stopTime }
 
 Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -299,7 +299,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - An active [TimeSensor](/x_ite/components/time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
-{: #field-isPaused }
+{: #fields-isPaused }
 
 *isPaused* true/false events are sent when [AudioClip](/x_ite/components/sound/audioclip/) is paused/resumed.
 
@@ -308,7 +308,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
-{: #field-isActive }
+{: #fields-isActive }
 
 *isActive* true/false events are sent when playback starts/stops.
 
@@ -317,7 +317,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **elapsedTime**
-{: #field-elapsedTime }
+{: #fields-elapsedTime }
 
 Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activated/running, cumulative in seconds, and not counting any paused time.
 

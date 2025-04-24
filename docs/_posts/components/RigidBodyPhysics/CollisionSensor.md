@@ -30,17 +30,17 @@ The CollisionSensor node belongs to the **RigidBodyPhysics** component and requi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFBool | [out] | [isActive](#field-isActive) |  |
-| MFNode | [out] | [intersections](#field-intersections) |  |
-| MFNode | [out] | [contacts](#field-contacts) |  |
-| SFNode | [in, out] | [collider](#field-collider) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| MFNode | [out] | [intersections](#fields-intersections) |  |
+| MFNode | [out] | [contacts](#fields-contacts) |  |
+| SFNode | [in, out] | [collider](#fields-collider) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -49,7 +49,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the node.
 
@@ -58,12 +58,12 @@ Author-provided prose that describes intended purpose of the node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFBool [out] **isActive**
-{: #field-isActive }
+{: #fields-isActive }
 
 *isActive* true/false events are sent when sensing starts/stops.
 
@@ -72,17 +72,17 @@ Enables/disables node operation.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### MFNode [out] **intersections** <small>[X3DNBodyCollidableNode]</small>
-{: #field-intersections }
+{: #fields-intersections }
 
 Output field *intersections*.
 
 ### MFNode [out] **contacts** <small>[Contact]</small>
-{: #field-contacts }
+{: #fields-contacts }
 
 Output field *contacts*.
 
 ### SFNode [in, out] **collider** NULL <small>[CollisionCollection]</small>
-{: #field-collider }
+{: #fields-collider }
 
 The *collider* field specifies a [CollisionCollection](/x_ite/components/rigidbodyphysics/collisioncollection/) node that holds a collidables field of nodes and spaces that are to be included in collision-detection computations.
 

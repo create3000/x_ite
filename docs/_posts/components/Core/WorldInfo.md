@@ -30,13 +30,13 @@ The WorldInfo node belongs to the **Core** component and requires at least suppo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [title](#field-title) | "" |
-| MFString | [in, out] | [info](#field-info) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [title](#fields-title) | "" |
+| MFString | [in, out] | [info](#fields-info) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -45,7 +45,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **title** ""
-{: #field-title }
+{: #fields-title }
 
 *title* of this world, placed in window *title*.
 
@@ -54,7 +54,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### MFString [in, out] **info** [ ]
-{: #field-info }
+{: #fields-info }
 
 Additional information about this model.
 

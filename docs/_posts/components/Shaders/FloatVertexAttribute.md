@@ -30,14 +30,14 @@ The FloatVertexAttribute node belongs to the **Shaders** component and requires 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [ ] | [name](#field-name) | "" |
-| SFInt32 | [ ] | [numComponents](#field-numComponents) | 4  |
-| MFFloat | [in, out] | [value](#field-value) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [ ] | [name](#fields-name) | "" |
+| SFInt32 | [ ] | [numComponents](#fields-numComponents) | 4  |
+| MFFloat | [in, out] | [value](#fields-value) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -46,7 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [ ] **name** ""
-{: #field-name }
+{: #fields-name }
 
 Required *name* for this particular VertexAttribute instance.
 
@@ -60,7 +60,7 @@ Required *name* for this particular VertexAttribute instance.
 - *name* is not specified if this instance is a USE node.
 
 ### SFInt32 [ ] **numComponents** 4 <small>[1..4]</small>
-{: #field-numComponents }
+{: #fields-numComponents }
 
 *numComponents* specifies how many consecutive floating-point values should be grouped together per vertex.
 
@@ -69,7 +69,7 @@ Required *name* for this particular VertexAttribute instance.
 - The length of the value field shall be a multiple of *numComponents*.
 
 ### MFFloat [in, out] **value** [ ] <small>(-∞,∞)</small>
-{: #field-value }
+{: #fields-value }
 
 *value* specifies an arbitrary collection of floating-point values that will be passed to the shader as per-vertex information.
 

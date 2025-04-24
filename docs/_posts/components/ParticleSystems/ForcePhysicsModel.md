@@ -29,13 +29,13 @@ The ForcePhysicsModel node belongs to the **ParticleSystems** component and requ
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFVec3f | [in, out] | [force](#field-force) | 0 -9.8 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFVec3f | [in, out] | [force](#fields-force) | 0 -9.8 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -44,12 +44,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFVec3f [in, out] **force** 0 -9.8 0 <small>(∞,∞)</small>
-{: #field-force }
+{: #fields-force }
 
 *force* field indicates strength and direction of the propelling *force* on the particles (for example, default is Earth's gravity).
 

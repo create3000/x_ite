@@ -29,17 +29,17 @@ The Cylinder node belongs to the **Geometry3D** component and requires at least 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in, out] | [top](#field-top) | TRUE |
-| SFBool | [in, out] | [side](#field-side) | TRUE |
-| SFBool | [in, out] | [bottom](#field-bottom) | TRUE |
-| SFFloat | [ ] | [height](#field-height) | 2  |
-| SFFloat | [ ] | [radius](#field-radius) | 1  |
-| SFBool | [ ] | [solid](#field-solid) | TRUE |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [top](#fields-top) | TRUE |
+| SFBool | [in, out] | [side](#fields-side) | TRUE |
+| SFBool | [in, out] | [bottom](#fields-bottom) | TRUE |
+| SFFloat | [ ] | [height](#fields-height) | 2  |
+| SFFloat | [ ] | [radius](#fields-radius) | 1  |
+| SFBool | [ ] | [solid](#fields-solid) | TRUE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -48,22 +48,22 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **top** TRUE
-{: #field-top }
+{: #fields-top }
 
 Whether to draw *top* (inside faces are never drawn).
 
 ### SFBool [in, out] **side** TRUE
-{: #field-side }
+{: #fields-side }
 
 Whether to draw sides (inside faces are never drawn).
 
 ### SFBool [in, out] **bottom** TRUE
-{: #field-bottom }
+{: #fields-bottom }
 
 Whether to draw *bottom* (inside faces are never drawn).
 
 ### SFFloat [ ] **height** 2 <small>(0,∞)</small>
-{: #field-height }
+{: #fields-height }
 
 Size in meters.
 
@@ -76,7 +76,7 @@ Size in meters.
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFFloat [ ] **radius** 1 <small>(0,∞)</small>
-{: #field-radius }
+{: #fields-radius }
 
 Size in meters.
 
@@ -89,7 +89,7 @@ Size in meters.
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFBool [ ] **solid** TRUE
-{: #field-solid }
+{: #fields-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 

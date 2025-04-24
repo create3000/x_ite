@@ -33,16 +33,16 @@ The DepthMode node belongs to the **X_ITE** component and its default container 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFVec2f | [in, out] | [polygonOffset](#field-polygonOffset) | 0 0  |
-| SFVec2f | [in, out] | [depthRange](#field-depthRange) | 0 1  |
-| SFBool | [in, out] | [depthTest](#field-depthTest) | TRUE |
-| SFString | [in, out] | [depthFunction](#field-depthFunction) | "LESS |
-| SFBool | [in, out] | [depthMask](#field-depthMask) | TRUE |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFVec2f | [in, out] | [polygonOffset](#fields-polygonOffset) | 0 0  |
+| SFVec2f | [in, out] | [depthRange](#fields-depthRange) | 0 1  |
+| SFBool | [in, out] | [depthTest](#fields-depthTest) | TRUE |
+| SFString | [in, out] | [depthFunction](#fields-depthFunction) | "LESS |
+| SFBool | [in, out] | [depthMask](#fields-depthMask) | TRUE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -51,7 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFVec2f [in, out] **polygonOffset** 0 0 <small>(-∞,∞)</small>
-{: #field-polygonOffset }
+{: #fields-polygonOffset }
 
 Specifies the scale factors and units to calculate depth values.
 
@@ -62,7 +62,7 @@ The first value is *factor*, a GLfloat which sets the scale factor for the varia
 The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0.
 
 ### SFVec2f [in, out] **depthRange** 0 1 <small>[0,1]</small>
-{: #field-depthRange }
+{: #fields-depthRange }
 
 Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.
 
@@ -71,12 +71,12 @@ The first value is *zNear*, a GLclampf specifying the mapping of the near clippi
 The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
 
 ### SFBool [in, out] **depthTest** TRUE
-{: #field-depthTest }
+{: #fields-depthTest }
 
 Activates depth comparisons and updates to the depth buffer.
 
 ### SFString [in, out] **depthFunction** "LESS_EQUAL" <small>["NEVER", "LESS", "EQUAL", "LESS_EQUAL", "GREATER", "NOT_EQUAL", "GREATER_EQUAL", "ALWAYS"]</small>
-{: #field-depthFunction }
+{: #fields-depthFunction }
 
 Specifies a function that compares incoming pixel depth to the current depth buffer value.
 
@@ -92,7 +92,7 @@ Must be one of the following symbolic constants:
 * ALWAYS
 
 ### SFBool [in, out] **depthMask** TRUE
-{: #field-depthMask }
+{: #fields-depthMask }
 
 Sets whether writing into the depth buffer is enabled or disabled.
 

@@ -30,17 +30,17 @@ The BooleanSequencer node belongs to the **EventUtilities** component and requir
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFFloat | [in] | [set_fraction](#field-set_fraction) |  |
-| SFBool | [in] | [previous](#field-previous) |  |
-| SFBool | [in] | [next](#field-next) |  |
-| MFFloat | [in, out] | [key](#field-key) | [ ] |
-| MFBool | [in, out] | [keyValue](#field-keyValue) | [ ] |
-| SFBool | [out] | [value_changed](#field-value_changed) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
+| SFBool | [in] | [previous](#fields-previous) |  |
+| SFBool | [in] | [next](#fields-next) |  |
+| MFFloat | [in, out] | [key](#fields-key) | [ ] |
+| MFBool | [in, out] | [keyValue](#fields-keyValue) | [ ] |
+| SFBool | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -49,7 +49,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
-{: #field-set_fraction }
+{: #fields-set_fraction }
 
 *set_fraction* selects input key for corresponding keyValue output.
 
@@ -62,7 +62,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [in] **previous**
-{: #field-previous }
+{: #fields-previous }
 
 Send *previous* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
 
@@ -75,7 +75,7 @@ Send *previous* output value in keyValue array, and reset internal fraction fiel
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [in] **next**
-{: #field-next }
+{: #fields-next }
 
 Send *next* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
 
@@ -88,7 +88,7 @@ Send *next* output value in keyValue array, and reset internal fraction field to
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
-{: #field-key }
+{: #fields-key }
 
 Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
 
@@ -102,7 +102,7 @@ Definition values for linear-interpolation function input intervals, listed in n
 - Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFBool [in, out] **keyValue** [ ]
-{: #field-keyValue }
+{: #fields-keyValue }
 
 Output values for linear sequencing, each corresponding to an input-fraction value in the key array.
 
@@ -111,7 +111,7 @@ Output values for linear sequencing, each corresponding to an input-fraction val
 - Number of keys must match number of keyValues!
 
 ### SFBool [out] **value_changed**
-{: #field-value_changed }
+{: #fields-value_changed }
 
 Single intermittent output value determined by current key time and corresponding keyValue entry.
 

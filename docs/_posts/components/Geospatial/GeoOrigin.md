@@ -28,14 +28,14 @@ The GeoOrigin node belongs to the **Geospatial** component and requires at least
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| MFString | [ ] | [geoSystem](#field-geoSystem) | [ "GD", "WE" ] |
-| SFVec3d | [in, out] | [geoCoords](#field-geoCoords) | 0 0 0  |
-| SFBool | [ ] | [rotateYUp](#field-rotateYUp) | FALSE |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
+| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0  |
+| SFBool | [ ] | [rotateYUp](#fields-rotateYUp) | FALSE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -44,7 +44,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
-{: #field-geoSystem }
+{: #fields-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 
@@ -59,7 +59,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 - Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
-{: #field-geoCoords }
+{: #fields-geoCoords }
 
 Defines absolute geographic location (and implicit local coordinate frame).
 
@@ -72,7 +72,7 @@ Defines absolute geographic location (and implicit local coordinate frame).
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### SFBool [ ] **rotateYUp** FALSE
-{: #field-rotateYUp }
+{: #fields-rotateYUp }
 
 Whether to rotate coordinates of nodes using this GeoOrigin so that local-up direction aligns with VRML Y axis *rotateYUp* false means local up-direction is relative to planet surface *rotateYUp* true allows proper operation of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) modes FLY, WALK.
 

@@ -29,19 +29,19 @@ The Layer node belongs to the **Layering** component and requires at least suppo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in, out] | [pickable](#field-pickable) | TRUE |
-| MFString | [in, out] | [objectType](#field-objectType) | "ALL"  |
-| SFBool | [in, out] | [pointerEvents](#field-pointerEvents) | TRUE  |
-| SFBool | [in, out] | [visible](#field-visible) | TRUE |
-| SFNode | [in, out] | [viewport](#field-viewport) | NULL  |
-| MFNode | [in] | [addChildren](#field-addChildren) |  |
-| MFNode | [in] | [removeChildren](#field-removeChildren) |  |
-| MFNode | [in, out] | [children](#field-children) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [pickable](#fields-pickable) | TRUE |
+| MFString | [in, out] | [objectType](#fields-objectType) | "ALL"  |
+| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE  |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFNode | [in, out] | [viewport](#fields-viewport) | NULL  |
+| MFNode | [in] | [addChildren](#fields-addChildren) |  |
+| MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -50,12 +50,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **pickable** TRUE
-{: #field-pickable }
+{: #fields-pickable }
 
 *pickable* determines whether pick traversal is performed for this layer.
 
 ### MFString [in, out] **objectType** "ALL" <small>["ALL", "NONE", "TERRAIN", ...]</small>
-{: #field-objectType }
+{: #fields-objectType }
 
 The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a [PickableGroup](/x_ite/components/picking/pickablegroup/) with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field to false.
 
@@ -65,12 +65,12 @@ The *objectType* field specifies a set of labels used in the picking process. Ea
 - MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
-{: #field-pointerEvents }
+{: #fields-pointerEvents }
 
 *pointerEvents* defines whether this Layer becomes target for pointer events.
 
 ### SFBool [in, out] **visible** TRUE
-{: #field-visible }
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -80,22 +80,22 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFNode [in, out] **viewport** NULL <small>[X3DViewportNode]</small>
-{: #field-viewport }
+{: #fields-viewport }
 
 The *viewport* field is a single [Viewport](/x_ite/components/layering/viewport/) node that constrains layer output to a sub-region of the render surface.
 
 ### MFNode [in] **addChildren**
-{: #field-addChildren }
+{: #fields-addChildren }
 
 Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
-{: #field-removeChildren }
+{: #fields-removeChildren }
 
 Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
-{: #field-children }
+{: #fields-children }
 
 Nodes making up this layer.
 

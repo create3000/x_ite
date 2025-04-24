@@ -33,24 +33,24 @@ The TwoSidedMaterial node belongs to the **Shape** component and requires at lea
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in, out] | [separateBackColor](#field-separateBackColor) | FALSE |
-| SFFloat | [in, out] | [ambientIntensity](#field-ambientIntensity) | 0.2  |
-| SFColor | [in, out] | [diffuseColor](#field-diffuseColor) | 0.8 0.8 0.8  |
-| SFColor | [in, out] | [specularColor](#field-specularColor) | 0 0 0  |
-| SFColor | [in, out] | [emissiveColor](#field-emissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [shininess](#field-shininess) | 0.2  |
-| SFFloat | [in, out] | [transparency](#field-transparency) | 0  |
-| SFFloat | [in, out] | [backAmbientIntensity](#field-backAmbientIntensity) | 0.2  |
-| SFColor | [in, out] | [backDiffuseColor](#field-backDiffuseColor) | 0.8 0.8 0.8  |
-| SFColor | [in, out] | [backSpecularColor](#field-backSpecularColor) | 0 0 0  |
-| SFColor | [in, out] | [backEmissiveColor](#field-backEmissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [backShininess](#field-backShininess) | 0.2  |
-| SFFloat | [in, out] | [backTransparency](#field-backTransparency) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [separateBackColor](#fields-separateBackColor) | FALSE |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2  |
+| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8  |
+| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0  |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0  |
+| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2  |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFFloat | [in, out] | [backAmbientIntensity](#fields-backAmbientIntensity) | 0.2  |
+| SFColor | [in, out] | [backDiffuseColor](#fields-backDiffuseColor) | 0.8 0.8 0.8  |
+| SFColor | [in, out] | [backSpecularColor](#fields-backSpecularColor) | 0 0 0  |
+| SFColor | [in, out] | [backEmissiveColor](#fields-backEmissiveColor) | 0 0 0  |
+| SFFloat | [in, out] | [backShininess](#fields-backShininess) | 0.2  |
+| SFFloat | [in, out] | [backTransparency](#fields-backTransparency) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -59,7 +59,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **separateBackColor** FALSE
-{: #field-separateBackColor }
+{: #fields-separateBackColor }
 
 *separateBackColor* determines whether separate [Material](/x_ite/components/shape/material/) values are used for back faces.
 
@@ -68,7 +68,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - Backface [Material](/x_ite/components/shape/material/) values are ignored unless you set *separateBackColor*='true'
 
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
-{: #field-ambientIntensity }
+{: #fields-ambientIntensity }
 
 How much ambient omnidirectional light is reflected from all light sources. Interchange profile
 
@@ -77,7 +77,7 @@ How much ambient omnidirectional light is reflected from all light sources. Inte
 - This field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **diffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
-{: #field-diffuseColor }
+{: #fields-diffuseColor }
 
 How much direct, angle-dependent light is reflected from all light sources.
 
@@ -86,7 +86,7 @@ How much direct, angle-dependent light is reflected from all light sources.
 - Only emissiveColor affects [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/) and [PointSet](/x_ite/components/rendering/pointset/).
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
-{: #field-specularColor }
+{: #fields-specularColor }
 
 Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
 
@@ -95,7 +95,7 @@ Specular highlights are brightness reflections (example: shiny spots on an apple
 - This field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
-{: #field-emissiveColor }
+{: #fields-emissiveColor }
 
 How much glowing light is emitted from this object.
 
@@ -110,7 +110,7 @@ How much glowing light is emitted from this object.
 - Bright *emissiveColor* values can wash out other colors and some textures.
 
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
-{: #field-shininess }
+{: #fields-shininess }
 
 Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
 
@@ -119,7 +119,7 @@ Lower *shininess* values provide soft specular glows, while higher values result
 - This field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
-{: #field-transparency }
+{: #fields-transparency }
 
 How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
 
@@ -128,7 +128,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 - *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ### SFFloat [in, out] **backAmbientIntensity** 0.2 <small>[0,1]</small>
-{: #field-backAmbientIntensity }
+{: #fields-backAmbientIntensity }
 
 How much ambient omnidirectional light is reflected from all light sources. Interchange profile
 
@@ -137,7 +137,7 @@ How much ambient omnidirectional light is reflected from all light sources. Inte
 - This field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **backDiffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
-{: #field-backDiffuseColor }
+{: #fields-backDiffuseColor }
 
 How much direct, angle-dependent light is reflected from all light sources.
 
@@ -146,7 +146,7 @@ How much direct, angle-dependent light is reflected from all light sources.
 - Only emissiveColor affects [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/) and [PointSet](/x_ite/components/rendering/pointset/).
 
 ### SFColor [in, out] **backSpecularColor** 0 0 0 <small>[0,1]</small>
-{: #field-backSpecularColor }
+{: #fields-backSpecularColor }
 
 Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
 
@@ -155,7 +155,7 @@ Specular highlights are brightness reflections (example: shiny spots on an apple
 - This field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **backEmissiveColor** 0 0 0 <small>[0,1]</small>
-{: #field-backEmissiveColor }
+{: #fields-backEmissiveColor }
 
 How much glowing light is emitted from this object.
 
@@ -170,7 +170,7 @@ How much glowing light is emitted from this object.
 - Bright emissiveColor values can wash out other colors and some textures.
 
 ### SFFloat [in, out] **backShininess** 0.2 <small>[0,1]</small>
-{: #field-backShininess }
+{: #fields-backShininess }
 
 Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
 
@@ -179,7 +179,7 @@ Lower shininess values provide soft specular glows, while higher values result i
 - This field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **backTransparency** 0 <small>[0,1]</small>
-{: #field-backTransparency }
+{: #fields-backTransparency }
 
 How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
 

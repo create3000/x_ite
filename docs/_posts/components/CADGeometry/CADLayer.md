@@ -30,19 +30,19 @@ The CADLayer node belongs to the **CADGeometry** component and requires at least
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [name](#field-name) | "" |
-| SFBool | [in, out] | [visible](#field-visible) | TRUE |
-| SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#field-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#field-bboxCenter) | 0 0 0  |
-| MFNode | [in] | [addChildren](#field-addChildren) |  |
-| MFNode | [in] | [removeChildren](#field-removeChildren) |  |
-| MFNode | [in, out] | [children](#field-children) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [name](#fields-name) | "" |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [in] | [addChildren](#fields-addChildren) |  |
+| MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -51,7 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **name** ""
-{: #field-name }
+{: #fields-name }
 
 Optional *name* for this particular CAD node.
 
@@ -65,7 +65,7 @@ Optional *name* for this particular CAD node.
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
 ### SFBool [in, out] **visible** TRUE
-{: #field-visible }
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -79,7 +79,7 @@ Whether or not renderable content within this node is visually displayed.
 - CADLayer *visible* field had type MFBool in X3Dv3, thus is not backwards compatible.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
-{: #field-bboxDisplay }
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -88,7 +88,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
-{: #field-bboxSize }
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -100,7 +100,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
-{: #field-bboxCenter }
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -111,17 +111,17 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### MFNode [in] **addChildren**
-{: #field-addChildren }
+{: #fields-addChildren }
 
 Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
-{: #field-removeChildren }
+{: #fields-removeChildren }
 
 Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
-{: #field-children }
+{: #fields-children }
 
 Grouping nodes contain an ordered list of *children* nodes.
 

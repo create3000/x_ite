@@ -29,16 +29,16 @@ The ArcClose2D node belongs to the **Geometry2D** component and requires at leas
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [ ] | [closureType](#field-closureType) | "PIE"  |
-| SFFloat | [ ] | [startAngle](#field-startAngle) | 0  |
-| SFFloat | [ ] | [endAngle](#field-endAngle) | π/2  |
-| SFFloat | [ ] | [radius](#field-radius) | 1  |
-| SFBool | [ ] | [solid](#field-solid) | FALSE |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [ ] | [closureType](#fields-closureType) | "PIE"  |
+| SFFloat | [ ] | [startAngle](#fields-startAngle) | 0  |
+| SFFloat | [ ] | [endAngle](#fields-endAngle) | π/2  |
+| SFFloat | [ ] | [radius](#fields-radius) | 1  |
+| SFBool | [ ] | [solid](#fields-solid) | FALSE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -47,7 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [ ] **closureType** "PIE" <small>["PIE"|"CHORD"]</small>
-{: #field-closureType }
+{: #fields-closureType }
 
 Defines whether pair of line segments connect to center (PIE), or single line-segment chord connects arc endpoints (CHORD).
 
@@ -56,7 +56,7 @@ Defines whether pair of line segments connect to center (PIE), or single line-se
 - Simple-geometry parameters cannot be changed after initial creation.
 
 ### SFFloat [ ] **startAngle** 0 <small>[-2π,2π]</small>
-{: #field-startAngle }
+{: #fields-startAngle }
 
 Arc extends from *startAngle* counterclockwise to endAngle, in radians.
 
@@ -70,7 +70,7 @@ Arc extends from *startAngle* counterclockwise to endAngle, in radians.
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFFloat [ ] **endAngle** π/2 <small>[-2π,2π]</small>
-{: #field-endAngle }
+{: #fields-endAngle }
 
 Arc extends from startAngle counterclockwise to *endAngle*, in radians.
 
@@ -84,7 +84,7 @@ Arc extends from startAngle counterclockwise to *endAngle*, in radians.
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFFloat [ ] **radius** 1 <small>(0,∞)</small>
-{: #field-radius }
+{: #fields-radius }
 
 Circle *radius*, of which the arc is a portion.
 
@@ -97,7 +97,7 @@ Circle *radius*, of which the arc is a portion.
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFBool [ ] **solid** FALSE
-{: #field-solid }
+{: #fields-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 

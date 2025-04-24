@@ -30,13 +30,13 @@ The TimeTrigger node belongs to the **EventUtilities** component and requires at
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in] | [set_boolean](#field-set_boolean) |  |
-| SFTime | [out] | [triggerTime](#field-triggerTime) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in] | [set_boolean](#fields-set_boolean) |  |
+| SFTime | [out] | [triggerTime](#fields-triggerTime) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -45,7 +45,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **set_boolean**
-{: #field-set_boolean }
+{: #fields-set_boolean }
 
 If input event *set_boolean* is true, send output triggerTime event.
 
@@ -58,7 +58,7 @@ If input event *set_boolean* is true, send output triggerTime event.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFTime [out] **triggerTime**
-{: #field-triggerTime }
+{: #fields-triggerTime }
 
 *triggerTime* is output time event, sent when input event set_boolean is true.
 

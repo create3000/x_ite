@@ -32,14 +32,14 @@ The TransmissionMaterialExtension node belongs to the **X_ITE** component and re
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFFloat | [in, out] | [transmission](#field-transmission) | 0  |
-| SFString | [in, out] | [transmissionTextureMapping](#field-transmissionTextureMapping) | "" |
-| SFNode | [in, out] | [transmissionTexture](#field-transmissionTexture) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFFloat | [in, out] | [transmission](#fields-transmission) | 0  |
+| SFString | [in, out] | [transmissionTextureMapping](#fields-transmissionTextureMapping) | "" |
+| SFNode | [in, out] | [transmissionTexture](#fields-transmissionTexture) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -48,17 +48,17 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in, out] **transmission** 0 <small>[0,∞)</small>
-{: #field-transmission }
+{: #fields-transmission }
 
 The base percentage of light that is transmitted through the surface.
 
 ### SFString [in, out] **transmissionTextureMapping** ""
-{: #field-transmissionTextureMapping }
+{: #fields-transmissionTextureMapping }
 
 Input/Output field *transmissionTextureMapping*.
 
 ### SFNode [in, out] **transmissionTexture** NULL <small>[X3DSingleTextureNode]</small>
-{: #field-transmissionTexture }
+{: #fields-transmissionTexture }
 
 A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor.
 

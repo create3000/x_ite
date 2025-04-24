@@ -30,16 +30,16 @@ The PeriodicWave node belongs to the **Sound** component and requires at least s
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFString | [in, out] | [type](#field-type) | "SQUARE"  |
-| MFFloat | [in, out] | [optionsReal](#field-optionsReal) | [ ] |
-| MFFloat | [in, out] | [optionsImag](#field-optionsImag) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFString | [in, out] | [type](#fields-type) | "SQUARE"  |
+| MFFloat | [in, out] | [optionsReal](#fields-optionsReal) | [ ] |
+| MFFloat | [in, out] | [optionsImag](#fields-optionsImag) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -48,7 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -57,12 +57,12 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFString [in, out] **type** "SQUARE" <small>["SINE", "SQUARE", "SAWTOOTH", "TRIANGLE", "CUSTOM"]</small>
-{: #field-type }
+{: #fields-type }
 
 The *type* field specifies shape of waveform to play, which can be one of several provided values or else 'custom' to indicate that real and imaginary coefficient arrays define a custom waveform.
 
@@ -71,7 +71,7 @@ The *type* field specifies shape of waveform to play, which can be one of severa
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dictdef-periodicwaveoptions)
 
 ### MFFloat [in, out] **optionsReal** [ ] <small>(-∞,∞)</small>
-{: #field-optionsReal }
+{: #fields-optionsReal }
 
 Real coefficients for defining a waveform.
 
@@ -80,7 +80,7 @@ Real coefficients for defining a waveform.
 - Array lengths for *optionsReal* and optionsImag must match.
 
 ### MFFloat [in, out] **optionsImag** [ ] <small>(-∞,∞)</small>
-{: #field-optionsImag }
+{: #fields-optionsImag }
 
 Imaginary coefficients for defining a waveform.
 

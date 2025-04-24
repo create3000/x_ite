@@ -30,14 +30,14 @@ The IntegerTrigger node belongs to the **EventUtilities** component and requires
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFBool | [in] | [set_boolean](#field-set_boolean) |  |
-| SFInt32 | [in, out] | [integerKey](#field-integerKey) | -1  |
-| SFInt32 | [out] | [triggerValue](#field-triggerValue) |  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in] | [set_boolean](#fields-set_boolean) |  |
+| SFInt32 | [in, out] | [integerKey](#fields-integerKey) | -1  |
+| SFInt32 | [out] | [triggerValue](#fields-triggerValue) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -46,7 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **set_boolean**
-{: #field-set_boolean }
+{: #fields-set_boolean }
 
 If input event *set_boolean* is true, trigger output of integer value.
 
@@ -59,7 +59,7 @@ If input event *set_boolean* is true, trigger output of integer value.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFInt32 [in, out] **integerKey** -1 <small>(-∞,∞)</small>
-{: #field-integerKey }
+{: #fields-integerKey }
 
 *integerKey* is value for output when triggered.
 
@@ -68,7 +68,7 @@ If input event *set_boolean* is true, trigger output of integer value.
 - Directly setting a new value for the *integerKey* field generates a corresponding *integerKey* output event.
 
 ### SFInt32 [out] **triggerValue**
-{: #field-triggerValue }
+{: #fields-triggerValue }
 
 *triggerValue* provides integer event output matching integerKey when true set_boolean received.
 

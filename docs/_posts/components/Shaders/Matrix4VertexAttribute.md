@@ -30,13 +30,13 @@ The Matrix4VertexAttribute node belongs to the **Shaders** component and require
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [ ] | [name](#field-name) | "" |
-| MFMatrix4f | [in, out] | [value](#field-value) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [ ] | [name](#fields-name) | "" |
+| MFMatrix4f | [in, out] | [value](#fields-value) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -45,7 +45,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [ ] **name** ""
-{: #field-name }
+{: #fields-name }
 
 Required *name* for this particular VertexAttribute instance.
 
@@ -59,7 +59,7 @@ Required *name* for this particular VertexAttribute instance.
 - *name* is not specified if this instance is a USE node.
 
 ### MFMatrix4f [in, out] **value** [ ] <small>(-∞,∞)</small>
-{: #field-value }
+{: #fields-value }
 
 *value* specifies an arbitrary collection of matrix values that will be passed to the shader as per-vertex information.
 

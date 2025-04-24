@@ -35,32 +35,32 @@ The MovieTexture node belongs to the **Texturing** component and requires at lea
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFBool | [in, out] | [load](#field-load) | TRUE |
-| MFString | [in, out] | [url](#field-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#field-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#field-autoRefreshTimeLimit) | 3600  |
-| SFFloat | [in, out] | [gain](#field-gain) | 1  |
-| SFFloat | [in, out] | [speed](#field-speed) | 1  |
-| SFFloat | [in, out] | [pitch](#field-pitch) | 1  |
-| SFBool | [in, out] | [loop](#field-loop) | FALSE |
-| SFTime | [in, out] | [startTime](#field-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#field-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#field-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#field-stopTime) | 0  |
-| SFBool | [out] | [isPaused](#field-isPaused) |  |
-| SFBool | [out] | [isActive](#field-isActive) |  |
-| SFTime | [out] | [elapsedTime](#field-elapsedTime) |  |
-| SFTime | [out] | [duration_changed](#field-duration_changed) |  |
-| SFBool | [ ] | [repeatS](#field-repeatS) | TRUE |
-| SFBool | [ ] | [repeatT](#field-repeatT) | TRUE |
-| SFNode | [ ] | [textureProperties](#field-textureProperties) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFBool | [in, out] | [load](#fields-load) | TRUE |
+| MFString | [in, out] | [url](#fields-url) | [ ] |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
+| SFFloat | [in, out] | [speed](#fields-speed) | 1  |
+| SFFloat | [in, out] | [pitch](#fields-pitch) | 1  |
+| SFBool | [in, out] | [loop](#fields-loop) | FALSE |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFBool | [out] | [isPaused](#fields-isPaused) |  |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
+| SFTime | [out] | [duration_changed](#fields-duration_changed) |  |
+| SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
+| SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -69,7 +69,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -78,12 +78,12 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
-{: #field-enabled }
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFBool [in, out] **load** TRUE
-{: #field-load }
+{: #fields-load }
 
 *load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
@@ -93,7 +93,7 @@ Enables/disables node operation.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
-{: #field-url }
+{: #fields-url }
 
 Location and filename of movie file or stream. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
 
@@ -109,7 +109,7 @@ Location and filename of movie file or stream. Multiple locations are more relia
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
-{: #field-autoRefresh }
+{: #fields-autoRefresh }
 
 *autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
@@ -123,7 +123,7 @@ Location and filename of movie file or stream. Multiple locations are more relia
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
-{: #field-autoRefreshTimeLimit }
+{: #fields-autoRefreshTimeLimit }
 
 *autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
@@ -136,7 +136,7 @@ Location and filename of movie file or stream. Multiple locations are more relia
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
-{: #field-gain }
+{: #fields-gain }
 
 The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
@@ -149,7 +149,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - Decibel values shall not be used.
 
 ### SFFloat [in, out] **speed** 1 <small>(-∞,∞)</small>
-{: #field-speed }
+{: #fields-speed }
 
 Factor for how fast the movie (or soundtrack) is played.
 
@@ -159,7 +159,7 @@ Factor for how fast the movie (or soundtrack) is played.
 - A negative *speed* value sets the movie to play in reverse.
 
 ### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
-{: #field-pitch }
+{: #fields-pitch }
 
 Multiplier for the rate at which sampled sound is played. Changing *pitch* also changes playback speed.
 
@@ -168,12 +168,12 @@ Multiplier for the rate at which sampled sound is played. Changing *pitch* also 
 - Changing the *pitch* field does not trigger a duration_changed event. Playback interval may vary but duration of the original media data remains unmodified.
 
 ### SFBool [in, out] **loop** FALSE
-{: #field-loop }
+{: #fields-loop }
 
 Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
-{: #field-startTime }
+{: #fields-startTime }
 
 Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -182,7 +182,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
-{: #field-resumeTime }
+{: #fields-resumeTime }
 
 When *resumeTime* becomes \<= time now, isPaused becomes false and MovieTexture becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -195,7 +195,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and MovieTexture 
 - Not supported in VRML97.
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
-{: #field-pauseTime }
+{: #fields-pauseTime }
 
 When time now \>= *pauseTime*, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -208,7 +208,7 @@ When time now \>= *pauseTime*, isPaused becomes true and MovieTexture becomes pa
 - Not supported in VRML97.
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
-{: #field-stopTime }
+{: #fields-stopTime }
 
 Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -222,7 +222,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - An active [TimeSensor](/x_ite/components/time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
-{: #field-isPaused }
+{: #fields-isPaused }
 
 *isPaused* true/false events are sent when MovieTexture is paused/resumed.
 
@@ -232,7 +232,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
-{: #field-isActive }
+{: #fields-isActive }
 
 *isActive* true/false events are sent when playback starts/stops.
 
@@ -241,7 +241,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **elapsedTime**
-{: #field-elapsedTime }
+{: #fields-elapsedTime }
 
 Current elapsed time since MovieTexture activated/running, cumulative in seconds, and not counting any paused time.
 
@@ -255,7 +255,7 @@ Current elapsed time since MovieTexture activated/running, cumulative in seconds
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **duration_changed**
-{: #field-duration_changed }
+{: #fields-duration_changed }
 
 Length of time in seconds for one cycle of media stream.
 
@@ -270,17 +270,17 @@ Length of time in seconds for one cycle of media stream.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [ ] **repeatS** TRUE
-{: #field-repeatS }
+{: #fields-repeatS }
 
 Whether to repeat texture along S axis horizontally from left to right.
 
 ### SFBool [ ] **repeatT** TRUE
-{: #field-repeatT }
+{: #fields-repeatT }
 
 Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
-{: #field-textureProperties }
+{: #fields-textureProperties }
 
 Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 

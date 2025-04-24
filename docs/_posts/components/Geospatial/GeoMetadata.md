@@ -33,18 +33,18 @@ The GeoMetadata node belongs to the **Geospatial** component and requires at lea
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [description](#field-description) | "" |
-| SFBool | [in, out] | [load](#field-load) | TRUE |
-| MFString | [in, out] | [url](#field-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#field-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#field-autoRefreshTimeLimit) | 3600  |
-| MFString | [in, out] | [summary](#field-summary) | [ ] |
-| MFNode | [in, out] | [data](#field-data) | [ ] |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [load](#fields-load) | TRUE |
+| MFString | [in, out] | [url](#fields-url) | [ ] |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| MFString | [in, out] | [summary](#fields-summary) | [ ] |
+| MFNode | [in, out] | [data](#fields-data) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-{: #field-metadata }
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -53,7 +53,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
-{: #field-description }
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -62,7 +62,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **load** TRUE
-{: #field-load }
+{: #fields-load }
 
 *load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
@@ -72,7 +72,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
-{: #field-url }
+{: #fields-url }
 
 Hypertext link to an external, complete metadata description.
 
@@ -88,7 +88,7 @@ Hypertext link to an external, complete metadata description.
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
-{: #field-autoRefresh }
+{: #fields-autoRefresh }
 
 *autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
@@ -102,7 +102,7 @@ Hypertext link to an external, complete metadata description.
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
-{: #field-autoRefreshTimeLimit }
+{: #fields-autoRefreshTimeLimit }
 
 *autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
@@ -115,7 +115,7 @@ Hypertext link to an external, complete metadata description.
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### MFString [in, out] **summary** [ ]
-{: #field-summary }
+{: #fields-summary }
 
 The *summary* string array contains a set of keyword/value pairs, with each keyword and its subsequent value contained in separate strings.
 
@@ -126,7 +126,7 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 - There should always be an even (or zero) number of strings to match key-value paired strings.
 
 ### MFNode [in, out] **data** [ ]
-{: #field-data }
+{: #fields-data }
 
 #IMPLIED] DEF list of all nodes that implement this *data*. If no specific geospatial nodes are identified, then this GeoMetadata node pertains to entire scene.
 
