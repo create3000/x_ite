@@ -301,15 +301,17 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          textureCoordinateMapping);
 
       if (this .occlusionTextureNode)
+      {
          gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-      this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_OcclusionTexture,
-         this ._occlusionTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
+         this .occlusionTextureNode .setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_OcclusionTexture,
+            this ._occlusionTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
+      }
    },
 });
 
