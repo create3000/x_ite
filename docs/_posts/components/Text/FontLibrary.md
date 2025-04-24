@@ -35,7 +35,7 @@ The FontLibrary node belongs to the **Text** component and requires at least lev
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFString | [in, out] | [description](#field-description) | "" |
-| SFString | [in, out] | [family](#field-family) |  |
+| SFString | [in, out] | [family](#field-family) | "" |
 | SFBool | [in, out] | [load](#field-load) | TRUE |
 | MFString | [in, out] | [url](#field-url) | [ ] |
 | SFTime | [in, out] | [autoRefresh](#field-autoRefresh) | 0  |
