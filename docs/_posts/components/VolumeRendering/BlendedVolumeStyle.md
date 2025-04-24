@@ -32,8 +32,8 @@ The BlendedVolumeStyle node belongs to the **VolumeRendering** component and req
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFFloat | [in, out] | [weightConstant1](#field-weightConstant1) | 0 |
-| SFFloat | [in, out] | [weightConstant2](#field-weightConstant2) | 0 |
+| SFFloat | [in, out] | [weightConstant1](#field-weightConstant1) | 0.5  |
+| SFFloat | [in, out] | [weightConstant2](#field-weightConstant2) | 0.5  |
 | SFString | [in, out] | [weightFunction1](#field-weightFunction1) | "CONSTANT"  |
 | SFString | [in, out] | [weightFunction2](#field-weightFunction2) | "CONSTANT"  |
 | SFNode | [in, out] | [weightTransferFunction1](#field-weightTransferFunction1) | NULL  |

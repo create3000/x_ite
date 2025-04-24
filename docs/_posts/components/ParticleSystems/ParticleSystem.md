@@ -39,8 +39,8 @@ The ParticleSystem node belongs to the **ParticleSystems** component and require
 | SFString | [ ] | [geometryType](#field-geometryType) | "QUAD"  |
 | SFInt32 | [in, out] | [maxParticles](#field-maxParticles) | 200  |
 | SFFloat | [in, out] | [particleLifetime](#field-particleLifetime) | 5  |
-| SFFloat | [in, out] | [lifetimeVariation](#field-lifetimeVariation) | 0 |
-| SFVec2f | [in, out] | [particleSize](#field-particleSize) | 0 |
+| SFFloat | [in, out] | [lifetimeVariation](#field-lifetimeVariation) | 0.25  |
+| SFVec2f | [in, out] | [particleSize](#field-particleSize) | 0.02 0.02  |
 | SFNode | [ ] | [emitter](#field-emitter) | NULL  |
 | MFNode | [ ] | [physics](#field-physics) | [ ] |
 | MFFloat | [ ] | [colorKey](#field-colorKey) | [ ] |

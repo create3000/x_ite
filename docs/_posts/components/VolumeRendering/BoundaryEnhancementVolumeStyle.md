@@ -32,8 +32,8 @@ The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** compo
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFFloat | [in, out] | [retainedOpacity](#field-retainedOpacity) | 0 |
-| SFFloat | [in, out] | [boundaryOpacity](#field-boundaryOpacity) | 0 |
+| SFFloat | [in, out] | [retainedOpacity](#field-retainedOpacity) | 0.2  |
+| SFFloat | [in, out] | [boundaryOpacity](#field-boundaryOpacity) | 0.9  |
 | SFFloat | [in, out] | [opacityFactor](#field-opacityFactor) | 2  |
 {: .fields }
 

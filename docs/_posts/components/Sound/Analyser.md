@@ -37,7 +37,7 @@ The Analyser node belongs to the **Sound** component and requires at least suppo
 | SFInt32 | [in, out] | [fftSize](#field-fftSize) | 2048  |
 | SFFloat | [in, out] | [minDecibels](#field-minDecibels) | -100  |
 | SFFloat | [in, out] | [maxDecibels](#field-maxDecibels) | -30  |
-| SFFloat | [in, out] | [smoothingTimeConstant](#field-smoothingTimeConstant) | 0 |
+| SFFloat | [in, out] | [smoothingTimeConstant](#field-smoothingTimeConstant) | 0.8 |
 | SFInt32 | [out] | [frequencyBinCount](#field-frequencyBinCount) | 1024  |
 | MFInt32 | [out] | [byteFrequencyData](#field-byteFrequencyData) |  |
 | MFInt32 | [out] | [byteTimeDomainData](#field-byteTimeDomainData) |  |

@@ -38,8 +38,8 @@ The RigidBody node belongs to the **RigidBodyPhysics** component and requires at
 | SFBool | [in, out] | [useFiniteRotation](#field-useFiniteRotation) | FALSE |
 | SFVec3f | [in, out] | [finiteRotationAxis](#field-finiteRotationAxis) | 0 1 0  |
 | SFBool | [in, out] | [autoDamp](#field-autoDamp) | FALSE |
-| SFFloat | [in, out] | [linearDampingFactor](#field-linearDampingFactor) | 0 |
-| SFFloat | [in, out] | [angularDampingFactor](#field-angularDampingFactor) | 0 |
+| SFFloat | [in, out] | [linearDampingFactor](#field-linearDampingFactor) | 0.001  |
+| SFFloat | [in, out] | [angularDampingFactor](#field-angularDampingFactor) | 0.001  |
 | SFFloat | [in, out] | [mass](#field-mass) | 1  |
 | SFVec3f | [in, out] | [centerOfMass](#field-centerOfMass) | 0 0 0  |
 | SFNode | [in, out] | [massDensityModel](#field-massDensityModel) | NULL  |

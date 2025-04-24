@@ -32,10 +32,10 @@ The Material node belongs to the **Shape** component and requires at least suppo
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFFloat | [in, out] | [ambientIntensity](#field-ambientIntensity) | 0 |
+| SFFloat | [in, out] | [ambientIntensity](#field-ambientIntensity) | 0.2  |
 | SFString | [in, out] | [ambientTextureMapping](#field-ambientTextureMapping) | "" |
 | SFNode | [in, out] | [ambientTexture](#field-ambientTexture) | NULL  |
-| SFColor | [in, out] | [diffuseColor](#field-diffuseColor) | 0 |
+| SFColor | [in, out] | [diffuseColor](#field-diffuseColor) | 0.8 0.8 0.8  |
 | SFString | [in, out] | [diffuseTextureMapping](#field-diffuseTextureMapping) | "" |
 | SFNode | [in, out] | [diffuseTexture](#field-diffuseTexture) | NULL  |
 | SFColor | [in, out] | [specularColor](#field-specularColor) | 0 0 0  |
@@ -44,7 +44,7 @@ The Material node belongs to the **Shape** component and requires at least suppo
 | SFColor | [in, out] | [emissiveColor](#field-emissiveColor) | 0 0 0  |
 | SFString | [in, out] | [emissiveTextureMapping](#field-emissiveTextureMapping) | "" |
 | SFNode | [in, out] | [emissiveTexture](#field-emissiveTexture) | NULL  |
-| SFFloat | [in, out] | [shininess](#field-shininess) | 0 |
+| SFFloat | [in, out] | [shininess](#field-shininess) | 0.2  |
 | SFString | [in, out] | [shininessTextureMapping](#field-shininessTextureMapping) | "" |
 | SFNode | [in, out] | [shininessTexture](#field-shininessTexture) | NULL  |
 | SFFloat | [in, out] | [occlusionStrength](#field-occlusionStrength) | 1  |

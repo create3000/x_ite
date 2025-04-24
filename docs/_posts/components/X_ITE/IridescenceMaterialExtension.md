@@ -36,7 +36,7 @@ The IridescenceMaterialExtension node belongs to the **X_ITE** component and req
 | SFFloat | [in, out] | [iridescence](#field-iridescence) | 0  |
 | SFString | [in, out] | [iridescenceTextureMapping](#field-iridescenceTextureMapping) | "" |
 | SFNode | [in, out] | [iridescenceTexture](#field-iridescenceTexture) | NULL  |
-| SFFloat | [in, out] | [iridescenceIndexOfRefraction](#field-iridescenceIndexOfRefraction) | 1 |
+| SFFloat | [in, out] | [iridescenceIndexOfRefraction](#field-iridescenceIndexOfRefraction) | 1.3  |
 | SFFloat | [in, out] | [iridescenceThicknessMinimum](#field-iridescenceThicknessMinimum) | 100  |
 | SFFloat | [in, out] | [iridescenceThicknessMaximum](#field-iridescenceThicknessMaximum) | 400  |
 | SFString | [in, out] | [iridescenceThicknessTextureMapping](#field-iridescenceThicknessTextureMapping) | "" |

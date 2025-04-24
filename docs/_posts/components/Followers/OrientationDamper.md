@@ -37,7 +37,7 @@ The OrientationDamper node belongs to the **Followers** component and requires a
 | SFRotation | [ ] | [initialValue](#field-initialValue) | 0 1 0 0  |
 | SFRotation | [ ] | [initialDestination](#field-initialDestination) | 0 1 0 0  |
 | SFInt32 | [ ] | [order](#field-order) | 3  |
-| SFTime | [in, out] | [tau](#field-tau) | 0 |
+| SFTime | [in, out] | [tau](#field-tau) | 0.3  |
 | SFFloat | [in, out] | [tolerance](#field-tolerance) | -1  |
 | SFBool | [out] | [isActive](#field-isActive) |  |
 | SFRotation | [out] | [value_changed](#field-value_changed) |  |

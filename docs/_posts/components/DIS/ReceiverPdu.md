@@ -50,7 +50,7 @@ The ReceiverPdu node belongs to the **DIS** component and requires at least supp
 | SFString | [in, out] | [networkMode](#field-networkMode) | "standAlone"  |
 | SFInt32 | [in, out] | [port](#field-port) | 0  |
 | SFInt32 | [in, out] | [radioID](#field-radioID) | 0  |
-| SFTime | [in, out] | [readInterval](#field-readInterval) | 0 |
+| SFTime | [in, out] | [readInterval](#field-readInterval) | 0.1  |
 | SFFloat | [in, out] | [receivedPower](#field-receivedPower) | 0  |
 | SFInt32 | [in, out] | [receiverState](#field-receiverState) | 0  |
 | SFBool | [in, out] | [rtpHeaderExpected](#field-rtpHeaderExpected) | FALSE |

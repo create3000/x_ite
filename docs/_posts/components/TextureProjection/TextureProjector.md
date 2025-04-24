@@ -49,7 +49,7 @@ The TextureProjector node belongs to the **TextureProjection** component and req
 | SFBool | [in, out] | [shadows](#field-shadows) | FALSE |
 | SFColor | [in, out] | [shadowColor](#field-shadowColor) | 0 0 0  |
 | SFFloat | [in, out] | [shadowIntensity](#field-shadowIntensity) | 1  |
-| SFFloat | [in, out] | [shadowBias](#field-shadowBias) | 0 |
+| SFFloat | [in, out] | [shadowBias](#field-shadowBias) | 0.005  |
 | SFInt32 | [ ] | [shadowMapSize](#field-shadowMapSize) | 1024  |
 {: .fields }
 

@@ -34,10 +34,10 @@ The ColorDamper node belongs to the **Followers** component and requires at leas
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFColor | [in] | [set_value](#field-set_value) |  |
 | SFColor | [in] | [set_destination](#field-set_destination) |  |
-| SFColor | [ ] | [initialValue](#field-initialValue) | 0 |
-| SFColor | [ ] | [initialDestination](#field-initialDestination) | 0 |
+| SFColor | [ ] | [initialValue](#field-initialValue) | 0.8 0.8 0.8  |
+| SFColor | [ ] | [initialDestination](#field-initialDestination) | 0.8 0.8 0.8  |
 | SFInt32 | [ ] | [order](#field-order) | 3  |
-| SFTime | [in, out] | [tau](#field-tau) | 0 |
+| SFTime | [in, out] | [tau](#field-tau) | 0.3  |
 | SFFloat | [in, out] | [tolerance](#field-tolerance) | -1  |
 | SFBool | [out] | [isActive](#field-isActive) |  |
 | SFColor | [out] | [value_changed](#field-value_changed) |  |

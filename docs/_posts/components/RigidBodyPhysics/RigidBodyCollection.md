@@ -32,11 +32,11 @@ The RigidBodyCollection node belongs to the **RigidBodyPhysics** component and r
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
 | MFNode | [in] | [set_contacts](#field-set_contacts) |  |
-| SFVec3f | [in, out] | [gravity](#field-gravity) | 0 -9 |
+| SFVec3f | [in, out] | [gravity](#field-gravity) | 0 -9.8 0  |
 | SFBool | [in, out] | [preferAccuracy](#field-preferAccuracy) | FALSE |
-| SFFloat | [in, out] | [errorCorrection](#field-errorCorrection) | 0 |
+| SFFloat | [in, out] | [errorCorrection](#field-errorCorrection) | 0.8  |
 | SFInt32 | [in, out] | [iterations](#field-iterations) | 10  |
-| SFFloat | [in, out] | [constantForceMix](#field-constantForceMix) | 0 |
+| SFFloat | [in, out] | [constantForceMix](#field-constantForceMix) | 0.0001  |
 | SFFloat | [in, out] | [maxCorrectionSpeed](#field-maxCorrectionSpeed) | -1  |
 | SFFloat | [in, out] | [contactSurfaceThickness](#field-contactSurfaceThickness) | 0  |
 | SFBool | [in, out] | [autoDisable](#field-autoDisable) | FALSE |

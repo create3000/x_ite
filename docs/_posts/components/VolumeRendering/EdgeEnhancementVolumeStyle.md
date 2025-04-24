@@ -33,7 +33,7 @@ The EdgeEnhancementVolumeStyle node belongs to the **VolumeRendering** component
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
 | SFColorRGBA | [in, out] | [edgeColor](#field-edgeColor) | 0 0 0 1  |
-| SFFloat | [in, out] | [gradientThreshold](#field-gradientThreshold) | 0 |
+| SFFloat | [in, out] | [gradientThreshold](#field-gradientThreshold) | 0.4  |
 | SFNode | [in, out] | [surfaceNormals](#field-surfaceNormals) | NULL  |
 {: .fields }
 

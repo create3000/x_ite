@@ -35,7 +35,7 @@ The ConeEmitter node belongs to the **ParticleSystems** component and requires a
 | SFVec3f | [in, out] | [direction](#field-direction) | 0 1 0  |
 | SFFloat | [in, out] | [angle](#field-angle) | π/4  |
 | SFFloat | [in, out] | [speed](#field-speed) | 0  |
-| SFFloat | [in, out] | [variation](#field-variation) | 0 |
+| SFFloat | [in, out] | [variation](#field-variation) | 0.25  |
 | SFFloat | [in, out] | [mass](#field-mass) | 0  |
 | SFFloat | [in, out] | [surfaceArea](#field-surfaceArea) | 0  |
 {: .fields }

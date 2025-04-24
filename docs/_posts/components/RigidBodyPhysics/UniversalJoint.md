@@ -36,8 +36,8 @@ The UniversalJoint node belongs to the **RigidBodyPhysics** component and requir
 | SFVec3f | [in, out] | [axis2](#field-axis2) | 0 1 0  |
 | SFFloat | [in, out] | [stop1Bounce](#field-stop1Bounce) | 0  |
 | SFFloat | [in, out] | [stop2Bounce](#field-stop2Bounce) | 0  |
-| SFFloat | [in, out] | [stop1ErrorCorrection](#field-stop1ErrorCorrection) | 0 |
-| SFFloat | [in, out] | [stop2ErrorCorrection](#field-stop2ErrorCorrection) | 0 |
+| SFFloat | [in, out] | [stop1ErrorCorrection](#field-stop1ErrorCorrection) | 0.8  |
+| SFFloat | [in, out] | [stop2ErrorCorrection](#field-stop2ErrorCorrection) | 0.8  |
 | SFVec3f | [out] | [body1Axis](#field-body1Axis) |  |
 | SFVec3f | [out] | [body2Axis](#field-body2Axis) |  |
 | SFVec3f | [out] | [body1AnchorPoint](#field-body1AnchorPoint) |  |

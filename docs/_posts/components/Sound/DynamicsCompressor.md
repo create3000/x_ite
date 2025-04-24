@@ -36,10 +36,10 @@ The DynamicsCompressor node belongs to the **Sound** component and requires at l
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
 | SFFloat | [in, out] | [gain](#field-gain) | 1  |
 | SFTime | [in, out] | [tailTime](#field-tailTime) | 0  |
-| SFTime | [in, out] | [attack](#field-attack) | 0 |
+| SFTime | [in, out] | [attack](#field-attack) | 0.003  |
 | SFFloat | [in, out] | [knee](#field-knee) | 30  |
 | SFFloat | [in, out] | [ratio](#field-ratio) | 12  |
-| SFTime | [in, out] | [release](#field-release) | 0 |
+| SFTime | [in, out] | [release](#field-release) | 0.25  |
 | SFFloat | [in, out] | [threshold](#field-threshold) | -24  |
 | SFFloat | [out] | [reduction](#field-reduction) | 0  |
 | SFInt32 | [in, out] | [channelCount](#field-channelCount) |  |

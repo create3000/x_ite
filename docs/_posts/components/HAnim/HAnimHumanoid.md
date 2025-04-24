@@ -33,7 +33,7 @@ The HAnimHumanoid node belongs to the **HAnim** component and requires at least 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFString | [in, out] | [version](#field-version) | "2 |
+| SFString | [in, out] | [version](#field-version) | "2.0" |
 | SFString | [in, out] | [description](#field-description) | "" |
 | SFString | [in, out] | [name](#field-name) | "" |
 | MFString | [in, out] | [info](#field-info) | [ ] |

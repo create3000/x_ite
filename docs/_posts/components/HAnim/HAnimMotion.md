@@ -42,7 +42,7 @@ The HAnimMotion node belongs to the **HAnim** component and requires at least su
 | SFBool | [in] | [next](#field-next) |  |
 | SFBool | [in] | [previous](#field-previous) |  |
 | SFInt32 | [in, out] | [frameIndex](#field-frameIndex) | 0  |
-| SFTime | [in, out] | [frameDuration](#field-frameDuration) | 0 |
+| SFTime | [in, out] | [frameDuration](#field-frameDuration) | 0.1  |
 | SFInt32 | [in, out] | [frameIncrement](#field-frameIncrement) | 1  |
 | SFInt32 | [in, out] | [startFrame](#field-startFrame) | 0  |
 | SFInt32 | [in, out] | [endFrame](#field-endFrame) | 0  |

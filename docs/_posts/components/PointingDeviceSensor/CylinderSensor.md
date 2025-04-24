@@ -36,7 +36,7 @@ The CylinderSensor node belongs to the **PointingDeviceSensor** component and re
 | SFString | [in, out] | [description](#field-description) | "" |
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
 | SFRotation | [in, out] | [axisRotation](#field-axisRotation) | 0 0 1 0  |
-| SFFloat | [in, out] | [diskAngle](#field-diskAngle) | 0 |
+| SFFloat | [in, out] | [diskAngle](#field-diskAngle) | 0.26179167  |
 | SFFloat | [in, out] | [minAngle](#field-minAngle) | 0  |
 | SFFloat | [in, out] | [maxAngle](#field-maxAngle) | -1  |
 | SFFloat | [in, out] | [offset](#field-offset) | 0  |

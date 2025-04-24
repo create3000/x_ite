@@ -45,9 +45,9 @@ The MotorJoint node belongs to the **RigidBodyPhysics** component and requires a
 | SFFloat | [in, out] | [stop1Bounce](#field-stop1Bounce) | 0  |
 | SFFloat | [in, out] | [stop2Bounce](#field-stop2Bounce) | 0  |
 | SFFloat | [in, out] | [stop3Bounce](#field-stop3Bounce) | 0  |
-| SFFloat | [in, out] | [stop1ErrorCorrection](#field-stop1ErrorCorrection) | 0 |
-| SFFloat | [in, out] | [stop2ErrorCorrection](#field-stop2ErrorCorrection) | 0 |
-| SFFloat | [in, out] | [stop3ErrorCorrection](#field-stop3ErrorCorrection) | 0 |
+| SFFloat | [in, out] | [stop1ErrorCorrection](#field-stop1ErrorCorrection) | 0.8  |
+| SFFloat | [in, out] | [stop2ErrorCorrection](#field-stop2ErrorCorrection) | 0.8  |
+| SFFloat | [in, out] | [stop3ErrorCorrection](#field-stop3ErrorCorrection) | 0.8  |
 | SFFloat | [out] | [motor1Angle](#field-motor1Angle) |  |
 | SFFloat | [out] | [motor2Angle](#field-motor2Angle) |  |
 | SFFloat | [out] | [motor3Angle](#field-motor3Angle) |  |

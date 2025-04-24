@@ -37,7 +37,7 @@ The ScalarDamper node belongs to the **Followers** component and requires at lea
 | SFFloat | [ ] | [initialValue](#field-initialValue) | 0  |
 | SFFloat | [ ] | [initialDestination](#field-initialDestination) | 0  |
 | SFInt32 | [ ] | [order](#field-order) | 3  |
-| SFTime | [in, out] | [tau](#field-tau) | 0 |
+| SFTime | [in, out] | [tau](#field-tau) | 0.3  |
 | SFFloat | [in, out] | [tolerance](#field-tolerance) | -1  |
 | SFBool | [out] | [isActive](#field-isActive) |  |
 | SFFloat | [out] | [value_changed](#field-value_changed) |  |

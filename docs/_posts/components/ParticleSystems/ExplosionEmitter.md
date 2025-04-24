@@ -33,7 +33,7 @@ The ExplosionEmitter node belongs to the **ParticleSystems** component and requi
 | SFBool | [in, out] | [on](#field-on) | TRUE |
 | SFVec3f | [in, out] | [position](#field-position) | 0 0 0  |
 | SFFloat | [in, out] | [speed](#field-speed) | 0  |
-| SFFloat | [in, out] | [variation](#field-variation) | 0 |
+| SFFloat | [in, out] | [variation](#field-variation) | 0.25  |
 | SFFloat | [in, out] | [mass](#field-mass) | 0  |
 | SFFloat | [in, out] | [surfaceArea](#field-surfaceArea) | 0  |
 {: .fields }

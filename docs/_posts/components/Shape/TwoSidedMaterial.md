@@ -35,17 +35,17 @@ The TwoSidedMaterial node belongs to the **Shape** component and requires at lea
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFBool | [in, out] | [separateBackColor](#field-separateBackColor) | FALSE |
-| SFFloat | [in, out] | [ambientIntensity](#field-ambientIntensity) | 0 |
-| SFColor | [in, out] | [diffuseColor](#field-diffuseColor) | 0 |
+| SFFloat | [in, out] | [ambientIntensity](#field-ambientIntensity) | 0.2  |
+| SFColor | [in, out] | [diffuseColor](#field-diffuseColor) | 0.8 0.8 0.8  |
 | SFColor | [in, out] | [specularColor](#field-specularColor) | 0 0 0  |
 | SFColor | [in, out] | [emissiveColor](#field-emissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [shininess](#field-shininess) | 0 |
+| SFFloat | [in, out] | [shininess](#field-shininess) | 0.2  |
 | SFFloat | [in, out] | [transparency](#field-transparency) | 0  |
-| SFFloat | [in, out] | [backAmbientIntensity](#field-backAmbientIntensity) | 0 |
-| SFColor | [in, out] | [backDiffuseColor](#field-backDiffuseColor) | 0 |
+| SFFloat | [in, out] | [backAmbientIntensity](#field-backAmbientIntensity) | 0.2  |
+| SFColor | [in, out] | [backDiffuseColor](#field-backDiffuseColor) | 0.8 0.8 0.8  |
 | SFColor | [in, out] | [backSpecularColor](#field-backSpecularColor) | 0 0 0  |
 | SFColor | [in, out] | [backEmissiveColor](#field-backEmissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [backShininess](#field-backShininess) | 0 |
+| SFFloat | [in, out] | [backShininess](#field-backShininess) | 0.2  |
 | SFFloat | [in, out] | [backTransparency](#field-backTransparency) | 0  |
 {: .fields }
 

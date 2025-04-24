@@ -39,8 +39,8 @@ The Contact node belongs to the **RigidBodyPhysics** component and requires at l
 | SFVec2f | [in, out] | [frictionCoefficients](#field-frictionCoefficients) | 0 0  |
 | SFVec2f | [in, out] | [surfaceSpeed](#field-surfaceSpeed) | 0 0  |
 | SFVec2f | [in, out] | [slipCoefficients](#field-slipCoefficients) | 0 0  |
-| SFFloat | [in, out] | [softnessConstantForceMix](#field-softnessConstantForceMix) | 0 |
-| SFFloat | [in, out] | [softnessErrorCorrection](#field-softnessErrorCorrection) | 0 |
+| SFFloat | [in, out] | [softnessConstantForceMix](#field-softnessConstantForceMix) | 0.0001  |
+| SFFloat | [in, out] | [softnessErrorCorrection](#field-softnessErrorCorrection) | 0.8  |
 | SFNode | [in, out] | [geometry1](#field-geometry1) | NULL  |
 | SFNode | [in, out] | [geometry2](#field-geometry2) | NULL  |
 | SFNode | [in, out] | [body1](#field-body1) | NULL  |

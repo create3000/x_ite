@@ -39,8 +39,8 @@ The SpatialSound node belongs to the **Sound** component and requires at least s
 | SFVec3f | [in, out] | [direction](#field-direction) | 0 0 1  |
 | SFFloat | [in, out] | [gain](#field-gain) | 1  |
 | SFFloat | [in, out] | [coneOuterGain](#field-coneOuterGain) | 0  |
-| SFFloat | [in, out] | [coneInnerAngle](#field-coneInnerAngle) | 6 |
-| SFFloat | [in, out] | [coneOuterAngle](#field-coneOuterAngle) | 6 |
+| SFFloat | [in, out] | [coneInnerAngle](#field-coneInnerAngle) | 6.2832  |
+| SFFloat | [in, out] | [coneOuterAngle](#field-coneOuterAngle) | 6.2832  |
 | SFString | [in, out] | [distanceModel](#field-distanceModel) | "INVERSE"  |
 | SFFloat | [in, out] | [maxDistance](#field-maxDistance) | 10000  |
 | SFFloat | [in, out] | [referenceDistance](#field-referenceDistance) | 1  |

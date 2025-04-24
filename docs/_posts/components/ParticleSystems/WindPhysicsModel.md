@@ -32,8 +32,8 @@ The WindPhysicsModel node belongs to the **ParticleSystems** component and requi
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
 | SFVec3f | [in, out] | [direction](#field-direction) | 1 0 0  |
-| SFFloat | [in, out] | [speed](#field-speed) | 0 |
-| SFFloat | [in, out] | [gustiness](#field-gustiness) | 0 |
+| SFFloat | [in, out] | [speed](#field-speed) | 0.1  |
+| SFFloat | [in, out] | [gustiness](#field-gustiness) | 0.1  |
 | SFFloat | [in, out] | [turbulence](#field-turbulence) | 0  |
 {: .fields }
 

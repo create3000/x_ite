@@ -34,7 +34,7 @@ The SilhouetteEnhancementVolumeStyle node belongs to the **VolumeRendering** com
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
 | SFFloat | [in, out] | [silhouetteRetainedOpacity](#field-silhouetteRetainedOpacity) | 1  |
 | SFFloat | [in, out] | [silhouetteBoundaryOpacity](#field-silhouetteBoundaryOpacity) | 0  |
-| SFFloat | [in, out] | [silhouetteSharpness](#field-silhouetteSharpness) | 0 |
+| SFFloat | [in, out] | [silhouetteSharpness](#field-silhouetteSharpness) | 0.5  |
 | SFNode | [in, out] | [surfaceNormals](#field-surfaceNormals) | NULL  |
 {: .fields }
 

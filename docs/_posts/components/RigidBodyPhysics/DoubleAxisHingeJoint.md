@@ -41,10 +41,10 @@ The DoubleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and 
 | SFFloat | [in, out] | [maxTorque1](#field-maxTorque1) | 0  |
 | SFFloat | [in, out] | [maxTorque2](#field-maxTorque2) | 0  |
 | SFFloat | [in, out] | [stop1Bounce](#field-stop1Bounce) | 0  |
-| SFFloat | [in, out] | [stop1ConstantForceMix](#field-stop1ConstantForceMix) | 0 |
-| SFFloat | [in, out] | [stop1ErrorCorrection](#field-stop1ErrorCorrection) | 0 |
+| SFFloat | [in, out] | [stop1ConstantForceMix](#field-stop1ConstantForceMix) | 0.001  |
+| SFFloat | [in, out] | [stop1ErrorCorrection](#field-stop1ErrorCorrection) | 0.8  |
 | SFFloat | [in, out] | [suspensionForce](#field-suspensionForce) | 0  |
-| SFFloat | [in, out] | [suspensionErrorCorrection](#field-suspensionErrorCorrection) | 0 |
+| SFFloat | [in, out] | [suspensionErrorCorrection](#field-suspensionErrorCorrection) | 0.8  |
 | SFVec3f | [out] | [body1AnchorPoint](#field-body1AnchorPoint) |  |
 | SFVec3f | [out] | [body2AnchorPoint](#field-body2AnchorPoint) |  |
 | SFVec3f | [out] | [body1Axis](#field-body1Axis) |  |

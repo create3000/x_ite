@@ -34,12 +34,12 @@ The CollisionCollection node belongs to the **RigidBodyPhysics** component and r
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
 | MFString | [in, out] | [appliedParameters](#field-appliedParameters) | "BOUNCE" |
 | SFFloat | [in, out] | [bounce](#field-bounce) | 0  |
-| SFFloat | [in, out] | [minBounceSpeed](#field-minBounceSpeed) | 0 |
+| SFFloat | [in, out] | [minBounceSpeed](#field-minBounceSpeed) | 0.1  |
 | SFVec2f | [in, out] | [frictionCoefficients](#field-frictionCoefficients) | 0 0  |
 | SFVec2f | [in, out] | [surfaceSpeed](#field-surfaceSpeed) | 0 0  |
 | SFVec2f | [in, out] | [slipFactors](#field-slipFactors) | 0 0  |
-| SFFloat | [in, out] | [softnessConstantForceMix](#field-softnessConstantForceMix) | 0 |
-| SFFloat | [in, out] | [softnessErrorCorrection](#field-softnessErrorCorrection) | 0 |
+| SFFloat | [in, out] | [softnessConstantForceMix](#field-softnessConstantForceMix) | 0.0001  |
+| SFFloat | [in, out] | [softnessErrorCorrection](#field-softnessErrorCorrection) | 0.8  |
 | MFNode | [in, out] | [collidables](#field-collidables) | [ ] |
 | SFBool | [in, out] | [visible](#field-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#field-bboxDisplay) | FALSE |

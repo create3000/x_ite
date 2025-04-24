@@ -31,7 +31,7 @@ The Appearance node belongs to the **Shape** component and requires at least sup
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFString | [in, out] | [alphaMode](#field-alphaMode) | "AUTO"  |
-| SFFloat | [in, out] | [alphaCutoff](#field-alphaCutoff) | 0 |
+| SFFloat | [in, out] | [alphaCutoff](#field-alphaCutoff) | 0.5  |
 | SFNode | [in, out] | [acousticProperties](#field-acousticProperties) | NULL  |
 | SFNode | [in, out] | [pointProperties](#field-pointProperties) | NULL  |
 | SFNode | [in, out] | [lineProperties](#field-lineProperties) | NULL  |

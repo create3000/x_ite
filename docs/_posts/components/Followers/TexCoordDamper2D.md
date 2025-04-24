@@ -37,7 +37,7 @@ The TexCoordDamper2D node belongs to the **Followers** component and requires at
 | MFVec2f | [ ] | [initialValue](#field-initialValue) | [ ] |
 | MFVec2f | [ ] | [initialDestination](#field-initialDestination) | [ ] |
 | SFInt32 | [ ] | [order](#field-order) | 3  |
-| SFTime | [in, out] | [tau](#field-tau) | 0 |
+| SFTime | [in, out] | [tau](#field-tau) | 0.3  |
 | SFFloat | [in, out] | [tolerance](#field-tolerance) | -1  |
 | SFBool | [out] | [isActive](#field-isActive) |  |
 | MFVec2f | [out] | [value_changed](#field-value_changed) |  |

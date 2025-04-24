@@ -98,7 +98,7 @@ The EspduTransform node belongs to the **DIS** component and requires at least s
 | SFVec3f | [in, out] | [munitionStartPoint](#field-munitionStartPoint) | 0 0 0  |
 | SFString | [in, out] | [networkMode](#field-networkMode) | "standAlone"  |
 | SFInt32 | [in, out] | [port](#field-port) | 0  |
-| SFTime | [in, out] | [readInterval](#field-readInterval) | 0 |
+| SFTime | [in, out] | [readInterval](#field-readInterval) | 0.1  |
 | SFRotation | [in, out] | [rotation](#field-rotation) | 0 0 1 0  |
 | SFVec3f | [in, out] | [scale](#field-scale) | 1 1 1  |
 | SFRotation | [in, out] | [scaleOrientation](#field-scaleOrientation) | 0 0 1 0  |

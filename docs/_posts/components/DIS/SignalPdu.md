@@ -53,7 +53,7 @@ The SignalPdu node belongs to the **DIS** component and requires at least suppor
 | SFString | [in, out] | [networkMode](#field-networkMode) | "standAlone"  |
 | SFInt32 | [in, out] | [port](#field-port) | 0  |
 | SFInt32 | [in, out] | [radioID](#field-radioID) | 0  |
-| SFTime | [in, out] | [readInterval](#field-readInterval) | 0 |
+| SFTime | [in, out] | [readInterval](#field-readInterval) | 0.1  |
 | SFBool | [in, out] | [rtpHeaderExpected](#field-rtpHeaderExpected) | FALSE |
 | SFInt32 | [in, out] | [sampleRate](#field-sampleRate) | 0  |
 | SFInt32 | [in, out] | [samples](#field-samples) | 0  |

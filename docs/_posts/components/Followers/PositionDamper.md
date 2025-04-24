@@ -38,7 +38,7 @@ The PositionDamper node belongs to the **Followers** component and requires at l
 | SFVec3f | [ ] | [initialDestination](#field-initialDestination) | 0 0 0  |
 | SFInt32 | [ ] | [order](#field-order) | 3  |
 | SFFloat | [in, out] | [tolerance](#field-tolerance) | -1  |
-| SFTime | [in, out] | [tau](#field-tau) | 0 |
+| SFTime | [in, out] | [tau](#field-tau) | 0.3  |
 | SFVec3f | [out] | [value_changed](#field-value_changed) |  |
 | SFBool | [out] | [isActive](#field-isActive) |  |
 {: .fields }

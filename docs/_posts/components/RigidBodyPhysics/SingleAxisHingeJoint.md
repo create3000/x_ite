@@ -36,7 +36,7 @@ The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and 
 | SFFloat | [in, out] | [minAngle](#field-minAngle) | -π  |
 | SFFloat | [in, out] | [maxAngle](#field-maxAngle) | π  |
 | SFFloat | [in, out] | [stopBounce](#field-stopBounce) | 0  |
-| SFFloat | [in, out] | [stopErrorCorrection](#field-stopErrorCorrection) | 0 |
+| SFFloat | [in, out] | [stopErrorCorrection](#field-stopErrorCorrection) | 0.8  |
 | SFVec3f | [out] | [body1AnchorPoint](#field-body1AnchorPoint) |  |
 | SFVec3f | [out] | [body2AnchorPoint](#field-body2AnchorPoint) |  |
 | SFFloat | [out] | [angle](#field-angle) |  |

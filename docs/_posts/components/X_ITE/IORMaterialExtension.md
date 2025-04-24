@@ -33,7 +33,7 @@ The IORMaterialExtension node belongs to the **X_ITE** component and requires at
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
-| SFFloat | [in, out] | [indexOfRefraction](#field-indexOfRefraction) | 1 |
+| SFFloat | [in, out] | [indexOfRefraction](#field-indexOfRefraction) | 1.5  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

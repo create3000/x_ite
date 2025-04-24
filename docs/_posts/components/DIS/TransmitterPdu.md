@@ -69,7 +69,7 @@ The TransmitterPdu node belongs to the **DIS** component and requires at least s
 | SFInt32 | [in, out] | [radioEntityTypeNomenclature](#field-radioEntityTypeNomenclature) | 0  |
 | SFInt32 | [in, out] | [radioEntityTypeNomenclatureVersion](#field-radioEntityTypeNomenclatureVersion) | 0  |
 | SFInt32 | [in, out] | [radioID](#field-radioID) | 0  |
-| SFTime | [in, out] | [readInterval](#field-readInterval) | 0 |
+| SFTime | [in, out] | [readInterval](#field-readInterval) | 0.1  |
 | SFVec3f | [in, out] | [relativeAntennaLocation](#field-relativeAntennaLocation) | 0 0 0  |
 | SFBool | [in, out] | [rtpHeaderExpected](#field-rtpHeaderExpected) | FALSE |
 | SFInt32 | [in, out] | [siteID](#field-siteID) | 0  |

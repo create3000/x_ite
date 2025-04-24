@@ -31,7 +31,7 @@ The ForcePhysicsModel node belongs to the **ParticleSystems** component and requ
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#field-enabled) | TRUE |
-| SFVec3f | [in, out] | [force](#field-force) | 0 -9 |
+| SFVec3f | [in, out] | [force](#field-force) | 0 -9.8 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

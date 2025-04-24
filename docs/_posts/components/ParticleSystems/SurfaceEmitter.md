@@ -32,7 +32,7 @@ The SurfaceEmitter node belongs to the **ParticleSystems** component and require
 | SFNode | [in, out] | [metadata](#field-metadata) | NULL  |
 | SFBool | [in, out] | [on](#field-on) | TRUE |
 | SFFloat | [in, out] | [speed](#field-speed) | 0  |
-| SFFloat | [in, out] | [variation](#field-variation) | 0 |
+| SFFloat | [in, out] | [variation](#field-variation) | 0.25  |
 | SFFloat | [in, out] | [mass](#field-mass) | 0  |
 | SFFloat | [in, out] | [surfaceArea](#field-surfaceArea) | 0  |
 | SFNode | [ ] | [surface](#field-surface) | NULL  |
