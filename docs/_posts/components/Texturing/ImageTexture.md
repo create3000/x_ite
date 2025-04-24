@@ -41,7 +41,7 @@ The ImageTexture node belongs to the **Texturing** component and requires at lea
 | MFString | [in, out] | [url](#field-url) | [ ] |
 | SFTime | [in, out] | [autoRefresh](#field-autoRefresh) | 0  |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#field-autoRefreshTimeLimit) | 3600  |
-| SFBool | [ ] | [colorSpaceConversion](#field-colorSpaceConversion) |  |
+| SFBool | [ ] | [colorSpaceConversion](#field-colorSpaceConversion) | TRUE |
 | SFBool | [ ] | [repeatS](#field-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#field-repeatT) | TRUE |
 | SFNode | [ ] | [textureProperties](#field-textureProperties) | NULL  |
