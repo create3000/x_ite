@@ -38,9 +38,9 @@ The PrimitivePickSensor node belongs to the **Picking** component and requires a
 | SFString | [in, out] | [matchCriterion](#field-matchCriterion) | "MATCH |
 | SFString | [ ] | [intersectionType](#field-intersectionType) | "BOUNDS"  |
 | SFString | [ ] | [sortOrder](#field-sortOrder) | "CLOSEST"  |
-| SFBool | [out] | [isActive](#field-isActive) |  |
 | SFNode | [in, out] | [pickingGeometry](#field-pickingGeometry) | NULL  |
 | MFNode | [in, out] | [pickTarget](#field-pickTarget) | [ ] |
+| SFBool | [out] | [isActive](#field-isActive) |  |
 | MFNode | [out] | [pickedGeometry](#field-pickedGeometry) |  |
 {: .fields }
 
@@ -108,15 +108,6 @@ The *sortOrder* field determines the order provided for picked output events. Ex
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### SFBool [out] **isActive**
-{: #field-isActive }
-
-*isActive* indicates when the intersecting object is picked by the picking geometry. Output event *isActive*=true gets sent once a picked item is found. Output event *isActive*=false gets sent once no picked item is found.
-
-#### Warning
-
-- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
-
 ### SFNode [in, out] **pickingGeometry** NULL <small>[Cone|Cylinder|Sphere|Box]</small>
 {: #field-pickingGeometry }
 
@@ -126,6 +117,15 @@ The *sortOrder* field determines the order provided for picked output events. Ex
 {: #field-pickTarget }
 
 *pickTarget* specifies the list of nodes against which picking operations are performed. All nodes declared in this field and their descendents are evaluated for intersections.
+
+### SFBool [out] **isActive**
+{: #field-isActive }
+
+*isActive* indicates when the intersecting object is picked by the picking geometry. Output event *isActive*=true gets sent once a picked item is found. Output event *isActive*=false gets sent once no picked item is found.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### MFNode [out] **pickedGeometry**
 {: #field-pickedGeometry }

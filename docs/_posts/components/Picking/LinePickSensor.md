@@ -38,12 +38,12 @@ The LinePickSensor node belongs to the **Picking** component and requires at lea
 | SFString | [in, out] | [matchCriterion](#field-matchCriterion) | "MATCH |
 | SFString | [ ] | [intersectionType](#field-intersectionType) | "BOUNDS"  |
 | SFString | [ ] | [sortOrder](#field-sortOrder) | "CLOSEST"  |
+| SFNode | [in, out] | [pickingGeometry](#field-pickingGeometry) | NULL  |
+| MFNode | [in, out] | [pickTarget](#field-pickTarget) | [ ] |
 | SFBool | [out] | [isActive](#field-isActive) |  |
 | MFVec3f | [out] | [pickedTextureCoordinate](#field-pickedTextureCoordinate) |  |
 | MFVec3f | [out] | [pickedNormal](#field-pickedNormal) |  |
 | MFVec3f | [out] | [pickedPoint](#field-pickedPoint) |  |
-| SFNode | [in, out] | [pickingGeometry](#field-pickingGeometry) | NULL  |
-| MFNode | [in, out] | [pickTarget](#field-pickTarget) | [ ] |
 | MFNode | [out] | [pickedGeometry](#field-pickedGeometry) |  |
 {: .fields }
 
@@ -111,6 +111,16 @@ The *sortOrder* field determines the order provided for picked output events. Ex
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
+### SFNode [in, out] **pickingGeometry** NULL <small>[IndexedLineSet|LineSet]</small>
+{: #field-pickingGeometry }
+
+*pickingGeometry* specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
+
+### MFNode [in, out] **pickTarget** [ ] <small>[X3DGroupingNode|X3DShapeNode|Inline]</small>
+{: #field-pickTarget }
+
+*pickTarget* specifies the list of nodes against which picking operations are performed. All nodes declared in this field and their descendents are evaluated for intersections.
+
 ### SFBool [out] **isActive**
 {: #field-isActive }
 
@@ -147,16 +157,6 @@ Output event containing 3D points on surface of underlying pickingGeometry compu
 #### Warning
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
-
-### SFNode [in, out] **pickingGeometry** NULL <small>[IndexedLineSet|LineSet]</small>
-{: #field-pickingGeometry }
-
-*pickingGeometry* specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
-
-### MFNode [in, out] **pickTarget** [ ] <small>[X3DGroupingNode|X3DShapeNode|Inline]</small>
-{: #field-pickTarget }
-
-*pickTarget* specifies the list of nodes against which picking operations are performed. All nodes declared in this field and their descendents are evaluated for intersections.
 
 ### MFNode [out] **pickedGeometry**
 {: #field-pickedGeometry }
