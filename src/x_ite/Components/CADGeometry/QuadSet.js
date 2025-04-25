@@ -77,10 +77,7 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, X3DComposedGeometryN
    },
    build ()
    {
-      if (!this .getCoord ())
-         return;
-
-      let length = this .getCoord () .getSize ();
+      let length = this .getCoord () ?.getSize () ?? 0;
 
       length -= length % 4;
 

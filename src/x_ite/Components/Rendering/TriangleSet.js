@@ -71,10 +71,9 @@ Object .assign (Object .setPrototypeOf (TriangleSet .prototype, X3DComposedGeome
    },
    build ()
    {
-      if (!this .getCoord ())
-         return;
+      const trianglesSize = this .getCoord () ?.getSize () ?? 0;
 
-      X3DComposedGeometryNode .prototype .build .call (this, 3, this .getCoord () .getSize (), 3, this .getCoord () .getSize ());
+      X3DComposedGeometryNode .prototype .build .call (this, 3, trianglesSize, 3, trianglesSize);
    },
    createNormals (verticesPerPolygon, polygonsSize, polygons)
    {
