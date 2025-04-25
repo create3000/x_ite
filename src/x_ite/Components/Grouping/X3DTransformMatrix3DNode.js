@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
          this .matrix .identity ();
 
          if (this .isDefaultBBoxSize ())
-            this .getBBox  = this .getSubBBox;
+            this .getBBox = this .getSubBBox;
          else
             delete this .getBBox;
 
@@ -102,7 +102,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
          this .matrix .identity ();
 
          if (this .isDefaultBBoxSize ())
-            this .getBBox  = this .getSubBBox;
+            this .getBBox = this .getSubBBox;
          else
             delete this .getBBox;
 
