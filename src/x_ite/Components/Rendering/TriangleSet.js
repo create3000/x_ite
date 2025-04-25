@@ -67,11 +67,11 @@ Object .assign (Object .setPrototypeOf (TriangleSet .prototype, X3DComposedGeome
    },
    getNumVertices ()
    {
-      return this .getCoord () ?.getSize ();
+      return this .getCoord () ?.getSize () ?? 0;
    },
    build ()
    {
-      const trianglesSize = this .getCoord () ?.getSize () ?? 0;
+      const trianglesSize = this .getNumVertices ();
 
       X3DComposedGeometryNode .prototype .build .call (this, 3, trianglesSize, 3, trianglesSize);
    },

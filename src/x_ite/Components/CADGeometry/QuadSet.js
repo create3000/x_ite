@@ -73,11 +73,11 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, X3DComposedGeometryN
    },
    getNumVertices ()
    {
-      return this .getCoord () ?.getSize ();
+      return this .getCoord () ?.getSize () ?? 0;
    },
    build ()
    {
-      let length = this .getCoord () ?.getSize () ?? 0;
+      let length = this .getNumVertices ();
 
       length -= length % 4;
 
