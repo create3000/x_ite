@@ -59,6 +59,7 @@ import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
+import DEVELOPMENT         from "../../DEVELOPMENT.js";
 import _                   from "../../../locale/gettext.js";
 
 import "./Fonts.js";
@@ -68,6 +69,7 @@ const WEBGL_VERSION = 2;
 const
    _instanceId          = Symbol (),
    _element             = Symbol (),
+   _attributes          = Symbol (),
    _shadow              = Symbol (),
    _surface             = Symbol (),
    _canvas              = Symbol (),
@@ -179,6 +181,19 @@ Object .assign (X3DCoreContext .prototype,
       this .getElement ()
          .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
          .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
+
+      // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
+      // initially called for attributes set in XHTML and call callback initially
+      // for legacy X3DCanvas element.
+
+      setTimeout (() =>
+      {
+         if (this [_attributes])
+            return;
+
+         for (const { name, value } of this .getElement () [0] .attributes)
+            this .attributeChangedCallback (name, undefined, value);
+      });
    },
    getInstanceId ()
    {
@@ -255,6 +270,8 @@ Object .assign (X3DCoreContext .prototype,
    { },
    attributeChangedCallback (name, oldValue, newValue)
    {
+      this [_attributes] = true;
+
       switch (name)
       {
          case "antialiased":

@@ -63,11 +63,6 @@ const Legacy =
       if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
          return;
 
-      if (element .attr ("src"))
-         browser .attributeChangedCallback ("src", undefined, element .attr ("src"));
-      else if (element .attr ("url"))
-         browser .attributeChangedCallback ("url", undefined, element .attr ("url"));
-
       // Make element focusable.
       element .attr ("tabindex", element .attr ("tabindex") ?? 0);
    },
