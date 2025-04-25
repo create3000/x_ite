@@ -65,6 +65,9 @@ const Legacy =
 
       // Make element focusable.
       element .attr ("tabindex", element .attr ("tabindex") ?? 0);
+
+      // Process initial attributes.
+      browser .connectedCallback ();
    },
    error (elements, error)
    {

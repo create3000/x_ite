@@ -181,19 +181,6 @@ Object .assign (X3DCoreContext .prototype,
       this .getElement ()
          .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
          .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
-
-      // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
-      // initially called for attributes set in XHTML and call callback initially
-      // for legacy X3DCanvas element.
-
-      setTimeout (() =>
-      {
-         if (this [_attributes])
-            return;
-
-         for (const { name, value } of this .getElement () [0] .attributes)
-            this .attributeChangedCallback (name, undefined, value);
-      });
    },
    getInstanceId ()
    {
@@ -267,7 +254,19 @@ Object .assign (X3DCoreContext .prototype,
       })();
    },
    connectedCallback ()
-   { },
+   {
+      // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
+      // initially called for attributes set in XHTML and call callback initially
+      // for legacy X3DCanvas element.
+
+      if (this [_attributes])
+         return;
+
+      for (const { name, value } of this .getElement () [0] .attributes)
+         this .attributeChangedCallback (name, undefined, value);
+
+      this [_attributes] = true;
+   },
    attributeChangedCallback (name, oldValue, newValue)
    {
       this [_attributes] = true;
