@@ -948,14 +948,11 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, (external_X_ITE_X3D_
    },
    getNumVertices ()
    {
-      return this .getCoord () ?.getSize ();
+      return this .getCoord () ?.getSize () ?? 0;
    },
    build ()
    {
-      if (!this .getCoord ())
-         return;
-
-      let length = this .getCoord () .getSize ();
+      let length = this .getNumVertices ();
 
       length -= length % 4;
 

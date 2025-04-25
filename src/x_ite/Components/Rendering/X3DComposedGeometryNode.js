@@ -300,6 +300,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    },
    createNormals (verticesPerPolygon, polygonsSize, polygons = this .createPolygons (polygonsSize))
    {
+      // This function is used by Sunrize.
+
       const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize, polygons);
 
       if (!this ._normalPerVertex .getValue ())
@@ -323,6 +325,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    },
    createFaceNormals (verticesPerPolygon, polygonsSize, polygons = this .createPolygons (polygonsSize))
    {
+      // This function is used by Sunrize.
+
       const
          cw      = !this ._ccw .getValue (),
          coord   = this .coordNode,
