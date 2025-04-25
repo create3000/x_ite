@@ -608,6 +608,8 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 </table>
 
 >**Tip:** If you still haven't had enough and would like to see even more models, then take a look at the [X_ITE glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/). There are a lot of models from simple to advanced.
+><br><br>
+>[![glTF Model](/assets/laboratory/gltf-sample-viewer/teaser/boombox.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BoomBox/glTF/BoomBox.gltf){: .img-link .w-25 }[![glTF Model](/assets/laboratory/gltf-sample-viewer/teaser/heels.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/SheenHighHeel/glTF/SheenHighHeel.gltf){: .img-link .w-25 }[![glTF Model](/assets/laboratory/gltf-sample-viewer/teaser/sofa.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenWoodLeatherSofa/glTF/SheenWoodLeatherSofa.gltf){: .img-link .w-25 }[![glTF Model](/assets/laboratory/gltf-sample-viewer/teaser/dish.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/IridescentDishWithOlives/glTF/IridescentDishWithOlives.gltf){: .img-link .w-25 }
 {: .prompt-tip }
 
 ## Download X_ITE v{{ site.x_ite_latest_version }}
