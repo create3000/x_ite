@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleStripSet .prototype, X3DC
    },
    getNumVertices ()
    {
-      return this .triangleIndex .length;
+      return this .checkVertexCount (this .triangleIndex .length, 3);
    },
    build ()
    {

@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleFanSet .prototype, X3DCom
    },
    getNumVertices ()
    {
-      return this .triangleIndex .length;
+      return this .checkVertexCount (this .triangleIndex .length, 3);
    },
    build ()
    {

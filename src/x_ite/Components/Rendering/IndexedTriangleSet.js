@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleSet .prototype, X3DCompos
    },
    getNumVertices ()
    {
-      return this ._index .length;
+      return this .checkVertexCount (this ._index .length, 3);
    },
    initialize ()
    {

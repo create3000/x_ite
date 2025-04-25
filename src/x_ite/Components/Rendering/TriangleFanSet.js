@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (TriangleFanSet .prototype, X3DComposedGe
    },
    getNumVertices ()
    {
-      return this .triangleIndex .length;
+      return this .checkVertexCount (this .triangleIndex .length, 3);
    },
    build ()
    {

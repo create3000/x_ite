@@ -189,6 +189,10 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
+   checkVertexCount (numVertices, multiplier)
+   {
+      return numVertices - numVertices % multiplier;
+   },
    getPolygonIndex (index)
    {
       return index;
@@ -218,8 +222,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       // Set size to a multiple of verticesPerPolygon.
 
-      polygonsSize  -= polygonsSize  % verticesPerPolygon;
-      trianglesSize -= trianglesSize % verticesPerFace;
+      polygonsSize  = this .checkVertexCount (polygonsSize,  verticesPerPolygon);
+      trianglesSize = this .checkVertexCount (trianglesSize, verticesPerFace);
 
       const
          colorPerVertex     = this ._colorPerVertex .getValue (),

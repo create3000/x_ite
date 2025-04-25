@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (TriangleStripSet .prototype, X3DComposed
    },
    getNumVertices ()
    {
-      return this .triangleIndex .length;
+      return this .checkVertexCount (this .triangleIndex .length, 3);
    },
    build ()
    {
