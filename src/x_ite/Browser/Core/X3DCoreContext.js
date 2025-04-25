@@ -138,6 +138,7 @@ function X3DCoreContext (element)
    this [_instanceId]   = ++ instanceId;
    this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
    this [_element]      = element;
+   this [_attributes]   = new Set ();
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>") .attr ("part", "canvas") .addClass ("x_ite-private-canvas") .prependTo (surface);
    this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true");
@@ -259,17 +260,17 @@ Object .assign (X3DCoreContext .prototype,
       // initially called for attributes set in XHTML and call callback initially
       // for legacy X3DCanvas element.
 
-      if (this [_attributes])
-         return;
-
       for (const { name, value } of this .getElement () [0] .attributes)
-         this .attributeChangedCallback (name, undefined, value);
+      {
+         if (this [_attributes] .has (name))
+            continue;
 
-      this [_attributes] = true;
+         this .attributeChangedCallback (name, undefined, value);
+      }
    },
    attributeChangedCallback (name, oldValue, newValue)
    {
-      this [_attributes] = true;
+      this [_attributes] .add (name);
 
       switch (name)
       {
