@@ -61,12 +61,17 @@ function QuadSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (QuadSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   getTriangleIndex (i)
+   getTriangleIndex: (() =>
    {
-      const mod = i % 6;
+      const triangles = [0, 1, 2,   0, 2, 3];
 
-      return Math .floor (i / 6) * 4 + mod % 3 + Math .floor (mod / 4);
-   },
+      return function (i)
+      {
+         const mod = i % 6;
+
+         return (i - mod) / 6 * 4 + triangles [mod];
+      };
+   })(),
    getVerticesPerPolygon ()
    {
       return 4;
