@@ -85,12 +85,14 @@ Object .assign (Object .setPrototypeOf (TriangleStripSet .prototype, X3DComposed
 
       for (const vertexCount of stripCount)
       {
-         for (let i = 0, count = vertexCount - 2; i < count; ++ i)
-         {
-            const is_odd = i & 1;
+         const count = vertexCount - 2;
 
-            triangleIndex .push (index + (is_odd ? i + 1 : i),
-                                 index + (is_odd ? i : i + 1),
+         for (let i = 0; i < count; ++ i)
+         {
+            const odd = i & 1;
+
+            triangleIndex .push (index + (odd ? i + 1 : i),
+                                 index + (odd ? i : i + 1),
                                  index + (i + 2));
          }
 

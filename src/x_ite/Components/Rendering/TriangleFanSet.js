@@ -85,7 +85,9 @@ Object .assign (Object .setPrototypeOf (TriangleFanSet .prototype, X3DComposedGe
 
       for (const vertexCount of fanCount)
       {
-         for (let i = 1, length = vertexCount - 1; i < length; ++ i)
+         const count = vertexCount - 1
+
+         for (let i = 1; i < count; ++ i)
          {
             triangleIndex .push (index, index + i, index + i + 1);
          }

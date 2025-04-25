@@ -78,11 +78,12 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleFanSet .prototype, X3DCom
 
       const
          index         = this ._index,
-         triangleIndex = this .triangleIndex;
+         triangleIndex = this .triangleIndex,
+         length        = index .length;
 
       triangleIndex .length = 0;
 
-      for (let i = 0, length = index .length; i < length; ++ i)
+      for (let i = 0; i < length; ++ i)
       {
          const first = index [i];
 
