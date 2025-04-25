@@ -23,7 +23,7 @@ sub media {
 
    my $string = "const models = [\n";
 
-   foreach (map { s|$random/||r } @files)
+   foreach (map { s|$random||r } @files)
    {
       chomp;
       $string .= "   \"$media/$_\",\n";

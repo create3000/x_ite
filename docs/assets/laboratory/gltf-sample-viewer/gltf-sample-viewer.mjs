@@ -86,17 +86,17 @@ const no_headlight = [
 // SAMPLES_BEGIN
 
 const models = [
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/Animated Bee/Animated Bee.glb",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/BlackDragon/BlackDragon.glb",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/Bonsai 1/Bonsai 1.gltf",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/Bus Stop 1/Bus Stop 1.gltf",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/FurInstancing/FurInstancing.glb",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/GunBot/GunBot.glb",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/NeilArmstrong/NeilArmstrong.glb",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/Telephone/Telephone.gltf",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/Walking Alien/Walking Alien.gltf",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/WebP/WebP.gltf",
-   "https://create3000.github.io/media/glTF//Users/holger/Desktop/X_ITE/x_ite/../media/docs/glTF/YetiWarrior/YetiWarrior.gltf",
+   "https://create3000.github.io/media/glTF/Animated Bee/Animated Bee.glb",
+   "https://create3000.github.io/media/glTF/BlackDragon/BlackDragon.glb",
+   "https://create3000.github.io/media/glTF/Bonsai 1/Bonsai 1.gltf",
+   "https://create3000.github.io/media/glTF/Bus Stop 1/Bus Stop 1.gltf",
+   "https://create3000.github.io/media/glTF/FurInstancing/FurInstancing.glb",
+   "https://create3000.github.io/media/glTF/GunBot/GunBot.glb",
+   "https://create3000.github.io/media/glTF/NeilArmstrong/NeilArmstrong.glb",
+   "https://create3000.github.io/media/glTF/Telephone/Telephone.gltf",
+   "https://create3000.github.io/media/glTF/Walking Alien/Walking Alien.gltf",
+   "https://create3000.github.io/media/glTF/WebP/WebP.gltf",
+   "https://create3000.github.io/media/glTF/YetiWarrior/YetiWarrior.gltf",
 ];
 
 const glTF = [
