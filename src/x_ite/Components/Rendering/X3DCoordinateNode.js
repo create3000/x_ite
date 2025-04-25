@@ -75,10 +75,6 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
       this .point  = this ._point .getValue ();
       this .length = this ._point .length;
    },
-   isEmpty ()
-   {
-      return this .length === 0;
-   },
    getSize ()
    {
       return this .length;

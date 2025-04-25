@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    },
    build (verticesPerPolygon, polygonsSize, verticesPerFace, trianglesSize)
    {
-      if (!this .coordNode || this .coordNode .isEmpty ())
+      if (!this .coordNode ?.getSize ())
          return;
 
       // Set size to a multiple of verticesPerPolygon.

@@ -205,7 +205,7 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
    },
    build ()
    {
-      if (! this .coordNode || this .coordNode .isEmpty ())
+      if (!this .coordNode ?.getSize ())
          return;
 
       const

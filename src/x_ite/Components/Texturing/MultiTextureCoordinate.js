@@ -99,14 +99,6 @@ Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, X3DTe
    {
       return Math .min (this .maxTexCoords, this .textureCoordinateNodes .length);
    },
-   isEmpty ()
-   {
-      return true;
-   },
-   getSize ()
-   {
-      return 0;
-   },
    init (multiArray)
    {
       const

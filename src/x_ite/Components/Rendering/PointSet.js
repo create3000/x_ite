@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
    },
    build ()
    {
-      if (! this .coordNode || this .coordNode .isEmpty ())
+      if (!this .coordNode ?.getSize ())
          return;
 
       const

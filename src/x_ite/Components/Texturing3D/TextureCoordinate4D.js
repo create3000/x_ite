@@ -74,10 +74,6 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, X3DSingl
       this .point  = this ._point .getValue ();
       this .length = this ._point .length;
    },
-   isEmpty ()
-   {
-      return this .length === 0;
-   },
    getSize ()
    {
       return this .length;
