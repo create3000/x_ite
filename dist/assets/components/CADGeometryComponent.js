@@ -815,12 +815,17 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (external_X_I
 
       this ._set_index .addFieldInterest (this ._index);
    },
-   getTriangleIndex (i)
+   getTriangleIndex: (() =>
    {
-      const mod = i % 6;
+      const triangles = [0, 1, 2,   0, 2, 3];
 
-      return Math .floor (i / 6) * 4 + mod % 3 + Math .floor (mod / 4);
-   },
+      return function (i)
+      {
+         const mod = i % 6;
+
+         return (i - mod) / 6 * 4 + triangles [mod];
+      };
+   })(),
    getPolygonIndex (i)
    {
       return this ._index [i];
@@ -831,13 +836,11 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (external_X_I
    },
    getNumVertices ()
    {
-      return this ._index .length;
+      return this .checkVertexCount (this ._index .length, 4);
    },
    build ()
    {
-      let length = this ._index .length;
-
-      length -= length % 4;
+      const length = this .getNumVertices ();
 
       external_X_ITE_X3D_X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
@@ -936,25 +939,28 @@ function QuadSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (QuadSet .prototype, (external_X_ITE_X3D_X3DComposedGeometryNode_default()).prototype),
 {
-   getTriangleIndex (i)
+   getTriangleIndex: (() =>
    {
-      const mod = i % 6;
+      const triangles = [0, 1, 2,   0, 2, 3];
 
-      return Math .floor (i / 6) * 4 + mod % 3 + Math .floor (mod / 4);
-   },
+      return function (i)
+      {
+         const mod = i % 6;
+
+         return (i - mod) / 6 * 4 + triangles [mod];
+      };
+   })(),
    getVerticesPerPolygon ()
    {
       return 4;
    },
    getNumVertices ()
    {
-      return this .getCoord () ?.getSize () ?? 0;
+      return this .checkVertexCount (this .getCoord () ?.getSize () ?? 0, 4);
    },
    build ()
    {
-      let length = this .getNumVertices ();
-
-      length -= length % 4;
+      const length = this .getNumVertices ();
 
       external_X_ITE_X3D_X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },

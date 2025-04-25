@@ -1600,58 +1600,43 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
 
       return function ()
       {
-         const compoundShapes = this .compoundShapes;
+         const
+            compoundShapes = this .compoundShapes,
+            coord          = this .pickingGeometryNode ?.getCoord (),
+            length         = coord ?.getSize () ?? 0;
 
-         if (this .pickingGeometryNode)
+         for (let i = 0; i < length; ++ i)
          {
-            const coord = this .pickingGeometryNode .getCoord ();
-
-            if (coord)
+            if (i < compoundShapes .length)
             {
-               const length = coord .getSize ();
+               const
+                  compoundShape = compoundShapes [i],
+                  point         = coord .get1Point (i, compoundShape .point);
 
-               for (let i = 0; i < length; ++ i)
-               {
-                  if (i < compoundShapes .length)
-                  {
-                     const
-                        compoundShape = compoundShapes [i],
-                        point         = coord .get1Point (i, compoundShape .point);
+               o .setValue (point .x, point .y, point .z);
+               t .setOrigin (o);
 
-                     o .setValue (point .x, point .y, point .z);
-                     t .setOrigin (o);
-
-                     compoundShape .setLocalScaling (defaultScale);
-                     compoundShape .updateChildTransform (0, t);
-                  }
-                  else
-                  {
-                     const
-                        compoundShape = new (external_X_ITE_X3D_AmmoClass_default()).btCompoundShape (),
-                        sphereShape   = new (external_X_ITE_X3D_AmmoClass_default()).btSphereShape (0),
-                        point         = coord .get1Point (i, new (external_X_ITE_X3D_Vector3_default()) ());
-
-                     compoundShape .point = point;
-
-                     o .setValue (point .x, point .y, point .z);
-                     t .setOrigin (o);
-
-                     compoundShape .addChildShape (t, sphereShape);
-                     compoundShapes .push (compoundShape);
-                  }
-               }
-
-               compoundShapes .length = length;
+               compoundShape .setLocalScaling (defaultScale);
+               compoundShape .updateChildTransform (0, t);
             }
             else
             {
-               compoundShapes .length = 0;
+               const
+                  compoundShape = new (external_X_ITE_X3D_AmmoClass_default()).btCompoundShape (),
+                  sphereShape   = new (external_X_ITE_X3D_AmmoClass_default()).btSphereShape (0),
+                  point         = coord .get1Point (i, new (external_X_ITE_X3D_Vector3_default()) ());
+
+               compoundShape .point = point;
+
+               o .setValue (point .x, point .y, point .z);
+               t .setOrigin (o);
+
+               compoundShape .addChildShape (t, sphereShape);
+               compoundShapes .push (compoundShape);
             }
          }
-         else
-         {
-            compoundShapes .length = 0;
-         }
+
+         compoundShapes .length = length;
       };
    })(),
    process: (() =>
