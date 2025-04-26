@@ -76,9 +76,9 @@ X3DCanvas {
     --text-shadow-color: white;
     --logo-opacity: 0.8;
     --progress-color: rgba(0, 0, 0, 0.6);
-    --color1: rgb(222, 221, 226);
-    --color2: rgb(247, 247, 252);
-    --gradient: linear-gradient(to bottom, rgba(222, 221, 226, 0.6) 0%, rgba(247, 247, 252, 0.642) 100%);
+    --color1: rgb(247, 247, 252);
+    --color2: rgb(222, 221, 226);
+    --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
     --border: 4px solid rgba(229, 229, 234, 0.738);
     --button-color: rgba(255, 255, 255, 0.38196601);
     --icon-filter: invert(100%);
@@ -101,9 +101,9 @@ X3DCanvas[theme=light] {
   --text-shadow-color: white;
   --logo-opacity: 0.8;
   --progress-color: rgba(0, 0, 0, 0.6);
-  --color1: rgb(222, 221, 226);
-  --color2: rgb(247, 247, 252);
-  --gradient: linear-gradient(to bottom, rgba(222, 221, 226, 0.6) 0%, rgba(247, 247, 252, 0.642) 100%);
+  --color1: rgb(247, 247, 252);
+  --color2: rgb(222, 221, 226);
+  --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
   --border: 4px solid rgba(229, 229, 234, 0.738);
   --button-color: rgba(255, 255, 255, 0.38196601);
   --icon-filter: invert(100%);
