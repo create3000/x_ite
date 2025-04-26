@@ -62,7 +62,7 @@ X3DCanvas {
 @media (prefers-color-scheme: light) {
   :host(:not([theme=dark])),
   X3DCanvas:not([theme=dark]) {
-    ---red: #e12b2b;
+    --red: #e12b2b;
     --orange-filter:
       brightness(0)
       saturate(100%)
