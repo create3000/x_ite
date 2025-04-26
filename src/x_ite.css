@@ -37,6 +37,8 @@
 :host,
 X3DCanvas {
   --red: #d71f1f;
+  --orange-filter: brightness(0) saturate(100%) invert(71%) sepia(100%) saturate(1647%) hue-rotate(335deg) brightness(101%) contrast(101%);
+  --text-color: white;
   --color1: rgb(35, 37, 40);
   --color2: rgb(13, 16, 21);
   --gradient: linear-gradient(to bottom, rgba(35, 37, 40, 0.553) 0%, rgba(13, 16, 21, 0.831) 100%);
@@ -116,7 +118,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border: var(--border);
   border-radius: 5px;
   padding: 5px;
-  color: white;
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
   letter-spacing: unset;
@@ -145,7 +147,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-right: var(--border);
   border-radius: 5px;
   padding: 10px 15px 14px 14px;
-  color: white;
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: 9pt;
   white-space: pre;
@@ -160,7 +162,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 0;
   padding: 0;
   background: none;
-  color: white;
+  color: var(--text-color);
   font-size: inherit;
   font-weight: normal;
   font-style: normal;
@@ -219,7 +221,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   height: 14pt;
   padding: 0;
   background: rgba(0, 0, 0, 0.38196601);
-  color: white;
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-style: italic;
   font-size: 9pt;
@@ -256,7 +258,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 0;
   padding: 0;
   background: none;
-  color: white;
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: inherit;
   font-weight: inherit;
@@ -302,7 +304,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border: 4px solid transparent;
   border-radius: 5px;
   padding: 5px 10px 4px 9px;
-  color: white;
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
   white-space: pre;
@@ -454,8 +456,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu input:checked {
-  /* orange */
-  filter: brightness(0) saturate(100%) invert(71%) sepia(100%) saturate(1647%) hue-rotate(335deg) brightness(101%) contrast(101%);
+  filter: var(--orange-filter);
 }
 
 .x_ite-private-menu .context-menu-input:hover input:checked {
@@ -597,7 +598,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-x_ite {
-  color: white;
+  color: var(--text-color);
   font-size: 28pt;
   text-align: center;
   text-shadow: 1px 1px 0 black;
@@ -605,7 +606,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-spinner-text {
-  color: white;
+  color: var(--text-color);
   font-size: 11pt;
   text-align: center;
   text-shadow: 1px 1px 0 black;
