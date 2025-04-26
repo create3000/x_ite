@@ -488,6 +488,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   line-height: 1;
 }
 
+.x_ite-private-menu label span {
+  color: var(--text-color-dark);
+  filter: var(--icon-filter);
+}
+
 .x_ite-private-menu label:has(>input[type=radio]:checked) {
   font-weight: bold;
 }
