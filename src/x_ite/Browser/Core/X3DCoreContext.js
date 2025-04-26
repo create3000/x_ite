@@ -59,7 +59,6 @@ import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
-import DEVELOPMENT         from "../../DEVELOPMENT.js";
 import _                   from "../../../locale/gettext.js";
 
 import "./Fonts.js";
@@ -101,11 +100,11 @@ function X3DCoreContext (element)
    // Get canvas & context.
 
    const
-      browser      = $("<div></div>") .addClass ("x_ite-private-browser") .attr ("part", "browser") .attr ("tabindex", 0),
-      surface      = $("<div></div>") .addClass ("x_ite-private-surface") .attr ("part", "surface") .appendTo (browser),
-      splashScreen = $("<div></div>") .addClass (["x_ite-private-splash-screen", "x_ite-private-hidden"]) .appendTo (browser),
-      spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
-      progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
+      browser      = $("<div></div>", { class: "x_ite-private-browser", part: "browser", tabindex: 0 }),
+      surface      = $("<div></div>", { class: "x_ite-private-surface", part: "surface" }) .appendTo (browser),
+      splashScreen = $("<div></div>", { class: "x_ite-private-splash-screen x_ite-private-hidden" }) .appendTo (browser),
+      spinner      = $("<div></div>", { class: "x_ite-private-spinner" }) .appendTo (splashScreen),
+      progress     = $("<div></div>", { class: "x_ite-private-progress" }) .appendTo (splashScreen);
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
@@ -113,13 +112,15 @@ function X3DCoreContext (element)
 
       const stylesheet = new Promise (resolve =>
       {
-         $("<link/>")
-            .on ("load", resolve)
-            .attr ("integrity", "integrity-x_ite-css")
-            .attr ("crossorigin", "anonymous")
-            .attr ("rel", "stylesheet")
-            .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
-            .appendTo (shadow);
+         $("<link/>",
+         {
+            on: { load: resolve },
+            integrity: "integrity-x_ite-css",
+            crossorigin: "anonymous",
+            rel: "stylesheet",
+            href: new URL ("x_ite.css", URLs .getScriptURL ()),
+         })
+         .appendTo (shadow);
       });
 
       this [_shadow] = shadow .append (browser .hide ());
@@ -131,16 +132,16 @@ function X3DCoreContext (element)
       this [_shadow] = element .prepend (browser);
    }
 
-   $("<div></div>") .addClass ("x_ite-private-x_ite") .html (`${this .getName ()}<b>X3D</b>`) .appendTo (progress);
-   $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
-   $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
+   $("<div></div>", { class: "x_ite-private-x_ite" }) .html (`${this .getName ()}<b>X3D</b>`) .appendTo (progress);
+   $("<div></div>", { class: "x_ite-private-progressbar" })  .appendTo (progress) .append ($("<div></div>"));
+   $("<div></div>", { class: "x_ite-private-spinner-text" }) .appendTo (progress);
 
    this [_instanceId]   = ++ instanceId;
    this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
    this [_element]      = element;
    this [_attributes]   = new Set ();
    this [_surface]      = surface;
-   this [_canvas]       = $("<canvas></canvas>") .attr ("part", "canvas") .addClass ("x_ite-private-canvas") .prependTo (surface);
+   this [_canvas]       = $("<canvas></canvas>", { part: "canvas", class: "x_ite-private-canvas" }) .prependTo (surface);
    this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true");
    this [_splashScreen] = splashScreen;
 
