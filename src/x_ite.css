@@ -60,8 +60,8 @@ X3DCanvas {
 }
 
 @media (prefers-color-scheme: light) {
-  :host,
-  X3DCanvas {
+  :host(:not([theme=dark])),
+  X3DCanvas:not([theme=dark]) {
     --orange-filter:
       brightness(0)
       saturate(100%)
@@ -77,11 +77,34 @@ X3DCanvas {
     --progress-color: rgba(0, 0, 0, 0.6);
     --color1: rgb(222, 221, 221);
     --color2: rgb(247, 247, 247);
-    --gradient: linear-gradient(to bottom, rgba(222, 221, 221, 0.675) 0%, rgba(247, 247, 247, 0.45) 100%);
-    --border: 4px solid rgba(221, 231, 241, 0.552);
+    --gradient: linear-gradient(to bottom, rgba(222, 221, 221, 0.6) 0%, rgba(247, 247, 247, 0.642) 100%);
+    --border: 4px solid rgba(229, 229, 229, 0.738);
     --button-color: rgba(255, 255, 255, 0.38196601);
     --icon-filter: invert(100%);
   }
+}
+
+:host([theme=light]),
+X3DCanvas[theme=light] {
+  --orange-filter:
+    brightness(0)
+    saturate(100%)
+    invert(71%)
+    sepia(100%)
+    saturate(2647%)
+    hue-rotate(335deg)
+    brightness(70%)
+    contrast(121%);
+  --text-color: black;
+  --text-shadow-color: white;
+  --logo-opacity: 0.8;
+  --progress-color: rgba(0, 0, 0, 0.6);
+  --color1: rgb(222, 221, 221);
+  --color2: rgb(247, 247, 247);
+  --gradient: linear-gradient(to bottom, rgba(222, 221, 221, 0.6) 0%, rgba(247, 247, 247, 0.642) 100%);
+  --border: 4px solid rgba(229, 229, 229, 0.738);
+  --button-color: rgba(255, 255, 255, 0.38196601);
+  --icon-filter: invert(100%);
 }
 
 :host,

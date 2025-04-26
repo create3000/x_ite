@@ -809,6 +809,9 @@ src
 textCompression
 : A string value that determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, ie. either by adjusting char spacing or by scaling. The default value for the *textCompression* attribute is `CHAR_SPACING`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
+theme
+: A string value that determines what color theme should be used for the user interface (context menu, notifications, ...). The default value for the *theme* attribute is `auto`. Possible values are `light`, `dark` and `auto`;
+
 timings
 : A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session, otherwise it is `false`.
 
