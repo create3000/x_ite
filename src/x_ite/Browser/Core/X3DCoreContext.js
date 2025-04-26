@@ -262,7 +262,7 @@ Object .assign (X3DCoreContext .prototype,
 
       for (const { name, value } of this .getElement () [0] .attributes)
       {
-         if (this [_attributes] .has (name))
+         if (this [_attributes] .has (name .toLowerCase ()))
             continue;
 
          this .attributeChangedCallback (name, undefined, value);
@@ -270,16 +270,15 @@ Object .assign (X3DCoreContext .prototype,
    },
    attributeChangedCallback (name, oldValue, newValue)
    {
-      this [_attributes] .add (name);
+      this [_attributes] .add (name .toLowerCase ());
 
-      switch (name)
+      switch (name .toLowerCase ())
       {
          case "antialiased":
          {
             this .setBrowserOption ("Antialiased", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
-         case "baseURL":
          case "baseurl":
          {
             this .setBaseURL (newValue);
@@ -290,19 +289,16 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Cache", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
-         case "colorSpace":
          case "colorspace":
          {
             this .setBrowserOption ("ColorSpace", newValue);
             break;
          }
-         case "contentScale":
          case "contentscale":
          {
             this .setBrowserOption ("ContentScale", newValue === "auto" ? -1 : parseFloat (newValue));
             break;
          }
-         case "contextMenu":
          case "contextmenu":
          {
             this .setBrowserOption ("ContextMenu", this .parseBooleanAttribute (newValue) ?? true);
@@ -318,7 +314,6 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Exposure", newValue);
             break;
          }
-         case "logarithmicDepthBuffer":
          case "logarithmicdepthbuffer":
          {
             this .setBrowserOption ("LogarithmicDepthBuffer", this .parseBooleanAttribute (newValue) ?? false);
@@ -350,13 +345,11 @@ Object .assign (X3DCoreContext .prototype,
 
             break;
          }
-         case "orderIndependentTransparency":
          case "orderindependenttransparency":
          {
             this .setBrowserOption ("OrderIndependentTransparency", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
-         case "splashScreen":
          case "splashscreen":
          {
             this .setBrowserOption ("SplashScreen", this .parseBooleanAttribute (newValue) ?? true);
@@ -382,7 +375,6 @@ Object .assign (X3DCoreContext .prototype,
 
             break;
          }
-         case "textCompression":
          case "textcompression":
          {
             this .setBrowserOption ("TextCompression", newValue || "CHAR_SPACINGS");
@@ -393,7 +385,6 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Timings", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
-         case "toneMapping":
          case "tonemapping":
          {
             this .setBrowserOption ("ToneMapping", newValue || "NONE");
@@ -427,7 +418,6 @@ Object .assign (X3DCoreContext .prototype,
 
             break;
          }
-         case "xrSessionMode":
          case "xrsessionmode":
          {
             this .setBrowserOption ("XRSessionMode", newValue || "IMMERSIVE_VR");
