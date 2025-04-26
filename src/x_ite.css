@@ -37,7 +37,15 @@
 :host,
 X3DCanvas {
   --red: #d71f1f;
-  --orange-filter: brightness(0) saturate(100%) invert(71%) sepia(100%) saturate(1647%) hue-rotate(335deg) brightness(101%) contrast(101%);
+  --orange-filter:
+    brightness(0)
+    saturate(100%)
+    invert(71%)
+    sepia(100%)
+    saturate(1647%)
+    hue-rotate(335deg)
+    brightness(101%)
+    contrast(101%);
   --text-color: white;
   --color1: rgb(35, 37, 40);
   --color2: rgb(13, 16, 21);
