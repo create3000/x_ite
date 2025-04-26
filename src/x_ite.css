@@ -47,30 +47,29 @@ X3DCanvas {
     brightness(101%)
     contrast(101%);
   --text-color: white;
+  --text-shadow-color: black;
+  --logo-opacity: 0.6;
+  --progress-color: rgba(255, 255, 255, 0.5);
   --color1: rgb(35, 37, 40);
   --color2: rgb(13, 16, 21);
   --gradient: linear-gradient(to bottom, rgba(35, 37, 40, 0.553) 0%, rgba(13, 16, 21, 0.831) 100%);
   --border: 4px solid rgba(43, 45, 47, 0.675);
+  --button-color: rgba(0, 0, 0, 0.38196601);
 }
 
 @media (prefers-color-scheme: light) {
-  :host(:not([theme=dark])),
-  X3DCanvas:not([theme=dark]) {
+  :host,
+  X3DCanvas {
     --text-color: black;
-    --color1: rgb(13, 16, 21);
-    --color2: rgb(35, 37, 40);
-    --gradient: linear-gradient(to bottom, rgba(217, 232, 255, 0.553) 0%, rgba(239, 245, 255, 0.831) 100%);
-    --border: 4px solid rgba(235, 245, 255, 0.675);
+    --text-shadow-color: white;
+    --logo-opacity: 0.8;
+    --progress-color: rgba(0, 0, 0, 0.6);
+    --color1: rgb(231, 237, 246);
+    --color2: rgb(221, 234, 253);
+    --gradient: linear-gradient(to bottom, rgba(231, 237, 246, 0.675) 0%, rgba(221, 234, 253, 0.45) 100%);
+    --border: 4px solid rgba(235, 245, 255, 0.552);
+    --button-color: rgba(255, 255, 255, 0.38196601);
   }
-}
-
-:host([theme=light]),
-X3DCanvas[theme=light] {
-  --text-color: black;
-  --color1: rgb(13, 16, 21);
-  --color2: rgb(35, 37, 40);
-  --gradient: linear-gradient(to bottom, rgba(217, 232, 255, 0.553) 0%, rgba(239, 245, 255, 0.831) 100%);
-  --border: 4px solid rgba(235, 245, 255, 0.675);
 }
 
 :host,
@@ -248,7 +247,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   width: 100%;
   height: 14pt;
   padding: 0;
-  background: rgba(0, 0, 0, 0.38196601);
+  background: var(--button-color);
   color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-style: italic;
@@ -600,16 +599,19 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-spinner {
+  --size: 160px;
+  --center-x: calc(458 / 1024 * var(--size));
+  --center-y: calc(539 / 1024 * var(--size));
   position: absolute;
-  top: calc(50% - (160px / 2));
-  left: calc(50% - (160px / 2) + 8px);
-  width: 160px;
-  height: 160px;
+  top: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-y)));
+  left: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-x)));
+  width: var(--size);
+  height: var(--size);
   background: url(assets/images/logo.svg) no-repeat;
-  background-size: 160px 160px;
-  opacity: 0.6;
+  background-size: var(--size) var(--size);
+  opacity: var(--logo-opacity);
   animation: spinner-animation-spin 32s linear infinite;
-  transform-origin: calc(458 / 1024 * 160px) calc(539 / 1024 * 160px);
+  transform-origin: var(--center-x) var(--center-y);
 }
 
 @keyframes spinner-animation-spin {
@@ -629,7 +631,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   color: var(--text-color);
   font-size: 28pt;
   text-align: center;
-  text-shadow: 1px 1px 0 black;
+  text-shadow: 1px 1px 0 var(--text-shadow-color);
   font-family: X_ITE PT Sans, sans-serif;
 }
 
@@ -637,14 +639,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   color: var(--text-color);
   font-size: 11pt;
   text-align: center;
-  text-shadow: 1px 1px 0 black;
+  text-shadow: 1px 1px 0 var(--text-shadow-color);
   font-family: X_ITE PT Sans, sans-serif;
 }
 
 .x_ite-private-progressbar {
   margin: 8px;
-  border-left: 2px solid rgba(255, 255, 255, 0.5);
-  border-right: 2px solid rgba(255, 255, 255, 0.5);
+  border-left: 2px solid var(--progress-color);
+  border-right: 2px solid var(--progress-color);
   padding: 0 2px;
   text-align: left;
 }
@@ -652,7 +654,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-progressbar div {
   width: 0%;
   height: 6px;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--progress-color);
 }
 
 /* WebXR */
