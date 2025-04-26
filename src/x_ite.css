@@ -62,6 +62,7 @@ X3DCanvas {
 @media (prefers-color-scheme: light) {
   :host(:not([theme=dark])),
   X3DCanvas:not([theme=dark]) {
+    ---red: #e12b2b;
     --orange-filter:
       brightness(0)
       saturate(100%)
@@ -86,6 +87,7 @@ X3DCanvas {
 
 :host([theme=light]),
 X3DCanvas[theme=light] {
+  --red: #e12b2b;
   --orange-filter:
     brightness(0)
     saturate(100%)
@@ -526,7 +528,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-input:hover input:checked {
-  filter: none;
+  filter: var(--icon-filter);
 }
 
 .x_ite-private-menu input[type=checkbox]:checked {
