@@ -36,6 +36,15 @@
 
 :host,
 X3DCanvas {
+  --red: #d71f1f;
+  --color1: rgb(35, 37, 40);
+  --color2: rgb(13, 16, 21);
+  --gradient: linear-gradient(to bottom, rgba(35, 37, 40, 0.553) 0%, rgba(13, 16, 21, 0.831) 100%);
+  --border: 4px solid rgba(43, 45, 47, 0.675);
+}
+
+:host,
+X3DCanvas {
   display: inline-block;
   overflow: hidden;
   outline: none;
@@ -101,20 +110,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: absolute;
   top: 20px;
   right: -4px;
-  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.61803);
-  background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  -webkit-background-clip: padding-box;
-  /* for Safari */
+  background: var(--gradient);
   background-clip: padding-box;
-  /* for IE9+, Firefox 4+, Opera, Chrome */
-  border: 4px solid rgba(60, 60, 60, 0.61803);
+  border: var(--border);
   border-radius: 5px;
   padding: 5px;
   color: white;
@@ -139,21 +138,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: absolute;
   bottom: -4px;
   left: -4px;
-  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.61803);
-  background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  -webkit-background-clip: padding-box;
-  /* for Safari */
+  background: var(--gradient);
   background-clip: padding-box;
-  /* for IE9+, Firefox 4+, Opera, Chrome */
-  border-top: 4px solid rgba(60, 60, 60, 0.61803);
-  border-right: 4px solid rgba(60, 60, 60, 0.61803);
+  border-top: var(--border);
+  border-right: var(--border);
   border-radius: 5px;
   padding: 10px 15px 14px 14px;
   color: white;
@@ -243,36 +232,18 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-world-info-overlay {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
 }
 
 .x_ite-private-world-info {
   overflow-y: auto;
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
   margin: 21pt;
-  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.61803);
-  background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  -webkit-background-clip: padding-box;
-  /* for Safari */
+  background: var(--gradient);
   background-clip: padding-box;
-  /* for IE9+, Firefox 4+, Opera, Chrome */
-  border: 4px solid rgba(60, 60, 60, 0.61803);
+  border: var(--border);
   border-radius: 15px;
   padding: 21pt;
 }
@@ -313,20 +284,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-size: 14pt;
 }
 
-.x_ite-private-world-info a {
-  text-decoration: underline;
-  color: #fd9f2e;
-}
-
 /* Context Menu */
 
 .x_ite-private-menu.context-menu-layer {
   position: fixed;
   z-index: 10000;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
 }
 
@@ -362,31 +324,17 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-menu .context-menu-background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
   box-sizing: border-box;
   min-width: 120px;
   margin: 0;
   margin-left: 1px;
-  border: 4px solid rgba(60, 60, 60, 0.61803);
+  border: var(--border);
   border-radius: 5px;
   padding: 5px 10px 9px 9px;
-  background: rgba(0, 0, 0, 0.61803);
-  background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  -webkit-backdrop-filter: blur(8px);
+  background: var(--gradient);
   backdrop-filter: blur(8px);
-  -webkit-background-clip: padding-box;
-  /* for Safari */
   background-clip: padding-box;
-  /* for IE9+, Firefox 4+, Opera, Chrome */
 }
 
 .x_ite-private-menu .context-menu-item {
@@ -413,7 +361,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item:hover:not(.context-menu-not-selectable) {
-  background-color: #d71f1f;
+  background-color: var(--red);
 }
 
 .x_ite-private-menu .context-menu-item:hover > .context-menu-list {
@@ -447,7 +395,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   /* CSS triangle */
   border-style: solid;
   border-width: 4px 0 4px 5px;
-  border-color: transparent transparent transparent #eee;
+  border-color: transparent transparent transparent #e8eaed; /* color from icons */
   width: 0;
   height: 0;
 }
@@ -486,8 +434,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu input {
   all: revert;
   cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
 }
 
@@ -620,15 +566,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-splash-screen {
   pointer-events: none;
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
-  background: #1b1d21;
-  background: -moz-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);
-  background: -webkit-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);
-  background: radial-gradient(ellipse at center, #2f3135 0%, #1b1d21 100%);
+  background: radial-gradient(ellipse at center, var(--color1) 0%, var(--color2) 100%);
 }
 
 .x_ite-private-spinner {
@@ -640,27 +579,12 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: url(assets/images/logo.svg) no-repeat;
   background-size: 160px 160px;
   opacity: 0.6;
-  -webkit-animation: spinner-animation-spin 32s linear infinite;
-  -moz-animation: spinner-animation-spin 32s linear infinite;
   animation: spinner-animation-spin 32s linear infinite;
-  transform-origin: 71.5625px 84.0625px; /* calc(458px / 1024px * 160px) calc(539px / 1024px * 160px) */
-}
-
-@-moz-keyframes spinner-animation-spin {
-  100% {
-    -moz-transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spinner-animation-spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
+  transform-origin: calc(458 / 1024 * 160px) calc(539 / 1024 * 160px);
 }
 
 @keyframes spinner-animation-spin {
   100% {
-    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }

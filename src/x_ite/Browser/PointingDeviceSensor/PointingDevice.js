@@ -240,6 +240,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       this .over = browser .motionNotifyEvent (x, y);
 
+      if (browser .getViewer () ._isActive .getValue ())
+         return;
+
       if (this .over)
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
       else
