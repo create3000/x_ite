@@ -406,61 +406,13 @@ Object .assign (Box3 .prototype,
    })(),
    intersectsBox: (() =>
    {
-      const points1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const points2 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes2 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes9 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const normals = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
+      const
+         points1 = Array .from ({ length: 8 }, () => new Vector3 ()),
+         points2 = Array .from ({ length: 8 }, () => new Vector3 ()),
+         axes1   = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes2   = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes9   = Array .from ({ length: 9 }, () => new Vector3 ()),
+         normals = Array .from ({ length: 3 }, () => new Vector3 ());
 
       return function (other)
       {
@@ -508,53 +460,14 @@ Object .assign (Box3 .prototype,
    })(),
    intersectsTriangle: (() =>
    {
-      const points1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes9 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const normals = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const triangle = [ ];
-
-      const triangleNormal = [ new Vector3 () ];
-
-      const triangleEdges = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 ()
-      ];
+      const
+         points1        = Array .from ({ length: 8 }, () => new Vector3 ()),
+         axes1          = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes9          = Array .from ({ length: 9 }, () => new Vector3 ()),
+         normals        = Array .from ({ length: 3 }, () => new Vector3 ()),
+         triangle       = [ ],
+         triangleNormal = [ new Vector3 () ],
+         triangleEdges  = Array .from ({ length: 3 }, () => new Vector3 ());
 
       return function (a, b, c)
       {
