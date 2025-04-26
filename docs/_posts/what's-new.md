@@ -20,6 +20,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ### X_ITE
 
+* New `theme` attribute for the \<x3d-canvas\> element.
 * New icon concept for context menu, timings and notifications.
 * Fixed various minor bugs in [MovieTexture](/x_ite/components/texturing/movietexture/).
 * Fixed issue with animation getting stuck when in transition, viewAll or lookAt animation.
