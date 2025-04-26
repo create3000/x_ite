@@ -45,6 +45,26 @@ X3DCanvas {
   --border: 4px solid rgba(43, 45, 47, 0.675);
 }
 
+@media (prefers-color-scheme: light) {
+  :host(:not([theme=dark])),
+  X3DCanvas:not([theme=dark]) {
+    --text-color: black;
+    --color1: rgb(13, 16, 21);
+    --color2: rgb(35, 37, 40);
+    --gradient: linear-gradient(to bottom, rgba(217, 232, 255, 0.553) 0%, rgba(239, 245, 255, 0.831) 100%);
+    --border: 4px solid rgba(235, 245, 255, 0.675);
+  }
+}
+
+:host([theme=light]),
+X3DCanvas[theme=light] {
+  --text-color: black;
+  --color1: rgb(13, 16, 21);
+  --color2: rgb(35, 37, 40);
+  --gradient: linear-gradient(to bottom, rgba(217, 232, 255, 0.553) 0%, rgba(239, 245, 255, 0.831) 100%);
+  --border: 4px solid rgba(235, 245, 255, 0.675);
+}
+
 :host,
 X3DCanvas {
   display: inline-block;
