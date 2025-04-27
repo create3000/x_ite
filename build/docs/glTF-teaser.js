@@ -21,11 +21,10 @@ function main ()
 
    // .md
 
-   let md = sh (`cat docs/_posts/getting-started.md`);
-
    const links = ["light", "dark"] .flatMap (theme => files .map ((file, i) => `[![Teaser${i + 1}](/assets/laboratory/gltf-sample-viewer/teaser/${theme}-image${i + 1}.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=${file}){: .${theme} .img-link .w-25 }`)) .join ("");
 
-   md = md .replace (/><br><br>\[!\[Teaser1\].*?\n/, `><br><br>${links}\n`);
+   const md = sh (`cat docs/_posts/getting-started.md`)
+      .replace (/><br><br>\[!\[Teaser1\].*?\n/, `><br><br>${links}\n`);
 
    fs .writeFileSync (`docs/_posts/getting-started.md`, md);
 
