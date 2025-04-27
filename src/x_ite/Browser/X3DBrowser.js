@@ -449,10 +449,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             this .shutdown () .processInterests ();
             this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
             this .callBrowserEventHandler ("shutdown");
-         }
 
-         if (this [_reject] !== reject)
-            return;
+            // There could be a replaceWorld from a shutdown event handlers,
+            // so we need to check if the reject function is still the same.
+            if (this [_reject] !== reject)
+               return;
+         }
 
          // Replace world.
 
