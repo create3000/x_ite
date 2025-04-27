@@ -6,7 +6,7 @@
   </head>
   <Scene>
     <Background
-        transparency='0.9'/>
+        transparency='0.96'/>
     <Viewpoint
         description='Initial View'
         position='4.737889 4.718629 7.435519'
