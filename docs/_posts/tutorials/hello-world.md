@@ -200,7 +200,7 @@ Transform {
 }
 ```
 
-We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a [Material](/x_ite/components/shape/material/) node to the *material* field of the [Appearance](/x_ite/components/shape/appearance/) node and set the *diffuseColor* field to (0 0.5 1). As geometry we take a [Text](/x_ite/components/text/text/) node and set the *string* field to "Hello World!".
+We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a [Material](/x_ite/components/shape/material/) node to the *material* field of the [Appearance](/x_ite/components/shape/appearance/) node and set the *diffuseColor* field to `0 0.5 1`. As geometry we take a [Text](/x_ite/components/text/text/) node and set the *string* field to "Hello World!". The *string* field is of type MFString, an Array like object, where each element is of type String, one element for each line.
 
 ### Result
 
