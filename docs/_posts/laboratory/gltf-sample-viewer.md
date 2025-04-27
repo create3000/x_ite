@@ -131,7 +131,15 @@ function initialize ()
 
 function changeColorScheme (event)
 {
-   colorScheme = event .matches ? 1 : 0;
+    let theme = !!event .matches;
+
+    if ($("html") .attr ("data-mode") === "light")
+        theme = 0;
+
+    if ($("html") .attr ("data-mode") === "dark")
+        theme = 1;
+
+   colorScheme = theme;
 }
 ]]>
           </Script>

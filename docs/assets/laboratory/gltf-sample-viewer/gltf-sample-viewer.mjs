@@ -743,7 +743,7 @@ class SampleViewer
 
       // Handle color scheme change.
 
-      const colorScheme = window .matchMedia ("(prefers-color-scheme: light)");
+      const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)");
 
       colorScheme .addEventListener ("change", event => this .changeColorScheme (event));
 
@@ -785,7 +785,15 @@ class SampleViewer
    {
       const defaultBackground = await this .getDefaultBackground ();
 
-      defaultBackground .skyColor = event .matches ? [1, 1, 1] : [0, 0, 0];
+      let theme = !!event .matches;
+
+      if ($("html") .attr ("data-mode") === "light")
+         theme = 0;
+
+      if ($("html") .attr ("data-mode") === "dark")
+         theme = 1;
+
+      defaultBackground .skyColor = theme ? [0, 0, 0] : [1, 1, 1];
    }
 
    get scene ()
