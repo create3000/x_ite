@@ -741,6 +741,16 @@ class SampleViewer
          this .setBackground (!$("#summer") .hasClass ("selected"));
       });
 
+      // Handle color scheme change.
+
+      const colorScheme = window .matchMedia ("(prefers-color-scheme: light)");
+
+      colorScheme .addEventListener ("change", event => this .changeColorScheme (event));
+
+      this .changeColorScheme (colorScheme);
+
+      // Handle viewpoint change.
+
       browser .getField ("activeViewpoint") .addFieldCallback ("change", () =>
       {
          const
@@ -769,6 +779,13 @@ class SampleViewer
          else
             this .loadURL (url);
       });
+   }
+
+   async changeColorScheme (event)
+   {
+      const defaultBackground = await this .getDefaultBackground ();
+
+      defaultBackground .skyColor = event .matches ? [1, 1, 1] : [0, 0, 0];
    }
 
    get scene ()
@@ -960,11 +977,20 @@ class SampleViewer
          $("#summer, [for=summer]") .removeClass ("selected");
       }
 
-      const background = await this .getBackground ();
+      const
+         defaultBackground = await this .getDefaultBackground (),
+         background        = await this .getBackground ();
 
-      background .set_bind = on;
+      defaultBackground .set_bind = !on;
+      background        .set_bind = on;
 
+      this .scene .addRootNode (defaultBackground);
       this .scene .addRootNode (background);
+   }
+
+   async getDefaultBackground ()
+   {
+      return this .defaultBackground ??= this .scene .createNode ("Background");
    }
 
    async getBackground ()
