@@ -10,21 +10,21 @@ tags: [glTF, Sample, Viewer, Laboratory]
 
 @media (prefers-color-scheme: dark) {
   html:not([data-mode]), html[data-mode=dark] {
-     --list-color: rgba(0, 0, 0, 0.3);
+     --list-color: rgba(0, 0, 0, 0.1);
   }
 
   html[data-mode=light] {
-    --list-color: rgba(0, 0, 0, 0.03);
+    --list-color: rgba(0, 0, 0, 0.01);
   }
 }
 
 @media (prefers-color-scheme: light) {
   html[data-mode=dark] {
-    --list-color: rgba(0, 0, 0, 0.3);
+    --list-color: rgba(0, 0, 0, 0.1);
   }
 
   html:not([data-mode]), html[data-mode=light] {
-    --list-color: rgba(0, 0, 0, 0.03);
+    --list-color: rgba(0, 0, 0, 0.01);
   }
 }
 
@@ -94,14 +94,48 @@ x3d-canvas {
     <x3d-canvas class="xr-button-tr" contentScale="auto" update="auto">
       <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
         <head>
+          <component name='Scripting' level='1'></component>
           <component name='Text' level='1'></component>
         </head>
         <Scene>
-          <Shape>
-            <Text string='"glTF Sample Viewer"'>
-              <FontStyle justify='"MIDDLE", "MIDDLE"'></FontStyle>
-            </Text>
-          </Shape>
+          <Background
+            transparency='0.96'></Background>
+          <Switch DEF='Text'>
+            <Shape>
+              <Appearance>
+                <UnlitMaterial
+                    emissiveColor='0 0 0'></UnlitMaterial>
+              </Appearance>
+              <Text DEF='_1'
+                  string='"glTF Sample Viewer"'>
+                <FontStyle
+                    justify='"MIDDLE", "MIDDLE"'></FontStyle>
+              </Text>
+            </Shape>
+            <Shape>
+              <Text USE='_1'></Text>
+            </Shape>
+          </Switch>
+          <Script type='model/x3d+xml' DEF='ColorSchemeScript'>
+            <field accessType='outputOnly' type='SFInt32' name='colorScheme'></field>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)");
+
+   colorScheme .addEventListener ("change", event => changeColorScheme (event));
+
+   changeColorScheme (colorScheme);
+}
+
+function changeColorScheme (event)
+{
+   colorScheme = event .matches ? 1 : 0;
+}
+]]>
+          </Script>
+          <ROUTE fromNode='ColorSchemeScript' fromField='colorScheme' toNode='Text' toField='set_whichChoice'></ROUTE>
         </Scene>
       </X3D>
     </x3d-canvas>
