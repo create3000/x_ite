@@ -38,12 +38,18 @@ function main ()
    const resize = `${width - border * 2}x${height - border * 2}`;
    const size   = `${width}x${height}`;
 
-   for (const [i, file] of files .entries ())
+   // Light and Dark Images
+
+   for (const [theme, color] of [["light", "white"], ["dark", "black"]])
    {
-      systemSync (`npx --yes x3d-image -s 3200x1800 -a -e CANNON -b -i "${file}" -o image.png`);
-      systemSync (`magick image.png -trim -resize ${resize} -size ${size} xc:white +swap -gravity center -composite -quality 50 light-image${i + 1}.avif`);
-      systemSync (`magick image.png -trim -resize ${resize} -size ${size} xc:black +swap -gravity center -composite -quality 50 dark-image${i + 1}.avif`);
+      for (const [i, file] of files .entries ())
+      {
+         systemSync (`npx --yes x3d-image -s 3200x1800 -a -e CANNON -b ${color} -i "${file}" -o image.png`);
+         systemSync (`magick image.png -trim -resize ${resize} -size ${size} xc:${color} +swap -gravity center -composite -quality 50 ${theme}-image${i + 1}.avif`);
+      }
    }
+
+   // Cleanup
 
    systemSync (`rm image.png`);
 }
