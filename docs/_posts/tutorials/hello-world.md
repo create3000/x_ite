@@ -59,7 +59,7 @@ Transform {
 }
 ```
 
-The Sphere has a radius field, which which is by default 1. The units in X3D are measured in Meters. The Sphere here is a node that is assigned to the *geometry* field of the Shape node. The Shape node has a second field *appearance*, which we will use later for texturing. The Shape node is assigned to the *children* field of the Transform node. The Transform node could have as many children as you want, but this is not always desired. The Transform node has special fields *translation*, *rotation* and *scale* for positioning it's children in space.
+The Sphere has a radius field, which is by default 1. The units in X3D are measured in Meters. The Sphere here is a node that is assigned to the *geometry* field of the Shape node. The Shape node has a second field *appearance*, which we will use later for texturing. The Shape node is assigned to the *children* field of the Transform node. The Transform node could have as many children as you want, but this is not always desired. The Transform node has special fields *translation*, *rotation* and *scale* for positioning it's children in space.
 
 Now we have a sphere, but we don't see if it is rotating, let's assign a texture:
 
