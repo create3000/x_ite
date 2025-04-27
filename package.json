@@ -35,6 +35,7 @@
     "docs-reference": "node build/docs/reference.js",
     "docs-table": "node build/docs/table.js",
     "glTF-samples": "perl build/docs/glTF-samples.pl",
+    "glTF-teaser": "node build/docs/glTF-teaser.js",
     "purge-camo": "perl build/docs/purge-camo.js",
     "merge-development": "sh build/bin/merge-development.sh",
     "make-tests": "perl build/bin/tests.pl"
