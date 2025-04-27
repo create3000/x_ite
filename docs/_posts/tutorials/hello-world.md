@@ -100,7 +100,7 @@ Transform {
 }
 ```
 
-We take a [Appearance](/x_ite/components/shape/appearance/) node and assign it to the *appearance* field of the [Shape](/x_ite/components/shape/shape/) node. For the texture we take an ImageTex[ImageTexture](/x_ite/components/texturing/imagetexture/)ture node. It would be possible a  [MovieTexture](/x_ite/components/texturing/movietexture/) as texture too. But this later. The [ImageTexture](/x_ite/components/texturing/imagetexture/) has a field *url*. Here we say the [ImageTexture](/x_ite/components/texturing/imagetexture/) should fetch the image from "earth.png". We could assign multiple urls:
+We take a [Appearance](/x_ite/components/shape/appearance/) node and assign it to the *appearance* field of the [Shape](/x_ite/components/shape/shape/) node. For the texture we take an [ImageTexture](/x_ite/components/texturing/imagetexture/) node. It would be possible a  [MovieTexture](/x_ite/components/texturing/movietexture/) as texture too. But this later. The [ImageTexture](/x_ite/components/texturing/imagetexture/) has a field *url*. Here we say the [ImageTexture](/x_ite/components/texturing/imagetexture/) should fetch the image from "earth.png". We could assign multiple urls:
 
 ### XML Encoding
 
