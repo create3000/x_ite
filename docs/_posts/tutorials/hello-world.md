@@ -100,7 +100,7 @@ Transform {
 }
 ```
 
-We take a Appearance node and assign it to the *appearance* field of the Shape node. For the texture we take an ImageTexture node. It would be possible a MovieTexture as texture too. But this later. The ImageTexture has a field *url*. Here we say the ImageTexture should fetch the image from ".earth.png". We could assign multiple urls:
+We take a Appearance node and assign it to the *appearance* field of the Shape node. For the texture we take an ImageTexture node. It would be possible a MovieTexture as texture too. But this later. The ImageTexture has a field *url*. Here we say the ImageTexture should fetch the image from "earth.png". We could assign multiple urls:
 
 ### XML Encoding
 
@@ -200,7 +200,7 @@ Transform {
 }
 ```
 
-We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a Material node to the *material* field of the Appearance node and set the *diffuseColor* field to 1 0 0. As geometry we take a Text node and set the *string* field to "Hello World!".
+We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a Material node to the *material* field of the Appearance node and set the *diffuseColor* field to (0 0.5 1). As geometry we take a Text node and set the *string* field to "Hello World!".
 
 ### Result
 
