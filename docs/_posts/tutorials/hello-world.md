@@ -59,7 +59,7 @@ Transform {
 }
 ```
 
-The Sphere has a radius field, which is by default 1. The units in X3D are measured in Meters. The Sphere here is a node that is assigned to the *geometry* field of the Shape node. The Shape node has a second field *appearance*, which we will use later for texturing. The Shape node is assigned to the *children* field of the Transform node. The Transform node could have as many children as you want, but this is not always desired. The Transform node has special fields *translation*, *rotation* and *scale* for positioning it's children in space.
+The [Sphere](/x_ite/components/geometry3d/sphere/) has a radius field, which is by default 1. The units in X3D are measured in Meters. The [Sphere](/x_ite/components/geometry3d/sphere/) here is a node that is assigned to the *geometry* field of the [Shape](/x_ite/components/shape/shape/) node. The [Shape](/x_ite/components/shape/shape/) node has a second field *appearance*, which we will use later for texturing. The [Shape](/x_ite/components/shape/shape/) node is assigned to the *children* field of the [Transform](/x_ite/components/grouping/transform/) node. The [Transform](/x_ite/components/grouping/transform/) node could have as many children as you want, but this is not always desired. The [Transform](/x_ite/components/grouping/transform/) node has special fields *translation*, *rotation* and *scale* for positioning it's children in space.
 
 Now we have a sphere, but we don't see the earth right now, let's assign a texture:
 
@@ -100,7 +100,7 @@ Transform {
 }
 ```
 
-We take a Appearance node and assign it to the *appearance* field of the Shape node. For the texture we take an ImageTexture node. It would be possible a MovieTexture as texture too. But this later. The ImageTexture has a field *url*. Here we say the ImageTexture should fetch the image from "earth.png". We could assign multiple urls:
+We take a [Appearance](/x_ite/components/shape/appearance/) node and assign it to the *appearance* field of the [Shape](/x_ite/components/shape/shape/) node. For the texture we take an ImageTex[ImageTexture](/x_ite/components/texturing/imagetexture/)ture node. It would be possible a  [MovieTexture](/x_ite/components/texturing/movietexture/) as texture too. But this later. The [ImageTexture](/x_ite/components/texturing/imagetexture/) has a field *url*. Here we say the [ImageTexture](/x_ite/components/texturing/imagetexture/) should fetch the image from "earth.png". We could assign multiple urls:
 
 ### XML Encoding
 
@@ -200,7 +200,7 @@ Transform {
 }
 ```
 
-We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a Material node to the *material* field of the Appearance node and set the *diffuseColor* field to (0 0.5 1). As geometry we take a Text node and set the *string* field to "Hello World!".
+We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a [Material](/x_ite/components/shape/material/) node to the *material* field of the [Appearance](/x_ite/components/shape/appearance/) node and set the *diffuseColor* field to (0 0.5 1). As geometry we take a [Text](/x_ite/components/text/text/) node and set the *string* field to "Hello World!".
 
 ### Result
 
