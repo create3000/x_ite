@@ -38,7 +38,7 @@ function main ()
 
    // Light and Dark Images
 
-   for (const [theme, x3d, magick] of [["light", "white", "rgb(239, 240, 239)"], ["dark", "black", "black"]])
+   for (const [theme, x3d, magick] of [["light", "1000 1000 1000 1", "white"], ["dark", "black", "black"]])
    {
       for (const [i, file] of files .entries ())
       {
