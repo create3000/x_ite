@@ -6,14 +6,15 @@ const fs = require ("fs");
 
 const files = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BoomBox/glTF/BoomBox.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/IridescentDishWithOlives/glTF/IridescentDishWithOlives.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenWoodLeatherSofa/glTF/SheenWoodLeatherSofa.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SunglassesKhronos/glTF/SunglassesKhronos.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/IridescentDishWithOlives/glTF/IridescentDishWithOlives.gltf",
 ];
 
-const width  = 400;
-const height = 240;
-const border = 30;
+const width    = 400;
+const height   = 240;
+const border   = 20;
+const rotation = "0.509086470924499 -0.842639596032569 -0.175469303069548 0.42682311202636";
 
 function main ()
 {
@@ -41,7 +42,7 @@ function main ()
    {
       for (const [i, file] of files .entries ())
       {
-         systemSync (`npx --yes x3d-image -s 3200x1800 -a -e CANNON -b ${color} -i "${file}" -o image.png`);
+         systemSync (`npx --yes x3d-image -s 3200x1800 -a -e CANNON -b ${color} -r "${rotation}" -i "${file}" -o image.png`);
          systemSync (`magick image.png -trim -resize ${resize} -size ${size} xc:${color} +swap -gravity center -composite -quality 50 ${theme}-image${i + 1}.avif`);
       }
    }
