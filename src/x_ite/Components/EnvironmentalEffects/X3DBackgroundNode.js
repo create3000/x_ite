@@ -77,14 +77,15 @@ function X3DBackgroundNode (executionContext)
 
    // Private properties
 
-   this .modelMatrix     = new Matrix4 ();
-   this .clipPlanes      = [ ];
-   this .colors          = [ ];
-   this .sphere          = [ ];
-   this .textureNodes    = new Array (6);
-   this .textureBits     = new BitSet ();
-   this .sphereContext   = new GeometryContext ({ colorMaterial: true });
-   this .texturesContext = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys});
+   this .modelMatrix      = new Matrix4 ();
+   this .clipPlanes       = [ ];
+   this .colors           = [ ];
+   this .sphere           = [ ];
+   this .textureNodes     = new Array (6);
+   this .textureBits      = new BitSet ();
+   this .sphereContext    = new GeometryContext ({ colorMaterial: true });
+   this .texturesContext  = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys });
+   this .localObjectsKeys = this .sphereContext .localObjectsKeys;
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
@@ -433,7 +434,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             const
                localObjects     = renderObject .getLocalObjects (),
                clipPlanes       = this .clipPlanes,
-               localObjectsKeys = this .sphereContext .localObjectsKeys;
+               localObjectsKeys = this .localObjectsKeys;
 
             let c = 0;
 
