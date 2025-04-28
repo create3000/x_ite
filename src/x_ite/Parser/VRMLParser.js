@@ -87,7 +87,7 @@ const Grammar = Expressions ({
    IMPORT:      /IMPORT/gy,
    IS:          /IS/gy,
    META:        /META/gy,
-   NULL:        /NULL/gy,
+   NULL:        /NULL|null/gy,
    TRUE:        /TRUE|true/gy,
    PROFILE:     /PROFILE/gy,
    PROTO:       /PROTO/gy,
@@ -2606,6 +2606,8 @@ Object .assign (VRMLParser .prototype,
    [X3DConstants .SFVec3f]:     VRMLParser .prototype .sfvec3Value,
    [X3DConstants .SFVec4d]:     VRMLParser .prototype .sfvec4Value,
    [X3DConstants .SFVec4f]:     VRMLParser .prototype .sfvec4Value,
+
+   [X3DConstants .VrmlMatrix]:  VRMLParser .prototype .sfmatrix4Value,
 
    [X3DConstants .MFBool]:      VRMLParser .prototype .mfboolValue,
    [X3DConstants .MFColor]:     VRMLParser .prototype .mfcolorValue,
