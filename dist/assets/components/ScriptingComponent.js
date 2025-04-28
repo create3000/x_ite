@@ -539,10 +539,12 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       function SFNode (vrmlSyntax)
       {
-         const nodes = browser .createVrmlFromString (vrmlSyntax);
+         const node = new (external_X_ITE_X3D_Fields_default()).SFNode ();
 
-         if (nodes .length && nodes [0])
-            return nodes [0];
+         node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
+
+         if (node .getValue ())
+            return node;
 
          throw new Error ("SFNode.new: invalid argument.");
       }
