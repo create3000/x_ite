@@ -771,7 +771,7 @@ debug
 : A Boolean value (`true` or `false`) to indicate whether additional debug message should be printed into the web browsers console and whether additional context menu items should be enabled. The default value for the *debug* attribute is `false`.
 
 exposure
-: A Float value that describes the amount of light that is captured. This option only works with PhysicalMaterial node and SpecularGlossinessMaterial node. The default value for the *exposure* attribute is `1`.
+: A Float value that describes the amount of light that is captured. The default value for the *exposure* attribute is `1`.
 
 logarithmicDepthBuffer
 : A Boolean value (`true` or `false`) to indicate whether logarithmic depth buffer rendering technique should be used. The default value for the *logarithmicDepthBuffer* attribute is `false`.

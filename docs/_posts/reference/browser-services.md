@@ -327,7 +327,7 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>Exposure</td>
-         <td>The exposure of an image describes the amount of light that is captured. This option only works with PhysicalMaterial node and SpecularGlossinessMaterial node. <small class="blue">non-standard</small></td>
+         <td>The exposure of an image describes the amount of light that is captured. <small class="blue">non-standard</small></td>
          <td>Float</td>
          <td>1</td>
       </tr>

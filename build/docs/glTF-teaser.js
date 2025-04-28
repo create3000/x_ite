@@ -42,7 +42,7 @@ function main ()
    {
       for (const [i, file] of files .entries ())
       {
-         systemSync (`npx --yes x3d-image -s 3200x1800 -a -e CANNON -b ${color} -r "${rotation}" -i "${file}" -o image.png`);
+         systemSync (`npx --yes x3d-image -s 3200x1800 -c LINEAR -m KHR_PBR_NEUTRAL -e CANNON -b ${color} -r "${rotation}" -a -i "${file}" -o image.png`);
          systemSync (`magick image.png -trim -resize ${resize} -size ${size} xc:${color} +swap -gravity center -composite -quality 50 ${theme}-image${i + 1}.avif`);
       }
    }
