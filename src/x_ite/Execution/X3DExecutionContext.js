@@ -478,7 +478,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       return node;
    },
-   setRootNodes () { },
+   setRootNodes ()
+   { },
    getRootNodes ()
    {
       return this ._rootNodes;

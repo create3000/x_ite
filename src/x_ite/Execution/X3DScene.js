@@ -408,9 +408,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    setRootNodes (value)
    {
-      if (!(value instanceof Fields .MFNode))
-         throw new Error ("Value must be of type MFNode.");
-
       this .getRootNodes () .assign (value);
    },
    toVRMLStream (generator)
