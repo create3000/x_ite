@@ -1,4 +1,28 @@
 export default /* glsl */ `
+
+#if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
+// Generate flat normals for 2D and 3D geometry.
+vec3
+generateFlatNormal (const in vec3 vertex)
+{
+   vec3 dFdxPos = dFdx (vertex);
+   vec3 dFdyPos = dFdy (vertex);
+
+   return normalize (cross (dFdxPos, dFdyPos));
+}
+
+void
+generateFlatNormals ()
+{
+   normal = generateFlatNormal (vertex);
+
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      localNormal = generateFlatNormal (localVertex);
+   #endif
+}
+#endif
+
+#if defined (X3D_LIGHTING) || defined (X3D_USE_IBL) || defined (X3D_ANISOTROPY_MATERIAL_EXT) || defined (X3D_CLEARCOAT_MATERIAL_EXT)
 struct NormalInfo
 {
    vec3 ng;
@@ -101,10 +125,13 @@ getNormalInfo (const in float normalScale)
 
    return info;
 }
+#endif
 
+#if defined (X3D_LIGHTING)
 vec3
 getNormalVector (const in float normalScale)
 {
    return getNormalInfo (normalScale) .n;
 }
+#endif
 `;

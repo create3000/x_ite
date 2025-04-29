@@ -67,6 +67,7 @@ import Shadow2                from "../../../assets/shaders/webgl2/common/Shadow
 import Skin2                  from "../../../assets/shaders/webgl2/common/Skin2.glsl.js";
 import Stipple2               from "../../../assets/shaders/webgl2/common/Stipple2.glsl.js";
 import Texture2               from "../../../assets/shaders/webgl2/common/Texture2.glsl.js";
+import Unlit2                 from "../../../assets/shaders/webgl2/common/Unlit2.glsl.js";
 import Utils2                 from "../../../assets/shaders/webgl2/common/Utils2.glsl.js";
 import Vertex2                from "../../../assets/shaders/webgl2/common/Vertex2.glsl.js";
 
@@ -119,6 +120,7 @@ const ShaderRegistry = {
          PointSize: PointSize2,
          Shadow: Shadow2,
          Texture: Texture1,
+         Unlit: Unlit2,
          Vertex: Vertex1,
          // PBR
          BRDF: BRDF2,
@@ -146,6 +148,7 @@ const ShaderRegistry = {
          Skin: Skin2,
          Stipple: Stipple2,
          Texture: Texture2,
+         Unlit: Unlit2,
          Utils: Utils2,
          Vertex: Vertex2,
          // PBR
