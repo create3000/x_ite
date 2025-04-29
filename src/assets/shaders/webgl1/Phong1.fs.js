@@ -10,18 +10,11 @@ precision highp int;
 precision highp sampler2D;
 precision highp samplerCube;
 
-#pragma X3D include "common/Fragment.glsl"
 #pragma X3D include "common/Material.glsl"
 
 vec4
 getMaterialColor ()
 {
    return getPhongColor ();
-}
-
-void
-main ()
-{
-   fragment_main ();
 }
 `;

@@ -1,6 +1,8 @@
 import MaterialTextures from "../../MaterialTextures.js";
 
 export default /* glsl */ `
+#pragma X3D include "Fragment.glsl"
+
 uniform x3d_MaterialParameters x3d_Material;
 
 ${MaterialTextures .texture ("x3d_AmbientTexture", "rgb", "sRGB")}
@@ -252,4 +254,10 @@ getPhongColor ()
    return vec4 (finalColor, alpha);
 }
 #endif
+
+void
+main ()
+{
+   fragment_main ();
+}
 `;
