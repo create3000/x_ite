@@ -76,7 +76,6 @@ import DefaultVertex1         from "../../../assets/shaders/webgl1/Default1.vs.j
 import DepthFragment1         from "../../../assets/shaders/webgl1/Depth1.fs.js";
 import DepthVertex1           from "../../../assets/shaders/webgl1/Depth1.vs.js";
 import GouraudFragment1       from "../../../assets/shaders/webgl1/Gouraud1.fs.js";
-import GouraudVertex1         from "../../../assets/shaders/webgl1/Gouraud1.vs.js";
 import PhysicalFragment1      from "../../../assets/shaders/webgl1/Physical1.fs.js";
 import PhongFragment1         from "../../../assets/shaders/webgl1/Phong1.fs.js";
 import PointingFragment1      from "../../../assets/shaders/webgl1/Pointing1.fs.js";
@@ -89,7 +88,6 @@ import DefaultVertex2         from "../../../assets/shaders/webgl2/Default2.vs.j
 import DepthFragment2         from "../../../assets/shaders/webgl2/Depth2.fs.js";
 import DepthVertex2           from "../../../assets/shaders/webgl2/Depth2.vs.js";
 import GouraudFragment2       from "../../../assets/shaders/webgl2/Gouraud2.fs.js";
-import GouraudVertex2         from "../../../assets/shaders/webgl2/Gouraud2.vs.js";
 import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform2.fs.js";
 import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform2.vs.js";
 import OITComposeFragment2    from "../../../assets/shaders/webgl2/OITCompose2.fs.js";
@@ -167,14 +165,12 @@ const ShaderRegistry = {
          Default: DefaultVertex1,
          Depth: DepthVertex1,
          FullScreen: FullScreenVertex1,
-         Gouraud: GouraudVertex1,
          Pointing: PointingVertex1,
       },
       2: {
          Default: DefaultVertex2,
          Depth: DepthVertex2,
          FullScreen: FullScreenVertex2,
-         Gouraud: GouraudVertex2,
          LineTransform: LineTransformVertex2,
          Pointing: PointingVertex2,
       },

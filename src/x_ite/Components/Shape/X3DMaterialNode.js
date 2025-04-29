@@ -184,7 +184,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       const flat = browser .getRenderingProperty ("Shading") === "FLAT";
 
-      if (geometryContext .hasNormals && (!flat || this .getMaterialKey () === 1))
+      if (geometryContext .hasNormals && !flat)
          options .push ("X3D_NORMALS");
 
       if (geometryContext .hasTangents)

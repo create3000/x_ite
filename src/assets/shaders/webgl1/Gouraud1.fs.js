@@ -1,35 +1,20 @@
 export default /* glsl */ `
+
+#extension GL_OES_standard_derivatives : enable
+#extension GL_EXT_frag_depth : enable
+
 precision highp float;
 precision highp int;
 precision highp sampler2D;
 precision highp samplerCube;
 
 #pragma X3D include "common/Fragment.glsl"
-
-varying vec4 frontColor;
-
-#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
-   varying vec4 backColor;
-#endif
+#pragma X3D include "common/Material.glsl"
 
 vec4
 getMaterialColor ()
 {
-   #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
-      vec4 finalColor = frontColor;
-   #else
-      vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
-   #endif
-
-   #if defined (X3D_TEXTURE)
-      finalColor = getTextureColor (finalColor, vec4 (1.0));
-   #endif
-
-   #if defined (X3D_TEXTURE_PROJECTION)
-      finalColor .rgb *= getTextureProjectorColor ();
-   #endif
-
-   return finalColor;
+   return getGouraudColor ();
 }
 
 void
