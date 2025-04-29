@@ -176,7 +176,7 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
 
 #if defined (X3D_GOURAUD_MATERIAL)
 vec4
-getGouraudColor ()
+getMaterialColor ()
 {
    // Calculate diffuseColor & alpha
 
@@ -222,7 +222,7 @@ getGouraudColor ()
 
 #if defined (X3D_PHONG_MATERIAL)
 vec4
-getPhongColor ()
+getMaterialColor ()
 {
    // Calculate diffuseColor & alpha
 

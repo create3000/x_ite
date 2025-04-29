@@ -7,10 +7,4 @@ precision highp sampler3D;
 precision highp samplerCube;
 
 #pragma X3D include "common/Material.glsl"
-
-vec4
-getMaterialColor ()
-{
-   return getGouraudColor ();
-}
 `;

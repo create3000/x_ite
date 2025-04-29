@@ -11,10 +11,4 @@ precision highp sampler2D;
 precision highp samplerCube;
 
 #pragma X3D include "common/Material.glsl"
-
-vec4
-getMaterialColor ()
-{
-   return getPhongColor ();
-}
 `;
