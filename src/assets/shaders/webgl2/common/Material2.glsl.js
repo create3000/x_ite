@@ -5,6 +5,7 @@ export default /* glsl */ `
 
 uniform x3d_MaterialParameters x3d_Material;
 
+#if defined (X3D_LIGHTING)
 ${MaterialTextures .texture ("x3d_AmbientTexture", "rgb", "sRGB")}
 
 vec3
@@ -22,6 +23,7 @@ getAmbientColor (const in vec3 diffuseColor)
 
    return ambientColor;
 }
+#endif
 
 ${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "sRGB")}
 
@@ -49,6 +51,7 @@ getDiffuseColor ()
    return diffuseColor;
 }
 
+#if defined (X3D_LIGHTING)
 ${MaterialTextures .texture ("x3d_SpecularTexture", "rgb", "sRGB")}
 
 vec3
@@ -66,6 +69,7 @@ getSpecularColor ()
 
    return specularColor;
 }
+#endif
 
 ${MaterialTextures .texture ("x3d_EmissiveTexture", "rgb", "sRGB")}
 
@@ -85,6 +89,7 @@ getEmissiveColor ()
    return emissiveColor;
 }
 
+#if defined (X3D_LIGHTING)
 ${MaterialTextures .texture ("x3d_ShininessTexture", "a")}
 
 float
@@ -102,6 +107,7 @@ getShininessFactor ()
 
    return shininess;
 }
+#endif
 
 ${MaterialTextures .texture ("x3d_OcclusionTexture", "r")}
 
