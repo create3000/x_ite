@@ -1,7 +1,7 @@
 const maxLights = 8;
 
 export default /* glsl */ `
-#if defined (X3D_FRAGMENT_SHADER) && defined (X3D_SHADOWS)
+#if defined (X3D_SHADOWS)
 
 uniform sampler2D x3d_ShadowMap [X3D_NUM_LIGHTS];
 

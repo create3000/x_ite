@@ -158,7 +158,7 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
          vec3  ambientTerm           = light .ambientIntensity * ambientColor;
          vec3  diffuseSpecularTerm   = light .intensity * (diffuseTerm + specularTerm);
 
-         #if defined (X3D_FRAGMENT_SHADER) && defined (X3D_SHADOWS)
+         #if defined (X3D_SHADOWS)
             if (lightAngle > 0.0)
                diffuseSpecularTerm = mix (diffuseSpecularTerm, light .shadowColor, getShadowIntensity (i, light));
          #endif
