@@ -247,8 +247,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          options .push ("X3D_UNLIT_MATERIAL");
 
          var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
-
-         browser .getShaders () .set (key, shaderNode);
       }
 
       browser .getShaders () .set (key, shaderNode);
