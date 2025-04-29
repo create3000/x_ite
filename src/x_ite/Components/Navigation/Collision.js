@@ -94,7 +94,7 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    set_enabled__ ()
    {
       this .set_live__ ();
-      this .set_collisionObjects__ ();
+      this .set_children__ ();
    },
    set_active (value)
    {
@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    {
       this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this ._proxy);
 
-      this .set_collisionObjects__ ();
+      this .set_children__ ();
    },
    set_collisionObjects__ ()
    {
@@ -125,6 +125,28 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
       }
 
       X3DGroupingNode .prototype .set_collisionObjects__ .call (this);
+   },
+   traverse (type, renderObject)
+   {
+      switch (type)
+      {
+         case TraverseType .COLLISION:
+         {
+            const collisions = renderObject .getCollisions ();
+
+            collisions .push (this);
+
+            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+
+            collisions .pop ();
+            return;
+         }
+         default:
+         {
+            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            return;
+         }
+      }
    },
    dispose ()
    {
