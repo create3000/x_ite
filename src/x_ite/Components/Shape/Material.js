@@ -213,8 +213,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       if (geometryContext .hasNormals)
       {
-         options .push ("X3D_MATERIAL");
-
          if (+this .getTextureBits ())
          {
             this .ambientTextureNode   ?.getShaderOptions (options, "AMBIENT");
