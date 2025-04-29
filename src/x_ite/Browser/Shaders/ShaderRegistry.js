@@ -75,9 +75,8 @@ import FullScreenVertex1      from "../../../assets/shaders/webgl1/FullScreen1.v
 import DefaultVertex1         from "../../../assets/shaders/webgl1/Default1.vs.js";
 import DepthFragment1         from "../../../assets/shaders/webgl1/Depth1.fs.js";
 import DepthVertex1           from "../../../assets/shaders/webgl1/Depth1.vs.js";
-import GouraudFragment1       from "../../../assets/shaders/webgl1/Gouraud1.fs.js";
+import MaterialFragment1      from "../../../assets/shaders/webgl1/Material1.fs.js";
 import PhysicalFragment1      from "../../../assets/shaders/webgl1/Physical1.fs.js";
-import PhongFragment1         from "../../../assets/shaders/webgl1/Phong1.fs.js";
 import PointingFragment1      from "../../../assets/shaders/webgl1/Pointing1.fs.js";
 import PointingVertex1        from "../../../assets/shaders/webgl1/Pointing1.vs.js";
 import UnlitFragment1         from "../../../assets/shaders/webgl1/Unlit1.fs.js";
@@ -87,12 +86,11 @@ import FullScreenVertex2      from "../../../assets/shaders/webgl2/FullScreen2.v
 import DefaultVertex2         from "../../../assets/shaders/webgl2/Default2.vs.js";
 import DepthFragment2         from "../../../assets/shaders/webgl2/Depth2.fs.js";
 import DepthVertex2           from "../../../assets/shaders/webgl2/Depth2.vs.js";
-import GouraudFragment2       from "../../../assets/shaders/webgl2/Gouraud2.fs.js";
+import MaterialFragment2      from "../../../assets/shaders/webgl2/Material2.fs.js";
 import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform2.fs.js";
 import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform2.vs.js";
 import OITComposeFragment2    from "../../../assets/shaders/webgl2/OITCompose2.fs.js";
 import PhysicalFragment2      from "../../../assets/shaders/webgl2/Physical2.fs.js";
-import PhongFragment2         from "../../../assets/shaders/webgl2/Phong2.fs.js";
 import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.js";
 import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.js";
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
@@ -178,20 +176,18 @@ const ShaderRegistry = {
    fragment: {
       1: {
          Depth: DepthFragment1,
-         Gouraud: GouraudFragment1,
-         Phong: PhongFragment1,
-         Pointing: PointingFragment1,
+         Material: MaterialFragment1,
          Physical: PhysicalFragment1,
+         Pointing: PointingFragment1,
          Unlit: UnlitFragment1,
       },
       2: {
          Depth: DepthFragment2,
-         Gouraud: GouraudFragment2,
          LineTransform: LineTransformFragment2,
+         Material: MaterialFragment2,
          OITCompose: OITComposeFragment2,
-         Phong: PhongFragment2,
-         Pointing: PointingFragment2,
          Physical: PhysicalFragment2,
+         Pointing: PointingFragment2,
          Unlit: UnlitFragment2,
       },
    },

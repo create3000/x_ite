@@ -228,14 +228,14 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
             {
                options .push ("X3D_GOURAUD_MATERIAL");
 
-               var shaderNode = browser .createShader ("Gouraud", "Default", "Gouraud", options);
+               var shaderNode = browser .createShader ("Gouraud", "Default", "Material", options);
                break;
             }
             case 2:
             {
                options .push ("X3D_PHONG_MATERIAL");
 
-               var shaderNode = browser .createShader ("Phong", "Default", "Phong", options);
+               var shaderNode = browser .createShader ("Phong", "Default", "Material", options);
                break;
             }
          }
