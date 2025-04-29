@@ -129,24 +129,6 @@ const Context =
 
       // Feature detection:
 
-      // If the aliased lineWidth ranges are both 1, gl .lineWidth is probably not possible,
-      // thus we disable it completely to prevent webgl errors.
-
-      const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
-
-      if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
-      {
-         gl .lineWidth                     = Function .prototype;
-         gl .HAS_FEATURE_TRANSFORMED_LINES = gl .getVersion () >= 2;
-
-         if (DEVELOPMENT)
-            console .info ("Lines are transformed if necessary to obtain thick lines.");
-      }
-      else
-      {
-         gl .HAS_FEATURE_TRANSFORMED_LINES = false;
-      }
-
       gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
       gl .HAS_FEATURE_FRAG_DEPTH    = gl .getVersion () >= 2 || !! gl .getExtension ("EXT_frag_depth");
 

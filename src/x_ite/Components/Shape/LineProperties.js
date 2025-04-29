@@ -116,12 +116,13 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
    set_linewidthScaleFactor__ ()
    {
       const
-         browser      = this .getBrowser (),
-         gl           = browser .getContext (),
-         contentScale = browser .getRenderingProperty ("ContentScale");
+         browser               = this .getBrowser (),
+         gl                    = browser .getContext (),
+         contentScale          = browser .getRenderingProperty ("ContentScale"),
+         aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
 
       this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ()) * contentScale;
-      this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
+      this .transformLines       = this .linewidthScaleFactor > 1 && this .linewidthScaleFactor > aliasedLineWidthRange [1];
    },
    setShaderUniforms (gl, shaderObject)
    {
