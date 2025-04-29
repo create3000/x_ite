@@ -180,7 +180,8 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
 #endif
 
 #if defined (X3D_GOURAUD_MATERIAL)
-// Simulate Gouraud shading.
+// Simulate Gouraud shading. Although this is a Phong shader, we use the same
+// calculations as a Gouraud shader would do.
 vec4
 getMaterialColor ()
 {
