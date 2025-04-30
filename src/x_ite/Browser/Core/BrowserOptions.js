@@ -204,7 +204,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    getTextCompression ()
    {
-      switch (this ._TextCompression .getValue ())
+      switch (this ._TextCompression .getValue () .toUpperCase ())
       {
          default: // CHAR_SPACING
             return TextCompression .CHAR_SPACING;
