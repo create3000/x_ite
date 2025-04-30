@@ -57,6 +57,7 @@ import TextCompression      from "./TextCompression.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 // https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#BrowserProperties
+// String values are considered to be case insensitive.
 
 function BrowserOptions (executionContext)
 {
