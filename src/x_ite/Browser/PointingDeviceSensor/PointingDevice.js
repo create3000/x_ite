@@ -145,6 +145,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    dblclick (event)
    {
+      const browser = this .getBrowser ();
+
+      if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
+         return;
+
       if (!this .over)
          return;
 
