@@ -269,7 +269,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    showContextMenu (event)
    {
-      this .getBrowser () .getContextMenu () .show (event);
+      const contextMenu = this .getBrowser () .getContextMenu ();
+
+      contextMenu .hide ();
+      contextMenu .show (event);
    },
 });
 
