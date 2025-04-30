@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       if (typeof this [_userMenu] === "function")
       {
-         const menu = this [_userMenu] (this .getBrowser ());
+         const menu = $.try (() => this [_userMenu] (this .getBrowser ()), true);
 
          if ($.isPlainObject (menu))
          {
