@@ -114,6 +114,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          menu    = options .build (event),
          level   = 1;
 
+      this .hide ();
+
       if (!menu) return;
 
       // Layer
