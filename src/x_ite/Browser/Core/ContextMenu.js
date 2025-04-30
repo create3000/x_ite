@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       return userMenu;
    },
-   hide (event)
+   hide ()
    {
       this [_hide] ?.();
    },
