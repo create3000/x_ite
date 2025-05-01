@@ -161,15 +161,13 @@ Object .assign (Plane3 .prototype,
       // Plane and line are not parallel. The intersection point can be calculated now.
       const t = (this .distanceFromOrigin - this .normal .dot (point)) / theta;
 
-      intersection .x = point .x + direction .x * t;
-      intersection .y = point .y + direction .y * t;
-      intersection .z = point .z + direction .z * t;
+      intersection .assign (direction) .multiply (t) .add (point);
 
       return true;
    },
    toString ()
    {
-      return `${this .normal} ${this .distanceFromOrigin}`;
+      return `${this .normal}, ${this .distanceFromOrigin}`;
    },
 });
 
