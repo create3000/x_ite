@@ -141,12 +141,10 @@ Object .assign (Line3 .prototype,
    getPerpendicularVectorToLine: (() =>
    {
       const
-         cross   = new Vector3 (),
-         diff    = new Vector3 (),
-         proj    = new Vector3 (),
-         d       = new Vector3 (),
-         point1  = new Vector3 (),
-         EPSILON = 1e-8;
+         diff   = new Vector3 (),
+         proj   = new Vector3 (),
+         d      = new Vector3 (),
+         point1 = new Vector3 ();
 
       return function (line, result = new Vector3 ())
       {
@@ -154,12 +152,9 @@ Object .assign (Line3 .prototype,
             { point: p1, direction: d1 } = this,
             { point: p2, direction: d2 } = line;
 
-         // Convert direction vectors to unit vectors
-         cross .assign (d1) .cross (d2);
+         const t = d1 .dot (d2);
 
-         const denom = cross .dot (cross);
-
-         if (denom < EPSILON)
+         if (Math .abs (t) >= 1)
          {
             // Lines are parallel
 
