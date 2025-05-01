@@ -68,6 +68,10 @@ Object .assign (Line2 .prototype,
       this .direction .assign (line .direction);
       return this;
    },
+   equals (line)
+   {
+      return this .point .equals (line .point) && this .direction .equals (line .direction);
+   },
    set (point, direction)
    {
       this .point     .assign (point);
@@ -92,7 +96,7 @@ Object .assign (Line2 .prototype,
       matrix .multDirMatrix (this .direction) .normalize ();
       return this;
    },
-   getClosestPointToPoint (point, result)
+   getClosestPointToPoint (point, result = new Vector2 ())
    {
       const
          r = result .assign (point) .subtract (this .point),
@@ -104,7 +108,7 @@ Object .assign (Line2 .prototype,
    {
       const t = new Vector2 ();
 
-      return function (point, result)
+      return function (point, result = new Vector2 ())
       {
          result .assign (this .point) .subtract (point);
 

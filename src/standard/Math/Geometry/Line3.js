@@ -68,6 +68,10 @@ Object .assign (Line3 .prototype,
       this .direction .assign (line .direction);
       return this;
    },
+   equals (line)
+   {
+      return this .point .equals (line .point) && this .direction .equals (line .direction);
+   },
    set (point, direction)
    {
       this .point     .assign (point);
