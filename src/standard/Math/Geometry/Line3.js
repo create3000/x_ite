@@ -141,19 +141,18 @@ Object .assign (Line3 .prototype,
    getPerpendicularVectorToLine: (() =>
    {
       const
-         cross  = new Vector3 (),
-         diff   = new Vector3 (),
-         proj   = new Vector3 (),
-         d      = new Vector3 (),
-         point1 = new Vector3 ();
+         cross   = new Vector3 (),
+         diff    = new Vector3 (),
+         proj    = new Vector3 (),
+         d       = new Vector3 (),
+         point1  = new Vector3 (),
+         EPSILON = 1e-8;
 
       return function (line, result = new Vector3 ())
       {
          const
             { point: p1, direction: d1 } = this,
             { point: p2, direction: d2 } = line;
-
-         const EPSILON = 1e-8;
 
          // Convert direction vectors to unit vectors
          cross .assign (d1) .cross (d2);
