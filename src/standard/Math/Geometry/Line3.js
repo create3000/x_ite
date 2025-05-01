@@ -141,29 +141,52 @@ Object .assign (Line3 .prototype,
    getPerpendicularVectorToLine: (() =>
    {
       const
-         d  = new Vector3 (),
-         ad = new Vector3 ();
+         cross  = new Vector3 (),
+         diff   = new Vector3 (),
+         proj   = new Vector3 (),
+         d      = new Vector3 (),
+         point1 = new Vector3 (),
+         point2 = new Vector3 ();
 
-      return function (line, result = new Vector3 ())
+      return function (line, result)
       {
-         const bd = result;
+         const
+            { point: p1, direction: d1 } = this,
+            { point: p2, direction: d2 } = line;
 
-         d .assign (this .point) .subtract (line .point);
+         const EPSILON = 1e-8;
+
+         // Convert direction vectors to unit vectors
+         cross .assign (d1) .cross (d2);
+
+         const denom = cross .dot (cross);
+
+         if (denom < EPSILON)
+         {
+            // Lines are parallel
+
+            diff .assign (p2) .subtract (p1);
+            proj .assign (d1) .multiply (diff .dot (d1) / d1 .dot (d1));
+
+            return proj .subtract (diff);
+         }
+
+         d .assign (p1) .subtract (p2);
 
          const
-            re1 = d .dot (this .direction),
-            re2 = d .dot (line .direction),
-            e12 = this .direction .dot (line .direction),
+            re1 = d .dot (d1),
+            re2 = d .dot (d2),
+            e12 = d1 .dot (d2),
             E12 = e12 * e12;
 
          const
             a =  (re1 - re2 * e12) / (1 - E12),
             b = -(re2 - re1 * e12) / (1 - E12);
 
-         ad .assign (this .direction) .multiply (a);
-         bd .assign (line .direction) .multiply (b);
+         point1 .assign (d1) .multiply (a);
+         point2 .assign (d2) .multiply (b);
 
-         return bd .subtract (ad) .add (d);
+         return point2 .subtract (point1) .add (d);
       };
    })(),
    intersectsTriangle: (() =>
