@@ -145,10 +145,9 @@ Object .assign (Line3 .prototype,
          diff   = new Vector3 (),
          proj   = new Vector3 (),
          d      = new Vector3 (),
-         point1 = new Vector3 (),
-         point2 = new Vector3 ();
+         point1 = new Vector3 ();
 
-      return function (line, result)
+      return function (line, result = new Vector3 ())
       {
          const
             { point: p1, direction: d1 } = this,
@@ -184,9 +183,9 @@ Object .assign (Line3 .prototype,
             b = -(re2 - re1 * e12) / (1 - E12);
 
          point1 .assign (d1) .multiply (a);
-         point2 .assign (d2) .multiply (b);
+         result .assign (d2) .multiply (b);
 
-         return point2 .subtract (point1) .add (d);
+         return result .subtract (point1) .add (d);
       };
    })(),
    intersectsTriangle: (() =>
