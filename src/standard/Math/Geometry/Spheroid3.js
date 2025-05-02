@@ -59,8 +59,8 @@ function Spheroid3 (semiMajorAxis, semiMinorAxis)
          break;
       case 3:
          const f_1 = arguments [1];
-         this .semiMajorAxis = semiMajorAxis;                 // a
-         this .semiMinorAxis = semiMajorAxis * (1 - 1 / f_1); // c
+         this .semiMajorAxis = semiMajorAxis;                   // a
+         this .semiMinorAxis = semiMajorAxis * (1 - (1 / f_1)); // c
          break;
    }
 }
