@@ -142,15 +142,10 @@ Object .assign (Plane3 .prototype,
    {
       return result .assign (this .normal) .multiply (-this .getDistanceToPoint (point));
    },
-	getClosestPointToPoint: (function ()
+	getClosestPointToPoint (point, result = new Vector3 ())
    {
-      const p = new Vector3 ();
-
-      return function (point, result = new Vector3 ())
-      {
-         return result .assign (point) .add (this .getPerpendicularVectorToPoint (point, p));
-      };
-   })(),
+      return this .getPerpendicularVectorToPoint (point, result) .add (point);
+   },
    intersectsLine (line, intersection)
    {
       const { point, direction } = line;
