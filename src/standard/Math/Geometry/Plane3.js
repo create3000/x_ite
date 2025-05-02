@@ -55,8 +55,9 @@ const
 
 function Plane3 (point = Vector3 .Zero, normal = Vector3 .zAxis)
 {
-   this .normal             = normal .copy ();
-   this .distanceFromOrigin = normal .dot (point);
+   this .normal = new Vector3 ();
+
+   this .set (point, normal);
 }
 
 Object .assign (Plane3 .prototype,
@@ -64,14 +65,17 @@ Object .assign (Plane3 .prototype,
    copy ()
    {
       const copy = Object .create (Plane3 .prototype);
+
       copy .normal             = this .normal .copy ();
       copy .distanceFromOrigin = this .distanceFromOrigin;
+
       return copy;
    },
    assign (plane)
    {
       this .normal .assign (plane .normal);
       this .distanceFromOrigin = plane .distanceFromOrigin;
+
       return this;
    },
    equals (plane)

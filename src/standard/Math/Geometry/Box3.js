@@ -50,7 +50,7 @@ import Matrix4   from "../Numbers/Matrix4.js";
 import Vector3   from "../Numbers/Vector3.js";
 import SAT       from "../Algorithms/SAT.js";
 
-function Box3 (/* size, center */)
+function Box3 (... args) /* size, center */
 {
    this .matrix = new Matrix4 ();
 
@@ -62,12 +62,15 @@ Object .assign (Box3 .prototype,
    copy ()
    {
       const copy = Object .create (Box3 .prototype);
+
       copy .matrix = this .matrix .copy ();
+
       return copy;
    },
    assign (box)
    {
       this .matrix .assign (box .matrix);
+
       return this;
    },
    equals (box)

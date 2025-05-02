@@ -49,8 +49,10 @@ import Vector3 from "../Numbers/Vector3.js";
 
 function Line3 (point = Vector3 .Zero, direction = Vector3 .zAxis)
 {
-   this .point     = point     .copy ();
-   this .direction = direction .copy ();
+   this .point     = new Vector3 ();
+   this .direction = new Vector3 ();
+
+   this .set (point, direction);
 }
 
 Object .assign (Line3 .prototype,
@@ -58,14 +60,17 @@ Object .assign (Line3 .prototype,
    copy ()
    {
       const copy = Object .create (Line3 .prototype);
+
       copy .point     = this .point .copy ();
       copy .direction = this .direction .copy ();
+
       return copy;
    },
    assign (line)
    {
       this .point     .assign (line .point);
       this .direction .assign (line .direction);
+
       return this;
    },
    equals (line)

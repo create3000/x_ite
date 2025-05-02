@@ -49,8 +49,10 @@ import Vector2 from "../Numbers/Vector2.js";
 
 function Line2 (point = Vector2 .Zero, direction = Vector2 .yAxis)
 {
-   this .point     = point     .copy ();
-   this .direction = direction .copy ();
+   this .point     = new Vector2 ();
+   this .direction = new Vector2 ();
+
+   this .set (point, direction);
 }
 
 Object .assign (Line2 .prototype,
@@ -58,14 +60,17 @@ Object .assign (Line2 .prototype,
    copy ()
    {
       const copy = Object .create (Line2 .prototype);
+
       copy .point     = this .point .copy ();
       copy .direction = this .direction .copy ();
+
       return copy;
    },
    assign (line)
    {
       this .point     .assign (line .point);
       this .direction .assign (line .direction);
+
       return this;
    },
    equals (line)

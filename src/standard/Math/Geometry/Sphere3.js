@@ -47,18 +47,41 @@
 
 import Vector3 from "../Numbers/Vector3.js";
 
-function Sphere3 (radius, center)
+function Sphere3 (radius = 1, center = Vector3 .Zero)
 {
-   this .radius = radius;
-   this .center = center .copy ();
+   this .center = new Vector3 ();
+
+   this .set (radius, center);
 }
 
 Object .assign (Sphere3 .prototype,
 {
+   copy ()
+   {
+      const copy = Object .create (Sphere3 .prototype);
+
+      copy .radius = this .radius;
+      copy .center = this .center .copy ();
+
+      return copy;
+   },
+   assign (sphere)
+   {
+      this .radius = sphere .radius;
+      this .center .assign (sphere .center);
+
+      return this;
+   },
+   equals (sphere)
+   {
+      return this .radius === sphere .radius && this .center .equals (sphere .center);
+   },
    set (radius, center)
    {
       this .radius = radius;
       this .center .assign (center);
+
+      return this;
    },
    intersectsLine (line, enterPoint, exitPoint)
    {
