@@ -56,8 +56,8 @@ const
 function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northingFirst)
 {
    const
-      a    = spheroid .getSemiMajorAxis (),
-      ecc2 = 1 - (spheroid .getSemiMinorAxis () / a) ** 2,
+      a    = spheroid .semiMajorAxis,
+      ecc2 = 1 - (spheroid .semiMinorAxis / a) ** 2,
       EE   = ecc2 / (1 - ecc2),
       e1   = (1 - Math .sqrt (1 - ecc2)) / (1 + Math .sqrt (1 - ecc2));
 

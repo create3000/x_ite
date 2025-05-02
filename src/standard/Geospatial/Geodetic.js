@@ -54,9 +54,9 @@ function Geodetic (spheroid, latitudeFirst, radians)
 {
    this .longitudeFirst = ! latitudeFirst;
    this .degrees        = ! radians;
-   this .a              = spheroid .getSemiMajorAxis ();
-   this .c              = spheroid .getSemiMinorAxis ();
-   this .c2a2           = (spheroid .getSemiMinorAxis () / this .a) ** 2;
+   this .a              = spheroid .semiMajorAxis;
+   this .c              = spheroid .semiMinorAxis;
+   this .c2a2           = (spheroid .semiMinorAxis / this .a) ** 2;
    this .ecc2           = 1 - this .c2a2;
 }
 

@@ -67,16 +67,6 @@ function Spheroid3 (semiMajorAxis, semiMinorAxis)
 
 Object .assign (Spheroid3 .prototype,
 {
-   getSemiMajorAxis ()
-   {
-      // Returns the semi-major axis (a)
-      return this .semiMajorAxis; // a
-   },
-   getSemiMinorAxis ()
-   {
-      // Returns the semi-minor axis (c)
-      return this .semiMinorAxis; // c
-   },
    toString ()
    {
       return `${this .semiMajorAxis} ${this .semiMinorAxis}`;
