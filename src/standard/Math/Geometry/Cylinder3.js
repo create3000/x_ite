@@ -52,12 +52,38 @@ import Line3     from "./Line3.js";
 
 function Cylinder3 (axis, radius)
 {
-   this .axis   = axis .copy ();
-   this .radius = radius;
+   this .axis = new Vector3 ();
+
+   this .set (axis, radius);
 }
 
 Object .assign (Cylinder3 .prototype,
 {
+   copy ()
+   {
+      const copy = Object .create (Cylinder3 .prototype);
+
+      copy .radius = this .radius;
+      copy .axis   = this .axis .copy ();
+
+      return copy;
+   },
+   assign (cylinder)
+   {
+      this .radius = cylinder .radius;
+      this .axis .assign (cylinder .axis);
+
+      return this;
+   },
+   equals (cylinder)
+   {
+      return this .radius === cylinder .radius && this .axis .equals (cylinder .axis);
+   },
+   set (axis, radius)
+   {
+      this .axis .assign (axis);
+      this .radius = radius;
+   },
    intersectsLine (line, enter, exit)
    {
       ////////////////////////////////////////////////////////////////////////
