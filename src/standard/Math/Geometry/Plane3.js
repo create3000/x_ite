@@ -140,7 +140,7 @@ Object .assign (Plane3 .prototype,
    },
    getPerpendicularVectorToPoint (point, result = new Vector3 ())
    {
-      return result .assign (this .normal) .multiply (this .getDistanceToPoint (point));
+      return result .assign (this .normal) .multiply (-this .getDistanceToPoint (point));
    },
 	getClosestPointToPoint: (function ()
    {
