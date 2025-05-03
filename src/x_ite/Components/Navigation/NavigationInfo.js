@@ -52,8 +52,6 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DBindableNode      from "../Core/X3DBindableNode.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Box3                 from "../../../standard/Math/Geometry/Box3.js";
 
 function NavigationInfo (executionContext)
 {
@@ -295,9 +293,6 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    },
    enable (type, renderObject)
    {
-      if (type !== TraverseType .DISPLAY)
-         return;
-
       if (!this ._headlight .getValue ())
          return;
 

@@ -52,7 +52,6 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DSoundNode         from "./X3DSoundNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
@@ -227,6 +226,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       for (const childNode of this .childNodes)
          childNode .getAudioSource () .connect (this .gainNode);
+
+      this .setVisibleObject (this .childNodes .length);
    },
    update ()
    {
@@ -240,12 +241,6 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       return function (type, renderObject)
       {
-         if (type !== TraverseType .DISPLAY)
-            return;
-
-         if (!this .childNodes .length)
-            return;
-
          this .setTraversed (true);
 
          const modelViewMatrix = renderObject .getModelViewMatrix () .get ();

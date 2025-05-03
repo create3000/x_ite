@@ -52,7 +52,6 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DSoundNode         from "./X3DSoundNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
@@ -279,9 +278,6 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
 
       return function (type, renderObject)
       {
-         if (type !== TraverseType .DISPLAY)
-            return;
-
          this .setTraversed (true);
 
          const modelViewMatrix = renderObject .getModelViewMatrix () .get ();

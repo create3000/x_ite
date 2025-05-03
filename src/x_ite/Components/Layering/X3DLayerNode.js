@@ -415,7 +415,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       }
 
       this .setHitRay (this .getProjectionMatrix () .get (), viewport, browser .getPointer ());
-      this .getNavigationInfo () .enable (type, renderObject);
       this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
 
       this .viewportNode .push (this);

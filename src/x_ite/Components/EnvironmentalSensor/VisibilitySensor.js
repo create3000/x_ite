@@ -115,9 +115,6 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
 
       return function (type, renderObject)
       {
-         if (type !== TraverseType .DISPLAY)
-            return;
-
          this .setTraversed (true);
 
          if (this .visible)
