@@ -107,10 +107,6 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
 
       return this .matrix .identity ();
    },
-   getLayout ()
-   {
-      return this .layoutNode;
-   },
    traverse (type, renderObject)
    {
       this .viewportNode ?.push ();
