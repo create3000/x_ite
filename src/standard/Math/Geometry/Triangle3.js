@@ -161,6 +161,8 @@ const Triangle3 =
 
       for (let i = 1; i < numVertices_1; ++ i)
          triangles .push (vertices [0], vertices [i], vertices [i + 1]);
+
+      return triangles;
    },
 };
 
