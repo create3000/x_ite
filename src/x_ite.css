@@ -661,11 +661,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: url(assets/images/logo.svg) no-repeat;
   background-size: var(--size) var(--size);
   opacity: var(--logo-opacity);
-  animation: spinner-animation-spin 32s linear infinite;
+  animation: x_ite-spinner-animation-spin 32s linear infinite;
   transform-origin: var(--center-x) var(--center-y);
 }
 
-@keyframes spinner-animation-spin {
+@keyframes x_ite-spinner-animation-spin {
   100% {
     transform: rotate(360deg);
   }
