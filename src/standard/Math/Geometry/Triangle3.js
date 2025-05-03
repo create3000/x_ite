@@ -156,7 +156,10 @@ const Triangle3 =
    triangulateConvexPolygon (vertices, triangles)
    {
       // Fallback: Very simple triangulation for convex polygons.
-      for (let i = 1, length = vertices .length - 1; i < length; ++ i)
+
+      const numVertices_1 = vertices .length - 1;
+
+      for (let i = 1; i < numVertices_1; ++ i)
          triangles .push (vertices [0], vertices [i], vertices [i + 1]);
    },
 };
