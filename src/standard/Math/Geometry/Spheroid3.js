@@ -45,28 +45,54 @@
  *
  ******************************************************************************/
 
-function Spheroid3 (semiMajorAxis, semiMinorAxis)
+function Spheroid3 (... args)
 {
-   switch (arguments .length)
-   {
-      case 0:
-         this .semiMajorAxis = 0; // a
-         this .semiMinorAxis = 0; // c
-         break;
-      case 2:
-         this .semiMajorAxis = semiMajorAxis; // a
-         this .semiMinorAxis = semiMinorAxis; // c
-         break;
-      case 3:
-         const f_1 = arguments [1];
-         this .semiMajorAxis = semiMajorAxis;                   // a
-         this .semiMinorAxis = semiMajorAxis * (1 - (1 / f_1)); // c
-         break;
-   }
+   this .set (... args);
 }
 
 Object .assign (Spheroid3 .prototype,
 {
+   copy ()
+   {
+      const copy = Object .create (Spheroid3 .prototype);
+
+      copy .semiMajorAxis = this .semiMajorAxis; // a
+      copy .semiMinorAxis = this .semiMinorAxis; // c
+
+      return copy;
+   },
+   assign (spheroid)
+   {
+      this .semiMajorAxis = spheroid .semiMajorAxis;
+      this .semiMinorAxis = spheroid .semiMinorAxis;
+
+      return this;
+   },
+   equals (spheroid)
+   {
+      return this .semiMajorAxis === spheroid .semiMajorAxis && this .semiMinorAxis === spheroid .semiMinorAxis;
+   },
+   set (semiMajorAxis, semiMinorAxis)
+   {
+      switch (arguments .length)
+      {
+         case 0:
+            this .semiMajorAxis = 1; // a
+            this .semiMinorAxis = 1; // c
+            break;
+         case 2:
+            this .semiMajorAxis = semiMajorAxis; // a
+            this .semiMinorAxis = semiMinorAxis; // c
+            break;
+         case 3:
+            const f_1 = arguments [1];
+            this .semiMajorAxis = semiMajorAxis;                   // a
+            this .semiMinorAxis = semiMajorAxis * (1 - (1 / f_1)); // c
+            break;
+      }
+
+      return this;
+   },
    toString ()
    {
       return `${this .semiMajorAxis} ${this .semiMinorAxis}`;
