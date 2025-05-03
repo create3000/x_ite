@@ -174,7 +174,6 @@ export default Namespace .add ("${base}", __default__);`;
          new webpack .ProvidePlugin ({
             $: "jquery",
             jQuery: "jquery",
-            jquery_fullscreen: "jquery-fullscreen-plugin/jquery.fullscreen.js",
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
@@ -320,7 +319,6 @@ export default Namespace .add ("${base}", __default__);`;
          new webpack .ProvidePlugin ({
             $: "jquery",
             jQuery: "jquery",
-            jquery_fullscreen: "jquery-fullscreen-plugin/jquery.fullscreen.js",
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",

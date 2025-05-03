@@ -48,8 +48,6 @@
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
 import _           from "../../../locale/gettext.js";
 
-typeof jquery_fullscreen; // import plugin
-
 const
    _options  = Symbol (),
    _userMenu = Symbol (),
@@ -317,7 +315,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
    {
       const
          browser    = this .getBrowser (),
-         fullscreen = browser .getElement () .fullScreen ();
+         fullscreen = document .fullscreenElement === browser .getElement () [0];
 
       if (!browser .getBrowserOption ("ContextMenu"))
          return;
@@ -533,7 +531,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                className: `context-menu-icon ${fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-enter-fullscreen"}`,
                callback: () =>
                {
-                  browser .getElement () .fullScreen (!fullscreen);
+                  if (fullscreen)
+                     document .exitFullscreen () .catch (Function .prototype);
+                  else
+                     browser .getElement () [0] .requestFullscreen ({ navigationUI: "hide" }) .catch (Function .prototype);
                },
             },
             "separator4": "--------",

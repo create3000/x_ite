@@ -398,7 +398,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const element = this .getElement ();
 
-      if (element .fullScreen ())
+      if (document .fullscreenElement === element [0])
          element .addClass ("x_ite-fullscreen");
       else
          element .removeClass ("x_ite-fullscreen");

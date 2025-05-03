@@ -113,7 +113,6 @@
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
     "jquery": "^3.7.1",
-    "jquery-fullscreen-plugin": "^1.1.5",
     "jquery-mousewheel": "^3.2.2",
     "libgif": "^0.0.3",
     "libtess": "^1.2.2",
