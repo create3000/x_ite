@@ -77,7 +77,7 @@ Object .assign (Line2 .prototype,
    {
       return this .point .equals (line .point) && this .direction .equals (line .direction);
    },
-   set (point, direction)
+   set (point = Vector2 .Zero, direction = Vector2 .yAxis)
    {
       this .point     .assign (point);
       this .direction .assign (direction);

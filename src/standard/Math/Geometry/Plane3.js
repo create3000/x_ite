@@ -82,7 +82,7 @@ Object .assign (Plane3 .prototype,
    {
       return this .distanceFromOrigin === plane .distanceFromOrigin && this .normal .equals (plane .normal);
    },
-   set (point, normal)
+   set (point = Vector3 .Zero, normal = Vector3 .zAxis)
    {
       this .normal .assign (normal);
       this .distanceFromOrigin = normal .dot (point);

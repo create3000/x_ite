@@ -76,7 +76,7 @@ Object .assign (Sphere3 .prototype,
    {
       return this .radius === sphere .radius && this .center .equals (sphere .center);
    },
-   set (radius, center)
+   set (radius = 1, center = Vector3 .Zero)
    {
       this .radius = radius;
       this .center .assign (center);

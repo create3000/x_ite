@@ -45,9 +45,9 @@
  *
  ******************************************************************************/
 
-function Spheroid3 (... args)
+function Spheroid3 (semiMajorAxis = 1, semiMinorAxis = 1, use_f_1 = false)
 {
-   this .set (... args);
+   this .set (semiMajorAxis, semiMinorAxis, use_f_1);
 }
 
 Object .assign (Spheroid3 .prototype,
@@ -72,23 +72,19 @@ Object .assign (Spheroid3 .prototype,
    {
       return this .semiMajorAxis === spheroid .semiMajorAxis && this .semiMinorAxis === spheroid .semiMinorAxis;
    },
-   set (semiMajorAxis, semiMinorAxis)
+   set (semiMajorAxis = 1, semiMinorAxis = 1, use_f_1 = false)
    {
-      switch (arguments .length)
+      if (use_f_1)
       {
-         case 0:
-            this .semiMajorAxis = 1; // a
-            this .semiMinorAxis = 1; // c
-            break;
-         case 2:
-            this .semiMajorAxis = semiMajorAxis; // a
-            this .semiMinorAxis = semiMinorAxis; // c
-            break;
-         case 3:
-            const f_1 = arguments [1];
-            this .semiMajorAxis = semiMajorAxis;                   // a
-            this .semiMinorAxis = semiMajorAxis * (1 - (1 / f_1)); // c
-            break;
+         const f_1 = semiMinorAxis;
+
+         this .semiMajorAxis = semiMajorAxis;                   // a
+         this .semiMinorAxis = semiMajorAxis * (1 - (1 / f_1)); // c
+      }
+      else
+      {
+         this .semiMajorAxis = semiMajorAxis; // a
+         this .semiMinorAxis = semiMinorAxis; // c
       }
 
       return this;

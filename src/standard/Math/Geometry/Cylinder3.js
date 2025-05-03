@@ -79,7 +79,7 @@ Object .assign (Cylinder3 .prototype,
    {
       return this .radius === cylinder .radius && this .axis .equals (cylinder .axis);
    },
-   set (axis, radius)
+   set (axis = new Line3 (), radius = 1)
    {
       this .axis .assign (axis);
       this .radius = radius;
