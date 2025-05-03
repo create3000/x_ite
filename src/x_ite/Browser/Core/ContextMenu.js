@@ -315,7 +315,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
    {
       const
          browser    = this .getBrowser (),
-         fullscreen = document .fullscreenElement === browser .getElement () [0];
+         element    = browser .getElement (),
+         fullscreen = document .fullscreenElement === element [0];
 
       if (!browser .getBrowserOption ("ContextMenu"))
          return;
@@ -534,7 +535,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   if (fullscreen)
                      document .exitFullscreen () .catch (Function .prototype);
                   else
-                     browser .getElement () [0] .requestFullscreen ({ navigationUI: "hide" }) .catch (Function .prototype);
+                     element [0] .requestFullscreen ({ navigationUI: "hide" }) .catch (Function .prototype);
                },
             },
             "separator4": "--------",
