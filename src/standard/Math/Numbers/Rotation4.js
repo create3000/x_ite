@@ -149,7 +149,7 @@ Object .assign (Rotation4 .prototype,
 
       return this;
    },
-   set (x, y, z, angle)
+   set (x = 0, y = 0, z = 1, angle = 0)
    {
       this [_x]     = x;
       this [_y]     = y;
