@@ -298,7 +298,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   if (childNode .isCameraObject ())
                      this .cameraObjects .add (childNode);
 
-                  if (childNode .isPickableObject ())
+                  if (childNode .isPickableObject () && !this .pickableSensorNodes .has (childNode))
                      this .pickableObjects .add (childNode);
 
                   if (childNode .isCollisionObject ())

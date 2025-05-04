@@ -339,8 +339,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
 
       pickingHierarchy .push (this);
 
-      for (const pickSensor of pickSensorStack .at (-1))
-         pickSensor .collect (this .geometryNode, modelMatrix, pickingHierarchy);
+      for (const pickSensorNode of pickSensorStack .at (-1))
+         pickSensorNode .collect (this .geometryNode, modelMatrix, pickingHierarchy);
 
       pickingHierarchy .pop ();
    },
