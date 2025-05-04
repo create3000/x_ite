@@ -77,7 +77,8 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("isPickable", this ._pickable);
 
-   // Create main group.
+   // Create main Group node.
+   // This Group node is setuped in Layer or LayoutLayer.
 
    let groupNodes;
 
@@ -92,8 +93,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
       }
    }
 
-   if (!groupNodes)
-      groupNodes = new Group (executionContext);
+   groupNodes ??= new Group (executionContext);
 
    groupNodes ._children = [groupNode];
    groupNodes .setPrivate (true);
