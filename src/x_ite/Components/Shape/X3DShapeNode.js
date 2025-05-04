@@ -329,11 +329,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
-      if (this .getTransformSensors () .size)
-      {
-         for (const transformSensorNode of this .getTransformSensors ())
-            transformSensorNode .collect (modelMatrix);
-      }
+      for (const transformSensorNode of this .getTransformSensors ())
+         transformSensorNode .collect (modelMatrix);
 
       const
          browser          = this .getBrowser (),
@@ -343,9 +340,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       pickingHierarchy .push (this);
 
       for (const pickSensor of pickSensorStack .at (-1))
-      {
          pickSensor .collect (this .geometryNode, modelMatrix, pickingHierarchy);
-      }
 
       pickingHierarchy .pop ();
    },
