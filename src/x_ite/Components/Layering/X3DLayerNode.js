@@ -77,12 +77,28 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("isPickable", this ._pickable);
 
-   // Private properties
+   // Create main group.
 
-   const groupNodes = new Group (executionContext);
+   let groupNodes;
+
+   if (executionContext .hasComponent ("Picking"))
+   {
+      groupNodes = executionContext .createNode ("PickableGroup", false);
+
+      if (groupNodes)
+      {
+         this ._pickable   .addFieldInterest (groupNodes ._pickable);
+         this ._objectType .addFieldInterest (groupNodes ._objectType);
+      }
+   }
+
+   if (!groupNodes)
+      groupNodes = new Group (executionContext);
 
    groupNodes ._children = [groupNode];
    groupNodes .setPrivate (true);
+
+   // Private properties
 
    this .active     = false;
    this .layer0     = false;
