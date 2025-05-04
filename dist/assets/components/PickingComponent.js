@@ -1,5 +1,5 @@
-/* X_ITE v11.5.5 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.5")];
+/* X_ITE v11.5.6 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.6")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -57,9 +57,6 @@ var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(exte
 ;// external "__X_ITE_X3D__ .X3DSensorNode"
 const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
 var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
-;// external "__X_ITE_X3D__ .TraverseType"
-const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
-var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
@@ -305,7 +302,6 @@ var external_X_ITE_X3D_ObjectCache_default = /*#__PURE__*/__webpack_require__.n(
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -625,13 +621,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    },
    traverse (type, renderObject)
    {
-      // X3DPickSensorNode nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
-
-      if (type !== (external_X_ITE_X3D_TraverseType_default()).PICKING)
-         return;
-
-      if (this .isPickableObject ())
-         this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+      this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
    },
    collect (geometryNode, modelMatrix, pickingHierarchy)
    {
@@ -1102,6 +1092,9 @@ const X3DPickableObject_default_ = X3DPickableObject;
 ;
 
 /* harmony default export */ const Picking_X3DPickableObject = (external_X_ITE_X3D_Namespace_default().add ("X3DPickableObject", X3DPickableObject_default_));
+;// external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// ./src/x_ite/Components/Picking/PickableGroup.js
 /*******************************************************************************
  *

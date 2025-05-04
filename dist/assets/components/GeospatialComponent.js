@@ -1,5 +1,5 @@
-/* X_ITE v11.5.5 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.5")];
+/* X_ITE v11.5.6 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.6")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -111,37 +111,49 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
  *
  ******************************************************************************/
 
-function Spheroid3 (semiMajorAxis, semiMinorAxis)
+function Spheroid3 (semiMajorAxis = 1, semiMinorAxis = 1, use_f_1 = false)
 {
-   switch (arguments .length)
-   {
-      case 0:
-         this .semiMajorAxis = 0; // a
-         this .semiMinorAxis = 0; // c
-         break;
-      case 2:
-         this .semiMajorAxis = semiMajorAxis; // a
-         this .semiMinorAxis = semiMinorAxis; // c
-         break;
-      case 3:
-         const f_1 = arguments [1];
-         this .semiMajorAxis = semiMajorAxis;                 // a
-         this .semiMinorAxis = semiMajorAxis * (1 - 1 / f_1); // c
-         break;
-   }
+   this .set (semiMajorAxis, semiMinorAxis, use_f_1);
 }
 
 Object .assign (Spheroid3 .prototype,
 {
-   getSemiMajorAxis ()
+   copy ()
    {
-      // Returns the semi-major axis (a)
-      return this .semiMajorAxis; // a
+      const copy = Object .create (Spheroid3 .prototype);
+
+      copy .semiMajorAxis = this .semiMajorAxis; // a
+      copy .semiMinorAxis = this .semiMinorAxis; // c
+
+      return copy;
    },
-   getSemiMinorAxis ()
+   assign (spheroid)
    {
-      // Returns the semi-minor axis (c)
-      return this .semiMinorAxis; // c
+      this .semiMajorAxis = spheroid .semiMajorAxis;
+      this .semiMinorAxis = spheroid .semiMinorAxis;
+
+      return this;
+   },
+   equals (spheroid)
+   {
+      return this .semiMajorAxis === spheroid .semiMajorAxis && this .semiMinorAxis === spheroid .semiMinorAxis;
+   },
+   set (semiMajorAxis = 1, semiMinorAxis = 1, use_f_1 = false)
+   {
+      if (use_f_1)
+      {
+         const f_1 = semiMinorAxis;
+
+         this .semiMajorAxis = semiMajorAxis;                   // a
+         this .semiMinorAxis = semiMajorAxis * (1 - (1 / f_1)); // c
+      }
+      else
+      {
+         this .semiMajorAxis = semiMajorAxis; // a
+         this .semiMinorAxis = semiMinorAxis; // c
+      }
+
+      return this;
    },
    toString ()
    {
@@ -305,9 +317,9 @@ function Geodetic (spheroid, latitudeFirst, radians)
 {
    this .longitudeFirst = ! latitudeFirst;
    this .degrees        = ! radians;
-   this .a              = spheroid .getSemiMajorAxis ();
-   this .c              = spheroid .getSemiMinorAxis ();
-   this .c2a2           = (spheroid .getSemiMinorAxis () / this .a) ** 2;
+   this .a              = spheroid .semiMajorAxis;
+   this .c              = spheroid .semiMinorAxis;
+   this .c2a2           = (spheroid .semiMinorAxis / this .a) ** 2;
    this .ecc2           = 1 - this .c2a2;
 }
 
@@ -498,8 +510,8 @@ const
 function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northingFirst)
 {
    const
-      a    = spheroid .getSemiMajorAxis (),
-      ecc2 = 1 - (spheroid .getSemiMinorAxis () / a) ** 2,
+      a    = spheroid .semiMajorAxis,
+      ecc2 = 1 - (spheroid .semiMinorAxis / a) ** 2,
       EE   = ecc2 / (1 - ecc2),
       e1   = (1 - Math .sqrt (1 - ecc2)) / (1 + Math .sqrt (1 - ecc2));
 

@@ -108,9 +108,9 @@ Object .assign (X3DRenderingContext .prototype,
       // Observe fullscreen changes of <x3d-canvas>.
 
       $(document) .on ([
+         "fullscreenchange",
          "webkitfullscreenchange",
          "mozfullscreenchange",
-         "fullscreenchange",
          "MSFullscreenChange",
       ]
       .map (event => `${event}.X3DRenderingContext-${this .getInstanceId ()}`)

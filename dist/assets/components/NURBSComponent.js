@@ -1,5 +1,5 @@
-/* X_ITE v11.5.5 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.5")];
+/* X_ITE v11.5.6 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.6")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -4708,7 +4708,7 @@ const Triangle2 =
          v1 = new (external_X_ITE_X3D_Vector2_default()) (),
          v2 = new (external_X_ITE_X3D_Vector2_default()) ();
 
-      return function (point, a, b, c, result)
+      return function (point, a, b, c, result = { })
       {
          v0 .assign (b) .subtract (a);
          v1 .assign (c) .subtract (a);
