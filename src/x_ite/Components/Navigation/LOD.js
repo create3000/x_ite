@@ -92,13 +92,9 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    clearChildren ()
    { },
    addChildren ()
-   {
-      this .set_children__ ();
-   },
+   { },
    removeChildren ()
-   {
-      this .set_children__ ();
-   },
+   { },
    setChild (childNode)
    {
       // Remove node.
@@ -183,6 +179,18 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
       }
 
       this .set_objects__ ();
+   },
+   set_addChildren__ ()
+   {
+      X3DGroupingNode .prototype .set_addChildren__ .call (this);
+
+      this .set_children__ ();
+   },
+   set_removeChildren__ ()
+   {
+      X3DGroupingNode .prototype .set_removeChildren__ .call (this);
+
+      this .set_children__ ();
    },
    set_children__ ()
    {
