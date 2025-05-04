@@ -92,9 +92,13 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    clearChildren ()
    { },
    addChildren ()
-   { },
+   {
+      this .set_children__ ();
+   },
    removeChildren ()
-   { },
+   {
+      this .set_children__ ();
+   },
    setChild (childNode)
    {
       // Remove node.

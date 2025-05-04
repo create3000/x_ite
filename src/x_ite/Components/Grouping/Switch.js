@@ -84,9 +84,13 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    clearChildren ()
    { },
    addChildren ()
-   { },
+   {
+      this .set_children__ ();
+   },
    removeChildren ()
-   { },
+   {
+      this .set_children__ ();
+   },
    setChild (childNode)
    {
       // Remove node.
