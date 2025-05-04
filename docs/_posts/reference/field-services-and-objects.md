@@ -562,7 +562,7 @@ Adds a field callback function, if external browser interface is used. *key* is 
 The callback has a signature of `function (value)`, where value is the current value of the field.
 
 ```js
-visibilitySensor .addFieldCallback ("checkItOut", "enterTime", time =>
+visibilitySensor .addFieldCallback ("log", "enterTime", time =>
 {
   console .log (`You have entered the world at ${time}.`);
 });
