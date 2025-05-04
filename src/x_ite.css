@@ -686,6 +686,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-family: X_ITE PT Sans, sans-serif;
 }
 
+.x_ite-private-x_ite b {
+  font-family: X_ITE PT Sans, sans-serif;
+  font-weight: bold;
+}
+
 .x_ite-private-spinner-text {
   color: var(--text-color);
   font-size: 11pt;
