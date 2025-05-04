@@ -296,6 +296,9 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       throw new Error ("SFNode.getFieldDefinitions: node is null.");
    },
+   /**
+   * @deprecated Returns the corresponding X3DField object associated with *name*. Use sfnode.{fieldName} syntax.
+   */
    getField (name)
    {
       const
