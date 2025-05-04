@@ -111,7 +111,6 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
       {
          this .setPickableObject (false);
          this .getBrowser () .removeTransformSensor (this);
-
          this .targetObjectNode ?.removeTransformSensor (this);
 
          if (this ._isActive .getValue ())
