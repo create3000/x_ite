@@ -126,11 +126,14 @@ function changeColorScheme (event)
 {
    light = event .matches;
 
-   if ($("html") .attr ("data-mode") === "light")
-      light = true;
+   if (typeof $ !== "undefined")
+   {
+      if ($("html") .attr ("data-mode") === "light")
+         light = true;
 
-   if ($("html") .attr ("data-mode") === "dark")
-      light = false;
+      if ($("html") .attr ("data-mode") === "dark")
+         light = false;
+   }
 
    dark = !light;
 }
@@ -139,7 +142,7 @@ function changeColorScheme (event)
             </ProtoBody>
           </ProtoDeclare>
           <ProtoInstance name='ColorScheme' DEF='_1'></ProtoInstance>
-          <Background DEF='White_1'
+          <Background DEF='White'
               skyColor='1 1 1'></Background>
           <Background DEF='Black'></Background>
           <Shape DEF='Light'
@@ -158,9 +161,9 @@ function changeColorScheme (event)
             <Text USE='_2'></Text>
           </Shape>
           <ROUTE fromNode='_1' fromField='light' toNode='Light' toField='set_visible'></ROUTE>
+          <ROUTE fromNode='_1' fromField='light' toNode='White' toField='set_bind'></ROUTE>
           <ROUTE fromNode='_1' fromField='dark' toNode='Dark' toField='set_visible'></ROUTE>
           <ROUTE fromNode='_1' fromField='dark' toNode='Black' toField='set_bind'></ROUTE>
-          <ROUTE fromNode='_1' fromField='light' toNode='White_1' toField='set_bind'></ROUTE>
         </Scene>
       </X3D>
     </x3d-canvas>

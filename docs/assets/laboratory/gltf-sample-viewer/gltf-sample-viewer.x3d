@@ -7,7 +7,7 @@
     <meta name='created' content='Sun, 27 Apr 2025 10:03:02 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.8.5, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 05 May 2025 10:33:49 GMT'/>
+    <meta name='modified' content='Mon, 05 May 2025 11:48:45 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -37,14 +37,24 @@ function initialize ()
 function changeColorScheme (event)
 {
    light = event .matches;
-   dark  = !event .matches;
+
+   if (typeof $ !== "undefined")
+   {
+      if ($("html") .attr ("data-mode") === "light")
+         light = true;
+
+      if ($("html") .attr ("data-mode") === "dark")
+         light = false;
+   }
+
+   dark = !light;
 }
 ]]>
         </Script>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='ColorScheme' DEF='_1'/>
-    <Background DEF='White_1'
+    <Background DEF='White'
         skyColor='1 1 1'/>
     <Background DEF='Black'/>
     <Shape DEF='Light'
@@ -63,8 +73,8 @@ function changeColorScheme (event)
       <Text USE='_2'/>
     </Shape>
     <ROUTE fromNode='_1' fromField='light' toNode='Light' toField='set_visible'/>
+    <ROUTE fromNode='_1' fromField='light' toNode='White' toField='set_bind'/>
     <ROUTE fromNode='_1' fromField='dark' toNode='Dark' toField='set_visible'/>
     <ROUTE fromNode='_1' fromField='dark' toNode='Black' toField='set_bind'/>
-    <ROUTE fromNode='_1' fromField='light' toNode='White_1' toField='set_bind'/>
   </Scene>
 </X3D>
