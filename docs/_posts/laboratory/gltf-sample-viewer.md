@@ -14,7 +14,7 @@ tags: [glTF, Sample, Viewer, Laboratory]
   }
 
   html[data-mode=light] {
-    --list-color: rgba(0, 0, 0, 0.01);
+    --list-color: rgba(0, 0, 0, 0.02);
   }
 }
 
@@ -24,7 +24,7 @@ tags: [glTF, Sample, Viewer, Laboratory]
   }
 
   html:not([data-mode]), html[data-mode=light] {
-    --list-color: rgba(0, 0, 0, 0.01);
+    --list-color: rgba(0, 0, 0, 0.02);
   }
 }
 
@@ -92,37 +92,34 @@ x3d-canvas {
 <div class="viewer viewer-row">
   <div class="viewer-column1">
     <x3d-canvas class="xr-button-tr" contentScale="auto" update="auto">
-      <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
+      <X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
         <head>
           <component name='Scripting' level='1'></component>
           <component name='Text' level='1'></component>
+          <meta name='created' content='Sun, 27 Apr 2025 10:03:02 GMT'></meta>
+          <meta name='creator' content='Holger Seelig'></meta>
+          <meta name='generator' content='Sunrize X3D Editor V1.8.5, https://create3000.github.io/sunrize/'></meta>
+          <meta name='modified' content='Mon, 05 May 2025 10:27:16 GMT'></meta>
         </head>
         <Scene>
-          <Background
-            transparency='0.96'></Background>
-          <Switch DEF='Text'>
-            <Shape>
-              <Appearance>
-                <UnlitMaterial
-                    emissiveColor='0 0 0'></UnlitMaterial>
-              </Appearance>
-              <Text DEF='_1'
-                  string='"glTF Sample Viewer"'>
-                <FontStyle
-                    justify='"MIDDLE", "MIDDLE"'></FontStyle>
-              </Text>
-            </Shape>
-            <Shape>
-              <Text USE='_1'></Text>
-            </Shape>
-          </Switch>
-          <Script type='model/x3d+xml' DEF='ColorSchemeScript'>
-            <field accessType='outputOnly' type='SFInt32' name='colorScheme'></field>
+          <ProtoDeclare name='ColorScheme'>
+            <ProtoInterface>
+              <field accessType='outputOnly' type='SFBool' name='light'></field>
+              <field accessType='outputOnly' type='SFBool' name='dark'></field>
+            </ProtoInterface>
+            <ProtoBody>
+              <Script type='model/x3d+xml' DEF='ColorSchemeScript'>
+                <field accessType='outputOnly' type='SFBool' name='light'></field>
+                <field accessType='outputOnly' type='SFBool' name='dark'></field>
+                <IS>
+                  <connect nodeField='light' protoField='light'></connect>
+                  <connect nodeField='dark' protoField='dark'></connect>
+                </IS>
 <![CDATA[ecmascript:
 
 function initialize ()
 {
-   const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)");
+   const colorScheme = window .matchMedia ("(prefers-color-scheme: light)");
 
    colorScheme .addEventListener ("change", event => changeColorScheme (event));
 
@@ -131,19 +128,36 @@ function initialize ()
 
 function changeColorScheme (event)
 {
-    let theme = !!event .matches;
-
-    if ($("html") .attr ("data-mode") === "light")
-        theme = 0;
-
-    if ($("html") .attr ("data-mode") === "dark")
-        theme = 1;
-
-   colorScheme = theme;
+   light = event .matches;
+   dark  = !event .matches;
 }
 ]]>
-          </Script>
-          <ROUTE fromNode='ColorSchemeScript' fromField='colorScheme' toNode='Text' toField='set_whichChoice'></ROUTE>
+              </Script>
+            </ProtoBody>
+          </ProtoDeclare>
+          <ProtoInstance name='ColorScheme' DEF='_1'></ProtoInstance>
+          <Background DEF='White_1'
+              skyColor='1 1 1'></Background>
+          <Background DEF='Black'></Background>
+          <Shape DEF='Light'
+              visible='false'>
+            <Appearance>
+              <UnlitMaterial
+                  emissiveColor='0 0 0'></UnlitMaterial>
+            </Appearance>
+            <Text DEF='_2'
+                string='"glTF Sample Viewer"'>
+              <FontStyle
+                  justify='"MIDDLE", "MIDDLE"'></FontStyle>
+            </Text>
+          </Shape>
+          <Shape DEF='Dark'>
+            <Text USE='_2'></Text>
+          </Shape>
+          <ROUTE fromNode='_1' fromField='light' toNode='Light' toField='set_visible'></ROUTE>
+          <ROUTE fromNode='_1' fromField='dark' toNode='Dark' toField='set_visible'></ROUTE>
+          <ROUTE fromNode='_1' fromField='dark' toNode='Black' toField='set_bind'></ROUTE>
+          <ROUTE fromNode='_1' fromField='light' toNode='White_1' toField='set_bind'></ROUTE>
         </Scene>
       </X3D>
     </x3d-canvas>
