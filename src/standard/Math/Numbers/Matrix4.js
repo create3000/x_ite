@@ -52,12 +52,12 @@ import Rotation4           from "./Rotation4.js";
 import Matrix3             from "./Matrix3.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
-function Matrix4 ()
+function Matrix4 (... args)
 {
-   if (arguments .length)
+   if (args .length)
    {
       for (let i = 0; i < 16; ++ i)
-         this [i] = arguments [i];
+         this [i] = args [i];
    }
    else
    {

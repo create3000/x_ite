@@ -47,12 +47,12 @@
 
 import Vector2 from "./Vector2.js";
 
-function Matrix2 ()
+function Matrix2 (... args)
 {
-   if (arguments .length)
+   if (args .length)
    {
       for (let i = 0; i < 4; ++ i)
-         this [i] = arguments [i];
+         this [i] = args [i];
    }
    else
    {
