@@ -127,10 +127,10 @@ function changeColorScheme (event)
    light = event .matches;
 
    if ($("html") .attr ("data-mode") === "light")
-      theme = true;
+      light = true;
 
    if ($("html") .attr ("data-mode") === "dark")
-      theme = false;
+      light = false;
 
    dark = !light;
 }
