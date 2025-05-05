@@ -92,14 +92,10 @@ x3d-canvas {
 <div class="viewer viewer-row">
   <div class="viewer-column1">
     <x3d-canvas class="xr-button-tr" contentScale="auto" update="auto">
-      <X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+      <X3D profile='Interchange' version='4.0'>
         <head>
           <component name='Scripting' level='1'></component>
           <component name='Text' level='1'></component>
-          <meta name='created' content='Sun, 27 Apr 2025 10:03:02 GMT'></meta>
-          <meta name='creator' content='Holger Seelig'></meta>
-          <meta name='generator' content='Sunrize X3D Editor V1.8.5, https://create3000.github.io/sunrize/'></meta>
-          <meta name='modified' content='Mon, 05 May 2025 10:27:16 GMT'></meta>
         </head>
         <Scene>
           <ProtoDeclare name='ColorScheme'>
