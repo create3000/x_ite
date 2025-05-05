@@ -91,7 +91,7 @@ x3d-canvas {
 
 <div class="viewer viewer-row">
   <div class="viewer-column1">
-    <x3d-canvas class="xr-button-tr" contentScale="auto" update="auto">
+    <x3d-canvas class="xr-button-tr" contentScale="auto" update="auto" toneMapping="KHR_PBR_NEUTRAL">
       <X3D profile='Interchange' version='4.0'>
         <head>
           <component name='Scripting' level='1'></component>
