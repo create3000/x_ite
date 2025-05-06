@@ -102,4 +102,4 @@ $viewer =~ s|// SAMPLES_BEGIN.*?// SAMPLES_END|$string|s;
 
 open SCRIPT, ">", $script;
 print SCRIPT $viewer;
-close PASCRIPTGE;
+close SCRIPT;
