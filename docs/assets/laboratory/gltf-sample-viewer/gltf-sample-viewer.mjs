@@ -662,6 +662,11 @@ const ibl = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/EnvironmentTest/glTF-IBL/EnvironmentTest.gltf",
 ];
 
+const webp = [
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF-WEBP/CarConcept.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-WebP/ChronographWatch-WebP.gltf",
+];
+
 const ktx = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-KTX/ChronographWatch-KTX.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf",
@@ -705,6 +710,7 @@ class SampleViewer
       this .createList ("glTF Draco Sample Models",     draco);
       this .createList ("glTF Embedded Sample Models",  embedded);
       this .createList ("glTF IBL Sample Models",       ibl);
+      this .createList ("glTF WebP Sample Models",      webp);
       this .createList ("glTF KTX2 Sample Models",      ktx);
       this .createList ("glTF JPG/PNG Sample Models",   jpg);
 
@@ -844,7 +850,7 @@ class SampleViewer
    makeName (string)
    {
       return string
-         .replace (/-KTX/g, "")
+         .replace (/-(?:WebP|KTX)/ig, "")
          .replace (/([A-Z]+)/g, " $1")
          .replace (/([A-Z]+)([A-Z])/g, "$1 $2")
          .replace (/\s+/g, " ")

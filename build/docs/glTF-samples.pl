@@ -45,15 +45,15 @@ sub glTF {
    {
       say "Getting $folder files ...";
 
-      @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
-      @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
+      @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/" | sort`;
+      @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/" | sort`;
       @files  = (@models, @assets);
 
       s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
       s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
       s|$samples/|| foreach @files;
 
-      @files = grep { m|/$folder/| } @files;
+      @files = grep { m|/$folder/|i } @files;
       @all   = (@all, @files);
    }
 
@@ -90,6 +90,8 @@ $string .= "\n";
 $string .= glTF (["glTF-Embedded"], ".gltf", "embedded");
 $string .= "\n";
 $string .= glTF (["glTF-IBL"], ".gltf", "ibl");
+$string .= "\n";
+$string .= glTF (["glTF-WebP"], ".gltf", "webp");
 $string .= "\n";
 $string .= glTF (["glTF-KTX", "glTF-KTX-BasisU"], ".gltf", "ktx");
 $string .= "\n";
