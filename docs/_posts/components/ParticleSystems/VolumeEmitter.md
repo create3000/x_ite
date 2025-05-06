@@ -128,7 +128,7 @@ Coordinates for the geometry used as the emitting volume.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/VolumeEmitter/VolumeEmitter.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/VolumeEmitter/VolumeEmitter.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/ParticleSystems/VolumeEmitter/screenshot.avif" alt="VolumeEmitter"/>
 </x3d-canvas>
 

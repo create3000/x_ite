@@ -136,7 +136,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Billboard/Billboard.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Billboard/Billboard.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Navigation/Billboard/screenshot.avif" alt="Billboard"/>
 </x3d-canvas>
 

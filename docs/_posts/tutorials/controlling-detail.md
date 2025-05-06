@@ -118,7 +118,7 @@ LOD {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/lod/lod.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/lod/lod.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/lod/screenshot.avif" alt="LOD"/>
 </x3d-canvas>
 

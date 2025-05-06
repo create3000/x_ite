@@ -70,7 +70,7 @@ Coordinates of vertices connected into contiguous Polyline2D.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Polyline2D/Polyline2D.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Polyline2D/Polyline2D.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Geometry2D/Polyline2D/screenshot.avif" alt="Polyline2D"/>
 </x3d-canvas>
 

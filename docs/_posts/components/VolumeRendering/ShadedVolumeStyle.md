@@ -94,7 +94,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/ShadedVolumeStyle.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/ShadedVolumeStyle.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/screenshot.avif" alt="ShadedVolumeStyle"/>
 </x3d-canvas>
 

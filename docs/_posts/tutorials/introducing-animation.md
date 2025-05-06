@@ -199,7 +199,7 @@ ROUTE Rot1.value_changed      TO Frame1.set_rotation
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/touch1/screenshot.avif" alt="TouchSensor"/>
 </x3d-canvas>
 

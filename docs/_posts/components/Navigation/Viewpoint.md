@@ -241,7 +241,7 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Navigation/Viewpoint/screenshot.avif" alt="Viewpoint"/>
 </x3d-canvas>
 

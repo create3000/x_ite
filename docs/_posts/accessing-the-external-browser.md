@@ -132,7 +132,7 @@ await browser .replaceWorld (scene);
 
 And here you can see the result:
 
-<x3d-canvas update="auto">
+<x3d-canvas>
   <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>

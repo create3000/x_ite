@@ -245,7 +245,7 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/screenshot.avif" alt="ElevationGrid"/>
 </x3d-canvas>
 

@@ -217,7 +217,7 @@ Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) i
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Time/TimeSensor/screenshot.avif" alt="TimeSensor"/>
 </x3d-canvas>
 

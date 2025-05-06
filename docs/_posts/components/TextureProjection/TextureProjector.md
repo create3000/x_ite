@@ -196,7 +196,7 @@ Size of the shadow map in pixels, must be power of two.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/screenshot.avif" alt="TextureProjector"/>
 </x3d-canvas>
 

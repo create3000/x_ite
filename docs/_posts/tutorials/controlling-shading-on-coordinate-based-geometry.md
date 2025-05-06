@@ -101,7 +101,7 @@ Shape {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/faces2/faces2.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/faces2/faces2.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/faces2/screenshot.avif" alt="Normal"/>
 </x3d-canvas>
 

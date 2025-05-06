@@ -389,7 +389,7 @@ sub update_example {
 
    $string = "## Example\n";
    $string .= "\n";
-   $string .= "<x3d-canvas class=\"$xrButtonPosition\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" contentScale=\"auto\" update=\"auto\">\n";
+   $string .= "<x3d-canvas class=\"$xrButtonPosition\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" contentScale=\"auto\">\n";
    $string .= "  <img src=\"https://create3000.github.io/media/examples/$componentName/$typeName/screenshot.avif\" alt=\"$typeName\"/>\n";
    $string .= "</x3d-canvas>\n";
    $string .= "\n";

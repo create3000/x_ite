@@ -75,7 +75,7 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/ClipPlane/screenshot.avif" alt="ClipPlane"/>
 </x3d-canvas>
 

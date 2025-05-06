@@ -184,7 +184,7 @@ Output event containing the node or nodes that have been found to intersect with
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Picking/LinePickSensor/LinePickSensor.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Picking/LinePickSensor/LinePickSensor.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Picking/LinePickSensor/screenshot.avif" alt="LinePickSensor"/>
 </x3d-canvas>
 

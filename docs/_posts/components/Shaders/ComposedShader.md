@@ -104,7 +104,7 @@ ComposedShader can contain multiple [ShaderPart](/x_ite/components/shaders/shade
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Shaders/ComposedShader/screenshot.avif" alt="ComposedShader"/>
 </x3d-canvas>
 

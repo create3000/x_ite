@@ -68,7 +68,7 @@ NavigationInfo {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/navigation1/navigation1.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/navigation1/navigation1.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/navigation1/screenshot.avif" alt="NavigationInfo"/>
 </x3d-canvas>
 

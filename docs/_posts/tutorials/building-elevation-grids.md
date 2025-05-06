@@ -163,7 +163,7 @@ Shape {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/elevation-grid/elevation-grid.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/elevation-grid/elevation-grid.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/elevation-grid/screenshot.avif" alt="Elevation Grid"/>
 </x3d-canvas>
 

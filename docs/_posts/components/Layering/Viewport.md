@@ -129,7 +129,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layering/Viewport/Viewport.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layering/Viewport/Viewport.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Layering/Viewport/screenshot.avif" alt="Viewport"/>
 </x3d-canvas>
 

@@ -80,7 +80,7 @@ Be careful! X3D is a case sensitive language.
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/simple/simple.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/simple/simple.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/simple/screenshot.avif" alt="Simple Example"/>
 </x3d-canvas>
 

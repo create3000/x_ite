@@ -241,7 +241,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/sound/sound.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/sound/sound.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/sound/screenshot.avif" alt="Sound"/>
 </x3d-canvas>
 

@@ -146,7 +146,7 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Networking/LoadSensor/screenshot.avif" alt="LoadSensor"/>
 </x3d-canvas>
 

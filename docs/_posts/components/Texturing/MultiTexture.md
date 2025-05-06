@@ -141,7 +141,7 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Texturing/MultiTexture/screenshot.avif" alt="MultiTexture"/>
 </x3d-canvas>
 

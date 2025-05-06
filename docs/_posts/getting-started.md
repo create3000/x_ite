@@ -15,7 +15,7 @@ permalink: /
 <x3d-canvas
   class="teaser"
   src="/x_ite/assets/teaser/teaser.x3d"
-  update="auto"
+
   splashScreen="false"
   contextMenu="false"
   notifications="false"
@@ -27,7 +27,7 @@ permalink: /
   <x3d-canvas
     class="mascot"
     src="/x_ite/assets/teaser/halloween-child.x3d"
-    update="auto"
+
     splashScreen="false"
     contextMenu="false"
     notifications="false"
@@ -832,7 +832,7 @@ xrSessionMode
 ### Example of Use
 
 ```html
-<x3d-canvas src="path/to/your/X3D/world.x3d" cache="true" update="auto"></x3d-canvas>
+<x3d-canvas src="path/to/your/X3D/world.x3d" cache="true"></x3d-canvas>
 ```
 
 ### More Options

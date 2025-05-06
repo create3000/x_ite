@@ -114,7 +114,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Followers/ColorChaser/screenshot.avif" alt="ColorChaser"/>
 </x3d-canvas>
 

@@ -294,7 +294,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Material/Material.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Material/Material.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Shape/Material/screenshot.avif" alt="Material"/>
 </x3d-canvas>
 

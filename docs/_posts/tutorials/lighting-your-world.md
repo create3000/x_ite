@@ -66,7 +66,7 @@ PointLight {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light1/light1.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light1/light1.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/light1/screenshot.avif" alt="PointLight"/>
 </x3d-canvas>
 
@@ -99,7 +99,7 @@ DirectionalLight {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light2/light2.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light2/light2.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/light2/screenshot.avif" alt="DirectionalLight"/>
 </x3d-canvas>
 
@@ -136,7 +136,7 @@ SpotLight {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light3/light3.x3dv" update="auto">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light3/light3.x3dv">
   <img src="https://create3000.github.io/media/tutorials/scenes/light3/screenshot.avif" alt="SpotLight"/>
 </x3d-canvas>
 

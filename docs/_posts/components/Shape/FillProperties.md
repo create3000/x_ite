@@ -81,7 +81,7 @@ Whether or not associated geometry is *hatched*.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/Shape/FillProperties/screenshot.avif" alt="FillProperties"/>
 </x3d-canvas>
 

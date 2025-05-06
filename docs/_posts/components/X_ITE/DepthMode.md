@@ -98,7 +98,7 @@ Sets whether writing into the depth buffer is enabled or disabled.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d" contentScale="auto">
   <img src="https://create3000.github.io/media/examples/X_ITE/DepthMode/screenshot.avif" alt="DepthMode"/>
 </x3d-canvas>
 
