@@ -29,7 +29,7 @@ npm install
 
 ## Next Steps
 
-* Install a localhost server: see https://192.168.178.35:4000/x_ite/setup-a-localhost-server/#using-node
+* [Setup a localhost server](https://create3000.github.io/x_ite/setup-a-localhost-server/).
 
 ## Making Changes
 
