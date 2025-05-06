@@ -50,7 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
-import X3DCast              from "../../Base/X3DCast.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
@@ -111,9 +110,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
       const level = Math .min (this ._level_changed .getValue (), this ._children .length - 1);
 
       if (level >= 0 && level < this ._children .length)
-      {
-         this .addChild (X3DCast (X3DConstants .X3DChildNode, this ._children [level]))
-      }
+         this .addChild (this ._children [level]);
    },
    set_visibleObjects__ ()
    { },

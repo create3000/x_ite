@@ -50,8 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGroupingNode      from "./X3DGroupingNode.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
-import X3DCast              from "../../Base/X3DCast.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 function Switch (executionContext)
@@ -104,9 +102,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
       const whichChoice = this ._whichChoice .getValue ();
 
       if (whichChoice >= 0 && whichChoice < this ._children .length)
-      {
-         this .addChild (X3DCast (X3DConstants .X3DChildNode, this ._children [whichChoice]));
-      }
+         this .addChild (this ._children [whichChoice]);
    },
 });
 
