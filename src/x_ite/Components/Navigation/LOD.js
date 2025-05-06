@@ -76,8 +76,7 @@ function LOD (executionContext)
 
    // Private properties
 
-   this .frameRate        = 60;
-   this .keepCurrentLevel = false;
+   this .frameRate = 60;
 }
 
 Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototype),
@@ -161,7 +160,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
       return function (type, renderObject)
       {
-         if (type === TraverseType .DISPLAY && !this .keepCurrentLevel)
+         if (type === TraverseType .DISPLAY)
          {
             const currentLevel = this ._level_changed .getValue ();
 
