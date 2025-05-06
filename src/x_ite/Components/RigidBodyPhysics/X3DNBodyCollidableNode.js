@@ -320,8 +320,17 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          }
          case TraverseType .PICKING:
          {
-            this .pickableObject ?.traverse (type, renderObject);
-            return;
+            // X3DNBodyCollidableNode cannot be pickTarget of a X3DPickSensorNode,
+            // so we do not need to a this node to pickingHierarchy.
+
+            const browser = this .getBrowser ();
+
+            if (browser .getPickable () .at (-1))
+               this .visibleObject ?.traverse (type, renderObject);
+            else
+               this .pickableObject ?.traverse (type, renderObject);
+
+            break;
          }
          case TraverseType .COLLISION:
          {

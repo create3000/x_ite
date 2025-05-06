@@ -89,97 +89,10 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   clearChildren ()
-   { },
    addChildren ()
    { },
    removeChildren ()
    { },
-   setChild (childNode)
-   {
-      // Remove node.
-
-      if (this .childNode)
-      {
-         const childNode = this .childNode;
-
-         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
-         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
-         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
-         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
-         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
-
-         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-         {
-            childNode ._display     .removeInterest ("requestRebuild", this);
-            childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
-         }
-      }
-
-      // Clear node.
-
-      this .childNode       = null;
-      this .boundedObject   = null;
-      this .pointingObject  = null;
-      this .cameraObject    = null;
-      this .pickableObject  = null;
-      this .collisionObject = null;
-      this .shadowObject    = null;
-      this .visibleObject   = null;
-      this .bboxObject      = null;
-
-      // Add node.
-
-      if (childNode)
-      {
-         childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
-         childNode ._isPointingObject  .addInterest ("requestRebuild", this);
-         childNode ._isCameraObject    .addInterest ("requestRebuild", this);
-         childNode ._isPickableObject  .addInterest ("requestRebuild", this);
-         childNode ._isCollisionObject .addInterest ("requestRebuild", this);
-         childNode ._isShadowObject    .addInterest ("requestRebuild", this);
-         childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
-
-         this .childNode = childNode;
-
-         if (childNode .isVisible ())
-         {
-            if (childNode .isBoundedObject ())
-               this .boundedObject = childNode;
-
-            if (childNode .isPointingObject ())
-               this .pointingObject = childNode;
-
-            if (childNode .isCameraObject ())
-               this .cameraObject = childNode;
-
-            if (childNode .isPickableObject ())
-               this .pickableObject = childNode;
-
-            if (childNode .isCollisionObject ())
-               this .collisionObject = childNode;
-
-            if (childNode .isShadowObject ())
-               this .shadowObject = childNode;
-
-            if (childNode .isVisibleObject ())
-               this .visibleObject = childNode;
-         }
-
-         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-         {
-            childNode ._display     .addInterest ("requestRebuild", this);
-            childNode ._bboxDisplay .addInterest ("requestRebuild", this);
-
-            if (childNode .isBBoxVisible ())
-               this .bboxObject = childNode;
-         }
-      }
-
-      this .set_objects__ ();
-   },
    set_addChildren__ ()
    {
       X3DGroupingNode .prototype .set_addChildren__ .call (this);
@@ -194,40 +107,14 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    },
    set_children__ ()
    {
+      this .clearChildren ();
+
       const level = Math .min (this ._level_changed .getValue (), this ._children .length - 1);
 
       if (level >= 0 && level < this ._children .length)
       {
-         this .setChild (X3DCast (X3DConstants .X3DChildNode, this ._children [level]))
+         this .addChild (X3DCast (X3DConstants .X3DChildNode, this ._children [level]))
       }
-      else
-      {
-         this .setChild (null);
-      }
-   },
-   set_boundedObjects__ ()
-   {
-      this .setBoundedObject (this .boundedObject || !this .isDefaultBBoxSize ());
-   },
-   set_pointingObjects__ ()
-   {
-      this .setPointingObject (this .pointingObject);
-   },
-   set_cameraObjects__ ()
-   {
-      this .setCameraObject (this .cameraObject);
-   },
-   set_pickableObjects__ ()
-   {
-      this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
-   },
-   set_collisionObjects__ ()
-   {
-      this .setCollisionObject (this .collisionObject);
-   },
-   set_shadowObjects__ ()
-   {
-      this .setShadowObject (this .shadowObject);
    },
    set_visibleObjects__ ()
    { },
@@ -274,79 +161,30 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
       return function (type, renderObject)
       {
-         switch (type)
+         if (type === TraverseType .DISPLAY && !this .keepCurrentLevel)
          {
-            case TraverseType .POINTER:
+            let
+               level        = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
+               currentLevel = this ._level_changed .getValue ();
+
+            if (this ._forceTransitions .getValue ())
             {
-               this .pointingObject ?.traverse (type, renderObject);
-               return;
+               if (level > currentLevel)
+                  level = currentLevel + 1;
+
+               else if (level < currentLevel)
+                  level = currentLevel - 1;
             }
-            case TraverseType .CAMERA:
+
+            if (level !== currentLevel)
             {
-               this .cameraObject ?.traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .PICKING:
-            {
-               if (this .getTransformSensors () .size)
-               {
-                  const modelMatrix = renderObject .getModelViewMatrix () .get ();
+               this ._level_changed = level;
 
-                  for (const transformSensorNode of this .getTransformSensors ())
-                     transformSensorNode .collect (modelMatrix);
-               }
-
-               const
-                  browser          = this .getBrowser (),
-                  pickingHierarchy = browser .getPickingHierarchy ();
-
-               pickingHierarchy .push (this);
-
-               this .pickableObject ?.traverse (type, renderObject);
-
-               pickingHierarchy .pop ();
-               return;
-            }
-            case TraverseType .COLLISION:
-            {
-               this .collisionObject ?.traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .SHADOW:
-            {
-               this .shadowObject ?.traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .DISPLAY:
-            {
-               if (!this .keepCurrentLevel)
-               {
-                  let
-                     level        = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-                     currentLevel = this ._level_changed .getValue ();
-
-                  if (this ._forceTransitions .getValue ())
-                  {
-                     if (level > currentLevel)
-                        level = currentLevel + 1;
-
-                     else if (level < currentLevel)
-                        level = currentLevel - 1;
-                  }
-
-                  if (level !== currentLevel)
-                  {
-                     this ._level_changed = level;
-
-                     this .set_children__ ();
-                  }
-               }
-
-               this .visibleObject ?.traverse    (type, renderObject);
-               this .bboxObject    ?.displayBBox (type, renderObject);
-               return;
+               this .set_children__ ();
             }
          }
+
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
       };
    })(),
 });

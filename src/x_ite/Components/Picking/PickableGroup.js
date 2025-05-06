@@ -79,12 +79,15 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
    },
    set_pickableObjects__ ()
    {
-      this .setPickableObject (this ._pickable .getValue () && (this .pickableObjects .size || this .getTransformSensors () .size));
+      this .setPickableObject (this ._pickable .getValue ());
    },
    traverse (type, renderObject)
    {
       if (type !== TraverseType .PICKING)
+      {
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+         return;
+      }
 
       if (!this ._pickable .getValue ())
          return;
@@ -92,11 +95,15 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
       if (this .getObjectType () .has ("NONE"))
          return;
 
-      const browser = this .getBrowser ();
+      const
+         browser       = this .getBrowser (),
+         pickableStack = browser .getPickable ();
 
       if (this .getObjectType () .has ("ALL"))
       {
+         pickableStack .push (true);
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+         pickableStack .pop ();
          return;
       }
 
@@ -150,11 +157,14 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
          pickSensorNodes .add (pickSensorNode);
       }
 
+      pickableStack   .push (true);
       pickSensorStack .push (pickSensorNodes);
 
       X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
       pickSensorStack .pop ();
+      pickableStack   .pop ();
+
       pickSensorNodes .clear ();
    },
    dispose ()

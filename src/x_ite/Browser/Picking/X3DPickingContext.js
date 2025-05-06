@@ -52,6 +52,7 @@ const
    _transformSensorNodes = Symbol (),
    _pickSensorNodes      = Symbol (),
    _pickingHierarchy     = Symbol (),
+   _pickable             = Symbol (),
    _pickingTime          = Symbol ();
 
 function X3DPickingContext ()
@@ -59,6 +60,7 @@ function X3DPickingContext ()
    this [_transformSensorNodes] = new Set ();
    this [_pickSensorNodes]      = [ new Set () ];
    this [_pickingHierarchy]     = [ ];
+   this [_pickable]             = [ false ];
    this [_pickingTime]          = new StopWatch ();
 }
 
@@ -91,6 +93,10 @@ Object .assign (X3DPickingContext .prototype,
    getPickingHierarchy ()
    {
       return this [_pickingHierarchy];
+   },
+   getPickable ()
+   {
+      return this [_pickable];
    },
    enablePicking ()
    {
