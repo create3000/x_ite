@@ -163,9 +163,9 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
       {
          if (type === TraverseType .DISPLAY && !this .keepCurrentLevel)
          {
-            let
-               level        = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-               currentLevel = this ._level_changed .getValue ();
+            const currentLevel = this ._level_changed .getValue ();
+
+            let level = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
 
             if (this ._forceTransitions .getValue ())
             {
