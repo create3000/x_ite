@@ -332,6 +332,9 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       for (const transformSensorNode of this .getTransformSensors ())
          transformSensorNode .collect (modelMatrix);
 
+      if (!this .geometryNode)
+         return;
+
       const
          browser          = this .getBrowser (),
          pickSensorStack  = browser .getPickSensors (),

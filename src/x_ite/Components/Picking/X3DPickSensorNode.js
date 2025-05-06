@@ -236,7 +236,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          executionContext = this .getExecutionContext (),
          geometryNode     = target .geometryNode;
 
-      if (!geometryNode || geometryNode .getExecutionContext () === executionContext)
+      if (geometryNode .getExecutionContext () === executionContext)
          return geometryNode;
 
       const instance = geometryNode .getExecutionContext ();
