@@ -1,4 +1,4 @@
-# Contribution
+# Contributing
 
 ## Introduction
 
