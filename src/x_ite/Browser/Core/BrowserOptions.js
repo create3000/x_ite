@@ -297,7 +297,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          browser = this .getBrowser (),
          element = browser .getElement ();
 
-      if (!document .hidden && element .isInViewport ())
+      if ((!document .hidden && element .isInViewport ()) || this .getPose ())
       {
          if (!browser .isLive ())
             browser .beginUpdate ();
