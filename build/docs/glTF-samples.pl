@@ -45,8 +45,8 @@ sub glTF {
    {
       say "Getting $folder files ...";
 
-      @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/" | sort`;
-      @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/" | sort`;
+      @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
       @files  = (@models, @assets);
 
       s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
@@ -59,7 +59,7 @@ sub glTF {
 
    my $string = "const $var = [\n";
 
-   foreach (@all)
+   foreach (sort @all)
    {
       chomp;
       $string .= "   \"$khronos/$_\",\n";
@@ -85,7 +85,7 @@ $string .= glTF (["glTF-Binary"], ".glb", "glb");
 $string .= "\n";
 $string .= glTF (["glTF-Quantized"], ".gltf", "quantized");
 $string .= "\n";
-$string .= glTF (["glTF-Draco"], ".gltf", "draco");
+$string .= glTF (["glTF-Draco", "glTF-KTX-BasisU-Draco"], ".gltf", "draco");
 $string .= "\n";
 $string .= glTF (["glTF-Embedded"], ".gltf", "embedded");
 $string .= "\n";
