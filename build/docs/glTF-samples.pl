@@ -35,25 +35,31 @@ sub media {
 }
 
 sub glTF {
-   my $folder = shift;
-   my $suffix = shift;
+   my $folders = shift;
+   my $suffix  = shift;
    my $var    = shift;
 
-   say "Getting $folder files ...";
+   @all = ();
 
-   @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
-   @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
-   @files  = (@models, @assets);
+   foreach $folder (@$folders)
+   {
+      say "Getting $folder files ...";
 
-   s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
-   s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
-   s|$samples/|| foreach @files;
+      @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
+      @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
+      @files  = (@models, @assets);
 
-   @files = grep { m|/$folder/| } @files;
+      s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
+      s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
+      s|$samples/|| foreach @files;
+
+      @files = grep { m|/$folder/| } @files;
+      @all   = (@all, @files);
+   }
 
    my $string = "const $var = [\n";
 
-   foreach (@files)
+   foreach (@all)
    {
       chomp;
       $string .= "   \"$khronos/$_\",\n";
@@ -73,21 +79,21 @@ $string = "";
 $string .= "// SAMPLES_BEGIN\n\n";
 $string .= media;
 $string .= "\n";
-$string .= glTF ("glTF", ".gltf", "glTF");
+$string .= glTF (["glTF"], ".gltf", "glTF");
 $string .= "\n";
-$string .= glTF ("glTF-Binary", ".glb", "glb");
+$string .= glTF (["glTF-Binary"], ".glb", "glb");
 $string .= "\n";
-$string .= glTF ("glTF-Quantized", ".gltf", "quantized");
+$string .= glTF (["glTF-Quantized"], ".gltf", "quantized");
 $string .= "\n";
-$string .= glTF ("glTF-Draco", ".gltf", "draco");
+$string .= glTF (["glTF-Draco"], ".gltf", "draco");
 $string .= "\n";
-$string .= glTF ("glTF-Embedded", ".gltf", "embedded");
+$string .= glTF (["glTF-Embedded"], ".gltf", "embedded");
 $string .= "\n";
-$string .= glTF ("glTF-IBL", ".gltf", "ibl");
+$string .= glTF (["glTF-IBL"], ".gltf", "ibl");
 $string .= "\n";
-$string .= glTF ("glTF-KTX-BasisU", ".gltf", "ktx");
+$string .= glTF (["glTF-KTX", "glTF-KTX-BasisU"], ".gltf", "ktx");
 $string .= "\n";
-$string .= glTF ("glTF-JPG-PNG", ".gltf", "jpg");
+$string .= glTF (["glTF-JPG-PNG"], ".gltf", "jpg");
 $string .= "\n// SAMPLES_END";
 
 $viewer =~ s|// SAMPLES_BEGIN.*?// SAMPLES_END|$string|s;

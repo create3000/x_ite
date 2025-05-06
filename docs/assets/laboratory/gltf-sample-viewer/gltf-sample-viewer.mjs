@@ -19,6 +19,7 @@ const ibl_files = [
    "CarConcept",
    "Cesium",
    "ChairDamaskPurplegold",
+   "Chronograph",
    "Clearcoat",
    "ClearCoat",
    "CommercialRefrigerator",
@@ -235,6 +236,7 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CesiumMan/glTF/CesiumMan.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CesiumMilkTruck/glTF/CesiumMilkTruck.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChairDamaskPurplegold/glTF/ChairDamaskPurplegold.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF/ChronographWatch.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ClearCoatCarPaint/glTF/ClearCoatCarPaint.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ClearCoatTest/glTF/ClearCoatTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ClearcoatWicker/glTF/ClearcoatWicker.gltf",
@@ -443,6 +445,7 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CesiumMan/glTF-Binary/CesiumMan.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CesiumMilkTruck/glTF-Binary/CesiumMilkTruck.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChairDamaskPurplegold/glTF-Binary/ChairDamaskPurplegold.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-Binary/ChronographWatch.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ClearCoatCarPaint/glTF-Binary/ClearCoatCarPaint.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ClearCoatTest/glTF-Binary/ClearCoatTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ClearcoatWicker/glTF-Binary/ClearcoatWicker.glb",
@@ -660,6 +663,7 @@ const ibl = [
 ];
 
 const ktx = [
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-KTX/ChronographWatch-KTX.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnisotropyBarnLamp/glTF-KTX-BasisU/AnisotropyBarnLamp.gltf",
@@ -815,7 +819,7 @@ class SampleViewer
       {
          const
             match = filename .match (/([^\/]+)\.\w+$/),
-            name  = match [1] .replace (/([A-Z]+)/g, " $1") .replace (/([A-Z]+)([A-Z])/g, "$1 $2") .replace (/\s+/g, " ") .trim ();
+            name  = this .makeName (match [1]);
 
          map .set (name, filename);
       }
@@ -835,6 +839,16 @@ class SampleViewer
                return false;
             });
       }
+   }
+
+   makeName (string)
+   {
+      return string
+         .replace (/-KTX/g, "")
+         .replace (/([A-Z]+)/g, " $1")
+         .replace (/([A-Z]+)([A-Z])/g, "$1 $2")
+         .replace (/\s+/g, " ")
+         .trim ();
    }
 
    async loadURL (filename)
