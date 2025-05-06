@@ -1,4 +1,5 @@
 # Contribution
+
 ## Introduction
 
 It is assumed that you know a little about Node.js and Git. If not, [here's some help to get started with Git](https://help.github.com/en/github/using-git) and [here’s some help to get started with Node.js.](https://nodejs.org/en/docs/guides/getting-started-guide/)
@@ -10,40 +11,50 @@ It is assumed that you know a little about Node.js and Git. If not, [here's some
 * Change into the directory you’d like
 * Clone your forked repo
 
-      git clone https://github.com/[yourgithubname]/x_ite.git
+```sh
+git clone https://github.com/[yourgithubname]/x_ite.git
+```
 
 * Go into the x_ite directory.
 
-      cd ./x_ite
+```sh
+cd ./x_ite
+```
 
 * Install the dependencies
 
-      npm install
+```sh
+npm install
+```
 
 ## Next Steps
 
 * Install a localhost server: see https://192.168.178.35:4000/x_ite/setup-a-localhost-server/#using-node
 
-## Making changes
+## Making Changes
 
 When you’ve decided to make changes, start with the following:
 
 * Update your local repo
 
-      git pull https://github.com/create3000/x_ite.git
-      git push
+```sh
+git pull https://github.com/create3000/x_ite.git
+git push
+```
 
 * Make a new branch from the `development` branch
 
-      git checkout development
-      git branch [mychangesbranch]
-      git checkout [mychangesbranch]
+```sh
+git checkout development
+git branch [mychangesbranch]
+git checkout [mychangesbranch]
+```
 
 * Add your changes to your commit.
 * Push the changes to your forked repo.
 * Open a Pull Request (PR)
 
-## Important notes:
+## Important Notes
 
 * Don't include any build files in your commit.
 * Not all new features will need a new example. Simpler features could be incorporated into an existing example. Bigger features may be asked to add an example demonstrating the feature.
