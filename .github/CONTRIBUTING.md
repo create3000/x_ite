@@ -2,14 +2,14 @@
 
 ## Introduction
 
-It is assumed that you know a little about Node.js and Git. If not, [here's some help to get started with Git](https://help.github.com/en/github/using-git) and [here’s some help to get started with Node.js.](https://nodejs.org/en/docs/guides/getting-started-guide/)
+It is assumed that you know a little about Node.js and Git. If not, [here's some help to get started with Git](https://help.github.com/en/github/using-git) and [here’s some help to get started with Node.js.](https://nodejs.org/en/docs/guides/getting-started-guide/).
 
-* Install [Node.js](https://nodejs.org/)
-* Install [Git](https://git-scm.com/)
-* [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) x_ite
-* Open your OS’s terminal
-* Change into the directory you’d like
-* Clone your forked repo
+* Install [Node.js](https://nodejs.org/).
+* Install [Git](https://git-scm.com/).
+* [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) x_ite.
+* Open your OS’s terminal.
+* Change into the directory you’d like.
+* Clone your forked repo.
 
 ```sh
 git clone https://github.com/[yourgithubname]/x_ite.git
@@ -21,7 +21,7 @@ git clone https://github.com/[yourgithubname]/x_ite.git
 cd ./x_ite
 ```
 
-* Install the dependencies
+* Install the dependencies.
 
 ```sh
 npm install
@@ -35,14 +35,14 @@ npm install
 
 When you’ve decided to make changes, start with the following:
 
-* Update your local repo
+* Update your local repo.
 
 ```sh
 git pull https://github.com/create3000/x_ite.git
 git push
 ```
 
-* Make a new branch from the `development` branch
+* Make a new branch from the `development` branch.
 
 ```sh
 git checkout development
@@ -52,7 +52,7 @@ git checkout [mychangesbranch]
 
 * Add your changes to your commit.
 * Push the changes to your forked repo.
-* Open a Pull Request (PR)
+* Open a Pull Request (PR).
 
 ## Important Notes
 
