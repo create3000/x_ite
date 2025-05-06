@@ -234,15 +234,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       {
          case TraverseType .PICKING:
          {
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy ();
-
-            pickingHierarchy .push (this);
-
             this .traverseChildren (type, renderObject);
-
-            pickingHierarchy .pop ();
             return;
          }
          case TraverseType .DISPLAY:

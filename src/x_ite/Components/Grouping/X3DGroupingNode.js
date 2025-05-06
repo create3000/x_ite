@@ -77,7 +77,6 @@ function X3DGroupingNode (executionContext)
    this .clipPlaneNodes            = new Set ();
    this .displayNodes              = new Set ();
    this .cameraObjects             = new Set ();
-   this .pickableSensorNodes       = new Set ();
    this .pickableObjects           = new Set ();
    this .collisionObjects          = new Set ();
    this .shadowObjects             = new Set ();
@@ -211,7 +210,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .clipPlaneNodes            .clear ();
       this .displayNodes              .clear ();
       this .cameraObjects             .clear ();
-      this .pickableSensorNodes       .clear ();
       this .pickableObjects           .clear ();
       this .collisionObjects          .clear ();
       this .shadowObjects             .clear ();
@@ -267,14 +265,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                this .displayNodes .add (childNode);
                continue;
             }
-            case X3DConstants .TransformSensor:
-            case X3DConstants .X3DPickSensorNode:
-            {
-               if (childNode .isPickableObject ())
-                  this .pickableSensorNodes .add (childNode);
-
-               continue;
-            }
             case X3DConstants .X3DChildNode:
             {
                childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
@@ -298,7 +288,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   if (childNode .isCameraObject ())
                      this .cameraObjects .add (childNode);
 
-                  if (childNode .isPickableObject () && !this .pickableSensorNodes .has (childNode))
+                  if (childNode .isPickableObject ())
                      this .pickableObjects .add (childNode);
 
                   if (childNode .isCollisionObject ())
@@ -368,12 +358,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                this .displayNodes .delete (childNode);
                continue;
             }
-            case X3DConstants .TransformSensor:
-            case X3DConstants .X3DPickSensorNode:
-            {
-               this .pickableSensorNodes .delete (childNode);
-               continue;
-            }
             case X3DConstants .X3DChildNode:
             {
                childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
@@ -432,7 +416,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_pickableObjects__ ()
    {
-      this .setPickableObject (this .getTransformSensors () .size || this .pickableSensorNodes .size || this .pickableObjects .size);
+      this .setPickableObject (this .getTransformSensors () .size || this .pickableObjects .size);
    },
    set_collisionObjects__ ()
    {
@@ -499,25 +483,14 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   transformSensorNode .collect (modelMatrix);
             }
 
-            for (const pickableSensorNode of this .pickableSensorNodes)
-               pickableSensorNode .traverse (type, renderObject);
-
             const
                browser          = this .getBrowser (),
                pickingHierarchy = browser .getPickingHierarchy ();
 
             pickingHierarchy .push (this);
 
-            if (browser .getPickable () .at (-1))
-            {
-               for (const visibleObject of this .visibleObjects)
-                  visibleObject .traverse (type, renderObject);
-            }
-            else
-            {
-               for (const pickableObject of this .pickableObjects)
-                  pickableObject .traverse (type, renderObject);
-            }
+            for (const pickableObject of this .pickableObjects)
+               pickableObject .traverse (type, renderObject);
 
             pickingHierarchy .pop ();
             return;

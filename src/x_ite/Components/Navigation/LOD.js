@@ -302,10 +302,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
                pickingHierarchy .push (this);
 
-               if (browser .getPickable () .at (-1))
-                  this .visibleObject ?.traverse (type, renderObject);
-               else
-                  this .pickableObject ?.traverse (type, renderObject);
+               this .pickableObject ?.traverse (type, renderObject);
 
                pickingHierarchy .pop ();
                return;

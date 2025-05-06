@@ -266,7 +266,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_pickableObject__ ()
    {
-      this .setPickableObject (this .getTransformSensors () .size);
+      this .setPickableObject (this .isEnabled ());
    },
    set_collisionObject__ ()
    {
