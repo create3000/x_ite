@@ -677,6 +677,7 @@ const ktx = [
 ];
 
 const jpg = [
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF-JPG/CarConcept.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/StainedGlassLamp/glTF-JPG-PNG/StainedGlassLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/StainedGlassLamp/glTF-JPG-PNG/StainedGlassLamp.gltf",
 ];
