@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
    },
    set_pickableObjects__ ()
    {
-      this .setPickableObject (this ._pickable .getValue ());
+      this .setPickableObject (this ._pickable .getValue () || this .getTransformSensors () .size);
    },
    traverse (type, renderObject)
    {
@@ -90,7 +90,17 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
       }
 
       if (!this ._pickable .getValue ())
+      {
+         if (this .getTransformSensors () .size)
+         {
+            const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+            for (const transformSensorNode of this .getTransformSensors ())
+               transformSensorNode .collect (modelMatrix);
+         }
+
          return;
+      }
 
       if (this .getObjectType () .has ("NONE"))
          return;
