@@ -74,6 +74,11 @@ class X3DCanvasElement extends HTMLElement
       this .browser ?.connectedCallback ();
    }
 
+   disconnectedCallback ()
+   {
+      this .browser ?.disconnectedCallback ();
+   }
+
    static get observedAttributes ()
    {
       const attributes = [

@@ -268,6 +268,16 @@ Object .assign (X3DCoreContext .prototype,
 
          this .attributeChangedCallback (name, undefined, value);
       }
+
+      // AutoUpdate
+
+      this .getBrowserOptions () .checkUpdate ();
+   },
+   disconnectedCallback ()
+   {
+      // AutoUpdate
+
+      this .getBrowserOptions () .checkUpdate ();
    },
    attributeChangedCallback (name, oldValue, newValue)
    {

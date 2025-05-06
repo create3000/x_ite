@@ -283,28 +283,30 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       if (!autoUpdate .getValue ())
          return;
 
+      $(window)   .on (windowEvents,   () => this .checkUpdate ());
+      $(document) .on (documentEvents, () => this .checkUpdate ());
+
+      this .checkUpdate ();
+   },
+   checkUpdate ()
+   {
+      if (!this ._AutoUpdate .getValue ())
+         return;
+
       const
          browser = this .getBrowser (),
          element = browser .getElement ();
 
-      const checkUpdate = () =>
+      if (!document .hidden && element .isInViewport ())
       {
-         if (!document .hidden && element .isInViewport ())
-         {
-            if (!browser .isLive ())
-               browser .beginUpdate ();
-         }
-         else
-         {
-            if (browser .isLive ())
-               browser .endUpdate ();
-         }
-      };
-
-      $(window)   .on (windowEvents,   checkUpdate);
-      $(document) .on (documentEvents, checkUpdate);
-
-      checkUpdate ();
+         if (!browser .isLive ())
+            browser .beginUpdate ();
+      }
+      else
+      {
+         if (browser .isLive ())
+            browser .endUpdate ();
+      }
    },
    set_ContentScale__ (contentScale)
    {
