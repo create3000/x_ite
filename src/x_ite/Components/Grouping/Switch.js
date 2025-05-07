@@ -74,11 +74,8 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    },
    addChildren ()
    { },
-   removeChildren (children)
-   {
-      for (const child of children)
-         this .children .delete (child);
-   },
+   removeChildren ()
+   { },
    set_addChildren__ ()
    {
       X3DGroupingNode .prototype .set_addChildren__ .call (this);
@@ -94,11 +91,6 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    set_children__ ()
    {
       this .clearChildren ();
-
-      // Fill children with all SFNode.
-
-      for (const child of this ._children)
-         this .children .add (child);
 
       // Add single child.
 

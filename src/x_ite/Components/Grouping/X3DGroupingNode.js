@@ -71,7 +71,6 @@ function X3DGroupingNode (executionContext)
    // Private properties
 
    this .allowedTypes              = new Set ();
-   this .children                  = new Set ();
    this .pointingDeviceSensorNodes = new Set ();
    this .pointingObjects           = new Set ();
    this .clipPlaneNodes            = new Set ();
@@ -135,7 +134,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       const addChildren = new Set (this ._addChildren);
 
-      for (const node of this .children)
+      for (const node of this ._children)
          addChildren .delete (node);
 
       this .addChildren (addChildren);
@@ -161,7 +160,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       if (this ._children .length > 0)
       {
-         this .removeChildren (this ._removeChildren);
+         const removeChildren = new Set (this ._removeChildren);
+
+         this .removeChildren (removeChildren);
 
          if (!this ._children .isTainted ())
          {
@@ -169,7 +170,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             this ._children .addInterest ("connectChildren", this);
          }
 
-         this ._children = Array .from (this .children);
+         this ._children = this ._children .filter (child => !removeChildren .has (child));
       }
 
       this ._removeChildren .length = 0;
@@ -204,7 +205,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
       }
 
-      this .children                  .clear ();
       this .boundedObjects            .clear ();
       this .pointingDeviceSensorNodes .clear ();
       this .pointingObjects           .clear ();
@@ -231,8 +231,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    addChild (child)
    {
-      this .children .add (child); // Set of SFNode.
-
       const childNode = X3DCast (X3DConstants .X3DChildNode, child);
 
       if (!childNode)
@@ -338,8 +336,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    removeChild (child)
    {
-      this .children .delete (child);
-
       const childNode = X3DCast (X3DConstants .X3DChildNode, child);
 
       if (!childNode)
