@@ -97,8 +97,6 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    },
    set_enabled__ ()
    {
-      this .setCameraObject (this ._enabled .getValue ());
-
       if (this ._enabled .getValue ())
          delete this .traverse;
       else

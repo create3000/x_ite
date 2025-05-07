@@ -80,13 +80,6 @@ function LOD (executionContext)
 
 Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototype),
 {
-   getSubBBox (bbox, shadows)
-   {
-      if (this .isDefaultBBoxSize ())
-         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
-
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-   },
    addChildren ()
    { },
    removeChildren ()
@@ -107,17 +100,22 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    {
       this .clearChildren ();
 
+      for (const child of this ._children)
+        this .children .add (child);
+
       const level = Math .min (this ._level_changed .getValue (), this ._children .length - 1);
 
       if (level >= 0 && level < this ._children .length)
          this .addChild (this ._children [level]);
+
+      this .set_objects__ ();
    },
    set_visibleObjects__ ()
    { },
    getLevel: (() =>
    {
       const
-         FRAMES         = 180, // Number of frames after wich a level change takes in affect.
+         FRAMES         = 180, // Number of frames after which a level change takes in affect.
          FRAME_RATE_MIN = 20,  // Lowest level of detail.
          FRAME_RATE_MAX = 55;  // Highest level of detail.
 
@@ -151,38 +149,40 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          return Algorithm .upperBound (this ._range, 0, this ._range .length, distance);
       };
    })(),
-   traverse: (() =>
+   changeLevel: (() =>
    {
       const modelViewMatrix = new Matrix4 ();
 
-      return function (type, renderObject)
+      return function (renderObject)
       {
-         if (type === TraverseType .DISPLAY)
+         const currentLevel = this ._level_changed .getValue ();
+
+         let level = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+
+         if (this ._forceTransitions .getValue ())
          {
-            const currentLevel = this ._level_changed .getValue ();
+            if (level > currentLevel)
+               level = currentLevel + 1;
 
-            let level = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
-
-            if (this ._forceTransitions .getValue ())
-            {
-               if (level > currentLevel)
-                  level = currentLevel + 1;
-
-               else if (level < currentLevel)
-                  level = currentLevel - 1;
-            }
-
-            if (level !== currentLevel)
-            {
-               this ._level_changed = level;
-
-               this .set_children__ ();
-            }
+            else if (level < currentLevel)
+               level = currentLevel - 1;
          }
 
-         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+         if (level === currentLevel)
+            return;
+
+         this ._level_changed = level;
+
+         this .set_children__ ();
       };
    })(),
+   traverse (type, renderObject)
+   {
+      if (type === TraverseType .DISPLAY)
+         this .changeLevel (renderObject);
+
+      X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+   },
 });
 
 Object .defineProperties (LOD,

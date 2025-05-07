@@ -85,7 +85,6 @@ function GeoLOD (executionContext)
    this .childInlineNodes = [this .child1InlineNode, this .child2InlineNode, this .child3InlineNode, this .child4InlineNode];
    this .childrenLoaded   = false;
    this .keepCurrentLevel = false;
-   this .modelViewMatrix  = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototype),
@@ -208,16 +207,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    {
       this .setShadowObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isShadowObject ()));
    },
-   getLevel (modelViewMatrix)
-   {
-      const distance = this .getDistance (modelViewMatrix);
-
-      if (distance < this ._range .getValue ())
-         return 1;
-
-      return 0;
-   },
-   getDistance: (() =>
+   getLevel: (() =>
    {
       const center = new Vector3 ();
 
@@ -225,107 +215,111 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       {
          modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
-         return modelViewMatrix .origin .magnitude ();
+         const distance = modelViewMatrix .origin .magnitude ();
+
+         if (distance < this ._range .getValue ())
+            return 1;
+
+         return 0;
+      };
+   })(),
+   changeLevel: (() =>
+   {
+      const modelViewMatrix = new Matrix4 ();
+
+      return function (renderObject)
+      {
+         const level = this .getLevel (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+
+         if (level === this ._level_changed .getValue ())
+            return;
+
+         this ._level_changed = level;
+
+         switch (level)
+         {
+            case 0:
+            {
+               for (const childInlineNode of this .childInlineNodes)
+               {
+                  childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
+                  childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
+                  childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
+                  childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
+                  childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
+                  childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
+               }
+
+               if (this ._rootNode .length)
+               {
+                  this .connectChildNode (this .rootGroupNode, [TraverseType .DISPLAY]);
+
+                  this ._children      = this ._rootNode;
+                  this .childrenLoaded = false;
+               }
+               else
+               {
+                  if (this .rootInlineNode .checkLoadState () == X3DConstants .COMPLETE_STATE)
+                  {
+                     this .connectChildNode (this .rootInlineNode, [TraverseType .DISPLAY]);
+
+                     this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
+                     this .childrenLoaded = false;
+                  }
+               }
+
+               if (this .unload)
+               {
+                  for (const childInlineNode of this .childInlineNodes)
+                     childInlineNode ._load = false;
+               }
+
+               break;
+            }
+            case 1:
+            {
+               if (this ._rootNode .length)
+                  this .disconnectChildNode (this .rootGroupNode);
+               else
+                  this .disconnectChildNode (this .rootInlineNode);
+
+               for (const childInlineNode of this .childInlineNodes)
+               {
+                  childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
+                  childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
+                  childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
+                  childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
+                  childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
+                  childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
+               }
+
+               this .set_childBoundedObject__ ();
+               this .set_childPointingObject__ ();
+               this .set_childCameraObject__ ();
+               this .set_childPickableObject__ ();
+               this .set_childCollisionObject__ ();
+               this .set_childShadowObject__ ();
+
+               if (this .child1InlineNode ._load .getValue ())
+               {
+                  this .set_childLoadState__ ();
+               }
+               else
+               {
+                  for (const childInlineNode of this .childInlineNodes)
+                     childInlineNode ._load = true;
+               }
+
+               break;
+            }
+         }
       };
    })(),
    traverse (type, renderObject)
    {
       if (type === TraverseType .DISPLAY)
-      {
-         const level = this .getLevel (this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+         this .changeLevel (renderObject);
 
-         if (level !== this ._level_changed .getValue ())
-         {
-            this ._level_changed = level;
-
-            switch (level)
-            {
-               case 0:
-               {
-                  for (const childInlineNode of this .childInlineNodes)
-                  {
-                     childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
-                     childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
-                     childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
-                     childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
-                     childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
-                     childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
-                  }
-
-                  if (this ._rootNode .length)
-                  {
-                     this .connectChildNode (this .rootGroupNode, [TraverseType .DISPLAY]);
-
-                     this ._children      = this ._rootNode;
-                     this .childrenLoaded = false;
-                  }
-                  else
-                  {
-                     if (this .rootInlineNode .checkLoadState () == X3DConstants .COMPLETE_STATE)
-                     {
-                        this .connectChildNode (this .rootInlineNode, [TraverseType .DISPLAY]);
-
-                        this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
-                        this .childrenLoaded = false;
-                     }
-                  }
-
-                  if (this .unload)
-                  {
-                     for (const childInlineNode of this .childInlineNodes)
-                        childInlineNode ._load = false;
-                  }
-
-                  break;
-               }
-               case 1:
-               {
-                  if (this ._rootNode .length)
-                     this .disconnectChildNode (this .rootGroupNode);
-                  else
-                     this .disconnectChildNode (this .rootInlineNode);
-
-                  for (const childInlineNode of this .childInlineNodes)
-                  {
-                     childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
-                     childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
-                     childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
-                     childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
-                     childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
-                     childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
-                  }
-
-                  this .set_childBoundedObject__ ();
-                  this .set_childPointingObject__ ();
-                  this .set_childCameraObject__ ();
-                  this .set_childPickableObject__ ();
-                  this .set_childCollisionObject__ ();
-                  this .set_childShadowObject__ ();
-
-                  if (this .child1InlineNode ._load .getValue ())
-                  {
-                     this .set_childLoadState__ ();
-                  }
-                  else
-                  {
-                     for (const childInlineNode of this .childInlineNodes)
-                        childInlineNode ._load = true;
-                  }
-
-                  break;
-               }
-            }
-         }
-
-         this .traverseChildren (type, renderObject);
-      }
-      else
-      {
-         this .traverseChildren (type, renderObject);
-      }
-   },
-   traverseChildren (type, renderObject)
-   {
       switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
       {
          case 0:

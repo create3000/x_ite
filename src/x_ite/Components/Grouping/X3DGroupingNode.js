@@ -231,7 +231,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    addChild (child)
    {
-      this .children .add (child);
+      this .children .add (child); // Set of SFNode.
 
       const childNode = X3DCast (X3DConstants .X3DChildNode, child);
 

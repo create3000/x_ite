@@ -72,13 +72,6 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
 
       this ._whichChoice .addInterest ("requestRebuild", this);
    },
-   getSubBBox (bbox, shadows)
-   {
-      if (this .isDefaultBBoxSize ())
-         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
-
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-   },
    addChildren ()
    { },
    removeChildren ()
@@ -99,10 +92,15 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    {
       this .clearChildren ();
 
+      for (const child of this ._children)
+         this .children .add (child);
+
       const whichChoice = this ._whichChoice .getValue ();
 
       if (whichChoice >= 0 && whichChoice < this ._children .length)
          this .addChild (this ._children [whichChoice]);
+
+      this .set_objects__ ();
    },
 });
 
