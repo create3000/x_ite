@@ -60,7 +60,6 @@ function VisibilitySensor (executionContext)
 
    this .addType (X3DConstants .VisibilitySensor);
 
-   this .setVisibleObject (true);
    this .setZeroTest (false);
 
    this .visible = false;
@@ -72,16 +71,9 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-      this ._enabled .addInterest ("set_enabled__", this);
+      this ._enabled .addFieldInterest (this ._isVisibleObject);
 
-      this .set_enabled__ ();
-   },
-   set_enabled__ ()
-   {
-      if (this ._enabled .getValue ())
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
+      this ._isVisibleObject = this ._enabled;
    },
    update ()
    {
