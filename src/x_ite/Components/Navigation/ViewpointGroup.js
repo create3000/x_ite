@@ -62,7 +62,7 @@ function ViewpointGroup (executionContext)
 
    this .addType (X3DConstants .ViewpointGroup);
 
-   this .setCameraObject (true);
+   this .setCameraObject  (true);
    this .setVisibleObject (true);
 
    // Units
@@ -72,9 +72,9 @@ function ViewpointGroup (executionContext)
 
    // Private properties
 
-   this .proximitySensor  = new ProximitySensor (executionContext);
-   this .cameraObjects    = [ ];
-   this .viewpointGroups  = [ ];
+   this .proximitySensor = new ProximitySensor (executionContext);
+   this .cameraObjects   = [ ];
+   this .viewpointGroups = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode .prototype),
@@ -153,14 +153,12 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
          }
       }
 
-      this .setCameraObject  (this .cameraObjects   .length);
-      this .setVisibleObject (this .viewpointGroups .length);
+      this .setCameraObject  (this .cameraObjects .length);
+      this .setVisibleObject (this .cameraObjects .length || this .viewpointGroups .length);
    },
    traverse (type, renderObject)
    {
-      const proximitySensor = this .proximitySensor;
-
-      proximitySensor .traverse (type, renderObject);
+      this .proximitySensor .traverse (type, renderObject);
 
       switch (type)
       {
