@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
       this ._enabled   .addFieldInterest (this ._isVisibleObject);
       this ._traversed .addFieldInterest (this ._isCameraObject);
 
-      this ._isVisibleObject = this ._enabled;
+      this .setVisibleObject (this ._enabled .getValue ());
 
       this .set_extents__ ();
    },

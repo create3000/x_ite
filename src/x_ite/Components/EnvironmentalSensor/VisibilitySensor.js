@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
 
       this ._enabled .addFieldInterest (this ._isVisibleObject);
 
-      this ._isVisibleObject = this ._enabled;
+      this .setVisibleObject (this ._enabled .getValue ());
    },
    update ()
    {
