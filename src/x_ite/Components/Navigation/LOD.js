@@ -118,10 +118,12 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          FRAME_RATE_MIN = 20,  // Lowest level of detail.
          FRAME_RATE_MAX = 55;  // Highest level of detail.
 
-      return function (browser, modelViewMatrix)
+      return function (modelViewMatrix)
       {
          if (this ._range .length === 0)
          {
+            const browser = this .getBrowser ();
+
             this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 
             const size = this ._children .length;
@@ -156,7 +158,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
       {
          const currentLevel = this ._level_changed .getValue ();
 
-         let level = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+         let level = this .getLevel (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
 
          if (this ._forceTransitions .getValue ())
          {
