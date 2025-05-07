@@ -82,8 +82,11 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 {
    addChildren ()
    { },
-   removeChildren ()
-   { },
+   removeChildren (children)
+   {
+      for (const child of children)
+         this .children .delete (child);
+   },
    set_addChildren__ ()
    {
       X3DGroupingNode .prototype .set_addChildren__ .call (this);
@@ -100,8 +103,12 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    {
       this .clearChildren ();
 
+      // Fill children with all SFNode.
+
       for (const child of this ._children)
         this .children .add (child);
+
+      // Add single child.
 
       const level = Math .min (this ._level_changed .getValue (), this ._children .length - 1);
 
