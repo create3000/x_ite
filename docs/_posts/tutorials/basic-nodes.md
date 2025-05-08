@@ -11,7 +11,7 @@ X3D is capable of representing static and animated objects and it can have hyper
 
 ## Let The Games Begin…
 
-A X3D file has four basic elements:
+An X3D file has four basic elements:
 
 1. A header which tells the browser that the file is X3D and which version also. A header line is mandatory.
 2. Comments are preceded by a #.

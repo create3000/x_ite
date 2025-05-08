@@ -15,7 +15,7 @@ In this tutorial, you will learn how to create a simple hello world scene with X
 2. X3D is a text file if when saved as Classic VRML Encoding consists of a set of nodes like (Transform { … }).
 3. All of the nodes start with the node type name like Transform follow by a open curly brace »{«. They end with a close curly brace »}«
 4. The syntax is just like a command to tell X3D browser (like X\_ITE) what should do.
-5. A X3D XML Encoding file must have the extension .x3d or .x3dz. A X3D Classic VRML Encoding file must have .x3dv or .x3dvz as file extension.
+5. An X3D XML Encoding file must have the extension .x3d or .x3dz. An X3D Classic VRML Encoding file must have .x3dv or .x3dvz as file extension.
 6. X3D file is case sensitive. *Transform, transform* or *tRansForm* are not the same.
 7. X3D file can be edit with any text editor like GEdit or Emacs for Linux or Unix, Notepad++ or Wordpad for Windows, and Coda or Simple Text for Mac.
 
