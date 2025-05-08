@@ -9,7 +9,7 @@ tags: [Introducing]
 
 X3D is:
 
-- X3D is an open, extensible 3D graphics standard standardized by the [Web3D® Consortium](https://www.web3d.org), designed for real-time interactive 3D content across platforms and the web.
+- X3D is an open, extensible 3D graphics standard standardized by the [Web3D® Consortium](https://www.web3d.org), designed for real-time interactive 3D content across platforms and the web
 - A simple text language for describing 3-D shapes and interactive environments
 - X3D text files use a .x3d, x3dj, x3dv, or .x3db extension
   - .x3d (XML) - save to parse
