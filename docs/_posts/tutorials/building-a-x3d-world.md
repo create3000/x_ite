@@ -149,6 +149,7 @@ Order of header statements is important!
     <meta name='modified' content='Thu, 08 May 2025 14:19:44 GMT'/>
   </head>
   <Scene>
+    <!-- zero or more proto, node, route, import, export statements in arbitrary order -->
     ...
   </Scene>
 </X3D>
