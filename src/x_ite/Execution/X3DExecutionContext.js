@@ -511,8 +511,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (this [_protos] .get (proto .getName ()) === proto)
          throw new Error (`Couldn't add proto declaration: proto '${proto .getName ()}' already added.`);
 
-      name = String (name);
-
       if (name .length === 0)
          throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
@@ -530,8 +528,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (proto .getExecutionContext () !== this)
          throw new Error ("Couldn't update proto declaration: proto does not belong to this execution context.");
-
-      name = String (name);
 
       if (name .length === 0)
          throw new Error ("Couldn't update proto declaration: proto name is empty.");
@@ -584,8 +580,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (this [_externprotos] .get (externproto .getName ()) === externproto)
          throw new Error (`Couldn't add extern proto declaration: extern proto '${externproto .getName ()}' already added.`);
 
-      name = String (name);
-
       if (name .length === 0)
          throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
 
@@ -603,8 +597,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (externproto .getExecutionContext () !== this)
          throw new Error ("Couldn't update extern proto declaration: extern proto does not belong to this execution context.");
-
-      name = String (name);
 
       if (name .length === 0)
          throw new Error ("Couldn't update extern proto declaration: extern proto name is empty.");
