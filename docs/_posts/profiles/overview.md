@@ -3,6 +3,8 @@ title: Profiles
 date: 2025-04-14
 categories: [profiles]
 tags: [Profiles]
+redirect_from:
+  - /profiles/
 ---
 X3D profiles are predefined feature sets in the X3D standard that group together related components and capabilities. They serve as shortcuts to [declare what functionality a particular X3D file requires](/x_ite/tutorials/building-a-x3d-world/#understanding-profiles-and-components), making it easier for browsers or tools to know if they support the scene.
 

@@ -4,6 +4,8 @@ date: 2022-11-28
 nav: components
 categories: [components]
 tags: [Components]
+redirect_from:
+  - /components/
 ---
 X3D components are modular groups of related functionality in the X3D standard. Each component defines a set of nodes, fields, and behaviors that enable specific features in a scene, such as geometry, animation, scripting, or sensors.
 
