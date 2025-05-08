@@ -122,6 +122,63 @@ What profiles and components are there:
 - [Profiles](/x_ite/profiles/overview/)
 - [Components](/x_ite/components/overview/)
 
+## Header statements
+
+Always add a **PROFILE** statement. If there is no profile declared, profile **Full** is assumed and all components will be loaded.
+
+There are three header statements:
+
+1. **COMPONENT** statements
+2. **UNIT** statements
+3. **META** statements
+
+Order of statements is important!
+
+### XML Encoding
+
+```x3d
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='CubeMapTexturing' level='3'/>
+    <component name='Scripting' level='1'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
+    <unit category='length' name='millimetre' conversionFactor='0.001'/>
+    <meta name='created' content='Thu, 08 May 2025 14:11:46 GMT'/>
+    <meta name='modified' content='Thu, 08 May 2025 14:19:44 GMT'/>
+  </head>
+  <Scene>
+    ...
+  </Scene>
+</X3D>
+```
+
+### Classic VRML Encoding
+
+```vrml
+#X3D V{{ site.x3d_latest_version }} utf8
+
+# profile statement
+PROFILE Interchange
+
+# component statements
+COMPONENT Scripting : 1
+COMPONENT CubeMapTexturing : 3
+
+# unit statements
+UNIT angle degree 0.017453292519943295
+UNIT length millimetre 0.001
+
+# meta statements
+META "created" "Thu, 08 May 2025 14:11:46 GMT"
+META "modified" "Thu, 08 May 2025 14:12:13 GMT"
+
+# proto, node, route, import, export statements
+# in arbitrary order
+...
+```
+
 ## Using comments
 
 ### XML Encoding
