@@ -132,7 +132,7 @@ There are three header statements:
 2. **UNIT** statements
 3. **META** statements
 
-Order of statements is important!
+Order of header statements is important!
 
 ### XML Encoding
 
