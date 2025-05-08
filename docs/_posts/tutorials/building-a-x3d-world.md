@@ -86,7 +86,7 @@ Shape {
 
 ## Understanding profiles and components
 
-- **PROFILE Interchange:** File uses nodes from the interchange profile
+- **PROFILE Interchange:** File uses nodes from the `Interchange` profile
 - Nodes are grouped into components
 - Components are grouped into profiles
 - Browsers can load components on demand to reduce initial load times and improve performance by only fetching what is necessary when it’s needed
@@ -99,6 +99,7 @@ Shape {
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
 <X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <head>
+    <component name='CubeMapTexturing' level='3'/>
     <component name='Scripting' level='1'/>
   </head>
   <Scene>
@@ -112,6 +113,7 @@ Shape {
 ```vrml
 PROFILE Interchange
 
+COMPONENT CubeMapTexturing : 3
 COMPONENT Scripting : 1
 ```
 
