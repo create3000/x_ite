@@ -159,22 +159,22 @@ Order of statements is important!
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 
-# profile statement
+# exactly one profile statement
 PROFILE Interchange
 
-# component statements
+# zero or more component statements
 COMPONENT Scripting : 1
 COMPONENT CubeMapTexturing : 3
 
-# unit statements
+# zero or more unit statements
 UNIT angle degree 0.017453292519943295
 UNIT length millimetre 0.001
 
-# meta statements
+# zero or more meta statements
 META "created" "Thu, 08 May 2025 14:11:46 GMT"
 META "modified" "Thu, 08 May 2025 14:12:13 GMT"
 
-# proto, node, route, import, export statements
+# zero or more proto, node, route, import, export statements
 # in arbitrary order
 ...
 ```
