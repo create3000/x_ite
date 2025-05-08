@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DB
    },
    requestUpdateInstances ()
    {
-      this ._updateInstances = this .getBrowser () .getCurrentTime ();
+      this ._updateInstances = Date .now () / 1000;
    },
    updateInstances ()
    {
