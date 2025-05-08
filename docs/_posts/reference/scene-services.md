@@ -340,7 +340,7 @@ Additional units, called *derived units* are used in this International Standard
 | area         | length<sup>2</sup>        |
 | volume       | length<sup>3</sup>        |
 
-The standard color space used by this International Standard is RGB where each color component has the range [0.,1.].
+The standard color space used by this International Standard is RGB where each color component has the range [0.0, 1.0].
 
 #### **name**: string
 
