@@ -35,6 +35,30 @@ Object .assign (ExamineViewer .prototype,
          this .disconnect ();
       }
 
+      if (button0)
+      {
+         gamepads .down = Date .now ();
+      }
+      else
+      {
+         gamepads .up     ??= 0;
+         gamepads .clicks ??= 0;
+
+         if (Date .now () - gamepad .down < 300)
+            ++ gamepad .clicks;
+         else
+            gamepad .clicks = 0;
+
+         if (gamepad .clicks === 2 && Date .now () - gamepads .up < 300)
+         {
+            gamepad .clicks = 0;
+
+            this .dblclick ();
+         }
+
+         gamepads .up = Date .now ();
+      }
+
       const f = 60 / this .getBrowser () .currentFrameRate;
 
       gamepads .action = true;
