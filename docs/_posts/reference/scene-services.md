@@ -218,7 +218,7 @@ Removes the exported node *exportedName.*
 
 #### **toVRMLString** (options?: Options): string
 
-Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 ##### Options
 
@@ -234,13 +234,13 @@ An object with one or more of these properties:
 
 #### **toXMLString** (options?: Options): string
 
-Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
 #### **toJSONString** (options?: Options): string
 
-Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
