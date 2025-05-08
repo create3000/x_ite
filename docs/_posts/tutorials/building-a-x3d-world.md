@@ -124,7 +124,7 @@ What profiles and components are there:
 
 ## Header statements
 
-Always add a **PROFILE** statement. If there is no profile declared, profile **Full** is assumed and all components will be loaded.
+There are a few other header statements, but always add a **PROFILE** statement. If there is no profile declared, profile **Full** is assumed and all components will be loaded.
 
 There are three header statements:
 
