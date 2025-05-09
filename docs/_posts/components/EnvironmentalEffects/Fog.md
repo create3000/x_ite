@@ -136,7 +136,7 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ## Example
 
-<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/Fog.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/Fog.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/screenshot.avif" alt="Fog"/>
 </x3d-canvas>
 

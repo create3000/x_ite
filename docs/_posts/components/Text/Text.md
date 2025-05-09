@@ -139,7 +139,7 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Text/Text/Text.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Text/Text/Text.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Text/Text/screenshot.avif" alt="Text"/>
 </x3d-canvas>
 

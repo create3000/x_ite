@@ -293,7 +293,7 @@ Returns a browser option with the corresponding *name*.
          <td>AutoUpdate</td>
          <td>Whether the update control of the browser should be done automatically or not. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
-         <td>true</td>
+         <td>false</td>
       </tr>
       <tr>
          <td>Cache</td>

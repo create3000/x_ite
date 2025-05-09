@@ -79,7 +79,7 @@ Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/ProjectionVolumeStyle/ProjectionVolumeStyle.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/ProjectionVolumeStyle/ProjectionVolumeStyle.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/VolumeRendering/ProjectionVolumeStyle/screenshot.avif" alt="ProjectionVolumeStyle"/>
 </x3d-canvas>
 

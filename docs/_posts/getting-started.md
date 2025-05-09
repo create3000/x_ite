@@ -13,29 +13,29 @@ permalink: /
 [![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447){: .badge-link }
 
 <x3d-canvas
-  class="teaser"
-  src="/x_ite/assets/teaser/teaser.x3d"
-
-  splashScreen="false"
-  contextMenu="false"
-  notifications="false"
-  timings="false"
-  contentScale="auto"
-  xrSessionMode="NONE">
-</x3d-canvas>
-<div class="mascot-wrapper">
-  <x3d-canvas
-    class="mascot"
-    src="/x_ite/assets/teaser/halloween-child.x3d"
-
+    class="teaser"
+    src="/x_ite/assets/teaser/teaser.x3d"
+    update="auto"
     splashScreen="false"
     contextMenu="false"
     notifications="false"
     timings="false"
     contentScale="auto"
-    xrSessionMode="NONE"
-    style="display: none;"
-    oninitialized="this .style .display = 'inline-block';">
+    xrSessionMode="NONE">
+</x3d-canvas>
+<div class="mascot-wrapper">
+  <x3d-canvas
+      class="mascot"
+      src="/x_ite/assets/teaser/halloween-child.x3d"
+      update="auto"
+      splashScreen="false"
+      contextMenu="false"
+      notifications="false"
+      timings="false"
+      contentScale="auto"
+      xrSessionMode="NONE"
+      style="display: none;"
+      oninitialized="this .style .display = 'inline-block';">
   </x3d-canvas>
 </div>
 Credits: [Jonás](https://sketchfab.com/jonasaguilar) (Halloween child)
@@ -818,7 +818,7 @@ toneMapping
 : A String value that indicates whether tone mapping should be applied. The default value for the *toneMapping* attribute is `NONE`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 update
-: A Boolean value (`true`, `false` or `auto`) to indicate whether browser events should be processed. The default value for the *update* attribute is `auto`. A value of `true` will enable event processing, a value of `false` will stop event processing. If the value is `auto`, the effective value is determined by the visibility of the \<x3d-canvas\> element and the document itself.
+: A Boolean value (`true`, `false` or `auto`) to indicate whether browser events should be processed. The default value for the *update* attribute is `true`. A value of `true` will enable event processing, a value of `false` will stop event processing. If the value is `auto`, the effective value is determined by the visibility of the \<x3d-canvas\> element and the document itself.
 
 url
 : An MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both *src* and *url* attributes are given, the last given attribute takes precedence.

@@ -114,7 +114,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/LineSet/screenshot.avif" alt="LineSet"/>
 </x3d-canvas>
 

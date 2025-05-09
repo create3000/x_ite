@@ -403,8 +403,6 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "update":
          {
-            newValue = this .parseBooleanAttribute (newValue) ?? "auto";
-
             if (newValue === "auto")
             {
                this .setBrowserOption ("AutoUpdate", true);
@@ -413,7 +411,7 @@ Object .assign (X3DCoreContext .prototype,
             {
                this .setBrowserOption ("AutoUpdate", false);
 
-               if (newValue)
+               if (this .parseBooleanAttribute (newValue) ?? true)
                   this .beginUpdate ();
                else
                   this .endUpdate ();

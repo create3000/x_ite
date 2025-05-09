@@ -139,7 +139,7 @@ The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigi
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/SliderJoint/SliderJoint.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/SliderJoint/SliderJoint.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/SliderJoint/screenshot.avif" alt="SliderJoint"/>
 </x3d-canvas>
 

@@ -36,7 +36,7 @@ WorldInfo {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/world-info/world-info.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/world-info/world-info.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/world-info/screenshot.avif" alt="WorldInfo"/>
 </x3d-canvas>
 

@@ -158,7 +158,7 @@ Input/Output field *geometry*.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/X_ITE/InstancedShape/screenshot.avif" alt="InstancedShape"/>
 </x3d-canvas>
 

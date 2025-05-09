@@ -60,7 +60,7 @@ Shape {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.avif" alt="Cylinder"/>
 </x3d-canvas>
 

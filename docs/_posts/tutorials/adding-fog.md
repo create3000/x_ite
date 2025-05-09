@@ -63,7 +63,7 @@ Fog {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/fog1/fog1.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/fog1/fog1.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/fog1/screenshot.avif" alt="Fog"/>
 </x3d-canvas>
 

@@ -140,7 +140,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/Switch/Switch.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/Switch/Switch.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Grouping/Switch/screenshot.avif" alt="Switch"/>
 </x3d-canvas>
 

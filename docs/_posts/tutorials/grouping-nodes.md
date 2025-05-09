@@ -139,7 +139,7 @@ Billboard {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/billboard1/billboard1.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/billboard1/billboard1.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/billboard1/screenshot.avif" alt="Billboard"/>
 </x3d-canvas>
 

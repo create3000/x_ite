@@ -80,7 +80,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Rectangle2D/Rectangle2D.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Rectangle2D/Rectangle2D.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry2D/Rectangle2D/screenshot.avif" alt="Rectangle2D"/>
 </x3d-canvas>
 

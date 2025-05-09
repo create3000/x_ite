@@ -115,7 +115,7 @@ Shape {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image1/image1.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image1/image1.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/image1/screenshot.avif" alt="ImageTexture"/>
 </x3d-canvas>
 
@@ -162,7 +162,7 @@ Shape {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image2/image2.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image2/image2.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/image2/screenshot.avif" alt="PixelTexture"/>
 </x3d-canvas>
 
@@ -214,7 +214,7 @@ Shape {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image3/image3.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image3/image3.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/image3/screenshot.avif" alt="MovieTexture"/>
 </x3d-canvas>
 

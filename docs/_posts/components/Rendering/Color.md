@@ -57,7 +57,7 @@ The *color* field defines an array of 3-tuple RGB colors.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/Color/Color.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/Color/Color.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/Color/screenshot.avif" alt="Color"/>
 </x3d-canvas>
 

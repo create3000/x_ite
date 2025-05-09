@@ -21,7 +21,7 @@ In this tutorial, you will learn how to create a simple hello world scene with X
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/hello-world1/hello-world1.x3dv" xrSessionMode="IMMERSIVE_AR">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/hello-world1/hello-world1.x3dv" update="auto" xrSessionMode="IMMERSIVE_AR">
   <img src="https://create3000.github.io/media/tutorials/scenes/hello-world1/screenshot.avif" alt="Hello World Image"/>
 </x3d-canvas>
 
@@ -204,7 +204,7 @@ We position the text below the sphere by a translation of about 1 Meter along th
 
 ### Result
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/hello-world2/hello-world2.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/hello-world2/hello-world2.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/hello-world2/screenshot.avif" alt="Hello World Image"/>
 </x3d-canvas>
 

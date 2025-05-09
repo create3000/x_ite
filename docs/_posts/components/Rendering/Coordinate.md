@@ -50,7 +50,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/Coordinate/Coordinate.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/Coordinate/Coordinate.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/Coordinate/screenshot.avif" alt="Coordinate"/>
 </x3d-canvas>
 

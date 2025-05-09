@@ -100,7 +100,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/PointEmitter.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/PointEmitter.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/screenshot.avif" alt="PointEmitter"/>
 </x3d-canvas>
 

@@ -216,7 +216,7 @@ The outputOnly *children* field exposes a portion of the scene graph for the cur
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoLOD/GeoLOD.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoLOD/GeoLOD.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geospatial/GeoLOD/screenshot.avif" alt="GeoLOD"/>
 </x3d-canvas>
 
