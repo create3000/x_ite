@@ -36,11 +36,11 @@ You can view X3D files from your local hard disk, or from the Internet.
 
 ## How can X3D be used on a Web page?
 
-- Include the X_ITE Script: Add the `<script>` tag linking to X_ITE in your HTML `<head>` or before the `</body>`.
-- Add the `<x3d-canvas>` Element: This custom element acts as the rendering surface for your 3D scene.
-- Write Your X3D Scene: Create an X3D file and add a `src` attribute to the `<x3d-canvas>` element, or inside the `<x3d-canvas>`, use `<X3D>` and `<Scene>` tags to define your shapes, appearances, lights, and views.
-- Style the Canvas: Use CSS or inline style attributes to set width, height, or layout of your 3D canvas.
-- Test in a Browser: Open the HTML file in any modern browser; no plugin needed — X_ITE runs purely in JavaScript and WebGL.
+- Include the X_ITE Script: Add the `<script>` tag linking to X_ITE in your HTML `<head>` or before the `</body>`
+- Add the `<x3d-canvas>` Element: This custom element acts as the rendering surface for your 3D scene
+- Write Your X3D Scene: Create an X3D file and add a `src` attribute to the `<x3d-canvas>` element, or inside the `<x3d-canvas>`, use `<X3D>` and `<Scene>` tags to define your shapes, appearances, lights, and views
+- Style the Canvas: Use CSS or inline style attributes to set width, height, or layout of your 3D canvas
+- Test in a Browser: Open the HTML file in any modern browser; no plugin needed — X_ITE runs purely in JavaScript and WebGL
 
 ## What do I need to develop in X3D?
 
