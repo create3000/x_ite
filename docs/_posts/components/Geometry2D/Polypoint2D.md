@@ -15,7 +15,7 @@ tags: [Polypoint2D, Geometry2D]
 
 Polypoint2D is a geometry node that defines a set of 2D points in X-Y plane.
 
-The Polypoint2D node belongs to the **Geometry2D** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The Polypoint2D node belongs to the [Geometry2D](/x_ite/components/overview/#geometry2d) component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

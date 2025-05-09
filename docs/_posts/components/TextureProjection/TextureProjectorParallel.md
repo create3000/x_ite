@@ -15,7 +15,7 @@ tags: [TextureProjectorParallel, TextureProjection]
 
 TextureProjectorParallel is similar to a light that projects a texture into the scene, illuminating geometry that intersects the parallel projection volume.
 
-The TextureProjectorParallel node belongs to the **TextureProjection** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The TextureProjectorParallel node belongs to the [TextureProjection](/x_ite/components/overview/#textureprojection) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

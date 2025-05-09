@@ -15,7 +15,7 @@ tags: [NavigationInfo, Navigation]
 
 NavigationInfo describes the user's viewing model, user navigation-interaction modalities, and also dimensional characteristics of the user's (typically invisible) avatar.
 
-The NavigationInfo node belongs to the **Navigation** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The NavigationInfo node belongs to the [Navigation](/x_ite/components/overview/#navigation) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

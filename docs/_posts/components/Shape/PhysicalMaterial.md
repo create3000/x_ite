@@ -15,7 +15,7 @@ tags: [PhysicalMaterial, Shape]
 
 PhysicalMaterial specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.
 
-The PhysicalMaterial node belongs to the **Shape** component and requires at least support level **2,** its default container field is *material.* It is available from X3D version 4.0 or higher.
+The PhysicalMaterial node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **2,** its default container field is *material.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

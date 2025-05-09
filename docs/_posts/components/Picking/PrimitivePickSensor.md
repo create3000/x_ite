@@ -15,7 +15,7 @@ tags: [PrimitivePickSensor, Picking]
 
 PrimitivePickSensor tests picking intersections using one of the basic primitive shapes specified in the pickingGeometry field [Cone or Cylinder or Sphere or Box] against the pickTarget geometry.
 
-The PrimitivePickSensor node belongs to the **Picking** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The PrimitivePickSensor node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

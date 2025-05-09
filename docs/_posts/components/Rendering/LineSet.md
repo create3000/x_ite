@@ -15,7 +15,7 @@ tags: [LineSet, Rendering]
 
 LineSet is a geometry node that can contain a Coordinate or CoordinateDouble node and optionally a Color or ColorRGBA node.
 
-The LineSet node belongs to the **Rendering** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The LineSet node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

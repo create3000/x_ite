@@ -15,7 +15,7 @@ tags: [TimeSensor, Time]
 
 TimeSensor continuously generates events as time passes. Typical use: ROUTE thisTimeSensorDEF.fraction_changed TO someInterpolatorDEF.set_fraction. Interchange profile
 
-The TimeSensor node belongs to the **Time** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The TimeSensor node belongs to the [Time](/x_ite/components/overview/#time) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

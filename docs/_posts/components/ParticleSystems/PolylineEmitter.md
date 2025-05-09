@@ -15,7 +15,7 @@ tags: [PolylineEmitter, ParticleSystems]
 
 PolylineEmitter emits particles along a single polyline. The coordinates for the line along which particles should be randomly generated are taken from a combination of the coord and coordIndex fields. The starting point for generating particles is randomly distributed along this line and given the initial speed and direction.
 
-The PolylineEmitter node belongs to the **ParticleSystems** component and requires at least support level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
+The PolylineEmitter node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

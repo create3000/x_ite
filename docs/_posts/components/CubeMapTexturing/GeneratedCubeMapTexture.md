@@ -15,7 +15,7 @@ tags: [GeneratedCubeMapTexture, CubeMapTexturing]
 
 GeneratedCubeMapTexture is a texture node that defines a cubic environment map that sources its data from internally generated images. The viewpoint of the generated texture is the location and orientation of the associated geometry in world space.
 
-The GeneratedCubeMapTexture node belongs to the **CubeMapTexturing** component and requires at least support level **3,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
+The GeneratedCubeMapTexture node belongs to the [CubeMapTexturing](/x_ite/components/overview/#cubemaptexturing) component and requires at least support level **3,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

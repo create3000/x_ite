@@ -15,7 +15,7 @@ tags: [NurbsCurve, NURBS]
 
 NurbsCurve is a 3D curve analogous to NurbsPatchSurface.
 
-The NurbsCurve node belongs to the **NURBS** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The NurbsCurve node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

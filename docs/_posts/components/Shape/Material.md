@@ -15,7 +15,7 @@ tags: [Material, Shape]
 
 Material specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.
 
-The Material node belongs to the **Shape** component and requires at least support level **1,** its default container field is *material.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Material node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *material.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [PositionInterpolator, Interpolation]
 
 PositionInterpolator generates a series of 3-tuple SFVec3f values. Authors can ROUTE value_changed output events to a Transform node's translation field or another SFVec3f field.
 
-The PositionInterpolator node belongs to the **Interpolation** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The PositionInterpolator node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

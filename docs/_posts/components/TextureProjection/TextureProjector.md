@@ -15,7 +15,7 @@ tags: [TextureProjection, TextureProjector]
 
 TextureProjector is similar to a light that projects a texture into the scene, illuminating geometry that intersects the perspective projection volume.
 
-The TextureProjector node belongs to the **TextureProjection** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The TextureProjector node belongs to the [TextureProjection](/x_ite/components/overview/#textureprojection) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

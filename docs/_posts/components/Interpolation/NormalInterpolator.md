@@ -15,7 +15,7 @@ tags: [NormalInterpolator, Interpolation]
 
 NormalInterpolator generates a series of normal (perpendicular) 3-tuple SFVec3f values. Each vector value has unit length, i.e. the set of allowed vectors describes the surface of a unit sphere. Authors can ROUTE value_changed output events to a Normal node's vector field, or to another 3-tuple SFVec3f field.
 
-The NormalInterpolator node belongs to the **Interpolation** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The NormalInterpolator node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

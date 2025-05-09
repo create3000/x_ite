@@ -15,7 +15,7 @@ tags: [ContourPolyline2D, NURBS]
 
 ContourPolyline2D defines a linear curve segment as part of a trimming contour in the u-v domain of a NURBS surface. NurbsCurve2D and ContourPolyline2D nodes that together form a closed contour, defined in the u-v parametric space of a NURBS surface, may be used as children in a Contour2D node.
 
-The ContourPolyline2D node belongs to the **NURBS** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The ContourPolyline2D node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

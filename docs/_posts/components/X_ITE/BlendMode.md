@@ -15,7 +15,7 @@ tags: [BlendMode, X_ITE]
 
 BlendMode controls how pixels of an objects are drawn. Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). BlendMode is an X3DAppearanceChildNode node that handles blend operations.
 
-The BlendMode node belongs to the **X_ITE** component and its default container field is *blendMode.* It is available in X_ITE.
+The BlendMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *blendMode.* It is available in X_ITE.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
