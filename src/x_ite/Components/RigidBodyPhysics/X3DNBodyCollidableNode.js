@@ -241,12 +241,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
             if (childNode .isBBoxVisible ())
                this .bboxObject = childNode;
          }
-
-         delete this .traverse;
-      }
-      else
-      {
-         this .traverse = Function .prototype;
       }
 
       this .set_boundedObjects__ ();
