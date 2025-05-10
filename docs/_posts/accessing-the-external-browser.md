@@ -66,7 +66,7 @@ const
    browser = X3D .getBrowser (), // Get browser from first x3d-canvas element.
    scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
-// Change browser options:
+// Change Browser Options:
 
 browser .setBrowserOption ("AutoUpdate",   true);
 browser .setBrowserOption ("ContentScale", -1);
