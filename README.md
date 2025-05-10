@@ -110,8 +110,8 @@ The same scene can also be created using pure JavaScript:
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.5.6/dist/x_ite.min.mjs";
 
 const
-   browser = X3D .getBrowser (), // Get X3DBrowser from first x3d-canvas element.
-   scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
+  browser = X3D .getBrowser (), // Get X3DBrowser from first x3d-canvas element.
+  scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
 // Change Browser Options:
 
@@ -132,11 +132,11 @@ scene .rootNodes .push (viewpointNode);
 // Create Box:
 
 const
-   transformNode  = scene .createNode ("Transform"),
-   shapeNode      = scene .createNode ("Shape"),
-   appearanceNode = scene .createNode ("Appearance"),
-   materialNode   = scene .createNode ("Material"),
-   boxNode        = scene .createNode ("Box");
+  transformNode  = scene .createNode ("Transform"),
+  shapeNode      = scene .createNode ("Shape"),
+  appearanceNode = scene .createNode ("Appearance"),
+  materialNode   = scene .createNode ("Material"),
+  boxNode        = scene .createNode ("Box");
 
 appearanceNode .material = materialNode;
 
@@ -153,8 +153,8 @@ scene .addNamedNode ("Box", transformNode);
 // Create animation:
 
 const
-   timeSensorNode   = scene .createNode ("TimeSensor"),
-   interpolatorNode = scene .createNode ("OrientationInterpolator");
+  timeSensorNode   = scene .createNode ("TimeSensor"),
+  interpolatorNode = scene .createNode ("OrientationInterpolator");
 
 timeSensorNode .cycleInterval = 10;
 timeSensorNode .loop          = true;
