@@ -76,7 +76,7 @@ browser .setBrowserOption ("ContentScale", -1);   // Increase resolution for HiD
 const viewpointNode = scene .createNode ("Viewpoint");
 
 viewpointNode .set_bind    = true;           // Bind the viewpoint.
-viewpointNode .description = "Initial View"; // Now it appears in the context menu.
+viewpointNode .description = "Initial View"; // Appears now in the context menu.
 viewpointNode .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
 viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
 
