@@ -187,7 +187,9 @@ touchSensor .addFieldCallback ("on", "touchTime", value =>
 If you have given a (DEF) name to a node, you can access this node later using `getNamedNode` of a X3DExecutionContext, where each X3DScene is derived from a X3DExecutionContext.
 
 ```js
-const box = scene .getNamedNode ("Box");
+const box = scene .getNamedNode ("Box"); // Get Transform node named "Box".
+
+box .translation = new X3D .SFVec3f (1, 2, 3);
 ```
 
 ### Documentation
