@@ -174,7 +174,7 @@ A complete function reference for the X3DBrowser object and all other X3D JavaSc
 
 ## Second Example
 
-This example will load an external scene, and then access and manipulate some nodes of this scene.
+This HTML file is a demonstration of how to control an X3D scene externally using JavaScript and HTML elements. It embeds an X3D scene ("adrenaline.x3d") within an \<x3d-canvas\> element and provides interactive controls like buttons and dropdown menus. The JavaScript code imports the X_ITE library to access and manipulate the X3D browser and its scene graph. Users can interact with these controls to change the viewpoint, modify the appearance of objects (styles), alter the background color, and control an animation within the 3D scene. Essentially, it showcases the X_ITE library's capabilities for integrating and controlling 3D content within a standard web page.
 
 <iframe src="https://create3000.github.io/media/x_ite/external-browser/adrenaline.html"></iframe>
 
