@@ -115,8 +115,8 @@ const
 
 // Change Browser Options:
 
-browser .setBrowserOption ("AutoUpdate",   true);
-browser .setBrowserOption ("ContentScale", -1);
+browser .setBrowserOption ("AutoUpdate",   true); // Disable animations if x3d-canvas is not visible.
+browser .setBrowserOption ("ContentScale", -1);   // Increase resolution for HIDPI displays.
 
 // Create Viewpoint:
 

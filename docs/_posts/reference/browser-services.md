@@ -291,7 +291,7 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>AutoUpdate</td>
-         <td>Whether the update control of the browser should be done automatically or not. <small class="blue">non-standard</small></td>
+         <td>Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if x3d-canvas is not visible.<small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
