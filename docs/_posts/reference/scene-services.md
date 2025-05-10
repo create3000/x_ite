@@ -17,6 +17,8 @@ tags: [Scene, Services, Authoring, Interface]
 
 This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
 
+Scripts inside a proto instance only have access to the current X3DExecutionContext object and this via `Browser .currentScene`.
+
 ### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
