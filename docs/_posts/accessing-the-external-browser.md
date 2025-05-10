@@ -63,7 +63,7 @@ Outside of a [Script](/x_ite/components/scripting/script/) node context, you can
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
 const
-   browser = X3D .getBrowser (), // Get browser from first x3d-canvas element.
+   browser = X3D .getBrowser (), // Get X3DBrowser from first x3d-canvas element.
    scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
 // Change Browser Options:
