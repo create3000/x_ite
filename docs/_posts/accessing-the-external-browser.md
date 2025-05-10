@@ -182,10 +182,10 @@ touchSensor .addFieldCallback ("on", "touchTime", value =>
   console .log (`touchTime: ${value}`);
 
   // Pause or resume the animation.
-  if (timeSensor .isPaused)
-    timeSensor .resumeTime = value;
+  if (timeSensorNode .isPaused)
+    timeSensorNode .resumeTime = value;
   else
-    timeSensor .pauseTime = value;
+    timeSensorNode .pauseTime = value;
 });
 ```
 
@@ -195,9 +195,9 @@ If you have given a (DEF) name to a node, you can access this node later using `
 
 ```js
 // Get Transform node named "Box".
-const box = scene .getNamedNode ("Box");
+const transformNode = scene .getNamedNode ("Box");
 
-box .translation = new X3D .SFVec3f (1, 2, 3);
+transformNode .translation = new X3D .SFVec3f (1, 2, 3);
 ```
 
 ### Documentation
