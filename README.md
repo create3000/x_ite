@@ -69,7 +69,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.5.6/dist/x_ite.min.js"></script>
-<x3d-canvas>
+<x3d-canvas update="auto" contentScale="auto">
   <X3D profile='Interchange' version='4.0'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
@@ -110,8 +110,14 @@ The same scene can also be created using pure JavaScript:
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.5.6/dist/x_ite.min.mjs";
 
 const
-   browser = X3D .getBrowser (),
+   canvas  = document .getElementById ("x_ite"),
+   browser = canvas .browser,
    scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
+
+// Change attributes:
+
+canvas .setAttribute ("update",       "auto");
+canvas .setAttribute ("contentScale", "auto");
 
 // Create Viewpoint:
 
@@ -172,7 +178,7 @@ scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_ro
 await browser .replaceWorld (scene);
 </script>
 <!-- x3d-canvas element comes here: -->
-<x3d-canvas></x3d-canvas>
+<x3d-canvas id="x_ite"></x3d-canvas>
 ```
 
 ## Contributing

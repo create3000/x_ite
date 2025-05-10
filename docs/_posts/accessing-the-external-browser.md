@@ -20,7 +20,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
-<x3d-canvas>
+<x3d-canvas update="auto" contentScale="auto">
   <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
@@ -63,8 +63,14 @@ Outside of a [Script](/x_ite/components/scripting/script/) node context, you can
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
 const
-   browser = X3D .getBrowser (),
+   canvas  = document .getElementById ("x_ite"),
+   browser = canvas .browser,
    scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
+
+// Change attributes:
+
+canvas .setAttribute ("update",       "auto");
+canvas .setAttribute ("contentScale", "auto");
 
 // Create Viewpoint:
 
@@ -125,14 +131,14 @@ scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_ro
 await browser .replaceWorld (scene);
 </script>
 <!-- x3d-canvas element comes here: -->
-<x3d-canvas></x3d-canvas>
+<x3d-canvas id="x_ite"></x3d-canvas>
 ```
 
 ### Example
 
 And here you can see the result:
 
-<x3d-canvas update="auto">
+<x3d-canvas update="auto" contentScale="auto">
   <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
