@@ -174,6 +174,8 @@ A complete function reference for the X3DBrowser object and all other X3D JavaSc
 
 ## Second Example
 
+This example will load an external scene, and then access and manipulate some nodes of this scene.
+
 <iframe src="https://create3000.github.io/media/x_ite/external-browser/adrenaline.html"></iframe>
 
 Adding HTML controls to your scene is no rocket science. We have added some HTML buttons below the x3d-canvas, which on click call a callback function.
@@ -195,7 +197,7 @@ function init ()
 {
   const
     scene = Browser .currentScene,                      // Get the scene.
-    timer = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
+    timer = scene .getNamedNode ("SpinAnimationTimer"); // Get box TimeSensor node.
 
   $("#center")            .on ("click",  center);
   $("#change-style")      .on ("change", changeStyle);
@@ -223,8 +225,8 @@ function center ()
 function changeStyle ()
 {
   const
-    scene      = Browser .currentScene,                   // Get the scene.
-    switchNode = scene .getNamedNode ("Adrenaline");      // Get Switch node.
+    scene      = Browser .currentScene,              // Get the scene.
+    switchNode = scene .getNamedNode ("Adrenaline"); // Get Switch node.
 
   // Change styles.
 
