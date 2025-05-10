@@ -184,7 +184,7 @@ touchSensor .addFieldCallback ("on", "touchTime", value =>
 
 ### Get Access to a Specific Node Quickly
 
-If you have given a (DEF) name to a node, you can access this node later using `getNamedNode` of an X3DExecutionContext, where each X3DScene is derived from a X3DExecutionContext.
+If you have given a (DEF) name to a node, you can access this node later using `getNamedNode` of an X3DExecutionContext, where each X3DScene is derived from an X3DExecutionContext.
 
 ```js
 const box = scene .getNamedNode ("Box"); // Get Transform node named "Box".
