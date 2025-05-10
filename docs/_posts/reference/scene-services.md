@@ -5,6 +5,14 @@ nav: reference
 categories: [Reference]
 tags: [Scene, Services, Authoring, Interface]
 ---
+
+## Hierarchy
+
+```
++ X3DExecutionContext
+  + X3DScene
+```
+
 ## X3DExecutionContext
 
 This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
