@@ -69,6 +69,7 @@ PROTO BouncingBall [
     <Transform>
       <!-- children ... -->
     </Transform>
+    <ROUTE ... />
   </ProtoBody>
 </ProtoDeclare>
 ```
