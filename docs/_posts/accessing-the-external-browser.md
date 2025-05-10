@@ -195,7 +195,7 @@ If you have given a (DEF) name to a node, you can access this node later using `
 
 ```js
 // Get Transform node named "Box".
-const box = scene .getNamedNode ("Box")
+const box = scene .getNamedNode ("Box");
 
 box .translation = new X3D .SFVec3f (1, 2, 3);
 ```
