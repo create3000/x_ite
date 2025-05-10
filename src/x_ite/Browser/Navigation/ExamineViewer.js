@@ -893,8 +893,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    disconnect ()
    {
-      const browser = this .getBrowser ();
-
       this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this);
       this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
       this .rotationChaser         ._value_changed .removeInterest ("set_rotation__",               this);
@@ -906,7 +904,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       const browser = this .getBrowser ();
 
       this .disconnect ();
-      this .getNavigationInfo () ._transitionStart .removeInterest ("disconnect", this);
+      this    .getNavigationInfo () ._transitionStart   .removeInterest ("disconnect", this);
       browser .getBrowserOptions () ._StraightenHorizon .removeInterest ("disconnect", this);
 
       browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);

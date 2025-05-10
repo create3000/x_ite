@@ -957,6 +957,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    endUpdate ()
    {
+      this .getViewer () .disconnect ();
       this .setLive (false);
    },
    print (... args)

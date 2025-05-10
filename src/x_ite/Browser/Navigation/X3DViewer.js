@@ -186,6 +186,8 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    {
       return this .getBrowser () .touch (x, y);
    },
+   disconnect ()
+   { },
 });
 
 function tbProjectToSphere (r, x, y)
