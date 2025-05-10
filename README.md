@@ -110,14 +110,13 @@ The same scene can also be created using pure JavaScript:
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.5.6/dist/x_ite.min.mjs";
 
 const
-   canvas  = document .getElementById ("x_ite"),
-   browser = canvas .browser,
+   browser = X3D .getBrowser (), // Get browser from first x3d-canvas element.
    scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
-// Change attributes:
+// Change browser options:
 
-canvas .setAttribute ("update",       "auto");
-canvas .setAttribute ("contentScale", "auto");
+browser .setBrowserOption ("AutoUpdate",   true);
+browser .setBrowserOption ("ContentScale", -1);
 
 // Create Viewpoint:
 
@@ -178,7 +177,7 @@ scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_ro
 await browser .replaceWorld (scene);
 </script>
 <!-- x3d-canvas element comes here: -->
-<x3d-canvas id="x_ite"></x3d-canvas>
+<x3d-canvas></x3d-canvas>
 ```
 
 ## Contributing
