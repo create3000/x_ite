@@ -182,6 +182,14 @@ touchSensor .addFieldCallback ("on", "touchTime", value =>
 });
 ```
 
+### Get Access to a Specific Node Quickly
+
+If you have given a (DEF) name to a node, you can access this node later using `getNamedNode` of a X3DExecutionContext, where each X3DScene is derived from a X3DExecutionContext.
+
+```js
+const box = scene .getNamedNode ("Box");
+```
+
 ### Documentation
 
 A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found in [ECMAScript Object and Function Definitions](/x_ite/reference/ecmascript-object-and-function-definitions/).
