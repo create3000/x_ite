@@ -180,6 +180,8 @@ await browser .replaceWorld (scene);
 <x3d-canvas></x3d-canvas>
 ```
 
+Read more in [Accessing the External Browser](https://create3000.github.io/x_ite/accessing-the-external-browser/).
+
 ## Contributing
 
 Contributions are always welcome. There is no special form to do this. A good idea is to fork the X_ITE repository and create a separate branch from the `development` branch, make your changes and then make a pull request.
