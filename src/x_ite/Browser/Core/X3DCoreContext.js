@@ -185,6 +185,11 @@ Object .assign (X3DCoreContext .prototype,
             set: (value) =>
             {
                this .getElement () .attr ("src", value);
+
+               // Legacy
+
+               if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
+                  this .attributeChangedCallback ("src", undefined, value);
             },
             enumerable: true,
          },
@@ -197,6 +202,11 @@ Object .assign (X3DCoreContext .prototype,
             set: (value) =>
             {
                this .getElement () .attr ("url", value);
+
+               // Legacy
+
+               if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
+                  this .attributeChangedCallback ("url", undefined, value);
             },
             enumerable: true,
          },
