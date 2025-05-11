@@ -180,12 +180,11 @@ Object .assign (X3DCoreContext .prototype,
          {
             get: () =>
             {
-               return this .getExecutionContext () .getWorldURL ();
+               return this .getElement () .attr ("src");
             },
             set: (value) =>
             {
-               this .loadURL (new Fields .MFString (value))
-                  .catch (error => console .error (error));
+               this .getElement () .attr ("src", value);
             },
             enumerable: true,
          },
@@ -193,12 +192,11 @@ Object .assign (X3DCoreContext .prototype,
          {
             get: () =>
             {
-               return new Fields .MFString (this .getExecutionContext () .getWorldURL ());
+               return this .getElement () .attr ("url");
             },
             set: (value) =>
             {
-               this .loadURL (value)
-                  .catch (error => console .error (error));
+               this .getElement () .attr ("url", value);
             },
             enumerable: true,
          },
