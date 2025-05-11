@@ -1,5 +1,5 @@
-/* X_ITE v11.5.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.6")];
+/* X_ITE v11.5.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -863,12 +863,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
             if (childNode .isBBoxVisible ())
                this .bboxObject = childNode;
          }
-
-         delete this .traverse;
-      }
-      else
-      {
-         this .traverse = Function .prototype;
       }
 
       this .set_boundedObjects__ ();
@@ -942,12 +936,10 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
          }
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
-            // X3DNBodyCollidableNode cannot be pickTarget of a X3DPickSensorNode,
-            // so we do not need to a this node to pickingHierarchy.
+            // X3DNBodyCollidableNode can't be pickTarget of a X3DPickSensorNode or TransformSensor,
+            // so we do not need to add this node to the pickingHierarchy.
 
-            const browser = this .getBrowser ();
-
-            if (browser .getPickable () .at (-1))
+            if (this .getBrowser () .getPickable () .at (-1))
                this .visibleObject ?.traverse (type, renderObject);
             else
                this .pickableObject ?.traverse (type, renderObject);

@@ -1,5 +1,5 @@
-/* X_ITE v11.5.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.6")];
+/* X_ITE v11.5.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -489,20 +489,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
-            if (this .getTransformSensors () .size)
-            {
-               const modelMatrix = renderObject .getModelViewMatrix () .get ();
+            // CADFace can't be pickTarget of a X3DPickSensorNode or TransformSensor,
+            // so we do not need to add this node to the pickingHierarchy.
 
-               for (const transformSensorNode of this .getTransformSensors ())
-                  transformSensorNode .collect (modelMatrix);
-            }
-
-            // CADFace cannot be pickTarget of a X3DPickSensorNode,
-            // so we do not need to a this node to pickingHierarchy.
-
-            const browser = this .getBrowser ();
-
-            if (browser .getPickable () .at (-1))
+            if (this .getBrowser () .getPickable () .at (-1))
                this .visibleObject ?.traverse (type, renderObject);
             else
                this .pickableObject ?.traverse (type, renderObject);
