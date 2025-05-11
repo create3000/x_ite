@@ -153,8 +153,8 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
          }
       }
 
-      this .setCameraObject  (this .cameraObjects .length || this .viewpointGroups .length);
-      this .setVisibleObject (this .cameraObjects .length || this .viewpointGroups .length);
+      this .setCameraObject  (this .cameraObjects .length);
+      this .setVisibleObject (this .cameraObjects .length);
    },
    traverse (type, renderObject)
    {
