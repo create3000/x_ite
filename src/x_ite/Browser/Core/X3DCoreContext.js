@@ -176,6 +176,32 @@ Object .assign (X3DCoreContext .prototype,
             configurable: true,
             enumerable: true,
          },
+         src:
+         {
+            get: () =>
+            {
+               return this .getExecutionContext () .getWorldURL ();
+            },
+            set: (value) =>
+            {
+               this .loadURL (new Fields .MFString (value))
+                  .catch (error => console .error (error));
+            },
+            enumerable: true,
+         },
+         url:
+         {
+            get: () =>
+            {
+               return new Fields .MFString (this .getExecutionContext () .getWorldURL ());
+            },
+            set: (value) =>
+            {
+               this .loadURL (value)
+                  .catch (error => console .error (error));
+            },
+            enumerable: true,
+         },
       });
 
       // Configure browser event handlers.
