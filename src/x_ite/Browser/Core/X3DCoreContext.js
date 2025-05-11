@@ -157,6 +157,8 @@ Object .assign (X3DCoreContext .prototype,
 {
    initialize ()
    {
+      const element = this .getElement ();
+
       // Setup browser nodes.
 
       this [_renderingProperties] .setup ();
@@ -168,7 +170,7 @@ Object .assign (X3DCoreContext .prototype,
 
       // Define properties of X3DCanvasElement.
 
-      Object .defineProperties (this .getElement () .get (0),
+      Object .defineProperties (element .get (0),
       {
          browser:
          {
@@ -180,15 +182,15 @@ Object .assign (X3DCoreContext .prototype,
          {
             get: () =>
             {
-               return this .getElement () .attr ("src");
+               return element .attr ("src");
             },
             set: (value) =>
             {
-               this .getElement () .attr ("src", value);
+               element .attr ("src", value);
 
                // Legacy
 
-               if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
+               if (element .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
                   this .attributeChangedCallback ("src", undefined, value);
             },
             enumerable: true,
@@ -197,15 +199,15 @@ Object .assign (X3DCoreContext .prototype,
          {
             get: () =>
             {
-               return this .getElement () .attr ("url");
+               return element .attr ("url");
             },
             set: (value) =>
             {
-               this .getElement () .attr ("url", value);
+               element .attr ("url", value);
 
                // Legacy
 
-               if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
+               if (element .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
                   this .attributeChangedCallback ("url", undefined, value);
             },
             enumerable: true,
@@ -214,7 +216,7 @@ Object .assign (X3DCoreContext .prototype,
 
       // Configure browser event handlers.
 
-      this .getElement ()
+      element
          .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
          .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
    },
