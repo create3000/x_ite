@@ -110,7 +110,7 @@ The same scene can also be created using pure JavaScript:
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.5.8/dist/x_ite.min.mjs";
 
 const
-  canvas  = document .createElement ("x3d-canvas"), // Or get a already inserted <x3d-canvas> element.
+  canvas  = document .createElement ("x3d-canvas"), // Or get an already inserted <x3d-canvas> element.
   browser = canvas .browser,                        // Get X3DBrowser reference.
   scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
