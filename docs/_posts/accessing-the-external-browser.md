@@ -64,7 +64,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 
 const
   canvas  = document .createElement ("x3d-canvas"), // Or get a already inserted <x3d-canvas> element.
-  browser = canvas .browser, // Get X3D browser reference.
+  browser = canvas .browser,                        // Get X3DBrowser reference.
   scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
 // Append <x3d-canvas> element to body:
