@@ -1119,7 +1119,7 @@ Object .defineProperties (X3DBrowser .prototype,
    {
       get ()
       {
-         return this .getElement () .get (0);
+         return this .getElement () [0];
       },
       enumerable: true,
    },

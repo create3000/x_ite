@@ -171,7 +171,7 @@ Object .assign (X3DCoreContext .prototype,
 
       // Define properties of X3DCanvasElement.
 
-      Object .defineProperties (element .get (0),
+      Object .defineProperties (element [0],
       {
          browser:
          {
