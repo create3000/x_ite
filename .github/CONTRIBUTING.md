@@ -7,7 +7,7 @@ This document outlines how to get involved.
 
 ---
 
-## 🧰 Getting Started
+## Getting Started
 
 1. **Fork** the repository and clone your fork.
 2. Install [Node.js](https://nodejs.org/) (LTS version recommended).
@@ -48,9 +48,9 @@ npm install
 ## Pull Request Checklist
 
 * Clear, focused scope (one feature or fix per PR).
-* ✅ Runs without errors.
-* ✅ Includes tests if applicable.
-* ✅ You have signed off on your work (`git commit -s` is welcome but not required).
+* [x] Runs without errors.
+* [x] Includes tests if applicable.
+* [x] You have signed off on your work (`git commit -s` is welcome but not required).
 
 ## License
 
