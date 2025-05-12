@@ -56,6 +56,8 @@ npm install
 
 By contributing, you agree that your contributions will be licensed under the same MIT License as the rest of the project.
 
+---
+
 Thank you for helping make X_ITE better!
 
 The create3000 team
