@@ -63,8 +63,8 @@ Outside of a [Script](/x_ite/components/scripting/script/) node context, you can
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
 const
-  canvas  = document .createElement ("x3d-canvas"),
-  browser = canvas .browser,
+  canvas  = document .createElement ("x3d-canvas"), // Or get a already inserted <x3d-canvas> element.
+  browser = canvas .browser, // Get X3D browser reference.
   scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
 // Append <x3d-canvas> element to body:
@@ -134,8 +134,6 @@ scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_ro
 
 await browser .replaceWorld (scene);
 </script>
-<!-- x3d-canvas element comes here: -->
-<x3d-canvas></x3d-canvas>
 ```
 
 ### Example
