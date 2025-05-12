@@ -186,6 +186,8 @@ Read more in [Accessing the External Browser](https://create3000.github.io/x_ite
 
 Contributions are always welcome. There is no special form to do this. A good idea is to fork the X_ITE repository and create a separate branch from the `development` branch, make your changes and then make a pull request.
 
+For more information see [CONTRIBUTING](.github/CONTRIBUTING.md).
+
 ## License
 
 X_ITE is free software and licensed under the [MIT License](LICENSE.md).
