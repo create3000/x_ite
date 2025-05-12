@@ -56,6 +56,30 @@ const Legacy =
 
       $.map (elements, element => new X3DBrowser (element));
    },
+   properties (browser, properties)
+   {
+      const element = browser .getElement ();
+
+      if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
+         return properties;
+
+      for (const [name, property] of Object .entries (properties))
+      {
+         const set = property .set;
+
+         if (!set)
+            continue;
+
+         property .set = function (value)
+         {
+            set (value);
+
+            browser .attributeChangedCallback (name, undefined, value);
+         };
+      }
+
+      return properties;
+   },
    browser (browser)
    {
       const element = browser .getElement ();

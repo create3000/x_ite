@@ -49,7 +49,6 @@ import VERSION              from "../BROWSER_VERSION.js";
 import X3DFieldDefinition   from "../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../Base/FieldDefinitionArray.js";
 import Fields               from "../Fields.js";
-import SFNodeCache          from "../Fields/SFNodeCache.js";
 import Components           from "../Components.js";
 import X3DBrowserContext    from "./X3DBrowserContext.js";
 import DOMIntegration       from "./DOMIntegration.js";

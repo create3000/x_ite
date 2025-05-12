@@ -59,6 +59,7 @@ import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
+import Legacy              from "../Legacy.js";
 import _                   from "../../../locale/gettext.js";
 
 import "./Fonts.js";
@@ -175,43 +176,35 @@ Object .assign (X3DCoreContext .prototype,
          browser:
          {
             value: this,
-            configurable: true,
             enumerable: true,
          },
-         src:
+         ... Legacy .properties (this,
          {
-            get: () =>
+            src:
             {
-               return element .attr ("src");
+               get: () =>
+               {
+                  return element .attr ("src");
+               },
+               set: (value) =>
+               {
+                  element .attr ("src", value);
+               },
+               enumerable: true,
             },
-            set: (value) =>
+            url:
             {
-               element .attr ("src", value);
-
-               // Legacy
-
-               if (element .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
-                  this .attributeChangedCallback ("src", undefined, value);
+               get: () =>
+               {
+                  return element .attr ("url");
+               },
+               set: (value) =>
+               {
+                  element .attr ("url", value);
+               },
+               enumerable: true,
             },
-            enumerable: true,
-         },
-         url:
-         {
-            get: () =>
-            {
-               return element .attr ("url");
-            },
-            set: (value) =>
-            {
-               element .attr ("url", value);
-
-               // Legacy
-
-               if (element .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
-                  this .attributeChangedCallback ("url", undefined, value);
-            },
-            enumerable: true,
-         },
+         }),
       });
 
       // Configure browser event handlers.
@@ -839,8 +832,6 @@ Object .assign (X3DCoreContext .prototype,
    dispose ()
    {
       this .getElement () .off (".X3DCoreContext .ContextMenu");
-
-      delete this .getElement () [0] .browser;
 
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ?.();
       this [_shadow] .find ("*") .remove ();
