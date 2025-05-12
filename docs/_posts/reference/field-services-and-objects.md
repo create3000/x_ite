@@ -576,15 +576,6 @@ Returns the corresponding [X3DFieldDefinition](/x_ite/reference/field-services-a
 
 Returns a list of fields defined for the SFNode object.
 
-<!--
-#### **getField** (*name: string*): X3DField
-
-Returns the corresponding X3DField object associated with *name*.
-
->**Attention:** Only use this function for `node .getField ("name") .addFieldCallback (key, callback)`. To access properties use *sfNodeObjectName.fieldName* syntax.
-{: .prompt-danger }
--->
-
 #### **getNodeName** (): string
 
 Returns the node name.
