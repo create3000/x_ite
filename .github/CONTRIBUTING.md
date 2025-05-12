@@ -1,70 +1,61 @@
-# Contributing
+# Contributing to X_ITE
 
-## Introduction
+First of all, thank you for your interest in contributing to **X_ITE**!
+We welcome code improvements, bug reports, feature suggestions, documentation updates, and test cases.
 
-It is assumed that you know a little about Node.js and Git. If not, [here's some help to get started with Git](https://help.github.com/en/github/using-git) and [here’s some help to get started with Node.js.](https://nodejs.org/en/docs/guides/getting-started-guide/).
+This document outlines how to get involved.
 
-* Install [Node.js](https://nodejs.org/) and [Git](https://git-scm.com/) on your computer.
-* [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) x_ite.
-* Open your OS’s terminal.
-* Change into the directory you’d like.
-* Clone your forked repo.
+---
 
-```sh
-git clone https://github.com/[yourgithubname]/x_ite.git
-```
+## 🧰 Getting Started
 
-* Go into the x_ite directory.
-
-```sh
-cd ./x_ite
-```
-
-* Install the dependencies.
+1. **Fork** the repository and clone your fork.
+2. Install [Node.js](https://nodejs.org/) (LTS version recommended).
+3. Install dependencies:
 
 ```sh
 npm install
 ```
 
-## Next Steps
+4. Start the local development server:
+   * [Setup a localhost server](https://create3000.github.io/x_ite/setup-a-localhost-server/).
+5. Visit http://localhost:****/ to run and test your changes.
 
-* [Setup a localhost server](https://create3000.github.io/x_ite/setup-a-localhost-server/).
+## Code Contributions
 
-## Making Changes
+* Please follow the existing code style.
+* Write descriptive commit messages.
+* Ensure your code passes linting and basic tests (`npm test`).
 
-When you’ve decided to make changes, start with the following:
+## Suggested Improvements
 
-* Update your local repo.
+* Bug fixes in X3D nodes, rendering, parsing, etc.
+* Support for more X3D components and profiles.
+* Performance optimizations in scene graph traversal or shaders.
+* New examples and demos.
 
-```sh
-git pull https://github.com/create3000/x_ite.git
-git push
-```
+## Reporting Issues
 
-* Make a new branch from the `development` branch.
+* Please search existing issues before opening a new one.
+* Include a minimal reproducible example if reporting a bug.
+* Be clear about browser versions and platform if the bug is rendering-related.
 
-```sh
-git checkout development
-git branch [mychangesbranch]
-git checkout [mychangesbranch]
-```
+## Improving Documentation
 
-* Add your changes to your commit.
-* Push the changes to your forked repo.
-* Open a Pull Request (PR).
+* Help us expand the [API documentation](https://create3000.github.io/x_ite/reference/ecmascript-object-and-function-definitions/).
+* Add code examples, explain X3D usage, or improve clarity.
 
-## Important Notes
+## Pull Request Checklist
 
-* Don't include any build files in your commit.
-* Not all new features will need a new example. Simpler features could be incorporated into an existing example. Bigger features may be asked to add an example demonstrating the feature.
-* Making changes may require changes to the documentation. To update the docs in other languages, simply copy the English to begin with.
-* It's good to also add an example and screenshot for it, for showing how it's used and for end-to-end testing.
-* If you modify existing code, run relevant examples to check they didn't break and there wasn't performance regress.
-* If you add some assets for the examples (models, textures, sounds, etc), make sure they have a proper license allowing for their use here, less restrictive the better. It is unlikely for large assets to be accepted.
-* If some issue is relevant to the patch/feature, please mention it with a hash (e.g. #2774) in a commit message to get cross-reference in GitHub.
-* If the end-to-end test failed and you are sure that all is correct, follow the instructions it outputs.
-* Once done with a patch/feature do not add more commits to a feature branch.
-* Create separate branches per patch or feature.
-* If you make a PR but it is not actually ready to be pulled into the dev branch then please [convert it to a draft PR](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/changing-the-stage-of-a-pull-request#converting-a-pull-request-to-a-draft).
+* Clear, focused scope (one feature or fix per PR).
+* ✅ Runs without errors.
+* ✅ Includes tests if applicable.
+* ✅ You have signed off on your work (`git commit -s` is welcome but not required).
 
-This project is currently contributed mostly via everyone's spare time. Please keep that in mind as it may take some time for the appropriate feedback to get to you. If you are unsure about adding a new feature, it might be better to ask first to see whether other people think it's a good idea.
+## License
+
+By contributing, you agree that your contributions will be licensed under the same MIT License as the rest of the project.
+
+Thank you for helping make X_ITE better!
+
+The create3000 team
