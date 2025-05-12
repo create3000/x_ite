@@ -178,33 +178,22 @@ Object .assign (X3DCoreContext .prototype,
             value: this,
             enumerable: true,
          },
-         ... Legacy .properties (this,
+         ... Legacy .properties (this, Object .fromEntries ([
+            "src",
+            "url",
+         ]
+         .map (name => [name,
          {
-            src:
+            get: () =>
             {
-               get: () =>
-               {
-                  return element .attr ("src");
-               },
-               set: (value) =>
-               {
-                  element .attr ("src", value);
-               },
-               enumerable: true,
+               return element .attr (name);
             },
-            url:
+            set: (value) =>
             {
-               get: () =>
-               {
-                  return element .attr ("url");
-               },
-               set: (value) =>
-               {
-                  element .attr ("url", value);
-               },
-               enumerable: true,
+               element .attr (name, value);
             },
-         }),
+            enumerable: true,
+         }]))),
       });
 
       // Configure browser event handlers.
