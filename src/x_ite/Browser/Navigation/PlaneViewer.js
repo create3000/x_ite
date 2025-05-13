@@ -45,12 +45,8 @@
  *
  ******************************************************************************/
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import X3DViewer            from "./X3DViewer.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import X3DViewer from "./X3DViewer.js";
+import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 
 typeof jquery_mousewheel; // import plugin
 
@@ -229,13 +225,6 @@ Object .defineProperties (PlaneViewer,
    typeName:
    {
       value: "PlaneViewer",
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
       enumerable: true,
    },
 });

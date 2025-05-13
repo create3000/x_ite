@@ -45,11 +45,7 @@
  *
  ******************************************************************************/
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import X3DFlyViewer         from "./X3DFlyViewer.js";
+import X3DFlyViewer from "./X3DFlyViewer.js";
 
 function FlyViewer (executionContext, navigationInfo)
 {
@@ -85,13 +81,6 @@ Object .defineProperties (FlyViewer,
    typeName:
    {
       value: "FlyViewer",
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
       enumerable: true,
    },
 });

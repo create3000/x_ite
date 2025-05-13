@@ -195,13 +195,19 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       return this .primitiveQuality;
    },
-   getShading ()
+   getQualityWhenMoving ()
    {
-      return this .shading;
+      const qualityWhenMoving = this ._QualityWhenMoving .getValue () .toUpperCase ();
+
+      return $.enum (PrimitiveQuality, qualityWhenMoving) ?? this .primitiveQuality;
    },
    getTextureQuality ()
    {
       return this .textureQuality;
+   },
+   getShading ()
+   {
+      return this .shading;
    },
    getTextCompression ()
    {

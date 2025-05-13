@@ -224,7 +224,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       this .set_bbox__ ();
       this .set_transparent__ ();
       this .set_objects__ ();
-      this .set_traverse__ ();
    },
    set_transparent__ ()
    {
@@ -279,13 +278,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    set_visibleObject__ ()
    {
       this .setVisibleObject (this .isEnabled ());
-   },
-   set_traverse__ ()
-   {
-      if (this .isEnabled ())
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
    },
    traverse (type, renderObject)
    {

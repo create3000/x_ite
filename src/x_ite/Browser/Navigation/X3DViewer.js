@@ -45,7 +45,10 @@
  *
  ******************************************************************************/
 
+
+import Fields         from "../../Fields.js";
 import X3DBaseNode    from "../../Base/X3DBaseNode.js";
+import X3DConstants   from "../../Base/X3DConstants.js";
 import OrthoViewpoint from "../../Components/Navigation/OrthoViewpoint.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
@@ -56,6 +59,10 @@ import ViewVolume     from "../../../standard/Math/Geometry/ViewVolume.js";
 function X3DViewer (executionContext, navigationInfoNode)
 {
    X3DBaseNode .call (this, executionContext);
+
+   this .addChildObjects (X3DConstants .outputOnly, "isActive", new Fields .SFBool ());
+
+   // Private properties
 
    this .navigationInfoNode = navigationInfoNode;
 }
