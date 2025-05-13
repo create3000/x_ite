@@ -106,6 +106,9 @@ Object .assign (X3DTimeContext .prototype,
          {
             this [_currentSpeed] = 0;
          }
+
+         if (this [_currentSpeed] > 0)
+            this .addBrowserEvent ();
       };
    })(),
 });
