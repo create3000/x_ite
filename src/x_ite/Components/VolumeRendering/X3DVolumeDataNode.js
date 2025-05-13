@@ -246,7 +246,10 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    },
    set_dimensions__ ()
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         size      = this ._dimensions .getValue () .magnitude (),
+         size1_2   = size / 2;
 
       this .textureTransformNode ._scale = this ._dimensions .inverse ();
 
@@ -254,8 +257,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       {
          const
             numPlanes = this .getNumPlanes (browser .getBrowserOptions () .getQualityWhenMoving ()),
-            size      = this ._dimensions .getValue () .magnitude (),
-            size1_2   = size / 2,
             points    = [ ];
 
          for (let i = 0; i < numPlanes; ++ i)
@@ -276,8 +277,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       {
          const
             numPlanes = this .getNumPlanes (browser .getBrowserOptions () .getPrimitiveQuality ()),
-            size      = this ._dimensions .getValue () .magnitude (),
-            size1_2   = size / 2,
             points    = [ ];
 
          for (let i = 0; i < numPlanes; ++ i)
