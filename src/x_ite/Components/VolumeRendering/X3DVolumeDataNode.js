@@ -301,16 +301,17 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    {
       const
          browser = this .getBrowser (),
-         moving  = browser .currentSpeed > 0 || browser .getViewer () ._isActive .getValue ();
+         moving  = browser .currentSpeed > 0,
+         low     = moving || browser .getViewer () ._isActive .getValue ();
 
       if (moving)
          this .getBrowser () .addBrowserEvent ();
 
-      if (this .lowShapeNode ._visible .getValue () !== moving)
-         this .lowShapeNode ._visible = moving;
+      if (this .lowShapeNode ._visible .getValue () !== low)
+         this .lowShapeNode ._visible = low;
 
-      if (this .hiShapeNode ._visible .getValue () !== !moving)
-         this .hiShapeNode ._visible = !moving;
+      if (this .hiShapeNode ._visible .getValue () !== !low)
+         this .hiShapeNode ._visible = !low;
    },
    traverse (type, renderObject)
    {
