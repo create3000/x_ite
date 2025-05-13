@@ -245,7 +245,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       this .over = browser .motionNotifyEvent (x, y);
 
-      if (browser .getViewer () ._isActive .getValue ())
+      if (browser .getViewer () .isActive ())
          return;
 
       if (this .over)

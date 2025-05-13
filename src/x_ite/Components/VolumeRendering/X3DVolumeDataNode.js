@@ -301,7 +301,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    {
       const
          browser = this .getBrowser (),
-         moving  = browser .getCurrentSpeed () > 0 || browser .getViewer () ._isActive .getValue ();
+         moving  = browser .getCurrentSpeed () > 0 || browser .getViewer () .isActive ();
 
       if (this .lowShapeNode ._visible .getValue () !== moving)
          this .lowShapeNode ._visible = moving;
