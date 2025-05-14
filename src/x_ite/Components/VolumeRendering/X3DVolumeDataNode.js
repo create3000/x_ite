@@ -270,10 +270,18 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .hiCoordinateNode ._point        = hi;
       this .hiTextureCoordinateNode ._point = hi;
 
-      const low = moving === quality ? hi : this .getPoints (moving);
+      if (moving === quality)
+      {
+         this .lowShapeNode ._geometry = this .hiGeometryNode;
+      }
+      else
+      {
+         const low = this .getPoints (moving);
 
-      this .lowCoordinateNode ._point        = low;
-      this .lowTextureCoordinateNode ._point = low;
+         this .lowCoordinateNode ._point        = low;
+         this .lowTextureCoordinateNode ._point = low;
+         this .lowShapeNode ._geometry          = this .lowGeometryNode;
+      }
    },
    set_textureTransform__ ()
    {
