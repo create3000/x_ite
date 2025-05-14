@@ -680,21 +680,17 @@ Object .assign (DicomParser .prototype,
    },
    decodeJPEGBaseline (pixelData)
    {
-      const jpeg = new JpegImage ();
-
-      jpeg .opts =
+      const opts =
       {
          colorTransform: true,
+         useTArray: true,
+         formatAsRGBA: false,
          tolerantDecoding: true,
          maxResolutionInMP: 100, // Don't decode more than 100 megapixels
          maxMemoryUsageInMB: 512, // Don't decode if memory footprint is more than 512MB
       };
 
-      JpegImage .resetMaxMemoryUsage (jpeg .opts .maxMemoryUsageInMB * 1024 * 1024);
-
-      jpeg .parse (pixelData);
-
-      const data = jpeg .getData (this .dicom .width, this .dicom .height);
+      const data = (window ?.["jpeg-js"] ?.decode ?? JpegImage) (pixelData, opts);
 
       this .bitsAllocated = 8;
 
