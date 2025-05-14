@@ -179,7 +179,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .set_live__ (false);
       this .set_dimensions__ ();
       this .set_textureTransform__ ();
-      this .set_active__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -246,6 +245,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
 
          if (rebuild)
             this .set_dimensions__ ();
+
+         this .set_active__ ();
       }
       else
       {
