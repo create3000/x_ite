@@ -448,7 +448,7 @@ export default Namespace .add ("${base}", __default__);`;
                      CharLS: "CharLS.js/dist/charLS-DynamicMemory-browser.js",
                      dicomParser: "dicom-parser/dist/dicomParser.js",
                      OpenJPEG: "OpenJPEG.js/dist/openJPEG-DynamicMemory-browser.js",
-                     JpegImage: "jpeg-js/lib/decoder.js",
+                     jpegDecode: "jpeg-js/lib/decoder.js",
                   },
                }
                [name] || { },
