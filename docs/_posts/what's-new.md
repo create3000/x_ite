@@ -20,7 +20,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ### X_ITE
 
-* New `theme` attribute for the \<x3d-canvas\> element.
+* New `theme` [attribute](/x_ite/#attributes-of-the-x3d-canvas-element) for the \<x3d-canvas\> element.
 * New icon concept for context menu, timings and notifications.
 * X3DVolumeDataNode now supports [browser option](/x_ite/reference/browser-services/#browser-options) `QualityWhenMoving`.
 * Improved [LineProperties](/x_ite/components/shape/lineproperties/) `linewidthScaleFactor` handling to support a greater range of values.
