@@ -140,7 +140,7 @@ function X3DCoreContext (element)
    this [_instanceId]   = ++ instanceId;
    this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
    this [_element]      = element;
-   this [_attributes]   = new Set ();
+   this [_attributes]   = new Map ();
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>", { part: "canvas", class: "x_ite-private-canvas" }) .prependTo (surface);
    this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true");
@@ -186,7 +186,7 @@ Object .assign (X3DCoreContext .prototype,
          {
             get: () =>
             {
-               return element .attr (name);
+               return this [_attributes] .get (name .toLowerCase ());
             },
             set: (value) =>
             {
@@ -299,8 +299,6 @@ Object .assign (X3DCoreContext .prototype,
    },
    attributeChangedCallback (name, oldValue, newValue)
    {
-      this [_attributes] .add (name .toLowerCase ());
-
       switch (name .toLowerCase ())
       {
          case "antialiased":
@@ -441,7 +439,7 @@ Object .assign (X3DCoreContext .prototype,
          {
             if (newValue)
             {
-               this .loadURL (this .parseUrlAttribute (newValue))
+               this .loadURL (newValue = this .parseUrlAttribute (newValue))
                   .catch (error => console .error (error));
             }
 
@@ -453,6 +451,8 @@ Object .assign (X3DCoreContext .prototype,
             break;
          }
       }
+
+      this [_attributes] .set (name .toLowerCase (), newValue);
    },
    parseBooleanAttribute (value)
    {
