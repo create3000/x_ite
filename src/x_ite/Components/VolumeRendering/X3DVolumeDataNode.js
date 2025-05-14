@@ -289,14 +289,18 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    },
    set_active__ ()
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         update  = this .proximitySensorNode ._isActive .getValue ()
+            && browser .getBrowserOptions () .getQualityWhenMoving () !== undefined;
 
-      if (this .proximitySensorNode ._isActive .getValue () && browser .getBrowserOptions () .getQualityWhenMoving () !== undefined)
+      if (update)
          browser .sensorEvents () .addInterest ("update", this);
       else
          browser .sensorEvents () .removeInterest ("update", this);
 
-      this .update ();
+      this .lowShapeNode ._visible = !update;
+      this .hiShapeNode  ._visible = update;
    },
    update ()
    {
