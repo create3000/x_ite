@@ -228,7 +228,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
 
       if (this .getLive () .getValue () || alwaysUpdate)
       {
-         browser .getBrowserOptions () ._PrimitiveQuality  .addInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._TextureQuality    .addInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .addInterest ("set_dimensions__", this);
 
          browser .sensorEvents () .addInterest ("update", this);
@@ -238,7 +238,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       }
       else
       {
-         browser .getBrowserOptions () ._PrimitiveQuality  .removeInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._TextureQuality    .removeInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .removeInterest ("set_dimensions__", this);
 
          browser .sensorEvents () .removeInterest ("update", this);
@@ -248,15 +248,16 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    {
       const
          browser = this .getBrowser (),
-         size      = this ._dimensions .getValue () .magnitude (),
-         size1_2   = size / 2;
+         quality = browser .getBrowserOptions () .getTextureQuality (),
+         size     = this ._dimensions .getValue () .magnitude (),
+         size1_2  = size / 2;
 
       this .textureTransformNode ._scale = this ._dimensions .inverse ();
 
       // low
       {
          const
-            numPlanes = this .getNumPlanes (browser .getBrowserOptions () .getQualityWhenMoving ()),
+            numPlanes = this .getNumPlanes (browser .getBrowserOptions () .getQualityWhenMoving () ?? quality),
             points    = [ ];
 
          for (let i = 0; i < numPlanes; ++ i)
@@ -276,7 +277,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       // hi
       {
          const
-            numPlanes = this .getNumPlanes (browser .getBrowserOptions () .getPrimitiveQuality ()),
+            numPlanes = this .getNumPlanes (quality),
             points    = [ ];
 
          for (let i = 0; i < numPlanes; ++ i)

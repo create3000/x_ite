@@ -199,7 +199,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       const qualityWhenMoving = this ._QualityWhenMoving .getValue () .toUpperCase ();
 
-      return $.enum (PrimitiveQuality, qualityWhenMoving) ?? this .primitiveQuality;
+      return $.enum (PrimitiveQuality, qualityWhenMoving);
    },
    getTextureQuality ()
    {
