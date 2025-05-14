@@ -468,7 +468,7 @@ Object .assign (X3DCoreContext .prototype,
       {
          const url = new Fields .MFString ();
 
-         if (urlCharacters .match (/^\s*\[.*?\]\s*$/))
+         if (/^\s*\[.*?\]\s*$/ .test (urlCharacters))
             url .fromString (urlCharacters, this .getExecutionContext ());
          else
             url .fromString (`[${urlCharacters}]`, this .getExecutionContext ());
