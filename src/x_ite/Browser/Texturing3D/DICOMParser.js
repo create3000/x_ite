@@ -686,7 +686,7 @@ Object .assign (DicomParser .prototype,
          useTArray: true,
          formatAsRGBA: false,
          tolerantDecoding: true,
-         maxResolutionInMP: 100, // Don't decode more than 100 megapixels
+         maxResolutionInMP: 100,  // Don't decode more than 100 megapixels
          maxMemoryUsageInMB: 512, // Don't decode if memory footprint is more than 512MB
       };
 
