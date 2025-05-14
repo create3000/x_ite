@@ -261,7 +261,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       const
          browser = this .getBrowser (),
          quality = browser .getBrowserOptions () .getTextureQuality (),
-         moving  = browser .getBrowserOptions () .getQualityWhenMoving ();
+         moving  = browser .getBrowserOptions () .getQualityWhenMoving () ?? quality;
 
       this .textureTransformNode ._scale = this ._dimensions .inverse ();
 
@@ -270,7 +270,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .hiCoordinateNode ._point        = hi;
       this .hiTextureCoordinateNode ._point = hi;
 
-      const low = moving !== undefined ? this .getPoints (moving) : hi;
+      const low = moving === quality ? hi : this .getPoints (moving);
 
       this .lowCoordinateNode ._point        = low;
       this .lowTextureCoordinateNode ._point = low;
