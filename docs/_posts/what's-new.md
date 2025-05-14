@@ -22,6 +22,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 * New `theme` attribute for the \<x3d-canvas\> element.
 * New icon concept for context menu, timings and notifications.
+* X3DVolumeDataNode now supports [browser option](/x_ite/reference/browser-services/#browser-options) `QualityWhenMoving`.
 * Fixed various minor bugs in [MovieTexture](/x_ite/components/texturing/movietexture/).
 * Fixed issue with animation getting stuck when in transition, viewAll or lookAt animation.
 * Fixed issue with [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) sending »old« *touchTime* values.
