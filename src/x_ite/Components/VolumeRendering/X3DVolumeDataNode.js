@@ -177,9 +177,9 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .textureTransformNode .addInterest ("set_textureTransform__", this);
 
       this .set_live__ (false);
-      this .set_active__ ();
       this .set_dimensions__ ();
       this .set_textureTransform__ ();
+      this .set_active__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -242,6 +242,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       {
          browser .getBrowserOptions () ._TextureQuality    .addInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .addInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._QualityWhenMoving .addInterest ("set_active__",     this);
 
          if (rebuild)
             this .set_dimensions__ ();
@@ -250,21 +251,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       {
          browser .getBrowserOptions () ._TextureQuality    .removeInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .removeInterest ("set_dimensions__", this);
-      }
-   },
-   set_active__ ()
-   {
-      const browser = this .getBrowser ();
-
-      if (this .proximitySensorNode ._isActive .getValue ())
-      {
-         browser .sensorEvents () .addInterest ("update", this);
-
-         this .update ();
-      }
-      else
-      {
-         browser .sensorEvents () .removeInterest ("update", this);
+         browser .getBrowserOptions () ._QualityWhenMoving .removeInterest ("set_active__",     this);
       }
    },
    set_dimensions__ ()
@@ -298,6 +285,17 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    set_textureTransform__ ()
    {
       this .textureNormalMatrixArray .set (new Matrix4 (... this .textureTransformNode .getMatrix ()) .submatrix .inverse ());
+   },
+   set_active__ ()
+   {
+      const browser = this .getBrowser ();
+
+      if (this .proximitySensorNode ._isActive .getValue () && browser .getBrowserOptions () .getQualityWhenMoving () !== undefined)
+         browser .sensorEvents () .addInterest ("update", this);
+      else
+         browser .sensorEvents () .removeInterest ("update", this);
+
+      this .update ();
    },
    update ()
    {
