@@ -179,6 +179,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .set_live__ (false);
       this .set_dimensions__ ();
       this .set_textureTransform__ ();
+      this .set_active__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -241,18 +242,14 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       {
          browser .getBrowserOptions () ._TextureQuality    .addInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .addInterest ("set_dimensions__", this);
-         browser .getBrowserOptions () ._QualityWhenMoving .addInterest ("set_active__",     this);
 
          if (rebuild)
             this .set_dimensions__ ();
-
-         this .set_active__ ();
       }
       else
       {
          browser .getBrowserOptions () ._TextureQuality    .removeInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .removeInterest ("set_dimensions__", this);
-         browser .getBrowserOptions () ._QualityWhenMoving .removeInterest ("set_active__",     this);
       }
    },
    set_dimensions__ ()
@@ -282,6 +279,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
          this .lowTextureCoordinateNode ._point = low;
          this .lowShapeNode ._geometry          = this .lowGeometryNode;
       }
+
+      this .set_active__ ();
    },
    set_textureTransform__ ()
    {
