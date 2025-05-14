@@ -291,8 +291,9 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    {
       const
          browser = this .getBrowser (),
-         update  = this .proximitySensorNode ._isActive .getValue ()
-            && browser .getBrowserOptions () .getQualityWhenMoving () !== undefined;
+         quality = browser .getBrowserOptions () .getTextureQuality (),
+         moving  = browser .getBrowserOptions () .getQualityWhenMoving () ?? quality,
+         update  = this .proximitySensorNode ._isActive .getValue () && quality !== moving;
 
       if (update)
          browser .sensorEvents () .addInterest ("update", this);
