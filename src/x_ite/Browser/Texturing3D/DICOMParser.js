@@ -680,7 +680,7 @@ Object .assign (DicomParser .prototype,
    },
    decodeJPEGBaseline (pixelData)
    {
-      var jpeg = new JpegImage ();
+      const jpeg = new JpegImage ();
 
       jpeg .opts =
       {
@@ -694,7 +694,7 @@ Object .assign (DicomParser .prototype,
 
       jpeg .parse (pixelData);
 
-      var data = jpeg .getData (this .dicom .width, this .dicom .height);
+      const data = jpeg .getData (this .dicom .width, this .dicom .height);
 
       this .bitsAllocated = 8;
 
@@ -710,11 +710,11 @@ Object .assign (DicomParser .prototype,
    },
    decodeJPEGLS (pixelData)
    {
-      var image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
+      const image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
 
       // throw error if not success or too much data
       if (image .result !== 0 && image .result !== 6)
-         throw new Error (`DICOM: JPEG-LS decoder failed to decode frame (error code ${image.result}).`);
+         throw new Error (`DICOM: JPEG-LS decoder failed to decode frame (error code ${image .result}).`);
 
       return new Uint8Array (image .pixelData .buffer);
    },
