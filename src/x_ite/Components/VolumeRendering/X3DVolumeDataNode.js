@@ -50,7 +50,6 @@ import X3DNode          from "../Core/X3DNode.js";
 import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
-import TraverseType     from "../../Rendering/TraverseType.js";
 import TextureQuality   from "../../Browser/Core/TextureQuality.js";
 import VolumeMaterial   from "../../Browser/VolumeRendering/VolumeMaterial.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
@@ -104,6 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
 
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
+      this .proximitySensorNode ._isActive .addInterest ("set_active__", this);
 
       this .groupNode ._children     = [this .proximitySensorNode, this .transformNode];
       this .transformNode ._children = [this .lowShapeNode, this .hiShapeNode];
@@ -177,9 +177,9 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .textureTransformNode .addInterest ("set_textureTransform__", this);
 
       this .set_live__ (false);
+      this .set_active__ ();
       this .set_dimensions__ ();
       this .set_textureTransform__ ();
-      this .update ();
    },
    getBBox (bbox, shadows)
    {
@@ -252,6 +252,21 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
          browser .getBrowserOptions () ._QualityWhenMoving .removeInterest ("set_dimensions__", this);
       }
    },
+   set_active__ ()
+   {
+      const browser = this .getBrowser ();
+
+      if (this .proximitySensorNode ._isActive .getValue ())
+      {
+         browser .sensorEvents () .addInterest ("update", this);
+
+         this .update ();
+      }
+      else
+      {
+         browser .sensorEvents () .removeInterest ("update", this);
+      }
+   },
    set_dimensions__ ()
    {
       const
@@ -298,9 +313,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    },
    traverse (type, renderObject)
    {
-      if (type === TraverseType .CAMERA)
-         this .update ();
-
       this .groupNode .traverse (type, renderObject);
    },
    setShaderUniforms (gl, shaderObject)
