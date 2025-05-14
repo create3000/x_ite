@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import { Decoder } from "../../../../node_modules/jpeg-lossless-decoder-js/release/lossless.js";
+import DEVELOPMENT from "../../DEVELOPMENT.js";
 
 function DicomParser ()
 {
@@ -698,7 +699,7 @@ Object .assign (DicomParser .prototype,
       };
 
       const
-         decode = typeof jpegDecode !== "undefined" ? jpegDecode : window ["jpeg-js"] .decode,
+         decode = DEVELOPMENT ? window ["jpeg-js"] .decode : jpegDecode,
          data   = decode (pixelData, opts);
 
       this .bitsAllocated = 8;
