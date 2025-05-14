@@ -682,7 +682,7 @@ Object .assign (DicomParser .prototype,
    {
       const opts =
       {
-         colorTransform: true,
+         colorTransform: false,
          useTArray: true,
          formatAsRGBA: false,
          tolerantDecoding: true,
