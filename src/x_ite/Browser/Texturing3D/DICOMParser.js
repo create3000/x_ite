@@ -682,9 +682,17 @@ Object .assign (DicomParser .prototype,
    {
       var jpeg = new JpegImage ();
 
-      jpeg .parse (pixelData);
+      jpeg .opts =
+      {
+         colorTransform: true,
+         tolerantDecoding: true,
+         maxResolutionInMP: 100, // Don't decode more than 100 megapixels
+         maxMemoryUsageInMB: 512, // Don't decode if memory footprint is more than 512MB
+      };
 
-      jpeg .colorTransform = true; // default is true
+      JpegImage .resetMaxMemoryUsage (jpeg .opts .maxMemoryUsageInMB * 1024 * 1024);
+
+      jpeg .parse (pixelData);
 
       var data = jpeg .getData (this .dicom .width, this .dicom .height);
 
