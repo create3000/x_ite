@@ -50,6 +50,7 @@ import X3DNode          from "../Core/X3DNode.js";
 import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
+import TraverseType     from "../../Rendering/TraverseType.js";
 import TextureQuality   from "../../Browser/Core/TextureQuality.js";
 import VolumeMaterial   from "../../Browser/VolumeRendering/VolumeMaterial.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
@@ -104,9 +105,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
 
-      this .groupNode ._children       = [this .proximitySensorNode, this .transformNode];
-      this .proximitySensorNode ._size = new Fields .SFVec3f (-1, -1, -1);
-      this .transformNode ._children   = [this .lowShapeNode, this .hiShapeNode];
+      this .groupNode ._children     = [this .proximitySensorNode, this .transformNode];
+      this .transformNode ._children = [this .lowShapeNode, this .hiShapeNode];
 
       this .textureTransformNode ._translation = new Fields .SFVec3f (0.5, 0.5, 0.5);
       this .textureTransformNode ._center      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
@@ -243,8 +243,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
          browser .getBrowserOptions () ._TextureQuality    .addInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .addInterest ("set_dimensions__", this);
 
-         browser .sensorEvents () .addInterest ("update", this);
-
          if (rebuild)
             this .set_dimensions__ ();
       }
@@ -252,8 +250,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       {
          browser .getBrowserOptions () ._TextureQuality    .removeInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .removeInterest ("set_dimensions__", this);
-
-         browser .sensorEvents () .removeInterest ("update", this);
       }
    },
    set_dimensions__ ()
@@ -263,6 +259,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
          quality = browser .getBrowserOptions () .getTextureQuality (),
          moving  = browser .getBrowserOptions () .getQualityWhenMoving () ?? quality;
 
+      this .proximitySensorNode ._size   = this ._dimensions .multiply (200);
       this .textureTransformNode ._scale = this ._dimensions .inverse ();
 
       const hi = this .getPoints (quality);
@@ -301,6 +298,9 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    },
    traverse (type, renderObject)
    {
+      if (type === TraverseType .CAMERA)
+         this .update ();
+
       this .groupNode .traverse (type, renderObject);
    },
    setShaderUniforms (gl, shaderObject)
