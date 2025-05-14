@@ -1512,7 +1512,6 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
 
       this .set_bbox__ ();
       this .set_objects__ ();
-      this .set_traverse__ ();
    },
    intersectsBox (box, clipPlanes, modelViewMatrix)
    { },

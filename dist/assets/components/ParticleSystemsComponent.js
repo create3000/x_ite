@@ -2370,7 +2370,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this .updateVertexArrays ();
 
       this .set_objects__ ();
-      this .set_traverse__ ();
    },
    set_maxParticles__ ()
    {
@@ -2388,7 +2387,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this .updateVertexArrays ();
 
       this .set_objects__ ();
-      this .set_traverse__ ();
    },
    set_particleLifetime__ ()
    {
@@ -2700,7 +2698,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             deltaTime = Number .POSITIVE_INFINITY;
 
             this .set_objects__ ();
-            this .set_traverse__ ();
          }
          else
          {
@@ -2723,7 +2720,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             this .numParticles = Math .min (this .maxParticles, this .numParticles + newParticles);
 
             this .set_objects__ ();
-            this .set_traverse__ ();
          }
       }
 
