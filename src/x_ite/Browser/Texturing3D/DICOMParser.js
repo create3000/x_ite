@@ -690,7 +690,9 @@ Object .assign (DicomParser .prototype,
          maxMemoryUsageInMB: 512, // Don't decode if memory footprint is more than 512MB
       };
 
-      const data = (typeof jpegDecode !== "undefined" ? jpegDecode : window ["jpeg-js"] .decode) (pixelData, opts);
+      const
+         decode = typeof jpegDecode !== "undefined" ? jpegDecode : window ["jpeg-js"] .decode,
+         data   = decode (pixelData, opts);
 
       this .bitsAllocated = 8;
 
