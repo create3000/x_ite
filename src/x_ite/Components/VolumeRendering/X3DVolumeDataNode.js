@@ -205,20 +205,32 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       switch (quality)
       {
          case TextureQuality .LOW:
-         {
             return 200;
-         }
          case TextureQuality .MEDIUM:
-         {
             return 400;
-         }
          case TextureQuality .HIGH:
-         {
             return 600;
-         }
+      }
+   },
+   getPoints (quality)
+   {
+      const
+         numPlanes = this .getNumPlanes (quality),
+         size      = this ._dimensions .getValue () .magnitude (),
+         size1_2   = size / 2,
+         points    = [ ];
+
+      for (let i = 0; i < numPlanes; ++ i)
+      {
+         const z = i / (numPlanes - 1) - 0.5;
+
+         points .push ( size1_2,  size1_2, size * z,
+                       -size1_2,  size1_2, size * z,
+                       -size1_2, -size1_2, size * z,
+                        size1_2, -size1_2, size * z);
       }
 
-      return 200;
+      return points;
    },
    set_live__ (rebuild)
    {
@@ -249,50 +261,19 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       const
          browser = this .getBrowser (),
          quality = browser .getBrowserOptions () .getTextureQuality (),
-         size     = this ._dimensions .getValue () .magnitude (),
-         size1_2  = size / 2;
+         moving  = browser .getBrowserOptions () .getQualityWhenMoving ();
 
       this .textureTransformNode ._scale = this ._dimensions .inverse ();
 
-      // low
-      {
-         const
-            numPlanes = this .getNumPlanes (browser .getBrowserOptions () .getQualityWhenMoving () ?? quality),
-            points    = [ ];
+      const hi = this .getPoints (quality);
 
-         for (let i = 0; i < numPlanes; ++ i)
-         {
-            const z = i / (numPlanes - 1) - 0.5;
+      this .hiCoordinateNode ._point        = hi;
+      this .hiTextureCoordinateNode ._point = hi;
 
-            points .push ( size1_2,  size1_2, size * z,
-                          -size1_2,  size1_2, size * z,
-                          -size1_2, -size1_2, size * z,
-                           size1_2, -size1_2, size * z);
-         }
+      const low = moving !== undefined ? this .getPoints (moving) : hi;
 
-         this .lowCoordinateNode ._point        = points;
-         this .lowTextureCoordinateNode ._point = points;
-      }
-
-      // hi
-      {
-         const
-            numPlanes = this .getNumPlanes (quality),
-            points    = [ ];
-
-         for (let i = 0; i < numPlanes; ++ i)
-         {
-            const z = i / (numPlanes - 1) - 0.5;
-
-            points .push ( size1_2,  size1_2, size * z,
-                          -size1_2,  size1_2, size * z,
-                          -size1_2, -size1_2, size * z,
-                           size1_2, -size1_2, size * z);
-         }
-
-         this .hiCoordinateNode ._point        = points;
-         this .hiTextureCoordinateNode ._point = points;
-      }
+      this .lowCoordinateNode ._point        = low;
+      this .lowTextureCoordinateNode ._point = low;
    },
    set_textureTransform__ ()
    {
