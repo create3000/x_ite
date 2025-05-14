@@ -55,4 +55,4 @@ const AlphaMode =
    BLEND:  i ++,
 };
 
-export default AlphaMode;
+export default Object .assign (new Map (Object .entries (AlphaMode)), AlphaMode);

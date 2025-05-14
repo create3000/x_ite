@@ -54,4 +54,4 @@ const PrimitiveQuality =
    HIGH:   i ++,
 };
 
-export default PrimitiveQuality;
+export default Object .assign (new Map (Object .entries (PrimitiveQuality)), PrimitiveQuality);

@@ -56,4 +56,4 @@ const GeometryType = {
    GEOMETRY: i ++,
 };
 
-export default GeometryType;
+export default Object .assign (new Map (Object .entries (GeometryType)), GeometryType);

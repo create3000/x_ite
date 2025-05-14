@@ -7,11 +7,6 @@ Object .assign ($,
 
       return new TextDecoder () .decode (input);
    },
-   enum (object, property)
-   {
-      if (object .hasOwnProperty (property))
-         return object [property];
-   },
    sleep (ms)
    {
       return new Promise (resolve => setTimeout (resolve, ms));

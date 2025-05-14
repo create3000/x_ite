@@ -56,4 +56,4 @@ const Shading =
    PHONG:     i ++,
 };
 
-export default Shading;
+export default Object .assign (new Map (Object .entries (Shading)), Shading);
