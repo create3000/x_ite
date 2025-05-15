@@ -470,7 +470,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       // Calculate translation
 
-      const translation = this .translation .set (0, 0, 0);
+      const translation = this .translation .set (0);
 
       switch (this .getAlignX ())
       {
@@ -506,7 +506,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       // Calculate offset
 
-      const offset = this .offset .set (0, 0, 0);
+      const offset = this .offset .set (0);
 
       switch (this .getOffsetUnitX ())
       {
@@ -531,7 +531,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
       // Calculate scale
 
       const
-         scale              = this .scale .set (1, 1, 1),
+         scale              = this .scale .set (1),
          currentTranslation = this .currentTranslation,
          currentRotation    = this .currentRotation,
          currentScale       = this .currentScale;

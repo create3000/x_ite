@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
       }
       else
       {
-         return result .set (0, 0, 0);
+         return result .set (0);
       }
    },
    addPoint (index, array)

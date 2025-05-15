@@ -174,9 +174,9 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          rotations .length = numSpines;
 
          // SCP axes:
-         SCPxAxis .set (0, 0, 0);
-         SCPyAxis .set (0, 0, 0);
-         SCPzAxis .set (0, 0, 0);
+         SCPxAxis .set (0);
+         SCPyAxis .set (0);
+         SCPzAxis .set (0);
 
          // SCP for the first point:
          if (closedSpine)

@@ -199,7 +199,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             this .fromVector .set (x, y, 0);
             this .toVector   .assign (this .fromVector);
-            this .direction  .set (0, 0, 0);
+            this .direction  .set (0);
 
             this .addPan ();
 
@@ -225,7 +225,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       this .event  = null;
       this .button = -1;
 
-      this .direction .set (0, 0, 0);
+      this .direction .set (0);
 
       $(document) .off (".X3DFlyViewer" + this .getId ());
 

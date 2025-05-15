@@ -220,8 +220,8 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
          }
          else
          {
-            min .set (0, 0, 0);
-            max .set (0, 0, 0);
+            min .set (0);
+            max .set (0);
          }
 
          const extents = glyphCache .extents = { };
