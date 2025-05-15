@@ -59,10 +59,10 @@ const
 
 function Color4 (r = 0, g = 0, b = 0, a = 0)
 {
-   this [_r] = Math .max (r, 0);
-   this [_g] = Math .max (g, 0);
-   this [_b] = Math .max (b, 0);
-   this [_a] = Math .max (a, 0);
+   this [_r] = r;
+   this [_g] = g;
+   this [_b] = b;
+   this [_a] = a;
 }
 
 Object .assign (Color4 .prototype,
@@ -93,10 +93,10 @@ Object .assign (Color4 .prototype,
    },
    set (r = 0, g = 0, b = 0, a = 0)
    {
-      this [_r] = Math .max (r, 0);
-      this [_g] = Math .max (g, 0);
-      this [_b] = Math .max (b, 0);
-      this [_a] = Math .max (a, 0);
+      this [_r] = r;
+      this [_g] = g;
+      this [_b] = b;
+      this [_a] = a;
       return this;
    },
    equals (color)
@@ -118,7 +118,7 @@ Object .assign (Color4 .prototype,
    {
       Color3 .prototype .setHSV .call (this, h, s, v);
 
-      this [_a] = Math .max (a, 0);
+      this [_a] = a;
 
       return this;
    },
@@ -152,22 +152,22 @@ for (const key of Object .keys (Color4 .prototype))
 
 const r = {
    get () { return this [_r]; },
-   set (value) { this [_r] = Math .max (value, 0); },
+   set (value) { this [_r] = value; },
 };
 
 const g = {
    get () { return this [_g]; },
-   set (value) { this [_g] = Math .max (value, 0); },
+   set (value) { this [_g] = value; },
 };
 
 const b = {
    get () { return this [_b]; },
-   set (value) { this [_b] = Math .max (value, 0); },
+   set (value) { this [_b] = value; },
 };
 
 const a = {
    get () { return this [_a]; },
-   set (value) { this [_a] = Math .max (value, 0); },
+   set (value) { this [_a] = value; },
 };
 
 Object .defineProperties (Color4 .prototype,
