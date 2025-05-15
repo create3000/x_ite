@@ -47,7 +47,7 @@
 
 import Algorithm from "../Algorithm.js";
 
-function Vector3 (x = 0, y = 0, z = 0)
+function Vector3 (x = 0, y = x, z = y)
 {
    this .x = x;
    this .y = y;
@@ -77,7 +77,7 @@ Object .assign (Vector3 .prototype,
       this .z = z;
       return this;
    },
-   set (x = 0, y = 0, z = 0)
+   set (x = 0, y = x, z = y)
    {
       this .x = x;
       this .y = y;

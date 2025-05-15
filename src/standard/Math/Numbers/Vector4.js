@@ -47,7 +47,7 @@
 
 import Algorithm from "../Algorithm.js";
 
-function Vector4 (x = 0, y = 0, z = 0, w = 0)
+function Vector4 (x = 0, y = x, z = y, w = z)
 {
    this .x = x;
    this .y = y;
@@ -81,7 +81,7 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   set (x = 0, y = 0, z = 0, w = 0)
+   set (x = 0, y = x, z = y, w = z)
    {
       this .x = x;
       this .y = y;

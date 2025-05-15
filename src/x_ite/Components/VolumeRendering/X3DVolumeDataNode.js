@@ -259,7 +259,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
          quality = browser .getBrowserOptions () .getTextureQuality (),
          moving  = browser .getBrowserOptions () .getQualityWhenMoving () ?? quality;
 
-      this .proximitySensorNode ._size   = new Vector3 (1, 1, 1) .multiply (200 * this ._dimensions .length ());
+      this .proximitySensorNode ._size   = new Vector3 (200 * this ._dimensions .length ());
       this .textureTransformNode ._scale = this ._dimensions .inverse ();
 
       const hi = this .getPoints (quality);

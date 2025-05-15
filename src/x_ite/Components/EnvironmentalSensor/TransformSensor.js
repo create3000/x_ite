@@ -229,7 +229,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    })(),
    intersects: (() =>
    {
-      const infinity = new Vector3 (-1, -1, -1);
+      const infinity = new Vector3 (-1);
 
       return function ()
       {

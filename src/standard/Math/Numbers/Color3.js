@@ -58,7 +58,7 @@ const
 // See: https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_materials_specular/README.md
 // See: https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SpecularTest/glTF/SpecularTest.gltf
 
-function Color3 (r = 0, g = 0, b = 0)
+function Color3 (r = 0, g = r, b = g)
 {
    this [_r] = r;
    this [_g] = g;
@@ -88,7 +88,7 @@ Object .assign (Color3 .prototype,
       this [_b] = color [_b];
       return this;
    },
-   set (r = 0, g = 0, b = 0)
+   set (r = 0, g = r, b = g)
    {
       this [_r] = r;
       this [_g] = g;

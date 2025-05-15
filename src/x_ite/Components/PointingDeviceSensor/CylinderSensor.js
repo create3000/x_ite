@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    isBehind (hitRay, hitPoint)
    {
       const
-         enter = new Vector3 (0, 0 ,0),
+         enter = new Vector3 (),
          exit  = new Vector3 ();
 
       this .cylinder .intersectsLine (hitRay, enter, exit);

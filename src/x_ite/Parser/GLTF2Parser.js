@@ -482,7 +482,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene = this .getScene (),
          name  = this .sanitizeName (light .name) || `Light${id + 1}`;
 
-      const color = new Color3 (1, 1, 1);
+      const color = new Color3 (1);
 
       if (this .vectorValue (light .color, color))
          lightNode ._color = color;
@@ -1448,7 +1448,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          translation = new Vector2 (),
-         scale       = new Vector2 (1, 1),
+         scale       = new Vector2 (1),
          matrix      = new Matrix4 ();
 
       matrix .scale (new Vector3 (1, -1, 1));
@@ -2104,7 +2104,7 @@ function eventsProcessed ()
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1, 1, 1),
+         scale            = new Vector3 (1),
          scaleOrientation = new Rotation4 (),
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();

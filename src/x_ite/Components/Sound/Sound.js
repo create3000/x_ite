@@ -286,7 +286,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          sphereMatrix    = new Matrix4 (),
          invSphereMatrix = new Matrix4 (),
          rotation        = new Rotation4 (),
-         scale           = new Vector3 (1, 1, 1),
+         scale           = new Vector3 (1),
          sphere          = new Sphere3 (1, Vector3 .Zero),
          normal          = new Vector3 (),
          line            = new Line3 (),

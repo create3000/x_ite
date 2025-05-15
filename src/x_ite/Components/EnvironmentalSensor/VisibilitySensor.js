@@ -102,7 +102,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
    {
       const
          bbox     = new Box3 (),
-         infinity = new Vector3 (-1, -1, -1);
+         infinity = new Vector3 (-1);
 
       return function (type, renderObject)
       {

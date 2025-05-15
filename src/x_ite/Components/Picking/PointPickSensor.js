@@ -150,7 +150,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
          localScaling  = new Ammo .btVector3 (),
          translation   = new Vector3 (),
          rotation      = new Rotation4 (),
-         scale         = new Vector3 (1, 1, 1),
+         scale         = new Vector3 (1),
          pickedPoint   = new Fields .MFVec3f ();
 
       return function ()

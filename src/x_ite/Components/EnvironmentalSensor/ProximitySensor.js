@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    {
       const
          invModelViewMatrix = new Matrix4 (),
-         infinity           = new Vector3 (-1, -1, -1);
+         infinity           = new Vector3 (-1);
 
       return function (type, renderObject)
       {

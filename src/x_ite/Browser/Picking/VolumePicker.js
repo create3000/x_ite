@@ -95,7 +95,7 @@ Object .assign (VolumePicker .prototype,
       const
          translation = new Vector3 (),
          rotation    = new Rotation4 (),
-         scale       = new Vector3 (1, 1, 1),
+         scale       = new Vector3 (1),
          s           = new Ammo .btVector3 (0, 0, 0);
 
       return function (compoundShape, matrix, childShape)

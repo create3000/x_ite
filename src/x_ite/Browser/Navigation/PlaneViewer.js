@@ -55,8 +55,8 @@ const macOS = /Mac OS X/i .test (navigator .userAgent)
 const SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
 
 const
-   vector                 = new Vector3 (0 ,0, 0),
-   positionOffset         = new Vector3 (0 ,0, 0),
+   vector                 = new Vector3 (),
+   positionOffset         = new Vector3 (),
    centerOfRotationOffset = new Vector3 ();
 
 function PlaneViewer (executionContext, navigationInfo)
