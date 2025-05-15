@@ -80,95 +80,104 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
 
       return function ()
       {
-         const image = this ._image;
-
-         if (image .length < OFFSET)
+         try
          {
-            this .clearTexture ();
-            return;
-         }
+            const image = this ._image;
 
-         const
-            gl          = this .getBrowser () .getContext (),
-            components  = image [COMPONENTS],
-            width       = image [WIDTH],
-            height      = image [HEIGHT],
-            depth       = image [DEPTH],
-            transparent = !(components & 1),
-            size3D      = width * height * depth;
-
-         let data, format;
-
-         switch (components)
-         {
-            case 1:
-            {
-               data   = new Uint8Array (size3D);
-               format = gl .LUMINANCE;
-
-               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-               {
-                  data [d ++] = image [i];
-               }
-
-               break;
-            }
-            case 2:
-            {
-               data   = new Uint8Array (size3D * 2);
-               format = gl .LUMINANCE_ALPHA;
-
-               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-               {
-                  const p = image [i];
-
-                  data [d ++] = (p >>> 8) & 0xff;
-                  data [d ++] = p & 0xff;
-               }
-
-               break;
-            }
-            case 3:
-            {
-               data   = new Uint8Array (size3D * 3);
-               format = gl .RGB;
-
-               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-               {
-                  const p = image [i];
-
-                  data [d ++] = (p >>> 16) & 0xff;
-                  data [d ++] = (p >>> 8)  & 0xff;
-                  data [d ++] = p & 0xff;
-               }
-
-               break;
-            }
-            case 4:
-            {
-               data   = new Uint8Array (size3D * 4);
-               format = gl .RGBA;
-
-               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-               {
-                  const p = image [i];
-
-                  data [d ++] = (p >>> 24) & 0xff;
-                  data [d ++] = (p >>> 16) & 0xff;
-                  data [d ++] = (p >>> 8)  & 0xff;
-                  data [d ++] = p & 0xff;
-               }
-
-               break;
-            }
-            default:
+            if (image .length < OFFSET)
             {
                this .clearTexture ();
                return;
             }
-         }
 
-         this .setTextureData (width, height, depth, transparent, format, data);
+            const
+               gl          = this .getBrowser () .getContext (),
+               components  = image [COMPONENTS],
+               width       = image [WIDTH],
+               height      = image [HEIGHT],
+               depth       = image [DEPTH],
+               transparent = !(components & 1),
+               size3D      = width * height * depth;
+
+            let data, format;
+
+            switch (components)
+            {
+               case 1:
+               {
+                  data   = new Uint8Array (size3D);
+                  format = gl .LUMINANCE;
+
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     data [d ++] = image [i];
+                  }
+
+                  break;
+               }
+               case 2:
+               {
+                  data   = new Uint8Array (size3D * 2);
+                  format = gl .LUMINANCE_ALPHA;
+
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     const p = image [i];
+
+                     data [d ++] = (p >>> 8) & 0xff;
+                     data [d ++] = p & 0xff;
+                  }
+
+                  break;
+               }
+               case 3:
+               {
+                  data   = new Uint8Array (size3D * 3);
+                  format = gl .RGB;
+
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     const p = image [i];
+
+                     data [d ++] = (p >>> 16) & 0xff;
+                     data [d ++] = (p >>> 8)  & 0xff;
+                     data [d ++] = p & 0xff;
+                  }
+
+                  break;
+               }
+               case 4:
+               {
+                  data   = new Uint8Array (size3D * 4);
+                  format = gl .RGBA;
+
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     const p = image [i];
+
+                     data [d ++] = (p >>> 24) & 0xff;
+                     data [d ++] = (p >>> 16) & 0xff;
+                     data [d ++] = (p >>> 8)  & 0xff;
+                     data [d ++] = p & 0xff;
+                  }
+
+                  break;
+               }
+               default:
+               {
+                  this .clearTexture ();
+                  return;
+               }
+            }
+
+            this .setTextureData (width, height, depth, transparent, format, data);
+         }
+         catch (error)
+         {
+            console .error (error);
+
+            this .clearTexture ();
+         }
       };
    })(),
 });
