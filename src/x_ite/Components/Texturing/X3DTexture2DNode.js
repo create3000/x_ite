@@ -121,7 +121,14 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       this .width  = width;
       this .height = height;
 
-      const gl = this .getBrowser () .getContext ();
+      const
+         gl  = this .getBrowser () .getContext (),
+         max = gl .getParameter (gl .MAX_TEXTURE_SIZE);
+
+      if (width > max || height > max)
+      {
+         throw new Error (`At least one dimension (${width} × ${height}) is greater than the maximum texture size (${max} px).`);
+      }
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorSpaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);

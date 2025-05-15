@@ -132,6 +132,13 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
       if (gl .getVersion () < 2)
          return;
 
+      const max = gl .getParameter (gl .MAX_3D_TEXTURE_SIZE);
+
+      if (width > max || height > max || depth > max)
+      {
+         throw new Error (`At least one dimension (${width} × ${height} × ${depth}) is greater than the maximum texture size (${max} px).`);
+      }
+
       // If the texture is updated with different data, it will not display
       // correctly, so we will create a new texture here.
       this .setTexture (gl .createTexture ());
