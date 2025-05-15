@@ -76,6 +76,8 @@ function XMLParser (scene)
    this .url               = new Fields .MFString ();
    this .protoNames        = new Map ();
    this .protoFields       = new WeakMap ();
+
+   this .parser .setUnits (!!scene);
 }
 
 Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototype),
@@ -984,14 +986,16 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    fieldValue (field, value)
    {
       if (value === null)
-         return;
+         return false;
 
       this .parser .pushExecutionContext (this .getExecutionContext ());
-
       this .parser .setInput (value);
-      this [field .getType ()] .call (this .parser, field, field .getUnit ());
+
+      const ok = this [field .getType ()] .call (this .parser, field, field .getUnit ());
 
       this .parser .popExecutionContext ();
+
+      return ok;
    },
    id (string)
    {
@@ -1212,6 +1216,16 @@ const HTMLParser =
 
       return HTMLSupport .getFieldName (name);
    },
+};
+
+X3DField .prototype .fromXMLString = function (string, scene)
+{
+   const parser = new XMLParser (scene);
+
+   if (parser .fieldValue (this, string))
+      return;
+
+   throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 };
 
 export default XMLParser;

@@ -2632,7 +2632,7 @@ Object .assign (VRMLParser .prototype,
    [X3DConstants .MFVec4f]:     VRMLParser .prototype .mfvec4Value,
 });
 
-X3DField .prototype .fromString = function (string, scene)
+X3DField .prototype .fromVRMLString = function (string, scene)
 {
    const parser = new VRMLParser (scene);
 
