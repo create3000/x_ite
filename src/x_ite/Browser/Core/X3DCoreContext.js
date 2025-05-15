@@ -468,14 +468,14 @@ Object .assign (X3DCoreContext .prototype,
       {
          const url = new Fields .MFString ();
 
-         if (/^\s*\[.*?\]\s*$/ .test (urlCharacters))
+         if (/^\s*\[.*?\]\s*$/s .test (urlCharacters))
             url .fromString (urlCharacters, this .getExecutionContext ());
          else
             url .fromString (`[${urlCharacters}]`, this .getExecutionContext ());
 
          return url;
       }
-      catch
+      catch (error)
       {
          throw new Error ("Couldn't parse url attribute.");
       }
