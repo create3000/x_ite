@@ -66,7 +66,8 @@ const Bezier =
 
       return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, steps, points)
       {
-         p .set (x0, y0, z0, x1, y1, z1, x2, y2, z2)
+         p
+            .set (x0, y0, z0, x1, y1, z1, x2, y2, z2)
             .multLeft (c);
 
          for (let i = 0, d = steps - 1; i < steps; ++ i)
@@ -86,7 +87,8 @@ const Bezier =
 
       return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, x3, y3, z3, steps, points)
       {
-         p .set (x0, y0, z0, 0, x1, y1, z1, 0, x2, y2, z2, 0, x3, y3, z3, 0)
+         p
+            .set (x0, y0, z0, 0, x1, y1, z1, 0, x2, y2, z2, 0, x3, y3, z3, 0)
             .multLeft (c);
 
          for (let i = 0, d = steps - 1; i < steps; ++ i)
