@@ -372,6 +372,10 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       // Function will be overridden in XMLParser.
    },
+   fromJSONString (string, scene)
+   {
+      this .fromVRMLString (string, scene);
+   },
    dispose ()
    {
       for (const reference of this [_references] ?? EMPTY)
