@@ -187,7 +187,7 @@ Object .assign (Color4,
 {
    Transparent: Object .freeze (new Color4 ()),
    Black: Object .freeze (new Color4 (0, 0, 0, 1)),
-   White: Object .freeze (new Color4 (1, 1, 1, 1)),
+   White: Object .freeze (new Color4 (1)),
    HSVA (h, s, v, a)
    {
       const color = Object .create (this .prototype);

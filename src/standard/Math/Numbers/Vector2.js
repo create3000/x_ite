@@ -243,7 +243,7 @@ Object .defineProperties (Vector2 .prototype,
 Object .assign (Vector2,
 {
    Zero: Object .freeze (new Vector2 ()),
-   One: Object .freeze (new Vector2 (1, 1)),
+   One: Object .freeze (new Vector2 (1)),
    xAxis: Object .freeze (new Vector2 (1, 0)),
    yAxis: Object .freeze (new Vector2 (0, 1)),
 });

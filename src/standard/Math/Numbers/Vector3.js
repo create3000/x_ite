@@ -293,7 +293,7 @@ Object .defineProperties (Vector3 .prototype,
 Object .assign (Vector3,
 {
    Zero: Object .freeze (new Vector3 ()),
-   One: Object .freeze (new Vector3 (1, 1, 1)),
+   One: Object .freeze (new Vector3 (1)),
    xAxis: Object .freeze (new Vector3 (1, 0, 0)),
    yAxis: Object .freeze (new Vector3 (0, 1, 0)),
    zAxis: Object .freeze (new Vector3 (0, 0, 1)),

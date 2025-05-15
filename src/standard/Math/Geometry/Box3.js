@@ -536,8 +536,8 @@ Object .assign (Box3,
    Points (points)
    {
       const
-         min = new Vector3 (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
-         max = new Vector3 (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+         min = new Vector3 (Number .POSITIVE_INFINITY),
+         max = new Vector3 (Number .NEGATIVE_INFINITY);
 
       for (const point of points)
       {

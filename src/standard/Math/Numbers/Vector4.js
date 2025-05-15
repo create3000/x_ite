@@ -305,7 +305,7 @@ Object .defineProperties (Vector4 .prototype,
 Object .assign (Vector4,
 {
    Zero: Object .freeze (new Vector4 ()),
-   One: Object .freeze (new Vector4 (1, 1, 1, 1)),
+   One: Object .freeze (new Vector4 (1)),
    xAxis: Object .freeze (new Vector4 (1, 0, 0, 0)),
    yAxis: Object .freeze (new Vector4 (0, 1, 0, 0)),
    zAxis: Object .freeze (new Vector4 (0, 0, 1, 0)),
