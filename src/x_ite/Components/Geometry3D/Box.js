@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (Box .prototype, X3DGeometryNode .prototy
                x               = Math .abs (size .x / 2),
                y               = Math .abs (size .y / 2),
                z               = Math .abs (size .z / 2),
-               defaultVertices = geometry .getVertices () .getValue ();
+               defaultVertices = geometry .getVertices ();
 
             for (let i = 0, length = defaultVertices .length; i < length; i += 4)
             {
