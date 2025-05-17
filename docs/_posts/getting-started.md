@@ -21,9 +21,7 @@ permalink: /
     notifications="false"
     timings="false"
     contentScale="auto"
-    xrSessionMode="NONE"
-    style="visibility: hidden;"
-    oninitialized="this .style .visibility = 'visible';">
+    xrSessionMode="NONE">
 </x3d-canvas>
 <div class="mascot-wrapper">
   <x3d-canvas
