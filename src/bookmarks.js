@@ -76,7 +76,7 @@ Object .assign (Bookmarks .prototype,
                   .append ($("<a/>")
                      .addClass ('display-example')
                      .attr ('href', `${server}/${component}/${test}/${test}.x3d`)
-                     .attr ('style', `background-image:url(${server}/${component}/${test}/screenshot-small.avif)`)
+                     .attr ('style', `background-image:url(${server}/${component}/${test}/screenshot-small.png)`)
                      .on ("click", () => prevent (this .loadURL (`${server}/${component}/${test}/${test}.x3d`, bookmark))));
             }
             else if (path)
