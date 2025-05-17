@@ -248,7 +248,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
          },
          set (value)
          {
-            this .getValue () [i] = value;
+            this .getValue () [i] = +value;
             this .addEvent ();
          },
          enumerable: true,
