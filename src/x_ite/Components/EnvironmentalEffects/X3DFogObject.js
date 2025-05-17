@@ -49,7 +49,6 @@ import Fields       from "../../Fields.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import ObjectCache  from "../../../standard/Utility/ObjectCache.js";
-import Algorithm    from "../../../standard/Math/Algorithm.js";
 
 const Fogs = ObjectCache (FogContainer);
 
