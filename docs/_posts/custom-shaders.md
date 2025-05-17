@@ -624,6 +624,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
 | Type  | Name            | Comment                                                 |
 |-------|-----------------|---------------------------------------------------------|
 | vec3  | color           |                                                         |
+| float | visibilityStart |                                                         |
 | float | visibilityRange |                                                         |
 | mat3  | matrix          | inverse fog space matrix, rotation and scale components |
 
