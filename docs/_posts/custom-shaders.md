@@ -14,7 +14,7 @@ However, you will often want to perform special effects or special cases for you
 ## Example
 
 <x3d-canvas class="xr-button-cr" update="auto" src="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d">
-  <img src="https://create3000.github.io/media/images/water-quality.png" alt="Shader Example"/>
+  <img src="https://create3000.github.io/media/examples/X3D/WaterQuality/screenshot.avif" alt="Shader Example"/>
 </x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.zip)
