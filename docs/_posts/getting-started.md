@@ -14,14 +14,16 @@ permalink: /
 
 <x3d-canvas
     class="teaser"
-    src="/x_ite/assets/teaser/teaser.x3d"
+    src="/x_ite/assets/teaser/pluto.x3d"
     update="auto"
     splashScreen="false"
     contextMenu="false"
     notifications="false"
     timings="false"
     contentScale="auto"
-    xrSessionMode="NONE">
+    xrSessionMode="NONE"
+    style="visibility: hidden;"
+    oninitialized="this .style .visibility = 'visible';">
 </x3d-canvas>
 <div class="mascot-wrapper">
   <x3d-canvas
@@ -34,8 +36,8 @@ permalink: /
       timings="false"
       contentScale="auto"
       xrSessionMode="NONE"
-      style="display: none;"
-      oninitialized="this .style .display = 'inline-block';">
+      style="visibility: hidden;"
+      oninitialized="this .style .visibility = 'visible';">
   </x3d-canvas>
 </div>
 Credits: [Jonás](https://sketchfab.com/jonasaguilar) (Halloween child)
