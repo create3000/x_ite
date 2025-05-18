@@ -6,7 +6,7 @@
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.8.8, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 18 May 2025 08:40:32 GMT'/>
+    <meta name='modified' content='Sun, 18 May 2025 08:45:39 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -32,21 +32,6 @@
         headlight='false'/>
     <Background
         transparency='1'/>
-    <Transform
-        translation='-5.18307 2.035274 -1.181229'
-        scale='1.65 1.65 1.65'>
-      <Transform DEF='HalloweenChild_1'
-          translation='6.521287 -12.04896 2.191832'
-          rotation='0 -1 0 0.549344416768186'
-          scale='0.5987189 0.5987189 0.5987189'
-          center='0 22.54239 -0.3160129'>
-        <Inline DEF='_7'
-            url='"palm_tree_-_animated.glb"'/>
-        <LoadSensor DEF='_8'>
-          <Inline USE='_7'/>
-        </LoadSensor>
-      </Transform>
-    </Transform>
     <EnvironmentLight>
       <ImageCubeMapTexture containerField='diffuseTexture'
           url='"https://cdn.jsdelivr.net/npm/x3d-image@2.1.3/src/images/cannon-exterior-diffuse.avif"'>
@@ -60,7 +45,18 @@
         <TextureProperties USE='_1'/>
       </ImageCubeMapTexture>
     </EnvironmentLight>
-    <IMPORT inlineDEF='_7' importedDEF='Timer1' AS='HalloweenChildTimer'/>
-    <ROUTE fromNode='_8' fromField='isLoaded' toNode='HalloweenChildTimer' toField='set_loop'/>
+    <Transform DEF='Palm'
+        translation='5.577054 -3.192956 2.229885'
+        rotation='0 -1 0 0.549344416768186'
+        scale='0.9878862 0.9878862 0.9878862'
+        center='0 22.54239 -0.3160129'>
+      <Inline DEF='_7'
+          url='"palm_tree_-_animated.glb"'/>
+      <LoadSensor DEF='_8'>
+        <Inline USE='_7'/>
+      </LoadSensor>
+    </Transform>
+    <IMPORT inlineDEF='_7' importedDEF='Timer1' AS='Timer'/>
+    <ROUTE fromNode='_8' fromField='isLoaded' toNode='Timer' toField='set_loop'/>
   </Scene>
 </X3D>
