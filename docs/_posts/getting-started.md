@@ -13,7 +13,7 @@ permalink: /
 [![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447){: .badge-link }
 
 <x3d-canvas
-    class="teaser"
+    class="teaser shadow"
     src="/x_ite/assets/teaser/pluto/pluto.x3d"
     update="auto"
     splashScreen="false"
