@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='CubeMapTexturing' level='3'/>
+    <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.8.8, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sun, 18 May 2025 08:40:32 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='BrowserFrame'>
+          <MetadataBoolean
+              name='fixedSize'
+              value='true'/>
+          <MetadataDouble
+              name='aspectRatio'
+              value='780, 280'/>
+          <MetadataString
+              name='backgroundColor'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <NavigationInfo
+        type='"NONE"'
+        headlight='false'/>
+    <Background
+        transparency='1'/>
+    <Transform
+        translation='-5.18307 2.035274 -1.181229'
+        scale='1.65 1.65 1.65'>
+      <Transform DEF='HalloweenChild_1'
+          translation='6.521287 -12.04896 2.191832'
+          rotation='0 -1 0 0.549344416768186'
+          scale='0.5987189 0.5987189 0.5987189'
+          center='0 22.54239 -0.3160129'>
+        <Inline DEF='_7'
+            url='"palm_tree_-_animated.glb"'/>
+        <LoadSensor DEF='_8'>
+          <Inline USE='_7'/>
+        </LoadSensor>
+      </Transform>
+    </Transform>
+    <EnvironmentLight>
+      <ImageCubeMapTexture containerField='diffuseTexture'
+          url='"https://cdn.jsdelivr.net/npm/x3d-image@2.1.3/src/images/cannon-exterior-diffuse.avif"'>
+        <TextureProperties DEF='_1'
+            generateMipMaps='true'
+            minificationFilter='NICEST'
+            magnificationFilter='NICEST'/>
+      </ImageCubeMapTexture>
+      <ImageCubeMapTexture containerField='specularTexture'
+          url='"https://cdn.jsdelivr.net/npm/x3d-image@2.1.3/src/images/cannon-exterior-specular.avif"'>
+        <TextureProperties USE='_1'/>
+      </ImageCubeMapTexture>
+    </EnvironmentLight>
+    <IMPORT inlineDEF='_7' importedDEF='Timer1' AS='HalloweenChildTimer'/>
+    <ROUTE fromNode='_8' fromField='isLoaded' toNode='HalloweenChildTimer' toField='set_loop'/>
+  </Scene>
+</X3D>
