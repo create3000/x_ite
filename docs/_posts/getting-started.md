@@ -38,7 +38,7 @@ permalink: /
       oninitialized="this .style .visibility = 'visible';">
   </x3d-canvas>
 </div>
-Credits: [mqumboz](https://sketchfab.com/mqumboz) (Palm)
+Credits: [mqumboz](https://sketchfab.com/mqumboz) (palm)
 {: .small }
 
 ## Overview
