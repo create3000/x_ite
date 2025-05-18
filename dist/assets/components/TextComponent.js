@@ -1,5 +1,5 @@
-/* X_ITE v11.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.8")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -776,7 +776,7 @@ Object .assign (X3DTextGeometry .prototype,
             this .minorAlignment .assign (this .bearing);
             break;
          case Text_TextAlignment .FIRST:
-            this .minorAlignment .set (0, 0);
+            this .minorAlignment .set (0);
             break;
          case Text_TextAlignment .MIDDLE:
             this .minorAlignment .set (0, size .y / 2 - max .y);
@@ -1359,8 +1359,8 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
          }
          else
          {
-            min .set (0, 0, 0);
-            max .set (0, 0, 0);
+            min .set (0);
+            max .set (0);
          }
 
          const extents = glyphCache .extents = { };

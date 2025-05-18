@@ -1,5 +1,5 @@
-/* X_ITE v11.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.8")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -10,7 +10,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.8")];
 
 /***/ }),
 
-/***/ 70:
+/***/ 98:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -1165,7 +1165,15 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 166:
+/***/ 254:
+/***/ ((module) => {
+
+"use strict";
+module.exports = __X_ITE_X3D__ .jquery;
+
+/***/ }),
+
+/***/ 426:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -5121,15 +5129,28 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 254:
-/***/ ((module) => {
+/***/ 497:
+/***/ (() => {
 
-"use strict";
-module.exports = __X_ITE_X3D__ .jquery;
+/* (ignored) */
 
 /***/ }),
 
-/***/ 340:
+/***/ 559:
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 722:
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 752:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -5166,28 +5187,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 497:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 559:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 722:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 838:
+/***/ 842:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -5449,6 +5449,13 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (external_X
 
       if (gl .getVersion () < 2)
          return;
+
+      const max = gl .getParameter (gl .MAX_3D_TEXTURE_SIZE);
+
+      if (width > max || height > max || depth > max)
+      {
+         throw new Error (`At least one dimension (${width} × ${height} × ${depth}) is greater than the maximum texture size (${max} px).`);
+      }
 
       // If the texture is updated with different data, it will not display
       // correctly, so we will create a new texture here.
@@ -7309,11 +7316,14 @@ var Decoder = class _Decoder {
 };
 
 //# 
+;// external "__X_ITE_X3D__ .DEVELOPMENT"
+const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
+var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(166);
-/* provided dependency */ var jpegDecode = __webpack_require__(70);
-/* provided dependency */ var CharLS = __webpack_require__(340);
-/* provided dependency */ var OpenJPEG = __webpack_require__(838);
+/* provided dependency */ var dicomParser = __webpack_require__(426);
+/* provided dependency */ var jpegDecode = __webpack_require__(98);
+/* provided dependency */ var CharLS = __webpack_require__(752);
+/* provided dependency */ var OpenJPEG = __webpack_require__(842);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -7360,6 +7370,7 @@ var Decoder = class _Decoder {
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -8014,7 +8025,7 @@ Object .assign (DicomParser .prototype,
       };
 
       const
-         decode = typeof jpegDecode !== "undefined" ? jpegDecode : window ["jpeg-js"] .decode,
+         decode = (external_X_ITE_X3D_DEVELOPMENT_default()) ? window ["jpeg-js"] .decode : jpegDecode,
          data   = decode (pixelData, opts);
 
       this .bitsAllocated = 8;
@@ -8431,9 +8442,6 @@ const DICOMParser_default_ = DicomParser;
 ;// external "__X_ITE_X3D__ .FileLoader"
 const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
 var external_X_ITE_X3D_FileLoader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FileLoader_namespaceObject);
-;// external "__X_ITE_X3D__ .DEVELOPMENT"
-const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
-var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Components/Texturing3D/ImageTexture3D.js
 /*******************************************************************************
  *
@@ -8967,95 +8975,104 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
 
       return function ()
       {
-         const image = this ._image;
-
-         if (image .length < OFFSET)
+         try
          {
-            this .clearTexture ();
-            return;
-         }
+            const image = this ._image;
 
-         const
-            gl          = this .getBrowser () .getContext (),
-            components  = image [COMPONENTS],
-            width       = image [WIDTH],
-            height      = image [HEIGHT],
-            depth       = image [DEPTH],
-            transparent = !(components & 1),
-            size3D      = width * height * depth;
-
-         let data, format;
-
-         switch (components)
-         {
-            case 1:
-            {
-               data   = new Uint8Array (size3D);
-               format = gl .LUMINANCE;
-
-               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-               {
-                  data [d ++] = image [i];
-               }
-
-               break;
-            }
-            case 2:
-            {
-               data   = new Uint8Array (size3D * 2);
-               format = gl .LUMINANCE_ALPHA;
-
-               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-               {
-                  const p = image [i];
-
-                  data [d ++] = (p >>> 8) & 0xff;
-                  data [d ++] = p & 0xff;
-               }
-
-               break;
-            }
-            case 3:
-            {
-               data   = new Uint8Array (size3D * 3);
-               format = gl .RGB;
-
-               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-               {
-                  const p = image [i];
-
-                  data [d ++] = (p >>> 16) & 0xff;
-                  data [d ++] = (p >>> 8)  & 0xff;
-                  data [d ++] = p & 0xff;
-               }
-
-               break;
-            }
-            case 4:
-            {
-               data   = new Uint8Array (size3D * 4);
-               format = gl .RGBA;
-
-               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-               {
-                  const p = image [i];
-
-                  data [d ++] = (p >>> 24) & 0xff;
-                  data [d ++] = (p >>> 16) & 0xff;
-                  data [d ++] = (p >>> 8)  & 0xff;
-                  data [d ++] = p & 0xff;
-               }
-
-               break;
-            }
-            default:
+            if (image .length < OFFSET)
             {
                this .clearTexture ();
                return;
             }
-         }
 
-         this .setTextureData (width, height, depth, transparent, format, data);
+            const
+               gl          = this .getBrowser () .getContext (),
+               components  = image [COMPONENTS],
+               width       = image [WIDTH],
+               height      = image [HEIGHT],
+               depth       = image [DEPTH],
+               transparent = !(components & 1),
+               size3D      = width * height * depth;
+
+            let data, format;
+
+            switch (components)
+            {
+               case 1:
+               {
+                  data   = new Uint8Array (size3D);
+                  format = gl .LUMINANCE;
+
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     data [d ++] = image [i];
+                  }
+
+                  break;
+               }
+               case 2:
+               {
+                  data   = new Uint8Array (size3D * 2);
+                  format = gl .LUMINANCE_ALPHA;
+
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     const p = image [i];
+
+                     data [d ++] = (p >>> 8) & 0xff;
+                     data [d ++] = p & 0xff;
+                  }
+
+                  break;
+               }
+               case 3:
+               {
+                  data   = new Uint8Array (size3D * 3);
+                  format = gl .RGB;
+
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     const p = image [i];
+
+                     data [d ++] = (p >>> 16) & 0xff;
+                     data [d ++] = (p >>> 8)  & 0xff;
+                     data [d ++] = p & 0xff;
+                  }
+
+                  break;
+               }
+               case 4:
+               {
+                  data   = new Uint8Array (size3D * 4);
+                  format = gl .RGBA;
+
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     const p = image [i];
+
+                     data [d ++] = (p >>> 24) & 0xff;
+                     data [d ++] = (p >>> 16) & 0xff;
+                     data [d ++] = (p >>> 8)  & 0xff;
+                     data [d ++] = p & 0xff;
+                  }
+
+                  break;
+               }
+               default:
+               {
+                  this .clearTexture ();
+                  return;
+               }
+            }
+
+            this .setTextureData (width, height, depth, transparent, format, data);
+         }
+         catch (error)
+         {
+            console .error (error);
+
+            this .clearTexture ();
+         }
       };
    })(),
 });

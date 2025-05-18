@@ -1,5 +1,5 @@
-/* X_ITE v11.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.8")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1415,7 +1415,7 @@ Object .assign (VolumePicker .prototype,
       const
          translation = new (external_X_ITE_X3D_Vector3_default()) (),
          rotation    = new (external_X_ITE_X3D_Rotation4_default()) (),
-         scale       = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1),
+         scale       = new (external_X_ITE_X3D_Vector3_default()) (1),
          s           = new (external_X_ITE_X3D_AmmoClass_default()).btVector3 (0, 0, 0);
 
       return function (compoundShape, matrix, childShape)
@@ -1651,7 +1651,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
          localScaling  = new (external_X_ITE_X3D_AmmoClass_default()).btVector3 (),
          translation   = new (external_X_ITE_X3D_Vector3_default()) (),
          rotation      = new (external_X_ITE_X3D_Rotation4_default()) (),
-         scale         = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1),
+         scale         = new (external_X_ITE_X3D_Vector3_default()) (1),
          pickedPoint   = new (external_X_ITE_X3D_Fields_default()).MFVec3f ();
 
       return function ()

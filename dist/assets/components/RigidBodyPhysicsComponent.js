@@ -1,5 +1,5 @@
-/* X_ITE v11.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.8")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -3114,14 +3114,14 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    })(),
    set_forces__ ()
    {
-      this .force .set (0, 0, 0);
+      this .force .set (0);
 
       for (const force of this ._forces)
          this .force .add (force .getValue ());
    },
    set_torques__ ()
    {
-      this .torque .set (0, 0, 0);
+      this .torque .set (0);
 
       for (const torque of this ._torques)
          this .torque .add (torque .getValue ());

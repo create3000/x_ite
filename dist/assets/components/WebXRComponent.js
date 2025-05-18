@@ -1,5 +1,5 @@
-/* X_ITE v11.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.8")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -399,7 +399,7 @@ var external_X_ITE_X3D_X3DFlyViewer_default = /*#__PURE__*/__webpack_require__.n
 
 
 
-const GAMEPAD_SPEED_FACTOR = new (external_X_ITE_X3D_Vector3_default()) (300, 300, 300); // 143 would be right
+const GAMEPAD_SPEED_FACTOR = new (external_X_ITE_X3D_Vector3_default()) (300); // 143 would be right
 
 Object .assign ((external_X_ITE_X3D_X3DFlyViewer_default()).prototype,
 {

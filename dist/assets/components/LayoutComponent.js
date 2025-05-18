@@ -1,5 +1,5 @@
-/* X_ITE v11.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.8")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -388,7 +388,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
    pixelSize: new (external_X_ITE_X3D_Vector2_default()) (),
    translation: new (external_X_ITE_X3D_Vector3_default()) (),
    offset: new (external_X_ITE_X3D_Vector3_default()) (),
-   scale: new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1),
+   scale: new (external_X_ITE_X3D_Vector3_default()) (1),
    currentTranslation: new (external_X_ITE_X3D_Vector3_default()) (),
    currentRotation: new (external_X_ITE_X3D_Rotation4_default()) (),
    currentScale: new (external_X_ITE_X3D_Vector3_default()) (),
@@ -756,7 +756,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
 
       // Calculate translation
 
-      const translation = this .translation .set (0, 0, 0);
+      const translation = this .translation .set (0);
 
       switch (this .getAlignX ())
       {
@@ -792,7 +792,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
 
       // Calculate offset
 
-      const offset = this .offset .set (0, 0, 0);
+      const offset = this .offset .set (0);
 
       switch (this .getOffsetUnitX ())
       {
@@ -817,7 +817,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
       // Calculate scale
 
       const
-         scale              = this .scale .set (1, 1, 1),
+         scale              = this .scale .set (1),
          currentTranslation = this .currentTranslation,
          currentRotation    = this .currentRotation,
          currentScale       = this .currentScale;

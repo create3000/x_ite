@@ -1,5 +1,5 @@
-/* X_ITE v11.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.8")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1949,10 +1949,10 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
 
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
+      this .proximitySensorNode ._isActive .addInterest ("set_active__", this);
 
-      this .groupNode ._children       = [this .proximitySensorNode, this .transformNode];
-      this .proximitySensorNode ._size = new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1);
-      this .transformNode ._children   = [this .lowShapeNode, this .hiShapeNode];
+      this .groupNode ._children     = [this .proximitySensorNode, this .transformNode];
+      this .transformNode ._children = [this .lowShapeNode, this .hiShapeNode];
 
       this .textureTransformNode ._translation = new (external_X_ITE_X3D_Fields_default()).SFVec3f (0.5, 0.5, 0.5);
       this .textureTransformNode ._center      = new (external_X_ITE_X3D_Fields_default()).SFVec3f (-0.5, -0.5, -0.5);
@@ -2025,7 +2025,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
       this .set_live__ (false);
       this .set_dimensions__ ();
       this .set_textureTransform__ ();
-      this .update ();
+      this .set_active__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -2051,20 +2051,32 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
       switch (quality)
       {
          case (external_X_ITE_X3D_TextureQuality_default()).LOW:
-         {
             return 200;
-         }
          case (external_X_ITE_X3D_TextureQuality_default()).MEDIUM:
-         {
             return 400;
-         }
          case (external_X_ITE_X3D_TextureQuality_default()).HIGH:
-         {
             return 600;
-         }
+      }
+   },
+   getPoints (quality)
+   {
+      const
+         numPlanes = this .getNumPlanes (quality),
+         size      = this ._dimensions .getValue () .magnitude (),
+         size1_2   = size / 2,
+         points    = [ ];
+
+      for (let i = 0; i < numPlanes; ++ i)
+      {
+         const z = i / (numPlanes - 1) - 0.5;
+
+         points .push ( size1_2,  size1_2, size * z,
+                       -size1_2,  size1_2, size * z,
+                       -size1_2, -size1_2, size * z,
+                        size1_2, -size1_2, size * z);
       }
 
-      return 200;
+      return points;
    },
    set_live__ (rebuild)
    {
@@ -2074,74 +2086,67 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
 
       if (this .getLive () .getValue () || alwaysUpdate)
       {
-         browser .getBrowserOptions () ._PrimitiveQuality  .addInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._TextureQuality    .addInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .addInterest ("set_dimensions__", this);
-
-         browser .sensorEvents () .addInterest ("update", this);
 
          if (rebuild)
             this .set_dimensions__ ();
       }
       else
       {
-         browser .getBrowserOptions () ._PrimitiveQuality  .removeInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._TextureQuality    .removeInterest ("set_dimensions__", this);
          browser .getBrowserOptions () ._QualityWhenMoving .removeInterest ("set_dimensions__", this);
-
-         browser .sensorEvents () .removeInterest ("update", this);
       }
    },
    set_dimensions__ ()
    {
       const
          browser = this .getBrowser (),
-         size      = this ._dimensions .getValue () .magnitude (),
-         size1_2   = size / 2;
+         quality = browser .getBrowserOptions () .getTextureQuality (),
+         moving  = browser .getBrowserOptions () .getQualityWhenMoving () ?? quality;
 
+      this .proximitySensorNode ._size   = new (external_X_ITE_X3D_Vector3_default()) (200 * this ._dimensions .length ());
       this .textureTransformNode ._scale = this ._dimensions .inverse ();
 
-      // low
+      const hi = this .getPoints (quality);
+
+      this .hiCoordinateNode ._point        = hi;
+      this .hiTextureCoordinateNode ._point = hi;
+
+      if (moving === quality)
       {
-         const
-            numPlanes = this .getNumPlanes (browser .getBrowserOptions () .getQualityWhenMoving ()),
-            points    = [ ];
+         this .lowShapeNode ._geometry = this .hiGeometryNode;
+      }
+      else
+      {
+         const low = this .getPoints (moving);
 
-         for (let i = 0; i < numPlanes; ++ i)
-         {
-            const z = i / (numPlanes - 1) - 0.5;
-
-            points .push ( size1_2,  size1_2, size * z,
-                          -size1_2,  size1_2, size * z,
-                          -size1_2, -size1_2, size * z,
-                           size1_2, -size1_2, size * z);
-         }
-
-         this .lowCoordinateNode ._point        = points;
-         this .lowTextureCoordinateNode ._point = points;
+         this .lowCoordinateNode ._point        = low;
+         this .lowTextureCoordinateNode ._point = low;
+         this .lowShapeNode ._geometry          = this .lowGeometryNode;
       }
 
-      // hi
-      {
-         const
-            numPlanes = this .getNumPlanes (browser .getBrowserOptions () .getPrimitiveQuality ()),
-            points    = [ ];
-
-         for (let i = 0; i < numPlanes; ++ i)
-         {
-            const z = i / (numPlanes - 1) - 0.5;
-
-            points .push ( size1_2,  size1_2, size * z,
-                          -size1_2,  size1_2, size * z,
-                          -size1_2, -size1_2, size * z,
-                           size1_2, -size1_2, size * z);
-         }
-
-         this .hiCoordinateNode ._point        = points;
-         this .hiTextureCoordinateNode ._point = points;
-      }
+      this .set_active__ ();
    },
    set_textureTransform__ ()
    {
       this .textureNormalMatrixArray .set (new (external_X_ITE_X3D_Matrix4_default()) (... this .textureTransformNode .getMatrix ()) .submatrix .inverse ());
+   },
+   set_active__ ()
+   {
+      const
+         browser = this .getBrowser (),
+         quality = browser .getBrowserOptions () .getTextureQuality (),
+         moving  = browser .getBrowserOptions () .getQualityWhenMoving () ?? quality,
+         update  = this .proximitySensorNode ._isActive .getValue () && quality !== moving;
+
+      if (update)
+         browser .sensorEvents () .addInterest ("update", this);
+      else
+         browser .sensorEvents () .removeInterest ("update", this);
+
+      this .lowShapeNode ._visible = !update;
+      this .hiShapeNode  ._visible = update;
    },
    update ()
    {

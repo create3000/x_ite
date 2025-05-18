@@ -1,5 +1,5 @@
-/* X_ITE v11.5.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.8")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1072,7 +1072,7 @@ Object .assign (X3DGeospatialObject .prototype,
       if (this .geoOriginNode)
          this .geoOriginNode .getOrigin (this .origin);
       else
-         this .origin .set (0, 0, 0);
+         this .origin .set (0);
 
       this .set_originMatrix__ ();
    },
@@ -1324,7 +1324,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
          }
          else
          {
-            return result .set (0, 0, 0);
+            return result .set (0);
          }
       };
    })(),
