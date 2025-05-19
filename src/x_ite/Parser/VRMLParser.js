@@ -771,6 +771,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                            const existingProto = this .getExecutionContext () .getProtoDeclaration (nodeTypeId);
 
                            this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (nodeTypeId), existingProto);
+
+                           console .warn (`Proto '${nodeTypeId}' already defined, overriding existing one.`);
                         }
                         catch
                         { }
@@ -1008,6 +1010,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                         const existingExternProto = this .getExecutionContext () .getExternProtoDeclaration (nodeTypeId);
 
                         this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (nodeTypeId), existingExternProto);
+
+                        console .warn (`Extern proto '${nodeTypeId}' already defined, overriding existing one.`);
                      }
                      catch
                      { }
