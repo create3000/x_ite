@@ -200,12 +200,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          // There must be an error if the specification range does not match,
          // otherwise protos with the same name will be overwritten, e.g. Delay.
 
-         const specificationRange = ConcreteNode .specificationRange;
+         const { from, to } = ConcreteNode .specificationRange;
 
-         if (this .getSpecificationVersion () < specificationRange .from)
-            return null;
-
-         if (this .getSpecificationVersion () > specificationRange .to)
+         if (this .getSpecificationVersion () < from || this .getSpecificationVersion () > to)
             return null;
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
@@ -223,12 +220,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          // There must be an error if the specification range does not match,
          // otherwise protos with the same name will be overwritten, e.g. Delay.
 
-         const specificationRange = ConcreteNode .specificationRange;
+         const { from, to } = ConcreteNode .specificationRange;
 
-         if (this .getSpecificationVersion () < specificationRange .from)
-            throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
-
-         if (this .getSpecificationVersion () > specificationRange .to)
+         if (this .getSpecificationVersion () < from || this .getSpecificationVersion () > to)
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
@@ -514,6 +508,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (name .length === 0)
          throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
+      if (this .getBrowser () .getConcreteNodes () .has (name))
+         console .warn (`Added proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
+
       this [_protos] .add (name, proto);
       proto .setName (name);
 
@@ -531,6 +528,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (name .length === 0)
          throw new Error ("Couldn't update proto declaration: proto name is empty.");
+
+      if (this .getBrowser () .getConcreteNodes () .has (name))
+         console .warn (`Added proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
 
       this [_protos] .update (proto .getName (), name, proto);
       proto .setName (name);
@@ -583,6 +583,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (name .length === 0)
          throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
 
+      if (this .getBrowser () .getConcreteNodes () .has (name))
+         console .warn (`Added extern proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
+
       this [_externprotos] .add (name, externproto);
       externproto .setName (name);
 
@@ -600,6 +603,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (name .length === 0)
          throw new Error ("Couldn't update extern proto declaration: extern proto name is empty.");
+
+      if (this .getBrowser () .getConcreteNodes () .has (name))
+         console .warn (`Added extern proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
 
       this [_externprotos] .update (externproto .getName (), name, externproto);
       externproto .setName (name);
