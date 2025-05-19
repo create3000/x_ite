@@ -463,7 +463,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
             this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (name), existingExternProto);
 
-            console .warn (`Extern proto '${name}' already defined, overriding existing one.`);
+            console .warn (`Extern proto '${name}' already defined, renamed existing one.`);
          }
          catch
          { }
@@ -530,7 +530,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
             this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (name), existingProto);
 
-            console .warn (`Proto '${name}' already defined, overriding existing one.`);
+            console .warn (`Proto '${name}' already defined, renamed existing one.`);
          }
          catch
          { }
