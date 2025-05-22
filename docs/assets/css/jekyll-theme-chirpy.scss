@@ -560,39 +560,14 @@ select.select option {
 
 /* table examples */
 
-.table-wrapper > table.examples tbody tr {
-  border: none;
-  background-color: var(--tb-odd-bg);
+.examples {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  gap: 3px;
 }
 
-.table-wrapper > table.examples tbody tr td {
-  border: 3px solid var(--tb-odd-bg);
-  padding: 0;
-  line-height: 1rem;
-}
-
-.table-wrapper > table.examples a.img-link {
-  display: block;
-}
-
-.table-wrapper > table.examples a.img-link:hover {
+.examples a:hover {
   outline: 1px solid #d2603a;
-}
-
-.table-wrapper > table.examples a.popup {
-  margin: 0;
-}
-
-@media all and (max-width: 849px) {
-  .table-wrapper > table.examples tbody tr td {
-    border-width: 2px;
-  }
-}
-
-@media all and (max-width: 576px) {
-  .table-wrapper > table.examples tbody tr td {
-    border-width: 1px;
-  }
 }
 
 /* example overlay */

@@ -1,4 +1,4 @@
-$("table.examples a") .on ("click", function ()
+$(".examples a") .on ("click", function ()
 {
    Examples .shared .load ($(this));
    return false;
