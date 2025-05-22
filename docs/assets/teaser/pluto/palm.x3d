@@ -6,7 +6,7 @@
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.8.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 18 May 2025 19:24:53 GMT'/>
+    <meta name='modified' content='Thu, 22 May 2025 20:27:44 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -47,7 +47,7 @@
     </Transform>
     <Transform DEF='Sun'
         translation='3.354208 2.30938 2.341443'
-        rotation='0 0 1.0000000000002 3.09600734710631'
+        rotation='0 0 1 240.299998283386'
         scale='0.003287474 0.003287474 0.003287474'>
       <Group DEF='Animation'>
         <TimeSensor DEF='_1'
@@ -55,7 +55,7 @@
             loop='true'/>
         <OrientationInterpolator DEF='_2'
             key='0, 0.25, 0.5, 0.75, 1'
-            keyValue='0 0 1 0, 0 0 1 90, 0 0 1 180, 0 0 1 270, 0 0 1 0'/>
+            keyValue='0 0 1 0, 0 0 1 -90, 0 0 1 -180, 0 0 1 -270, 0 0 1 0'/>
       </Group>
       <StaticGroup>
         <Transform DEF='Extrude1'>
