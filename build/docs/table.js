@@ -35,7 +35,11 @@ for (const example of html)
 
 	folder = folder .replace (/^.*\/media\/docs\//, "");
 
-	output += `[![${basename}](https://create3000.github.io/media/${folder}/screenshot-small.png){: width="${size [0]}" height="${size [1]}" }](https://create3000.github.io/media/${folder}/${basename}.x3d){: title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" xrButtonPosition="${xrButtonPosition}" }\n`;
+	const image = `![${basename}](https://create3000.github.io/media/${folder}/screenshot-small.png){: width="${size [0]}" height="${size [1]}" }`;
+
+	const link = `[${image}](https://create3000.github.io/media/${folder}/${basename}.x3d){: title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" xrButtonPosition="${xrButtonPosition}" }`;
+
+	output += `${link}\n`;
 }
 
 output += `{: .examples }\n`;
