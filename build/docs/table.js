@@ -6,8 +6,6 @@ const
    fs     = require ("fs"),
 	{ sh } = require ("shell-tools");
 
-const COLUMNS = 7;
-
 const
 	cwd      = process .cwd (),
 	examples = `${cwd}/../media/docs/examples`,
