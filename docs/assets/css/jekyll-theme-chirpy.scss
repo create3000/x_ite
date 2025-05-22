@@ -563,7 +563,13 @@ select.select option {
 .examples {
   display: grid;
   grid-template-columns: repeat(7, auto);
-  gap: 1px;
+  gap: 2px;
+}
+
+@media all and (max-width: 576px) {
+  .examples {
+    gap: 1px;
+  }
 }
 
 .examples a:hover {
