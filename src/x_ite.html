@@ -376,17 +376,11 @@ main.color-management #browser {
 #buttons a,
 #links a {
    padding: 0px 5px;
+}
+
+#buttons a:not(:first-child),
+#links a:not(:first-child) {
    border-left: 1px solid white;
-}
-
-#buttons a:first-child,
-#links a:first-child {
-   border-left: none;
-}
-
-#buttons a:last-child,
-#links a:last-child {
-   border-right: 0px;
 }
 
 .min-links,
@@ -398,11 +392,11 @@ main.color-management #browser {
 .clearfix,
 #location-bar:after,
 #links:after {
-      content: ".";
-      clear: both;
-      display: block;
-      visibility: hidden;
-      height: 0px;
+   content: ".";
+   clear: both;
+   display: block;
+   visibility: hidden;
+   height: 0px;
 }
 
 #examples-box {
