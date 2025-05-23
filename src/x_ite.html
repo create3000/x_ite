@@ -222,6 +222,7 @@ main.color-management #browser {
 }
 
 #file {
+   display: flex;;
    margin: 10px 40px 10px 20px;
    word-break: break-all;
 }
@@ -363,23 +364,21 @@ main.color-management #browser {
    background: #515151;
 }
 
-#buttons {
-   margin: 10px 0px;
-   float: left;
+.button-bar {
+   display: flex;
+   justify-content: space-between;
 }
 
-#links {
+.buttons {
+   display: flex;
    margin: 10px 0px;
-   text-align: right;
 }
 
-#buttons a,
-#links a {
+.buttons a {
    padding: 0px 5px;
 }
 
-#buttons a:not(:first-child),
-#links a:not(:first-child) {
+.buttons a:not(:first-child) {
    border-left: 1px solid white;
 }
 
@@ -499,11 +498,20 @@ main.color-management #browser {
                <input id="location-entry" value="https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
                <button id="location-go" type="button">Load URL</button>
             </div>
-            <div id="buttons">
-               <a id="print-xml" href="#">XML</a><a id="print-vrml" href="#">VRML</a><a id="print-json" href="#">JSON</a><a href="/x_ite/dist/example.html">Example Page</a><a href="/x_ite-dom/">DOM</a><a id="blob" href="#">Blob</a><a id="reset-history" href="#">Reset History</a>
-            </div>
-            <div id="links">
-               <a href="../x_ite.min.html">x_ite.min.html</a><a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
+            <div class="button-bar">
+               <div class="buttons">
+                  <a id="print-xml" href="#">XML</a>
+                  <a id="print-vrml" href="#">VRML</a>
+                  <a id="print-json" href="#">JSON</a>
+                  <a href="/x_ite/dist/example.html">Example Page</a>
+                  <a href="/x_ite-dom/">DOM</a>
+                  <a id="blob" href="#">Blob</a>
+                  <a id="reset-history" href="#">Reset History</a>
+               </div>
+               <div class="buttons">
+                  <a href="../x_ite.min.html">x_ite.min.html</a>
+                  <a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
+               </div>
             </div>
             <div id="examples-box"></div>
          </div>
