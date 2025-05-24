@@ -110,6 +110,9 @@ getNormalInfo (const in float normalScale)
          #endif
       #endif
 
+      // Convert from [0, 1] to [-1, 1] range.
+      // Scale by normalScale.
+      // The normal texture is expected to be in tangent space.
       ntex  = ntex * 2.0 - vec3 (1.0);
       ntex *= vec3 (vec2 (normalScale), 1.0);
       ntex  = normalize (ntex);
