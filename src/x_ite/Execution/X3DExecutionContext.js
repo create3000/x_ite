@@ -509,7 +509,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
       if (this [_externprotos] .has (name))
-         console .warn (`Added proto '${name} will override extern proto with same name.`);
+         console .warn (`Added proto '${name}' will override extern proto with same name.`);
 
       if (this .getBrowser () .getConcreteNodes () .has (name))
          console .warn (`Added proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
@@ -533,7 +533,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error ("Couldn't update proto declaration: proto name is empty.");
 
       if (this [_externprotos] .has (name))
-         console .warn (`Added proto '${name} will override extern proto with same name.`);
+         console .warn (`Added proto '${name}' will override extern proto with same name.`);
 
       if (this .getBrowser () .getConcreteNodes () .has (name))
          console .warn (`Added proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
@@ -589,6 +589,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (name .length === 0)
          throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
 
+      if (this [_protos] .has (name))
+         console .warn (`Added extern proto '${name}' will be overridden by proto with same name.`);
+
       if (this .getBrowser () .getConcreteNodes () .has (name))
          console .warn (`Added extern proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
 
@@ -609,6 +612,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (name .length === 0)
          throw new Error ("Couldn't update extern proto declaration: extern proto name is empty.");
+
+      if (this [_protos] .has (name))
+         console .warn (`Added extern proto '${name}' will be overridden by proto with same name.`);
 
       if (this .getBrowser () .getConcreteNodes () .has (name))
          console .warn (`Added extern proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
