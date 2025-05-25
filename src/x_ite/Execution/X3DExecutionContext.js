@@ -499,7 +499,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (proto .getExecutionContext () !== this)
          throw new Error ("Couldn't add proto declaration: proto does not belong to this execution context.");
 
-      if (this [_protos] .get (name))
+      if (this [_protos] .has (name))
          throw new Error (`Couldn't add proto declaration: proto '${name}' already in use.`);
 
       if (this [_protos] .get (proto .getName ()) === proto)
@@ -507,6 +507,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (name .length === 0)
          throw new Error ("Couldn't add proto declaration: proto name is empty.");
+
+      if (this [_externprotos] .has (name))
+         console .warn (`Added proto '${name} will override extern proto with same name.`);
 
       if (this .getBrowser () .getConcreteNodes () .has (name))
          console .warn (`Added proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
@@ -528,6 +531,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (name .length === 0)
          throw new Error ("Couldn't update proto declaration: proto name is empty.");
+
+      if (this [_externprotos] .has (name))
+         console .warn (`Added proto '${name} will override extern proto with same name.`);
 
       if (this .getBrowser () .getConcreteNodes () .has (name))
          console .warn (`Added proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
@@ -574,7 +580,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (externproto .getExecutionContext () !== this)
          throw new Error ("Couldn't add extern proto declaration: extern proto does not belong to this execution context.");
 
-      if (this [_externprotos] .get (name))
+      if (this [_externprotos] .has (name))
          throw new Error (`Couldn't add extern proto declaration: extern proto '${name}' already in use.`);
 
       if (this [_externprotos] .get (externproto .getName ()) === externproto)
