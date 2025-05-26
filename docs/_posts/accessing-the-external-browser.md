@@ -56,7 +56,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 
 The same scene can also be created using pure JavaScript.
 
-Outside of a [Script](/x_ite/components/scripting/script/) node context, you can access **all** objects through the X3D object, which can then be used as a namespace, eg. `new X3D .MFString ("foo")`.
+Outside of a [Script](/x_ite/components/scripting/script/) node context, you can access **all** objects through the X3D object, which can then be used as a namespace, eg. `new X3D .MFString ("foo")`. It is also possible to get a X3DBrowser reference with `X3D .getBrowser ()`, if there is already an \<x3d-canvas\> element on the page.
 
 ```html
 <script type="module">

@@ -156,6 +156,17 @@ $("#reset-history") .on ("click", () =>
       <style>
 @import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");
 
+html {
+   --background-color: #3d4145;
+   --text-color: white;
+   --shadow-color: black;
+   --black: black;
+   --yellow: #ffe32d;
+   --gray: rgb(106, 106, 106);
+   --teal: rgb(0, 92, 128);
+   --min-color: #e06c75;
+}
+
 html, body {
    margin: 0px;
    padding: 0px;
@@ -165,8 +176,8 @@ html, body {
 
 body {
    padding-bottom: 100px;
-   background: black;
-   color: white;
+   background: var(--black);
+   color: var(--text-color);
    font-family: PT Sans, sans-serif;
    line-height: 1.3;
 }
@@ -178,8 +189,8 @@ a {
 }
 
 p a {
-   color: white;
-   text-shadow: 0px 0px 3px black;
+   color: var(--text-color);
+   text-shadow: 0px 0px 3px var(--shadow-color);
 }
 
 header > div,
@@ -191,7 +202,7 @@ main > div {
 }
 
 main {
-   background: #3d4145;
+   background: var(--background-color);
 }
 
 main.color-management {
@@ -209,23 +220,24 @@ main.color-management #browser {
 }
 
 #file {
+   display: flex;;
    margin: 10px 40px 10px 20px;
    word-break: break-all;
 }
 
 #file.loaded {
-   color: #ffe32d;
+   color: var(--yellow);
 }
 
 #file a {
    margin-left: 10px;
    padding-left: 10px;
-   border-left: 1px solid white;
+   border-left: 1px solid var(--text-color);
    color: inherit;
 }
 
 #file.loaded a {
-   border-color: #ffe32d;
+   border-color: var(--yellow);
 }
 
 #toolbar {
@@ -243,7 +255,7 @@ main.color-management #browser {
 }
 
 #toolbar span.selected {
-   color: #ffe32d;
+   color: var(--yellow);
 }
 
 #toolbar span.separator {
@@ -270,7 +282,7 @@ main.color-management #browser {
 }
 
 #browser:focus {
-   box-shadow: 0px 2px 6px 3px black;
+   box-shadow: 0px 2px 6px 3px var(--shadow-color);
 }
 
 #browser.xr-button-tr::part(xr-button) {
@@ -322,7 +334,7 @@ main.color-management #browser {
    padding: 4px;
    width: 880px;
    background: #313131;
-   color: white;
+   color: var(--text-color);
    font-family: PT Sans, sans-serif;
    font-size: 10pt;
 }
@@ -337,7 +349,7 @@ main.color-management #browser {
    padding: 4px;
    width: 115px;
    background: #313131;
-   color: white;
+   color: var(--text-color);
    font-family: PT Sans, sans-serif;
    font-size: 10pt;
 }
@@ -350,46 +362,38 @@ main.color-management #browser {
    background: #515151;
 }
 
-#buttons {
-   margin: 10px 0px;
-   float: left;
+.button-bar {
+   display: flex;
+   justify-content: space-between;
 }
 
-#links {
+.buttons {
+   display: flex;
    margin: 10px 0px;
-   text-align: right;
 }
 
-#buttons a,
-#links a {
+.buttons a {
    padding: 0px 5px;
+}
+
+.buttons a:not(:first-child) {
    border-left: 1px solid white;
-}
-
-#buttons a:first-child,
-#links a:first-child {
-   border-left: none;
-}
-
-#buttons a:last-child,
-#links a:last-child {
-   border-right: 0px;
 }
 
 .min-links,
 .min-links a:last-child {
-   color: #e06c75;
-   border-color: #e06c75;
+   color: var(--min-color);
+   border-color: var(--min-color);
 }
 
 .clearfix,
 #location-bar:after,
 #links:after {
-      content: ".";
-      clear: both;
-      display: block;
-      visibility: hidden;
-      height: 0px;
+   content: ".";
+   clear: both;
+   display: block;
+   visibility: hidden;
+   height: 0px;
 }
 
 #examples-box {
@@ -415,7 +419,7 @@ main.color-management #browser {
    width: 62px;
    height: 62px;
    margin: 0px 5px 5px 0px;
-   background-color: gray;
+   background-color: var(--gray);
    font-size: 8pt;
    white-space: normal;
    word-wrap: break-word;
@@ -433,12 +437,12 @@ main.color-management #browser {
 
 .example-box::after {
    border-width: 8px;
-   border-right-color: #3d4145;
-   border-top-color: #3d4145;
+   border-right-color: var(--background-color);
+   border-top-color: var(--background-color);
 }
 
 .display-component {
-   background-color: teal;
+   background-color: var(--teal);
 }
 
 .example-box a.display-example {
@@ -492,11 +496,20 @@ main.color-management #browser {
                <input id="location-entry" value="https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
                <button id="location-go" type="button">Load URL</button>
             </div>
-            <div id="buttons">
-               <a id="print-xml" href="#">XML</a><a id="print-vrml" href="#">VRML</a><a id="print-json" href="#">JSON</a><a href="/x_ite/dist/example.html">Example Page</a><a href="/x_ite-dom/">DOM</a><a id="blob" href="#">Blob</a><a id="reset-history" href="#">Reset History</a>
-            </div>
-            <div id="links" class="min-links">
-               <a href="src/x_ite.html">src/x_ite.html</a><a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
+            <div class="button-bar">
+               <div class="buttons">
+                  <a id="print-xml" href="#">XML</a>
+                  <a id="print-vrml" href="#">VRML</a>
+                  <a id="print-json" href="#">JSON</a>
+                  <a href="/x_ite/dist/example.html">Example Page</a>
+                  <a href="/x_ite-dom/">DOM</a>
+                  <a id="blob" href="#">Blob</a>
+                  <a id="reset-history" href="#">Reset History</a>
+               </div>
+               <div class="buttons">
+                  <a href="src/x_ite.html">src/x_ite.html</a>
+                  <a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
+               </div>
             </div>
             <div id="examples-box"></div>
          </div>
