@@ -276,6 +276,7 @@ class Playground
          .attr ("title", "Toggle browser update on/off.")
          .addClass ("material-icons")
          .addClass (browser .isLive () ? "selected" : "")
+         .css ("transform", "scale(1.3)")
          .text ("play_arrow")
          .on ("click", () =>
          {
