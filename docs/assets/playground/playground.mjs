@@ -226,7 +226,7 @@ class Playground
       $("<button></button>")
          .attr ("title", "Open a file (X3D, VRML, glTF (GLB), OBJ, STL, PLY, SVG).")
          .addClass ("material-symbols-outlined")
-         .text ("edit_note")
+         .text ("file_open")
          .on ("click", () =>
          {
             openFile .trigger ("click");
