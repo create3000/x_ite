@@ -6,7 +6,16 @@ icon: fas fa-rocket
 order: 4
 ---
 <style>
-/* Icons */
+@import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
+@import url(https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css);
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
 
 .material-symbols-outlined,
 .material-icons {
@@ -16,7 +25,6 @@ order: 4
 }
 
 /* Table */
-
 .playground {
   box-sizing: border-box;
   height: 100%;
