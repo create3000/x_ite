@@ -6,6 +6,24 @@ icon: fas fa-rocket
 order: 4
 ---
 <style>
+@import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
+@import url(https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css);
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.material-symbols-outlined,
+.material-icons {
+  font-size: 21px;
+  position: relative;
+  top: 5px;
+}
+
 /* Table */
 .playground {
   box-sizing: border-box;
@@ -30,11 +48,6 @@ order: 4
 
 .toolbar button:not(:last-child) {
   padding-right: 0.4rem;
-}
-
-.toolbar .fa-solid {
-  position: relative;
-  top: 1px;
 }
 
 .toolbar span.dot::before {

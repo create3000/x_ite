@@ -225,7 +225,8 @@ class Playground
 
       $("<button></button>")
          .attr ("title", "Open a file (X3D, VRML, glTF (GLB), OBJ, STL, PLY, SVG).")
-         .addClass (["fa-solid", "fa-file-pen"])
+         .addClass ("material-symbols-outlined")
+         .text ("edit_note")
          .on ("click", () =>
          {
             openFile .trigger ("click");
@@ -236,9 +237,9 @@ class Playground
 
       const autoUpdateButton = $("<button></button>")
          .addClass (this .autoUpdate ? "selected" : "")
-         .append ($("<i></i>")
-            .addClass (["icon", "fa-solid"])
-            .addClass (this .autoUpdate ? "fa-check" : "fa-xmark"))
+         .append ($("<span></span>")
+            .addClass (["icon", "material-symbols-outlined"])
+            .text (this .autoUpdate ? "check" : "close"))
          .append ($("<span></span>")
             .addClass ("label")
             .text ("Auto Update"))
@@ -254,15 +255,15 @@ class Playground
                .addClass (this .autoUpdate ? "selected" : "");
 
             autoUpdateButton .find (".icon")
-               .removeClass (["fa-check", "fa-xmark"])
-               .addClass (this .autoUpdate ? "fa-check" : "fa-xmark");
+               .text (this .autoUpdate ? "check" : "close");
          })
          .appendTo (toolbar);
 
       $("<button></button>")
          .attr ("title", "Apply changes.")
          .attr ("id", "refresh-button")
-         .addClass (["fa-solid", "fa-arrows-rotate"])
+         .addClass ("material-symbols-outlined")
+         .text ("autorenew")
          .on ("click", () =>
          {
             this .applyChanges ();
@@ -273,8 +274,9 @@ class Playground
 
       const playButton = $("<button></button>")
          .attr ("title", "Toggle browser update on/off.")
-         .addClass (["fa-solid", "fa-play"])
+         .addClass ("material-icons")
          .addClass (browser .isLive () ? "selected" : "")
+         .text ("play_arrow")
          .on ("click", () =>
          {
             if (browser .isLive ())
@@ -295,7 +297,8 @@ class Playground
 
       $("<button></button>")
          .attr ("title", "View all objects in scene.")
-         .addClass (["fa-solid", "fa-arrows-to-dot"])
+         .addClass ("material-symbols-outlined")
+         .text ("center_focus_strong")
          .on ("click", () =>
          {
             browser .viewAll ();
@@ -306,7 +309,8 @@ class Playground
 
       this .fullSizeButton = $("<button></button>")
          .attr ("title", "View browser in full size.")
-         .addClass (["fa-solid", "fa-expand"])
+         .addClass ("material-symbols-outlined")
+         .text ("fullscreen")
          .on ("click", () =>
          {
             this .setFullSize (!this .localStorage .fullSize);
