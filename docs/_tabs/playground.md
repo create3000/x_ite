@@ -6,6 +6,8 @@ icon: fas fa-rocket
 order: 4
 ---
 <style>
+/* Icons */
+
 .material-symbols-outlined,
 .material-icons {
   font-size: 21px;
@@ -14,6 +16,7 @@ order: 4
 }
 
 /* Table */
+
 .playground {
   box-sizing: border-box;
   height: 100%;
