@@ -3220,14 +3220,14 @@ function eventsProcessed ()
    },
    createTangent (tangent, normal)
    {
-      if (tangent ?.type !== "VEC4")
-         return null;
-
       // When the base mesh primitive does not specify normals, client implementations
       // MUST calculate flat normals for each morph target; the provided tangents and
       // their displacements (if present) MUST be ignored.
 
       if (normal ?.type !== "VEC3")
+         return null;
+
+      if (tangent ?.type !== "VEC4")
          return null;
 
       if (tangent .tangentNode)
