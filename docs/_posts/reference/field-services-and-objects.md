@@ -553,6 +553,13 @@ The SFNode object corresponds to an X3D SFNode field.
 
 Each node may be assigned values to its **initializeOnly,** **inputOnly** and **inputOutput** fields and obtain the last output values of its **initializeOnly,** **outputOnly** and **inputOutput** fields using the `sfNodeObjectName.fieldName` syntax. The *directOutput* field of a corresponding [Script](/x_ite/components/scripting/script/) node must then be set to `TRUE`.
 
+When you assign to a field of type `SFBool`, `SFDouble`, `SFFloat`, `SFInt32`, `SFString` or `SFTime` you can use plain JavaScript types like boolean, number or string:
+
+```js
+material .diffuseColor = new SFColor (1, 1, 1);
+material .transparency = 0.5;
+```
+
 ### Methods
 
 #### **addFieldCallback** (*key: any, name: string, callback: (value: any) => void*): void
