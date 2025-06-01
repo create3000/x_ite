@@ -601,19 +601,19 @@ Returns the node type name.
 
 Removes a field callback function associated with *key* and *name* from the field.
 
-#### **toVRMLString** (options: Options): string
+#### **toVRMLString** (options?: Options): string
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toXMLString** (options: Options): string
+#### **toXMLString** (options?: Options): string
 
 Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toJSONString** (options: Options): string
+#### **toJSONString** (options?: Options): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
