@@ -56,6 +56,7 @@ const ibl_files = [
    "PrimitiveModeNormalsTest",
    "ReciprocatingSaw",
    "RecursiveSkeletons",
+   "ScatteringSkull",
    "Sheen",
    "SimpleInstancing",
    "SpecGlossVsMetalRough",
@@ -203,6 +204,7 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RecursiveSkeletons/glTF/RecursiveSkeletons.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedFigure/glTF/RiggedFigure.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedSimple/glTF/RiggedSimple.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ScatteringSkull/glTF/ScatteringSkull.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SciFiHelmet/glTF/SciFiHelmet.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenChair/glTF/SheenChair.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenCloth/glTF/SheenCloth.gltf",
@@ -437,6 +439,7 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RecursiveSkeletons/glTF-Binary/RecursiveSkeletons.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedFigure/glTF-Binary/RiggedFigure.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedSimple/glTF-Binary/RiggedSimple.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ScatteringSkull/glTF-Binary/ScatteringSkull.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenChair/glTF-Binary/SheenChair.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenTestGrid/glTF-Binary/SheenTestGrid.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenWoodLeatherSofa/glTF-Binary/SheenWoodLeatherSofa.glb",
@@ -665,12 +668,12 @@ const ibl = [
 
 const webp = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF-WEBP/CarConcept.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-WebP/ChronographWatch-WebP.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-WEBP/ChronographWatch.gltf",
 ];
 
 const ktx = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnisotropyBarnLamp/glTF-KTX-BasisU/AnisotropyBarnLamp.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-KTX/ChronographWatch-KTX.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-KTX-BasisU/ChronographWatch.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
