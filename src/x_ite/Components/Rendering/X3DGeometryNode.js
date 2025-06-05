@@ -770,8 +770,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       // BBox
 
-      this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-      this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+      this .min .set (Number .POSITIVE_INFINITY);
+      this .max .set (Number .NEGATIVE_INFINITY);
 
       // Create attribArray arrays.
       {
@@ -832,7 +832,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          }
          else
          {
-            this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
+            this .bbox .setExtents (min .set (0), max .set (0));
          }
 
          for (let i = 0; i < 5; ++ i)

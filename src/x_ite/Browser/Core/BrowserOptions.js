@@ -57,6 +57,7 @@ import TextCompression      from "./TextCompression.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 // https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#BrowserProperties
+// String values are considered to be case insensitive.
 
 function BrowserOptions (executionContext)
 {
@@ -194,17 +195,23 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       return this .primitiveQuality;
    },
-   getShading ()
+   getQualityWhenMoving ()
    {
-      return this .shading;
+      const qualityWhenMoving = this ._QualityWhenMoving .getValue () .toUpperCase ();
+
+      return PrimitiveQuality .get (qualityWhenMoving);
    },
    getTextureQuality ()
    {
       return this .textureQuality;
    },
+   getShading ()
+   {
+      return this .shading;
+   },
    getTextCompression ()
    {
-      switch (this ._TextCompression .getValue ())
+      switch (this ._TextCompression .getValue () .toUpperCase ())
       {
          default: // CHAR_SPACING
             return TextCompression .CHAR_SPACING;
@@ -227,7 +234,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          primitiveQuality = value .getValue () .toUpperCase ();
 
       this .localStorage .PrimitiveQuality = primitiveQuality;
-      this .primitiveQuality               = $.enum (PrimitiveQuality, primitiveQuality) ?? PrimitiveQuality .MEDIUM;
+      this .primitiveQuality               = PrimitiveQuality .get (primitiveQuality) ?? PrimitiveQuality .MEDIUM;
 
       browser .setPrimitiveQuality2D ?.(this .primitiveQuality);
       browser .setPrimitiveQuality3D ?.(this .primitiveQuality);
@@ -239,7 +246,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          textureQuality = value .getValue () .toUpperCase ();
 
       this .localStorage .TextureQuality = textureQuality;
-      this .textureQuality               = $.enum (TextureQuality, textureQuality) ?? TextureQuality .MEDIUM;
+      this .textureQuality               = TextureQuality .get (textureQuality) ?? TextureQuality .MEDIUM;
 
       browser .setTextureQuality ?.(this .textureQuality);
    },
@@ -253,7 +260,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
             browser = this .getBrowser (),
             shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
 
-         this .shading = $.enum (Shading, shading) ?? Shading .GOURAUD;
+         this .shading = Shading .get (shading) ?? Shading .GOURAUD;
 
          browser .getRenderingProperties () ._Shading = strings .get (this .shading);
          browser .setShading (this .shading);
@@ -282,28 +289,30 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       if (!autoUpdate .getValue ())
          return;
 
+      $(window)   .on (windowEvents,   () => this .checkUpdate ());
+      $(document) .on (documentEvents, () => this .checkUpdate ());
+
+      this .checkUpdate ();
+   },
+   checkUpdate ()
+   {
+      if (!this ._AutoUpdate .getValue ())
+         return;
+
       const
          browser = this .getBrowser (),
          element = browser .getElement ();
 
-      const checkUpdate = () =>
+      if ((!document .hidden && element .isInViewport ()) || browser .getPose ())
       {
-         if (!document .hidden && element .isInViewport ())
-         {
-            if (!browser .isLive ())
-               browser .beginUpdate ();
-         }
-         else
-         {
-            if (browser .isLive ())
-               browser .endUpdate ();
-         }
-      };
-
-      $(window)   .on (windowEvents,   checkUpdate);
-      $(document) .on (documentEvents, checkUpdate);
-
-      checkUpdate ();
+         if (!browser .isLive ())
+            browser .beginUpdate ();
+      }
+      else
+      {
+         if (browser .isLive ())
+            browser .endUpdate ();
+      }
    },
    set_ContentScale__ (contentScale)
    {

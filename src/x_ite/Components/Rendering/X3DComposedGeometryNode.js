@@ -59,9 +59,8 @@ function X3DComposedGeometryNode (executionContext)
 
    // Private properties
 
-   this .triangles = [ ];
    this .polygons  = [ ];
-
+   this .triangles = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DGeometryNode .prototype),
@@ -190,6 +189,10 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
+   checkVertexCount (numVertices, multiplier)
+   {
+      return numVertices - numVertices % multiplier;
+   },
    getPolygonIndex (index)
    {
       return index;
@@ -198,15 +201,29 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    {
       return index;
    },
+   createPolygons (polygonsSize, polygons = [ ])
+   {
+      for (let i = 0; i < polygonsSize; ++ i)
+         polygons .push (this .getPolygonIndex (i));
+
+      return polygons;
+   },
+   createTriangles (trianglesSize, triangles = [ ])
+   {
+      for (let i = 0; i < trianglesSize; ++ i)
+         triangles .push (this .getTriangleIndex (i));
+
+      return triangles;
+   },
    build (verticesPerPolygon, polygonsSize, verticesPerFace, trianglesSize)
    {
-      if (!this .coordNode || this .coordNode .isEmpty ())
+      if (!this .coordNode ?.getSize ())
          return;
 
       // Set size to a multiple of verticesPerPolygon.
 
-      polygonsSize  -= polygonsSize  % verticesPerPolygon;
-      trianglesSize -= trianglesSize % verticesPerFace;
+      polygonsSize  = this .checkVertexCount (polygonsSize,  verticesPerPolygon);
+      trianglesSize = this .checkVertexCount (trianglesSize, verticesPerFace);
 
       const
          colorPerVertex     = this ._colorPerVertex .getValue (),
@@ -227,20 +244,12 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          normalArray        = this .getNormals (),
          tangentArray       = this .getTangents (),
          vertexArray        = this .getVertices (),
-         triangles          = this .triangles,
-         polygons           = this .polygons;
+         polygons           = this .createPolygons (polygonsSize, this .polygons),
+         triangles          = this .createTriangles (trianglesSize, this .triangles);
 
       // Init TextureCoordinateNode.
 
       texCoordNode ?.init (multiTexCoordArray);
-
-      // Fill index arrays.
-
-      for (let i = 0; i < polygonsSize; ++ i)
-         polygons .push (this .getPolygonIndex (i));
-
-      for (let i = 0; i < trianglesSize; ++ i)
-         triangles .push (this .getTriangleIndex (i));
 
       // Fill GeometryNode.
 
@@ -293,8 +302,10 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          normalArray .push (x, y, z);
       }
    },
-   createNormals (verticesPerPolygon, polygonsSize, polygons)
+   createNormals (verticesPerPolygon, polygonsSize, polygons = this .createPolygons (polygonsSize))
    {
+      // This function is used by Sunrize.
+
       const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize, polygons);
 
       if (!this ._normalPerVertex .getValue ())
@@ -316,8 +327,10 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       return this .refineNormals (normalIndex, normals, Math .PI);
    },
-   createFaceNormals (verticesPerPolygon, polygonsSize, polygons)
+   createFaceNormals (verticesPerPolygon, polygonsSize, polygons = this .createPolygons (polygonsSize))
    {
+      // This function is used by Sunrize.
+
       const
          cw      = !this ._ccw .getValue (),
          coord   = this .coordNode,

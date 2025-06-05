@@ -224,7 +224,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       this .set_bbox__ ();
       this .set_transparent__ ();
       this .set_objects__ ();
-      this .set_traverse__ ();
    },
    set_transparent__ ()
    {
@@ -280,13 +279,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       this .setVisibleObject (this .isEnabled ());
    },
-   set_traverse__ ()
-   {
-      if (this .isEnabled ())
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
-   },
    traverse (type, renderObject)
    {
       switch (type)
@@ -329,11 +321,11 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
-      if (this .getTransformSensors () .size)
-      {
-         for (const transformSensorNode of this .getTransformSensors ())
-            transformSensorNode .collect (modelMatrix);
-      }
+      for (const transformSensorNode of this .getTransformSensors ())
+         transformSensorNode .collect (modelMatrix);
+
+      if (!this .geometryNode)
+         return;
 
       const
          browser          = this .getBrowser (),
@@ -342,10 +334,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
 
       pickingHierarchy .push (this);
 
-      for (const pickSensor of pickSensorStack .at (-1))
-      {
-         pickSensor .collect (this .geometryNode, modelMatrix, pickingHierarchy);
-      }
+      for (const pickSensorNode of pickSensorStack .at (-1))
+         pickSensorNode .collect (this .geometryNode, modelMatrix, pickingHierarchy);
 
       pickingHierarchy .pop ();
    },

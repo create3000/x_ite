@@ -15,7 +15,7 @@ tags: [DepthMode, X_ITE]
 
 DepthMode contains parameters that are specific for depth control, like the value used for depth buffer comparisons.
 
-The DepthMode node belongs to the **X_ITE** component and its default container field is *depthMode.* It is available in X_ITE.
+The DepthMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *depthMode.* It is available in X_ITE.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }

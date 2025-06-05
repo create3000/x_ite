@@ -15,7 +15,7 @@ tags: [TransformSensor, EnvironmentalSensor]
 
 TransformSensor generates output events when its targetObject enters, exits, and moves within a region in space (defined by a box).
 
-The TransformSensor node belongs to the **EnvironmentalSensor** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The TransformSensor node belongs to the [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

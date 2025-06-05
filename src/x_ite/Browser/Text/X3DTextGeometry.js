@@ -326,7 +326,7 @@ Object .assign (X3DTextGeometry .prototype,
             this .minorAlignment .assign (this .bearing);
             break;
          case TextAlignment .FIRST:
-            this .minorAlignment .set (0, 0);
+            this .minorAlignment .set (0);
             break;
          case TextAlignment .MIDDLE:
             this .minorAlignment .set (0, size .y / 2 - max .y);

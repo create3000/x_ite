@@ -71,4 +71,6 @@ const HTMLSupport =
    },
 };
 
+HTMLSupport .addNodeTypeName ("ProtoInstance");
+
 export default HTMLSupport;

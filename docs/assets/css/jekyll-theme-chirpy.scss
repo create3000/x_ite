@@ -29,7 +29,7 @@
   --system-pink: rgb(255, 45, 85);
   --system-brown: rgb(162, 132, 94);
 
-  --system-gray0: rgb(72, 72, 77);
+  --system-gray0: rgb(42, 42, 47);
   --system-gray1: rgb(122, 122, 127);
   --system-gray2: rgb(174, 174, 178);
   --system-gray3: rgb(199, 199, 204);
@@ -51,7 +51,6 @@
   --color-filter: filter: brightness(0) saturate(100%) invert(78%) sepia(0%) saturate(301%) hue-rotate(279deg) brightness(92%) contrast(89%);
   --example-background-color: rgba(0, 0, 0, 0.471);
   --playground-console-background: rgba(0, 0, 0, 0.2);
-  --button-background-color: black;
 }
 
 @mixin x_ite-light-scheme {
@@ -70,7 +69,7 @@
   --system-pink: rgb(255, 55, 95);
   --system-brown: rgb(172, 142, 104);
 
-  --system-gray0: rgb(204, 204, 209);
+  --system-gray0: rgb(234, 234, 239);
   --system-gray1: rgb(142, 142, 147);
   --system-gray2: rgb(99, 99, 102);
   --system-gray3: rgb(72, 72, 74);
@@ -90,7 +89,6 @@
   --color-filter: filter: brightness(0) saturate(100%) invert(22%) sepia(7%) saturate(669%) hue-rotate(201deg) brightness(89%) contrast(97%);
   --example-background-color: rgba(235, 235, 255, 0.644);
   --playground-console-background: rgb(0, 0, 0, 0.02);
-  --button-background-color: white;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -562,45 +560,26 @@ select.select option {
 
 /* table examples */
 
-.table-wrapper > table.examples tbody tr {
-  border: none;
-  background-color: var(--tb-odd-bg);
-}
-
-.table-wrapper > table.examples tbody tr td {
-  border: 3px solid var(--tb-odd-bg);
-  padding: 0;
-  line-height: 1rem;
-}
-
-.table-wrapper > table.examples a.img-link {
-  display: block;
-}
-
-.table-wrapper > table.examples a.img-link:hover {
-  outline: 1px solid #d2603a;
-}
-
-.table-wrapper > table.examples a.popup {
-  margin: 0;
-}
-
-@media all and (max-width: 849px) {
-  .table-wrapper > table.examples tbody tr td {
-    border-width: 2px;
-  }
+.examples {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  gap: 2px;
 }
 
 @media all and (max-width: 576px) {
-  .table-wrapper > table.examples tbody tr td {
-    border-width: 1px;
+  .examples {
+    gap: 1px;
   }
+}
+
+.examples a:hover {
+  outline: 1px solid #d2603a;
 }
 
 /* example overlay */
 
 .example {
-  z-index: 2;
+  z-index: 100;
   position: fixed;
   bottom: 1rem;
   right: 1rem;
@@ -707,13 +686,14 @@ select.select option {
   width: 36px;
   height: 36px;
   padding: 10px;
-  left: -20px;
-  top: -18px;
+  left: -24px;
+  top: -20px;
   cursor: pointer;
+  color: var(--system-gray0);
 }
 
 .example .fa-circle-xmark:hover {
-  color: var(--system-gray7);
+  color: var(--main-bg);
 }
 
 .example .fa-circle-xmark::after {
@@ -721,12 +701,13 @@ select.select option {
   z-index: -1;
   position: relative;
   display: block;
+  border: 9px solid var(--text-color);
   border-radius: 50%;
   width: 16px;
   height: 16px;
-  left: 0px;
-  top: -16px;
-  background: var(--button-background-color);
+  left: -1px;
+  top: -17px;
+  background: var(--text-color);
 }
 
 .example-links {

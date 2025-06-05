@@ -371,7 +371,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       // Get geometryType.
 
-      this .geometryType = $.enum (GeometryType, this ._geometryType .getValue ()) ?? GeometryType .QUAD;
+      this .geometryType = GeometryType .get (this ._geometryType .getValue ()) ?? GeometryType .QUAD;
 
       // Create buffers.
 
@@ -432,7 +432,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .updateVertexArrays ();
 
       this .set_objects__ ();
-      this .set_traverse__ ();
    },
    set_maxParticles__ ()
    {
@@ -450,7 +449,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .updateVertexArrays ();
 
       this .set_objects__ ();
-      this .set_traverse__ ();
    },
    set_particleLifetime__ ()
    {
@@ -762,7 +760,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             deltaTime = Number .POSITIVE_INFINITY;
 
             this .set_objects__ ();
-            this .set_traverse__ ();
          }
          else
          {
@@ -785,7 +782,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .numParticles = Math .min (this .maxParticles, this .numParticles + newParticles);
 
             this .set_objects__ ();
-            this .set_traverse__ ();
          }
       }
 

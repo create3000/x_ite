@@ -1,5 +1,5 @@
-/* X_ITE v11.5.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.3")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1221,7 +1221,7 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, (external_X_ITE_X3D
       }
       else
       {
-         const defaultVertices = geometry .getVertices () .getValue ();
+         const defaultVertices = geometry .getVertices ();
 
          for (let i = 0, length = defaultVertices .length; i < length; i += 4)
             vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
@@ -1346,8 +1346,8 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          {
             vertexArray .push (0, 0, 0, 1);
 
-            this .getMin () .set (0, 0, 0);
-            this .getMax () .set (0, 0, 0);
+            this .getMin () .set (0);
+            this .getMax () .set (0);
 
             this .setGeometryType (0);
             this .setPrimitiveMode (gl .POINTS);
@@ -1369,7 +1369,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          }
          else
          {
-            const defaultVertices = geometry .getVertices () .getValue ();
+            const defaultVertices = geometry .getVertices ();
 
             for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
@@ -1765,7 +1765,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, (external_X_ITE_
 {
    build: (() =>
    {
-      const defaultSize = new (external_X_ITE_X3D_Vector2_default()) (2, 2);
+      const defaultSize = new (external_X_ITE_X3D_Vector2_default()) (2);
 
       return function ()
       {
@@ -1791,7 +1791,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, (external_X_ITE_
             const
                x               = Math .abs (size .x / 2),
                y               = Math .abs (size .y / 2),
-               defaultVertices = geometry .getVertices () .getValue ();
+               defaultVertices = geometry .getVertices ();
 
             for (let i = 0; i < defaultVertices .length; i += 4)
             {

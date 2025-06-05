@@ -198,7 +198,7 @@ struct x3d_UnlitMaterialParameters
 
 //uniform x3d_UnlitMaterialParameters x3d_Material;
 
-#if defined (X3D_MATERIAL)
+#if defined (X3D_GOURAUD_MATERIAL) || defined (X3D_PHONG_MATERIAL)
 struct x3d_MaterialParameters
 {
    mediump float ambientIntensity;

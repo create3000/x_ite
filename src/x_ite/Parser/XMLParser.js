@@ -76,6 +76,8 @@ function XMLParser (scene)
    this .url               = new Fields .MFString ();
    this .protoNames        = new Map ();
    this .protoFields       = new WeakMap ();
+
+   this .parser .setUnits (!!scene);
 }
 
 Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototype),
@@ -459,6 +461,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             const existingExternProto = this .getExecutionContext () .getExternProtoDeclaration (name);
 
+            console .warn (`A extern proto named '${name}' is already defined and will be overridden.`);
+
             this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (name), existingExternProto);
          }
          catch
@@ -523,6 +527,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          try
          {
             const existingProto = this .getExecutionContext () .getProtoDeclaration (name);
+
+            console .warn (`A proto named '${name}' is already defined and will be overridden.`);
 
             this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (name), existingProto);
          }
@@ -917,7 +923,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             const node = this .getExecutionContext () .getNamedNode (name);
 
-            if (xmlElement .nodeName === "ProtoInstance")
+            if (this .nodeNameToCamelCase (xmlElement .nodeName) === "ProtoInstance")
             {
                if (!node .getNodeType () .includes (X3DConstants .X3DPrototypeInstance))
                {
@@ -928,7 +934,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${xmlElement .getAttribute ("name")} != ${node .getNodeTypeName ()}.`);
                }
             }
-            else if (xmlElement .nodeName !== node .getNodeTypeName ())
+            else if (this .nodeNameToCamelCase (xmlElement .nodeName) !== node .getNodeTypeName ())
             {
                console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${xmlElement .nodeName} != ${node .getNodeTypeName ()}.`);
             }
@@ -984,14 +990,16 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    fieldValue (field, value)
    {
       if (value === null)
-         return;
+         return false;
 
       this .parser .pushExecutionContext (this .getExecutionContext ());
-
       this .parser .setInput (value);
-      this [field .getType ()] .call (this .parser, field, field .getUnit ());
+
+      const ok = this [field .getType ()] .call (this .parser, field, field .getUnit ());
 
       this .parser .popExecutionContext ();
+
+      return ok;
    },
    id (string)
    {
@@ -1115,9 +1123,17 @@ Object .assign (XMLParser .prototype,
    [X3DConstants .SFMatrix3d]:  VRMLParser .prototype .sfmatrix3Value,
    [X3DConstants .SFMatrix4f]:  VRMLParser .prototype .sfmatrix4Value,
    [X3DConstants .SFMatrix4d]:  VRMLParser .prototype .sfmatrix4Value,
-   [X3DConstants .SFNode] (field) { field .setValue (null); },
+   [X3DConstants .SFNode] (field)
+   {
+      field .setValue (null);
+      return true;
+   },
    [X3DConstants .SFRotation]:  VRMLParser .prototype .sfrotationValue,
-   [X3DConstants .SFString] (field) { field .setValue (Fields .SFString .unescape (this .input)); },
+   [X3DConstants .SFString] (field)
+   {
+      field .setValue (Fields .SFString .unescape (this .input));
+      return true;
+   },
    [X3DConstants .SFTime]:      VRMLParser .prototype .sfdoubleValue,
    [X3DConstants .SFVec2d]:     VRMLParser .prototype .sfvec2Value,
    [X3DConstants .SFVec2f]:     VRMLParser .prototype .sfvec2Value,
@@ -1125,6 +1141,8 @@ Object .assign (XMLParser .prototype,
    [X3DConstants .SFVec3f]:     VRMLParser .prototype .sfvec3Value,
    [X3DConstants .SFVec4d]:     VRMLParser .prototype .sfvec4Value,
    [X3DConstants .SFVec4f]:     VRMLParser .prototype .sfvec4Value,
+
+   [X3DConstants .VrmlMatrix]:  VRMLParser .prototype .sfmatrix4Value,
 
    [X3DConstants .MFBool]:      VRMLParser .prototype .sfboolValues,
    [X3DConstants .MFColor]:     VRMLParser .prototype .sfcolorValues,
@@ -1137,7 +1155,11 @@ Object .assign (XMLParser .prototype,
    [X3DConstants .MFMatrix3f]:  VRMLParser .prototype .sfmatrixValues,
    [X3DConstants .MFMatrix4d]:  VRMLParser .prototype .sfmatrixValues,
    [X3DConstants .MFMatrix4f]:  VRMLParser .prototype .sfmatrixValues,
-   [X3DConstants .MFNode] (field) { field .length = 0; },
+   [X3DConstants .MFNode] (field)
+   {
+      field .length = 0;
+      return true;
+   },
    [X3DConstants .MFRotation]:  VRMLParser .prototype .sfrotationValues,
    [X3DConstants .MFString]:    VRMLParser .prototype .sfstringValues,
    [X3DConstants .MFTime]:      VRMLParser .prototype .sfdoubleValues,
@@ -1212,6 +1234,16 @@ const HTMLParser =
 
       return HTMLSupport .getFieldName (name);
    },
+};
+
+X3DField .prototype .fromXMLString = function (string, scene)
+{
+   const parser = new XMLParser (scene);
+
+   if (parser .fieldValue (this, string))
+      return;
+
+   throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 };
 
 export default XMLParser;

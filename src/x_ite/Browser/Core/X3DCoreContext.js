@@ -59,6 +59,7 @@ import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
+import Legacy              from "../Legacy.js";
 import _                   from "../../../locale/gettext.js";
 
 import "./Fonts.js";
@@ -68,6 +69,7 @@ const WEBGL_VERSION = 2;
 const
    _instanceId          = Symbol (),
    _element             = Symbol (),
+   _attributes          = Symbol (),
    _shadow              = Symbol (),
    _surface             = Symbol (),
    _canvas              = Symbol (),
@@ -99,11 +101,11 @@ function X3DCoreContext (element)
    // Get canvas & context.
 
    const
-      browser      = $("<div></div>") .addClass ("x_ite-private-browser") .attr ("part", "browser") .attr ("tabindex", 0),
-      surface      = $("<div></div>") .addClass ("x_ite-private-surface") .attr ("part", "surface") .appendTo (browser),
-      splashScreen = $("<div></div>") .addClass (["x_ite-private-splash-screen", "x_ite-private-hidden"]) .appendTo (browser),
-      spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
-      progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
+      browser      = $("<div></div>", { class: "x_ite-private-browser", part: "browser", tabindex: 0 }),
+      surface      = $("<div></div>", { class: "x_ite-private-surface", part: "surface" }) .appendTo (browser),
+      splashScreen = $("<div></div>", { class: "x_ite-private-splash-screen x_ite-private-hidden" }) .appendTo (browser),
+      spinner      = $("<div></div>", { class: "x_ite-private-spinner" }) .appendTo (splashScreen),
+      progress     = $("<div></div>", { class: "x_ite-private-progress" }) .appendTo (splashScreen);
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
@@ -111,13 +113,15 @@ function X3DCoreContext (element)
 
       const stylesheet = new Promise (resolve =>
       {
-         $("<link/>")
-            .on ("load", resolve)
-            .attr ("integrity", "integrity-x_ite-css")
-            .attr ("crossorigin", "anonymous")
-            .attr ("rel", "stylesheet")
-            .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()))
-            .appendTo (shadow);
+         $("<link/>",
+         {
+            on: { load: resolve },
+            integrity: "integrity-x_ite-css",
+            crossorigin: "anonymous",
+            rel: "stylesheet",
+            href: new URL ("x_ite.css", URLs .getScriptURL ()),
+         })
+         .appendTo (shadow);
       });
 
       this [_shadow] = shadow .append (browser .hide ());
@@ -129,15 +133,16 @@ function X3DCoreContext (element)
       this [_shadow] = element .prepend (browser);
    }
 
-   $("<div></div>") .addClass ("x_ite-private-x_ite") .html (`${this .getName ()}<b>X3D</b>`) .appendTo (progress);
-   $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
-   $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
+   $("<div></div>", { class: "x_ite-private-x_ite" }) .html (`${this .getName ()}<b>X3D</b>`) .appendTo (progress);
+   $("<div></div>", { class: "x_ite-private-progressbar" })  .appendTo (progress) .append ($("<div></div>"));
+   $("<div></div>", { class: "x_ite-private-spinner-text" }) .appendTo (progress);
 
    this [_instanceId]   = ++ instanceId;
    this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
    this [_element]      = element;
+   this [_attributes]   = new Map ();
    this [_surface]      = surface;
-   this [_canvas]       = $("<canvas></canvas>") .attr ("part", "canvas") .addClass ("x_ite-private-canvas") .prependTo (surface);
+   this [_canvas]       = $("<canvas></canvas>", { part: "canvas", class: "x_ite-private-canvas" }) .prependTo (surface);
    this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true");
    this [_splashScreen] = splashScreen;
 
@@ -153,6 +158,8 @@ Object .assign (X3DCoreContext .prototype,
 {
    initialize ()
    {
+      const element = this .getElement ();
+
       // Setup browser nodes.
 
       this [_renderingProperties] .setup ();
@@ -164,19 +171,34 @@ Object .assign (X3DCoreContext .prototype,
 
       // Define properties of X3DCanvasElement.
 
-      Object .defineProperties (this .getElement () .get (0),
+      Object .defineProperties (element [0],
       {
          browser:
          {
             value: this,
-            configurable: true,
             enumerable: true,
          },
+         ... Legacy .properties (this, Object .fromEntries ([
+            "src",
+            "url",
+         ]
+         .map (name => [name,
+         {
+            get: () =>
+            {
+               return this [_attributes] .get (name .toLowerCase ());
+            },
+            set: (value) =>
+            {
+               element .attr (name, value);
+            },
+            enumerable: true,
+         }]))),
       });
 
       // Configure browser event handlers.
 
-      this .getElement ()
+      element
          .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
          .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
    },
@@ -252,17 +274,38 @@ Object .assign (X3DCoreContext .prototype,
       })();
    },
    connectedCallback ()
-   { },
+   {
+      // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
+      // initially called for attributes set in XHTML and call callback initially
+      // for legacy X3DCanvas element.
+
+      for (const { name, value } of this .getElement () [0] .attributes)
+      {
+         if (this [_attributes] .has (name .toLowerCase ()))
+            continue;
+
+         this .attributeChangedCallback (name, undefined, value);
+      }
+
+      // AutoUpdate
+
+      this .getBrowserOptions () .checkUpdate ();
+   },
+   disconnectedCallback ()
+   {
+      // AutoUpdate
+
+      this .getBrowserOptions () .checkUpdate ();
+   },
    attributeChangedCallback (name, oldValue, newValue)
    {
-      switch (name)
+      switch (name .toLowerCase ())
       {
          case "antialiased":
          {
             this .setBrowserOption ("Antialiased", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
-         case "baseURL":
          case "baseurl":
          {
             this .setBaseURL (newValue);
@@ -273,19 +316,16 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Cache", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
-         case "colorSpace":
          case "colorspace":
          {
             this .setBrowserOption ("ColorSpace", newValue);
             break;
          }
-         case "contentScale":
          case "contentscale":
          {
             this .setBrowserOption ("ContentScale", newValue === "auto" ? -1 : parseFloat (newValue));
             break;
          }
-         case "contextMenu":
          case "contextmenu":
          {
             this .setBrowserOption ("ContextMenu", this .parseBooleanAttribute (newValue) ?? true);
@@ -301,7 +341,6 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Exposure", newValue);
             break;
          }
-         case "logarithmicDepthBuffer":
          case "logarithmicdepthbuffer":
          {
             this .setBrowserOption ("LogarithmicDepthBuffer", this .parseBooleanAttribute (newValue) ?? false);
@@ -333,13 +372,11 @@ Object .assign (X3DCoreContext .prototype,
 
             break;
          }
-         case "orderIndependentTransparency":
          case "orderindependenttransparency":
          {
             this .setBrowserOption ("OrderIndependentTransparency", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
-         case "splashScreen":
          case "splashscreen":
          {
             this .setBrowserOption ("SplashScreen", this .parseBooleanAttribute (newValue) ?? true);
@@ -365,7 +402,6 @@ Object .assign (X3DCoreContext .prototype,
 
             break;
          }
-         case "textCompression":
          case "textcompression":
          {
             this .setBrowserOption ("TextCompression", newValue || "CHAR_SPACINGS");
@@ -376,7 +412,6 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Timings", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
-         case "toneMapping":
          case "tonemapping":
          {
             this .setBrowserOption ("ToneMapping", newValue || "NONE");
@@ -404,19 +439,20 @@ Object .assign (X3DCoreContext .prototype,
          {
             if (newValue)
             {
-               this .loadURL (this .parseUrlAttribute (newValue))
+               this .loadURL (newValue = this .parseUrlAttribute (newValue))
                   .catch (error => console .error (error));
             }
 
             break;
          }
-         case "xrSessionMode":
          case "xrsessionmode":
          {
             this .setBrowserOption ("XRSessionMode", newValue || "IMMERSIVE_VR");
             break;
          }
       }
+
+      this [_attributes] .set (name .toLowerCase (), newValue);
    },
    parseBooleanAttribute (value)
    {
@@ -432,11 +468,14 @@ Object .assign (X3DCoreContext .prototype,
       {
          const url = new Fields .MFString ();
 
-         url .fromString (`[${urlCharacters}]`, this .getExecutionContext ());
+         if (!/^\[.*?\]$/s .test (urlCharacters))
+            urlCharacters = `[${urlCharacters}]`;
+
+         url .fromString (urlCharacters, this .getExecutionContext ());
 
          return url;
       }
-      catch
+      catch (error)
       {
          throw new Error ("Couldn't parse url attribute.");
       }
@@ -785,8 +824,6 @@ Object .assign (X3DCoreContext .prototype,
    dispose ()
    {
       this .getElement () .off (".X3DCoreContext .ContextMenu");
-
-      delete this .getElement () [0] .browser;
 
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ?.();
       this [_shadow] .find ("*") .remove ();

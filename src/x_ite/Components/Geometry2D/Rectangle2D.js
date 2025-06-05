@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode 
 {
    build: (() =>
    {
-      const defaultSize = new Vector2 (2, 2);
+      const defaultSize = new Vector2 (2);
 
       return function ()
       {
@@ -96,7 +96,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode 
             const
                x               = Math .abs (size .x / 2),
                y               = Math .abs (size .y / 2),
-               defaultVertices = geometry .getVertices () .getValue ();
+               defaultVertices = geometry .getVertices ();
 
             for (let i = 0; i < defaultVertices .length; i += 4)
             {

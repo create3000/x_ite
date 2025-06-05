@@ -149,7 +149,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       if (browser .getRenderingProperty ("XRSession"))
          options .push ("X3D_XR_SESSION");
 
-      switch (browser .getBrowserOption ("ColorSpace"))
+      switch (browser .getBrowserOption ("ColorSpace") .toUpperCase ())
       {
          case "SRGB":
             options .push ("X3D_COLORSPACE_SRGB");
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             break;
       }
 
-      switch (browser .getBrowserOption ("ToneMapping"))
+      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
       {
          default: // NONE
             break;
@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          case "ACES_HILL":
          case "ACES_HILL_EXPOSURE_BOOST":
          case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
+            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
             break;
       }
 
@@ -184,7 +184,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       const flat = browser .getRenderingProperty ("Shading") === "FLAT";
 
-      if (geometryContext .hasNormals && (!flat || this .getMaterialKey () === 1))
+      if (geometryContext .hasNormals && !flat)
          options .push ("X3D_NORMALS");
 
       if (geometryContext .hasTangents)

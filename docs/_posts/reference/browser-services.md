@@ -291,7 +291,7 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>AutoUpdate</td>
-         <td>Whether the update control of the browser should be done automatically or not. <small class="blue">non-standard</small></td>
+         <td>Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if x3d-canvas is not visible.<small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
@@ -327,7 +327,7 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>Exposure</td>
-         <td>The exposure of an image describes the amount of light that is captured. This option only works with PhysicalMaterial node and SpecularGlossinessMaterial node. <small class="blue">non-standard</small></td>
+         <td>The exposure of an image describes the amount of light that is captured. <small class="blue">non-standard</small></td>
          <td>Float</td>
          <td>1</td>
       </tr>

@@ -4,7 +4,6 @@ export default /* glsl */ `
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/pbr.frag
 
 #pragma X3D include "../common/Fragment.glsl"
-#pragma X3D include "../common/Normal.glsl"
 #pragma X3D include "../common/Shadow.glsl"
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)

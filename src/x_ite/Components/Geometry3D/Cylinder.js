@@ -167,8 +167,8 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
 
       if (!this ._top .getValue () && !this ._side .getValue () && !this ._bottom .getValue ())
       {
-         this .getMin () .set (0, 0, 0);
-         this .getMax () .set (0, 0, 0);
+         this .getMin () .set (0);
+         this .getMax () .set (0);
       }
 
       else if (!this ._top .getValue () && !this ._side .getValue ())

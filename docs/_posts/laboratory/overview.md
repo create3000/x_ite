@@ -11,7 +11,7 @@ table.examples td {
 }
 </style>
 
-<table class="examples">
+<table>
   <tr>
     <td>
       <a href="../x3d-visual-blend-mode-editor/"><img src="/assets/img/laboratory/blend-mode.png" alt="Visual Blend Mode Editor"/></a>

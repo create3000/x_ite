@@ -213,8 +213,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       if (geometryContext .hasNormals)
       {
-         options .push ("X3D_MATERIAL");
-
          if (+this .getTextureBits ())
          {
             this .ambientTextureNode   ?.getShaderOptions (options, "AMBIENT");
@@ -228,17 +226,18 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          {
             case 1:
             {
-               if (!renderContext ?.shadows)
-               {
-                  var shaderNode = browser .createShader ("Gouraud", "Gouraud", "Gouraud", options);
-                  break;
-               }
+               options .push ("X3D_GOURAUD_MATERIAL");
 
-               // Proceed with next case:
+               var shaderNode = browser .createShader ("Gouraud", "Default", "Material", options);
+               break;
             }
             case 2:
-               var shaderNode = browser .createShader ("Phong", "Default", "Phong", options);
+            {
+               options .push ("X3D_PHONG_MATERIAL");
+
+               var shaderNode = browser .createShader ("Phong", "Default", "Material", options);
                break;
+            }
          }
       }
       else
@@ -248,8 +247,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          options .push ("X3D_UNLIT_MATERIAL");
 
          var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
-
-         browser .getShaders () .set (key, shaderNode);
       }
 
       browser .getShaders () .set (key, shaderNode);
@@ -301,15 +298,17 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          textureCoordinateMapping);
 
       if (this .occlusionTextureNode)
+      {
          gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-      this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_OcclusionTexture,
-         this ._occlusionTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
+         this .occlusionTextureNode .setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_OcclusionTexture,
+            this ._occlusionTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
+      }
    },
 });
 

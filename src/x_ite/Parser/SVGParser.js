@@ -1086,7 +1086,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          c = new Vector2 (gradient .fx, gradient .fy);
 
       s .translate (c);
-      s .scale (new Vector2 (SPREAD, SPREAD));
+      s .scale (new Vector2 (SPREAD));
       s .translate (c .negate ());
 
       gradient .spreadMatrix = s;
@@ -1177,7 +1177,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       const m = new Matrix3 ();
 
-      m .scale (new Vector2 (this .GRADIENT_SIZE / 2, this .GRADIENT_SIZE / 2));
+      m .scale (new Vector2 (this .GRADIENT_SIZE / 2));
       m .translate (Vector2 .One);
       m .scale (new Vector2 (1, -1));
 
@@ -2531,7 +2531,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          matrix           = Matrix4 .Matrix3 (m),
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1, 1, 1),
+         scale            = new Vector3 (1),
          scaleOrientation = new Rotation4 ();
 
       matrix .get (translation, rotation, scale, scaleOrientation);

@@ -15,7 +15,7 @@ tags: [Transform, Grouping]
 
 Transform is a Grouping node that can contain most nodes. Transform translates, orients and scales child geometry within the local world coordinate system.
 
-The Transform node belongs to the **Grouping** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Transform node belongs to the [Grouping](/x_ite/components/overview/#grouping) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

@@ -5,9 +5,19 @@ nav: reference
 categories: [Reference]
 tags: [Scene, Services, Authoring, Interface]
 ---
+
+## Hierarchy
+
+```
++ X3DExecutionContext
+  + X3DScene
+```
+
 ## X3DExecutionContext
 
 This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
+
+A [Script](/x_ite/components/scripting/script/) node inside a proto instance only has access to the current X3DExecutionContext object and this via `Browser.currentScene`, which returns a reference to the execution context inside the proto instance.
 
 ### Instance Creation Method(s)
 
@@ -218,7 +228,7 @@ Removes the exported node *exportedName.*
 
 #### **toVRMLString** (options?: Options): string
 
-Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 ##### Options
 
@@ -234,13 +244,13 @@ An object with one or more of these properties:
 
 #### **toXMLString** (options?: Options): string
 
-Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
 #### **toJSONString** (options?: Options): string
 
-Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
@@ -340,7 +350,7 @@ Additional units, called *derived units* are used in this International Standard
 | area         | length<sup>2</sup>        |
 | volume       | length<sup>3</sup>        |
 
-The standard color space used by this International Standard is RGB where each color component has the range [0.,1.].
+The standard color space used by this International Standard is RGB where each color component has the range [0.0, 1.0].
 
 #### **name**: string
 

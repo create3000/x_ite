@@ -83,91 +83,99 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
    },
    traverse (type, renderObject)
    {
-      if (type === TraverseType .PICKING)
-      {
-         if (this ._pickable .getValue ())
-         {
-            if (this .getObjectType () .has ("NONE"))
-               return;
-
-            const
-               browser       = this .getBrowser (),
-               pickableStack = browser .getPickable ();
-
-            if (this .getObjectType () .has ("ALL"))
-            {
-               pickableStack .push (true);
-               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-               pickableStack .pop ();
-            }
-            else
-            {
-               // Filter pick sensors.
-
-               const
-                  pickSensorNodes = this .pickSensorNodes,
-                  pickSensorStack = browser .getPickSensors ();
-
-               for (const pickSensorNode of pickSensorStack .at (-1))
-               {
-                  if (!pickSensorNode .getObjectType () .has ("ALL"))
-                  {
-                     let intersection = 0;
-
-                     for (const objectType of this .getObjectType ())
-                     {
-                        if (pickSensorNode .getObjectType () .has (objectType))
-                        {
-                           ++ intersection;
-                           break;
-                        }
-                     }
-
-                     switch (pickSensorNode .getMatchCriterion ())
-                     {
-                        case MatchCriterion .MATCH_ANY:
-                        {
-                           if (intersection === 0)
-                              continue;
-
-                           break;
-                        }
-                        case MatchCriterion .MATCH_EVERY:
-                        {
-                           if (intersection !== pickSensor .getObjectType () .size)
-                              continue;
-
-                           break;
-                        }
-                        case MatchCriterion .MATCH_ONLY_ONE:
-                        {
-                           if (intersection !== 1)
-                              continue;
-
-                           break;
-                        }
-                     }
-                  }
-
-                  pickSensorNodes .add (pickSensorNode);
-               }
-
-               pickableStack   .push (true);
-               pickSensorStack .push (pickSensorNodes);
-
-               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-               pickSensorStack .pop ();
-               pickableStack   .pop ();
-
-               pickSensorNodes .clear ();
-            }
-         }
-      }
-      else
+      if (type !== TraverseType .PICKING)
       {
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+         return;
       }
+
+      if (!this ._pickable .getValue ())
+      {
+         if (this .getTransformSensors () .size)
+         {
+            const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+            for (const transformSensorNode of this .getTransformSensors ())
+               transformSensorNode .collect (modelMatrix);
+         }
+
+         return;
+      }
+
+      if (this .getObjectType () .has ("NONE"))
+         return;
+
+      const
+         browser       = this .getBrowser (),
+         pickableStack = browser .getPickable ();
+
+      if (this .getObjectType () .has ("ALL"))
+      {
+         pickableStack .push (true);
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+         pickableStack .pop ();
+         return;
+      }
+
+      // Filter pick sensors.
+
+      const
+         pickSensorNodes = this .pickSensorNodes,
+         pickSensorStack = browser .getPickSensors ();
+
+      for (const pickSensorNode of pickSensorStack .at (-1))
+      {
+         if (!pickSensorNode .getObjectType () .has ("ALL"))
+         {
+            let intersection = 0;
+
+            for (const objectType of this .getObjectType ())
+            {
+               if (pickSensorNode .getObjectType () .has (objectType))
+               {
+                  ++ intersection;
+                  break;
+               }
+            }
+
+            switch (pickSensorNode .getMatchCriterion ())
+            {
+               case MatchCriterion .MATCH_ANY:
+               {
+                  if (intersection === 0)
+                     continue;
+
+                  break;
+               }
+               case MatchCriterion .MATCH_EVERY:
+               {
+                  if (intersection !== pickSensor .getObjectType () .size)
+                     continue;
+
+                  break;
+               }
+               case MatchCriterion .MATCH_ONLY_ONE:
+               {
+                  if (intersection !== 1)
+                     continue;
+
+                  break;
+               }
+            }
+         }
+
+         pickSensorNodes .add (pickSensorNode);
+      }
+
+      pickableStack   .push (true);
+      pickSensorStack .push (pickSensorNodes);
+
+      X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+
+      pickSensorStack .pop ();
+      pickableStack   .pop ();
+
+      pickSensorNodes .clear ();
    },
    dispose ()
    {

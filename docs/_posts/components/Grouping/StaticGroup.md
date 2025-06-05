@@ -15,7 +15,7 @@ tags: [StaticGroup, Grouping]
 
 StaticGroup is a Grouping node that can contain most nodes. StaticGroup children are guaranteed to not change, send events, receive events, or include re-USE-able content. This allows browser optimizations of contained-node content.
 
-The StaticGroup node belongs to the **Grouping** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The StaticGroup node belongs to the [Grouping](/x_ite/components/overview/#grouping) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

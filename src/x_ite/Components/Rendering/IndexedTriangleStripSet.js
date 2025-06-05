@@ -78,13 +78,14 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleStripSet .prototype, X3DC
 
       const
          index         = this ._index,
-         triangleIndex = this .triangleIndex;
+         triangleIndex = this .triangleIndex,
+         length        = index .length;
 
       triangleIndex .length = 0;
 
       // Build coordIndex
 
-      for (let i = 0, length = index .length; i < length; ++ i)
+      for (let i = 0; i < length; ++ i)
       {
          let first = index [i];
 
@@ -128,7 +129,7 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleStripSet .prototype, X3DC
    },
    getNumVertices ()
    {
-      return this .triangleIndex .length;
+      return this .checkVertexCount (this .triangleIndex .length, 3);
    },
    build ()
    {

@@ -377,7 +377,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       for (const node of renderModeNodes)
          node .disable (gl);
 
-      gl .lineWidth (1)
+      gl .lineWidth (1);
    },
    displayThick: (() =>
    {

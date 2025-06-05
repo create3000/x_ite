@@ -482,7 +482,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene = this .getScene (),
          name  = this .sanitizeName (light .name) || `Light${id + 1}`;
 
-      const color = new Color3 (1, 1, 1);
+      const color = new Color3 (1);
 
       if (this .vectorValue (light .color, color))
          lightNode ._color = color;
@@ -1448,7 +1448,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          translation = new Vector2 (),
-         scale       = new Vector2 (1, 1),
+         scale       = new Vector2 (1),
          matrix      = new Matrix4 ();
 
       matrix .scale (new Vector3 (1, -1, 1));
@@ -2104,7 +2104,7 @@ function eventsProcessed ()
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1, 1, 1),
+         scale            = new Vector3 (1),
          scaleOrientation = new Rotation4 (),
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
@@ -2825,7 +2825,7 @@ function eventsProcessed ()
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2843,7 +2843,7 @@ function eventsProcessed ()
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       switch (mode)
@@ -2931,7 +2931,7 @@ function eventsProcessed ()
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2952,7 +2952,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2973,7 +2973,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2995,7 +2995,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -3016,7 +3016,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -3046,7 +3046,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -3067,7 +3067,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -3218,8 +3218,15 @@ function eventsProcessed ()
 
       return normal .normalNode = normalNode;
    },
-   createTangent (tangent)
+   createTangent (tangent, normal)
    {
+      // When the base mesh primitive does not specify normals, client implementations
+      // MUST calculate flat normals for each morph target; the provided tangents and
+      // their displacements (if present) MUST be ignored.
+
+      if (normal ?.type !== "VEC3")
+         return null;
+
       if (tangent ?.type !== "VEC4")
          return null;
 

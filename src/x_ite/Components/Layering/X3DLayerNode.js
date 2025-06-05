@@ -77,12 +77,28 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("isPickable", this ._pickable);
 
-   // Private properties
+   // Create main Group node.
+   // This Group node is setuped in Layer or LayoutLayer.
 
-   const groupNodes = new Group (executionContext);
+   let groupNodes;
+
+   if (executionContext .hasComponent ("Picking"))
+   {
+      groupNodes = executionContext .createNode ("PickableGroup", false);
+
+      if (groupNodes)
+      {
+         this ._pickable   .addFieldInterest (groupNodes ._pickable);
+         this ._objectType .addFieldInterest (groupNodes ._objectType);
+      }
+   }
+
+   groupNodes ??= new Group (executionContext);
 
    groupNodes ._children = [groupNode];
    groupNodes .setPrivate (true);
+
+   // Private properties
 
    this .active     = false;
    this .layer0     = false;
@@ -415,7 +431,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       }
 
       this .setHitRay (this .getProjectionMatrix () .get (), viewport, browser .getPointer ());
-      this .getNavigationInfo () .enable (type, renderObject);
       this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
 
       this .viewportNode .push (this);

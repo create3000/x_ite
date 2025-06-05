@@ -15,7 +15,7 @@ tags: [LinePickSensor, Picking]
 
 LinePickSensor uses one or more pickingGeometry line segments to compute intersections with pickTarget shapes. As each line intersection generates a known point in space, useful event information is returned including normal, geometry and texCoord values.
 
-The LinePickSensor node belongs to the **Picking** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The LinePickSensor node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

@@ -49,7 +49,6 @@ import VERSION              from "../BROWSER_VERSION.js";
 import X3DFieldDefinition   from "../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../Base/FieldDefinitionArray.js";
 import Fields               from "../Fields.js";
-import SFNodeCache          from "../Fields/SFNodeCache.js";
 import Components           from "../Components.js";
 import X3DBrowserContext    from "./X3DBrowserContext.js";
 import DOMIntegration       from "./DOMIntegration.js";
@@ -449,10 +448,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             this .shutdown () .processInterests ();
             this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
             this .callBrowserEventHandler ("shutdown");
-         }
 
-         if (this [_reject] !== reject)
-            return;
+            // There could be a replaceWorld from a shutdown event handlers,
+            // so we need to check if the reject function is still the same.
+            if (this [_reject] !== reject)
+               return;
+         }
 
          // Replace world.
 
@@ -955,6 +956,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    endUpdate ()
    {
+      this .getViewer () .disconnect ();
       this .setLive (false);
    },
    print (... args)
@@ -1117,7 +1119,7 @@ Object .defineProperties (X3DBrowser .prototype,
    {
       get ()
       {
-         return this .getElement () .get (0);
+         return this .getElement () [0];
       },
       enumerable: true,
    },

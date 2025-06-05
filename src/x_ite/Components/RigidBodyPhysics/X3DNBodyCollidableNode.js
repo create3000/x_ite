@@ -241,12 +241,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
             if (childNode .isBBoxVisible ())
                this .bboxObject = childNode;
          }
-
-         delete this .traverse;
-      }
-      else
-      {
-         this .traverse = Function .prototype;
       }
 
       this .set_boundedObjects__ ();
@@ -320,12 +314,10 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          }
          case TraverseType .PICKING:
          {
-            // X3DNBodyCollidableNode cannot be pickTarget of a X3DPickSensorNode,
-            // so we do not need to a this node to pickingHierarchy.
+            // X3DNBodyCollidableNode can't be pickTarget of a X3DPickSensorNode or TransformSensor,
+            // so we do not need to add this node to the pickingHierarchy.
 
-            const browser = this .getBrowser ();
-
-            if (browser .getPickable () .at (-1))
+            if (this .getBrowser () .getPickable () .at (-1))
                this .visibleObject ?.traverse (type, renderObject);
             else
                this .pickableObject ?.traverse (type, renderObject);

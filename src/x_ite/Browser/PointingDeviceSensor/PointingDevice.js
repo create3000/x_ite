@@ -145,6 +145,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    dblclick (event)
    {
+      const browser = this .getBrowser ();
+
+      if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
+         return;
+
       if (!this .over)
          return;
 
@@ -239,6 +244,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       const browser = this .getBrowser ();
 
       this .over = browser .motionNotifyEvent (x, y);
+
+      if (browser .getViewer () .isActive ())
+         return;
 
       if (this .over)
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");

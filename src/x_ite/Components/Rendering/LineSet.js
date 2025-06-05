@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, X3DLineGeometryNode 
    },
    build ()
    {
-      if (! this .coordNode || this .coordNode .isEmpty ())
+      if (!this .coordNode ?.getSize ())
          return;
 
       // Fill GeometryNode

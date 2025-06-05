@@ -254,20 +254,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
          case TraverseType .PICKING:
          {
-            if (this .getTransformSensors () .size)
-            {
-               const modelMatrix = renderObject .getModelViewMatrix () .get ();
+            // CADFace can't be pickTarget of a X3DPickSensorNode or TransformSensor,
+            // so we do not need to add this node to the pickingHierarchy.
 
-               for (const transformSensorNode of this .getTransformSensors ())
-                  transformSensorNode .collect (modelMatrix);
-            }
-
-            // CADFace cannot be pickTarget of a X3DPickSensorNode,
-            // so we do not need to a this node to pickingHierarchy.
-
-            const browser = this .getBrowser ();
-
-            if (browser .getPickable () .at (-1))
+            if (this .getBrowser () .getPickable () .at (-1))
                this .visibleObject ?.traverse (type, renderObject);
             else
                this .pickableObject ?.traverse (type, renderObject);

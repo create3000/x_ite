@@ -1,41 +1,9 @@
-/* X_ITE v11.5.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.3")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 254:
-/***/ ((module) => {
-
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
@@ -1935,7 +1903,6 @@ const BVH_default_ = BVH;
 
 /* harmony default export */ const Utility_BVH = (external_X_ITE_X3D_Namespace_default().add ("BVH", BVH_default_));
 ;// ./src/x_ite/Components/ParticleSystems/ParticleSystem.js
-/* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2309,7 +2276,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
       // Get geometryType.
 
-      this .geometryType = $.enum ((external_X_ITE_X3D_GeometryType_default()), this ._geometryType .getValue ()) ?? (external_X_ITE_X3D_GeometryType_default()).QUAD;
+      this .geometryType = external_X_ITE_X3D_GeometryType_default().get (this ._geometryType .getValue ()) ?? (external_X_ITE_X3D_GeometryType_default()).QUAD;
 
       // Create buffers.
 
@@ -2370,7 +2337,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this .updateVertexArrays ();
 
       this .set_objects__ ();
-      this .set_traverse__ ();
    },
    set_maxParticles__ ()
    {
@@ -2388,7 +2354,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this .updateVertexArrays ();
 
       this .set_objects__ ();
-      this .set_traverse__ ();
    },
    set_particleLifetime__ ()
    {
@@ -2700,7 +2665,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             deltaTime = Number .POSITIVE_INFINITY;
 
             this .set_objects__ ();
-            this .set_traverse__ ();
          }
          else
          {
@@ -2723,7 +2687,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             this .numParticles = Math .min (this .maxParticles, this .numParticles + newParticles);
 
             this .set_objects__ ();
-            this .set_traverse__ ();
          }
       }
 

@@ -50,7 +50,6 @@ import X3DFieldDefinition         from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
 import X3DNode                    from "../Core/X3DNode.js";
 import X3DEnvironmentalSensorNode from "./X3DEnvironmentalSensorNode.js";
-import TraverseType               from "../../Rendering/TraverseType.js";
 import X3DConstants               from "../../Base/X3DConstants.js";
 import Vector3                    from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4                  from "../../../standard/Math/Numbers/Rotation4.js";
@@ -112,9 +111,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
       {
          this .setPickableObject (false);
          this .getBrowser () .removeTransformSensor (this);
-
-         if (this .targetObjectNode)
-            this .targetObjectNode .removeTransformSensor (this);
+         this .targetObjectNode ?.removeTransformSensor (this);
 
          if (this ._isActive .getValue ())
          {
@@ -172,13 +169,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    },
    traverse (type, renderObject)
    {
-      // TransformSensor nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
-
-      if (type !== TraverseType .PICKING)
-         return;
-
-      if (this .isPickableObject ())
-         this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+      this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
    },
    collect (targetMatrix)
    {
@@ -238,7 +229,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    })(),
    intersects: (() =>
    {
-      const infinity = new Vector3 (-1, -1, -1);
+      const infinity = new Vector3 (-1);
 
       return function ()
       {

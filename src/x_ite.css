@@ -36,6 +36,81 @@
 
 :host,
 X3DCanvas {
+  --red: #d71f1f;
+  --orange-filter:
+    brightness(0)
+    saturate(100%)
+    invert(71%)
+    sepia(100%)
+    saturate(1647%)
+    hue-rotate(335deg)
+    brightness(101%)
+    contrast(101%);
+  --text-color: white;
+  --text-color-dark: white;
+  --text-shadow-color: black;
+  --logo-opacity: 0.6;
+  --progress-color: rgba(255, 255, 255, 0.5);
+  --color1: rgb(35, 37, 40);
+  --color2: rgb(13, 16, 21);
+  --gradient: linear-gradient(to bottom, rgba(35, 37, 40, 0.553) 0%, rgba(13, 16, 21, 0.831) 100%);
+  --border: 4px solid rgba(43, 45, 47, 0.675);
+  --button-color: rgba(0, 0, 0, 0.38196601);
+  --icon-filter: none;
+}
+
+@media (prefers-color-scheme: light) {
+  :host(:not([theme=dark])),
+  X3DCanvas:not([theme=dark]) {
+    --red: #e12b2b;
+    --orange-filter:
+      brightness(0)
+      saturate(100%)
+      invert(71%)
+      sepia(100%)
+      saturate(2647%)
+      hue-rotate(335deg)
+      brightness(70%)
+      contrast(121%);
+    --text-color: black;
+    --text-shadow-color: white;
+    --logo-opacity: 0.8;
+    --progress-color: rgba(0, 0, 0, 0.6);
+    --color1: rgb(247, 247, 252);
+    --color2: rgb(222, 221, 226);
+    --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
+    --border: 4px solid rgba(229, 229, 234, 0.66);
+    --button-color: rgba(255, 255, 255, 0.38196601);
+    --icon-filter: invert(100%);
+  }
+}
+
+:host([theme=light]),
+X3DCanvas[theme=light] {
+  --red: #e12b2b;
+  --orange-filter:
+    brightness(0)
+    saturate(100%)
+    invert(71%)
+    sepia(100%)
+    saturate(2647%)
+    hue-rotate(335deg)
+    brightness(70%)
+    contrast(121%);
+  --text-color: black;
+  --text-shadow-color: white;
+  --logo-opacity: 0.8;
+  --progress-color: rgba(0, 0, 0, 0.6);
+  --color1: rgb(247, 247, 252);
+  --color2: rgb(222, 221, 226);
+  --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
+  --border: 4px solid rgba(229, 229, 234, 0.66);
+  --button-color: rgba(255, 255, 255, 0.38196601);
+  --icon-filter: invert(100%);
+}
+
+:host,
+X3DCanvas {
   display: inline-block;
   overflow: hidden;
   outline: none;
@@ -101,23 +176,13 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: absolute;
   top: 20px;
   right: -4px;
-  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.61803);
-  background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  -webkit-background-clip: padding-box;
-  /* for Safari */
+  background: var(--gradient);
   background-clip: padding-box;
-  /* for IE9+, Firefox 4+, Opera, Chrome */
-  border: 4px solid rgba(60, 60, 60, 0.61803);
+  border: var(--border);
   border-radius: 5px;
-  padding: 5px;
-  color: white;
+  padding: 5px 5px 3px 5px;
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
   letter-spacing: unset;
@@ -130,7 +195,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: inline-block;
   position: relative;
   top: -1px;
-  padding: 0 24px 0 20px;
+  padding: 0 24px 2px 20px;
   background: url(assets/images/logo.svg) no-repeat top -1px left 0px;
   background-size: 17px 17px;
 }
@@ -139,24 +204,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: absolute;
   bottom: -4px;
   left: -4px;
-  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.61803);
-  background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  -webkit-background-clip: padding-box;
-  /* for Safari */
+  background: var(--gradient);
   background-clip: padding-box;
-  /* for IE9+, Firefox 4+, Opera, Chrome */
-  border-top: 4px solid rgba(60, 60, 60, 0.61803);
-  border-right: 4px solid rgba(60, 60, 60, 0.61803);
+  border-top: var(--border);
+  border-right: var(--border);
   border-radius: 5px;
-  padding: 10px 15px 14px 14px;
-  color: white;
+  padding: 7px 15px 14px 14px;
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: 9pt;
   white-space: pre;
@@ -171,7 +226,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 0;
   padding: 0;
   background: none;
-  color: white;
+  color: var(--text-color);
   font-size: inherit;
   font-weight: normal;
   font-style: normal;
@@ -182,9 +237,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-browser-timings table {
   overflow: hidden;
-  background: url(assets/images/schedule.svg) no-repeat 0px -1px;
-  background-size: 17px 17px;
-  image-rendering: pixelated;
   width: 100%;
   max-width: 100%;
   border-collapse: separate;
@@ -193,9 +245,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-browser-timings thead th {
+  padding-top: 3px;
+  background: url(assets/images/schedule.svg) no-repeat -1px -1px;
+  background-size: 17px 17px;
   padding-left: 20px;
   padding-bottom: 5px;
   font-weight: bold;
+  color: var(--text-color-dark);
+  filter: var(--icon-filter);
 }
 
 .x_ite-private-browser-timings td:first-child {
@@ -229,8 +286,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   width: 100%;
   height: 14pt;
   padding: 0;
-  background: rgba(0, 0, 0, 0.38196601);
-  color: white;
+  background: var(--button-color);
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-style: italic;
   font-size: 9pt;
@@ -243,36 +300,18 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-world-info-overlay {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
 }
 
 .x_ite-private-world-info {
   overflow-y: auto;
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
   margin: 21pt;
-  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.61803);
-  background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  -webkit-background-clip: padding-box;
-  /* for Safari */
+  background: var(--gradient);
   background-clip: padding-box;
-  /* for IE9+, Firefox 4+, Opera, Chrome */
-  border: 4px solid rgba(60, 60, 60, 0.61803);
+  border: var(--border);
   border-radius: 15px;
   padding: 21pt;
 }
@@ -285,7 +324,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 0;
   padding: 0;
   background: none;
-  color: white;
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: inherit;
   font-weight: inherit;
@@ -313,20 +352,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-size: 14pt;
 }
 
-.x_ite-private-world-info a {
-  text-decoration: underline;
-  color: #fd9f2e;
-}
-
 /* Context Menu */
 
 .x_ite-private-menu.context-menu-layer {
   position: fixed;
   z-index: 10000;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
 }
 
@@ -340,7 +370,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border: 4px solid transparent;
   border-radius: 5px;
   padding: 5px 10px 4px 9px;
-  color: white;
+  color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
   white-space: pre;
@@ -362,31 +392,17 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-menu .context-menu-background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
   box-sizing: border-box;
   min-width: 120px;
   margin: 0;
   margin-left: 1px;
-  border: 4px solid rgba(60, 60, 60, 0.61803);
+  border: var(--border);
   border-radius: 5px;
   padding: 5px 10px 9px 9px;
-  background: rgba(0, 0, 0, 0.61803);
-  background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(50, 50, 50, 0.61803) 0%, rgba(0, 0, 0, 0.61803) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  -webkit-backdrop-filter: blur(8px);
+  background: var(--gradient);
   backdrop-filter: blur(8px);
-  -webkit-background-clip: padding-box;
-  /* for Safari */
   background-clip: padding-box;
-  /* for IE9+, Firefox 4+, Opera, Chrome */
 }
 
 .x_ite-private-menu .context-menu-item {
@@ -413,7 +429,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item:hover:not(.context-menu-not-selectable) {
-  background-color: #d71f1f;
+  background-color: var(--red);
 }
 
 .x_ite-private-menu .context-menu-item:hover > .context-menu-list {
@@ -447,7 +463,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   /* CSS triangle */
   border-style: solid;
   border-width: 4px 0 4px 5px;
-  border-color: transparent transparent transparent #eee;
+  border-color: transparent transparent transparent #e8eaed; /* color from icons */
+  filter: var(--icon-filter);
   width: 0;
   height: 0;
 }
@@ -471,6 +488,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   line-height: 1;
 }
 
+.x_ite-private-menu label span {
+  color: var(--text-color-dark);
+  filter: var(--icon-filter);
+}
+
 .x_ite-private-menu label:has(>input[type=radio]:checked) {
   font-weight: bold;
 }
@@ -486,8 +508,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu input {
   all: revert;
   cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
 }
 
@@ -505,15 +525,15 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   top: 3px;
   background: url(assets/images/radio_button_unchecked.svg) no-repeat left 0px top 0px;
   background-size: 17px 17px;
+  filter: var(--icon-filter);
 }
 
 .x_ite-private-menu input:checked {
-  /* orange */
-  filter: brightness(0) saturate(100%) invert(71%) sepia(100%) saturate(1647%) hue-rotate(335deg) brightness(101%) contrast(101%);
+  filter: var(--orange-filter);
 }
 
 .x_ite-private-menu .context-menu-input:hover input:checked {
-  filter: none;
+  filter: var(--icon-filter);
 }
 
 .x_ite-private-menu input[type=checkbox]:checked {
@@ -536,18 +556,23 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 /* Icons */
 
-.x_ite-private-menu .context-menu-icon {
+.x_ite-private-menu .context-menu-icon > span {
+  display: block;
   background-repeat: no-repeat;
   background-position: 2px 3px;
   background-size: 17px 17px;
+  color: var(--text-color-dark);
+  filter: var(--icon-filter);
 }
 
-.x_ite-private-menu .context-menu-icon.x_ite-private-icon-logo {
+.x_ite-private-menu .context-menu-icon.x_ite-private-icon-logo > span {
   background-image: url(assets/images/logo.svg);
   background-position: 2px 4px;
+  filter: none;
+  color: var(--text-color);
 }
 
-.x_ite-private-icon-viewpoint {
+.x_ite-private-icon-viewpoint > span {
   background-image: url(assets/images/eye_tracking.svg);
 }
 
@@ -559,7 +584,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/visibility.svg);
 }
 
-.x_ite-private-icon-viewer {
+.x_ite-private-icon-viewer > span {
   background-image: url(assets/images/stadia_controller.svg);
 }
 
@@ -587,31 +612,31 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/block.svg);
 }
 
-.x_ite-private-icon-primitive-quality {
+.x_ite-private-icon-primitive-quality > span {
   background-image: url(assets/images/hexagon.svg);
 }
 
-.x_ite-private-icon-texture-quality {
+.x_ite-private-icon-texture-quality > span {
   background-image: url(assets/images/texture.svg);
 }
 
-.x_ite-private-icon-shading {
+.x_ite-private-icon-shading > span {
   background-image: url(assets/images/stroke_partial.svg);
 }
 
-.x_ite-private-icon-enter-fullscreen {
+.x_ite-private-icon-enter-fullscreen > span {
   background-image: url(assets/images/fullscreen.svg);
 }
 
-.x_ite-private-icon-leave-fullscreen {
+.x_ite-private-icon-leave-fullscreen > span {
   background-image: url(assets/images/fullscreen_exit.svg);
 }
 
-.x_ite-private-icon-world-info {
+.x_ite-private-icon-world-info > span {
   background-image: url(assets/images/globe.svg);
 }
 
-.x_ite-private-icon-info {
+.x_ite-private-icon-info > span {
   background-image: url(assets/images/info.svg);
 }
 
@@ -620,47 +645,28 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-splash-screen {
   pointer-events: none;
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   inset: 0;
-  background: #1b1d21;
-  background: -moz-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);
-  background: -webkit-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);
-  background: radial-gradient(ellipse at center, #2f3135 0%, #1b1d21 100%);
+  background: radial-gradient(ellipse at center, var(--color1) 0%, var(--color2) 100%);
 }
 
 .x_ite-private-spinner {
+  --size: 160px;
+  --center-x: calc(458 / 1024 * var(--size));
+  --center-y: calc(539 / 1024 * var(--size));
   position: absolute;
-  top: calc(50% - (160px / 2));
-  left: calc(50% - (160px / 2) + 8px);
-  width: 160px;
-  height: 160px;
+  top: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-y)));
+  left: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-x)));
+  width: var(--size);
+  height: var(--size);
   background: url(assets/images/logo.svg) no-repeat;
-  background-size: 160px 160px;
-  opacity: 0.6;
-  -webkit-animation: spinner-animation-spin 32s linear infinite;
-  -moz-animation: spinner-animation-spin 32s linear infinite;
-  animation: spinner-animation-spin 32s linear infinite;
-  transform-origin: 71.5625px 84.0625px; /* calc(458px / 1024px * 160px) calc(539px / 1024px * 160px) */
+  background-size: var(--size) var(--size);
+  opacity: var(--logo-opacity);
+  animation: x_ite-spinner-animation 32s linear infinite;
+  transform-origin: var(--center-x) var(--center-y);
 }
 
-@-moz-keyframes spinner-animation-spin {
+@keyframes x_ite-spinner-animation {
   100% {
-    -moz-transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spinner-animation-spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes spinner-animation-spin {
-  100% {
-    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
@@ -673,25 +679,30 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-x_ite {
-  color: white;
+  color: var(--text-color);
   font-size: 28pt;
   text-align: center;
-  text-shadow: 1px 1px 0 black;
+  text-shadow: 1px 1px 0 var(--text-shadow-color);
   font-family: X_ITE PT Sans, sans-serif;
 }
 
+.x_ite-private-x_ite b {
+  font-family: X_ITE PT Sans, sans-serif;
+  font-weight: bold;
+}
+
 .x_ite-private-spinner-text {
-  color: white;
+  color: var(--text-color);
   font-size: 11pt;
   text-align: center;
-  text-shadow: 1px 1px 0 black;
+  text-shadow: 1px 1px 0 var(--text-shadow-color);
   font-family: X_ITE PT Sans, sans-serif;
 }
 
 .x_ite-private-progressbar {
   margin: 8px;
-  border-left: 2px solid rgba(255, 255, 255, 0.5);
-  border-right: 2px solid rgba(255, 255, 255, 0.5);
+  border-left: 2px solid var(--progress-color);
+  border-right: 2px solid var(--progress-color);
   padding: 0 2px;
   text-align: left;
 }
@@ -699,7 +710,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-progressbar div {
   width: 0%;
   height: 6px;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--progress-color);
 }
 
 /* WebXR */

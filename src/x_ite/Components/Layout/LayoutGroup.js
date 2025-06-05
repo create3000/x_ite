@@ -51,7 +51,6 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
 import X3DCast              from "../../Base/X3DCast.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
@@ -60,6 +59,8 @@ function LayoutGroup (executionContext)
    X3DGroupingNode .call (this, executionContext);
 
    this .addType (X3DConstants .LayoutGroup);
+
+   this .setCollisionObject (false);
 
    // Private properties
 
@@ -89,6 +90,8 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    {
       this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
    },
+   set_collisionObjects__ ()
+   { },
    set_visibleObjects__ ()
    {
       this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
@@ -104,46 +107,31 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
 
       return this .matrix .identity ();
    },
-   getLayout ()
-   {
-      return this .layoutNode;
-   },
    traverse (type, renderObject)
    {
-      switch (type)
+      this .viewportNode ?.push ();
+
+      if (this .layoutNode)
       {
-         case TraverseType .COLLISION:
-         {
-            return;
-         }
-         default:
-         {
-            this .viewportNode ?.push ();
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-            if (this .layoutNode)
-            {
-               const modelViewMatrix = renderObject .getModelViewMatrix ();
+         this .modelViewMatrix .assign (modelViewMatrix .get ());
+         this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
 
-               this .modelViewMatrix .assign (modelViewMatrix .get ());
-               this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
+         modelViewMatrix .push (this .screenMatrix);
+         renderObject .getLayouts () .push (this .layoutNode);
 
-               modelViewMatrix .push (this .screenMatrix);
-               renderObject .getLayouts () .push (this .layoutNode);
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-               renderObject .getLayouts () .pop ();
-               modelViewMatrix .pop ();
-            }
-            else
-            {
-               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-            }
-
-            this .viewportNode ?.pop ();
-            return;
-         }
+         renderObject .getLayouts () .pop ();
+         modelViewMatrix .pop ();
       }
+      else
+      {
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+      }
+
+      this .viewportNode ?.pop ();
    },
 });
 

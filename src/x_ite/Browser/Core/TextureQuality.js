@@ -45,13 +45,6 @@
  *
  ******************************************************************************/
 
-let i = 0;
+import PrimitiveQuality from "./PrimitiveQuality.js";
 
-const TextureQuality =
-{
-   LOW:    i ++,
-   MEDIUM: i ++,
-   HIGH:   i ++,
-};
-
-export default TextureQuality;
+export default PrimitiveQuality;

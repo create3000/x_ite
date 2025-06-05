@@ -45,13 +45,9 @@
  *
  ******************************************************************************/
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DFlyViewer         from "./X3DFlyViewer.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
+import X3DFlyViewer from "./X3DFlyViewer.js";
+import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4    from "../../../standard/Math/Numbers/Rotation4.js";
 
 function WalkViewer (executionContext, navigationInfo)
 {
@@ -116,13 +112,6 @@ Object .defineProperties (WalkViewer,
    typeName:
    {
       value: "WalkViewer",
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
       enumerable: true,
    },
 });

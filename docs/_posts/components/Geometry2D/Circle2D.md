@@ -15,7 +15,7 @@ tags: [Circle2D, Geometry2D]
 
 Circle2D is a geometry node that defines a linear X-Y circle with center (0,0) in X-Y plane.
 
-The Circle2D node belongs to the **Geometry2D** component and requires at least support level **2,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The Circle2D node belongs to the [Geometry2D](/x_ite/components/overview/#geometry2d) component and requires at least support level **2,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

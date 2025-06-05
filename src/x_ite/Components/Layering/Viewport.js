@@ -123,8 +123,10 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
                // Proceed with next case:
             }
             default:
+            {
                X3DViewportNode .prototype .traverse .call (this, type, renderObject);
                break;
+            }
          }
       }
       finally

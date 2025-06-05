@@ -51,6 +51,8 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DBaseNode          from "../../Base/X3DBaseNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
+// https://www.web3d.org/documents/specifications/19775-2/V3.3/Part02/servRef.html#getBrowserProperties
+
 function BrowserProperties (executionContext)
 {
    X3DBaseNode .call (this, executionContext);

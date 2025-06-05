@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_alphaMode__ ()
    {
-      this .alphaMode = $.enum (AlphaMode, this ._alphaMode .getValue ()) ?? AlphaMode .AUTO;
+      this .alphaMode = AlphaMode .get (this ._alphaMode .getValue ()) ?? AlphaMode .AUTO;
 
       this .set_alphaCutoff__ ();
    },

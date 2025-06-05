@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       this [_profile] = profile;
 
-      this ._profile_changed = this .getBrowser () .getCurrentTime ();
+      this ._profile_changed = Date .now () / 1000;
    },
    getProfile ()
    {
@@ -176,19 +176,19 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       this [_components] .add (component .name, component);
 
-      this ._components_changed = this .getBrowser () .getCurrentTime ();
+      this ._components_changed = Date .now () / 1000;
    },
    updateComponent (component)
    {
       this [_components] .update (component .name, component .name, component);
 
-      this ._components_changed = this .getBrowser () .getCurrentTime ();
+      this ._components_changed = Date .now () / 1000;
    },
    removeComponent (name)
    {
       this [_components] .remove (name);
 
-      this ._components_changed = this .getBrowser () .getCurrentTime ();
+      this ._components_changed = Date .now () / 1000;
    },
    getComponents ()
    {
@@ -203,7 +203,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_units] .update (category, category, new UnitInfo (category, String (name),  Number (conversionFactor)));
 
-      this ._units_changed = this .getBrowser () .getCurrentTime ();
+      this ._units_changed = Date .now () / 1000;
    },
    getUnit (category)
    {
@@ -284,7 +284,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_metadata] .set (name, values .map (String));
 
-      this ._metadata_changed = this .getBrowser () .getCurrentTime ();
+      this ._metadata_changed = Date .now () / 1000;
    },
    addMetaData (name, value)
    {
@@ -307,7 +307,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_metadata] .delete (name);
 
-      this ._metadata_changed = this .getBrowser () .getCurrentTime ();
+      this ._metadata_changed = Date .now () / 1000;
    },
    getMetaData (name)
    {
@@ -338,7 +338,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this .updateExportedNode (exportedName, node);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    updateExportedNode (exportedName, node)
    {
@@ -358,7 +358,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_exportedNodes] .update (exportedName, exportedName, exportedNode);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    removeExportedNode (exportedName)
    {
@@ -366,7 +366,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_exportedNodes] .remove (exportedName);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    getExportedNode (exportedName)
    {
@@ -408,9 +408,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    setRootNodes (value)
    {
-      if (!(value instanceof Fields .MFNode))
-         throw new Error ("Value must be of type MFNode.");
-
       this .getRootNodes () .assign (value);
    },
    toVRMLStream (generator)

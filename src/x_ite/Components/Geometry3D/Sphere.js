@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prot
       }
       else
       {
-         const defaultVertices = geometry .getVertices () .getValue ();
+         const defaultVertices = geometry .getVertices ();
 
          for (let i = 0, length = defaultVertices .length; i < length; i += 4)
          {

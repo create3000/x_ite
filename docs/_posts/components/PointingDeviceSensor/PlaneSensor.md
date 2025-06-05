@@ -15,7 +15,7 @@ tags: [PlaneSensor, PointingDeviceSensor]
 
 PlaneSensor converts pointing device motion into 2D translation parallel to the local Z=0 plane.
 
-The PlaneSensor node belongs to the **PointingDeviceSensor** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The PlaneSensor node belongs to the [PointingDeviceSensor](/x_ite/components/overview/#pointingdevicesensor) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

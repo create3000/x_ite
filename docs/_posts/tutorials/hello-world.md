@@ -15,7 +15,7 @@ In this tutorial, you will learn how to create a simple hello world scene with X
 2. X3D is a text file if when saved as Classic VRML Encoding consists of a set of nodes like (Transform { … }).
 3. All of the nodes start with the node type name like Transform follow by a open curly brace »{«. They end with a close curly brace »}«
 4. The syntax is just like a command to tell X3D browser (like X\_ITE) what should do.
-5. A X3D XML Encoding file must have the extension .x3d or .x3dz. A X3D Classic VRML Encoding file must have .x3dv or .x3dvz as file extension.
+5. An X3D XML Encoding file must have the extension .x3d or .x3dz. An X3D Classic VRML Encoding file must have .x3dv or .x3dvz as file extension.
 6. X3D file is case sensitive. *Transform, transform* or *tRansForm* are not the same.
 7. X3D file can be edit with any text editor like GEdit or Emacs for Linux or Unix, Notepad++ or Wordpad for Windows, and Coda or Simple Text for Mac.
 
@@ -59,9 +59,9 @@ Transform {
 }
 ```
 
-The Sphere has a radius field, which which is by default 1. The units in X3D are measured in Meters. The Sphere here is a node that is assigned to the *geometry* field of the Shape node. The Shape node has a second field *appearance*, which we will use later for texturing. The Shape node is assigned to the *children* field of the Transform node. The Transform node could have as many children as you want, but this is not always desired. The Transform node has special fields *translation*, *rotation* and *scale* for positioning it's children in space.
+The [Sphere](/x_ite/components/geometry3d/sphere/) has a radius field, which is by default `1`. The units in X3D are measured in Meters. The [Sphere](/x_ite/components/geometry3d/sphere/) here is a node that is assigned to the *geometry* field of the [Shape](/x_ite/components/shape/shape/) node. The [Shape](/x_ite/components/shape/shape/) node has a second field *appearance*, which we will use later for texturing. The [Shape](/x_ite/components/shape/shape/) node is assigned to the *children* field of the [Transform](/x_ite/components/grouping/transform/) node. The [Transform](/x_ite/components/grouping/transform/) node could have as many children as you want, but this is not always desired. The [Transform](/x_ite/components/grouping/transform/) node has special fields *translation*, *rotation* and *scale* for positioning it's children in space.
 
-Now we have a sphere, but we don't see if it is rotating, let's assign a texture:
+Now we have a sphere, but we don't see the earth right now, let's assign a texture:
 
 ### XML Encoding
 
@@ -100,7 +100,7 @@ Transform {
 }
 ```
 
-We take a Appearance node and assign it to the *appearance* field of the Shape node. For the texture we take an ImageTexture node. It would be possible a MovieTexture as texture too. But this later. The ImageTexture has a field *url*. Here we say the ImageTexture should fetch the image from ".earth.png". We could assign multiple urls:
+We take a [Appearance](/x_ite/components/shape/appearance/) node and assign it to the *appearance* field of the [Shape](/x_ite/components/shape/shape/) node. For the texture we take an [ImageTexture](/x_ite/components/texturing/imagetexture/) node. It would be possible a  [MovieTexture](/x_ite/components/texturing/movietexture/) as texture too. But this later. The [ImageTexture](/x_ite/components/texturing/imagetexture/) has a field *url*. Here we say the [ImageTexture](/x_ite/components/texturing/imagetexture/) should fetch the image from `"earth.png"`. We could assign multiple urls:
 
 ### XML Encoding
 
@@ -200,7 +200,7 @@ Transform {
 }
 ```
 
-We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a Material node to the *material* field of the Appearance node and set the *diffuseColor* field to 1 0 0. As geometry we take a Text node and set the *string* field to "Hello World!".
+We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a [Material](/x_ite/components/shape/material/) node to the *material* field of the [Appearance](/x_ite/components/shape/appearance/) node and set the *diffuseColor* field to `0 0.5 1`. As geometry we take a [Text](/x_ite/components/text/text/) node and set the *string* field to `"Hello", "World!"`. The *string* field is of type MFString, an Array like object, where each element is of type String, one element for each line.
 
 ### Result
 

@@ -67,14 +67,13 @@ Object .assign (Object .setPrototypeOf (TriangleSet .prototype, X3DComposedGeome
    },
    getNumVertices ()
    {
-      return this .getCoord () ?.getSize ();
+      return this .checkVertexCount (this .getCoord () ?.getSize () ?? 0, 3);
    },
    build ()
    {
-      if (!this .getCoord ())
-         return;
+      const length = this .getNumVertices ();
 
-      X3DComposedGeometryNode .prototype .build .call (this, 3, this .getCoord () .getSize (), 3, this .getCoord () .getSize ());
+      X3DComposedGeometryNode .prototype .build .call (this, 3, length, 3, length);
    },
    createNormals (verticesPerPolygon, polygonsSize, polygons)
    {

@@ -48,11 +48,11 @@
 import Matrix3 from "../Numbers/Matrix3.js";
 import Vector2 from "../Numbers/Vector2.js";
 
-function Box2 (/* size, center */)
+function Box2 (... args) /* size, center */
 {
    this .matrix = new Matrix3 ();
 
-   this .set (... arguments);
+   this .set (... args);
 }
 
 Object .assign (Box2 .prototype,
@@ -60,12 +60,15 @@ Object .assign (Box2 .prototype,
    copy ()
    {
       const copy = Object .create (Box2 .prototype);
+
       copy .matrix = this .matrix .copy ();
+
       return copy;
    },
    assign (box)
    {
       this .matrix .assign (box .matrix);
+
       return this;
    },
    equals (box)
@@ -212,8 +215,8 @@ Object .assign (Box2,
    Points (points)
    {
       const
-         min = new Vector2 (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
-         max = new Vector2 (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+         min = new Vector2 (Number .POSITIVE_INFINITY),
+         max = new Vector2 (Number .NEGATIVE_INFINITY);
 
       for (const point of points)
       {

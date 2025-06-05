@@ -289,7 +289,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       this [_pointingTime] .start ();
 
-      if (this .getViewer () ._isActive .getValue ())
+      if (this .getViewer () .isActive ())
       {
          this [_pointingTime] .reset ();
          return false;

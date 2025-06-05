@@ -62,7 +62,7 @@ function ViewpointGroup (executionContext)
 
    this .addType (X3DConstants .ViewpointGroup);
 
-   this .setCameraObject (true);
+   this .setCameraObject  (true);
    this .setVisibleObject (true);
 
    // Units
@@ -72,9 +72,9 @@ function ViewpointGroup (executionContext)
 
    // Private properties
 
-   this .proximitySensor  = new ProximitySensor (executionContext);
-   this .cameraObjects    = [ ];
-   this .viewpointGroups  = [ ];
+   this .proximitySensor = new ProximitySensor (executionContext);
+   this .cameraObjects   = [ ];
+   this .viewpointGroups = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode .prototype),
@@ -97,12 +97,17 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
       this .proximitySensor .setup ();
 
       this .set_size__ ();
-      this .set_active__ ();
       this .set_children__ ();
+   },
+   getDisplayed ()
+   {
+      return this .displayed;
    },
    set_size__ ()
    {
       this .proximitySensor ._enabled = !this ._size .getValue () .equals (Vector3 .Zero);
+
+      this .set_active__ ();
    },
    set_active__ ()
    {
@@ -148,18 +153,12 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
          }
       }
 
-      this .setCameraObject  (this .cameraObjects   .length);
-      this .setVisibleObject (this .viewpointGroups .length);
-   },
-   getDisplayed ()
-   {
-      return this .displayed;
+      this .setCameraObject  (this .cameraObjects .length);
+      this .setVisibleObject (this .cameraObjects .length);
    },
    traverse (type, renderObject)
    {
-      const proximitySensor = this .proximitySensor;
-
-      proximitySensor .traverse (type, renderObject);
+      this .proximitySensor .traverse (type, renderObject);
 
       switch (type)
       {

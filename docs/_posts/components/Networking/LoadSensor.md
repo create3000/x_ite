@@ -15,7 +15,7 @@ tags: [LoadSensor, Networking]
 
 LoadSensor generates events as watchList child nodes are either loaded or fail to load. Changing watchlist child nodes restarts the LoadSensor.
 
-The LoadSensor node belongs to the **Networking** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The LoadSensor node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

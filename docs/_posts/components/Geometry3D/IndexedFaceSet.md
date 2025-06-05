@@ -15,7 +15,7 @@ tags: [IndexedFaceSet, Geometry3D]
 
 IndexedFaceSet defines polygons using index lists corresponding to vertex coordinates. IndexedFaceSet is a geometry node containing a Coordinate or CoordinateDouble node, and can also contain Color or ColorRGBA, Normal and TextureCoordinate nodes.
 
-The IndexedFaceSet node belongs to the **Geometry3D** component and requires at least support level **2,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The IndexedFaceSet node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **2,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

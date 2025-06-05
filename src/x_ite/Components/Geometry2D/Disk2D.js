@@ -91,8 +91,8 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          {
             vertexArray .push (0, 0, 0, 1);
 
-            this .getMin () .set (0, 0, 0);
-            this .getMax () .set (0, 0, 0);
+            this .getMin () .set (0);
+            this .getMax () .set (0);
 
             this .setGeometryType (0);
             this .setPrimitiveMode (gl .POINTS);
@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          }
          else
          {
-            const defaultVertices = geometry .getVertices () .getValue ();
+            const defaultVertices = geometry .getVertices ();
 
             for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);

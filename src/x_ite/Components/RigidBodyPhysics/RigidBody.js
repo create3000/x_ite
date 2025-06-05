@@ -295,14 +295,14 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_forces__ ()
    {
-      this .force .set (0, 0, 0);
+      this .force .set (0);
 
       for (const force of this ._forces)
          this .force .add (force .getValue ());
    },
    set_torques__ ()
    {
-      this .torque .set (0, 0, 0);
+      this .torque .set (0);
 
       for (const torque of this ._torques)
          this .torque .add (torque .getValue ());

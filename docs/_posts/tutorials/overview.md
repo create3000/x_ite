@@ -5,6 +5,7 @@ nav: none
 categories: [Tutorials]
 tags: [Tutorials, Overview]
 redirect_from:
+  - /tutorials/
   - /users-guide/tutorials/
 ---
 ## Overview

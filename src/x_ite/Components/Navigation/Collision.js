@@ -76,12 +76,11 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
       X3DGroupingNode .prototype .initialize .call (this);
       // X3DSensorNode .prototype .initialize .call (this); // We can only call the base of a *Objects.
 
-      this .getLive () .addInterest ("set_live__",    this);
-      this ._enabled   .addInterest ("set_enabled__", this);
-      this ._proxy     .addInterest ("set_proxy__",   this);
+      this .getLive () .addInterest ("set_live__",     this);
+      this ._enabled   .addInterest ("set_enabled__",  this);
+      this ._proxy     .addInterest ("set_children__", this);
 
       this .set_live__ ();
-      this .set_proxy__ ();
    },
    set_live__ ()
    {
@@ -94,37 +93,55 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    set_enabled__ ()
    {
       this .set_live__ ();
-      this .set_collisionObjects__ ();
+      this .set_children__ ();
    },
    set_active (value)
    {
-      if (this ._isActive .getValue () !== value)
-      {
-         this ._isActive = value;
+      if (this ._isActive .getValue () === value)
+         return;
 
-         if (value)
-            this ._collideTime = this .getBrowser () .getCurrentTime ();
-      }
-   },
-   set_proxy__ ()
-   {
-      this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this ._proxy);
+      this ._isActive = value;
 
-      this .set_collisionObjects__ ();
+      if (value)
+         this ._collideTime = this .getBrowser () .getCurrentTime ();
    },
    set_collisionObjects__ ()
    {
+      const proxyNode = X3DCast (X3DConstants .X3DChildNode, this ._proxy);
+
       if (!this ._enabled .getValue ())
       {
          this .collisionObjects .clear ();
       }
-      else if (this .proxyNode)
+      else if (proxyNode)
       {
          this .collisionObjects .clear ();
-         this .collisionObjects .add (this .proxyNode);
+         this .collisionObjects .add (proxyNode);
       }
 
       X3DGroupingNode .prototype .set_collisionObjects__ .call (this);
+   },
+   traverse (type, renderObject)
+   {
+      switch (type)
+      {
+         case TraverseType .COLLISION:
+         {
+            const collisions = renderObject .getCollisions ();
+
+            collisions .push (this);
+
+            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+
+            collisions .pop ();
+            return;
+         }
+         default:
+         {
+            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            return;
+         }
+      }
    },
    dispose ()
    {

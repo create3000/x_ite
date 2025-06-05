@@ -10,21 +10,21 @@ tags: [glTF, Sample, Viewer, Laboratory]
 
 @media (prefers-color-scheme: dark) {
   html:not([data-mode]), html[data-mode=dark] {
-     --list-color: rgba(0, 0, 0, 0.3);
+     --list-color: rgba(0, 0, 0, 0.1);
   }
 
   html[data-mode=light] {
-    --list-color: rgba(0, 0, 0, 0.03);
+    --list-color: rgba(0, 0, 0, 0.02);
   }
 }
 
 @media (prefers-color-scheme: light) {
   html[data-mode=dark] {
-    --list-color: rgba(0, 0, 0, 0.3);
+    --list-color: rgba(0, 0, 0, 0.1);
   }
 
   html:not([data-mode]), html[data-mode=light] {
-    --list-color: rgba(0, 0, 0, 0.03);
+    --list-color: rgba(0, 0, 0, 0.02);
   }
 }
 
@@ -91,17 +91,79 @@ x3d-canvas {
 
 <div class="viewer viewer-row">
   <div class="viewer-column1">
-    <x3d-canvas class="xr-button-tr" contentScale="auto" update="auto">
-      <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
+    <x3d-canvas class="xr-button-tr" contentScale="auto" update="auto" toneMapping="KHR_PBR_NEUTRAL">
+      <X3D profile='Interchange' version='4.0'>
         <head>
+          <component name='Scripting' level='1'></component>
           <component name='Text' level='1'></component>
         </head>
         <Scene>
-          <Shape>
-            <Text string='"glTF Sample Viewer"'>
-              <FontStyle justify='"MIDDLE", "MIDDLE"'></FontStyle>
+          <ProtoDeclare name='ColorScheme'>
+            <ProtoInterface>
+              <field accessType='outputOnly' type='SFBool' name='light'></field>
+              <field accessType='outputOnly' type='SFBool' name='dark'></field>
+            </ProtoInterface>
+            <ProtoBody>
+              <Script type='model/x3d+xml' DEF='ColorSchemeScript'>
+                <field accessType='outputOnly' type='SFBool' name='light'></field>
+                <field accessType='outputOnly' type='SFBool' name='dark'></field>
+                <IS>
+                  <connect nodeField='light' protoField='light'></connect>
+                  <connect nodeField='dark' protoField='dark'></connect>
+                </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   const colorScheme = window .matchMedia ("(prefers-color-scheme: light)");
+
+   colorScheme .addEventListener ("change", event => changeColorScheme (event));
+
+   changeColorScheme (colorScheme);
+}
+
+function changeColorScheme (event)
+{
+   light = event .matches;
+
+   if (typeof $ !== "undefined")
+   {
+      if ($("html") .attr ("data-mode") === "light")
+         light = true;
+
+      if ($("html") .attr ("data-mode") === "dark")
+         light = false;
+   }
+
+   dark = !light;
+}
+]]>
+              </Script>
+            </ProtoBody>
+          </ProtoDeclare>
+          <ProtoInstance name='ColorScheme' DEF='_1'></ProtoInstance>
+          <Background DEF='White'
+              skyColor='1 1 1'></Background>
+          <Background DEF='Black'></Background>
+          <Shape DEF='Light'
+              visible='false'>
+            <Appearance>
+              <UnlitMaterial
+                  emissiveColor='0 0 0'></UnlitMaterial>
+            </Appearance>
+            <Text DEF='_2'
+                string='"glTF Sample Viewer"'>
+              <FontStyle
+                  justify='"MIDDLE", "MIDDLE"'></FontStyle>
             </Text>
           </Shape>
+          <Shape DEF='Dark'>
+            <Text USE='_2'></Text>
+          </Shape>
+          <ROUTE fromNode='_1' fromField='light' toNode='Light' toField='set_visible'></ROUTE>
+          <ROUTE fromNode='_1' fromField='light' toNode='White' toField='set_bind'></ROUTE>
+          <ROUTE fromNode='_1' fromField='dark' toNode='Dark' toField='set_visible'></ROUTE>
+          <ROUTE fromNode='_1' fromField='dark' toNode='Black' toField='set_bind'></ROUTE>
         </Scene>
       </X3D>
     </x3d-canvas>

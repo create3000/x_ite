@@ -277,7 +277,7 @@ Object .assign (X3DOptimizer .prototype,
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1, 1, 1),
+         scale            = new Vector3 (1),
          scaleOrientation = new Rotation4 (),
          nodeMatrix       = new Matrix4 (),
          childMatrix      = new Matrix4 ();

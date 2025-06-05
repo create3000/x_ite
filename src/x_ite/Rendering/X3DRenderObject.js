@@ -984,7 +984,7 @@ Object .assign (X3DRenderObject .prototype,
             if (browser .getCurrentViewer () !== "WALK")
                return;
          }
-         else if (this .getNavigationInfo () .getViewer () !== "WALK")
+         else
          {
             return;
          }

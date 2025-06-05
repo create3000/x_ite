@@ -148,8 +148,8 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .protot
 
       if (!this ._side .getValue () && !this ._bottom .getValue ())
       {
-         this .getMin () .set (0, 0, 0);
-         this .getMax () .set (0, 0, 0);
+         this .getMin () .set (0);
+         this .getMax () .set (0);
       }
       else if (!this ._side .getValue ())
       {

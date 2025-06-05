@@ -116,12 +116,13 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
    set_linewidthScaleFactor__ ()
    {
       const
-         browser      = this .getBrowser (),
-         gl           = browser .getContext (),
-         contentScale = browser .getRenderingProperty ("ContentScale");
+         browser               = this .getBrowser (),
+         gl                    = browser .getContext (),
+         contentScale          = browser .getRenderingProperty ("ContentScale"),
+         aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
 
       this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ()) * contentScale;
-      this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
+      this .transformLines       = this .linewidthScaleFactor > 1 && this .linewidthScaleFactor > aliasedLineWidthRange [1];
    },
    setShaderUniforms (gl, shaderObject)
    {
@@ -131,7 +132,9 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
       {
          const textureUnit = browser .getTexture2DUnit ();
 
-         gl .lineWidth (this .linewidthScaleFactor);
+         if (!this .transformLines)
+            gl .lineWidth (this .linewidthScaleFactor);
+
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
          gl .uniform1f (shaderObject .x3d_LineStippleScale,       browser .getLineStippleScale ());
 
@@ -141,7 +144,9 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
       }
       else
       {
-         gl .lineWidth (browser .getRenderingProperty ("ContentScale"));
+         if (!this .transformLines)
+            gl .lineWidth (browser .getRenderingProperty ("ContentScale"));
+
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, 16);
          gl .uniform1f (shaderObject .x3d_LineStippleScale,       1);
       }

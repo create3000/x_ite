@@ -50,7 +50,7 @@ import Matrix4   from "../Numbers/Matrix4.js";
 import Vector3   from "../Numbers/Vector3.js";
 import SAT       from "../Algorithms/SAT.js";
 
-function Box3 (/* size, center */)
+function Box3 (... args) /* size, center */
 {
    this .matrix = new Matrix4 ();
 
@@ -62,12 +62,15 @@ Object .assign (Box3 .prototype,
    copy ()
    {
       const copy = Object .create (Box3 .prototype);
+
       copy .matrix = this .matrix .copy ();
+
       return copy;
    },
    assign (box)
    {
       this .matrix .assign (box .matrix);
+
       return this;
    },
    equals (box)
@@ -406,61 +409,13 @@ Object .assign (Box3 .prototype,
    })(),
    intersectsBox: (() =>
    {
-      const points1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const points2 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes2 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes9 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const normals = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
+      const
+         points1 = Array .from ({ length: 8 }, () => new Vector3 ()),
+         points2 = Array .from ({ length: 8 }, () => new Vector3 ()),
+         axes1   = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes2   = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes9   = Array .from ({ length: 9 }, () => new Vector3 ()),
+         normals = Array .from ({ length: 3 }, () => new Vector3 ());
 
       return function (other)
       {
@@ -508,53 +463,14 @@ Object .assign (Box3 .prototype,
    })(),
    intersectsTriangle: (() =>
    {
-      const points1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes9 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const normals = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const triangle = [ ];
-
-      const triangleNormal = [ new Vector3 () ];
-
-      const triangleEdges = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 ()
-      ];
+      const
+         points1        = Array .from ({ length: 8 }, () => new Vector3 ()),
+         axes1          = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes9          = Array .from ({ length: 9 }, () => new Vector3 ()),
+         normals        = Array .from ({ length: 3 }, () => new Vector3 ()),
+         triangle       = [ ],
+         triangleNormal = [ new Vector3 () ],
+         triangleEdges  = Array .from ({ length: 3 }, () => new Vector3 ());
 
       return function (a, b, c)
       {
@@ -620,8 +536,8 @@ Object .assign (Box3,
    Points (points)
    {
       const
-         min = new Vector3 (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
-         max = new Vector3 (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+         min = new Vector3 (Number .POSITIVE_INFINITY),
+         max = new Vector3 (Number .NEGATIVE_INFINITY);
 
       for (const point of points)
       {

@@ -1,5 +1,5 @@
-/* X_ITE v11.5.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.3")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -539,10 +539,12 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       function SFNode (vrmlSyntax)
       {
-         const nodes = browser .createVrmlFromString (vrmlSyntax);
+         const node = new (external_X_ITE_X3D_Fields_default()).SFNode ();
 
-         if (nodes .length && nodes [0])
-            return nodes [0];
+         node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
+
+         if (node .getValue ())
+            return node;
 
          throw new Error ("SFNode.new: invalid argument.");
       }

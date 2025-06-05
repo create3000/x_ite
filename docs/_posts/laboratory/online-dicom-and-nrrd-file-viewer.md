@@ -76,7 +76,7 @@ Click »Choose File« and select a DICOM P10 or NRRD file from your local file s
 <div class="viewer">
   <div class="viewer-row">
     <div class="viewer-column-70">
-      <x3d-canvas splashScreen="false" src="/x_ite/assets/laboratory/dicom/dicom.x3d"></x3d-canvas>
+      <x3d-canvas splashScreen="false" update="auto" src="/x_ite/assets/laboratory/dicom/dicom.x3d"></x3d-canvas>
     </div>
     <div class="viewer-column-30">
       <b>Sample Images</b>

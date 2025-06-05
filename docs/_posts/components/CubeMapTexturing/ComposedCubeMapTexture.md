@@ -15,7 +15,7 @@ tags: [ComposedCubeMapTexture, CubeMapTexturing]
 
 ComposedCubeMapTexture is a texture node that defines a cubic environment map source as an explicit set of images drawn from individual 2D texture nodes.
 
-The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
+The ComposedCubeMapTexture node belongs to the [CubeMapTexturing](/x_ite/components/overview/#cubemaptexturing) component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 

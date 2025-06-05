@@ -1,5 +1,5 @@
-/* X_ITE v11.5.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.3")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -388,7 +388,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
    pixelSize: new (external_X_ITE_X3D_Vector2_default()) (),
    translation: new (external_X_ITE_X3D_Vector3_default()) (),
    offset: new (external_X_ITE_X3D_Vector3_default()) (),
-   scale: new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1),
+   scale: new (external_X_ITE_X3D_Vector3_default()) (1),
    currentTranslation: new (external_X_ITE_X3D_Vector3_default()) (),
    currentRotation: new (external_X_ITE_X3D_Rotation4_default()) (),
    currentScale: new (external_X_ITE_X3D_Vector3_default()) (),
@@ -756,7 +756,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
 
       // Calculate translation
 
-      const translation = this .translation .set (0, 0, 0);
+      const translation = this .translation .set (0);
 
       switch (this .getAlignX ())
       {
@@ -792,7 +792,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
 
       // Calculate offset
 
-      const offset = this .offset .set (0, 0, 0);
+      const offset = this .offset .set (0);
 
       switch (this .getOffsetUnitX ())
       {
@@ -817,7 +817,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
       // Calculate scale
 
       const
-         scale              = this .scale .set (1, 1, 1),
+         scale              = this .scale .set (1),
          currentTranslation = this .currentTranslation,
          currentRotation    = this .currentRotation,
          currentScale       = this .currentScale;
@@ -919,9 +919,6 @@ var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require_
 ;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// external "__X_ITE_X3D__ .TraverseType"
-const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
-var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// ./src/x_ite/Components/Layout/LayoutGroup.js
 /*******************************************************************************
  *
@@ -979,12 +976,13 @@ var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n
 
 
 
-
 function LayoutGroup (executionContext)
 {
    external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).LayoutGroup);
+
+   this .setCollisionObject (false);
 
    // Private properties
 
@@ -1014,6 +1012,8 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
    {
       this .layoutNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DLayoutNode, this ._layout);
    },
+   set_collisionObjects__ ()
+   { },
    set_visibleObjects__ ()
    {
       this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
@@ -1029,46 +1029,31 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
 
       return this .matrix .identity ();
    },
-   getLayout ()
-   {
-      return this .layoutNode;
-   },
    traverse (type, renderObject)
    {
-      switch (type)
+      this .viewportNode ?.push ();
+
+      if (this .layoutNode)
       {
-         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
-         {
-            return;
-         }
-         default:
-         {
-            this .viewportNode ?.push ();
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-            if (this .layoutNode)
-            {
-               const modelViewMatrix = renderObject .getModelViewMatrix ();
+         this .modelViewMatrix .assign (modelViewMatrix .get ());
+         this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
 
-               this .modelViewMatrix .assign (modelViewMatrix .get ());
-               this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
+         modelViewMatrix .push (this .screenMatrix);
+         renderObject .getLayouts () .push (this .layoutNode);
 
-               modelViewMatrix .push (this .screenMatrix);
-               renderObject .getLayouts () .push (this .layoutNode);
+         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
 
-               external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-
-               renderObject .getLayouts () .pop ();
-               modelViewMatrix .pop ();
-            }
-            else
-            {
-               external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-            }
-
-            this .viewportNode ?.pop ();
-            return;
-         }
+         renderObject .getLayouts () .pop ();
+         modelViewMatrix .pop ();
       }
+      else
+      {
+         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+      }
+
+      this .viewportNode ?.pop ();
    },
 });
 
@@ -1779,6 +1764,9 @@ const ScreenFontStyle_default_ = ScreenFontStyle;
 ;
 
 /* harmony default export */ const Layout_ScreenFontStyle = (external_X_ITE_X3D_Namespace_default().add ("ScreenFontStyle", ScreenFontStyle_default_));
+;// external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// external "__X_ITE_X3D__ .X3DProtoDeclaration"
 const external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject = __X_ITE_X3D__ .X3DProtoDeclaration;
 var external_X_ITE_X3D_X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject);

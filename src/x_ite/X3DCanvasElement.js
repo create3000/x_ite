@@ -74,42 +74,39 @@ class X3DCanvasElement extends HTMLElement
       this .browser ?.connectedCallback ();
    }
 
+   disconnectedCallback ()
+   {
+      this .browser ?.disconnectedCallback ();
+   }
+
    static get observedAttributes ()
    {
-      return [
+      const attributes = [
          "antialiased",
          "baseURL",
-         "baseurl",
          "cache",
          "colorSpace",
-         "colorspace",
          "contentScale",
-         "contentscale",
          "contextMenu",
-         "contextmenu",
          "debug",
          "exposure",
          "logarithmicDepthBuffer",
-         "logarithmicdepthbuffer",
          "multisampling",
          "notifications",
          "oninitialized",
          "onshutdown",
          "orderIndependentTransparency",
-         "orderindependenttransparency",
          "splashScreen",
-         "splashscreen",
          "src",
          "textCompression",
-         "textcompression",
          "timings",
          "toneMapping",
-         "tonemapping",
          "update",
          "url",
          "xrSessionMode",
-         "xrsessionmode",
       ];
+
+      return attributes .concat (attributes .map (attribute => attribute .toLowerCase ()));
    }
 
    attributeChangedCallback (name, oldValue, newValue)

@@ -49,12 +49,36 @@ const Legacy =
 {
    elements (elements, X3DBrowser)
    {
-      if (elements .length)
-      {
-         console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
+      if (!elements .length)
+         return;
 
-         $.map (elements, element => new X3DBrowser (element));
+      console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
+
+      $.map (elements, element => new X3DBrowser (element));
+   },
+   properties (browser, properties)
+   {
+      const element = browser .getElement ();
+
+      if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
+         return properties;
+
+      for (const [name, property] of Object .entries (properties))
+      {
+         const set = property .set;
+
+         if (!set)
+            continue;
+
+         property .set = function (value)
+         {
+            set (value);
+
+            browser .attributeChangedCallback (name, undefined, value);
+         };
       }
+
+      return properties;
    },
    browser (browser)
    {
@@ -63,13 +87,11 @@ const Legacy =
       if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
          return;
 
-      if (element .attr ("src"))
-         browser .attributeChangedCallback ("src", undefined, element .attr ("src"));
-      else if (element .attr ("url"))
-         browser .attributeChangedCallback ("url", undefined, element .attr ("url"));
-
       // Make element focusable.
       element .attr ("tabindex", element .attr ("tabindex") ?? 0);
+
+      // Process initial attributes.
+      browser .connectedCallback ();
    },
    error (elements, error)
    {

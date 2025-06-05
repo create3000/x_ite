@@ -45,11 +45,7 @@
  *
  ******************************************************************************/
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import X3DViewer            from "./X3DViewer.js";
+import X3DViewer from "./X3DViewer.js";
 
 function NoneViewer (executionContext, navigationInfo)
 {
@@ -63,13 +59,6 @@ Object .defineProperties (NoneViewer,
    typeName:
    {
       value: "NoneViewer",
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
       enumerable: true,
    },
 });

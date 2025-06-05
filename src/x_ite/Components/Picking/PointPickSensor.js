@@ -100,58 +100,43 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
 
       return function ()
       {
-         const compoundShapes = this .compoundShapes;
+         const
+            compoundShapes = this .compoundShapes,
+            coord          = this .pickingGeometryNode ?.getCoord (),
+            length         = coord ?.getSize () ?? 0;
 
-         if (this .pickingGeometryNode)
+         for (let i = 0; i < length; ++ i)
          {
-            const coord = this .pickingGeometryNode .getCoord ();
-
-            if (coord)
+            if (i < compoundShapes .length)
             {
-               const length = coord .getSize ();
+               const
+                  compoundShape = compoundShapes [i],
+                  point         = coord .get1Point (i, compoundShape .point);
 
-               for (let i = 0; i < length; ++ i)
-               {
-                  if (i < compoundShapes .length)
-                  {
-                     const
-                        compoundShape = compoundShapes [i],
-                        point         = coord .get1Point (i, compoundShape .point);
+               o .setValue (point .x, point .y, point .z);
+               t .setOrigin (o);
 
-                     o .setValue (point .x, point .y, point .z);
-                     t .setOrigin (o);
-
-                     compoundShape .setLocalScaling (defaultScale);
-                     compoundShape .updateChildTransform (0, t);
-                  }
-                  else
-                  {
-                     const
-                        compoundShape = new Ammo .btCompoundShape (),
-                        sphereShape   = new Ammo .btSphereShape (0),
-                        point         = coord .get1Point (i, new Vector3 ());
-
-                     compoundShape .point = point;
-
-                     o .setValue (point .x, point .y, point .z);
-                     t .setOrigin (o);
-
-                     compoundShape .addChildShape (t, sphereShape);
-                     compoundShapes .push (compoundShape);
-                  }
-               }
-
-               compoundShapes .length = length;
+               compoundShape .setLocalScaling (defaultScale);
+               compoundShape .updateChildTransform (0, t);
             }
             else
             {
-               compoundShapes .length = 0;
+               const
+                  compoundShape = new Ammo .btCompoundShape (),
+                  sphereShape   = new Ammo .btSphereShape (0),
+                  point         = coord .get1Point (i, new Vector3 ());
+
+               compoundShape .point = point;
+
+               o .setValue (point .x, point .y, point .z);
+               t .setOrigin (o);
+
+               compoundShape .addChildShape (t, sphereShape);
+               compoundShapes .push (compoundShape);
             }
          }
-         else
-         {
-            compoundShapes .length = 0;
-         }
+
+         compoundShapes .length = length;
       };
    })(),
    process: (() =>
@@ -165,7 +150,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
          localScaling  = new Ammo .btVector3 (),
          translation   = new Vector3 (),
          rotation      = new Rotation4 (),
-         scale         = new Vector3 (1, 1, 1),
+         scale         = new Vector3 (1),
          pickedPoint   = new Fields .MFVec3f ();
 
       return function ()

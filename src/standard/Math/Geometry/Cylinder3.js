@@ -50,14 +50,40 @@ import Rotation4 from "../Numbers/Rotation4.js";
 import Matrix4   from "../Numbers/Matrix4.js";
 import Line3     from "./Line3.js";
 
-function Cylinder3 (axis, radius)
+function Cylinder3 (axis = new Line3 (), radius = 1)
 {
-   this .axis   = axis .copy ();
-   this .radius = radius;
+   this .axis = new Line3 ();
+
+   this .set (axis, radius);
 }
 
 Object .assign (Cylinder3 .prototype,
 {
+   copy ()
+   {
+      const copy = Object .create (Cylinder3 .prototype);
+
+      copy .radius = this .radius;
+      copy .axis   = this .axis .copy ();
+
+      return copy;
+   },
+   assign (cylinder)
+   {
+      this .radius = cylinder .radius;
+      this .axis .assign (cylinder .axis);
+
+      return this;
+   },
+   equals (cylinder)
+   {
+      return this .radius === cylinder .radius && this .axis .equals (cylinder .axis);
+   },
+   set (axis = new Line3 (), radius = 1)
+   {
+      this .axis .assign (axis);
+      this .radius = radius;
+   },
    intersectsLine (line, enter, exit)
    {
       ////////////////////////////////////////////////////////////////////////
@@ -97,19 +123,19 @@ Object .assign (Cylinder3 .prototype,
       // find the intersection on the unit cylinder
       const intersected = this .unitCylinderIntersectsLine (cylLine, enter, exit);
 
-      if (intersected)
-      {
-         // transform back to original space
-         const fromUnitCylSpace = toUnitCylSpace .inverse ();
+      if (!intersected)
+         return false;
 
-         fromUnitCylSpace .multVecMatrix (enter);
-         enter .add (this .axis .point);
+      // transform back to original space
+      const fromUnitCylSpace = toUnitCylSpace .inverse ();
 
-         fromUnitCylSpace .multVecMatrix (exit);
-         exit .add (this .axis .point);
-      }
+      fromUnitCylSpace .multVecMatrix (enter);
+      enter .add (this .axis .point);
 
-      return intersected;
+      fromUnitCylSpace .multVecMatrix (exit);
+      exit .add (this .axis .point);
+
+      return true;
    },
    unitCylinderIntersectsLine (line, enter, exit)
    {

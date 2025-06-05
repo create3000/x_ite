@@ -174,7 +174,6 @@ export default Namespace .add ("${base}", __default__);`;
          new webpack .ProvidePlugin ({
             $: "jquery",
             jQuery: "jquery",
-            jquery_fullscreen: "jquery-fullscreen-plugin/jquery.fullscreen.js",
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
@@ -320,7 +319,6 @@ export default Namespace .add ("${base}", __default__);`;
          new webpack .ProvidePlugin ({
             $: "jquery",
             jQuery: "jquery",
-            jquery_fullscreen: "jquery-fullscreen-plugin/jquery.fullscreen.js",
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
@@ -450,7 +448,7 @@ export default Namespace .add ("${base}", __default__);`;
                      CharLS: "CharLS.js/dist/charLS-DynamicMemory-browser.js",
                      dicomParser: "dicom-parser/dist/dicomParser.js",
                      OpenJPEG: "OpenJPEG.js/dist/openJPEG-DynamicMemory-browser.js",
-                     JpegImage: "jpeg-js/lib/decoder.js",
+                     jpegDecode: "jpeg-js/lib/decoder.js",
                   },
                }
                [name] || { },

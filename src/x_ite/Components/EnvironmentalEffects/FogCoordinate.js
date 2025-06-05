@@ -78,10 +78,6 @@ Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPr
       this .depth  = this ._depth .getValue ();
       this .length = this ._depth .length;
    },
-   isEmpty ()
-   {
-      return this .length === 0;
-   },
    getSize ()
    {
       return this .length;

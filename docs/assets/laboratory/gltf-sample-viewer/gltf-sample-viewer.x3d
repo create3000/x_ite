@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Scripting' level='1'/>
+    <component name='Text' level='1'/>
+    <meta name='created' content='Sun, 27 Apr 2025 10:03:02 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.8.5, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Mon, 05 May 2025 11:48:45 GMT'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='ColorScheme'>
+      <ProtoInterface>
+        <field accessType='outputOnly' type='SFBool' name='light'/>
+        <field accessType='outputOnly' type='SFBool' name='dark'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Script DEF='ColorSchemeScript'>
+          <field accessType='outputOnly' type='SFBool' name='light'/>
+          <field accessType='outputOnly' type='SFBool' name='dark'/>
+          <IS>
+            <connect nodeField='light' protoField='light'/>
+            <connect nodeField='dark' protoField='dark'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   const colorScheme = window .matchMedia ("(prefers-color-scheme: light)");
+
+   colorScheme .addEventListener ("change", event => changeColorScheme (event));
+
+   changeColorScheme (colorScheme);
+}
+
+function changeColorScheme (event)
+{
+   light = event .matches;
+
+   if (typeof $ !== "undefined")
+   {
+      if ($("html") .attr ("data-mode") === "light")
+         light = true;
+
+      if ($("html") .attr ("data-mode") === "dark")
+         light = false;
+   }
+
+   dark = !light;
+}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
+    <ProtoInstance name='ColorScheme' DEF='_1'/>
+    <Background DEF='White'
+        skyColor='1 1 1'/>
+    <Background DEF='Black'/>
+    <Shape DEF='Light'
+        visible='false'>
+      <Appearance>
+        <UnlitMaterial
+            emissiveColor='0 0 0'/>
+      </Appearance>
+      <Text DEF='_2'
+          string='"glTF Sample Viewer"'>
+        <FontStyle
+            justify='"MIDDLE", "MIDDLE"'/>
+      </Text>
+    </Shape>
+    <Shape DEF='Dark'>
+      <Text USE='_2'/>
+    </Shape>
+    <ROUTE fromNode='_1' fromField='light' toNode='Light' toField='set_visible'/>
+    <ROUTE fromNode='_1' fromField='light' toNode='White' toField='set_bind'/>
+    <ROUTE fromNode='_1' fromField='dark' toNode='Dark' toField='set_visible'/>
+    <ROUTE fromNode='_1' fromField='dark' toNode='Black' toField='set_bind'/>
+  </Scene>
+</X3D>

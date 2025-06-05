@@ -51,7 +51,6 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DBindableNode      from "../Core/X3DBindableNode.js";
 import X3DFogObject         from "./X3DFogObject.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 

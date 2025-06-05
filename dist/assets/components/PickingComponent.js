@@ -1,5 +1,5 @@
-/* X_ITE v11.5.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.3")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -57,9 +57,6 @@ var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(exte
 ;// external "__X_ITE_X3D__ .X3DSensorNode"
 const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
 var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
-;// external "__X_ITE_X3D__ .TraverseType"
-const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
-var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
@@ -305,7 +302,6 @@ var external_X_ITE_X3D_ObjectCache_default = /*#__PURE__*/__webpack_require__.n(
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -625,13 +621,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    },
    traverse (type, renderObject)
    {
-      // X3DPickSensorNode nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
-
-      if (type !== (external_X_ITE_X3D_TraverseType_default()).PICKING)
-         return;
-
-      if (this .isPickableObject ())
-         this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+      this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
    },
    collect (geometryNode, modelMatrix, pickingHierarchy)
    {
@@ -994,12 +984,12 @@ Object .defineProperties (LinePickSensor,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "matchCriterion",          new (external_X_ITE_X3D_Fields_default()).SFString ("MATCH_ANY")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "intersectionType",        new (external_X_ITE_X3D_Fields_default()).SFString ("BOUNDS")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "sortOrder",               new (external_X_ITE_X3D_Fields_default()).SFString ("CLOSEST")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickingGeometry",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickTarget",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",                new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "pickedTextureCoordinate", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "pickedNormal",            new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "pickedPoint",             new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickingGeometry",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickTarget",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "pickedGeometry",          new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
@@ -1102,6 +1092,9 @@ const X3DPickableObject_default_ = X3DPickableObject;
 ;
 
 /* harmony default export */ const Picking_X3DPickableObject = (external_X_ITE_X3D_Namespace_default().add ("X3DPickableObject", X3DPickableObject_default_));
+;// external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// ./src/x_ite/Components/Picking/PickableGroup.js
 /*******************************************************************************
  *
@@ -1188,91 +1181,99 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (external_X_IT
    },
    traverse (type, renderObject)
    {
-      if (type === (external_X_ITE_X3D_TraverseType_default()).PICKING)
-      {
-         if (this ._pickable .getValue ())
-         {
-            if (this .getObjectType () .has ("NONE"))
-               return;
-
-            const
-               browser       = this .getBrowser (),
-               pickableStack = browser .getPickable ();
-
-            if (this .getObjectType () .has ("ALL"))
-            {
-               pickableStack .push (true);
-               external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-               pickableStack .pop ();
-            }
-            else
-            {
-               // Filter pick sensors.
-
-               const
-                  pickSensorNodes = this .pickSensorNodes,
-                  pickSensorStack = browser .getPickSensors ();
-
-               for (const pickSensorNode of pickSensorStack .at (-1))
-               {
-                  if (!pickSensorNode .getObjectType () .has ("ALL"))
-                  {
-                     let intersection = 0;
-
-                     for (const objectType of this .getObjectType ())
-                     {
-                        if (pickSensorNode .getObjectType () .has (objectType))
-                        {
-                           ++ intersection;
-                           break;
-                        }
-                     }
-
-                     switch (pickSensorNode .getMatchCriterion ())
-                     {
-                        case Picking_MatchCriterion .MATCH_ANY:
-                        {
-                           if (intersection === 0)
-                              continue;
-
-                           break;
-                        }
-                        case Picking_MatchCriterion .MATCH_EVERY:
-                        {
-                           if (intersection !== pickSensor .getObjectType () .size)
-                              continue;
-
-                           break;
-                        }
-                        case Picking_MatchCriterion .MATCH_ONLY_ONE:
-                        {
-                           if (intersection !== 1)
-                              continue;
-
-                           break;
-                        }
-                     }
-                  }
-
-                  pickSensorNodes .add (pickSensorNode);
-               }
-
-               pickableStack   .push (true);
-               pickSensorStack .push (pickSensorNodes);
-
-               external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-
-               pickSensorStack .pop ();
-               pickableStack   .pop ();
-
-               pickSensorNodes .clear ();
-            }
-         }
-      }
-      else
+      if (type !== (external_X_ITE_X3D_TraverseType_default()).PICKING)
       {
          external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+         return;
       }
+
+      if (!this ._pickable .getValue ())
+      {
+         if (this .getTransformSensors () .size)
+         {
+            const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+            for (const transformSensorNode of this .getTransformSensors ())
+               transformSensorNode .collect (modelMatrix);
+         }
+
+         return;
+      }
+
+      if (this .getObjectType () .has ("NONE"))
+         return;
+
+      const
+         browser       = this .getBrowser (),
+         pickableStack = browser .getPickable ();
+
+      if (this .getObjectType () .has ("ALL"))
+      {
+         pickableStack .push (true);
+         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+         pickableStack .pop ();
+         return;
+      }
+
+      // Filter pick sensors.
+
+      const
+         pickSensorNodes = this .pickSensorNodes,
+         pickSensorStack = browser .getPickSensors ();
+
+      for (const pickSensorNode of pickSensorStack .at (-1))
+      {
+         if (!pickSensorNode .getObjectType () .has ("ALL"))
+         {
+            let intersection = 0;
+
+            for (const objectType of this .getObjectType ())
+            {
+               if (pickSensorNode .getObjectType () .has (objectType))
+               {
+                  ++ intersection;
+                  break;
+               }
+            }
+
+            switch (pickSensorNode .getMatchCriterion ())
+            {
+               case Picking_MatchCriterion .MATCH_ANY:
+               {
+                  if (intersection === 0)
+                     continue;
+
+                  break;
+               }
+               case Picking_MatchCriterion .MATCH_EVERY:
+               {
+                  if (intersection !== pickSensor .getObjectType () .size)
+                     continue;
+
+                  break;
+               }
+               case Picking_MatchCriterion .MATCH_ONLY_ONE:
+               {
+                  if (intersection !== 1)
+                     continue;
+
+                  break;
+               }
+            }
+         }
+
+         pickSensorNodes .add (pickSensorNode);
+      }
+
+      pickableStack   .push (true);
+      pickSensorStack .push (pickSensorNodes);
+
+      external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+
+      pickSensorStack .pop ();
+      pickableStack   .pop ();
+
+      pickSensorNodes .clear ();
    },
    dispose ()
    {
@@ -1414,7 +1415,7 @@ Object .assign (VolumePicker .prototype,
       const
          translation = new (external_X_ITE_X3D_Vector3_default()) (),
          rotation    = new (external_X_ITE_X3D_Rotation4_default()) (),
-         scale       = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1),
+         scale       = new (external_X_ITE_X3D_Vector3_default()) (1),
          s           = new (external_X_ITE_X3D_AmmoClass_default()).btVector3 (0, 0, 0);
 
       return function (compoundShape, matrix, childShape)
@@ -1600,58 +1601,43 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
 
       return function ()
       {
-         const compoundShapes = this .compoundShapes;
+         const
+            compoundShapes = this .compoundShapes,
+            coord          = this .pickingGeometryNode ?.getCoord (),
+            length         = coord ?.getSize () ?? 0;
 
-         if (this .pickingGeometryNode)
+         for (let i = 0; i < length; ++ i)
          {
-            const coord = this .pickingGeometryNode .getCoord ();
-
-            if (coord)
+            if (i < compoundShapes .length)
             {
-               const length = coord .getSize ();
+               const
+                  compoundShape = compoundShapes [i],
+                  point         = coord .get1Point (i, compoundShape .point);
 
-               for (let i = 0; i < length; ++ i)
-               {
-                  if (i < compoundShapes .length)
-                  {
-                     const
-                        compoundShape = compoundShapes [i],
-                        point         = coord .get1Point (i, compoundShape .point);
+               o .setValue (point .x, point .y, point .z);
+               t .setOrigin (o);
 
-                     o .setValue (point .x, point .y, point .z);
-                     t .setOrigin (o);
-
-                     compoundShape .setLocalScaling (defaultScale);
-                     compoundShape .updateChildTransform (0, t);
-                  }
-                  else
-                  {
-                     const
-                        compoundShape = new (external_X_ITE_X3D_AmmoClass_default()).btCompoundShape (),
-                        sphereShape   = new (external_X_ITE_X3D_AmmoClass_default()).btSphereShape (0),
-                        point         = coord .get1Point (i, new (external_X_ITE_X3D_Vector3_default()) ());
-
-                     compoundShape .point = point;
-
-                     o .setValue (point .x, point .y, point .z);
-                     t .setOrigin (o);
-
-                     compoundShape .addChildShape (t, sphereShape);
-                     compoundShapes .push (compoundShape);
-                  }
-               }
-
-               compoundShapes .length = length;
+               compoundShape .setLocalScaling (defaultScale);
+               compoundShape .updateChildTransform (0, t);
             }
             else
             {
-               compoundShapes .length = 0;
+               const
+                  compoundShape = new (external_X_ITE_X3D_AmmoClass_default()).btCompoundShape (),
+                  sphereShape   = new (external_X_ITE_X3D_AmmoClass_default()).btSphereShape (0),
+                  point         = coord .get1Point (i, new (external_X_ITE_X3D_Vector3_default()) ());
+
+               compoundShape .point = point;
+
+               o .setValue (point .x, point .y, point .z);
+               t .setOrigin (o);
+
+               compoundShape .addChildShape (t, sphereShape);
+               compoundShapes .push (compoundShape);
             }
          }
-         else
-         {
-            compoundShapes .length = 0;
-         }
+
+         compoundShapes .length = length;
       };
    })(),
    process: (() =>
@@ -1665,7 +1651,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
          localScaling  = new (external_X_ITE_X3D_AmmoClass_default()).btVector3 (),
          translation   = new (external_X_ITE_X3D_Vector3_default()) (),
          rotation      = new (external_X_ITE_X3D_Rotation4_default()) (),
-         scale         = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1),
+         scale         = new (external_X_ITE_X3D_Vector3_default()) (1),
          pickedPoint   = new (external_X_ITE_X3D_Fields_default()).MFVec3f ();
 
       return function ()
@@ -1809,10 +1795,10 @@ Object .defineProperties (PointPickSensor,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "matchCriterion",   new (external_X_ITE_X3D_Fields_default()).SFString ("MATCH_ANY")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "intersectionType", new (external_X_ITE_X3D_Fields_default()).SFString ("BOUNDS")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "sortOrder",        new (external_X_ITE_X3D_Fields_default()).SFString ("CLOSEST")),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",         new (external_X_ITE_X3D_Fields_default()).SFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "pickedPoint",      new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickingGeometry",  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickTarget",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",         new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "pickedPoint",      new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "pickedGeometry",   new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
@@ -2060,9 +2046,9 @@ Object .defineProperties (PrimitivePickSensor,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "matchCriterion",   new (external_X_ITE_X3D_Fields_default()).SFString ("MATCH_ANY")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "intersectionType", new (external_X_ITE_X3D_Fields_default()).SFString ("BOUNDS")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "sortOrder",        new (external_X_ITE_X3D_Fields_default()).SFString ("CLOSEST")),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",         new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickingGeometry",  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickTarget",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",         new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "pickedGeometry",   new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
@@ -2285,9 +2271,9 @@ Object .defineProperties (VolumePickSensor,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "matchCriterion",   new (external_X_ITE_X3D_Fields_default()).SFString ("MATCH_ANY")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "intersectionType", new (external_X_ITE_X3D_Fields_default()).SFString ("BOUNDS")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "sortOrder",        new (external_X_ITE_X3D_Fields_default()).SFString ("CLOSEST")),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",         new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickingGeometry",  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pickTarget",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",         new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "pickedGeometry",   new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,

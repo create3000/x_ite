@@ -209,7 +209,9 @@ sub update_node {
       $string .= "\n";
    }
 
-   $string .= "The $typeName node belongs to the **$componentName** component and requires at least support level **$componentLevel,** its default container field is *$containerField.*";
+   $componentSlug = lc $componentName;
+
+   $string .= "The $typeName node belongs to the [$componentName](/x_ite/components/overview/#$componentSlug) component and requires at least support level **$componentLevel,** its default container field is *$containerField.*";
    $string .= " ";
    $string .= "It is available from X3D version $from or higher." if $to eq "Infinity";
    $string .= "It is available from X3D version $from up to $to." if $to ne "Infinity";

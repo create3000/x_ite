@@ -92,7 +92,7 @@ function SFNumberTemplate (TypeName, double, defaultValue)
    {
       isDefaultValue ()
       {
-         return this .getValue () === 0;
+         return this .getValue () === defaultValue;
       },
       set (value)
       {

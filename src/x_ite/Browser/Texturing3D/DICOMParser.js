@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import { Decoder } from "../../../../node_modules/jpeg-lossless-decoder-js/release/lossless.js";
+import DEVELOPMENT from "../../DEVELOPMENT.js";
 
 function DicomParser ()
 {
@@ -134,7 +135,7 @@ Object .assign (DicomParser .prototype,
    },
    getPixelData ()
    {
-      var
+      const
          dicom        = this .dicom,
          pixelElement = this .dataSet .elements .x7fe00010 || this .dataSet .elements .x7fe00008, // pixel or float pixel
          components   = this .photometricInterpretation === "PALETTE COLOR" ? 3 : this .dicom .components,
@@ -226,10 +227,12 @@ Object .assign (DicomParser .prototype,
 
          if (this .pixelRepresentation === 1 && this .bitsStored !== undefined)
          {
-            var shift = 32 - this .bitsStored;
+            const
+               mask   = (1 << this .bitsStored) - 1,
+               length = frame .length;
 
-            for (var i = 0, length = frame .length; i < length; ++ i)
-               frame [i] = frame [i] << shift >> shift;
+            for (let i = 0; i < length; ++ i)
+               frame [i] &= mask;
          }
 
          // Handle photometric interpretation.
@@ -275,19 +278,24 @@ Object .assign (DicomParser .prototype,
 
          frame = this .flipImage (frame, components);
 
-         var
-            normalize = this .getNormalizeOffsetAndFactor (frame),
-            b         = f * imageLength;
+         // Copy data to bytes buffer.
+         {
+            const
+               { offset, factor } = this .getNormalizeOffsetAndFactor (frame),
+               length = frame .length;
 
-         for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
-            bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
+            for (let b = f * imageLength, i = 0; i < length; ++ i, ++ b)
+               bytes [b] = (frame [i] - offset) * factor;
+         }
       });
 
       // Invert MONOCHROME1 pixels.
 
       if (this .photometricInterpretation === "MONOCHROME1")
       {
-         for (var i = 0, length = bytes .length; i < length; ++ i)
+         const length = bytes .length;
+
+         for (let i = 0; i < length; ++ i)
             bytes [i] = 255 - bytes [i];
       }
 
@@ -680,13 +688,19 @@ Object .assign (DicomParser .prototype,
    },
    decodeJPEGBaseline (pixelData)
    {
-      var jpeg = new JpegImage ();
+      const opts =
+      {
+         colorTransform: false,
+         useTArray: true,
+         formatAsRGBA: false,
+         tolerantDecoding: true,
+         maxResolutionInMP: 100,  // Don't decode more than 100 megapixels
+         maxMemoryUsageInMB: 512, // Don't decode if memory footprint is more than 512MB
+      };
 
-      jpeg .parse (pixelData);
-
-      jpeg .colorTransform = true; // default is true
-
-      var data = jpeg .getData (this .dicom .width, this .dicom .height);
+      const
+         decode = DEVELOPMENT ? window ["jpeg-js"] .decode : jpegDecode,
+         data   = decode (pixelData, opts);
 
       this .bitsAllocated = 8;
 
@@ -702,11 +716,11 @@ Object .assign (DicomParser .prototype,
    },
    decodeJPEGLS (pixelData)
    {
-      var image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
+      const image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
 
       // throw error if not success or too much data
       if (image .result !== 0 && image .result !== 6)
-         throw new Error (`DICOM: JPEG-LS decoder failed to decode frame (error code ${image.result}).`);
+         throw new Error (`DICOM: JPEG-LS decoder failed to decode frame (error code ${image .result}).`);
 
       return new Uint8Array (image .pixelData .buffer);
    },

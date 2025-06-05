@@ -109,7 +109,7 @@ const Triangle2 =
          v1 = new Vector2 (),
          v2 = new Vector2 ();
 
-      return function (point, a, b, c, result)
+      return function (point, a, b, c, result = { })
       {
          v0 .assign (b) .subtract (a);
          v1 .assign (c) .subtract (a);

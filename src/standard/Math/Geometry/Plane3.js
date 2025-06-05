@@ -55,8 +55,9 @@ const
 
 function Plane3 (point = Vector3 .Zero, normal = Vector3 .zAxis)
 {
-   this .normal             = normal .copy ();
-   this .distanceFromOrigin = normal .dot (point);
+   this .normal = new Vector3 ();
+
+   this .set (point, normal);
 }
 
 Object .assign (Plane3 .prototype,
@@ -64,45 +65,27 @@ Object .assign (Plane3 .prototype,
    copy ()
    {
       const copy = Object .create (Plane3 .prototype);
+
       copy .normal             = this .normal .copy ();
       copy .distanceFromOrigin = this .distanceFromOrigin;
+
       return copy;
    },
    assign (plane)
    {
       this .normal .assign (plane .normal);
       this .distanceFromOrigin = plane .distanceFromOrigin;
+
       return this;
    },
-   set (point, normal)
+   equals (plane)
+   {
+      return this .distanceFromOrigin === plane .distanceFromOrigin && this .normal .equals (plane .normal);
+   },
+   set (point = Vector3 .Zero, normal = Vector3 .zAxis)
    {
       this .normal .assign (normal);
       this .distanceFromOrigin = normal .dot (point);
-      return this;
-   },
-   multRight (matrix)
-   {
-      // Taken from Inventor:
-
-      // Find the point on the plane along the normal from the origin
-      point .assign (this .normal) .multiply (this .distanceFromOrigin);
-
-      // Transform the plane normal by the matrix
-      // to get the new normal. Use the inverse transpose
-      // of the matrix so that normals are not scaled incorrectly.
-      // n' = n * !~m = ~m * n
-      invMatrix .assign (matrix) .submatrix .inverse ()
-         .multMatrixVec (normal .assign (this .normal)) .normalize ();
-
-      // Transform the point by the matrix
-      matrix .multVecMatrix (point);
-
-      // The new distance is the projected distance of the vector to the
-      // transformed point onto the (unit) transformed normal. This is
-      // just a dot product.
-      this .normal .assign (normal);
-      this .distanceFromOrigin = normal .dot (point);
-
       return this;
    },
    multLeft (matrix)
@@ -130,23 +113,43 @@ Object .assign (Plane3 .prototype,
 
       return this;
    },
+   multRight (matrix)
+   {
+      // Taken from Inventor:
+
+      // Find the point on the plane along the normal from the origin
+      point .assign (this .normal) .multiply (this .distanceFromOrigin);
+
+      // Transform the plane normal by the matrix
+      // to get the new normal. Use the inverse transpose
+      // of the matrix so that normals are not scaled incorrectly.
+      // n' = n * !~m = ~m * n
+      invMatrix .assign (matrix) .submatrix .inverse ()
+         .multMatrixVec (normal .assign (this .normal)) .normalize ();
+
+      // Transform the point by the matrix
+      matrix .multVecMatrix (point);
+
+      // The new distance is the projected distance of the vector to the
+      // transformed point onto the (unit) transformed normal. This is
+      // just a dot product.
+      this .normal .assign (normal);
+      this .distanceFromOrigin = normal .dot (point);
+
+      return this;
+   },
    getDistanceToPoint (point)
    {
       return point .dot (this .normal) - this .distanceFromOrigin;
    },
    getPerpendicularVectorToPoint (point, result = new Vector3 ())
    {
-      return result .assign (this .normal) .multiply (this .getDistanceToPoint (point));
+      return result .assign (this .normal) .multiply (-this .getDistanceToPoint (point));
    },
-	getClosestPointToPoint: (function ()
+	getClosestPointToPoint (point, result = new Vector3 ())
    {
-      const p = new Vector3 ();
-
-      return function (point, result = new Vector3 ())
-      {
-         return result .assign (point) .add (this .getPerpendicularVectorToPoint (point, p));
-      };
-   })(),
+      return this .getPerpendicularVectorToPoint (point, result) .add (point);
+   },
    intersectsLine (line, intersection)
    {
       const { point, direction } = line;
@@ -161,15 +164,13 @@ Object .assign (Plane3 .prototype,
       // Plane and line are not parallel. The intersection point can be calculated now.
       const t = (this .distanceFromOrigin - this .normal .dot (point)) / theta;
 
-      intersection .x = point .x + direction .x * t;
-      intersection .y = point .y + direction .y * t;
-      intersection .z = point .z + direction .z * t;
+      intersection .assign (direction) .multiply (t) .add (point);
 
       return true;
    },
    toString ()
    {
-      return `${this .normal} ${this .distanceFromOrigin}`;
+      return `${this .normal}, ${this .distanceFromOrigin}`;
    },
 });
 

@@ -36,10 +36,10 @@ If you are going to use X_ITE in a production environment, you should use a fixe
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.5.3/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.5.9/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.5.3/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.5.9/dist/x_ite.min.mjs";
 </script>
 ```
 
@@ -68,8 +68,8 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ### Declarative Syntax
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.5.3/dist/x_ite.min.js"></script>
-<x3d-canvas>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@11.5.9/dist/x_ite.min.js"></script>
+<x3d-canvas update="auto" contentScale="auto">
   <X3D profile='Interchange' version='4.1'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
@@ -107,18 +107,28 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.5.3/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@11.5.9/dist/x_ite.min.mjs";
 
 const
-   browser = X3D .getBrowser (),
-   scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
+  canvas  = document .createElement ("x3d-canvas"), // Or get an already inserted <x3d-canvas> element.
+  browser = canvas .browser,                        // Get X3DBrowser reference.
+  scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
+
+// Append <x3d-canvas> element to body:
+
+document .body .appendChild (canvas);
+
+// Change Browser Options (this could also be done by setting the attributes of the canvas):
+
+browser .setBrowserOption ("AutoUpdate",   true); // Disable animations if x3d-canvas is not visible.
+browser .setBrowserOption ("ContentScale", -1);   // Increase resolution for HiDPI displays.
 
 // Create Viewpoint:
 
 const viewpointNode = scene .createNode ("Viewpoint");
 
-viewpointNode .set_bind    = true;
-viewpointNode .description = "Initial View";
+viewpointNode .set_bind    = true;           // Bind the viewpoint.
+viewpointNode .description = "Initial View"; // Appears now in the context menu.
 viewpointNode .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
 viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
 
@@ -127,11 +137,11 @@ scene .rootNodes .push (viewpointNode);
 // Create Box:
 
 const
-   transformNode  = scene .createNode ("Transform"),
-   shapeNode      = scene .createNode ("Shape"),
-   appearanceNode = scene .createNode ("Appearance"),
-   materialNode   = scene .createNode ("Material"),
-   boxNode        = scene .createNode ("Box");
+  transformNode  = scene .createNode ("Transform"),
+  shapeNode      = scene .createNode ("Shape"),
+  appearanceNode = scene .createNode ("Appearance"),
+  materialNode   = scene .createNode ("Material"),
+  boxNode        = scene .createNode ("Box");
 
 appearanceNode .material = materialNode;
 
@@ -148,8 +158,8 @@ scene .addNamedNode ("Box", transformNode);
 // Create animation:
 
 const
-   timeSensorNode   = scene .createNode ("TimeSensor"),
-   interpolatorNode = scene .createNode ("OrientationInterpolator");
+  timeSensorNode   = scene .createNode ("TimeSensor"),
+  interpolatorNode = scene .createNode ("OrientationInterpolator");
 
 timeSensorNode .cycleInterval = 10;
 timeSensorNode .loop          = true;
@@ -171,13 +181,15 @@ scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_ro
 
 await browser .replaceWorld (scene);
 </script>
-<!-- x3d-canvas element comes here: -->
-<x3d-canvas></x3d-canvas>
 ```
+
+Read more in [Accessing the External Browser](https://create3000.github.io/x_ite/accessing-the-external-browser/).
 
 ## Contributing
 
 Contributions are always welcome. There is no special form to do this. A good idea is to fork the X_ITE repository and create a separate branch from the `development` branch, make your changes and then make a pull request.
+
+For more information see [CONTRIBUTING](.github/CONTRIBUTING.md).
 
 ## License
 

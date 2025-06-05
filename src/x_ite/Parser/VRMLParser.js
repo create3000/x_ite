@@ -87,7 +87,7 @@ const Grammar = Expressions ({
    IMPORT:      /IMPORT/gy,
    IS:          /IS/gy,
    META:        /META/gy,
-   NULL:        /NULL/gy,
+   NULL:        /NULL|null/gy,
    TRUE:        /TRUE|true/gy,
    PROFILE:     /PROFILE/gy,
    PROTO:       /PROTO/gy,
@@ -770,6 +770,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                         {
                            const existingProto = this .getExecutionContext () .getProtoDeclaration (nodeTypeId);
 
+                           console .warn (`A proto named '${nodeTypeId}' is already defined and will be overridden.`);
+
                            this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (nodeTypeId), existingProto);
                         }
                         catch
@@ -1006,6 +1008,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                      try
                      {
                         const existingExternProto = this .getExecutionContext () .getExternProtoDeclaration (nodeTypeId);
+
+                        console .warn (`A extern proto named '${nodeTypeId}' is already defined and will be overridden.`);
 
                         this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (nodeTypeId), existingExternProto);
                      }
@@ -2607,6 +2611,8 @@ Object .assign (VRMLParser .prototype,
    [X3DConstants .SFVec4d]:     VRMLParser .prototype .sfvec4Value,
    [X3DConstants .SFVec4f]:     VRMLParser .prototype .sfvec4Value,
 
+   [X3DConstants .VrmlMatrix]:  VRMLParser .prototype .sfmatrix4Value,
+
    [X3DConstants .MFBool]:      VRMLParser .prototype .mfboolValue,
    [X3DConstants .MFColor]:     VRMLParser .prototype .mfcolorValue,
    [X3DConstants .MFColorRGBA]: VRMLParser .prototype .mfcolorrgbaValue,
@@ -2630,7 +2636,7 @@ Object .assign (VRMLParser .prototype,
    [X3DConstants .MFVec4f]:     VRMLParser .prototype .mfvec4Value,
 });
 
-X3DField .prototype .fromString = function (string, scene)
+X3DField .prototype .fromVRMLString = function (string, scene)
 {
    const parser = new VRMLParser (scene);
 

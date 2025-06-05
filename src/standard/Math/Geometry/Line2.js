@@ -49,8 +49,10 @@ import Vector2 from "../Numbers/Vector2.js";
 
 function Line2 (point = Vector2 .Zero, direction = Vector2 .yAxis)
 {
-   this .point     = point     .copy ();
-   this .direction = direction .copy ();
+   this .point     = new Vector2 ();
+   this .direction = new Vector2 ();
+
+   this .set (point, direction);
 }
 
 Object .assign (Line2 .prototype,
@@ -58,17 +60,24 @@ Object .assign (Line2 .prototype,
    copy ()
    {
       const copy = Object .create (Line2 .prototype);
+
       copy .point     = this .point .copy ();
       copy .direction = this .direction .copy ();
+
       return copy;
    },
    assign (line)
    {
       this .point     .assign (line .point);
       this .direction .assign (line .direction);
+
       return this;
    },
-   set (point, direction)
+   equals (line)
+   {
+      return this .point .equals (line .point) && this .direction .equals (line .direction);
+   },
+   set (point = Vector2 .Zero, direction = Vector2 .yAxis)
    {
       this .point     .assign (point);
       this .direction .assign (direction);
@@ -92,7 +101,7 @@ Object .assign (Line2 .prototype,
       matrix .multDirMatrix (this .direction) .normalize ();
       return this;
    },
-   getClosestPointToPoint (point, result)
+   getClosestPointToPoint (point, result = new Vector2 ())
    {
       const
          r = result .assign (point) .subtract (this .point),
@@ -104,7 +113,7 @@ Object .assign (Line2 .prototype,
    {
       const t = new Vector2 ();
 
-      return function (point, result)
+      return function (point, result = new Vector2 ())
       {
          result .assign (this .point) .subtract (point);
 

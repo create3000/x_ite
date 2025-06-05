@@ -48,8 +48,6 @@
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
 import _           from "../../../locale/gettext.js";
 
-typeof jquery_fullscreen; // import plugin
-
 const
    _options  = Symbol (),
    _userMenu = Symbol (),
@@ -92,7 +90,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       if (typeof this [_userMenu] === "function")
       {
-         const menu = this [_userMenu] (this .getBrowser ());
+         const menu = $.try (() => this [_userMenu] (this .getBrowser ()), true);
 
          if ($.isPlainObject (menu))
          {
@@ -103,7 +101,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       return userMenu;
    },
-   hide (event)
+   hide ()
    {
       this [_hide] ?.();
    },
@@ -113,6 +111,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          options = this [_options],
          menu    = options .build (event),
          level   = 1;
+
+      this .hide ();
 
       if (!menu) return;
 
@@ -315,7 +315,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
    {
       const
          browser    = this .getBrowser (),
-         fullscreen = browser .getElement () .fullScreen ();
+         element    = browser .getElement (),
+         fullscreen = document .fullscreenElement === element [0];
 
       if (!browser .getBrowserOption ("ContextMenu"))
          return;
@@ -531,7 +532,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                className: `context-menu-icon ${fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-enter-fullscreen"}`,
                callback: () =>
                {
-                  browser .getElement () .fullScreen (!fullscreen);
+                  if (fullscreen)
+                     document .exitFullscreen () .catch (Function .prototype);
+                  else
+                     element [0] .requestFullscreen ({ navigationUI: "hide" }) .catch (Function .prototype);
                },
             },
             "separator4": "--------",

@@ -50,7 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
-import X3DCast              from "../../Base/X3DCast.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
@@ -76,160 +75,55 @@ function LOD (executionContext)
 
    // Private properties
 
-   this .frameRate        = 60;
-   this .keepCurrentLevel = false;
+   this .frameRate = 60;
 }
 
 Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototype),
 {
-   getSubBBox (bbox, shadows)
-   {
-      if (this .isDefaultBBoxSize ())
-         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
-
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-   },
-   clearChildren ()
-   { },
    addChildren ()
    { },
    removeChildren ()
    { },
-   setChild (childNode)
+   set_addChildren__ ()
    {
-      // Remove node.
+      X3DGroupingNode .prototype .set_addChildren__ .call (this);
 
-      if (this .childNode)
-      {
-         const childNode = this .childNode;
+      this .set_children__ ();
+   },
+   set_removeChildren__ ()
+   {
+      X3DGroupingNode .prototype .set_removeChildren__ .call (this);
 
-         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
-         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
-         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
-         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
-         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
-
-         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-         {
-            childNode ._display     .removeInterest ("requestRebuild", this);
-            childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
-         }
-      }
-
-      // Clear node.
-
-      this .childNode       = null;
-      this .boundedObject   = null;
-      this .pointingObject  = null;
-      this .cameraObject    = null;
-      this .pickableObject  = null;
-      this .collisionObject = null;
-      this .shadowObject    = null;
-      this .visibleObject   = null;
-      this .bboxObject      = null;
-
-      // Add node.
-
-      if (childNode)
-      {
-         childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
-         childNode ._isPointingObject  .addInterest ("requestRebuild", this);
-         childNode ._isCameraObject    .addInterest ("requestRebuild", this);
-         childNode ._isPickableObject  .addInterest ("requestRebuild", this);
-         childNode ._isCollisionObject .addInterest ("requestRebuild", this);
-         childNode ._isShadowObject    .addInterest ("requestRebuild", this);
-         childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
-
-         this .childNode = childNode;
-
-         if (childNode .isVisible ())
-         {
-            if (childNode .isBoundedObject ())
-               this .boundedObject = childNode;
-
-            if (childNode .isPointingObject ())
-               this .pointingObject = childNode;
-
-            if (childNode .isCameraObject ())
-               this .cameraObject = childNode;
-
-            if (childNode .isPickableObject ())
-               this .pickableObject = childNode;
-
-            if (childNode .isCollisionObject ())
-               this .collisionObject = childNode;
-
-            if (childNode .isShadowObject ())
-               this .shadowObject = childNode;
-
-            if (childNode .isVisibleObject ())
-               this .visibleObject = childNode;
-         }
-
-         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-         {
-            childNode ._display     .addInterest ("requestRebuild", this);
-            childNode ._bboxDisplay .addInterest ("requestRebuild", this);
-
-            if (childNode .isBBoxVisible ())
-               this .bboxObject = childNode;
-         }
-      }
-
-      this .set_objects__ ();
+      this .set_children__ ();
    },
    set_children__ ()
    {
+      this .clearChildren ();
+
+      // Add single child.
+
       const level = Math .min (this ._level_changed .getValue (), this ._children .length - 1);
 
       if (level >= 0 && level < this ._children .length)
-      {
-         this .setChild (X3DCast (X3DConstants .X3DChildNode, this ._children [level]))
-      }
-      else
-      {
-         this .setChild (null);
-      }
-   },
-   set_boundedObjects__ ()
-   {
-      this .setBoundedObject (this .boundedObject || !this .isDefaultBBoxSize ());
-   },
-   set_pointingObjects__ ()
-   {
-      this .setPointingObject (this .pointingObject);
-   },
-   set_cameraObjects__ ()
-   {
-      this .setCameraObject (this .cameraObject);
-   },
-   set_pickableObjects__ ()
-   {
-      this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
-   },
-   set_collisionObjects__ ()
-   {
-      this .setCollisionObject (this .collisionObject);
-   },
-   set_shadowObjects__ ()
-   {
-      this .setShadowObject (this .shadowObject);
+         this .addChild (this ._children [level]);
+
+      this .set_objects__ ();
    },
    set_visibleObjects__ ()
    { },
    getLevel: (() =>
    {
       const
-         FRAMES         = 180, // Number of frames after wich a level change takes in affect.
+         FRAMES         = 180, // Number of frames after which a level change takes in affect.
          FRAME_RATE_MIN = 20,  // Lowest level of detail.
          FRAME_RATE_MAX = 55;  // Highest level of detail.
 
-      return function (browser, modelViewMatrix)
+      return function (modelViewMatrix)
       {
          if (this ._range .length === 0)
          {
+            const browser = this .getBrowser ();
+
             this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 
             const size = this ._children .length;
@@ -256,90 +150,40 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          return Algorithm .upperBound (this ._range, 0, this ._range .length, distance);
       };
    })(),
-   traverse: (() =>
+   changeLevel: (() =>
    {
       const modelViewMatrix = new Matrix4 ();
 
-      return function (type, renderObject)
+      return function (renderObject)
       {
-         switch (type)
+         const currentLevel = this ._level_changed .getValue ();
+
+         let level = this .getLevel (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+
+         if (this ._forceTransitions .getValue ())
          {
-            case TraverseType .POINTER:
-            {
-               this .pointingObject ?.traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .CAMERA:
-            {
-               this .cameraObject ?.traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .PICKING:
-            {
-               if (this .getTransformSensors () .size)
-               {
-                  const modelMatrix = renderObject .getModelViewMatrix () .get ();
+            if (level > currentLevel)
+               level = currentLevel + 1;
 
-                  for (const transformSensorNode of this .getTransformSensors ())
-                     transformSensorNode .collect (modelMatrix);
-               }
-
-               const
-                  browser          = this .getBrowser (),
-                  pickingHierarchy = browser .getPickingHierarchy ();
-
-               pickingHierarchy .push (this);
-
-               if (browser .getPickable () .at (-1))
-                  this .visibleObject ?.traverse (type, renderObject);
-               else
-                  this .pickableObject ?.traverse (type, renderObject);
-
-               pickingHierarchy .pop ();
-               return;
-            }
-            case TraverseType .COLLISION:
-            {
-               this .collisionObject ?.traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .SHADOW:
-            {
-               this .shadowObject ?.traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .DISPLAY:
-            {
-               if (!this .keepCurrentLevel)
-               {
-                  let
-                     level        = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-                     currentLevel = this ._level_changed .getValue ();
-
-                  if (this ._forceTransitions .getValue ())
-                  {
-                     if (level > currentLevel)
-                        level = currentLevel + 1;
-
-                     else if (level < currentLevel)
-                        level = currentLevel - 1;
-                  }
-
-                  if (level !== currentLevel)
-                  {
-                     this ._level_changed = level;
-
-                     this .set_children__ ();
-                  }
-               }
-
-               this .visibleObject ?.traverse    (type, renderObject);
-               this .bboxObject    ?.displayBBox (type, renderObject);
-               return;
-            }
+            else if (level < currentLevel)
+               level = currentLevel - 1;
          }
+
+         if (level === currentLevel)
+            return;
+
+         this ._level_changed = level;
+
+         this .set_children__ ();
       };
    })(),
+   traverse (type, renderObject)
+   {
+      if (type === TraverseType .DISPLAY)
+         this .changeLevel (renderObject);
+
+      X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+   },
 });
 
 Object .defineProperties (LOD,

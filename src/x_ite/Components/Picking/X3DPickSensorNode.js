@@ -48,7 +48,6 @@
 import Fields           from "../../Fields.js";
 import X3DNode          from "../Core/X3DNode.js";
 import X3DSensorNode    from "../Core/X3DSensorNode.js";
-import TraverseType     from "../../Rendering/TraverseType.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
 import MatchCriterion   from "../../Browser/Picking/MatchCriterion.js";
 import IntersectionType from "../../Browser/Picking/IntersectionType.js";
@@ -364,13 +363,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
    traverse (type, renderObject)
    {
-      // X3DPickSensorNode nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
-
-      if (type !== TraverseType .PICKING)
-         return;
-
-      if (this .isPickableObject ())
-         this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+      this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
    },
    collect (geometryNode, modelMatrix, pickingHierarchy)
    {

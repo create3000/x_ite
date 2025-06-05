@@ -15,7 +15,7 @@ tags: [IsoSurfaceVolumeData, VolumeRendering]
 
 IsoSurfaceVolumeData displays one or more surfaces extracted from a voxel dataset. A surface is defined as the boundary between regions in the volume where the voxel values are larger than a given value (the iso value) on one side of the boundary and smaller on the other side, and the gradient magnitude is larger than surfaceTolerance.
 
-The IsoSurfaceVolumeData node belongs to the **VolumeRendering** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.3 or higher.
+The IsoSurfaceVolumeData node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 

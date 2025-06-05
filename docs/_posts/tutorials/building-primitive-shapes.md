@@ -143,7 +143,7 @@ Shape {
 ## Building multiple shapes
 
 - Shapes are built centered in the world
-- A X3D file can contain multiple shapes
+- An X3D file can contain multiple shapes
 - Shapes overlap when built at the same location
 
 ## A sample file with multiple shapes

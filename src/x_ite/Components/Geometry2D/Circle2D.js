@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode
       }
       else
       {
-         const defaultVertices = geometry .getVertices () .getValue ();
+         const defaultVertices = geometry .getVertices ();
 
          for (let i = 0, length = defaultVertices .length; i < length; i += 4)
             vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);

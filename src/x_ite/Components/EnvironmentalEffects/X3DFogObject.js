@@ -49,7 +49,6 @@ import Fields       from "../../Fields.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import ObjectCache  from "../../../standard/Utility/ObjectCache.js";
-import Algorithm    from "../../../standard/Math/Algorithm.js";
 
 const Fogs = ObjectCache (FogContainer);
 
@@ -144,7 +143,7 @@ Object .assign (X3DFogObject .prototype,
 
       return function ()
       {
-         if (this ._hidden .getValue () || this .visibilityRange === 0)
+         if (this ._hidden .getValue () || (this .visibilityRange === 0 && this .visibilityStart === 0))
             this .fogType = 0;
          else
             this .fogType = fogTypes .get (this ._fogType .getValue ()) || 1;
@@ -156,8 +155,8 @@ Object .assign (X3DFogObject .prototype,
    },
    set_visibilityRange__ ()
    {
+      this .visibilityStart = Math .max (this ._visibilityStart .getValue (), 0);
       this .visibilityRange = Math .max (this ._visibilityRange .getValue (), 0);
-      this .visibilityStart = Algorithm .clamp (this ._visibilityStart .getValue (), 0, this .visibilityRange - 0.001);
 
       this .set_fogType__ ();
    },

@@ -63,7 +63,6 @@ function ProximitySensor (executionContext)
    this .addType (X3DConstants .ProximitySensor);
 
    this .setCameraObject (true);
-   this .setVisibleObject (true);
    this .setZeroTest (true);
 
    // Units
@@ -86,23 +85,15 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-      this ._enabled .addInterest ("set_enabled__", this);
-      this ._size    .addInterest ("set_extents__", this);
-      this ._center  .addInterest ("set_extents__", this);
+      this ._size   .addInterest ("set_extents__", this);
+      this ._center .addInterest ("set_extents__", this);
 
+      this ._enabled   .addFieldInterest (this ._isVisibleObject);
       this ._traversed .addFieldInterest (this ._isCameraObject);
 
-      this .set_enabled__ ();
-      this .set_extents__ ();
-   },
-   set_enabled__ ()
-   {
-      this .setCameraObject (this ._enabled .getValue ());
+      this .setVisibleObject (this ._enabled .getValue ());
 
-      if (this ._enabled .getValue ())
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
+      this .set_extents__ ();
    },
    set_extents__ ()
    {
@@ -196,7 +187,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    {
       const
          invModelViewMatrix = new Matrix4 (),
-         infinity           = new Vector3 (-1, -1, -1);
+         infinity           = new Vector3 (-1);
 
       return function (type, renderObject)
       {

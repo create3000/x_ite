@@ -15,7 +15,7 @@ tags: [ExplosionEmitter, ParticleSystems]
 
 ExplosionEmitter generates all particles from a specific point in space at the initial time enabled.
 
-The ExplosionEmitter node belongs to the **ParticleSystems** component and requires at least support level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
+The ExplosionEmitter node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

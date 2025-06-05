@@ -96,7 +96,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
          }
          else
          {
-            return result .set (0, 0, 0);
+            return result .set (0);
          }
       };
    })(),

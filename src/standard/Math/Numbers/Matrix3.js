@@ -50,12 +50,12 @@ import Vector3             from "./Vector3.js";
 import Matrix2             from "./Matrix2.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
-function Matrix3 ()
+function Matrix3 (... args)
 {
-   if (arguments .length)
+   if (args .length)
    {
       for (let i = 0; i < 9; ++ i)
-         this [i] = arguments [i];
+         this [i] = args [i];
    }
    else
    {

@@ -117,7 +117,7 @@ const Browser = X3D .getBrowser ();
 
 #### **getBrowser** (*element: X3DCanvasElement*): X3DBrowser
 
-Given a DOM element that represents a x3d-canvas element, the getBrowser function returns the appropriate X3DBrowser object. This function is exactly the same as accessing the `browser` property from the X3DCanvasElement directly.
+Given a DOM element that represents an \<x3d-canvas\> element, the getBrowser function returns the appropriate X3DBrowser object. This function is exactly the same as accessing the `browser` property from the X3DCanvasElement directly.
 
 ```js
 // Query all x3d-canvas elements within the HTML page.

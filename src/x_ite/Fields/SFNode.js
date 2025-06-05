@@ -47,7 +47,6 @@
 
 import X3DField     from "../Base/X3DField.js";
 import X3DConstants from "../Base/X3DConstants.js";
-import Generator    from "../InputOutput/Generator.js";
 import SFNodeCache  from "./SFNodeCache.js";
 
 const
@@ -162,7 +161,7 @@ function SFNode (value)
    this [_target] = this;
    this [_proxy]  = proxy;
 
-   if (value)
+   if (value ?.getType () .includes (X3DConstants .X3DNode))
    {
       value .addParent (proxy);
 
@@ -222,7 +221,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       // No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
-      if (value)
+      if (value ?.getType () .includes (X3DConstants .X3DNode))
       {
          value .addParent (target [_proxy]);
 
@@ -297,6 +296,9 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       throw new Error ("SFNode.getFieldDefinitions: node is null.");
    },
+   /**
+   * @deprecated Returns the corresponding X3DField object associated with *name*. Use sfnode.{fieldName} syntax.
+   */
    getField (name)
    {
       const

@@ -58,11 +58,11 @@ const
 // See: https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_materials_specular/README.md
 // See: https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SpecularTest/glTF/SpecularTest.gltf
 
-function Color3 (r = 0, g = 0, b = 0)
+function Color3 (r = 0, g = r, b = g)
 {
-   this [_r] = Math .max (r, 0);
-   this [_g] = Math .max (g, 0);
-   this [_b] = Math .max (b, 0);
+   this [_r] = r;
+   this [_g] = g;
+   this [_b] = b;
 }
 
 Object .assign (Color3 .prototype,
@@ -88,11 +88,11 @@ Object .assign (Color3 .prototype,
       this [_b] = color [_b];
       return this;
    },
-   set (r = 0, g = 0, b = 0)
+   set (r = 0, g = r, b = g)
    {
-      this [_r] = Math .max (r, 0);
-      this [_g] = Math .max (g, 0);
-      this [_b] = Math .max (b, 0);
+      this [_r] = r;
+      this [_g] = g;
+      this [_b] = b;
       return this;
    },
    equals (color)
@@ -210,17 +210,17 @@ for (const key of Object .keys (Color3 .prototype))
 
 const r = {
    get () { return this [_r]; },
-   set (value) { this [_r] = Math .max (value, 0); },
+   set (value) { this [_r] = value; },
 };
 
 const g = {
    get () { return this [_g]; },
-   set (value) { this [_g] = Math .max (value, 0); },
+   set (value) { this [_g] = value; },
 };
 
 const b = {
    get () { return this [_b]; },
-   set (value) { this [_b] = Math .max (value, 0); },
+   set (value) { this [_b] = value; },
 };
 
 Object .defineProperties (Color3 .prototype,
@@ -237,7 +237,7 @@ Object .defineProperties (Color3 .prototype,
 Object .assign (Color3,
 {
    Black: Object .freeze (new Color3 ()),
-   White: Object .freeze (new Color3 (1, 1, 1)),
+   White: Object .freeze (new Color3 (1)),
    HSV (h, s, v)
    {
       const color = Object .create (this .prototype);

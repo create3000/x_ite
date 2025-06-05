@@ -45,12 +45,8 @@
  *
  ******************************************************************************/
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import X3DViewer            from "./X3DViewer.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import X3DViewer from "./X3DViewer.js";
+import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 
 typeof jquery_mousewheel; // import plugin
 
@@ -59,8 +55,8 @@ const macOS = /Mac OS X/i .test (navigator .userAgent)
 const SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
 
 const
-   vector                 = new Vector3 (0 ,0, 0),
-   positionOffset         = new Vector3 (0 ,0, 0),
+   vector                 = new Vector3 (),
+   positionOffset         = new Vector3 (),
    centerOfRotationOffset = new Vector3 ();
 
 function PlaneViewer (executionContext, navigationInfo)
@@ -229,13 +225,6 @@ Object .defineProperties (PlaneViewer,
    typeName:
    {
       value: "PlaneViewer",
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
       enumerable: true,
    },
 });

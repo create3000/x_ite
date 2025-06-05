@@ -174,19 +174,29 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
    },
    set_image__ ()
    {
-      const
-         gl          = this .getBrowser () .getContext (),
-         comp        = this ._image .comp,
-         array       = this ._image .array,
-         transparent = !(comp % 2);
-
-      let
-         width  = this ._image .width,
-         height = this ._image .height,
-         data   = null;
-
-      if (width > 0 && height > 0 && comp > 0 && comp < 5)
+      try
       {
+         const
+            gl          = this .getBrowser () .getContext (),
+            comp        = this ._image .comp,
+            array       = this ._image .array,
+            transparent = !(comp % 2);
+
+         let
+            width  = this ._image .width,
+            height = this ._image .height,
+            data   = null;
+
+         if (width < 0 || height < 0 || comp < 0 || comp > 4)
+            throw new Error (`At least one dimension (${width} × ${height} or components ${comp}) is invalid.`);
+
+         if (width === 0 || height === 0 || comp === 0)
+         {
+            this .clearTexture ();
+            this ._loadState = X3DConstants .COMPLETE_STATE;
+            return;
+         }
+
          if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
          {
             data = new Uint8Array (width * height * 4);
@@ -242,8 +252,10 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
 
          this ._loadState = X3DConstants .COMPLETE_STATE;
       }
-      else
+      catch (error)
       {
+         console .error (error);
+
          this .clearTexture ();
          this ._loadState = X3DConstants .FAILED_STATE;
       }

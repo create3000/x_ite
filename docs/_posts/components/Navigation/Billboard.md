@@ -15,7 +15,7 @@ tags: [Billboard, Navigation]
 
 Billboard is a Grouping node that can contain most nodes. Contained child geometry faces the user, rotating about the specified axis. Set axisOfRotation=0 0 0 to fully face the user's camera.
 
-The Billboard node belongs to the **Navigation** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Billboard node belongs to the [Navigation](/x_ite/components/overview/#navigation) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

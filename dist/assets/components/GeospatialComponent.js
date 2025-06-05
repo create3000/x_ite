@@ -1,5 +1,5 @@
-/* X_ITE v11.5.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.3")];
+/* X_ITE v11.5.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -111,37 +111,49 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
  *
  ******************************************************************************/
 
-function Spheroid3 (semiMajorAxis, semiMinorAxis)
+function Spheroid3 (semiMajorAxis = 1, semiMinorAxis = 1, use_f_1 = false)
 {
-   switch (arguments .length)
-   {
-      case 0:
-         this .semiMajorAxis = 0; // a
-         this .semiMinorAxis = 0; // c
-         break;
-      case 2:
-         this .semiMajorAxis = semiMajorAxis; // a
-         this .semiMinorAxis = semiMinorAxis; // c
-         break;
-      case 3:
-         const f_1 = arguments [1];
-         this .semiMajorAxis = semiMajorAxis;                 // a
-         this .semiMinorAxis = semiMajorAxis * (1 - 1 / f_1); // c
-         break;
-   }
+   this .set (semiMajorAxis, semiMinorAxis, use_f_1);
 }
 
 Object .assign (Spheroid3 .prototype,
 {
-   getSemiMajorAxis ()
+   copy ()
    {
-      // Returns the semi-major axis (a)
-      return this .semiMajorAxis; // a
+      const copy = Object .create (Spheroid3 .prototype);
+
+      copy .semiMajorAxis = this .semiMajorAxis; // a
+      copy .semiMinorAxis = this .semiMinorAxis; // c
+
+      return copy;
    },
-   getSemiMinorAxis ()
+   assign (spheroid)
    {
-      // Returns the semi-minor axis (c)
-      return this .semiMinorAxis; // c
+      this .semiMajorAxis = spheroid .semiMajorAxis;
+      this .semiMinorAxis = spheroid .semiMinorAxis;
+
+      return this;
+   },
+   equals (spheroid)
+   {
+      return this .semiMajorAxis === spheroid .semiMajorAxis && this .semiMinorAxis === spheroid .semiMinorAxis;
+   },
+   set (semiMajorAxis = 1, semiMinorAxis = 1, use_f_1 = false)
+   {
+      if (use_f_1)
+      {
+         const f_1 = semiMinorAxis;
+
+         this .semiMajorAxis = semiMajorAxis;                   // a
+         this .semiMinorAxis = semiMajorAxis * (1 - (1 / f_1)); // c
+      }
+      else
+      {
+         this .semiMajorAxis = semiMajorAxis; // a
+         this .semiMinorAxis = semiMinorAxis; // c
+      }
+
+      return this;
    },
    toString ()
    {
@@ -305,9 +317,9 @@ function Geodetic (spheroid, latitudeFirst, radians)
 {
    this .longitudeFirst = ! latitudeFirst;
    this .degrees        = ! radians;
-   this .a              = spheroid .getSemiMajorAxis ();
-   this .c              = spheroid .getSemiMinorAxis ();
-   this .c2a2           = (spheroid .getSemiMinorAxis () / this .a) ** 2;
+   this .a              = spheroid .semiMajorAxis;
+   this .c              = spheroid .semiMinorAxis;
+   this .c2a2           = (spheroid .semiMinorAxis / this .a) ** 2;
    this .ecc2           = 1 - this .c2a2;
 }
 
@@ -498,8 +510,8 @@ const
 function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northingFirst)
 {
    const
-      a    = spheroid .getSemiMajorAxis (),
-      ecc2 = 1 - (spheroid .getSemiMinorAxis () / a) ** 2,
+      a    = spheroid .semiMajorAxis,
+      ecc2 = 1 - (spheroid .semiMinorAxis / a) ** 2,
       EE   = ecc2 / (1 - ecc2),
       e1   = (1 - Math .sqrt (1 - ecc2)) / (1 + Math .sqrt (1 - ecc2));
 
@@ -1060,7 +1072,7 @@ Object .assign (X3DGeospatialObject .prototype,
       if (this .geoOriginNode)
          this .geoOriginNode .getOrigin (this .origin);
       else
-         this .origin .set (0, 0, 0);
+         this .origin .set (0);
 
       this .set_originMatrix__ ();
    },
@@ -1312,7 +1324,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
          }
          else
          {
-            return result .set (0, 0, 0);
+            return result .set (0);
          }
       };
    })(),
@@ -1958,7 +1970,6 @@ function GeoLOD (executionContext)
    this .childInlineNodes = [this .child1InlineNode, this .child2InlineNode, this .child3InlineNode, this .child4InlineNode];
    this .childrenLoaded   = false;
    this .keepCurrentLevel = false;
-   this .modelViewMatrix  = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
@@ -2081,16 +2092,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
    {
       this .setShadowObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isShadowObject ()));
    },
-   getLevel (modelViewMatrix)
-   {
-      const distance = this .getDistance (modelViewMatrix);
-
-      if (distance < this ._range .getValue ())
-         return 1;
-
-      return 0;
-   },
-   getDistance: (() =>
+   getLevel: (() =>
    {
       const center = new (external_X_ITE_X3D_Vector3_default()) ();
 
@@ -2098,125 +2100,111 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       {
          modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
-         return modelViewMatrix .origin .magnitude ();
+         const distance = modelViewMatrix .origin .magnitude ();
+
+         if (distance < this ._range .getValue ())
+            return 1;
+
+         return 0;
+      };
+   })(),
+   changeLevel: (() =>
+   {
+      const modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+
+      return function (renderObject)
+      {
+         const level = this .getLevel (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+
+         if (level === this ._level_changed .getValue ())
+            return;
+
+         this ._level_changed = level;
+
+         switch (level)
+         {
+            case 0:
+            {
+               for (const childInlineNode of this .childInlineNodes)
+               {
+                  childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
+                  childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
+                  childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
+                  childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
+                  childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
+                  childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
+               }
+
+               if (this ._rootNode .length)
+               {
+                  this .connectChildNode (this .rootGroupNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
+
+                  this ._children      = this ._rootNode;
+                  this .childrenLoaded = false;
+               }
+               else
+               {
+                  if (this .rootInlineNode .checkLoadState () == (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
+                  {
+                     this .connectChildNode (this .rootInlineNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
+
+                     this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
+                     this .childrenLoaded = false;
+                  }
+               }
+
+               if (this .unload)
+               {
+                  for (const childInlineNode of this .childInlineNodes)
+                     childInlineNode ._load = false;
+               }
+
+               break;
+            }
+            case 1:
+            {
+               if (this ._rootNode .length)
+                  this .disconnectChildNode (this .rootGroupNode);
+               else
+                  this .disconnectChildNode (this .rootInlineNode);
+
+               for (const childInlineNode of this .childInlineNodes)
+               {
+                  childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
+                  childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
+                  childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
+                  childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
+                  childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
+                  childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
+               }
+
+               this .set_childBoundedObject__ ();
+               this .set_childPointingObject__ ();
+               this .set_childCameraObject__ ();
+               this .set_childPickableObject__ ();
+               this .set_childCollisionObject__ ();
+               this .set_childShadowObject__ ();
+
+               if (this .child1InlineNode ._load .getValue ())
+               {
+                  this .set_childLoadState__ ();
+               }
+               else
+               {
+                  for (const childInlineNode of this .childInlineNodes)
+                     childInlineNode ._load = true;
+               }
+
+               break;
+            }
+         }
       };
    })(),
    traverse (type, renderObject)
    {
-      switch (type)
-      {
-         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
-         {
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy ();
+      if (type === (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
+         this .changeLevel (renderObject);
 
-            pickingHierarchy .push (this);
-
-            this .traverseChildren (type, renderObject);
-
-            pickingHierarchy .pop ();
-            return;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
-         {
-            const level = this .getLevel (this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
-
-            if (level !== this ._level_changed .getValue ())
-            {
-               this ._level_changed = level;
-
-               switch (level)
-               {
-                  case 0:
-                  {
-                     for (const childInlineNode of this .childInlineNodes)
-                     {
-                        childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
-                        childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
-                        childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
-                        childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
-                        childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
-                        childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
-                     }
-
-                     if (this ._rootNode .length)
-                     {
-                        this .connectChildNode (this .rootGroupNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
-
-                        this ._children      = this ._rootNode;
-                        this .childrenLoaded = false;
-                     }
-                     else
-                     {
-                        if (this .rootInlineNode .checkLoadState () == (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
-                        {
-                           this .connectChildNode (this .rootInlineNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
-
-                           this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
-                           this .childrenLoaded = false;
-                        }
-                     }
-
-                     if (this .unload)
-                     {
-                        for (const childInlineNode of this .childInlineNodes)
-                           childInlineNode ._load = false;
-                     }
-
-                     break;
-                  }
-                  case 1:
-                  {
-                     if (this ._rootNode .length)
-                        this .disconnectChildNode (this .rootGroupNode);
-                     else
-                        this .disconnectChildNode (this .rootInlineNode);
-
-                     for (const childInlineNode of this .childInlineNodes)
-                     {
-                        childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
-                        childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
-                        childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
-                        childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
-                        childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
-                        childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
-                     }
-
-                     this .set_childBoundedObject__ ();
-                     this .set_childPointingObject__ ();
-                     this .set_childCameraObject__ ();
-                     this .set_childPickableObject__ ();
-                     this .set_childCollisionObject__ ();
-                     this .set_childShadowObject__ ();
-
-                     if (this .child1InlineNode ._load .getValue ())
-                     {
-                        this .set_childLoadState__ ();
-                     }
-                     else
-                     {
-                        for (const childInlineNode of this .childInlineNodes)
-                           childInlineNode ._load = true;
-                     }
-
-                     break;
-                  }
-               }
-            }
-
-            this .traverseChildren (type, renderObject);
-            return;
-         }
-         default:
-         {
-            this .traverseChildren (type, renderObject);
-            return;
-         }
-      }
-   },
-   traverseChildren (type, renderObject)
-   {
       switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
       {
          case 0:

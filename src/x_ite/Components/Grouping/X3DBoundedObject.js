@@ -98,7 +98,7 @@ Object .assign (X3DBoundedObject .prototype,
    },
    isDefaultBBoxSize: (() =>
    {
-      const defaultBBoxSize = new Vector3 (-1, -1, -1);
+      const defaultBBoxSize = new Vector3 (-1);
 
       return function ()
       {
@@ -127,7 +127,7 @@ Object .assign (X3DBoundedObject .prototype,
    {
       const
          bbox   = new Box3 (),
-         eps    = new Vector3 (1e-5, 1e-5, 1e-5),
+         eps    = new Vector3 (1e-5),
          matrix = new Matrix4 ();
 
       return function (type, renderObject)

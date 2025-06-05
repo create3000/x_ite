@@ -15,7 +15,7 @@ tags: [IndexedQuadSet, CADGeometry]
 
 IndexedQuadSet is a geometry node that defines planar quadrilaterals. IndexedQuadSet contains a Coordinate or CoordinateDouble node, and can also contain Color or ColorRGBA, Normal and TextureCoordinate nodes.
 
-The IndexedQuadSet node belongs to the **CADGeometry** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.1 or higher.
+The IndexedQuadSet node belongs to the [CADGeometry](/x_ite/components/overview/#cadgeometry) component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 

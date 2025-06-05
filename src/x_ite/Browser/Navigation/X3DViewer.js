@@ -45,7 +45,10 @@
  *
  ******************************************************************************/
 
+
+import Fields         from "../../Fields.js";
 import X3DBaseNode    from "../../Base/X3DBaseNode.js";
+import X3DConstants   from "../../Base/X3DConstants.js";
 import OrthoViewpoint from "../../Components/Navigation/OrthoViewpoint.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
@@ -57,11 +60,19 @@ function X3DViewer (executionContext, navigationInfoNode)
 {
    X3DBaseNode .call (this, executionContext);
 
+   this .addChildObjects (X3DConstants .outputOnly, "isActive", new Fields .SFBool ());
+
+   // Private properties
+
    this .navigationInfoNode = navigationInfoNode;
 }
 
 Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .prototype),
 {
+   isActive ()
+   {
+      return this ._isActive .getValue ();
+   },
    getActiveLayer ()
    {
       return this .getBrowser () .getActiveLayer ();
@@ -186,6 +197,8 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    {
       return this .getBrowser () .touch (x, y);
    },
+   disconnect ()
+   { },
 });
 
 function tbProjectToSphere (r, x, y)

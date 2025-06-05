@@ -113,7 +113,7 @@ Object .assign (X3DGeospatialObject .prototype,
       if (this .geoOriginNode)
          this .geoOriginNode .getOrigin (this .origin);
       else
-         this .origin .set (0, 0, 0);
+         this .origin .set (0);
 
       this .set_originMatrix__ ();
    },
