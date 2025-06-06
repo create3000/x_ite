@@ -637,7 +637,7 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .magnitude () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
-         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
          const num = this .numPointingShapes ++;
@@ -685,7 +685,7 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .magnitude () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
-         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
          const num = this .numCollisionShapes ++;
@@ -733,7 +733,7 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .magnitude () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
-         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
          const num = this .numShadowShapes ++;
