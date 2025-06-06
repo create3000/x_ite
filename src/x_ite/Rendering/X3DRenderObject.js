@@ -638,36 +638,34 @@ Object .assign (X3DRenderObject .prototype,
             viewVolume = this .viewVolumes .at (-1);
 
          if (viewVolume .intersectsSphere (radius, bboxCenter))
+            return false;
+
+         const num = this .numPointingShapes ++;
+
+         if (num === this .pointingShapes .length)
          {
-            const num = this .numPointingShapes ++;
-
-            if (num === this .pointingShapes .length)
-            {
-               this .pointingShapes .push ({
-                  renderObject: this,
-                  modelViewMatrix: new Float32Array (16),
-                  viewport: new Vector4 (),
-                  clipPlanes: [ ],
-                  sensors: [ ],
-               });
-            }
-
-            const pointingContext = this .pointingShapes [num];
-
-            pointingContext .modelViewMatrix .set (modelViewMatrix);
-            pointingContext .viewport .assign (viewVolume .getViewport ());
-            pointingContext .hAnimNode = this .hAnimNode .at (-1);
-            pointingContext .shapeNode = shapeNode;
-
-            // Clip planes & sensors
-
-            assign (pointingContext .clipPlanes, this .localObjects);
-            assign (pointingContext .sensors,    this .sensors .at (-1));
-
-            return true;
+            this .pointingShapes .push ({
+               renderObject: this,
+               modelViewMatrix: new Float32Array (16),
+               viewport: new Vector4 (),
+               clipPlanes: [ ],
+               sensors: [ ],
+            });
          }
 
-         return false;
+         const pointingContext = this .pointingShapes [num];
+
+         pointingContext .modelViewMatrix .set (modelViewMatrix);
+         pointingContext .viewport .assign (viewVolume .getViewport ());
+         pointingContext .hAnimNode = this .hAnimNode .at (-1);
+         pointingContext .shapeNode = shapeNode;
+
+         // Clip planes & sensors
+
+         assign (pointingContext .clipPlanes, this .localObjects);
+         assign (pointingContext .sensors,    this .sensors .at (-1));
+
+         return true;
       };
    })(),
    addCollisionShape: (() =>
@@ -688,36 +686,34 @@ Object .assign (X3DRenderObject .prototype,
             viewVolume = this .viewVolumes .at (-1);
 
          if (viewVolume .intersectsSphere (radius, bboxCenter))
+            return false;
+
+         const num = this .numCollisionShapes ++;
+
+         if (num === this .collisionShapes .length)
          {
-            const num = this .numCollisionShapes ++;
-
-            if (num === this .collisionShapes .length)
-            {
-               this .collisionShapes .push ({
-                  renderObject: this,
-                  modelViewMatrix: new Float32Array (16),
-                  collisions: [ ],
-                  clipPlanes: [ ],
-               });
-            }
-
-            const collisionContext = this .collisionShapes [num];
-
-            collisionContext .modelViewMatrix .set (modelViewMatrix);
-            collisionContext .shapeNode = shapeNode;
-
-            // Collisions
-
-            assign (collisionContext .collisions, this .collisions);
-
-            // Clip planes
-
-            assign (collisionContext .clipPlanes, this .localObjects);
-
-            return true;
+            this .collisionShapes .push ({
+               renderObject: this,
+               modelViewMatrix: new Float32Array (16),
+               collisions: [ ],
+               clipPlanes: [ ],
+            });
          }
 
-         return false;
+         const collisionContext = this .collisionShapes [num];
+
+         collisionContext .modelViewMatrix .set (modelViewMatrix);
+         collisionContext .shapeNode = shapeNode;
+
+         // Collisions
+
+         assign (collisionContext .collisions, this .collisions);
+
+         // Clip planes
+
+         assign (collisionContext .clipPlanes, this .localObjects);
+
+         return true;
       };
    })(),
    addShadowShape: (() =>
@@ -738,34 +734,32 @@ Object .assign (X3DRenderObject .prototype,
             viewVolume = this .viewVolumes .at (-1);
 
          if (viewVolume .intersectsSphere (radius, bboxCenter))
+            return false;
+
+         const num = this .numShadowShapes ++;
+
+         if (num === this .shadowShapes .length)
          {
-            const num = this .numShadowShapes ++;
-
-            if (num === this .shadowShapes .length)
-            {
-               this .shadowShapes .push ({
-                  renderObject: this,
-                  modelViewMatrix: new Float32Array (16),
-                  viewport: new Vector4 (),
-                  clipPlanes: [ ]
-               });
-            }
-
-            const depthContext = this .shadowShapes [num];
-
-            depthContext .modelViewMatrix .set (modelViewMatrix);
-            depthContext .viewport .assign (viewVolume .getViewport ());
-            depthContext .hAnimNode = this .hAnimNode .at (-1);
-            depthContext .shapeNode = shapeNode;
-
-            // Clip planes
-
-            assign (depthContext .clipPlanes, this .localObjects);
-
-            return true;
+            this .shadowShapes .push ({
+               renderObject: this,
+               modelViewMatrix: new Float32Array (16),
+               viewport: new Vector4 (),
+               clipPlanes: [ ]
+            });
          }
 
-         return false;
+         const depthContext = this .shadowShapes [num];
+
+         depthContext .modelViewMatrix .set (modelViewMatrix);
+         depthContext .viewport .assign (viewVolume .getViewport ());
+         depthContext .hAnimNode = this .hAnimNode .at (-1);
+         depthContext .shapeNode = shapeNode;
+
+         // Clip planes
+
+         assign (depthContext .clipPlanes, this .localObjects);
+
+         return true;
       };
    })(),
    addDisplayShape: (() =>
@@ -785,48 +779,46 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .magnitude () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
-         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         if (!viewVolume .intersectsSphere (radius, bboxCenter))
+            return false;
+
+         if (shapeNode .isTransparent ())
          {
-            if (shapeNode .isTransparent ())
-            {
-               const num = this .numTransparentShapes ++;
+            const num = this .numTransparentShapes ++;
 
-               if (num === this .transparentShapes .length)
-                  this .transparentShapes .push (this .createRenderContext (true));
+            if (num === this .transparentShapes .length)
+               this .transparentShapes .push (this .createRenderContext (true));
 
-               var renderContext = this .transparentShapes [num];
+            var renderContext = this .transparentShapes [num];
 
-               renderContext .distance = bboxCenter .z;
-            }
-            else
-            {
-               const num = this .numOpaqueShapes ++;
+            renderContext .distance = bboxCenter .z;
+         }
+         else
+         {
+            const num = this .numOpaqueShapes ++;
 
-               if (num === this .opaqueShapes .length)
-                  this .opaqueShapes .push (this .createRenderContext (false));
+            if (num === this .opaqueShapes .length)
+               this .opaqueShapes .push (this .createRenderContext (false));
 
-               var renderContext = this .opaqueShapes [num];
-            }
-
-            this .transmission ||= shapeNode .isTransmission ();
-
-            renderContext .modelViewMatrix .set (modelViewMatrix);
-            renderContext .viewport .assign (viewVolume .getViewport ());
-            renderContext .shadows        = this .localShadows .at (-1);
-            renderContext .fogNode        = this .localFogs .at (-1);
-            renderContext .hAnimNode      = this .hAnimNode .at (-1);
-            renderContext .shapeNode      = shapeNode;
-            renderContext .appearanceNode = shapeNode .getAppearance ();
-
-            // Clip planes and local lights
-
-            assign (renderContext .localObjects,     this .localObjects); // Fog, ClipPane, X3DLightNode
-            assign (renderContext .localObjectsKeys, this .localObjectsKeys);
-
-            return true;
+            var renderContext = this .opaqueShapes [num];
          }
 
-         return false;
+         this .transmission ||= shapeNode .isTransmission ();
+
+         renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .shadows        = this .localShadows .at (-1);
+         renderContext .fogNode        = this .localFogs .at (-1);
+         renderContext .hAnimNode      = this .hAnimNode .at (-1);
+         renderContext .shapeNode      = shapeNode;
+         renderContext .appearanceNode = shapeNode .getAppearance ();
+
+         // Clip planes and local lights
+
+         assign (renderContext .localObjects,     this .localObjects); // Fog, ClipPane, X3DLightNode
+         assign (renderContext .localObjectsKeys, this .localObjectsKeys);
+
+         return true;
       };
    })(),
    createRenderContext (transparent)
