@@ -52,6 +52,7 @@ import X3DNode                  from "../Core/X3DNode.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+import Algorithm                from "../../../standard/Math/Algorithm.js";
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -62,6 +63,10 @@ function VolumeScatterMaterialExtension (executionContext)
    X3DMaterialExtensionNode .call (this, executionContext);
 
    this .addType (X3DConstants .VolumeScatterMaterialExtension);
+
+   // Private properties
+
+   this .multiscatterColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
@@ -70,14 +75,20 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      // this ._indexOfRefraction .addInterest ("set_indexOfRefraction__", this);
+      this ._multiscatterColor .addInterest ("set_multiscatterColor__", this);
+      this ._scatterAnisotropy .addInterest ("set_scatterAnisotropy__", this);
 
-      // this .set_indexOfRefraction__ ();
+      this .set_multiscatterColor__ ();
+      this .set_scatterAnisotropy__ ();
    },
-   // set_indexOfRefraction__ ()
-   // {
-   //    this .indexOfRefraction = Math .max (this ._indexOfRefraction .getValue (), 1);
-   // },
+   set_multiscatterColor__ ()
+   {
+      this .multiscatterColorArray .set (this ._multiscatterColor .getValue ());
+   },
+   set_scatterAnisotropy__ ()
+   {
+      this .scatterAnisotropy = Algorithm .clamp (this ._scatterAnisotropy .getValue (), -1, 1);
+   },
    getExtensionKey ()
    {
       return ExtensionKeys .VOLUME_SCATTER_MATERIAL_EXTENSION;
@@ -88,7 +99,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      // gl .uniform1f (shaderObject .x3d_IorEXT, this .indexOfRefraction);
+      // gl .uniform1f (shaderObject .x3d_IorEXT, this .scatterAnisotropy);
    },
 });
 
