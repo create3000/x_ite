@@ -47,6 +47,7 @@
 
 import TextureBuffer from "./TextureBuffer.js";
 import TraverseType  from "./TraverseType.js";
+import RenderPass    from "./RenderPass.js";
 import MergeSort     from "../../standard/Math/Algorithms/MergeSort.js";
 import Camera        from "../../standard/Math/Geometry/Camera.js";
 import Box3          from "../../standard/Math/Geometry/Box3.js";
@@ -110,6 +111,8 @@ function X3DRenderObject (executionContext)
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .transmission             = false;
+   this .volumeScatter            = false;
+   this .renderPass               = RenderPass .NONE;
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer (browser, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
 }
@@ -443,9 +446,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .transparentShapes;
    },
-   isTransmission ()
+   getRenderPass ()
    {
-      return this .transmission;
+      return this .renderPass;
    },
    constrainTranslation (translation, stepBack)
    {
@@ -803,7 +806,8 @@ Object .assign (X3DRenderObject .prototype,
             var renderContext = this .opaqueShapes [num];
          }
 
-         this .transmission ||= shapeNode .isTransmission ();
+         this .transmission  ||= shapeNode .isTransmission ();
+         this .volumeScatter ||= shapeNode .isVolumeScatter ();
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
@@ -1176,8 +1180,6 @@ Object .assign (X3DRenderObject .prototype,
 
       // Draw to all framebuffers.
 
-      const transmission = this .transmission;
-
       for (let i = 0; i < numFramebuffers; ++ i)
       {
          const frameBuffer = framebuffers [i];
@@ -1205,20 +1207,32 @@ Object .assign (X3DRenderObject .prototype,
          for (const light of lights)
             light .setGlobalVariables (this);
 
-         // Render to transmission buffer.
+         // Render transmission texture and volume scatter texture.
 
-         if (independent && transmission)
+         if (independent)
          {
-            this .transmission = true;
+            // Render to transmission buffer.
 
-            const transmissionBuffer = browser .getTransmissionBuffer ();
+            if (this .transmission)
+            {
+               const transmissionBuffer = browser .getTransmissionBuffer ();
 
-            this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+               this .renderPass = RenderPass .TRANSMISSION;
 
-            gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
-            gl .generateMipmap (gl .TEXTURE_2D);
+               this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
 
-            this .transmission = false;
+               gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+               gl .generateMipmap (gl .TEXTURE_2D);
+            }
+
+            // Render to volume scatter buffer.
+
+            if (this .volumeScatter)
+            {
+               this .renderPass = RenderPass .VOLUME_SCATTER;
+            }
+
+            this .renderPass = RenderPass .NONE;
          }
 
          // Draw with sorted blend or OIT.
@@ -1226,7 +1240,9 @@ Object .assign (X3DRenderObject .prototype,
          this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
       }
 
-      this .view = null;
+      this .view          = null;
+      this .transmission  = false;
+      this .volumeScatter = false;
 
       // POST DRAW
 

@@ -149,6 +149,14 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       this .transmission = !!value;
    },
+   isVolumeScatter ()
+   {
+      return this .volumeScatter;
+   },
+   setVolumeScatter (value)
+   {
+      this .volumeScatter = !!value;
+   },
    getAlphaMode ()
    {
       return this .alphaMode;
@@ -190,20 +198,23 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       if (this .appearanceNode)
       {
-         this .appearanceNode ._alphaMode    .removeInterest ("set_transparent__",  this);
-         this .appearanceNode ._transparent  .removeInterest ("set_transparent__",  this);
-         this .appearanceNode ._transmission .removeInterest ("set_transmission__", this);
+         this .appearanceNode ._alphaMode     .removeInterest ("set_transparent__",   this);
+         this .appearanceNode ._transparent   .removeInterest ("set_transparent__",   this);
+         this .appearanceNode ._transmission  .removeInterest ("set_transmission__",  this);
+         this .appearanceNode ._volumeScatter .removeInterest ("set_volumeScatter__", this);
       }
 
       this .appearanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance)
          ?? this .getBrowser () .getDefaultAppearance ();
 
-      this .appearanceNode ._alphaMode    .addInterest ("set_transparent__",  this);
-      this .appearanceNode ._transparent  .addInterest ("set_transparent__",  this);
-      this .appearanceNode ._transmission .addInterest ("set_transmission__", this);
+      this .appearanceNode ._alphaMode     .addInterest ("set_transparent__",   this);
+      this .appearanceNode ._transparent   .addInterest ("set_transparent__",   this);
+      this .appearanceNode ._transmission  .addInterest ("set_transmission__",  this);
+      this .appearanceNode ._volumeScatter .addInterest ("set_volumeScatter__", this);
 
       this .set_transparent__ ();
       this .set_transmission__ ();
+      this .set_volumeScatter__ ();
    },
    set_geometry__ ()
    {
@@ -245,6 +256,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    set_transmission__ ()
    {
       this .transmission = this .appearanceNode .isTransmission ();
+   },
+   set_volumeScatter__ ()
+   {
+      this .volumeScatter = this .appearanceNode .isVolumeScatter ();
    },
    set_objects__ ()
    {

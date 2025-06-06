@@ -233,15 +233,20 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       if (this .materialNode)
       {
-         this .materialNode ._transparent  .removeInterest ("set_transparent__",  this);
-         this .materialNode ._transmission .removeInterest ("set_transmission__", this);
+         this .materialNode ._transparent   .removeInterest ("set_transparent__",   this);
+         this .materialNode ._transmission  .removeInterest ("set_transmission__",  this);
+         this .materialNode ._volumeScatter .removeInterest ("set_volumeScatter__", this);
       }
 
       this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material)
          ?? this .getBrowser () .getDefaultMaterial ();
 
-      this .materialNode ._transparent  .addInterest ("set_transparent__",  this);
-      this .materialNode ._transmission .addInterest ("set_transmission__", this);
+      this .materialNode ._transparent   .addInterest ("set_transparent__",   this);
+      this .materialNode ._transmission  .addInterest ("set_transmission__",  this);
+      this .materialNode ._volumeScatter .addInterest ("set_volumeScatter__", this);
+
+      this .set_transmission__ ();
+      this .set_volumeScatter__ ();
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -384,6 +389,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this .setTransmission (this .materialNode ?.isTransmission () ||
                              this .backMaterialNode ?.isTransmission ());
 
+   },
+   set_volumeScatter__ ()
+   {
+      this .setVolumeScatter (this .materialNode ?.isVolumeScatter () ||
+                              this .backMaterialNode ?.isVolumeScatter ());
    },
    traverse (type, renderObject)
    {

@@ -53,6 +53,7 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+import RenderPass               from "../../Rendering/RenderPass.js";
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -114,7 +115,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
          // Transmission framebuffer texture
 
-         if (renderObject .isTransmission ())
+         if (renderObject .getRenderPass () === RenderPass .TRANSMISSION)
          {
             var
                transmissionBufferTexture = browser .getDefaultTexture2D (),
