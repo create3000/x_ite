@@ -1191,6 +1191,39 @@
       </InterfaceDefinition>
     </ConcreteNode>
 
+    <ConcreteNode name="VolumeScatterMaterialExtension">
+      <InterfaceDefinition
+        specificationUrl="https://create3000.github.io/x_ite/components/x-ite/volumescattermaterialextension"
+        appinfo="VolumeScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node.">
+        <componentInfo name="X_ITE" level="1" />
+        <Inheritance baseType="X3DMaterialExtensionNode" />
+        <field name="metadata"
+          type="SFNode"
+          accessType="inputOutput"
+          default="NULL"
+          acceptableNodeTypes="X3DMetadataObject"
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+        />
+        <field name="multiscatterColor"
+          type="SFColor"
+          accessType="inputOutput"
+          default="0 0 0"
+          minInclusive="0"
+          maxInclusive="1"
+          description="The multi-scatter albedo."
+        />
+        <field name="scatterAnisotropy"
+          type="SFFloat"
+          accessType="inputOutput"
+          default="0"
+          minInclusive="-1"
+          maxInclusive="1"
+          description="The anisotropy of scatter events. Range is (-1, 1)."
+        />
+        <containerField default="extensions" type="xs:NMTOKEN" />
+      </InterfaceDefinition>
+    </ConcreteNode>
+
     <ConcreteNode name="DiffuseTransmissionMaterialExtension">
       <InterfaceDefinition
         specificationUrl="https://create3000.github.io/x_ite/components/x-ite/diffusetransmissionmaterialextension"

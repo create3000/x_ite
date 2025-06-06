@@ -314,6 +314,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
             case "KHR_materials_volume":
+            case "KHR_materials_volume_scatter":
             {
                components .push (browser .getComponent ("X_ITE", 1));
                break;
@@ -1194,6 +1195,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_volume":
                this .khrMaterialsVolumeObject (value, materialNode);
                break;
+            case "KHR_materials_volume_scatter":
+               this .khrMaterialsVolumeScatterObject (value, materialNode);
+               break;
          }
       }
    },
@@ -1409,6 +1413,26 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension .setup ();
 
       KHR_materials_volume .pointers = [extension];
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsVolumeScatterObject (KHR_materials_volume_scatter, materialNode)
+   {
+      if (!(KHR_materials_volume_scatter instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("VolumeScatterMaterialExtension", false);
+
+      const multiscatterColor = new Color3 ();
+
+      if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColor, multiscatterColor))
+         extension ._multiscatterColor = multiscatterColor;
+
+      extension ._scatterAnisotropy = this .numberValue (KHR_materials_volume_scatter .scatterAnisotropy, 0);
+
+      extension .setup ();
+
+      KHR_materials_volume_scatter .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },

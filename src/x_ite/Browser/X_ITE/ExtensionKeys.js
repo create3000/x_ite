@@ -61,6 +61,7 @@ const ExtensionKeys =
    TRANSMISSION_MATERIAL_EXTENSION:      i ++,
    UNLIT_MATERIAL_EXTENSION:             i ++,
    VOLUME_MATERIAL_EXTENSION:            i ++,
+   VOLUME_SCATTER_MATERIAL_EXTENSION:    i ++,
 };
 
 export default ExtensionKeys;
