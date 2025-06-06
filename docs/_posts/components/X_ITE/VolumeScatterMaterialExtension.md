@@ -62,4 +62,5 @@ The anisotropy of scatter events. Range is (-1, 1).
 
 ## See Also
 
-- [Khronos glTF Specification of the KHR_materials_volume Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_volume)
+- [Khronos glTF Specification of the KHR_materials_volume_scatter Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_volume_scatter)
+- [Dassault Systemes glTF Specification of the KHR_materials_volume_scatter Extension](https://github.com/DassaultSystemes-Technology/glTF/tree/KHR_materials_volume_scatter/extensions/2.0/Khronos/KHR_materials_volume_scatter)
