@@ -33,8 +33,8 @@ The VolumeScatterMaterialExtension node belongs to the [X_ITE](/x_ite/components
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColor | [in, out] | [attenuationColor](#fields-attenuationColor) | 0 0 0  |
-| SFFloat | [in, out] | [attenuationDistance](#fields-attenuationDistance) | 0  |
+| SFColor | [in, out] | [multiscatterColor](#fields-multiscatterColor) | 0 0 0  |
+| SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -47,12 +47,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFColor [in, out] **multiscatterColor** 0 0 0 <small>[0,1]</small>
-{: #fields-attenuationColor }
+{: #fields-multiscatterColor }
 
 The multi-scatter albedo.
 
 ### SFFloat [in, out] **scatterAnisotropy** 0 <small>(-1,1)</small>
-{: #fields-attenuationDistance }
+{: #fields-scatterAnisotropy }
 
 The anisotropy of scatter events. Range is (-1, 1).
 
