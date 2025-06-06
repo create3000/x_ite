@@ -363,6 +363,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - VolumeEmitter
 - VolumeMaterialExtension
 - VolumePickSensor
+- VolumeScatterMaterialExtension
 - WaveShaper
 - WindPhysicsModel
 - WorldInfo
