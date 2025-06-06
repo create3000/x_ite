@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    },
    getShaderOptions (options)
    {
-      // options .push ("X3D_IOR_MATERIAL_EXT");
+      options .push ("X3D_VOLUME_SCATTER_MATERIAL_EXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
