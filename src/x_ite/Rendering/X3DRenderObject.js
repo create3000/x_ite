@@ -1232,6 +1232,13 @@ Object .assign (X3DRenderObject .prototype,
             {
                this .renderPass               = RenderPass .VOLUME_SCATTER;
                this .renderAndGlobalLightsKey = `.${this .renderKey}.${RenderPass .VOLUME_SCATTER}.${globalLightsKey}.`;
+
+               const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
+
+               this .drawShapes (gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, false, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+
+               gl .bindTexture (gl .TEXTURE_2D, volumeScatterBuffer .getColorTexture ());
+               gl .generateMipmap (gl .TEXTURE_2D);
             }
          }
 

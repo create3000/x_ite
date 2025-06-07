@@ -53,17 +53,18 @@ import { maxClipPlanes }      from "./RenderingConfiguration.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
 
 const
-   _session            = Symbol (),
-   _framebuffers       = Symbol (),
-   _defaultFramebuffer = Symbol (),
-   _transmissionBuffer = Symbol (),
-   _resizer            = Symbol (),
-   _localObjects       = Symbol (),
-   _fullscreenArray    = Symbol (),
-   _fullscreenBuffer   = Symbol (),
-   _composeShader      = Symbol (),
-   _depthShaders       = Symbol (),
-   _buttonLock         = Symbol ();
+   _session             = Symbol (),
+   _framebuffers        = Symbol (),
+   _defaultFramebuffer  = Symbol (),
+   _transmissionBuffer  = Symbol (),
+   _volumeScatterBuffer = Symbol (),
+   _resizer             = Symbol (),
+   _localObjects        = Symbol (),
+   _fullscreenArray     = Symbol (),
+   _fullscreenBuffer    = Symbol (),
+   _composeShader       = Symbol (),
+   _depthShaders        = Symbol (),
+   _buttonLock          = Symbol ();
 
 function X3DRenderingContext ()
 {
@@ -211,6 +212,13 @@ Object .assign (X3DRenderingContext .prototype,
    getTransmissionBuffer ()
    {
       return this [_transmissionBuffer] ??= (() =>
+      {
+         return new TextureBuffer (this, this ._viewport [2], this ._viewport [3], false, true);
+      })();
+   },
+   getVolumeScatterBuffer ()
+   {
+      return this [_volumeScatterBuffer] ??= (() =>
       {
          return new TextureBuffer (this, this ._viewport [2], this ._viewport [3], false, true);
       })();
@@ -378,7 +386,8 @@ Object .assign (X3DRenderingContext .prototype,
 
       this [_framebuffers] [i] = new MultiSampleFramebuffer (this, x, y, width, height, samples, oit);
 
-      this .reshapeTransmissionBuffer (width, height);
+      this .reshapeTransmissionBuffer  (width, height);
+      this .reshapeVolumeScatterBuffer (width, height);
    },
    reshapeTransmissionBuffer (width, height)
    {
@@ -393,6 +402,20 @@ Object .assign (X3DRenderingContext .prototype,
 
       this [_transmissionBuffer] .dispose ();
       this [_transmissionBuffer] = new TextureBuffer (this, width, height, false, true);
+   },
+   reshapeVolumeScatterBuffer (width, height)
+   {
+      if (!this [_volumeScatterBuffer])
+         return;
+
+      if (width  === this [_volumeScatterBuffer] .getWidth () &&
+          height === this [_volumeScatterBuffer] .getHeight ())
+      {
+         return;
+      }
+
+      this [_volumeScatterBuffer] .dispose ();
+      this [_volumeScatterBuffer] = new TextureBuffer (this, width, height, false, true);
    },
    onfullscreen ()
    {
