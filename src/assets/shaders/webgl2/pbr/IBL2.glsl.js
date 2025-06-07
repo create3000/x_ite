@@ -122,7 +122,7 @@ uniform sampler2D x3d_TransmissionFramebufferSamplerEXT;
 uniform ivec4     x3d_Viewport;
 
 vec3
-getTransmissionSample (in vec2 fragCoord, const in float roughness, const in float ior)
+getTransmissionSample (const in vec2 fragCoord, const in float roughness, const in float ior)
 {
    #if __VERSION__ == 100
       float framebufferSize  = max (float (x3d_Viewport .z), float (x3d_Viewport .w));
