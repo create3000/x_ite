@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
          {
             var
                transmissionBuffer        = browser .getTransmissionBuffer (),
-               transmissionBufferTexture = transmissionBuffer .getColorTexture (),
+               transmissionBufferTexture = transmissionBuffer .getColorTexture0 (),
                transmissionUnit          = browser .getTexture2DUnit ();
 
             gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
