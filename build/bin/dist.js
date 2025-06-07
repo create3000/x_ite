@@ -27,7 +27,6 @@ function html ()
 	systemSync (`perl -p0i -e 's|"./x_ite.js"|"./dist/x_ite.min.mjs"|sg'       x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'            x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|\\.\\./x_ite.min.html|src/x_ite.html|sg'      x_ite.min.html`);
-	systemSync (`perl -p0i -e 's|id="links"|id="links" class="min-links"|sg'   x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|\\>x_ite.min.html|>src/x_ite.html|sg'         x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|\\.\\./dist/|dist/|sg'                        x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|"examples.js"|"src/examples.js"|sg'           x_ite.min.html`);
