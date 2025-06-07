@@ -1220,7 +1220,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
-               this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport);
+               this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture0 ());
                gl .generateMipmap (gl .TEXTURE_2D);
@@ -1235,7 +1235,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-               this .drawShapes (gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, false, viewport);
+               this .drawShapes (gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
                gl .bindTexture (gl .TEXTURE_2D, volumeScatterBuffer .getColorTexture0 ());
                gl .generateMipmap (gl .TEXTURE_2D);
@@ -1247,7 +1247,7 @@ Object .assign (X3DRenderObject .prototype,
 
          // Draw with sorted blend or OIT.
 
-         this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport);
+         this .drawShapes (gl, browser, frameBuffer, 0, viewport);
       }
 
       this .view          = null;
@@ -1281,7 +1281,7 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (gl, browser, frameBuffer, clearBits, oit, viewport)
+   drawShapes (gl, browser, frameBuffer, clearBits, viewport)
    {
       const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter } = this;
 
@@ -1317,7 +1317,7 @@ Object .assign (X3DRenderObject .prototype,
 
       // Render transparent objects.
 
-      if (oit)
+      if (frameBuffer .getOIT ())
          frameBuffer .bindTransparency ();
       else
          transparencySorter .sort (0, numTransparentShapes);
@@ -1338,7 +1338,7 @@ Object .assign (X3DRenderObject .prototype,
       gl .depthMask (true);
       gl .disable (gl .BLEND);
 
-      if (oit)
+      if (frameBuffer .getOIT ())
          frameBuffer .compose ();
    },
 });
