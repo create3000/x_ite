@@ -1222,6 +1222,7 @@ Object .assign (X3DRenderObject .prototype,
 
                this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
+               // Mipmap is selected based on roughness and ior.
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
                gl .generateMipmap (gl .TEXTURE_2D);
             }
