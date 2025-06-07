@@ -1147,6 +1147,7 @@ Object .assign (X3DRenderObject .prototype,
          viewport                 = this .viewVolumes .at (-1) .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
+         globalLightsKey          = globalLightsKeys .sort () .join (""),
          globalLights             = this .globalLights,
          generatedCubeMapTextures = this .generatedCubeMapTextures,
          globalShadows            = this .globalShadows,
@@ -1173,8 +1174,7 @@ Object .assign (X3DRenderObject .prototype,
             generatedCubeMapTexture .renderTexture (this);
       }
 
-      this .renderAndGlobalLightsKey = `.${this .renderKey}.${globalLightsKeys .sort () .join ("")}.`;
-      this .globalShadow             = globalShadows .at (-1);
+      this .globalShadow = globalShadows .at (-1);
 
       // DRAW
 
@@ -1215,7 +1215,8 @@ Object .assign (X3DRenderObject .prototype,
 
             if (this .transmission)
             {
-               this .renderPass = RenderPass .TRANSMISSION;
+               this .renderPass               = RenderPass .TRANSMISSION;
+               this .renderAndGlobalLightsKey = `.${this .renderKey}.${RenderPass .RENDER}.${globalLightsKey}.`;
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
@@ -1229,11 +1230,13 @@ Object .assign (X3DRenderObject .prototype,
 
             if (this .volumeScatter)
             {
-               this .renderPass = RenderPass .VOLUME_SCATTER;
+               this .renderPass               = RenderPass .VOLUME_SCATTER;
+               this .renderAndGlobalLightsKey = `.${this .renderKey}.${RenderPass .VOLUME_SCATTER}.${globalLightsKey}.`;
             }
-
-            this .renderPass = RenderPass .RENDER;
          }
+
+         this .renderPass               = RenderPass .RENDER;
+         this .renderAndGlobalLightsKey = `.${this .renderKey}.${RenderPass .RENDER}.${globalLightsKey}.`;
 
          // Draw with sorted blend or OIT.
 
