@@ -123,7 +123,6 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
             // Hide object by using a model view matrix with zeros.
             gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-            gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, 1, 1);
          }
          else
          {
@@ -131,8 +130,6 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
                transmissionBuffer        = browser .getTransmissionBuffer (),
                transmissionBufferTexture = transmissionBuffer .getColorTexture0 (),
                transmissionUnit          = browser .getTexture2DUnit ();
-
-            gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
          }
 
          gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
