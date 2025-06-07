@@ -1222,7 +1222,7 @@ Object .assign (X3DRenderObject .prototype,
 
                this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
-               gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture0 ());
+               gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
                gl .generateMipmap (gl .TEXTURE_2D);
             }
 
@@ -1236,9 +1236,6 @@ Object .assign (X3DRenderObject .prototype,
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
                this .drawShapes (gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
-
-               gl .bindTexture (gl .TEXTURE_2D, volumeScatterBuffer .getColorTexture0 ());
-               gl .generateMipmap (gl .TEXTURE_2D);
             }
          }
 

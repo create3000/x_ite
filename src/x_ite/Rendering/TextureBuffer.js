@@ -82,11 +82,13 @@ function TextureBuffer (browser, width, height, float = false, mipMaps = false, 
 
    // Create color textures.
 
+   this .colorTextures = [ ];
+
    for (let i = 0; i < colorTextures; ++ i)
    {
-      this ["colorTexture" + i] = gl .createTexture ();
+      this .colorTextures [i] = gl .createTexture ();
 
-      gl .bindTexture (gl .TEXTURE_2D, this ["colorTexture" + i]);
+      gl .bindTexture (gl .TEXTURE_2D, this .colorTextures [i]);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .CLAMP_TO_EDGE);
 
@@ -106,7 +108,7 @@ function TextureBuffer (browser, width, height, float = false, mipMaps = false, 
       else
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
-      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .TEXTURE_2D, this ["colorTexture" + i], 0);
+      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .TEXTURE_2D, this .colorTextures [i], 0);
    }
 
    // Create depth buffer.
@@ -158,13 +160,9 @@ Object .assign (TextureBuffer .prototype,
    {
       return this .height;
    },
-   getColorTexture0 ()
+   getColorTexture (i = 0)
    {
-      return this .colorTexture0;
-   },
-   getColorTexture1 ()
-   {
-      return this .colorTexture1;
+      return this .colorTextures [i];
    },
    getDepthTexture ()
    {

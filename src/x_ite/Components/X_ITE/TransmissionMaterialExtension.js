@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
          {
             var
                transmissionBuffer        = browser .getTransmissionBuffer (),
-               transmissionBufferTexture = transmissionBuffer .getColorTexture0 (),
+               transmissionBufferTexture = transmissionBuffer .getColorTexture (),
                transmissionUnit          = browser .getTexture2DUnit ();
          }
 
