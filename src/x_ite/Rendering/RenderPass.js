@@ -49,7 +49,7 @@ let i = 0;
 
 const RenderPass =
 {
-   NONE:           i ++,
+   RENDER:         i ++,
    TRANSMISSION:   i ++,
    VOLUME_SCATTER: i ++,
 };

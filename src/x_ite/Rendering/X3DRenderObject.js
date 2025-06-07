@@ -112,7 +112,7 @@ function X3DRenderObject (executionContext)
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .transmission             = false;
    this .volumeScatter            = false;
-   this .renderPass               = RenderPass .NONE;
+   this .renderPass               = RenderPass .RENDER;
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer (browser, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
 }
@@ -1232,7 +1232,7 @@ Object .assign (X3DRenderObject .prototype,
                this .renderPass = RenderPass .VOLUME_SCATTER;
             }
 
-            this .renderPass = RenderPass .NONE;
+            this .renderPass = RenderPass .RENDER;
          }
 
          // Draw with sorted blend or OIT.
