@@ -207,7 +207,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, fogNode, shapeNode, appearanceNode, hAnimNode, localObjectsKeys, textureNode } = renderContext;
 
-         this .setRenderOptions (options, renderObject, shapeNode .getAlphaMode ());
+         this .addRenderOptions (options, renderObject, shapeNode .getAlphaMode ());
 
          if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
@@ -319,7 +319,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, alphaMode, localObjectsKeys, textureNode } = geometryContext;
 
-         this .setRenderOptions (options, renderObject, alphaMode);
+         this .addRenderOptions (options, renderObject, alphaMode);
 
          const numClipPlanes = localObjectsKeys .reduce ((a, c) => a + (c === 0), 0);
 
@@ -344,7 +344,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       return options;
    },
-   setRenderOptions (options, renderObject, alphaMode)
+   addRenderOptions (options, renderObject, alphaMode)
    {
       switch (renderObject .getRenderPass ())
       {
