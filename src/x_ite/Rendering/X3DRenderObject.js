@@ -110,8 +110,6 @@ function X3DRenderObject (executionContext)
    this .opaqueShapes             = [ ];
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
-   this .transmission             = false;
-   this .volumeScatter            = false;
    this .renderPasses             = 0;
    this .renderPass               = RenderPass .RENDER;
    this .speed                    = 0;
