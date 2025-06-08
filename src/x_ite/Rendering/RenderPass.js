@@ -45,13 +45,11 @@
  *
  ******************************************************************************/
 
-let i = 0;
-
 const RenderPass =
 {
-   RENDER:         i ++,
-   TRANSMISSION:   i ++,
-   VOLUME_SCATTER: i ++,
+   RENDER:         0b00,
+   TRANSMISSION:   0b01,
+   VOLUME_SCATTER: 0b10,
 };
 
 export default RenderPass;

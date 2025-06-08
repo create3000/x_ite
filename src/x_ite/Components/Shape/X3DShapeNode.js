@@ -53,6 +53,7 @@ import X3DConstants     from "../../Base/X3DConstants.js";
 import TraverseType     from "../../Rendering/TraverseType.js";
 import GeometryType     from "../../Browser/Shape/GeometryType.js";
 import AlphaMode        from "../../Browser/Shape/AlphaMode.js";
+import RenderPass       from "../../Rendering/RenderPass.js";
 import Box3             from "../../../standard/Math/Geometry/Box3.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
 
@@ -73,9 +74,10 @@ function X3DShapeNode (executionContext)
 
    // Private properties
 
-   this .bbox       = new Box3 ();
-   this .bboxSize   = new Vector3 ();
-   this .bboxCenter = new Vector3 ();
+   this .bbox         = new Box3 ();
+   this .bboxSize     = new Vector3 ();
+   this .bboxCenter   = new Vector3 ();
+   this .renderPasses = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .prototype),
@@ -137,33 +139,13 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .transparent;
    },
-   setTransparent (value)
-   {
-      this .transparent = !!value;
-   },
-   isTransmission ()
-   {
-      return this .transmission;
-   },
-   setTransmission (value)
-   {
-      this .transmission = !!value;
-   },
-   isVolumeScatter ()
-   {
-      return this .volumeScatter;
-   },
-   setVolumeScatter (value)
-   {
-      this .volumeScatter = !!value;
-   },
    getAlphaMode ()
    {
       return this .alphaMode;
    },
-   setAlphaMode (value)
+   getRenderPasses ()
    {
-      this .alphaMode = value;
+      return this .renderPasses;
    },
    getAppearance ()
    {
@@ -255,11 +237,17 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_transmission__ ()
    {
-      this .transmission = this .appearanceNode .isTransmission ();
+      if (this .appearanceNode .isTransmission ())
+         this .renderPasses |= RenderPass .TRANSMISSION;
+      else
+         this .renderPasses &= ~RenderPass .TRANSMISSION;
    },
    set_volumeScatter__ ()
    {
-      this .volumeScatter = this .appearanceNode .isVolumeScatter ();
+      if (this .appearanceNode .isVolumeScatter ())
+         this .renderPasses |= RenderPass .VOLUME_SCATTER;
+      else
+         this .renderPasses &= ~RenderPass .VOLUME_SCATTER;
    },
    set_objects__ ()
    {

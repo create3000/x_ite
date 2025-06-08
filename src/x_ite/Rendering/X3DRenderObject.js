@@ -112,6 +112,7 @@ function X3DRenderObject (executionContext)
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .transmission             = false;
    this .volumeScatter            = false;
+   this .renderPasses             = 0;
    this .renderPass               = RenderPass .RENDER;
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer (browser, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
@@ -608,6 +609,7 @@ Object .assign (X3DRenderObject .prototype,
          case TraverseType .DISPLAY:
          {
             this .lightIndex           = 0;
+            this .renderPasses         = 0;
             this .numOpaqueShapes      = 0;
             this .numTransparentShapes = 0;
 
@@ -806,8 +808,7 @@ Object .assign (X3DRenderObject .prototype,
             var renderContext = this .opaqueShapes [num];
          }
 
-         this .transmission  ||= shapeNode .isTransmission ();
-         this .volumeScatter ||= shapeNode .isVolumeScatter ();
+         this .renderPasses |= shapeNode .getRenderPasses ();
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
@@ -1213,7 +1214,7 @@ Object .assign (X3DRenderObject .prototype,
          {
             // Render to transmission buffer.
 
-            if (this .transmission)
+            if (this .renderPasses & RenderPass .TRANSMISSION)
             {
                this .renderPass               = RenderPass .TRANSMISSION;
                this .renderAndGlobalLightsKey = `.${this .renderKey}.${RenderPass .RENDER}.${globalLightsKey}.`;
@@ -1229,7 +1230,7 @@ Object .assign (X3DRenderObject .prototype,
 
             // Render to volume scatter buffer.
 
-            if (this .volumeScatter)
+            if (this .renderPasses & RenderPass .VOLUME_SCATTER)
             {
                this .renderPass               = RenderPass .VOLUME_SCATTER;
                this .renderAndGlobalLightsKey = `.${this .renderKey}.${RenderPass .VOLUME_SCATTER}.${globalLightsKey}.`;
@@ -1248,9 +1249,7 @@ Object .assign (X3DRenderObject .prototype,
          this .drawShapes (gl, browser, frameBuffer, 0, viewport);
       }
 
-      this .view          = null;
-      this .transmission  = false;
-      this .volumeScatter = false;
+      this .view = null;
 
       // POST DRAW
 
