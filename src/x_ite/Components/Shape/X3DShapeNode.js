@@ -248,7 +248,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       if (value)
          this .renderPasses |= bit;
       else
-         this .renderPasses &= bit;
+         this .renderPasses &= ~bit;
    },
    set_objects__ ()
    {
