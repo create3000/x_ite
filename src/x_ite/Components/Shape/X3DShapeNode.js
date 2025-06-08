@@ -139,9 +139,19 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .transparent;
    },
+   setTransparent (value)
+   {
+      // Used by ParticleSystem!
+      this .transparent = !!value;
+   },
    getAlphaMode ()
    {
       return this .alphaMode;
+   },
+   setAlphaMode (value)
+   {
+      // Used by ParticleSystem!
+      this .alphaMode = !!value;
    },
    getRenderPasses ()
    {
