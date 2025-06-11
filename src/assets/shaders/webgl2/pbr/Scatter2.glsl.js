@@ -3,39 +3,7 @@ export default /* glsl */ `
 // Originally from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/scatter.frag
 
-#pragma X3D include "../common/Fragment.glsl"
-#pragma X3D include "../common/Shadow.glsl"
-
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
-   uniform mat4 x3d_ProjectionMatrix;
-   uniform mat4 x3d_ModelViewMatrix;
-#endif
-
-#if defined (X3D_XR_SESSION)
-uniform mat4 x3d_EyeMatrix;
-
-mat4
-eye (const in mat4 modelViewMatrix)
-{
-   return x3d_EyeMatrix * modelViewMatrix;
-}
-#else
-   #define eye(x) (x)
-#endif
-
-#if defined (X3D_LIGHTING)
-   uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
-#endif
-
-uniform x3d_PhysicalMaterialParameters x3d_Material;
-
 layout(location = 1) out vec4 frontIBLColor;
-
-#pragma X3D include "pbr/BRDF.glsl"
-#pragma X3D include "pbr/MaterialInfo.glsl"
-#pragma X3D include "pbr/Punctual.glsl"
-#pragma X3D include "pbr/IBL.glsl"
-#pragma X3D include "pbr/Iridescence.glsl"
 
 vec4
 getMaterialColor ()
@@ -130,7 +98,7 @@ getMaterialColor ()
       #endif
 
       #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
-         f_specular_transmission += getIBLVolumeRefraction (
+         vec3 f_specular_transmission = getIBLVolumeRefraction (
             n,
             v,
             materialInfo .perceptualRoughness,
@@ -243,11 +211,5 @@ getMaterialColor ()
    #endif
 
    return vec4 (color, baseColor .a);
-}
-
-void
-main ()
-{
-   fragment_main ();
 }
 `;

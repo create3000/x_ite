@@ -29,12 +29,15 @@ eye (const in mat4 modelViewMatrix)
 
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#pragma X3D include "pbr/BRDF.glsl"
-#pragma X3D include "pbr/MaterialInfo.glsl"
-#pragma X3D include "pbr/Punctual.glsl"
-#pragma X3D include "pbr/IBL.glsl"
-#pragma X3D include "pbr/Iridescence.glsl"
+#pragma X3D include "BRDF.glsl"
+#pragma X3D include "MaterialInfo.glsl"
+#pragma X3D include "Punctual.glsl"
+#pragma X3D include "IBL.glsl"
+#pragma X3D include "Iridescence.glsl"
 
+#if defined (X3D_VOLUME_SCATTER_PASS)
+#pragma X3D include "Scatter.glsl"
+#else
 vec4
 getMaterialColor ()
 {
@@ -378,6 +381,7 @@ getMaterialColor ()
 
    return vec4 (color, baseColor .a);
 }
+#endif
 
 void
 main ()

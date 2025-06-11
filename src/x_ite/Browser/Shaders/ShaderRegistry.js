@@ -103,6 +103,7 @@ import Iridescence2           from "../../../assets/shaders/webgl2/pbr/Iridescen
 import MaterialInfo2          from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
 import PBR2                   from "../../../assets/shaders/webgl2/pbr/PBR2.glsl.js";
 import Punctual2              from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
+import Scatter2               from "../../../assets/shaders/webgl2/pbr/Scatter2.glsl.js";
 import ToneMapping2           from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
 
 const ShaderRegistry = {
@@ -118,6 +119,7 @@ const ShaderRegistry = {
          Perlin: Perlin2,
          Point: Point2,
          PointSize: PointSize2,
+         Scatter: Scatter2,
          Shadow: Shadow2,
          Texture: Texture1,
          Unlit: Unlit2,
@@ -144,6 +146,7 @@ const ShaderRegistry = {
          Perlin: Perlin2,
          Point: Point2,
          PointSize: PointSize2,
+         Scatter: Scatter2,
          Shadow: Shadow2,
          Skin: Skin2,
          Stipple: Stipple2,
