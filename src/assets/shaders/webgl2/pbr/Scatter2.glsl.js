@@ -69,9 +69,9 @@ getMaterialColor ()
    materialInfo .alphaRoughness = materialInfo .perceptualRoughness * materialInfo .perceptualRoughness;
 
    // LIGHTING
-   vec3 f_specular_dielectric = vec3(0.0);
-   vec3 f_diffuse             = vec3(0.0);
-   vec3 f_dielectric_brdf_ibl = vec3(0.0);
+   vec3 f_specular_dielectric = vec3 (0.0);
+   vec3 f_diffuse             = vec3 (0.0);
+   vec3 f_dielectric_brdf_ibl = vec3 (0.0);
 
    float diffuseTransmissionThickness = 1.0;
 
