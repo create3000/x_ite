@@ -68,7 +68,7 @@ in vec3 vertex;
    layout(location = 0) out vec4 x3d_FragData0;
    layout(location = 1) out vec4 x3d_FragData1;
 #else
-   out vec4 x3d_FragColor;
+   layout(location = 0) out vec4 x3d_FragColor;
 #endif
 
 #pragma X3D include "../pbr/ToneMapping.glsl"
