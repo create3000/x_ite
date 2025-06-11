@@ -200,10 +200,6 @@ Object .assign (X3DRenderObject .prototype,
    },
    getRenderKey ()
    {
-      return this .renderKey;
-   },
-   getRenderAndGlobalLightsKey ()
-   {
       return this .renderAndGlobalLightsKey;
    },
    getRenderCount ()
@@ -1215,7 +1211,7 @@ Object .assign (X3DRenderObject .prototype,
             if (this .renderPasses & RenderPass .TRANSMISSION)
             {
                this .renderPass               = RenderPass .TRANSMISSION;
-               this .renderAndGlobalLightsKey = `.${this .renderKey}.${RenderPass .RENDER}.${globalLightsKey}.`;
+               this .renderAndGlobalLightsKey = `.${this .renderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
@@ -1231,7 +1227,7 @@ Object .assign (X3DRenderObject .prototype,
             if (this .renderPasses & RenderPass .VOLUME_SCATTER)
             {
                this .renderPass               = RenderPass .VOLUME_SCATTER;
-               this .renderAndGlobalLightsKey = `.${this .renderKey}.${RenderPass .VOLUME_SCATTER}.${globalLightsKey}.`;
+               this .renderAndGlobalLightsKey = `.${this .renderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
@@ -1240,7 +1236,7 @@ Object .assign (X3DRenderObject .prototype,
          }
 
          this .renderPass               = RenderPass .RENDER;
-         this .renderAndGlobalLightsKey = `.${this .renderKey}.${RenderPass .RENDER}.${globalLightsKey}.`;
+         this .renderAndGlobalLightsKey = `.${this .renderKey}.${this .renderPass}.${globalLightsKey}.`;
 
          // Draw with sorted blend or OIT.
 

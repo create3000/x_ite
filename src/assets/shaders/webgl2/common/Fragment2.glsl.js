@@ -69,6 +69,10 @@ in vec3 vertex;
    layout(location = 1) out vec4 x3d_FragData1;
 #else
    layout(location = 0) out vec4 x3d_FragColor;
+
+   #if defined (X3D_VOLUME_SCATTER_PASS)
+      layout(location = 1) out vec4 x3d_IBLColor;
+   #endif
 #endif
 
 #pragma X3D include "../pbr/ToneMapping.glsl"
@@ -95,6 +99,10 @@ weight (const in float z, const in float a)
 void
 fragment_main ()
 {
+   #if defined (X3D_VOLUME_SCATTER_PASS)
+      x3d_IBLColor = vec4 (0.0);
+   #endif
+
    #if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
       generateFlatNormals ();
    #endif

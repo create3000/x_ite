@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, hAnimNode, localObjectsKeys } = renderContext;
 
          key += shapeNode .getAlphaMode ();
-         key += renderObject .getRenderAndGlobalLightsKey ();
+         key += renderObject .getRenderKey ();
          key += shadows || renderObject .getGlobalShadow () ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
@@ -374,8 +374,21 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             options .push ("X3D_ALPHA_MODE_BLEND");
 
-            if (renderObject .getOrderIndependentTransparency ())
-               options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+            switch (renderObject .getRenderPass ())
+            {
+               case RenderPass .TRANSMISSION:
+               case RenderPass .VOLUME_SCATTER:
+               {
+                  break;
+               }
+               default:
+               {
+                  if (renderObject .getOrderIndependentTransparency ())
+                     options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+
+                  break;
+               }
+            }
 
             break;
          }

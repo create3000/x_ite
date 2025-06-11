@@ -3,8 +3,6 @@ export default /* glsl */ `
 // Originally from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/scatter.frag
 
-layout(location = 1) out vec4 frontIBLColor;
-
 vec4
 getMaterialColor ()
 {
@@ -119,7 +117,7 @@ getMaterialColor ()
 
       vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
 
-      frontIBLColor = vec4 (mix (f_diffuse, f_specular_dielectric,  f_dielectric_fresnel_ibl), 1.0);
+      x3d_IBLColor = vec4 (mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl), 1.0);
    #endif
 
    #if defined (X3D_LIGHTING)
@@ -148,7 +146,6 @@ getMaterialColor ()
          vec3 h = normalize (l + v);          // Direction of the vector between l and v, called halfway vector
 
          float NdotL = clamp (dot (n, l), 0.0, 1.0);
-         float NdotH = clamp (dot (n, h), 0.0, 1.0);
          float VdotH = clamp (dot (v, h), 0.0, 1.0);
 
          vec3 dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (VdotH));
