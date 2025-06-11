@@ -153,7 +153,7 @@ getMaterialColor ()
 
    #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
    #if defined (X3D_VOLUME_MATERIAL_EXT)
-      diffuseTransmissionThickness = materialInfo .thickness * (length (vec3 (x3d_ModelViewMatrix [0] .xyz)) + length (vec3 (x3d_ModelViewMatrix [1] .xyz)) + length (vec3 (x3d_ModelViewMatrix [2] .xyz))) / 3.0;
+      diffuseTransmissionThickness = materialInfo .thickness * (length (x3d_ModelViewMatrix [0] .xyz) + length (x3d_ModelViewMatrix [1] .xyz) + length (x3d_ModelViewMatrix [2] .xyz)) / 3.0;
    #endif
    #endif
 
