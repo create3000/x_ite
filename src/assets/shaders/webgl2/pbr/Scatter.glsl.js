@@ -1,7 +1,7 @@
 export default /* glsl */ `
 
 // Originally from:
-// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/pbr.frag
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/scatter.frag
 
 #pragma X3D include "../common/Fragment.glsl"
 #pragma X3D include "../common/Shadow.glsl"
