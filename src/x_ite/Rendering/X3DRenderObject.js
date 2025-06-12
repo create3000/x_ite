@@ -1177,8 +1177,6 @@ Object .assign (X3DRenderObject .prototype,
 
       for (let i = 0; i < numFramebuffers; ++ i)
       {
-         const frameBuffer = framebuffers [i];
-
          // Set matrices with XR support.
 
          const view = this .view = pose ?.views [i];
@@ -1239,6 +1237,8 @@ Object .assign (X3DRenderObject .prototype,
 
          this .renderPass = RenderPass .RENDER;
          this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
+
+         const frameBuffer = framebuffers [i];
 
          this .drawShapes (gl, browser, frameBuffer, 0, viewport);
       }
