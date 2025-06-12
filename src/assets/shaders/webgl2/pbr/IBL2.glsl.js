@@ -120,7 +120,6 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness)
 // Framebuffers have all the same size, so we can use x3d_Viewport
 // to determine the size of the framebuffer.
 uniform sampler2D x3d_TransmissionSamplerEXT;
-uniform ivec4     x3d_Viewport;
 
 vec3
 getTransmissionSample (const in vec2 fragCoord, const in float roughness, const in float ior)

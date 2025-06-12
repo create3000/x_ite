@@ -266,7 +266,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_ScatterIBLSamplerEXT",
          "x3d_ScatterDepthSamplerEXT",
          "x3d_ScatterSamplesEXT",
-         "x3d_ScatterSamplesCountEXT",
       ];
 
       for (const name of commonUniforms)

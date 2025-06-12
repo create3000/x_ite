@@ -124,4 +124,40 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
    return normalize (refractionVector) * thickness * modelScale;
 }
 #endif
+
+#if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+
+uniform vec3  x3d_MultiscatterColorEXT;
+uniform float x3d_ScatterAnisotropyEXT;
+uniform vec3  x3d_ScatterSamplesEXT [64];
+uniform int   x3d_ScatterSamplesCountEXT;
+
+uniform sampler2D x3d_ScatterSamplerEXT;
+uniform sampler2D x3d_ScatterIBLSamplerEXT;
+uniform sampler2D x3d_ScatterDepthSamplerEXT;
+
+vec3
+getSubsurfaceScattering (const in vec4 v_Position, const in mat4 modelMatrix, const in mat4 viewMatrix, const in mat4 projectionMatrix, const in float attenuationDistance)
+{
+   vec2  uv           = (projectionMatrix * viewMatrix * v_Position) .xy;
+   float centerDepth  = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
+   vec2  texelSize    = 1.0 / vec2 (x3d_Viewport .zw);
+   vec2  centerVector = uv * centerDepth;
+   vec2  cornerVector = (uv + 0.5 * texelSize) * centerDepth;
+   vec2  pixelPerM    = abs (cornerVector - centerVector) * 2.0;
+
+   for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
+   {
+      vec3  scatterSample = x3d_ScatterSamplesEXT [i];
+      float fabAngle      = scatterSample .x;
+      float r             = scatterSample .y;
+      float rcpPdf        = scatterSample .z;
+      vec2  samplePos     = vec2 (cos (fabAngle), sin (fabAngle));
+
+      samplePos *= uv + round (r * pixelPerM * attenuationDistance);
+   }
+
+   return vec3 (0.0);
+}
+#endif
 `;

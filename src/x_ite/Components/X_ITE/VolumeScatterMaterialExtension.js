@@ -59,6 +59,8 @@ import RenderPass               from "../../Rendering/RenderPass.js";
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
+const ScatterSamplesCount = 64; // Number of samples for the Burley diffusion profile.
+
 function VolumeScatterMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);
@@ -68,7 +70,6 @@ function VolumeScatterMaterialExtension (executionContext)
    // Private properties
 
    this .multiscatterColorArray = new Float32Array (3);
-   this .scatterSamplesCount    = 64;
 }
 
 Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
@@ -90,18 +91,13 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
          uniformArray = [ ],
          goldenRatio  = (1 + Math .sqrt (5)) / 2;
 
-      for (let i = 0; i < this .scatterSamplesCount; ++ i)
+      for (let i = 0; i < ScatterSamplesCount; ++ i)
       {
-         const [r , pdf] = this .sampleBurleyDiffusionProfile (i / this .scatterSamplesCount + 1 / (2 * this .scatterSamplesCount), distance);
+         const [r , pdf] = this .sampleBurleyDiffusionProfile (i / ScatterSamplesCount + 1 / (2 * ScatterSamplesCount), distance);
 
-         const
-            fabAngle = 2 * Math .PI * ((i * goldenRatio) - Math .floor (i * goldenRatio)),
-            sinFab   = Math .sin (fabAngle),
-            cosFab   = Math .cos (fabAngle),
-            x        = r * cosFab,
-            y        = r * sinFab;
+         const fabAngle = 2 * Math .PI * ((i * goldenRatio) - Math .floor (i * goldenRatio));
 
-         uniformArray .push (x, y, pdf);
+         uniformArray .push (fabAngle, r, pdf);
       }
 
       return new Float32Array (uniformArray);
@@ -151,6 +147,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    getShaderOptions (options)
    {
       options .push ("X3D_VOLUME_SCATTER_MATERIAL_EXT");
+      options .push (`X3D_SCATTER_SAMPLES_COUNT_EXT ${ScatterSamplesCount}`);
    },
    setShaderUniforms: (() =>
    {
@@ -160,10 +157,9 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       {
          const browser = this .getBrowser ();
 
-         gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT,   this .multiscatterColorArray);
-         gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT,   this .scatterAnisotropy);
-         gl .uniform1fv (shaderObject .x3d_ScatterSamplesEXT,      this .scatterSamples);
-         gl .uniform1i  (shaderObject .x3d_ScatterSamplesCountEXT, this .scatterSamples .length);
+         gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
+         gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
+         gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    this .scatterSamples);
 
          // Scatter framebuffer texture
 
