@@ -66,8 +66,8 @@ function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
 
+   this .partialRenderKey         = "";
    this .renderKey                = "";
-   this .renderAndGlobalLightsKey = "";
    this .renderCount              = 0;
    this .view                     = null;
    this .viewVolumes              = [ ];
@@ -188,7 +188,7 @@ Object .assign (X3DRenderObject .prototype,
             break;
       }
 
-      this .renderKey = renderKey;
+      this .partialRenderKey = renderKey;
    },
    getLogarithmicDepthBuffer ()
    {
@@ -200,7 +200,7 @@ Object .assign (X3DRenderObject .prototype,
    },
    getRenderKey ()
    {
-      return this .renderAndGlobalLightsKey;
+      return this .renderKey;
    },
    getRenderCount ()
    {
@@ -1210,8 +1210,8 @@ Object .assign (X3DRenderObject .prototype,
 
             if (this .renderPasses & RenderPass .TRANSMISSION)
             {
-               this .renderPass               = RenderPass .TRANSMISSION;
-               this .renderAndGlobalLightsKey = `.${this .renderKey}.${this .renderPass}.${globalLightsKey}.`;
+               this .renderPass = RenderPass .TRANSMISSION;
+               this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
@@ -1226,8 +1226,8 @@ Object .assign (X3DRenderObject .prototype,
 
             if (this .renderPasses & RenderPass .VOLUME_SCATTER)
             {
-               this .renderPass               = RenderPass .VOLUME_SCATTER;
-               this .renderAndGlobalLightsKey = `.${this .renderKey}.${this .renderPass}.${globalLightsKey}.`;
+               this .renderPass = RenderPass .VOLUME_SCATTER;
+               this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
@@ -1235,8 +1235,8 @@ Object .assign (X3DRenderObject .prototype,
             }
          }
 
-         this .renderPass               = RenderPass .RENDER;
-         this .renderAndGlobalLightsKey = `.${this .renderKey}.${this .renderPass}.${globalLightsKey}.`;
+         this .renderPass = RenderPass .RENDER;
+         this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
          // Draw with sorted blend or OIT.
 
