@@ -1235,10 +1235,10 @@ Object .assign (X3DRenderObject .prototype,
             }
          }
 
+         // Draw with sorted blend or OIT.
+
          this .renderPass = RenderPass .RENDER;
          this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
-
-         // Draw with sorted blend or OIT.
 
          this .drawShapes (gl, browser, frameBuffer, 0, viewport);
       }
