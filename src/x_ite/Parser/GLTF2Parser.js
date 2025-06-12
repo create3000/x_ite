@@ -2504,7 +2504,6 @@ function eventsProcessed ()
       switchNode ._visible     = false;
 
       switchNode .setup ();
-
       switchNode .setMetaData ("MaterialVariants/names", new Fields .MFString (... names));
 
       for (const variantNode of this .materialVariantNodes)
