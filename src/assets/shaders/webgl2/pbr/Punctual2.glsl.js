@@ -137,9 +137,9 @@ uniform sampler2D x3d_ScatterIBLSamplerEXT;
 uniform sampler2D x3d_ScatterDepthSamplerEXT;
 
 vec3
-getSubsurfaceScattering (const in vec4 v_Position, const in mat4 modelMatrix, const in mat4 viewMatrix, const in mat4 projectionMatrix, const in float attenuationDistance)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 modelMatrix, const in mat4 viewMatrix, const in mat4 projectionMatrix, const in float attenuationDistance)
 {
-   vec2  uv           = (projectionMatrix * viewMatrix * v_Position) .xy;
+   vec2  uv           = (projectionMatrix * viewMatrix * vec4 (vertex, 1.0)) .xy; // TODO: vertex is already in world space
    float centerDepth  = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
    vec2  texelSize    = 1.0 / vec2 (x3d_Viewport .zw);
    vec2  centerVector = uv * centerDepth;
