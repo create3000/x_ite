@@ -129,7 +129,7 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
 
 uniform vec3  x3d_MultiscatterColorEXT;
 uniform float x3d_ScatterAnisotropyEXT;
-uniform vec3  x3d_ScatterSamplesEXT [64];
+uniform vec3  x3d_ScatterSamplesEXT [X3D_SCATTER_SAMPLES_COUNT_EXT];
 uniform int   x3d_ScatterSamplesCountEXT;
 
 uniform sampler2D x3d_ScatterSamplerEXT;
