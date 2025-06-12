@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
          gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
          gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
-         gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
+         gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
 
          if (!+this .getTextureBits ())
             return;

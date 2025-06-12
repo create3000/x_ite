@@ -119,7 +119,7 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness)
 
 // Framebuffers have all the same size, so we can use x3d_Viewport
 // to determine the size of the framebuffer.
-uniform sampler2D x3d_TransmissionFramebufferSamplerEXT;
+uniform sampler2D x3d_TransmissionSamplerEXT;
 uniform ivec4     x3d_Viewport;
 
 vec3
@@ -128,11 +128,11 @@ getTransmissionSample (const in vec2 fragCoord, const in float roughness, const 
    #if __VERSION__ == 100
       float framebufferSize  = max (float (x3d_Viewport .z), float (x3d_Viewport .w));
       float framebufferLod   = log2 (framebufferSize) * applyIorToRoughness (roughness, ior);
-      vec3  transmittedLight = texture2DLodEXT (x3d_TransmissionFramebufferSamplerEXT, fragCoord, framebufferLod) .rgb;
+      vec3  transmittedLight = texture2DLodEXT (x3d_TransmissionSamplerEXT, fragCoord, framebufferLod) .rgb;
    #else
       int   framebufferSize  = max (x3d_Viewport .z, x3d_Viewport .w);
       float framebufferLod   = log2 (float (framebufferSize)) * applyIorToRoughness (roughness, ior);
-      vec3  transmittedLight = textureLod (x3d_TransmissionFramebufferSamplerEXT, fragCoord, framebufferLod) .rgb;
+      vec3  transmittedLight = textureLod (x3d_TransmissionSamplerEXT, fragCoord, framebufferLod) .rgb;
    #endif
 
    #if defined (X3D_COLORSPACE_SRGB)

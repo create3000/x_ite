@@ -70,6 +70,10 @@ function TextureBuffer (browser, width, height, float = false, mipMaps = false, 
       configurable: true,
    });
 
+   // Get current frame buffer.
+
+   const currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+
    // Create frame buffer.
 
    this .frameBuffer = gl .createFramebuffer ();
@@ -139,6 +143,10 @@ function TextureBuffer (browser, width, height, float = false, mipMaps = false, 
    }
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
+
+   // Restore previous frame buffer.
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
 
    // Always check that our framebuffer is ok.
 
