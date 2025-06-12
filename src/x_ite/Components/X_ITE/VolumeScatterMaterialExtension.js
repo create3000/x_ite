@@ -68,6 +68,7 @@ function VolumeScatterMaterialExtension (executionContext)
    // Private properties
 
    this .multiscatterColorArray = new Float32Array (3);
+   this .scatterSamplesCount    = 64;
 }
 
 Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
@@ -82,9 +83,62 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       this .set_multiscatterColor__ ();
       this .set_scatterAnisotropy__ ();
    },
+   computeScatterSamples ()
+   {
+      const
+         distance     = Math .max (... this ._multiscatterColor),
+         uniformArray = [ ],
+         goldenRatio  = (1 + Math .sqrt (5)) / 2;
+
+      for (let i = 0; i < this .scatterSamplesCount; ++ i)
+      {
+         const [r , pdf] = this .sampleBurleyDiffusionProfile (i / this .scatterSamplesCount + 1 / (2 * this .scatterSamplesCount), distance);
+
+         const
+            fabAngle = 2 * Math .PI * ((i * goldenRatio) - Math .floor (i * goldenRatio)),
+            sinFab   = Math .sin (fabAngle),
+            cosFab   = Math .cos (fabAngle),
+            x        = r * cosFab,
+            y        = r * sinFab;
+
+         uniformArray .push (x, y, pdf);
+      }
+
+      return new Float32Array (uniformArray);
+   },
+   sampleBurleyDiffusionProfile (u, rcpS)
+   {
+      /**
+       * https://zero-radiance.github.io/post/sampling-diffusion/
+       * Sample Normalized Burley diffusion profile.
+       * 'u' is a random number (the value of the CDF): [0, 1).
+       * rcp(s) = 1 / ShapeParam = ScatteringDistance.
+       * 'r' is = the sampled radial distance, s.t. (u = 0 -> r = 0) and (u = 1 -> r = Inf).
+       * rcp(Pdf) is the reciprocal of the corresponding PDF value.
+       */
+
+      u = 1 - u; // Convert CDF to CCDF
+
+      const
+         g = 1 + 4 * u * (2 * u + Math .sqrt (1 + 4 * u * u)),
+         n = Math .pow (g, -1 / 3), // g^(-1/3)
+         p = g * n * n, // g^(+1/3)
+         c = 1 + p + n, // 1 + g^(+1/3) + g^(-1/3)
+         x = 3 * Math .log (c / (4 * u));
+
+      const rcpExp = ((c * c) * c) * 1 / (((4 * u) * ((c * c) + (4 * u) * (4 * u))));
+
+      const
+         r       = x * rcpS,
+         rcpPdf = (8 * Math.PI * rcpS) * rcpExp;
+
+      return [r, rcpPdf];
+    },
    set_multiscatterColor__ ()
    {
       this .multiscatterColorArray .set (this ._multiscatterColor .getValue ());
+
+      this .scatterSamples = this.computeScatterSamples ();
    },
    set_scatterAnisotropy__ ()
    {
@@ -106,8 +160,10 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       {
          const browser = this .getBrowser ();
 
-         gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
-         gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
+         gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT,   this .multiscatterColorArray);
+         gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT,   this .scatterAnisotropy);
+         gl .uniform1fv (shaderObject .x3d_ScatterSamplesEXT,      this .scatterSamples);
+         gl .uniform1i  (shaderObject .x3d_ScatterSamplesCountEXT, this .scatterSamples .length);
 
          // Scatter framebuffer texture
 
