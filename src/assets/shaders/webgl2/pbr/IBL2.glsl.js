@@ -119,7 +119,6 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness)
 
 uniform sampler2D x3d_TransmissionFramebufferSamplerEXT;
 uniform ivec2     x3d_TransmissionFramebufferSizeEXT;
-uniform ivec4     x3d_Viewport;
 
 vec3
 getTransmissionSample (in vec2 fragCoord, const in float roughness, const in float ior)
