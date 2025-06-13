@@ -74,9 +74,9 @@ evalIridescence (const in float outsideIOR, const in float eta2, const in float 
     vec3 I;
 
     // Force iridescenceIor -> outsideIOR when thinFilmThickness -> 0.0
-    float iridescenceIor = mix (outsideIOR, eta2, smoothstep(0.0, 0.03, thinFilmThickness));
+    float iridescenceIor = mix (outsideIOR, eta2, smoothstep (0.0, 0.03, thinFilmThickness));
     // Evaluate the cosTheta on the base layer (Snell law)
-    float sinTheta2Sq = sq (outsideIOR / iridescenceIor) * (1.0 - sq(cosTheta1));
+    float sinTheta2Sq = sq (outsideIOR / iridescenceIor) * (1.0 - sq (cosTheta1));
 
     // Handle TIR:
     float cosTheta2Sq = 1.0 - sinTheta2Sq;
@@ -99,7 +99,7 @@ evalIridescence (const in float outsideIOR, const in float eta2, const in float 
     float phi21 = M_PI - phi12;
 
     // Second interface
-    vec3 baseIOR = Fresnel0ToIor( clamp (baseF0, 0.0, 0.9999)); // guard against 1.0
+    vec3 baseIOR = Fresnel0ToIor (clamp (baseF0, 0.0, 0.9999)); // guard against 1.0
     vec3 R1      = IorToFresnel0 (baseIOR, iridescenceIor);
     vec3 R23     = F_Schlick (R1, cosTheta2);
     vec3 phi23   = vec3 (0.0);
