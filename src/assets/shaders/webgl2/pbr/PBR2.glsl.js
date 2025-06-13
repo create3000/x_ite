@@ -145,12 +145,15 @@ getMaterialColor ()
    float albedoSheenScaling           = 1.0;
    float diffuseTransmissionThickness = 1.0;
 
+   #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
+   // Holger: Values are only used if X3D_USE_IBL or X3D_LIGHTING is defined.
    #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
       vec3 iridescenceFresnel_dielectric = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, materialInfo .f0_dielectric);
       vec3 iridescenceFresnel_metallic   = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, baseColor .rgb);
 
       if (materialInfo .iridescenceThickness == 0.0)
          materialInfo .iridescenceFactor = 0.0;
+   #endif
    #endif
 
    #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
