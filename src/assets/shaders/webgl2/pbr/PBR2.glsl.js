@@ -6,8 +6,13 @@ export default /* glsl */ `
 #pragma X3D include "../common/Fragment.glsl"
 #pragma X3D include "../common/Shadow.glsl"
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || (defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) && defined (X3D_VOLUME_MATERIAL_EXT))
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+   uniform ivec4 x3d_Viewport;
+#endif
+
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
    uniform mat4 x3d_ProjectionMatrix;
+   uniform mat4 x3d_ViewMatrix;
    uniform mat4 x3d_ModelViewMatrix;
 #endif
 
