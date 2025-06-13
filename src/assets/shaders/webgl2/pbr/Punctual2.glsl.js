@@ -139,12 +139,18 @@ uniform sampler2D x3d_ScatterDepthSamplerEXT;
 vec3
 getSubsurfaceScattering (const in vec3 vertex, const in mat4 modelMatrix, const in mat4 viewMatrix, const in mat4 projectionMatrix, const in float attenuationDistance)
 {
-   vec2  uv           = vec2 (projectionMatrix * viewMatrix * vec4 (vertex, 1.0)); // TODO: vertex is already in world space
-   float centerDepth  = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
-   vec2  texelSize    = 1.0 / vec2 (x3d_Viewport .zw);
-   vec2  centerVector = uv * centerDepth;
-   vec2  cornerVector = (uv + 0.5 * texelSize) * centerDepth;
-   vec2  pixelPerM    = abs (cornerVector - centerVector) * 2.0;
+   vec2 uv = vec2 (projectionMatrix * viewMatrix * vec4 (vertex, 1.0)); // TODO: vertex is already in world space
+
+   #if __VERSION__ == 100
+      float centerDepth = texture2D (x3d_ScatterDepthSamplerEXT, uv) .x;
+   #else
+      float centerDepth = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
+   #endif
+
+   vec2 texelSize    = 1.0 / vec2 (x3d_Viewport .zw);
+   vec2 centerVector = uv * centerDepth;
+   vec2 cornerVector = (uv + 0.5 * texelSize) * centerDepth;
+   vec2 pixelPerM    = abs (cornerVector - centerVector) * 2.0;
 
    for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
    {
