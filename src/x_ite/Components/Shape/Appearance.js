@@ -248,6 +248,8 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this .set_transmission__ ();
       this .set_volumeScatter__ ();
 
+      this .set_transmission__ ();
+
       // Depreciated TwoSidedMaterial handling.
 
       if (X3DCast (X3DConstants .TwoSidedMaterial, this .materialNode))
