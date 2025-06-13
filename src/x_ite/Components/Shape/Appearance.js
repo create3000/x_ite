@@ -243,6 +243,8 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this .materialNode ._transparent  .addInterest ("set_transparent__",  this);
       this .materialNode ._transmission .addInterest ("set_transmission__", this);
 
+      this .set_transmission__ ();
+
       // Depreciated TwoSidedMaterial handling.
 
       if (X3DCast (X3DConstants .TwoSidedMaterial, this .materialNode))
