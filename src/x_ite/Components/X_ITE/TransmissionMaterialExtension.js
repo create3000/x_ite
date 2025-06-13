@@ -117,8 +117,8 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
          if (renderObject .isTransmission ())
          {
             var
-               transmissionBufferTexture = browser .getDefaultTexture2D (),
-               transmissionUnit          = browser .getDefaultTexture2DUnit ();
+               transmissionUnit    = browser .getDefaultTexture2DUnit (),
+               transmissionTexture = browser .getDefaultTexture2D ();
 
             // Hide object by using a model view matrix with zeros.
             gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
@@ -126,13 +126,13 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
          else
          {
             var
-               transmissionBuffer        = browser .getTransmissionBuffer (),
-               transmissionBufferTexture = transmissionBuffer .getColorTexture (),
-               transmissionUnit          = browser .getTexture2DUnit ();
+               transmissionBuffer  = browser .getTransmissionBuffer (),
+               transmissionUnit    = browser .getTexture2DUnit (),
+               transmissionTexture = transmissionBuffer .getColorTexture ();
          }
 
          gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
-         gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
+         gl .bindTexture (gl .TEXTURE_2D, transmissionTexture);
          gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
 
          if (!+this .getTextureBits ())
