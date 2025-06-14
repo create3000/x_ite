@@ -142,9 +142,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { renderObject, alphaMode, textureNode, localObjectsKeys } = geometryContext;
 
          key += alphaMode;
-         key += ".";
          key += renderObject .getRenderKey ();
-         key += "..000011[]";
+         key += "000011[]";
          key += localObjectsKeys .sort () .join (""); // ClipPlane
          key += ".";
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;
