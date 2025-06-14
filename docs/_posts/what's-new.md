@@ -30,6 +30,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Fixed issue in normal calculations in rare cases.
 * Fixed [Switch](/x_ite/components/grouping/switch/) and [LOD](/x_ite/components/navigation/lod/) `addChildren` and `removeChildren` events handling.
 * If the *min* package is selected, the correct files are now loaded from the assets folder.
+* Fixed a bug in the PBR shader when [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) and [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) are present at the same time.
 * Other bug fixes.
 
 ## X_ITE v11.4 Series
