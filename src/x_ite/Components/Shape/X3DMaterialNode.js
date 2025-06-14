@@ -374,20 +374,10 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             options .push ("X3D_ALPHA_MODE_BLEND");
 
-            switch (renderObject .getRenderPass ())
+            if (renderObject .getRenderPass () === RenderPass .RENDER)
             {
-               case RenderPass .TRANSMISSION:
-               case RenderPass .VOLUME_SCATTER:
-               {
-                  break;
-               }
-               default:
-               {
-                  if (renderObject .getOrderIndependentTransparency ())
-                     options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-
-                  break;
-               }
+               if (renderObject .getOrderIndependentTransparency ())
+                  options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
             }
 
             break;
