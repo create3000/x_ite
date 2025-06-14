@@ -29,6 +29,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Fixed issue with [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) sending »old« *touchTime* values.
 * Fixed issue in normal calculations in rare cases.
 * Fixed [Switch](/x_ite/components/grouping/switch/) and [LOD](/x_ite/components/navigation/lod/) `addChildren` and `removeChildren` events handling.
+* If the *min* package is selected, the correct files are now loaded from the assets folder.
 * Other bug fixes.
 
 ## X_ITE v11.4 Series
