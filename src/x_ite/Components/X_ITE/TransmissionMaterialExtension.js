@@ -113,6 +113,8 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
       if (renderObject .getRenderPass () === RenderPass .TRANSMISSION)
       {
+         // Avoid feedback loop by using the default texture.
+
          var
             transmissionUnit          = browser .getDefaultTexture2DUnit (),
             transmissionBufferTexture = browser .getDefaultTexture2D ();
