@@ -160,12 +160,11 @@ uniform sampler2D x3d_ScatterDepthSamplerEXT;
 // }
 
 vec3
-getSubsurfaceScattering(const in vec3 vertex,
-                        const in mat4 projectionMatrix,
-                        const in float attenuationDistance)
+getSubsurfaceScattering (const in float attenuationDistance)
 {
-   vec4  clipPosition = projectionMatrix * vec4 (vertex, 1.0);
-   vec2  uv           = (clipPosition .xy / clipPosition .w) * 0.5 + 0.5;
+   // vec4  clipPosition = projectionMatrix * vec4 (vertex, 1.0);
+   // vec2  uv           = (clipPosition .xy / clipPosition .w) * 0.5 + 0.5;
+   vec2  uv           = gl_FragCoord .xy / vec2 (x3d_Viewport .zw);
    float centerDepth  = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
    vec2  texelSize    = 1.0 / vec2 (x3d_Viewport .zw);
    vec2  centerVector = uv * centerDepth;
