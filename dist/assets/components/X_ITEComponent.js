@@ -1,5 +1,5 @@
-/* X_ITE v11.5.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.9")];
+/* X_ITE v11.5.10 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.10")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2645,26 +2645,23 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
          if (renderObject .isTransmission ())
          {
             var
-               transmissionBufferTexture = browser .getDefaultTexture2D (),
-               transmissionUnit          = browser .getDefaultTexture2DUnit ();
+               transmissionUnit          = browser .getDefaultTexture2DUnit (),
+               transmissionBufferTexture = browser .getDefaultTexture2D ();
 
             // Hide object by using a model view matrix with zeros.
             gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-            gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, 1, 1);
          }
          else
          {
             var
                transmissionBuffer        = browser .getTransmissionBuffer (),
-               transmissionBufferTexture = transmissionBuffer .getColorTexture (),
-               transmissionUnit          = browser .getTexture2DUnit ();
-
-            gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
+               transmissionUnit          = browser .getTexture2DUnit (),
+               transmissionBufferTexture = transmissionBuffer .getColorTexture ();
          }
 
          gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
          gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
-         gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
+         gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
 
          if (!+this .getTextureBits ())
             return;
