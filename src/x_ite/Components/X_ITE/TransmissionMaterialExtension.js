@@ -103,51 +103,43 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
       this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
    },
-   setShaderUniforms: (() =>
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      const zeros = new Float32Array (16);
+      const browser = this .getBrowser ();
 
-      return function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+      gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
+
+      // Transmission framebuffer texture
+
+      if (renderObject .getRenderPass () === RenderPass .TRANSMISSION)
       {
-         const browser = this .getBrowser ();
+         var
+            transmissionUnit          = browser .getDefaultTexture2DUnit (),
+            transmissionBufferTexture = browser .getDefaultTexture2D ();
+      }
+      else
+      {
+         var
+            transmissionBuffer        = browser .getTransmissionBuffer (),
+            transmissionUnit          = browser .getTexture2DUnit (),
+            transmissionBufferTexture = transmissionBuffer .getColorTexture ();
+      }
 
-         gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
+      gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
+      gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
+      gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
 
-         // Transmission framebuffer texture
+      if (!+this .getTextureBits ())
+         return;
 
-         if (renderObject .getRenderPass () === RenderPass .TRANSMISSION)
-         {
-            var
-               transmissionUnit          = browser .getDefaultTexture2DUnit (),
-               transmissionBufferTexture = browser .getDefaultTexture2D ();
-
-            // Hide object by using a model view matrix with zeros.
-            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-         }
-         else
-         {
-            var
-               transmissionBuffer        = browser .getTransmissionBuffer (),
-               transmissionUnit          = browser .getTexture2DUnit (),
-               transmissionBufferTexture = transmissionBuffer .getColorTexture ();
-         }
-
-         gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
-         gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
-         gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
-
-         if (!+this .getTextureBits ())
-            return;
-
-         this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_TransmissionTextureEXT,
-            this ._transmissionTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
-      };
-   })(),
+      this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_TransmissionTextureEXT,
+         this ._transmissionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+   },
 });
 
 Object .defineProperties (TransmissionMaterialExtension,
