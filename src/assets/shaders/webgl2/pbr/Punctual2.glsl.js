@@ -136,7 +136,7 @@ uniform sampler2D x3d_ScatterIBLSamplerEXT;
 uniform sampler2D x3d_ScatterDepthSamplerEXT;
 
 // vec3
-// getSubsurfaceScattering (const in vec3 vertex, const in mat4 modelMatrix, const in mat4 viewMatrix, const in mat4 projectionMatrix, const in float attenuationDistance)
+// getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance)
 // {
 //    vec2  uv           = vec2 (projectionMatrix * viewMatrix * vec4 (vertex, 1.0)); // TODO: vertex is already in world space
 //    float centerDepth  = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
@@ -161,19 +161,18 @@ uniform sampler2D x3d_ScatterDepthSamplerEXT;
 
 vec3
 getSubsurfaceScattering(const in vec3 vertex,
-                        const in mat4 modelMatrix,
-                        const in mat4 viewMatrix,
                         const in mat4 projectionMatrix,
                         const in float attenuationDistance)
 {
-   vec3 scatterColor = vec3 (0.0);
-
-   vec2  uv           = vec2 (projectionMatrix * viewMatrix * vec4 (vertex, 1.0)); // TODO: vertex is already in world space
+   vec4  clipPosition = projectionMatrix * vec4 (vertex, 1.0);
+   vec2  uv           = (clipPosition .xy / clipPosition .w) * 0.5 + 0.5;
    float centerDepth  = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
    vec2  texelSize    = 1.0 / vec2 (x3d_Viewport .zw);
    vec2  centerVector = uv * centerDepth;
    vec2  cornerVector = (uv + 0.5 * texelSize) * centerDepth;
    vec2  pixelPerM    = abs (cornerVector - centerVector) * 2.0;
+
+   vec3 scatterColor = vec3 (0.0);
 
    for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
    {
@@ -195,7 +194,7 @@ getSubsurfaceScattering(const in vec3 vertex,
       float thickness = abs (centerDepth - sampleDepth) * attenuationDistance;
 
       // Compute attenuation (Beer-Lambert law)
-      vec3 attenuation = exp (-thickness * x3d_MultiscatterColorEXT);
+      vec3 attenuation = exp (-thickness) * x3d_MultiscatterColorEXT;
 
       // Weight by inverse PDF and anisotropy factor
       float weight = r * max (0.0, 1.0 - x3d_ScatterAnisotropyEXT * rcpPdf);
@@ -205,6 +204,7 @@ getSubsurfaceScattering(const in vec3 vertex,
    }
 
    scatterColor /= float (X3D_SCATTER_SAMPLES_COUNT_EXT); // Average the result
+
    return scatterColor;
 }
 #endif
