@@ -187,17 +187,20 @@ getSubsurfaceScattering(const in vec3 vertex,
 
       // TODO: code below is AI generate.
 
+      // Sample depth and color at sample position
       float sampleDepth = texture (x3d_ScatterDepthSamplerEXT, samplePos) .r;
       vec3  sampleColor = texture (x3d_ScatterSamplerEXT, samplePos) .rgb;
 
-      // Depth difference acts as a proxy for thickness
+      // Estimate thickness along the view ray
       float thickness = abs (centerDepth - sampleDepth) * attenuationDistance;
 
-      // Use Beer-Lambert law for light attenuation through medium
+      // Compute attenuation (Beer-Lambert law)
       vec3 attenuation = exp (-thickness * x3d_MultiscatterColorEXT);
 
-      float weight = max (0.0, 1.0 - x3d_ScatterAnisotropyEXT * rcpPdf);
+      // Weight by inverse PDF and anisotropy factor
+      float weight = r * max (0.0, 1.0 - x3d_ScatterAnisotropyEXT * rcpPdf);
 
+      // Accumulate the weighted sample color
       scatterColor += sampleColor * attenuation * weight;
    }
 
