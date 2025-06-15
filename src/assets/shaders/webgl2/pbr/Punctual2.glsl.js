@@ -125,7 +125,7 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
 }
 #endif
 
-#if __VERSION__ >= 300 && defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+#if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
 
 uniform vec3  x3d_MultiscatterColorEXT;
 uniform float x3d_ScatterAnisotropyEXT;

@@ -218,7 +218,7 @@ getMaterialColor ()
 
       vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
 
-      #if __VERSION__ >= 300 && defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
          f_dielectric_brdf_ibl  = f_specular_dielectric * f_dielectric_fresnel_ibl;
          f_dielectric_brdf_ibl += getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance); // Subsurface scattering is calculated based on fresnel weighted diffuse terms
       #else

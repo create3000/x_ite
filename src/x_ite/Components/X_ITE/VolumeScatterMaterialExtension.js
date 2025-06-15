@@ -146,6 +146,11 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    },
    getShaderOptions (options)
    {
+      const gl = this .getBrowser () .getContext ();
+
+      if (gl .getVersion () < 2)
+         return;
+
       options .push ("X3D_VOLUME_SCATTER_MATERIAL_EXT");
       options .push (`X3D_SCATTER_SAMPLES_COUNT_EXT ${ScatterSamplesCount}`);
    },

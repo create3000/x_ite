@@ -194,7 +194,12 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
 
       this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .TransmissionMaterialExtension)));
 
-      this .setVolumeScatter (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeScatterMaterialExtension)) && extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeMaterialExtension)));
+      const gl = this .getBrowser () .getContext ();
+
+      if (gl .getVersion () >= 2)
+      {
+         this .setVolumeScatter (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeScatterMaterialExtension)) && extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeMaterialExtension)));
+      }
 
       this .set_extensionsKey__ ();
    },
