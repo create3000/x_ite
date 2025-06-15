@@ -154,58 +154,40 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       options .push ("X3D_VOLUME_SCATTER_MATERIAL_EXT");
       options .push (`X3D_SCATTER_SAMPLES_COUNT_EXT ${ScatterSamplesCount}`);
    },
-   setShaderUniforms: (() =>
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      const zeros = new Float32Array (16);
+      if (renderObject .getRenderPass () === RenderPass .VOLUME_SCATTER)
+         return;
 
-      return function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-      {
-         const browser = this .getBrowser ();
+      const browser = this .getBrowser ();
 
-         gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
-         gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
-         gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    this .scatterSamples);
+      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
+      gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
+      gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    this .scatterSamples);
 
-         // Scatter framebuffer texture
+      // Scatter framebuffer texture
 
-         if (renderObject .getRenderPass () === RenderPass .VOLUME_SCATTER)
-         {
-            var
-               scatterSampleUnit         = browser .getTexture2DUnit (),
-               scatterIBLSampleUnit      = browser .getTexture2DUnit (),
-               scatterDepthSampleUnit    = browser .getTexture2DUnit (),
-               scatterSampleTexture      = browser .getDefaultTexture2D (),
-               scatterIBLSampleTexture   = browser .getDefaultTexture2D (),
-               scatterDepthSampleTexture = browser .getDefaultTexture2D ();
+      const
+         scatterSampleBuffer       = browser .getVolumeScatterBuffer (),
+         scatterSampleUnit         = browser .getTexture2DUnit (),
+         scatterIBLSampleUnit      = browser .getTexture2DUnit (),
+         scatterDepthSampleUnit    = browser .getTexture2DUnit (),
+         scatterSampleTexture      = scatterSampleBuffer .getColorTexture (0),
+         scatterIBLSampleTexture   = scatterSampleBuffer .getColorTexture (1),
+         scatterDepthSampleTexture = scatterSampleBuffer .getDepthTexture ();
 
-            // Hide object by using a model view matrix with zeros.
-            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-         }
-         else
-         {
-            var
-               scatterSampleBuffer       = browser .getVolumeScatterBuffer (),
-               scatterSampleUnit         = browser .getTexture2DUnit (),
-               scatterIBLSampleUnit      = browser .getTexture2DUnit (),
-               scatterDepthSampleUnit    = browser .getTexture2DUnit (),
-               scatterSampleTexture      = scatterSampleBuffer .getColorTexture (0),
-               scatterIBLSampleTexture   = scatterSampleBuffer .getColorTexture (1),
-               scatterDepthSampleTexture = scatterSampleBuffer .getDepthTexture ();
-         }
+      gl .activeTexture (gl .TEXTURE0 + scatterSampleUnit);
+      gl .bindTexture (gl .TEXTURE_2D, scatterSampleTexture);
+      gl .uniform1i (shaderObject .x3d_ScatterSamplerEXT, scatterSampleUnit);
 
-         gl .activeTexture (gl .TEXTURE0 + scatterSampleUnit);
-         gl .bindTexture (gl .TEXTURE_2D, scatterSampleTexture);
-         gl .uniform1i (shaderObject .x3d_ScatterSamplerEXT, scatterSampleUnit);
+      gl .activeTexture (gl .TEXTURE0 + scatterIBLSampleUnit);
+      gl .bindTexture (gl .TEXTURE_2D, scatterIBLSampleTexture);
+      gl .uniform1i (shaderObject .x3d_ScatterIBLSamplerEXT, scatterIBLSampleUnit);
 
-         gl .activeTexture (gl .TEXTURE0 + scatterIBLSampleUnit);
-         gl .bindTexture (gl .TEXTURE_2D, scatterIBLSampleTexture);
-         gl .uniform1i (shaderObject .x3d_ScatterIBLSamplerEXT, scatterIBLSampleUnit);
-
-         gl .activeTexture (gl .TEXTURE0 + scatterDepthSampleUnit);
-         gl .bindTexture (gl .TEXTURE_2D, scatterDepthSampleTexture);
-         gl .uniform1i (shaderObject .x3d_ScatterDepthSamplerEXT, scatterDepthSampleUnit);
-      };
-   })(),
+      gl .activeTexture (gl .TEXTURE0 + scatterDepthSampleUnit);
+      gl .bindTexture (gl .TEXTURE_2D, scatterDepthSampleTexture);
+      gl .uniform1i (shaderObject .x3d_ScatterDepthSamplerEXT, scatterDepthSampleUnit);
+   },
 });
 
 Object .defineProperties (VolumeScatterMaterialExtension,
