@@ -1198,11 +1198,11 @@ Object .assign (X3DRenderObject .prototype,
 
          if (this .renderPasses & RenderPass .VOLUME_SCATTER)
          {
-            // Find opaque shapes that are rendered in the volume scatter pass.
-
             const
                { numOpaqueShapes, opaqueShapes, numTransparentShapes, transparentShapes } = this,
                { opaqueShapes: volumeScatterOpaqueShapes, transparentShapes: volumeScatterTransparentShapes } = this .volumeScatterShapes;
+
+            // Find opaque shapes that are rendered in the volume scatter pass.
 
             volumeScatterOpaqueShapes .length = 0;
 
