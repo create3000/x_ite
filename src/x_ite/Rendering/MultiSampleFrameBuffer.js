@@ -45,6 +45,8 @@
  *
  ******************************************************************************/
 
+import DEVELOPMENT from "../DEVELOPMENT.js";
+
 function MultiSampleFramebuffer (browser, x, y, width, height, samples, oit)
 {
    const gl = browser .getContext ();
@@ -366,15 +368,18 @@ Object .assign (MultiSampleFramebuffer .prototype,
 
       // DEBUG start
 
-      const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
+      if (DEVELOPMENT)
+      {
+         const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, volumeScatterBuffer .frameBuffer);
-      gl .readBuffer (gl .COLOR_ATTACHMENT0);
-      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFramebuffer ());
+         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, volumeScatterBuffer .frameBuffer);
+         gl .readBuffer (gl .COLOR_ATTACHMENT0);
+         gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFramebuffer ());
 
-      gl .blitFramebuffer (0, 0, width, height,
-                           0, 0, width / 4, height / 4,
-                           gl .COLOR_BUFFER_BIT, gl .NEAREST);
+         gl .blitFramebuffer (0, 0, width, height,
+                              0, 0, width / 4, height / 4,
+                              gl .COLOR_BUFFER_BIT, gl .NEAREST);
+      }
       // DEBUG end
 
       if (!auxBuffer)
