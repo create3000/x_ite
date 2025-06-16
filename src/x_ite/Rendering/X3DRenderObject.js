@@ -668,17 +668,17 @@ Object .assign (X3DRenderObject .prototype,
             this .pointingShapes .push (renderContext);
          }
 
-         const pointingContext = this .pointingShapes [num];
+         const renderContext = this .pointingShapes [num];
 
-         pointingContext .modelViewMatrix .set (modelViewMatrix);
-         pointingContext .viewport .assign (viewVolume .getViewport ());
-         pointingContext .hAnimNode = this .hAnimNode .at (-1);
-         pointingContext .shapeNode = shapeNode;
+         renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .shapeNode = shapeNode;
 
          // Clip planes & sensors
 
-         assign (pointingContext .clipPlanes, this .localObjects);
-         assign (pointingContext .sensors,    this .sensors .at (-1));
+         assign (renderContext .clipPlanes, this .localObjects);
+         assign (renderContext .sensors,    this .sensors .at (-1));
 
          return true;
       };
@@ -719,18 +719,18 @@ Object .assign (X3DRenderObject .prototype,
             this .collisionShapes .push (renderContext);
          }
 
-         const collisionContext = this .collisionShapes [num];
+         const renderContext = this .collisionShapes [num];
 
-         collisionContext .modelViewMatrix .set (modelViewMatrix);
-         collisionContext .shapeNode = shapeNode;
+         renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .shapeNode = shapeNode;
 
          // Collisions
 
-         assign (collisionContext .collisions, this .collisions);
+         assign (renderContext .collisions, this .collisions);
 
          // Clip planes
 
-         assign (collisionContext .clipPlanes, this .localObjects);
+         assign (renderContext .clipPlanes, this .localObjects);
 
          return true;
       };
@@ -771,16 +771,16 @@ Object .assign (X3DRenderObject .prototype,
             this .shadowShapes .push (renderContext);
          }
 
-         const depthContext = this .shadowShapes [num];
+         const renderContext = this .shadowShapes [num];
 
-         depthContext .modelViewMatrix .set (modelViewMatrix);
-         depthContext .viewport .assign (viewVolume .getViewport ());
-         depthContext .hAnimNode = this .hAnimNode .at (-1);
-         depthContext .shapeNode = shapeNode;
+         renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .shapeNode = shapeNode;
 
          // Clip planes
 
-         assign (depthContext .clipPlanes, this .localObjects);
+         assign (renderContext .clipPlanes, this .localObjects);
 
          return true;
       };
@@ -947,15 +947,15 @@ Object .assign (X3DRenderObject .prototype,
          for (let i = 0; i < numCollisionShapes; ++ i)
          {
             const
-               collisionContext = this .collisionShapes [i],
-               collisions       = collisionContext .collisions;
+               renderContext = this .collisionShapes [i],
+               collisions       = renderContext .collisions;
 
             if (collisions .length)
             {
                collisionBox .set (collisionSize, Vector3 .Zero);
-               collisionBox .multRight (invModelViewMatrix .assign (collisionContext .modelViewMatrix) .inverse ());
+               collisionBox .multRight (invModelViewMatrix .assign (renderContext .modelViewMatrix) .inverse ());
 
-               if (collisionContext .shapeNode .intersectsBox (collisionBox, collisionContext .clipPlanes, modelViewMatrix .assign (collisionContext .modelViewMatrix)))
+               if (renderContext .shapeNode .intersectsBox (collisionBox, renderContext .clipPlanes, modelViewMatrix .assign (renderContext .modelViewMatrix)))
                {
                   for (const collision of collisions)
                      activeCollisions .push (collision);
