@@ -114,6 +114,18 @@ function X3DRenderObject (executionContext)
    this .renderPass               = RenderPass .RENDER;
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer (browser, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
+
+   this .volumeScatterShapes =
+   {
+      numOpaqueShapes: 0,
+      numTransparentShapes: 0,
+      opaqueShapes: [ ],
+      transparentShapes: [ ],
+   };
+
+   this .volumeScatterShapes .transparencySorter = new MergeSort (
+      this .volumeScatterShapes .transparentShapes,
+      (a, b) => a .distance < b .distance);
 }
 
 Object .assign (X3DRenderObject .prototype,
@@ -1167,6 +1179,53 @@ Object .assign (X3DRenderObject .prototype,
 
          for (const generatedCubeMapTexture of generatedCubeMapTextures)
             generatedCubeMapTexture .renderTexture (this);
+
+         // Sort out volume scatter shapes.
+
+         if (this .renderPasses & RenderPass .VOLUME_SCATTER)
+         {
+            // Find opaque shapes that are rendered in the volume scatter pass.
+
+            const
+               numOpaqueShapes           = this .numOpaqueShapes,
+               opaqueShapes              = this .opaqueShapes,
+               volumeScatterOpaqueShapes = this .volumeScatterShapes .opaqueShapes;
+
+            volumeScatterOpaqueShapes .length = 0;
+
+            for (let i = 0; i < numOpaqueShapes; ++ i)
+            {
+               const renderContext = opaqueShapes [i];
+
+               if (!(renderContext .shapeNode .getRenderPasses () & RenderPass .VOLUME_SCATTER))
+                  continue;
+
+               volumeScatterOpaqueShapes .push (renderContext);
+            }
+
+            this .volumeScatterShapes .numOpaqueShapes = volumeScatterOpaqueShapes .length;
+
+            // Find transparent shapes that are rendered in the volume scatter pass.
+
+            const
+               numTransparentShapes           = this .numTransparentShapes,
+               transparentShapes              = this .transparentShapes,
+               volumeScatterTransparentShapes = this .volumeScatterShapes .transparentShapes;
+
+            volumeScatterTransparentShapes .length = 0;
+
+            for (let i = 0; i < numTransparentShapes; ++ i)
+            {
+               const renderContext = transparentShapes [i];
+
+               if (!(renderContext .shapeNode .getRenderPasses () & RenderPass .VOLUME_SCATTER))
+                  continue;
+
+               volumeScatterTransparentShapes .push (renderContext);
+            }
+
+            this .volumeScatterShapes .numTransparentShapes = volumeScatterTransparentShapes .length;
+         }
       }
 
       this .globalShadow = globalShadows .at (-1);
@@ -1229,7 +1288,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-               this .drawShapes (gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport, this .volumeScatterShapes);
             }
          }
 
@@ -1272,9 +1331,9 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (gl, browser, frameBuffer, clearBits, viewport)
+   drawShapes (gl, browser, frameBuffer, clearBits, viewport, shapes = this)
    {
-      const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter } = this;
+      const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter } = shapes;
 
       this .advanceRenderCount ();
 

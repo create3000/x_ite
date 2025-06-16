@@ -207,6 +207,6 @@ getMaterialColor ()
    }
    #endif
 
-   return vec4 (color, 1.0);
+   return vec4 (color, baseColor .a);
 }
 `;
