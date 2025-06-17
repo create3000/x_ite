@@ -3,7 +3,7 @@ export default /* glsl */ `
 // Originally from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/scatter.frag
 
-uniform int x3d_MaterialID;
+uniform int x3d_ScatterMaterialIdEXT;
 
 vec4
 getMaterialColor ()
@@ -102,7 +102,7 @@ getMaterialColor ()
 
       vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
 
-      x3d_IBLColor = vec4 (mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl), float (x3d_MaterialID) / 255.0);
+      x3d_IBLColor = vec4 (mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl), float (x3d_ScatterMaterialIdEXT) / 255.0);
    #endif
 
    #if defined (X3D_LIGHTING)
@@ -174,6 +174,6 @@ getMaterialColor ()
    }
    #endif
 
-   return vec4 (color, float (x3d_MaterialID) / 255.0);
+   return vec4 (color, float (x3d_ScatterMaterialIdEXT) / 255.0);
 }
 `;

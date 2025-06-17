@@ -218,29 +218,29 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
       vec2 sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
       vec4 textureSample = texture (x3d_ScatterIBLSamplerEXT, sampleUV);
 
-      if (centerSample .w == textureSample .w)
-      {
-         float sampleDepth = texture (x3d_ScatterDepthSamplerEXT, sampleUV) .r;
+      if (centerSample .w != textureSample .w)
+         continue;
 
-         sampleDepth = sampleDepth * 2.0 - 1.0; // Convert to normalized device coordinates
+      float sampleDepth = texture (x3d_ScatterDepthSamplerEXT, sampleUV) .r;
 
-         vec2  sampleClipUV       = sampleUV * 2.0 - 1.0; // Convert to clip space coordinates
-         vec4  sampleUpos         = inverseProjectionMatrix * vec4 (sampleClipUV .x, sampleClipUV .y, sampleDepth, 1.0);
-         vec3  sampleViewPosition = sampleUpos .xyz / sampleUpos .w; // Normalize the coordinates
-         float sampleDistance     = distance (sampleViewPosition, fragViewPosition);
+      sampleDepth = sampleDepth * 2.0 - 1.0; // Convert to normalized device coordinates
 
-         //vec3 exp_13 = exp2(((1.4426950408889634 * (-1.0/3.0)) * c) * vec3(0.5, 0.9, 0.0));
-         //vec3 expSum = exp_13 * (1.0 + exp_13 * exp_13);
+      vec2  sampleClipUV       = sampleUV * 2.0 - 1.0; // Convert to clip space coordinates
+      vec4  sampleUpos         = inverseProjectionMatrix * vec4 (sampleClipUV .x, sampleClipUV .y, sampleDepth, 1.0);
+      vec3  sampleViewPosition = sampleUpos .xyz / sampleUpos .w; // Normalize the coordinates
+      float sampleDistance     = distance (sampleViewPosition, fragViewPosition);
 
-         //vec3 diffusion = (exp(-c / scatterDistance) + exp(-c / (scatterDistance * 3.0))) / (8.0 * M_PI * scatterDistance) / c;
-         //vec3 pdf = (exp(-r / vMaxColor) + exp(-r / (vMaxColor * 3.0))) / (8.0 * M_PI * vMaxColor);
+      //vec3 exp_13 = exp2(((1.4426950408889634 * (-1.0/3.0)) * c) * vec3(0.5, 0.9, 0.0));
+      //vec3 expSum = exp_13 * (1.0 + exp_13 * exp_13);
 
-         vec3 weight = burley_eval (d, sampleDistance) * rcpPdf;
+      //vec3 diffusion = (exp(-c / scatterDistance) + exp(-c / (scatterDistance * 3.0))) / (8.0 * M_PI * scatterDistance) / c;
+      //vec3 pdf = (exp(-r / vMaxColor) + exp(-r / (vMaxColor * 3.0))) / (8.0 * M_PI * vMaxColor);
 
-         //vec3 weight = diffusion / pdf;
-         totalWeight  += weight;
-         totalDiffuse += weight * textureSample .rgb;
-      }
+      vec3 weight = burley_eval (d, sampleDistance) * rcpPdf;
+
+      //vec3 weight = diffusion / pdf;
+      totalWeight  += weight;
+      totalDiffuse += weight * textureSample .rgb;
    }
 
    totalWeight = max (totalWeight, vec3 (0.0001)); // Avoid division by zero
