@@ -161,23 +161,23 @@ const float M_GOLDEN_ANGLE = M_PI * (3.0f - sqrt (5.0));
 vec3
 getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 baseColor)
 {
-   vec3  scatterDistance         = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color
-   float maxColor                = max3 (scatterDistance);
-   vec3  vMaxColor               = max (vec3 (maxColor, maxColor, maxColor), vec3 (0.00001));
-   mat4  inverseProjectionMatrix = inverse (projectionMatrix);
-   vec2  texelSize               = 1.0 / vec2 (x3d_Viewport .zw);
-   vec2  uv                      = gl_FragCoord .xy * texelSize;
-   vec4  centerSample            = texture (x3d_ScatterIBLSamplerEXT, uv); // Sample the LUT at the current UV coordinates
-   float centerDepth             = texture (x3d_ScatterDepthSamplerEXT, uv) .r; // Get depth from the framebuffer
+   vec3  scatterDistance     = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color
+   float maxColor            = max3 (scatterDistance);
+   vec3  vMaxColor           = max (vec3 (maxColor, maxColor, maxColor), vec3 (0.00001));
+   mat4  invProjectionMatrix = inverse (projectionMatrix);
+   vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);
+   vec2  uv                  = gl_FragCoord .xy * texelSize;
+   vec4  centerSample        = texture (x3d_ScatterIBLSamplerEXT, uv); // Sample the LUT at the current UV coordinates
+   float centerDepth         = texture (x3d_ScatterDepthSamplerEXT, uv) .r; // Get depth from the framebuffer
 
    centerDepth = centerDepth * 2.0 - 1.0; // Convert to normalized device coordinates
 
    vec2 clipUV            = uv * 2.0 - 1.0; // Convert to clip space coordinates
    vec4 clipSpacePosition = vec4 (clipUV .xy, centerDepth, 1.0); // Convert to clip space coordinates
-   vec4 upos              = inverseProjectionMatrix * clipSpacePosition; // Convert to view space coordinates
+   vec4 upos              = invProjectionMatrix * clipSpacePosition; // Convert to view space coordinates
    vec3 fragViewPosition  = upos .xyz / upos .w; // Normalize the coordinates
 
-   upos = inverseProjectionMatrix * vec4 (clipUV .x + texelSize .x, clipUV .y, centerDepth, 1.0);
+   upos = invProjectionMatrix * vec4 (clipUV .x + texelSize .x, clipUV .y, centerDepth, 1.0);
 
    vec3  offsetViewPosition = upos .xyz / upos .w; // Normalize the coordinates
    float mPerPixel          = distance (fragViewPosition, offsetViewPosition);
@@ -217,7 +217,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
       sampleDepth = sampleDepth * 2.0 - 1.0; // Convert to normalized device coordinates
 
       vec2  sampleClipUV       = sampleUV * 2.0 - 1.0; // Convert to clip space coordinates
-      vec4  sampleUpos         = inverseProjectionMatrix * vec4 (sampleClipUV .xy, sampleDepth, 1.0);
+      vec4  sampleUpos         = invProjectionMatrix * vec4 (sampleClipUV .xy, sampleDepth, 1.0);
       vec3  sampleViewPosition = sampleUpos .xyz / sampleUpos .w; // Normalize the coordinates
       float sampleDistance     = distance (sampleViewPosition, fragViewPosition);
 
