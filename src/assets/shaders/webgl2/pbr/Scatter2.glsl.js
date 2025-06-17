@@ -85,7 +85,7 @@ getMaterialColor ()
 
    // Calculate lighting contribution from image based lighting source (IBL)
    #if defined (X3D_USE_IBL)
-      f_diffuse = getDiffuseLight (n) * baseColor .rgb;
+      f_diffuse = getDiffuseLight (n);
 
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
          vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
@@ -143,7 +143,7 @@ getMaterialColor ()
             lightIntensity = mix (lightIntensity, light .shadowColor, getShadowIntensity (i, light));
          #endif
 
-         vec3 l_diffuse             = lightIntensity * NdotL * BRDF_lambertian (baseColor .rgb);
+         vec3 l_diffuse             = lightIntensity * NdotL / M_PI;
          vec3 l_specular_dielectric = vec3 (0.0);
          vec3 l_dielectric_brdf     = vec3 (0.0);
 
