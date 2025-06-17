@@ -622,7 +622,6 @@ Object .assign (X3DRenderObject .prototype,
             this .renderPasses         = 0;
             this .numOpaqueShapes      = 0;
             this .numTransparentShapes = 0;
-            this .volumeScatterMaterialId    = 0;
 
             this .setGlobalFog (this .getFog ());
 
@@ -1310,6 +1309,12 @@ Object .assign (X3DRenderObject .prototype,
    },
    prepareVolumeScatterShapes ()
    {
+      // Reset material Id.
+
+      this .volumeScatterMaterialId = 0;
+
+      // Find all volume scatter shapes.
+
       const
          { numOpaqueShapes, opaqueShapes, numTransparentShapes, transparentShapes } = this,
          { opaqueShapes: volumeScatterOpaqueShapes, transparentShapes: volumeScatterTransparentShapes } = this .volumeScatterShapes;
