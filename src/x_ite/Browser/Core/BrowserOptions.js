@@ -285,7 +285,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       $(document) .off (documentEvents);
 
-      this .intersectionObserver ?.unobserve (element);
+      this .intersectionObserver ?.disconnect ();
 
       if (!autoUpdate .getValue ())
          return;
