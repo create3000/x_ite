@@ -12,7 +12,6 @@ export default /* glsl */ `
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
    uniform mat4 x3d_ProjectionMatrix;
-   uniform mat4 x3d_CameraSpaceMatrix;
    uniform mat4 x3d_ModelViewMatrix;
 #endif
 
@@ -220,7 +219,7 @@ getMaterialColor ()
 
       #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
          f_dielectric_brdf_ibl  = f_specular_dielectric * f_dielectric_fresnel_ibl;
-         f_dielectric_brdf_ibl += getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, x3d_CameraSpaceMatrix, materialInfo .attenuationDistance, baseColor .rgb); // Subsurface scattering is calculated based on fresnel weighted diffuse terms
+         f_dielectric_brdf_ibl += getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, baseColor .rgb); // Subsurface scattering is calculated based on fresnel weighted diffuse terms
       #else
          f_dielectric_brdf_ibl = mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl);
       #endif

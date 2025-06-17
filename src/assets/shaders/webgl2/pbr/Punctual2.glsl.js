@@ -159,7 +159,7 @@ const float M_PHI          = 1.61803398874989484820459;
 const float M_GOLDEN_ANGLE = M_PI * (3.0f - sqrt (5.0));
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in mat4 cameraSpaceMatrix, const in float attenuationDistance, const in vec3 baseColor)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 baseColor)
 {
    vec3  scatterDistance         = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color
    float maxColor                = max3 (scatterDistance);
