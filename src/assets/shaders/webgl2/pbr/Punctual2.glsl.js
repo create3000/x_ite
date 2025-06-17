@@ -138,10 +138,10 @@ uniform sampler2D x3d_ScatterDepthSamplerEXT;
 vec3
 getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in mat4 cameraSpaceMatrix, const in float attenuationDistance, const in vec3 baseColor)
 {
-   vec2  uv                      = (projectionMatrix * vec4 (vertex, 1.0)) .xy;
+   vec2  texelSize               = 1.0 / vec2 (x3d_Viewport .zw);
+   vec2  uv                      = gl_FragCoord .xy * texelSize;
    float centerDepth             = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
    vec4  centerSample            = texture (x3d_ScatterIBLSamplerEXT, uv);
-   vec2  texelSize               = 1.0 / vec2 (x3d_Viewport .zw);
    vec2  centerVector            = uv * centerDepth;
    vec2  cornerVector            = (uv + 0.5 * texelSize) * centerDepth;
    vec2  pixelPerM               = abs (cornerVector - centerVector) * 2.0;
