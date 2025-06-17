@@ -135,76 +135,54 @@ uniform sampler2D x3d_ScatterSamplerEXT;
 uniform sampler2D x3d_ScatterIBLSamplerEXT;
 uniform sampler2D x3d_ScatterDepthSamplerEXT;
 
-// vec3
-// getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance)
-// {
-//    vec2  uv           = vec2 (projectionMatrix * vec4 (vertex, 1.0)); // TODO: vertex is already in world space
-//    float centerDepth  = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
-//    vec2  texelSize    = 1.0 / vec2 (x3d_Viewport .zw);
-//    vec2  centerVector = uv * centerDepth;
-//    vec2  cornerVector = (uv + 0.5 * texelSize) * centerDepth;
-//    vec2  pixelPerM    = abs (cornerVector - centerVector) * 2.0;
-
-//    for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
-//    {
-//       vec3  scatterSample = x3d_ScatterSamplesEXT [i];
-//       float fabAngle      = scatterSample .x;
-//       float r             = scatterSample .y;
-//       float rcpPdf        = scatterSample .z;
-//       vec2  samplePos     = vec2 (cos (fabAngle), sin (fabAngle));
-
-//       samplePos *= uv + round (r * pixelPerM * attenuationDistance);
-//    }
-
-//    return vec3 (0.0);
-// }
-
 vec3
-getSubsurfaceScattering (const in float attenuationDistance)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in mat4 cameraSpaceMatrix, const in float attenuationDistance, const in vec3 baseColor)
 {
-   // vec4  clipPosition = projectionMatrix * vec4 (vertex, 1.0);
-   // vec2  uv           = (clipPosition .xy / clipPosition .w) * 0.5 + 0.5;
-   vec2  uv           = gl_FragCoord .xy / vec2 (x3d_Viewport .zw);
-   float centerDepth  = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
-   vec2  texelSize    = 1.0 / vec2 (x3d_Viewport .zw);
-   vec2  centerVector = uv * centerDepth;
-   vec2  cornerVector = (uv + 0.5 * texelSize) * centerDepth;
-   vec2  pixelPerM    = abs (cornerVector - centerVector) * 2.0;
+   vec2  uv                      = (projectionMatrix * vec4 (vertex, 1.0)) .xy;
+   float centerDepth             = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
+   vec4  centerSample            = texture (x3d_ScatterSamplerEXT, uv);
+   vec2  texelSize               = 1.0 / vec2 (x3d_Viewport .zw);
+   vec2  centerVector            = uv * centerDepth;
+   vec2  cornerVector            = (uv + 0.5 * texelSize) * centerDepth;
+   vec2  pixelPerM               = abs (cornerVector - centerVector) * 2.0;
+   mat4  inverseProjectionMatrix = inverse (projectionMatrix);
+   vec3  totalWeight             = vec3 (0.0);
+   vec3  totalDiffuse            = vec3 (0.0);
 
-   vec3 scatterColor = vec3 (0.0);
-
-   for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
+   for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; i++)
    {
       vec3  scatterSample = x3d_ScatterSamplesEXT [i];
       float fabAngle      = scatterSample .x;
-      float r             = scatterSample .y;
+      float r             = scatterSample .y * attenuationDistance;
       float rcpPdf        = scatterSample .z;
       vec2  samplePos     = vec2 (cos (fabAngle), sin (fabAngle));
 
-      samplePos *= uv + round (r * pixelPerM * attenuationDistance);
+      samplePos = uv + round (r * pixelPerM) * samplePos;
 
-      // TODO: code below is AI generate.
+      vec4  textureSample = texture (x3d_ScatterSamplerEXT, samplePos);
+      float sampleDepth   = texture (x3d_ScatterDepthSamplerEXT, samplePos) .x;
 
-      // Sample depth and color at sample position
-      float sampleDepth = texture (x3d_ScatterDepthSamplerEXT, samplePos) .r;
-      vec3  sampleColor = texture (x3d_ScatterSamplerEXT, samplePos) .rgb;
+      if (centerSample .w == textureSample .w)
+      {
+         vec4 realSampleDepth = cameraSpaceMatrix * inverseProjectionMatrix * vec4 (0.0 , 0.0, sampleDepth, 1.0);
+         vec4 realCenterDepth = cameraSpaceMatrix * inverseProjectionMatrix * vec4 (0.0 , 0.0, centerDepth, 1.0);
 
-      // Estimate thickness along the view ray
-      float thickness = abs (centerDepth - sampleDepth) * attenuationDistance;
+         float b = realSampleDepth .z - realCenterDepth .z;
+         float c = sqrt (r * r + b * b);
 
-      // Compute attenuation (Beer-Lambert law)
-      vec3 attenuation = exp (-thickness) * x3d_MultiscatterColorEXT;
+         vec3 exp_13 = exp2 (((1.4426950408889634 * (-1.0 / 3.0)) * c) * x3d_MultiscatterColorEXT);
+         vec3 expSum = exp_13 * (1.0 + exp_13 * exp_13);
 
-      // Weight by inverse PDF and anisotropy factor
-      float weight = r * max (0.0, 1.0 - x3d_ScatterAnisotropyEXT * rcpPdf);
+         vec3 weight = (x3d_MultiscatterColorEXT / ((8.0 * M_PI))) * expSum * rcpPdf;
 
-      // Accumulate the weighted sample color
-      scatterColor += sampleColor * attenuation * weight;
+         totalWeight  += weight;
+         totalDiffuse += weight * textureSample .rgb;
+      }
    }
 
-   scatterColor /= float (X3D_SCATTER_SAMPLES_COUNT_EXT); // Average the result
+   totalWeight = max (totalWeight, vec3 (0.0001)); // Avoid division by zero
 
-   return scatterColor;
+   return centerSample .xyz + baseColor * (totalDiffuse / totalWeight);
 }
 #endif
 `;
