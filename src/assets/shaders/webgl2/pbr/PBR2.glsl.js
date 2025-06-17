@@ -358,8 +358,13 @@ getMaterialColor ()
             l_specular_dielectric = l_specular_metal;
          #endif
 
-         l_metal_brdf      = metal_fresnel * l_specular_metal;
-         l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel); // Do we need to handle vec3 fresnel here?
+         l_metal_brdf = metal_fresnel * l_specular_metal;
+
+         #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+            l_dielectric_brdf = l_specular_dielectric * dielectric_fresnel;
+         #else
+            l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel); // Do we need to handle vec3 fresnel here?
+         #endif
 
          #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
             l_metal_brdf      = mix (l_metal_brdf, l_specular_metal * iridescenceFresnel_metallic, materialInfo .iridescenceFactor);
