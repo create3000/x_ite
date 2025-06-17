@@ -195,11 +195,8 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    vec3 clampedScatterDistance = max (vec3 (x3d_ScatterMinRadiusEXT), scatterDistance / maxColor) * maxColor;
    vec3 d                      = burley_setup (clampedScatterDistance, albedo); // Setup the Burley model parameters
 
-   float randomTheta = fract (52.9829189 * fract (0.06711056 * uv .x + 0.00583715 * uv .y)) * M_GOLDEN_ANGLE;
-
-   randomTheta = fract (tan (distance (uv * M_PHI, uv) * 1.0) * uv .x) * M_GOLDEN_ANGLE;
-
-   mat2 rotationMatrix = mat2 (cos (randomTheta), -sin (randomTheta), sin (randomTheta), cos (randomTheta));
+   float randomTheta    = fract (tan (distance (uv * M_PHI, uv) * 1.0) * uv .x) * M_GOLDEN_ANGLE;
+   mat2  rotationMatrix = mat2 (cos (randomTheta), -sin (randomTheta), sin (randomTheta), cos (randomTheta));
 
    for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
    {
@@ -207,12 +204,9 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
       float fabAngle      = scatterSample .x;
       float r             = (scatterSample .y * maxRadiusPixels) * texelSize .x;
       float rcpPdf        = scatterSample .z;
-      vec2  sampleCoords  = vec2 (cos (fabAngle) * r, sin (fabAngle) * r);
-
-      sampleCoords = rotationMatrix * sampleCoords; // Rotate the sample coordinates
-
-      vec2 sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
-      vec4 textureSample = texture (x3d_ScatterIBLSamplerEXT, sampleUV);
+      vec2  sampleCoords  = rotationMatrix * vec2 (cos (fabAngle) * r, sin (fabAngle) * r);  // Rotate the sample coordinates
+      vec2  sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
+      vec4  textureSample = texture (x3d_ScatterIBLSamplerEXT, sampleUV);
 
       // Check volume scatter material id.
       if (centerSample .w != textureSample .w)
