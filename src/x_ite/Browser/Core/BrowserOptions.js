@@ -275,7 +275,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_AutoUpdate__ (autoUpdate)
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         element = browser .getElement () [0];
 
       const documentEvents = ["visibilitychange"]
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
@@ -283,7 +285,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       $(document) .off (documentEvents);
 
-      this .intersectionObserver ?.unobserve (browser .getElement () [0]);
+      this .intersectionObserver ?.unobserve (element);
 
       if (!autoUpdate .getValue ())
          return;
@@ -296,7 +298,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
             this .checkUpdate (entry .isIntersecting);
       });
 
-      this .intersectionObserver .observe (browser .getElement () [0]);
+      this .intersectionObserver .observe (element);
    },
    checkUpdate (visible)
    {
@@ -307,13 +309,11 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       if ((!document .hidden && visible) || browser .getPose ())
       {
-         console .log (true)
          if (!browser .isLive ())
             browser .beginUpdate ();
       }
       else
       {
-         console .log (false)
          if (browser .isLive ())
             browser .endUpdate ();
       }
