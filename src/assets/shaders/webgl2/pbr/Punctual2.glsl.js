@@ -150,8 +150,7 @@ vec3
 burley_eval (const in vec3 d, const in float r)
 {
    vec3 exp_r_3_d = exp (-r / (3.0 * d));
-
-   vec3 exp_r_d = exp_r_3_d * exp_r_3_d * exp_r_3_d;
+   vec3 exp_r_d   = exp_r_3_d * exp_r_3_d * exp_r_3_d;
 
    return (exp_r_d + exp_r_3_d) / (4.0 * d);
 }
