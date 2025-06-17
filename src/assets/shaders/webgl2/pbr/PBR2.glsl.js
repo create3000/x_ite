@@ -398,6 +398,9 @@ getMaterialColor ()
 
    #if defined (X3D_UNLIT_MATERIAL_EXT)
       color = baseColor .rgb;
+   #elif (defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)) && !defined (X3D_NORMALS)
+      //Points or Lines with no NORMAL attribute SHOULD be rendered without lighting and instead use the sum of the base color value and the emissive value.
+      color = f_emissive + baseColor .rgb;
    #else
       color = f_emissive * (1.0 - clearcoatFactor * clearcoatFresnel) + color;
    #endif
