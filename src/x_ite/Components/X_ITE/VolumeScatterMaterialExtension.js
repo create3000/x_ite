@@ -78,6 +78,11 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
 
+      const [scatterSamples, minRadius] = this .computeScatterSamples ();
+
+      this .scatterSamples   = new Float32Array (scatterSamples);
+      this .scatterMinRadius = minRadius;
+
       this ._multiscatterColor .addInterest ("set_multiscatterColor__", this);
       this ._scatterAnisotropy .addInterest ("set_scatterAnisotropy__", this);
 
@@ -115,9 +120,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       // Avoid float imprecision.
       min_radius = Math .max (min_radius, 0.00001);
 
-      this .scatterMinRadius = min_radius;
-
-      return uniformArray;
+      return [uniformArray, min_radius];
    },
    burleySample(d, xRand)
    {
@@ -175,8 +178,6 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    set_multiscatterColor__ ()
    {
       this .multiscatterColorArray .set (this ._multiscatterColor .getValue ());
-
-      this .scatterSamples = new Float32Array (this .computeScatterSamples ());
    },
    set_scatterAnisotropy__ ()
    {
