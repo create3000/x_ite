@@ -294,17 +294,21 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       this .intersectionObserver ??= new IntersectionObserver (entries =>
       {
-         for (const entry of entries)
-            this .checkUpdate (entry .isIntersecting);
+         this .isIntersecting = entries .some (entry => entry .isIntersecting);
+
+         this .checkUpdate ();
       });
 
       this .intersectionObserver .observe (element);
    },
-   checkUpdate (isIntersecting)
+   checkUpdate ()
    {
+      if (!this ._AutoUpdate .getValue ())
+         return;
+
       const browser = this .getBrowser ();
 
-      if ((!document .hidden && isIntersecting) || browser .getPose ())
+      if ((!document .hidden && this .isIntersecting) || browser .getPose ())
       {
          if (!browser .isLive ())
             browser .beginUpdate ();
