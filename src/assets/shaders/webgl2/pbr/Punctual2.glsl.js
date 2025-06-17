@@ -130,51 +130,114 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
 uniform vec3  x3d_MultiscatterColorEXT;
 uniform float x3d_ScatterAnisotropyEXT;
 uniform vec3  x3d_ScatterSamplesEXT [X3D_SCATTER_SAMPLES_COUNT_EXT];
+uniform float x3d_ScatterMinRadiusEXT;
 
 uniform sampler2D x3d_ScatterSamplerEXT;
 uniform sampler2D x3d_ScatterIBLSamplerEXT;
 uniform sampler2D x3d_ScatterDepthSamplerEXT;
 
 vec3
+burley_setup (const in vec3 radius, const in vec3 albedo)
+{
+   float m_1_pi = 0.318309886183790671538;
+   vec3  s      = 1.9 - albedo + 3.5 * ((albedo - 0.8) * (albedo - 0.8));
+   vec3  l      = 0.25 * m_1_pi * radius;
+
+   return l / s;
+}
+
+vec3
+burley_eval (const in vec3 d, const in float r)
+{
+   vec3 exp_r_3_d = exp (-r / (3.0 * d));
+
+   vec3 exp_r_d = exp_r_3_d * exp_r_3_d * exp_r_3_d;
+
+   return (exp_r_d + exp_r_3_d) / (4.0 * d);
+}
+
+vec3
 getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in mat4 cameraSpaceMatrix, const in float attenuationDistance, const in vec3 baseColor)
 {
+   vec3  scatterDistance         = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color
+   float maxColor                = max3 (scatterDistance);
+   vec3  vMaxColor               = max (vec3 (maxColor, maxColor, maxColor), vec3 (0.00001));
+   mat4  inverseProjectionMatrix = inverse (projectionMatrix);
    vec2  texelSize               = 1.0 / vec2 (x3d_Viewport .zw);
    vec2  uv                      = gl_FragCoord .xy * texelSize;
-   float centerDepth             = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
-   vec4  centerSample            = texture (x3d_ScatterIBLSamplerEXT, uv);
-   vec2  centerVector            = uv * centerDepth;
-   vec2  cornerVector            = (uv + 0.5 * texelSize) * centerDepth;
-   vec2  pixelPerM               = abs (cornerVector - centerVector) * 2.0;
-   mat4  inverseProjectionMatrix = inverse (projectionMatrix);
-   vec3  totalWeight             = vec3 (0.0);
-   vec3  totalDiffuse            = vec3 (0.0);
+   vec4  centerSample            = texture (x3d_ScatterIBLSamplerEXT, uv); // Sample the LUT at the current UV coordinates
+   float centerDepth             = texture (x3d_ScatterDepthSamplerEXT, uv) .r; // Get depth from the framebuffer
 
-   for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; i++)
+   centerDepth = centerDepth * 2.0 - 1.0; // Convert to normalized device coordinates
+
+   vec2 clipUV            = uv * 2.0 - 1.0; // Convert to clip space coordinates
+   vec4 clipSpacePosition = vec4 (clipUV .x, clipUV .y, centerDepth, 1.0); // Convert to clip space coordinates
+   vec4 upos              = inverseProjectionMatrix * clipSpacePosition; // Convert to view space coordinates
+   vec3 fragViewPosition  = upos .xyz / upos .w; // Normalize the coordinates
+
+   upos = inverseProjectionMatrix * vec4 (clipUV .x + texelSize .x, clipUV .y, centerDepth, 1.0);
+
+   vec3  offsetViewPosition = upos .xyz / upos .w; // Normalize the coordinates
+   float mPerPixel          = distance (fragViewPosition, offsetViewPosition);
+   float maxRadiusPixels    = maxColor / mPerPixel; // Calculate the maximum radius in pixels
+
+   if (maxRadiusPixels <= 1.0)
+      return baseColor; // If the maximum color is less than or equal to the pixel size, return the base color
+
+   centerDepth = fragViewPosition.z; // Extract the depth value
+
+   vec3 totalWeight  = vec3 (0.0);
+   vec3 totalDiffuse = vec3 (0.0);
+
+   vec3 albedo                 = baseColor / max (0.00001, max3 (baseColor)); // Normalize the albedo color to avoid division by zero
+   vec3 clampedScatterDistance = max (vec3 (x3d_ScatterMinRadiusEXT), scatterDistance / maxColor) * maxColor;
+   vec3 d                      = burley_setup (clampedScatterDistance, albedo); // Setup the Burley model parameters
+
+   float golden_angle = M_PI * (3.0f - sqrt (5.0));
+
+   float PHI         = 1.61803398874989484820459;
+   float randomTheta = fract (52.9829189 * fract (0.06711056 * uv .x + 0.00583715 * uv .y)) * golden_angle;
+
+   randomTheta = fract (tan (distance (uv * PHI, uv) * 1.0) * uv .x) * golden_angle;
+
+   mat2 rotationMatrix = mat2 (cos (randomTheta), -sin (randomTheta), sin (randomTheta), cos (randomTheta));
+
+   for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
    {
       vec3  scatterSample = x3d_ScatterSamplesEXT [i];
       float fabAngle      = scatterSample .x;
-      float r             = scatterSample .y * attenuationDistance;
-      float rcpPdf        = scatterSample .z;
-      vec2  samplePos     = vec2 (cos (fabAngle), sin (fabAngle));
+      float r             = scatterSample .y * maxRadiusPixels;
 
-      samplePos = uv + round (r * pixelPerM) * samplePos;
+      r = r * texelSize .x;
 
-      vec4  textureSample = texture (x3d_ScatterIBLSamplerEXT,   samplePos);
-      float sampleDepth   = texture (x3d_ScatterDepthSamplerEXT, samplePos) .x;
+      float rcpPdf       = scatterSample .z;
+      vec2  sampleCoords = vec2 (cos (fabAngle) * r, sin (fabAngle) * r);
+
+      sampleCoords = rotationMatrix * sampleCoords; // Rotate the sample coordinates
+
+      vec2 sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
+      vec4 textureSample = texture (x3d_ScatterIBLSamplerEXT, sampleUV);
 
       if (centerSample .w == textureSample .w)
       {
-         vec4 realSampleDepth = cameraSpaceMatrix * inverseProjectionMatrix * vec4 (0.0 , 0.0, sampleDepth, 1.0);
-         vec4 realCenterDepth = cameraSpaceMatrix * inverseProjectionMatrix * vec4 (0.0 , 0.0, centerDepth, 1.0);
+         float sampleDepth = texture (x3d_ScatterDepthSamplerEXT, sampleUV) .r;
 
-         float b = realSampleDepth .z - realCenterDepth .z;
-         float c = sqrt (r * r + b * b);
+         sampleDepth = sampleDepth * 2.0 - 1.0; // Convert to normalized device coordinates
 
-         vec3 exp_13 = exp2 (((1.4426950408889634 * (-1.0 / 3.0)) * c) * x3d_MultiscatterColorEXT);
-         vec3 expSum = exp_13 * (1.0 + exp_13 * exp_13);
+         vec2  sampleClipUV       = sampleUV * 2.0 - 1.0; // Convert to clip space coordinates
+         vec4  sampleUpos         = inverseProjectionMatrix * vec4 (sampleClipUV .x, sampleClipUV .y, sampleDepth, 1.0);
+         vec3  sampleViewPosition = sampleUpos .xyz / sampleUpos .w; // Normalize the coordinates
+         float sampleDistance     = distance (sampleViewPosition, fragViewPosition);
 
-         vec3 weight = (x3d_MultiscatterColorEXT / ((8.0 * M_PI))) * expSum * rcpPdf;
+         //vec3 exp_13 = exp2(((1.4426950408889634 * (-1.0/3.0)) * c) * vec3(0.5, 0.9, 0.0));
+         //vec3 expSum = exp_13 * (1.0 + exp_13 * exp_13);
 
+         //vec3 diffusion = (exp(-c / scatterDistance) + exp(-c / (scatterDistance * 3.0))) / (8.0 * M_PI * scatterDistance) / c;
+         //vec3 pdf = (exp(-r / vMaxColor) + exp(-r / (vMaxColor * 3.0))) / (8.0 * M_PI * vMaxColor);
+
+         vec3 weight = burley_eval (d, sampleDistance) * rcpPdf;
+
+         //vec3 weight = diffusion / pdf;
          totalWeight  += weight;
          totalDiffuse += weight * textureSample .rgb;
       }
@@ -182,7 +245,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
    totalWeight = max (totalWeight, vec3 (0.0001)); // Avoid division by zero
 
-   return centerSample .xyz + baseColor * (totalDiffuse / totalWeight);
+   return baseColor * (totalDiffuse / totalWeight);
 }
 #endif
 `;

@@ -90,26 +90,26 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    computeScatterSamples ()
    {
       /* Precompute sample position with white albedo. */
-      const d = this .burleySetup (1.0, 1.0);
+      const d = this .burleySetup (1, 1);
 
       const randU = 0.2; // Random value between 0 and 1, fixed here for determinism.
       const randV = 0.5;
 
       /* Find minimum radius that we can represent because we are only sampling the largest radius. */
-      let min_radius = 1.0;
+      let min_radius = 1;
 
-      const goldenAngle  = Math .PI * (3.0 - Math .sqrt (5.0));
+      const goldenAngle  = Math .PI * (3 - Math .sqrt (5));
       const uniformArray = [ ];
 
       for (let i = 0; i < ScatterSamplesCount; ++ i)
       {
-         const theta = goldenAngle * i + Math.PI * 2.0 * randU;
+         const theta = goldenAngle * i + Math .PI * 2 * randU;
          const x     = (randV + i) / ScatterSamplesCount;
          const r     = this .burleySample (d, x);
 
          min_radius = Math .min (min_radius, r);
 
-         uniformArray .push (theta, r , 1.0 / this .burleyPdf (d, r));
+         uniformArray .push (theta, r , 1 / this .burleyPdf (d, r));
       }
       /* Avoid float imprecision. */
       min_radius = Math .max (min_radius, 0.00001);
@@ -128,23 +128,23 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       let r;
 
       if (xRand <= 0.9)
-         r = Math .exp (xRand * xRand * 2.4) - 1.0;
+         r = Math .exp (xRand * xRand * 2.4) - 1;
       else
-         r = 15.0;
+         r = 15;
 
       /* Solve against scaled radius. */
       for (let i = 0; i < maxIterationCount; ++ i)
       {
-         const exp_r_3 = Math .exp (-r / 3.0);
+         const exp_r_3 = Math .exp (-r / 3);
          const exp_r   = exp_r_3 * exp_r_3 * exp_r_3;
-         const f       = 1.0 - 0.25 * exp_r - 0.75 * exp_r_3 - xRand;
+         const f       = 1 - 0.25 * exp_r - 0.75 * exp_r_3 - xRand;
          const f_      = 0.25 * exp_r + 0.25 * exp_r_3;
 
-         if (Math .abs (f) < tolerance || f_ == 0.0)
+         if (Math .abs (f) < tolerance || f_ == 0)
             break;
 
          r = r - f / f_;
-         r = Math .max (r, 0.0);
+         r = Math .max (r, 0);
       }
 
       return r * d;
@@ -152,12 +152,12 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    burleyEval (d, r)
    {
       if (r >= 16 * d)
-         return 0.0;
+         return 0;
 
-      const exp_r_3_d = Math .exp (-r / (3.0 * d));
+      const exp_r_3_d = Math .exp (-r / (3 * d));
       const exp_r_d   = exp_r_3_d * exp_r_3_d * exp_r_3_d;
 
-      return (exp_r_d + exp_r_3_d) / (8.0 * Math .PI * d);
+      return (exp_r_d + exp_r_3_d) / (8 * Math .PI * d);
    },
    burleyPdf (d, r)
    {
