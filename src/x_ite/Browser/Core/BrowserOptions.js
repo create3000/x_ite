@@ -300,11 +300,11 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       this .intersectionObserver .observe (element);
    },
-   checkUpdate (visible)
+   checkUpdate (isIntersecting)
    {
       const browser = this .getBrowser ();
 
-      if ((!document .hidden && visible) || browser .getPose ())
+      if ((!document .hidden && isIntersecting) || browser .getPose ())
       {
          if (!browser .isLive ())
             browser .beginUpdate ();
