@@ -204,7 +204,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
       float fabAngle      = scatterSample .x;
       float r             = (scatterSample .y * maxRadiusPixels) * texelSize .x;
       float rcpPdf        = scatterSample .z;
-      vec2  sampleCoords  = rotationMatrix * vec2 (cos (fabAngle) * r, sin (fabAngle) * r);  // Rotate the sample coordinates
+      vec2  sampleCoords  = rotationMatrix * vec2 (cos (fabAngle) * r, sin (fabAngle) * r); // Rotate the sample coordinates
       vec2  sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
       vec4  textureSample = texture (x3d_ScatterIBLSamplerEXT, sampleUV);
 
