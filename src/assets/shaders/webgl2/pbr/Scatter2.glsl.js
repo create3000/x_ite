@@ -94,7 +94,8 @@ getMaterialColor ()
             diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
          #endif
 
-         f_diffuse = mix (f_diffuse, diffuseTransmissionIBL, materialInfo .diffuseTransmissionFactor);
+         f_diffuse *= materialInfo .diffuseTransmissionFactor;
+         f_diffuse += diffuseTransmissionIBL * materialInfo .diffuseTransmissionFactor;
       #endif
 
       // Calculate fresnel mix for IBL
@@ -147,7 +148,7 @@ getMaterialColor ()
          vec3 l_dielectric_brdf     = vec3 (0.0);
 
          #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-            l_diffuse *= 1.0 - materialInfo .diffuseTransmissionFactor;
+            l_diffuse *= materialInfo .diffuseTransmissionFactor;
 
             if (dot (n, l) < 0.0)
             {
