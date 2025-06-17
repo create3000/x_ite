@@ -157,7 +157,10 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       if (renderObject .getRenderPass () === RenderPass .VOLUME_SCATTER)
+      {
+         gl .uniform1i  (shaderObject .x3d_MaterialID, renderObject .getRenderCount ());
          return;
+      }
 
       const browser = this .getBrowser ();
 
