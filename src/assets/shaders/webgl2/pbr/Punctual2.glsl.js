@@ -140,7 +140,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 {
    vec2  uv                      = (projectionMatrix * vec4 (vertex, 1.0)) .xy;
    float centerDepth             = texture (x3d_ScatterDepthSamplerEXT, uv) .x;
-   vec4  centerSample            = texture (x3d_ScatterSamplerEXT, uv);
+   vec4  centerSample            = texture (x3d_ScatterIBLSamplerEXT, uv);
    vec2  texelSize               = 1.0 / vec2 (x3d_Viewport .zw);
    vec2  centerVector            = uv * centerDepth;
    vec2  cornerVector            = (uv + 0.5 * texelSize) * centerDepth;
@@ -159,7 +159,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
       samplePos = uv + round (r * pixelPerM) * samplePos;
 
-      vec4  textureSample = texture (x3d_ScatterSamplerEXT, samplePos);
+      vec4  textureSample = texture (x3d_ScatterIBLSamplerEXT,   samplePos);
       float sampleDepth   = texture (x3d_ScatterDepthSamplerEXT, samplePos) .x;
 
       if (centerSample .w == textureSample .w)
