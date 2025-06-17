@@ -289,13 +289,13 @@ Object .assign (X3DCoreContext .prototype,
 
       // AutoUpdate
 
-      this .getBrowserOptions () .checkUpdate ();
+      this .getBrowserOptions () ._AutoUpdate .addEvent ();
    },
    disconnectedCallback ()
    {
       // AutoUpdate
 
-      this .getBrowserOptions () .checkUpdate ();
+      this .getBrowserOptions () ._AutoUpdate .addEvent ();
    },
    attributeChangedCallback (name, oldValue, newValue)
    {

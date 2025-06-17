@@ -302,9 +302,6 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    checkUpdate (visible)
    {
-      if (!this ._AutoUpdate .getValue ())
-         return;
-
       const browser = this .getBrowser ();
 
       if ((!document .hidden && visible) || browser .getPose ())
