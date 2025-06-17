@@ -143,7 +143,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Browser Options
 
-         this .getBrowserOptions () .checkUpdate ();
+         this .getBrowserOptions () ._AutoUpdate .addEvent ();
 
          // Rendering Properties
 
@@ -189,7 +189,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Browser Options
 
-         this .getBrowserOptions () .checkUpdate ();
+         this .getBrowserOptions () ._AutoUpdate .addEvent ();
 
          // Rendering Properties
 
