@@ -89,13 +89,13 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
     */
    computeScatterSamples ()
    {
-      /* Precompute sample position with white albedo. */
+      // Precompute sample position with white albedo.
       const d = this .burleySetup (1, 1);
 
       const randU = 0.2; // Random value between 0 and 1, fixed here for determinism.
       const randV = 0.5;
 
-      /* Find minimum radius that we can represent because we are only sampling the largest radius. */
+      // Find minimum radius that we can represent because we are only sampling the largest radius.
       let min_radius = 1;
 
       const goldenAngle  = Math .PI * (3 - Math .sqrt (5));
@@ -111,7 +111,8 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
 
          uniformArray .push (theta, r , 1 / this .burleyPdf (d, r));
       }
-      /* Avoid float imprecision. */
+
+      // Avoid float imprecision.
       min_radius = Math .max (min_radius, 0.00001);
 
       this .scatterMinRadius = min_radius;
@@ -132,7 +133,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       else
          r = 15;
 
-      /* Solve against scaled radius. */
+      // Solve against scaled radius.
       for (let i = 0; i < maxIterationCount; ++ i)
       {
          const exp_r_3 = Math .exp (-r / 3);
