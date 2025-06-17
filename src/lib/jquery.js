@@ -56,20 +56,4 @@ Object .assign ($,
 //   @iffe fn (... args) { return function () { }; }
 // }
 
-Object .assign ($.fn,
-{
-   isInViewport ()
-   {
-      const
-         $this          = $(this),
-         $window        = $(window),
-         elementTop     = $this .offset () .top,
-         elementBottom  = elementTop + $this .outerHeight (),
-         viewportTop    = Math .max ($window .scrollTop (), 0),
-         viewportBottom = viewportTop + $window .height ();
-
-      return elementBottom > viewportTop && elementTop < viewportBottom;
-   },
-});
-
 export default $;
