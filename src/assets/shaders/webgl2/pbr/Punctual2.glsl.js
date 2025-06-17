@@ -217,6 +217,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
       vec2 sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
       vec4 textureSample = texture (x3d_ScatterIBLSamplerEXT, sampleUV);
 
+      // Check volume scatter material id.
       if (centerSample .w != textureSample .w)
          continue;
 
