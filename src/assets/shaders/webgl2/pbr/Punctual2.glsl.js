@@ -173,7 +173,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    centerDepth = centerDepth * 2.0 - 1.0; // Convert to normalized device coordinates
 
    vec2 clipUV            = uv * 2.0 - 1.0; // Convert to clip space coordinates
-   vec4 clipSpacePosition = vec4 (clipUV .x, clipUV .y, centerDepth, 1.0); // Convert to clip space coordinates
+   vec4 clipSpacePosition = vec4 (clipUV .xy, centerDepth, 1.0); // Convert to clip space coordinates
    vec4 upos              = inverseProjectionMatrix * clipSpacePosition; // Convert to view space coordinates
    vec3 fragViewPosition  = upos .xyz / upos .w; // Normalize the coordinates
 
@@ -223,7 +223,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
       sampleDepth = sampleDepth * 2.0 - 1.0; // Convert to normalized device coordinates
 
       vec2  sampleClipUV       = sampleUV * 2.0 - 1.0; // Convert to clip space coordinates
-      vec4  sampleUpos         = inverseProjectionMatrix * vec4 (sampleClipUV .x, sampleClipUV .y, sampleDepth, 1.0);
+      vec4  sampleUpos         = inverseProjectionMatrix * vec4 (sampleClipUV .xy, sampleDepth, 1.0);
       vec3  sampleViewPosition = sampleUpos .xyz / sampleUpos .w; // Normalize the coordinates
       float sampleDistance     = distance (sampleViewPosition, fragViewPosition);
 
