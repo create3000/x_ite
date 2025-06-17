@@ -155,6 +155,9 @@ burley_eval (const in vec3 d, const in float r)
    return (exp_r_d + exp_r_3_d) / (4.0 * d);
 }
 
+const float M_PHI          = 1.61803398874989484820459;
+const float M_GOLDEN_ANGLE = M_PI * (3.0f - sqrt (5.0));
+
 vec3
 getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in mat4 cameraSpaceMatrix, const in float attenuationDistance, const in vec3 baseColor)
 {
@@ -192,12 +195,9 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    vec3 clampedScatterDistance = max (vec3 (x3d_ScatterMinRadiusEXT), scatterDistance / maxColor) * maxColor;
    vec3 d                      = burley_setup (clampedScatterDistance, albedo); // Setup the Burley model parameters
 
-   float golden_angle = M_PI * (3.0f - sqrt (5.0));
+   float randomTheta = fract (52.9829189 * fract (0.06711056 * uv .x + 0.00583715 * uv .y)) * M_GOLDEN_ANGLE;
 
-   float PHI         = 1.61803398874989484820459;
-   float randomTheta = fract (52.9829189 * fract (0.06711056 * uv .x + 0.00583715 * uv .y)) * golden_angle;
-
-   randomTheta = fract (tan (distance (uv * PHI, uv) * 1.0) * uv .x) * golden_angle;
+   randomTheta = fract (tan (distance (uv * M_PHI, uv) * 1.0) * uv .x) * M_GOLDEN_ANGLE;
 
    mat2 rotationMatrix = mat2 (cos (randomTheta), -sin (randomTheta), sin (randomTheta), cos (randomTheta));
 
@@ -205,12 +205,9 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    {
       vec3  scatterSample = x3d_ScatterSamplesEXT [i];
       float fabAngle      = scatterSample .x;
-      float r             = scatterSample .y * maxRadiusPixels;
-
-      r = r * texelSize .x;
-
-      float rcpPdf       = scatterSample .z;
-      vec2  sampleCoords = vec2 (cos (fabAngle) * r, sin (fabAngle) * r);
+      float r             = (scatterSample .y * maxRadiusPixels) * texelSize .x;
+      float rcpPdf        = scatterSample .z;
+      vec2  sampleCoords  = vec2 (cos (fabAngle) * r, sin (fabAngle) * r);
 
       sampleCoords = rotationMatrix * sampleCoords; // Rotate the sample coordinates
 
