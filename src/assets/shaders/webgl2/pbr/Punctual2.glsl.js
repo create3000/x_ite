@@ -186,7 +186,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    if (maxRadiusPixels <= 1.0)
       return baseColor; // If the maximum color is less than or equal to the pixel size, return the base color
 
-   centerDepth = fragViewPosition.z; // Extract the depth value
+   centerDepth = fragViewPosition .z; // Extract the depth value
 
    vec3 totalWeight  = vec3 (0.0);
    vec3 totalDiffuse = vec3 (0.0);
