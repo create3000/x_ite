@@ -1197,43 +1197,7 @@ Object .assign (X3DRenderObject .prototype,
          // Sort out volume scatter shapes.
 
          if (this .renderPasses & RenderPass .VOLUME_SCATTER)
-         {
-            const
-               { numOpaqueShapes, opaqueShapes, numTransparentShapes, transparentShapes } = this,
-               { opaqueShapes: volumeScatterOpaqueShapes, transparentShapes: volumeScatterTransparentShapes } = this .volumeScatterShapes;
-
-            // Find opaque shapes that are rendered in the volume scatter pass.
-
-            volumeScatterOpaqueShapes .length = 0;
-
-            for (let i = 0; i < numOpaqueShapes; ++ i)
-            {
-               const { renderContext, shapeNode } = opaqueShapes [i];
-
-               if (!(shapeNode .getRenderPasses () & RenderPass .VOLUME_SCATTER))
-                  continue;
-
-               volumeScatterOpaqueShapes .push (renderContext);
-            }
-
-            this .volumeScatterShapes .numOpaqueShapes = volumeScatterOpaqueShapes .length;
-
-            // Find transparent shapes that are rendered in the volume scatter pass.
-
-            volumeScatterTransparentShapes .length = 0;
-
-            for (let i = 0; i < numTransparentShapes; ++ i)
-            {
-               const { renderContext, shapeNode } = transparentShapes [i];
-
-               if (!(shapeNode .getRenderPasses () & RenderPass .VOLUME_SCATTER))
-                  continue;
-
-               volumeScatterTransparentShapes .push (renderContext);
-            }
-
-            this .volumeScatterShapes .numTransparentShapes = volumeScatterTransparentShapes .length;
-         }
+            this .prepareVolumeScatterShapes ();
       }
 
       this .globalShadow = globalShadows .at (-1);
@@ -1338,6 +1302,44 @@ Object .assign (X3DRenderObject .prototype,
       lights                   .length = 0;
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
+   },
+   prepareVolumeScatterShapes ()
+   {
+      const
+         { numOpaqueShapes, opaqueShapes, numTransparentShapes, transparentShapes } = this,
+         { opaqueShapes: volumeScatterOpaqueShapes, transparentShapes: volumeScatterTransparentShapes } = this .volumeScatterShapes;
+
+      // Find opaque shapes that are rendered in the volume scatter pass.
+
+      volumeScatterOpaqueShapes .length = 0;
+
+      for (let i = 0; i < numOpaqueShapes; ++ i)
+      {
+         const { renderContext, shapeNode } = opaqueShapes [i];
+
+         if (!(shapeNode .getRenderPasses () & RenderPass .VOLUME_SCATTER))
+            continue;
+
+         volumeScatterOpaqueShapes .push (renderContext);
+      }
+
+      this .volumeScatterShapes .numOpaqueShapes = volumeScatterOpaqueShapes .length;
+
+      // Find transparent shapes that are rendered in the volume scatter pass.
+
+      volumeScatterTransparentShapes .length = 0;
+
+      for (let i = 0; i < numTransparentShapes; ++ i)
+      {
+         const { renderContext, shapeNode } = transparentShapes [i];
+
+         if (!(shapeNode .getRenderPasses () & RenderPass .VOLUME_SCATTER))
+            continue;
+
+         volumeScatterTransparentShapes .push (renderContext);
+      }
+
+      this .volumeScatterShapes .numTransparentShapes = volumeScatterTransparentShapes .length;
    },
    drawShapes (gl, browser, frameBuffer, clearBits, viewport, shapes = this)
    {
