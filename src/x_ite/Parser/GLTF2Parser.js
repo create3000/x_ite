@@ -1158,6 +1158,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(extensions instanceof Object))
          return;
 
+      if (!materialNode .getType () .includes (X3DConstants .PhysicalMaterial))
+         return;
+
       for (const [key, value] of Object .entries (extensions))
       {
          switch (key)
