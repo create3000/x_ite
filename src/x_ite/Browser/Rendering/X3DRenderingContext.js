@@ -394,13 +394,20 @@ Object .assign (X3DRenderingContext .prototype,
       const textureBuffer = this [key];
 
       if (!textureBuffer)
+      const textureBuffer = this [key];
+
+      if (!textureBuffer)
          return;
 
+      if (width === textureBuffer .getWidth () && height === textureBuffer .getHeight ())
       if (width === textureBuffer .getWidth () && height === textureBuffer .getHeight ())
          return;
 
       textureBuffer .dispose ();
 
+      textureBuffer .dispose ();
+
+      this [key] = undefined;
       this [key] = undefined;
    },
    onfullscreen ()
