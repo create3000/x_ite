@@ -386,36 +386,22 @@ Object .assign (X3DRenderingContext .prototype,
 
       this [_framebuffers] [i] = new MultiSampleFramebuffer (this, x, y, width, height, samples, oit);
 
-      this .reshapeTransmissionBuffer  (width, height);
-      this .reshapeVolumeScatterBuffer (width, height);
+      this .reshapeTextureBuffer (_transmissionBuffer,  width, height);
+      this .reshapeTextureBuffer (_volumeScatterBuffer, width, height);
    },
-   reshapeTransmissionBuffer (width, height)
+   reshapeTextureBuffer (key, width, height)
    {
-      if (!this [_transmissionBuffer])
+      const textureBuffer = this [key];
+
+      if (!textureBuffer)
          return;
 
-      if (width  === this [_transmissionBuffer] .getWidth () &&
-          height === this [_transmissionBuffer] .getHeight ())
-      {
-         return;
-      }
-
-      this [_transmissionBuffer] .dispose ();
-      this [_transmissionBuffer] = new TextureBuffer (this, width, height, false, true);
-   },
-   reshapeVolumeScatterBuffer (width, height)
-   {
-      if (!this [_volumeScatterBuffer])
+      if (width === textureBuffer .getWidth () && height === textureBuffer .getHeight ())
          return;
 
-      if (width  === this [_volumeScatterBuffer] .getWidth () &&
-          height === this [_volumeScatterBuffer] .getHeight ())
-      {
-         return;
-      }
+      textureBuffer .dispose ();
 
-      this [_volumeScatterBuffer] .dispose ();
-      this [_volumeScatterBuffer] = new TextureBuffer (this, width, height, false, false, 2);
+      this [key] = undefined;
    },
    onfullscreen ()
    {
