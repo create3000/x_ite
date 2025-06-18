@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
 
       return [uniformArray, min_radius];
    },
-   burleySample(d, xRand)
+   burleySample (d, xRand)
    {
       xRand *= 0.9963790093708328;
 
