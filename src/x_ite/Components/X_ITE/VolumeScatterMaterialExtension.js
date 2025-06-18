@@ -55,6 +55,13 @@ import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
 import RenderPass               from "../../Rendering/RenderPass.js";
 
+// Register shaders.
+
+import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
+import Scatter2       from "../../../assets/shaders/webgl2/pbr/Scatter2.glsl.js";
+
+ShaderRegistry .includes [2] .Scatter = Scatter2;
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
