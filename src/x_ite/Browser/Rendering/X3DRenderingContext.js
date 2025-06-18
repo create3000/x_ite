@@ -415,7 +415,7 @@ Object .assign (X3DRenderingContext .prototype,
       }
 
       this [_volumeScatterBuffer] .dispose ();
-      this [_volumeScatterBuffer] = new TextureBuffer (this, width, height, false, true, 2);
+      this [_volumeScatterBuffer] = new TextureBuffer (this, width, height, false, false, 2);
    },
    onfullscreen ()
    {
