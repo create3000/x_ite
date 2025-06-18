@@ -72,41 +72,38 @@ import Utils2      from "../../../assets/shaders/webgl2/common/Utils2.glsl.js";
 import Vertex2     from "../../../assets/shaders/webgl2/common/Vertex2.glsl.js";
 
 /* WebGL 1 */
-import FullScreenVertex1           from "../../../assets/shaders/webgl1/FullScreen1.vs.js";
-import DefaultVertex1              from "../../../assets/shaders/webgl1/Default1.vs.js";
-import DepthFragment1              from "../../../assets/shaders/webgl1/Depth1.fs.js";
-import DepthVertex1                from "../../../assets/shaders/webgl1/Depth1.vs.js";
-import MaterialFragment1           from "../../../assets/shaders/webgl1/Material1.fs.js";
-import PhysicalFragment1           from "../../../assets/shaders/webgl1/Physical1.fs.js";
-import PointingFragment1           from "../../../assets/shaders/webgl1/Pointing1.fs.js";
-import PointingVertex1             from "../../../assets/shaders/webgl1/Pointing1.vs.js";
-import SpecularGlossinessFragment1 from "../../../assets/shaders/webgl1/SpecularGlossiness1.fs.js";
-import UnlitFragment1              from "../../../assets/shaders/webgl1/Unlit1.fs.js";
+import FullScreenVertex1 from "../../../assets/shaders/webgl1/FullScreen1.vs.js";
+import DefaultVertex1    from "../../../assets/shaders/webgl1/Default1.vs.js";
+import DepthFragment1    from "../../../assets/shaders/webgl1/Depth1.fs.js";
+import DepthVertex1      from "../../../assets/shaders/webgl1/Depth1.vs.js";
+import MaterialFragment1 from "../../../assets/shaders/webgl1/Material1.fs.js";
+import PhysicalFragment1 from "../../../assets/shaders/webgl1/Physical1.fs.js";
+import PointingFragment1 from "../../../assets/shaders/webgl1/Pointing1.fs.js";
+import PointingVertex1   from "../../../assets/shaders/webgl1/Pointing1.vs.js";
+import UnlitFragment1    from "../../../assets/shaders/webgl1/Unlit1.fs.js";
 
 /* WebGL 2 */
-import FullScreenVertex2           from "../../../assets/shaders/webgl2/FullScreen2.vs.js";
-import DefaultVertex2              from "../../../assets/shaders/webgl2/Default2.vs.js";
-import DepthFragment2              from "../../../assets/shaders/webgl2/Depth2.fs.js";
-import DepthVertex2                from "../../../assets/shaders/webgl2/Depth2.vs.js";
-import MaterialFragment2           from "../../../assets/shaders/webgl2/Material2.fs.js";
-import LineTransformFragment2      from "../../../assets/shaders/webgl2/LineTransform2.fs.js";
-import LineTransformVertex2        from "../../../assets/shaders/webgl2/LineTransform2.vs.js";
-import OITComposeFragment2         from "../../../assets/shaders/webgl2/OITCompose2.fs.js";
-import PhysicalFragment2           from "../../../assets/shaders/webgl2/Physical2.fs.js";
-import PointingFragment2           from "../../../assets/shaders/webgl2/Pointing2.fs.js";
-import PointingVertex2             from "../../../assets/shaders/webgl2/Pointing2.vs.js";
-import SpecularGlossinessFragment2 from "../../../assets/shaders/webgl2/SpecularGlossiness2.fs.js";
-import UnlitFragment2              from "../../../assets/shaders/webgl2/Unlit2.fs.js";
+import FullScreenVertex2      from "../../../assets/shaders/webgl2/FullScreen2.vs.js";
+import DefaultVertex2         from "../../../assets/shaders/webgl2/Default2.vs.js";
+import DepthFragment2         from "../../../assets/shaders/webgl2/Depth2.fs.js";
+import DepthVertex2           from "../../../assets/shaders/webgl2/Depth2.vs.js";
+import MaterialFragment2      from "../../../assets/shaders/webgl2/Material2.fs.js";
+import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform2.fs.js";
+import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform2.vs.js";
+import OITComposeFragment2    from "../../../assets/shaders/webgl2/OITCompose2.fs.js";
+import PhysicalFragment2      from "../../../assets/shaders/webgl2/Physical2.fs.js";
+import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.js";
+import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.js";
+import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
 
 /* PBR 2 */
-import BRDF2               from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
-import IBL2                from "../../../assets/shaders/webgl2/pbr/IBL2.glsl.js";
-import Iridescence2        from "../../../assets/shaders/webgl2/pbr/Iridescence2.glsl.js";
-import MaterialInfo2       from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
-import PBR2                from "../../../assets/shaders/webgl2/pbr/PBR2.glsl.js";
-import Punctual2           from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
-import SpecularGlossiness2 from "../../../assets/shaders/webgl2/pbr/SpecularGlossiness2.glsl.js";
-import ToneMapping2        from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
+import BRDF2         from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
+import IBL2          from "../../../assets/shaders/webgl2/pbr/IBL2.glsl.js";
+import Iridescence2  from "../../../assets/shaders/webgl2/pbr/Iridescence2.glsl.js";
+import MaterialInfo2 from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
+import PBR2          from "../../../assets/shaders/webgl2/pbr/PBR2.glsl.js";
+import Punctual2     from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
+import ToneMapping2  from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
 
 const ShaderRegistry = {
    includes: {
@@ -132,7 +129,6 @@ const ShaderRegistry = {
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
-         SpecularGlossiness: SpecularGlossiness2,
          ToneMapping: ToneMapping2,
       },
       2: {
@@ -162,7 +158,6 @@ const ShaderRegistry = {
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
-         SpecularGlossiness: SpecularGlossiness2,
          ToneMapping: ToneMapping2,
       },
    },
@@ -187,7 +182,6 @@ const ShaderRegistry = {
          Material: MaterialFragment1,
          Physical: PhysicalFragment1,
          Pointing: PointingFragment1,
-         SpecularGlossiness: SpecularGlossinessFragment1,
          Unlit: UnlitFragment1,
       },
       2: {
@@ -197,7 +191,6 @@ const ShaderRegistry = {
          OITCompose: OITComposeFragment2,
          Physical: PhysicalFragment2,
          Pointing: PointingFragment2,
-         SpecularGlossiness: SpecularGlossinessFragment2,
          Unlit: UnlitFragment2,
       },
    },
