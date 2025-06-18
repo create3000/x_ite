@@ -54,6 +54,18 @@ import X3DCast                 from "../../Base/X3DCast.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 import Algorithm               from "../../../standard/Math/Algorithm.js";
 
+// Register shaders.
+
+import ShaderRegistry              from "../../Browser/Shaders/ShaderRegistry.js";
+import SpecularGlossiness2         from "../../../assets/shaders/webgl2/pbr/SpecularGlossiness2.glsl.js";
+import SpecularGlossinessFragment1 from "../../../assets/shaders/webgl1/SpecularGlossiness1.fs.js";
+import SpecularGlossinessFragment2 from "../../../assets/shaders/webgl2/SpecularGlossiness2.fs.js";
+
+ShaderRegistry .includes [1] .SpecularGlossiness = SpecularGlossiness2;
+ShaderRegistry .includes [2] .SpecularGlossiness = SpecularGlossiness2;
+ShaderRegistry .fragment [1] .SpecularGlossiness = SpecularGlossinessFragment1;
+ShaderRegistry .fragment [2] .SpecularGlossiness = SpecularGlossinessFragment2;
+
 /**
  * THIS NODE IS DEPRECIATED SINCE X3D VERSION 4.0.
  */
@@ -68,7 +80,6 @@ function SpecularGlossinessMaterial (executionContext)
 
    this .diffuseColorArray  = new Float32Array (3);
    this .specularColorArray = new Float32Array (3);
-   this .extensionNodes     = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X3DOneSidedMaterialNode .prototype),
@@ -85,7 +96,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
       this ._specularGlossinessTexture .addInterest ("set_specularGlossinessTexture__", this);
       this ._occlusionStrength         .addInterest ("set_occlusionStrength__",         this);
       this ._occlusionTexture          .addInterest ("set_occlusionTexture__",          this);
-      this ._extensions                .addInterest ("set_extensions__",                this);
 
       this .set_diffuseColor__ ();
       this .set_diffuseTexture__ ();
@@ -94,12 +104,11 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
       this .set_specularGlossinessTexture__ ();
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
-      this .set_extensions__ ();
       this .set_transparent__ ();
    },
    getMaterialKey ()
    {
-      return this .materialKey;
+      return 4;
    },
    getTextureIndices: (() =>
    {
@@ -170,48 +179,11 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
-   set_extensions__ ()
-   {
-      const extensionNodes = this .extensionNodes;
-
-      for (const extensionNode of extensionNodes)
-         extensionNode .removeInterest ("set_extensionsKey__", this);
-
-      extensionNodes .length = 0;
-
-      for (const node of this ._extensions)
-      {
-         const extensionNode = X3DCast (X3DConstants .X3DMaterialExtensionNode, node);
-
-         if (extensionNode)
-            extensionNodes .push (extensionNode);
-      }
-
-      extensionNodes .sort ((a, b) => a .getExtensionKey () - b .getExtensionKey ());
-
-      for (const extensionNode of extensionNodes)
-         extensionNode .addInterest ("set_extensionsKey__", this);
-
-      this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .TransmissionMaterialExtension)));
-
-      this .set_extensionsKey__ ();
-   },
-   set_extensionsKey__ ()
-   {
-      const extensionsKey = this .extensionNodes
-         .map (extensionNode => `${extensionNode .getExtensionKey () .toString (16)}${extensionNode .getTextureBits () .toString (16)}`)
-         .join ("");
-
-      this .materialKey = `[4.${extensionsKey}]`;
-   },
    createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
          options = this .getShaderOptions (geometryContext, renderContext);
-
-      for (const extensionNode of this .extensionNodes)
-         extensionNode .getShaderOptions (options);
 
       options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_SPECULAR_GLOSSINESS");
 
@@ -222,7 +194,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
          this .occlusionTextureNode          ?.getShaderOptions (options, "OCCLUSION");
       }
 
-      const shaderNode = browser .createShader ("SpecularGlossiness", "Default", "Physical", options);
+      const shaderNode = browser .createShader ("SpecularGlossiness", "Default", "SpecularGlossiness", options);
 
       browser .getShaders () .set (key, shaderNode);
 
@@ -231,9 +203,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
-
-      for (const extensionNode of this .extensionNodes)
-         extensionNode .setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
       gl .uniform3fv (shaderObject .x3d_DiffuseColor,  this .diffuseColorArray);
       gl .uniform3fv (shaderObject .x3d_SpecularColor, this .specularColorArray);
@@ -297,7 +266,6 @@ Object .defineProperties (SpecularGlossinessMaterial,
          new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",             new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",                     new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "extensions",                       new Fields .MFNode ()), // experimental
       ]),
       enumerable: true,
    },

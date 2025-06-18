@@ -55,7 +55,6 @@ The SpecularGlossinessMaterial node belongs to the [X_ITE](/x_ite/components/ove
 | SFString | [in, out] | [normalTextureMapping](#fields-normalTextureMapping) | "" |
 | SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL  |
 | SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
-| MFNode | [in, out] | [extensions](#fields-extensions) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -203,11 +202,6 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 #### Hint
 
 - *transparency* \< .5 opaque, *transparency* \> .5 transparent.
-
-### MFNode [in, out] **extensions** [ ] <small>[X3DMaterialExtensionNode]</small> <small class="blue">non-standard</small>
-{: #fields-extensions }
-
-Input/Output field *extensions*.
 
 ## Advice
 

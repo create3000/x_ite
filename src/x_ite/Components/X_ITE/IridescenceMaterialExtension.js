@@ -54,6 +54,14 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+// Register shaders.
+
+import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
+import Iridescence2   from "../../../assets/shaders/webgl2/pbr/Iridescence2.glsl.js";
+
+ShaderRegistry .includes [1] .Iridescence = Iridescence2;
+ShaderRegistry .includes [2] .Iridescence = Iridescence2;
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */

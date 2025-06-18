@@ -275,35 +275,40 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_AutoUpdate__ (autoUpdate)
    {
-      const windowEvents = ["resize", "scroll", "load"]
-         .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
-         .join (" ");
+      const
+         browser = this .getBrowser (),
+         element = browser .getElement () [0];
 
       const documentEvents = ["visibilitychange"]
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
          .join (" ");
 
-      $(window)   .off (windowEvents);
       $(document) .off (documentEvents);
+
+      this .intersectionObserver ?.disconnect ();
 
       if (!autoUpdate .getValue ())
          return;
 
-      $(window)   .on (windowEvents,   () => this .checkUpdate ());
       $(document) .on (documentEvents, () => this .checkUpdate ());
 
-      this .checkUpdate ();
+      this .intersectionObserver ??= new IntersectionObserver (entries =>
+      {
+         this .isIntersecting = entries .some (entry => entry .isIntersecting);
+
+         this .checkUpdate ();
+      });
+
+      this .intersectionObserver .observe (element);
    },
    checkUpdate ()
    {
       if (!this ._AutoUpdate .getValue ())
          return;
 
-      const
-         browser = this .getBrowser (),
-         element = browser .getElement ();
+      const browser = this .getBrowser ();
 
-      if ((!document .hidden && element .isInViewport ()) || browser .getPose ())
+      if ((!document .hidden && this .isIntersecting) || browser .getPose ())
       {
          if (!browser .isLive ())
             browser .beginUpdate ();

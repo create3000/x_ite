@@ -259,8 +259,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_SpecularEXT",
          "x3d_ThicknessEXT",
          "x3d_TransmissionEXT",
-         "x3d_TransmissionFramebufferSamplerEXT",
-         "x3d_TransmissionFramebufferSizeEXT",
+         "x3d_TransmissionSamplerEXT",
       ];
 
       for (const name of commonUniforms)

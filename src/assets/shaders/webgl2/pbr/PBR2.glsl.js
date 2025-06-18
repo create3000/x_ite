@@ -7,7 +7,12 @@ export default /* glsl */ `
 #pragma X3D include "../common/Shadow.glsl"
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+   uniform ivec4 x3d_Viewport;
+#endif
+
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
    uniform mat4 x3d_ProjectionMatrix;
+   uniform mat4 x3d_ViewMatrix;
    uniform mat4 x3d_ModelViewMatrix;
 #endif
 
@@ -75,11 +80,6 @@ getMaterialColor ()
       materialInfo = getMetallicRoughnessInfo (materialInfo);
    #endif
 
-   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
-      materialInfo   = getSpecularGlossinessInfo (materialInfo);
-      baseColor .rgb = materialInfo.baseColor;
-   #endif
-
    #if defined (X3D_SHEEN_MATERIAL_EXT)
       materialInfo = getSheenInfo (materialInfo);
    #endif
@@ -140,17 +140,20 @@ getMaterialColor ()
    float albedoSheenScaling           = 1.0;
    float diffuseTransmissionThickness = 1.0;
 
-   #if defined (X3D_IRIDESCENCE_MATERIAL_EXT) && (defined (X3D_USE_IBL) || defined (X3D_LIGHTING))
+   #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
+   // Holger: Values are only used if X3D_USE_IBL or X3D_LIGHTING is defined.
+   #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
       vec3 iridescenceFresnel_dielectric = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, materialInfo .f0_dielectric);
       vec3 iridescenceFresnel_metallic   = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, baseColor .rgb);
 
       if (materialInfo .iridescenceThickness == 0.0)
          materialInfo .iridescenceFactor = 0.0;
    #endif
+   #endif
 
    #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
    #if defined (X3D_VOLUME_MATERIAL_EXT)
-      diffuseTransmissionThickness = materialInfo .thickness * (length (vec3 (u_ModelMatrix[0] .xyz)) + length (vec3 (u_ModelMatrix[1] .xyz)) + length (vec3 (u_ModelMatrix[2] .xyz))) / 3.0;
+      diffuseTransmissionThickness = materialInfo .thickness * (length (x3d_ModelViewMatrix [0] .xyz) + length (x3d_ModelViewMatrix [1] .xyz) + length (x3d_ModelViewMatrix [2] .xyz)) / 3.0;
    #endif
    #endif
 
@@ -372,6 +375,9 @@ getMaterialColor ()
 
    #if defined (X3D_UNLIT_MATERIAL_EXT)
       color = baseColor .rgb;
+   #elif (defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)) && !defined (X3D_NORMALS)
+      // Points or Lines with no NORMAL attribute SHOULD be rendered without lighting and instead use the sum of the base color value and the emissive value.
+      color = f_emissive + baseColor .rgb;
    #else
       color = f_emissive * (1.0 - clearcoatFactor * clearcoatFresnel) + color;
    #endif

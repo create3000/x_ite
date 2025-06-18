@@ -3,7 +3,7 @@ export default /* glsl */ `
 // Originally from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/punctual.glsl
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 float
 applyIorToRoughness (const in float roughness, const in float ior)
 {
@@ -69,7 +69,7 @@ getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, co
 
 #endif
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 vec3
 getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const in vec3 pointToLight, const in float alphaRoughness, const in vec3 baseColor, const in float ior)
 {
