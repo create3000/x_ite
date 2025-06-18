@@ -139,10 +139,6 @@ getMaterialColor ()
          // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
          vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
 
-         #if defined (X3D_SHADOWS)
-            lightIntensity = mix (lightIntensity, light .shadowColor, getShadowIntensity (i, light));
-         #endif
-
          vec3 l_diffuse             = lightIntensity * NdotL / M_PI;
          vec3 l_specular_dielectric = vec3 (0.0);
          vec3 l_dielectric_brdf     = vec3 (0.0);
