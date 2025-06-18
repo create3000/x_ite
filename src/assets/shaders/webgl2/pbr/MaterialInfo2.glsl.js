@@ -99,30 +99,6 @@ getBaseColor ()
    return baseColor;
 }
 
-#if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
-
-${MaterialTextures .texture ("x3d_SpecularGlossinessTexture", "rgba", "linear")}
-
-MaterialInfo
-getSpecularGlossinessInfo (in MaterialInfo info)
-{
-   vec3  specular   = x3d_Material .specularColor;
-   float glossiness = x3d_Material .glossiness;
-
-   #if defined (X3D_SPECULAR_GLOSSINESS_TEXTURE)
-      vec4 sgSample = getSpecularGlossinessTexture ();
-
-      glossiness   *= sgSample .a ;  // glossiness to roughness
-      specular     *= sgSample .rgb; // specular
-   #endif
-
-   info .perceptualRoughness = 1.0 - glossiness;
-   info .f0_dielectric       = min (specular, vec3(1.0)); // Use KHR_materials_specular calculation
-
-   return info;
-}
-#endif
-
 #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
 
 ${MaterialTextures .texture ("x3d_MetallicRoughnessTexture")}

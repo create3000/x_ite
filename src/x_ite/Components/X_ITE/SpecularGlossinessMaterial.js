@@ -54,6 +54,18 @@ import X3DCast                 from "../../Base/X3DCast.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 import Algorithm               from "../../../standard/Math/Algorithm.js";
 
+// Register shaders.
+
+import ShaderRegistry              from "../../Browser/Shaders/ShaderRegistry.js";
+import SpecularGlossiness2         from "../../../assets/shaders/webgl2/pbr/SpecularGlossiness2.glsl.js";
+import SpecularGlossinessFragment1 from "../../../assets/shaders/webgl1/SpecularGlossiness1.fs.js";
+import SpecularGlossinessFragment2 from "../../../assets/shaders/webgl2/SpecularGlossiness2.fs.js";
+
+ShaderRegistry .includes [1] .SpecularGlossiness = SpecularGlossiness2;
+ShaderRegistry .includes [2] .SpecularGlossiness = SpecularGlossiness2;
+ShaderRegistry .fragment [1] .SpecularGlossiness = SpecularGlossinessFragment1;
+ShaderRegistry .fragment [2] .SpecularGlossiness = SpecularGlossinessFragment2;
+
 /**
  * THIS NODE IS DEPRECIATED SINCE X3D VERSION 4.0.
  */
