@@ -103,37 +103,11 @@ getBaseColor ()
 
 ${MaterialTextures .texture ("x3d_SpecularGlossinessTexture", "rgba", "linear")}
 
-float
-getPerceivedBrightness (const in vec3 color)
-{
-    return sqrt (0.299 * color .r * color .r + 0.587 * color .g * color .g + 0.114 * color .b * color .b);
-}
-
-// Inspired by Babylon.js and Three.js conversion scripts
-// https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Archived/KHR_materials_pbrSpecularGlossiness/examples
-float
-solveMetallic (const in float diffuse, const in float specular, const in float oneMinusSpecularStrength, const in float dielectricSpecular)
-{
-    if (specular < dielectricSpecular)
-    {
-        return 0.0;
-    }
-
-    float b = diffuse * oneMinusSpecularStrength / (1.0 - dielectricSpecular) + specular - 2.0 * dielectricSpecular;
-    float c = dielectricSpecular - specular;
-    float d = max (b * b - 4.0 * dielectricSpecular * c, 0.0);
-    return clamp ((-b + sqrt (d)) / (2.0 * dielectricSpecular), 0.0, 1.0);
-}
-
 MaterialInfo
 getSpecularGlossinessInfo (in MaterialInfo info)
 {
-   vec3  dielectricSpecular = vec3 (0.04);
-   vec3  specular           = x3d_Material .specularColor;
-   float glossiness         = x3d_Material .glossiness;
-   vec4  diffuseColor       = getBaseColor ();
-   vec3  diffuse            = diffuseColor .rgb;
-   float opacity            = diffuseColor .a;
+   vec3  specular   = x3d_Material .specularColor;
+   float glossiness = x3d_Material .glossiness;
 
    #if defined (X3D_SPECULAR_GLOSSINESS_TEXTURE)
       vec4 sgSample = getSpecularGlossinessTexture ();
@@ -143,14 +117,7 @@ getSpecularGlossinessInfo (in MaterialInfo info)
    #endif
 
    info .perceptualRoughness = 1.0 - glossiness;
-
-   float oneMinusSpecularStrength = 1.0 - max3 (specular);
-   float metallic                 = solveMetallic (getPerceivedBrightness (diffuse), getPerceivedBrightness (specular), oneMinusSpecularStrength, dielectricSpecular .r);
-   vec3 baseColorFromDiffuse      = diffuse * (oneMinusSpecularStrength / (1.0 - dielectricSpecular .r) / max (1.0 - metallic, 1e-6));
-   vec3 baseColorFromSpecular     = (specular - dielectricSpecular * (1.0 - metallic)) * (1.0 / max (metallic, 1e-6));
-
-   info .baseColor = clamp (mix (baseColorFromDiffuse, baseColorFromSpecular, metallic * metallic), 0.0, 1.0);
-   info .metallic  = metallic;
+   info .f0_dielectric       = min (specular, vec3(1.0)); // Use KHR_materials_specular calculation
 
    return info;
 }
