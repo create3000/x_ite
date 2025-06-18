@@ -99,7 +99,6 @@ import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js"
 /* PBR 2 */
 import BRDF2         from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
 import IBL2          from "../../../assets/shaders/webgl2/pbr/IBL2.glsl.js";
-import Iridescence2  from "../../../assets/shaders/webgl2/pbr/Iridescence2.glsl.js";
 import MaterialInfo2 from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
 import PBR2          from "../../../assets/shaders/webgl2/pbr/PBR2.glsl.js";
 import Punctual2     from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
@@ -125,7 +124,7 @@ const ShaderRegistry = {
          // PBR
          BRDF: BRDF2,
          IBL: IBL2,
-         Iridescence: Iridescence2,
+         Iridescence: "",
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
@@ -155,7 +154,7 @@ const ShaderRegistry = {
          // PBR
          BRDF: BRDF2,
          IBL: IBL2,
-         Iridescence: Iridescence2,
+         Iridescence: "",
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
