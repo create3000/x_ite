@@ -80,11 +80,6 @@ getMaterialColor ()
       materialInfo = getMetallicRoughnessInfo (materialInfo);
    #endif
 
-   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
-      materialInfo   = getSpecularGlossinessInfo (materialInfo);
-      baseColor .rgb = materialInfo.baseColor;
-   #endif
-
    #if defined (X3D_SHEEN_MATERIAL_EXT)
       materialInfo = getSheenInfo (materialInfo);
    #endif

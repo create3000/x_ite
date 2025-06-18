@@ -222,7 +222,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
          this .occlusionTextureNode          ?.getShaderOptions (options, "OCCLUSION");
       }
 
-      const shaderNode = browser .createShader ("SpecularGlossiness", "Default", "Physical", options);
+      const shaderNode = browser .createShader ("SpecularGlossiness", "Default", "SpecularGlossiness", options);
 
       browser .getShaders () .set (key, shaderNode);
 
