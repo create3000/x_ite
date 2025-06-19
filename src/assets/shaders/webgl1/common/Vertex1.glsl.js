@@ -1,6 +1,6 @@
 import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
-export default /* glsl */ `
+export default () => /* glsl */ `
 // Uniforms
 
 uniform mat4 x3d_ProjectionMatrix;

@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 
 #if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
 // Generate flat normals for 2D and 3D geometry.

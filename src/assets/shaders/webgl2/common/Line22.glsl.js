@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 struct Line2
 {
    vec2 point;

@@ -59,8 +59,14 @@ import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 import Iridescence2   from "../../../assets/shaders/webgl2/pbr/Iridescence2.glsl.js";
 
-ShaderRegistry .includes [1] .Iridescence = Iridescence2;
-ShaderRegistry .includes [2] .Iridescence = Iridescence2;
+ShaderRegistry .registerInclude ("Iridescence", Iridescence2);
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .register ("x3d_IridescenceTextureEXT");
+MaterialTextures .register ("x3d_IridescenceThicknessTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.

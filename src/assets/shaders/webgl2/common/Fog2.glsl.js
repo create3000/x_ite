@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 #if defined (X3D_FOG)
 
 uniform x3d_FogParameters x3d_Fog;

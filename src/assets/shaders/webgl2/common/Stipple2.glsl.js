@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
 
 #pragma X3D include "Line2.glsl"

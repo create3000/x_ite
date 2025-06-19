@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 #if (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)) && defined (X3D_STYLE_PROPERTIES)
 
 uniform x3d_FillPropertiesParameters x3d_FillProperties;

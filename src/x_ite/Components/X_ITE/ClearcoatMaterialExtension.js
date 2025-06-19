@@ -55,6 +55,14 @@ import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
 
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .register ("x3d_ClearcoatTextureEXT");
+MaterialTextures .register ("x3d_ClearcoatRoughnessTextureEXT");
+MaterialTextures .register ("x3d_ClearcoatNormalTextureEXT");
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */

@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 #extension GL_EXT_draw_buffers : enable
 
 precision highp float;
