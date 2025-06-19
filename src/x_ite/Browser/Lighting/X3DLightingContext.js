@@ -118,7 +118,12 @@ Object .assign (X3DLightingContext .prototype,
          else
             this [_shadowBuffers] [shadowMapSize] = [ ];
 
-         return new TextureBuffer ({ browser: this, width: shadowMapSize, height: shadowMapSize, float: true });
+         return new TextureBuffer ({
+            browser: this,
+            width: shadowMapSize,
+            height: shadowMapSize,
+            float: true,
+         });
       }
       catch (error)
       {
