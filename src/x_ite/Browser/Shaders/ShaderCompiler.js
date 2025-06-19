@@ -77,7 +77,7 @@ Object .assign (ShaderCompiler .prototype,
          if (match)
          {
             source += `#line 1 ${this .sourceFileNumbers [match [1]]}\n`;
-            source += this .process (this .includes [match [1]] (), this .sourceFileNumbers [match [1]]);
+            source += this .process (this .includes [match [1]] ?.() ?? "", this .sourceFileNumbers [match [1]]);
             source += "\n";
             source += `#line ${i + 2} ${parent}\n`;
          }
