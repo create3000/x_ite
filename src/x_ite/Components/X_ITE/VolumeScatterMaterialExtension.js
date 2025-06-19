@@ -55,6 +55,10 @@ import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
 import RenderPass               from "../../Rendering/RenderPass.js";
 
+// Register key.
+
+ExtensionKeys .add ("VOLUME_SCATTER_MATERIAL_EXTENSION");
+
 // Register shaders.
 
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
