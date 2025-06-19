@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          // Properties
 
          this .viewport    = new Vector4 (0, 0, size, size);
-         this .frameBuffer = new TextureBuffer (this .getBrowser (), size, size);
+         this .frameBuffer = new TextureBuffer ({ browser: this .getBrowser (), width: size, height: size });
 
          this .setSize (size);
       }
