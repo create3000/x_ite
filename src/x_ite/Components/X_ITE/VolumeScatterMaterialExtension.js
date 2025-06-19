@@ -81,21 +81,26 @@ function VolumeScatterMaterialExtension (executionContext)
 
 Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
 {
-   initialize ()
+   initialize: (function ()
    {
-      X3DMaterialExtensionNode .prototype .initialize .call (this);
+      let computedScatterSamples;
 
-      const [scatterSamples, minRadius] = this .computeScatterSamples ();
+      return function ()
+      {
+         X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      this .scatterSamples   = scatterSamples;
-      this .scatterMinRadius = minRadius;
+         const [scatterSamples, minRadius] = computedScatterSamples ??= this .computeScatterSamples ();
 
-      this ._multiscatterColor .addInterest ("set_multiscatterColor__", this);
-      this ._scatterAnisotropy .addInterest ("set_scatterAnisotropy__", this);
+         this .scatterSamples   = scatterSamples;
+         this .scatterMinRadius = minRadius;
 
-      this .set_multiscatterColor__ ();
-      this .set_scatterAnisotropy__ ();
-   },
+         this ._multiscatterColor .addInterest ("set_multiscatterColor__", this);
+         this ._scatterAnisotropy .addInterest ("set_scatterAnisotropy__", this);
+
+         this .set_multiscatterColor__ ();
+         this .set_scatterAnisotropy__ ();
+      };
+   })(),
    /**
     * Using blender implementation of Burley diffusion profile.
     */
