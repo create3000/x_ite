@@ -104,6 +104,11 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
       this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
    },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_TransmissionEXT");
+      uniforms .push ("x3d_TransmissionSamplerEXT");
+   },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       const browser = this .getBrowser ();
