@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
 
       const [scatterSamples, minRadius] = this .computeScatterSamples ();
 
-      this .scatterSamples   = new Float32Array (scatterSamples);
+      this .scatterSamples   = scatterSamples;
       this .scatterMinRadius = minRadius;
 
       this ._multiscatterColor .addInterest ("set_multiscatterColor__", this);
@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       // Avoid float imprecision.
       min_radius = Math .max (min_radius, 0.00001);
 
-      return [uniformArray, min_radius];
+      return [new Float32Array (uniformArray), min_radius];
    },
    burleySample (d, xRand)
    {
