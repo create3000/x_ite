@@ -50,7 +50,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFFloat [in, out] **diffuseTransmission** 0 <small>[0,∞)</small>
+### SFFloat [in, out] **diffuseTransmission** 0 <small>[0,1]</small>
 {: #fields-diffuseTransmission }
 
 The percentage of reflected, non-specularly reflected light that is transmitted through the surface via the Lambertian diffuse transmission, i.e., the strength of the diffuse transmission effect.

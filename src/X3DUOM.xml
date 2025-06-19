@@ -1210,6 +1210,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The percentage of reflected, non-specularly reflected light that is transmitted through the surface via the Lambertian diffuse transmission, i.e., the strength of the diffuse transmission effect."
         ></field>
         <field name="diffuseTransmissionTextureMapping"

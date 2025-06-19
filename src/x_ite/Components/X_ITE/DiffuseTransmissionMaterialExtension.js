@@ -53,6 +53,7 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+import Algorithm                from "../../../standard/Math/Algorithm.js";
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -85,7 +86,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    set_diffuseTransmission__ ()
    {
-      this .diffuseTransmission = Math .max (this ._diffuseTransmission .getValue (), 0);
+      this .diffuseTransmission = Algorithm .clamp (this ._diffuseTransmission .getValue (), 0, 1);
    },
    set_diffuseTransmissionTexture__ ()
    {
