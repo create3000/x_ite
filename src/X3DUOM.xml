@@ -1120,6 +1120,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The base percentage of light that is transmitted through the surface."
         />
         <field name="transmissionTextureMapping"
