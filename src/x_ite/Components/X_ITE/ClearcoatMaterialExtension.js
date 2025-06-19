@@ -127,6 +127,11 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       this .clearcoatRoughnessTextureNode ?.getShaderOptions (options, "CLEARCOAT_ROUGHNESS", true);
       this .clearcoatNormalTextureNode    ?.getShaderOptions (options, "CLEARCOAT_NORMAL",    true);
    },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_ClearcoatEXT");
+      uniforms .push ("x3d_ClearcoatRoughnessEXT");
+   },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_ClearcoatEXT,          this .clearcoat);

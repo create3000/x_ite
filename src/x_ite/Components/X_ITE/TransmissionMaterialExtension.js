@@ -103,6 +103,11 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
       this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
    },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_TransmissionEXT");
+      uniforms .push ("x3d_TransmissionSamplerEXT");
+   },
    setShaderUniforms: (() =>
    {
       const zeros = new Float32Array (16);

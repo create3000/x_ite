@@ -123,6 +123,12 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
 
       this .thicknessTextureNode ?.getShaderOptions (options, "THICKNESS", true);
    },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_ThicknessEXT");
+      uniforms .push ("x3d_AttenuationDistanceEXT");
+      uniforms .push ("x3d_AttenuationColorEXT");
+   },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f  (shaderObject .x3d_ThicknessEXT,           this .thickness);
