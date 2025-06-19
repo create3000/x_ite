@@ -60,7 +60,7 @@ import RenderPass               from "../../Rendering/RenderPass.js";
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 import Scatter2       from "../../../assets/shaders/webgl2/pbr/Scatter2.glsl.js";
 
-ShaderRegistry .registerFragment ("Scatter", "", Scatter2);
+ShaderRegistry .registerInclude ("Scatter", () => "", Scatter2);
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
