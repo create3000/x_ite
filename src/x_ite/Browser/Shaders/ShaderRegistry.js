@@ -124,11 +124,11 @@ const ShaderRegistry = {
          // PBR
          BRDF: BRDF2,
          IBL: IBL2,
-         Iridescence: "",
+         Iridescence: () => "",
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
-         Scatter: "",
+         Scatter: () => "",
          ToneMapping: ToneMapping2,
       },
       2: {
@@ -154,11 +154,11 @@ const ShaderRegistry = {
          // PBR
          BRDF: BRDF2,
          IBL: IBL2,
-         Iridescence: "",
+         Iridescence: () => "",
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
-         Scatter: "",
+         Scatter: () => "",
          ToneMapping: ToneMapping2,
       },
    },
