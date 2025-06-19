@@ -99,7 +99,9 @@ weight (const in float z, const in float a)
 void
 fragment_main ()
 {
-   x3d_FragColor = vec4 (0.0);
+   #if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+      x3d_FragColor = vec4 (0.0);
+   #endif
 
    #if defined (X3D_TRANSMISSION_PASS) && defined (X3D_TRANSMISSION_MATERIAL_EXT)
       discard;
