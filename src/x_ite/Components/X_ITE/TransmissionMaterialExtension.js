@@ -55,6 +55,10 @@ import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
 
+// Register key.
+
+ExtensionKeys .add ("TRANSMISSION_MATERIAL_EXTENSION");
+
 // Register textures.
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";

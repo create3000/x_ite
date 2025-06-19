@@ -49,18 +49,10 @@ let i = 0;
 
 const ExtensionKeys =
 {
-   ANISOTROPY_MATERIAL_EXTENSION:        i ++,
-   CLEARCOAT_MATERIAL_EXTENSION:         i ++,
-   DIFFUSE_TRANSMISSION_EXTENSION:       i ++,
-   DISPERSION_MATERIAL_EXTENSION:        i ++,
-   EMISSIVE_STRENGTH_MATERIAL_EXTENSION: i ++,
-   IOR_MATERIAL_EXTENSION:               i ++,
-   IRIDESCENCE_MATERIAL_EXTENSION:       i ++,
-   SHEEN_MATERIAL_EXTENSION:             i ++,
-   SPECULAR_MATERIAL_EXTENSION:          i ++,
-   TRANSMISSION_MATERIAL_EXTENSION:      i ++,
-   UNLIT_MATERIAL_EXTENSION:             i ++,
-   VOLUME_MATERIAL_EXTENSION:            i ++,
+   add (name)
+   {
+      this [name] = i ++;
+   },
 };
 
 export default ExtensionKeys;

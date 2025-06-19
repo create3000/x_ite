@@ -54,6 +54,10 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+// Register key.
+
+ExtensionKeys .add ("ANISOTROPY_MATERIAL_EXTENSION");
+
 // Register textures.
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
