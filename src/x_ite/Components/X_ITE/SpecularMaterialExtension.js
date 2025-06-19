@@ -54,6 +54,13 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .register ("x3d_SpecularTextureEXT");
+MaterialTextures .register ("x3d_SpecularColorTextureEXT");
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */

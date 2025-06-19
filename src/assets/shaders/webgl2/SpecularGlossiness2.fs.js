@@ -1,4 +1,4 @@
-export default /* glsl */ `#version 300 es
+export default () => /* glsl */ `#version 300 es
 
 precision highp float;
 precision highp int;

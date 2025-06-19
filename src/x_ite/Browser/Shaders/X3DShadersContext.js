@@ -176,7 +176,7 @@ Object .assign (X3DShadersContext .prototype,
          version = gl .getVersion ();
 
       const vertexShader = new ShaderPart (this .getPrivateScene ());
-      vertexShader ._url .push (encodeURI (vs .startsWith ("data:") ? vs : `data:x-shader/x-vertex,${ShaderRegistry .vertex [version] [vs]}`));
+      vertexShader ._url .push (encodeURI (vs .startsWith ("data:") ? vs : `data:x-shader/x-vertex,${ShaderRegistry .vertex [version] [vs] ()}`));
       vertexShader .setPrivate (true);
       vertexShader .setName (`${name}VertexShader`);
       vertexShader .setOptions (options);
@@ -184,7 +184,7 @@ Object .assign (X3DShadersContext .prototype,
 
       const fragmentShader = new ShaderPart (this .getPrivateScene ());
       fragmentShader ._type = "FRAGMENT";
-      fragmentShader ._url .push (encodeURI (fs .startsWith ("data:") ? fs : `data:x-shader/x-fragment,${ShaderRegistry .fragment [version] [fs]}`));
+      fragmentShader ._url .push (encodeURI (fs .startsWith ("data:") ? fs : `data:x-shader/x-fragment,${ShaderRegistry .fragment [version] [fs] ()}`));
       fragmentShader .setPrivate (true);
       fragmentShader .setName (`${name}FragmentShader`);
       fragmentShader .setOptions (options);

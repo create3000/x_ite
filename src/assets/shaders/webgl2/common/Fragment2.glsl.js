@@ -1,6 +1,6 @@
 import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
-export default /* glsl */ `
+export default () => /* glsl */ `
 #if defined (X3D_ALPHA_MODE_MASK)
    uniform float x3d_AlphaCutoff;
 #endif

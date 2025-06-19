@@ -1,6 +1,6 @@
 import { maxTexCoords, maxTextures } from "../../../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
-export default /* glsl */ `
+export default () => /* glsl */ `
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 
 #pragma X3D include "Perlin.glsl"
