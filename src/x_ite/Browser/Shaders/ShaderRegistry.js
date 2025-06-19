@@ -195,12 +195,12 @@ const ShaderRegistry = {
          Unlit: UnlitFragment2,
       },
    },
-   registerInclude: function (name, shader1, shader2 = shader1)
+   addInclude: function (name, shader1, shader2 = shader1)
    {
       this .includes [1] [name] = shader1;
       this .includes [2] [name] = shader2;
    },
-   registerFragment: function (name, shader1, shader2)
+   addFragment: function (name, shader1, shader2)
    {
       this .fragment [1] [name] = shader1;
       this .fragment [2] [name] = shader2;

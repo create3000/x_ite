@@ -61,8 +61,8 @@ import SpecularGlossiness2         from "../../../assets/shaders/webgl2/pbr/Spec
 import SpecularGlossinessFragment1 from "../../../assets/shaders/webgl1/SpecularGlossiness1.fs.js";
 import SpecularGlossinessFragment2 from "../../../assets/shaders/webgl2/SpecularGlossiness2.fs.js";
 
-ShaderRegistry .registerInclude  ("SpecularGlossiness", SpecularGlossiness2);
-ShaderRegistry .registerFragment ("SpecularGlossiness", SpecularGlossinessFragment1, SpecularGlossinessFragment2);
+ShaderRegistry .addInclude  ("SpecularGlossiness", SpecularGlossiness2);
+ShaderRegistry .addFragment ("SpecularGlossiness", SpecularGlossinessFragment1, SpecularGlossinessFragment2);
 
 /**
  * THIS NODE IS DEPRECIATED SINCE X3D VERSION 4.0.

@@ -63,8 +63,8 @@ ExtensionKeys .add ("SHEEN_MATERIAL_EXTENSION");
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
-MaterialTextures .register ("x3d_SheenColorTextureEXT");
-MaterialTextures .register ("x3d_SheenRoughnessTextureEXT");
+MaterialTextures .add ("x3d_SheenColorTextureEXT");
+MaterialTextures .add ("x3d_SheenRoughnessTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
