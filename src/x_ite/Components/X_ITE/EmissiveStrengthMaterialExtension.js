@@ -53,6 +53,10 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+// Register key.
+
+ExtensionKeys .add ("EMISSIVE_STRENGTH_MATERIAL_EXTENSION");
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */

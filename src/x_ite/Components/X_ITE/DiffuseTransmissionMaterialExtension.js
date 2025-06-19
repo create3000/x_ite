@@ -55,6 +55,10 @@ import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
 
+// Register key.
+
+ExtensionKeys .add ("DIFFUSE_TRANSMISSION_MATERIAL_EXTENSION");
+
 // Register textures.
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
@@ -113,7 +117,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    getExtensionKey ()
    {
-      return ExtensionKeys .DIFFUSE_TRANSMISSION_EXTENSION;
+      return ExtensionKeys .DIFFUSE_TRANSMISSION_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
