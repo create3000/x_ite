@@ -63,9 +63,9 @@ ExtensionKeys .add ("CLEARCOAT_MATERIAL_EXTENSION");
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
-MaterialTextures .register ("x3d_ClearcoatTextureEXT");
-MaterialTextures .register ("x3d_ClearcoatRoughnessTextureEXT");
-MaterialTextures .register ("x3d_ClearcoatNormalTextureEXT");
+MaterialTextures .add ("x3d_ClearcoatTextureEXT");
+MaterialTextures .add ("x3d_ClearcoatRoughnessTextureEXT");
+MaterialTextures .add ("x3d_ClearcoatNormalTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.

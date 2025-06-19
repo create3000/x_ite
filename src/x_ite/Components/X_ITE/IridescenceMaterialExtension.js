@@ -63,14 +63,14 @@ ExtensionKeys .add ("IRIDESCENCE_MATERIAL_EXTENSION");
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 import Iridescence2   from "../../../assets/shaders/webgl2/pbr/Iridescence2.glsl.js";
 
-ShaderRegistry .registerInclude ("Iridescence", Iridescence2);
+ShaderRegistry .addInclude ("Iridescence", Iridescence2);
 
 // Register textures.
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
-MaterialTextures .register ("x3d_IridescenceTextureEXT");
-MaterialTextures .register ("x3d_IridescenceThicknessTextureEXT");
+MaterialTextures .add ("x3d_IridescenceTextureEXT");
+MaterialTextures .add ("x3d_IridescenceThicknessTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.

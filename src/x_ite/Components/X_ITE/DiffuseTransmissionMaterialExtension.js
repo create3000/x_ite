@@ -63,8 +63,8 @@ ExtensionKeys .add ("DIFFUSE_TRANSMISSION_MATERIAL_EXTENSION");
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
-MaterialTextures .register ("x3d_DiffuseTransmissionTextureEXT");
-MaterialTextures .register ("x3d_DiffuseTransmissionColorTextureEXT");
+MaterialTextures .add ("x3d_DiffuseTransmissionTextureEXT");
+MaterialTextures .add ("x3d_DiffuseTransmissionColorTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.

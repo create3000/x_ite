@@ -62,8 +62,8 @@ ExtensionKeys .add ("SPECULAR_MATERIAL_EXTENSION");
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
-MaterialTextures .register ("x3d_SpecularTextureEXT");
-MaterialTextures .register ("x3d_SpecularColorTextureEXT");
+MaterialTextures .add ("x3d_SpecularTextureEXT");
+MaterialTextures .add ("x3d_SpecularColorTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.

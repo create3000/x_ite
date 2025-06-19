@@ -62,7 +62,7 @@ ExtensionKeys .add ("ANISOTROPY_MATERIAL_EXTENSION");
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
-MaterialTextures .register ("x3d_AnisotropyTextureEXT");
+MaterialTextures .add ("x3d_AnisotropyTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.

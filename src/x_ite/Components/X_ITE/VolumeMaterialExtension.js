@@ -62,7 +62,7 @@ ExtensionKeys .add ("VOLUME_MATERIAL_EXTENSION");
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
-MaterialTextures .register ("x3d_ThicknessTextureEXT");
+MaterialTextures .add ("x3d_ThicknessTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.

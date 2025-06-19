@@ -12,7 +12,7 @@ export default
       "x3d_OcclusionTexture",
       "x3d_NormalTexture",
    ],
-   register (name)
+   add (name)
    {
       this .names .push (name);
    },
