@@ -120,6 +120,11 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
       this .diffuseTransmissionTextureNode      ?.getShaderOptions (options, "DIFFUSE_TRANSMISSION",       true);
       this .diffuseTransmissionColorTextureNode ?.getShaderOptions (options, "DIFFUSE_TRANSMISSION_COLOR", true);
    },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_DiffuseTransmissionEXT");
+      uniforms .push ("x3d_DiffuseTransmissionColorEXT");
+   },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f  (shaderObject .x3d_DiffuseTransmissionEXT,      this .diffuseTransmission);

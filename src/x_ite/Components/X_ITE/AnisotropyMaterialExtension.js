@@ -67,7 +67,7 @@ function AnisotropyMaterialExtension (executionContext)
    // Units
 
    this ._anisotropyRotation .setUnit ("angle");
-   
+
    // Private properties
 
    this .anisotropyArray = new Float32Array (3);
@@ -118,6 +118,10 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
       options .push ("X3D_MATERIAL_TEXTURES");
 
       this .anisotropyTextureNode ?.getShaderOptions (options, "ANISOTROPY", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_AnisotropyEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

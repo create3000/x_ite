@@ -86,6 +86,10 @@ Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, 
    {
       options .push ("X3D_DISPERSION_MATERIAL_EXT");
    },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_DispersionEXT");
+   },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_DispersionEXT, this .dispersion);

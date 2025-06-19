@@ -222,7 +222,12 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          this .occlusionTextureNode         ?.getShaderOptions (options, "OCCLUSION");
       }
 
-      const shaderNode = browser .createShader ("Physical", "Default", "Physical", options);
+      const uniforms = [ ];
+
+      for (const extensionNode of this .extensionNodes)
+         extensionNode .getShaderUniforms (uniforms);
+
+      const shaderNode = browser .createShader ("Physical", "Default", "Physical", options, uniforms);
 
       browser .getShaders () .set (key, shaderNode);
 
