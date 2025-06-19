@@ -215,7 +215,13 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getVolumeScatterBuffer ()
    {
-      return this [_volumeScatterBuffer] ??= new TextureBuffer ({ browser: this, width: this ._viewport [2], height: this ._viewport [3], float: true, colorTextures: 2 });
+      return this [_volumeScatterBuffer] ??= new TextureBuffer ({
+         browser: this,
+         width: this ._viewport [2],
+         height: this ._viewport [3],
+         float: true,
+         colorTextures: 2,
+      });
    },
    getFullscreenVertexArrayObject ()
    {
