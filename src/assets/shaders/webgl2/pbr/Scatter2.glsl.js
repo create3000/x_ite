@@ -56,10 +56,6 @@ getMaterialColor ()
       materialInfo = getVolumeInfo (materialInfo);
    #endif
 
-   #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
-      materialInfo = getIridescenceInfo (materialInfo);
-   #endif
-
    #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
