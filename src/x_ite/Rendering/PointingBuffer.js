@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-function PointingBuffer (browser)
+function PointingBuffer ({ browser })
 {
    const gl = browser .getContext ();
 

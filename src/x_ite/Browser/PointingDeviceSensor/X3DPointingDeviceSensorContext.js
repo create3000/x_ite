@@ -82,7 +82,7 @@ function X3DPointingDeviceSensorContext ()
    this [_overSensors]               = new Map ();
    this [_activeSensors]             = new Map ();
    this [_pointingTime]              = new StopWatch ();
-   this [_pointingBuffer]            = new PointingBuffer (this);
+   this [_pointingBuffer]            = new PointingBuffer ({ browser: this });
    this [_pointingShaders]           = new Map ();
    this [_pointingContexts]          = [ ];
 

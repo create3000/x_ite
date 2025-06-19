@@ -212,7 +212,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_transmissionBuffer] ??= (() =>
       {
-         return new TextureBuffer (this, this ._viewport [2], this ._viewport [3], false, true);
+         return new TextureBuffer ({ browser: this, width: this ._viewport [2], height: this ._viewport [3], mipMaps: true });
       })();
    },
    getFullscreenVertexArrayObject ()
@@ -376,7 +376,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       frameBuffer ?.dispose ();
 
-      this [_framebuffers] [i] = new MultiSampleFramebuffer (this, x, y, width, height, samples, oit);
+      this [_framebuffers] [i] = new MultiSampleFramebuffer ({ browser: this, x, y, width, height, samples, oit });
 
       this .reshapeTextureBuffer (_transmissionBuffer, width, height);
    },
