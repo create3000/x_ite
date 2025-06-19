@@ -214,11 +214,11 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       uniforms .push ("x3d_ScatterMaterialIdEXT");
       uniforms .push ("x3d_MultiscatterColorEXT");
       uniforms .push ("x3d_ScatterAnisotropyEXT");
+      uniforms .push ("x3d_ScatterSamplesEXT");
+      uniforms .push ("x3d_ScatterMinRadiusEXT");
       uniforms .push ("x3d_ScatterSamplerEXT");
       uniforms .push ("x3d_ScatterIBLSamplerEXT");
       uniforms .push ("x3d_ScatterDepthSamplerEXT");
-      uniforms .push ("x3d_ScatterSamplesEXT");
-      uniforms .push ("x3d_ScatterMinRadiusEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
