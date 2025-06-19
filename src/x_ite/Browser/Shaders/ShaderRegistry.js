@@ -127,7 +127,6 @@ const ShaderRegistry = {
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
-         Scatter: () => "",
          ToneMapping: ToneMapping2,
       },
       2: {
@@ -156,7 +155,6 @@ const ShaderRegistry = {
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
-         Scatter: () => "",
          ToneMapping: ToneMapping2,
       },
    },
