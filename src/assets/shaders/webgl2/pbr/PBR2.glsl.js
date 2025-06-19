@@ -43,6 +43,10 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 vec4
 getMaterialColor ()
 {
+   #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+      mat4 modelViewMatrix = eye (x3d_ModelViewMatrix);
+   #endif
+
    vec4 baseColor = getBaseColor ();
 
    #if defined (X3D_TEXTURE_PROJECTION)
@@ -183,7 +187,7 @@ getMaterialColor ()
             materialInfo .perceptualRoughness,
             baseColor .rgb,
             vertex,
-            eye (x3d_ModelViewMatrix), // x3d_ModelMatrix
+            modelViewMatrix,
             x3d_ProjectionMatrix,
             materialInfo .ior,
             materialInfo .thickness,
@@ -319,7 +323,7 @@ getMaterialColor ()
          #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
             // If the light ray travels through the geometry, use the point it exits the geometry again.
             // That will change the angle to the light source, if the material refracts the light ray.
-            vec3 transmissionRay = getVolumeTransmissionRay (n, v, materialInfo .thickness, materialInfo .ior, eye (x3d_ModelViewMatrix)); // x3d_ModelMatrix
+            vec3 transmissionRay = getVolumeTransmissionRay (n, v, materialInfo .thickness, materialInfo .ior, modelViewMatrix);
 
             pointToLight -= transmissionRay;
             l             = normalize (pointToLight);
