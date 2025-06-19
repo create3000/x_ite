@@ -230,10 +230,6 @@ Object .assign (X3DRenderObject .prototype,
          this .renderCount = ++ renderCount;
       }
    })(),
-   getVolumeScatterMaterialId ()
-   {
-      return ++ this .volumeScatterMaterialId;
-   },
    getFramebuffers ()
    {
       return this .getBrowser () .getFramebuffers ();
@@ -1309,10 +1305,6 @@ Object .assign (X3DRenderObject .prototype,
    },
    prepareVolumeScatterShapes ()
    {
-      // Reset material Id.
-
-      this .volumeScatterMaterialId = 0;
-
       // Find all volume scatter shapes.
 
       const

@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       if (renderObject .getRenderPass () === RenderPass .VOLUME_SCATTER)
       {
-         gl .uniform1i (shaderObject .x3d_ScatterMaterialIdEXT, renderObject .getVolumeScatterMaterialId ());
+         gl .uniform1i (shaderObject .x3d_ScatterMaterialIdEXT, this .getId ());
          return;
       }
 
