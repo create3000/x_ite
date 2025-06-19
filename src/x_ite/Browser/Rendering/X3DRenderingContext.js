@@ -211,7 +211,12 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getTransmissionBuffer ()
    {
-      return this [_transmissionBuffer] ??= new TextureBuffer ({ browser: this, width: this ._viewport [2], height: this ._viewport [3], mipMaps: true });
+      return this [_transmissionBuffer] ??= new TextureBuffer ({
+         browser: this,
+         width: this ._viewport [2],
+         height: this ._viewport [3],
+         mipMaps: true,
+      });
    },
    getVolumeScatterBuffer ()
    {
