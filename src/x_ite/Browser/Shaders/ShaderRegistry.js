@@ -124,7 +124,6 @@ const ShaderRegistry = {
          // PBR
          BRDF: BRDF2,
          IBL: IBL2,
-         Iridescence: () => "",
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
@@ -153,7 +152,6 @@ const ShaderRegistry = {
          // PBR
          BRDF: BRDF2,
          IBL: IBL2,
-         Iridescence: () => "",
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
