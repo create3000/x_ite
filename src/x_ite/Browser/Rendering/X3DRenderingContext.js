@@ -220,7 +220,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_volumeScatterBuffer] ??= (() =>
       {
-         return new TextureBuffer (this, this ._viewport [2], this ._viewport [3], false, false, 2);
+         return new TextureBuffer (this, this ._viewport [2], this ._viewport [3], true, false, 2);
       })();
    },
    getFullscreenVertexArrayObject ()
