@@ -164,8 +164,8 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    vec3  scatterDistance     = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color
    float maxColor            = max3 (scatterDistance);
    vec3  vMaxColor           = max (vec3 (maxColor, maxColor, maxColor), vec3 (0.00001));
-   mat4  invProjectionMatrix = inverse (projectionMatrix);
    vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);
+   mat4  invProjectionMatrix = inverse (projectionMatrix);
    vec2  uv                  = gl_FragCoord .xy * texelSize;
    vec4  centerSample        = texture (scatterLUT, uv); // Sample the LUT at the current UV coordinates
    float centerDepth         = texture (x3d_ScatterDepthSamplerEXT, uv) .r; // Get depth from the framebuffer
@@ -202,7 +202,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    {
       vec3  scatterSample = x3d_ScatterSamplesEXT [i];
       float fabAngle      = scatterSample .x;
-      float r             = (scatterSample .y * maxRadiusPixels) * texelSize .x;
+      float r             = scatterSample .y * maxRadiusPixels * texelSize .x;
       float rcpPdf        = scatterSample .z;
       vec2  sampleCoords  = rotationMatrix * vec2 (cos (fabAngle) * r, sin (fabAngle) * r); // Rotate the sample coordinates
       vec2  sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
