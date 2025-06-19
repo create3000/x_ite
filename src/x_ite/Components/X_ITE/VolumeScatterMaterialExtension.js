@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
          const f       = 1 - 0.25 * exp_r - 0.75 * exp_r_3 - xRand;
          const f_      = 0.25 * exp_r + 0.25 * exp_r_3;
 
-         if (Math .abs (f) < tolerance || f_ == 0)
+         if (Math .abs (f) < tolerance || f_ === 0)
             break;
 
          r = r - f / f_;
