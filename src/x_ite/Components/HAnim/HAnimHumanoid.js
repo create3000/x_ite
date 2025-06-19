@@ -59,6 +59,13 @@ import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
+// Register shaders.
+
+import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
+import Skin2          from "../../../assets/shaders/webgl2/common/Skin2.glsl.js";
+
+ShaderRegistry .addInclude ("Skin", undefined, Skin2);
+
 function HAnimHumanoid (executionContext)
 {
    X3DChildNode     .call (this, executionContext);

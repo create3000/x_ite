@@ -10,4 +10,10 @@ texelFetch (const in sampler2D _sampler, const in int index, const in int lod)
    return t;
 }
 #endif
+
+#if !defined (X3D_SKINNING)
+   #define getSkinVertex(vertex,normal,tangent) (vertex)
+   #define getSkinNormal(normal) (normal)
+   #define getSkinTangent(tangent) (tangent)
+#endif
 `;
