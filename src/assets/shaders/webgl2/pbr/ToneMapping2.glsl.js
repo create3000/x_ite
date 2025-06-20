@@ -114,13 +114,13 @@ toneMap_KhronosPbrNeutral (in vec3 color)
     if (peak < startCompression)
       return color;
 
-    const float d = 1. - startCompression;
+    const float d = 1.0 - startCompression;
 
-    float newPeak = 1. - d * d / (peak + d - startCompression);
+    float newPeak = 1.0 - d * d / (peak + d - startCompression);
 
     color *= newPeak / peak;
 
-    float g = 1. - 1. / (desaturation * (peak - newPeak) + 1.);
+    float g = 1.0 - 1.0 / (desaturation * (peak - newPeak) + 1.0);
 
     return mix (color, newPeak * vec3 (1.0), g);
 }
