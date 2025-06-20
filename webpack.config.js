@@ -97,6 +97,7 @@ export default Namespace .add ("${base}", __default__);`;
                            .replace (/(#.*?)\n/sg, "$1__PREPROCESSOR__") // Replace preprocessor lines
                            .replace (/\b(\d+\.)0\b/sg, "$1") // Remove trailing zeroes in numbers
                            .replace (/\b0(\.\d+)\b/sg, "$1") // Remove leading zeroes in numbers
+                           .replace (/vec(\d)\s*\((\d+)\.\)/sg, "vec$1($2)") // Remove trailing dot in vecN
                            .replace (/\s+/sg, " ") // Remove multiple spaces
                            .replace (/\s*([(){}\[\],;=<>!+\-*\/&|?:\.])\s*/sg, "$1") // Remove spaces around operators
                            .replace (/(#.*?)__PREPROCESSOR__\s*/sg, "$1\n") // Restore preprocessor lines
