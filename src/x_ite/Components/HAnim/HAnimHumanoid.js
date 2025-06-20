@@ -66,6 +66,10 @@ import Skin2          from "../../../assets/shaders/webgl2/common/Skin2.glsl.js"
 
 ShaderRegistry .addInclude ("Skin", undefined, Skin2);
 
+/**
+ * HAnimHumanoid
+ */
+
 function HAnimHumanoid (executionContext)
 {
    X3DChildNode     .call (this, executionContext);
