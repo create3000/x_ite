@@ -68,11 +68,13 @@ import SubsurfaceScattering2 from "../../../assets/shaders/webgl2/pbr/Subsurface
 ShaderRegistry .addInclude ("Scatter",              undefined, Scatter2);
 ShaderRegistry .addInclude ("SubsurfaceScattering", undefined, SubsurfaceScattering2);
 
+// Define global constants.
+
+const ScatterSamplesCount = 64; // Number of samples for the Burley diffusion profile.
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
-
-const ScatterSamplesCount = 64; // Number of samples for the Burley diffusion profile.
 
 function VolumeScatterMaterialExtension (executionContext)
 {
