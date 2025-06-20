@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
 
       let key = "";
 
-      key += renderObject .getRenderAndGlobalLightsKey ();
+      key += renderObject .getRenderKey ();
       key += fogNode ?.getFogType () ?? 0;
       key += ".";
       key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
