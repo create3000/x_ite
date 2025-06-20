@@ -207,8 +207,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    createShader (key, geometryContext, renderContext)
    {
       const
-         browser = this .getBrowser (),
-         options = this .getShaderOptions (geometryContext, renderContext);
+         browser  = this .getBrowser (),
+         options  = this .getShaderOptions (geometryContext, renderContext),
+         uniforms = [ ];
 
       for (const extensionNode of this .extensionNodes)
          extensionNode .getShaderOptions (options);
@@ -221,8 +222,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          this .metallicRoughnessTextureNode ?.getShaderOptions (options, "METALLIC_ROUGHNESS");
          this .occlusionTextureNode         ?.getShaderOptions (options, "OCCLUSION");
       }
-
-      const uniforms = [ ];
 
       for (const extensionNode of this .extensionNodes)
          extensionNode .getShaderUniforms (uniforms);
