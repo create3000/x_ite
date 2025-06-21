@@ -10,12 +10,15 @@ uniform sampler2D x3d_ScatterSamplerEXT;
 uniform sampler2D x3d_ScatterIBLSamplerEXT;
 uniform sampler2D x3d_ScatterDepthSamplerEXT;
 
+const float M_1_PI         = 1.0 / M_PI;
+const float M_PHI          = (1.0 + sqrt (5.0)) / 2.0;
+const float M_GOLDEN_ANGLE = M_PI * (3.0f - sqrt (5.0));
+
 vec3
 burley_setup (const in vec3 radius, const in vec3 albedo)
 {
-   float m_1_pi = 0.318309886183790671538;
-   vec3  s      = 1.9 - albedo + 3.5 * ((albedo - 0.8) * (albedo - 0.8));
-   vec3  l      = 0.25 * m_1_pi * radius;
+   vec3 s = 1.9 - albedo + 3.5 * ((albedo - 0.8) * (albedo - 0.8));
+   vec3 l = 0.25 * M_1_PI * radius;
 
    return l / s;
 }
@@ -28,9 +31,6 @@ burley_eval (const in vec3 d, const in float r)
 
    return (exp_r_d + exp_r_3_d) / (4.0 * d);
 }
-
-const float M_PHI          = 1.61803398874989484820459;
-const float M_GOLDEN_ANGLE = M_PI * (3.0f - sqrt (5.0));
 
 vec3
 getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const sampler2D scatterLUT, const in vec3 baseColor)
