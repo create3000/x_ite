@@ -17,7 +17,8 @@ const float M_GOLDEN_ANGLE = M_PI * (3.0f - sqrt (5.0));
 vec3
 burley_setup (const in vec3 radius, const in vec3 albedo)
 {
-   vec3 s = 1.9 - albedo + 3.5 * ((albedo - 0.8) * (albedo - 0.8));
+   vec3 a = albedo - 0.8;
+   vec3 s = 1.9 - albedo + 3.5 * (a * a);
    vec3 l = 0.25 * M_1_PI * radius;
 
    return l / s;
