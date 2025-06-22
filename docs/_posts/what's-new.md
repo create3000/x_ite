@@ -31,7 +31,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Fixed [Switch](/x_ite/components/grouping/switch/) and [LOD](/x_ite/components/navigation/lod/) `addChildren` and `removeChildren` events handling.
 * If the *min* package is selected, the correct files are now loaded from the assets folder.
 * Fixed fatal bug in PBR shader when [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) and [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) are present at the same time.
-* Fixed a bug in PBR shader when points and lines without normals are rendered.
+* Fixed a bug in PBR shader when points and lines are rendered without normals.
 * Other bug fixes.
 <!-- * Fixed bug when Order Independent Transparency (OIT) and [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) are used together. -->
 
