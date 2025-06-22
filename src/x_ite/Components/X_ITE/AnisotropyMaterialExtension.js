@@ -54,6 +54,16 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+// Register key.
+
+ExtensionKeys .add ("ANISOTROPY_MATERIAL_EXTENSION");
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_AnisotropyTextureEXT");
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -67,7 +77,7 @@ function AnisotropyMaterialExtension (executionContext)
    // Units
 
    this ._anisotropyRotation .setUnit ("angle");
-   
+
    // Private properties
 
    this .anisotropyArray = new Float32Array (3);
@@ -118,6 +128,10 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
       options .push ("X3D_MATERIAL_TEXTURES");
 
       this .anisotropyTextureNode ?.getShaderOptions (options, "ANISOTROPY", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_AnisotropyEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

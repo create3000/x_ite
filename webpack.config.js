@@ -92,17 +92,20 @@ export default Namespace .add ("${base}", __default__);`;
                            {
                               return `${s1}__EXPRESSION_${e .push (s) - 1}__${s3}`;
                            })
-                           .replace (/\/\*.*?\*\//sg, "")
-                           .replace (/\/\/.*?\n/sg, "\n")
-                           .replace (/(#.*?)\n/sg, "$1__PREPROCESSOR__")
-                           .replace (/\s+/sg, " ")
-                           .replace (/\s*([(){}\[\],;=<>!+\-*\/&|?:\.])\s*/sg, "$1")
-                           .replace (/(#.*?)__PREPROCESSOR__\s*/sg, "$1\n")
-                           .replace (/(.)#/sg, "$1\n#")
-                           .replace (/^\s+/mg, "")
-                           .replace (/$/, "\n")
-                           .replace (/(\})\s+$/s, "$1")
-                           .replace (/\n+/sg, "\n")
+                           .replace (/\/\*.*?\*\//sg, "") // Remove comments
+                           .replace (/\/\/.*?\n/sg, "\n") // Remove comments
+                           .replace (/(#.*?)\n/sg, "$1__PREPROCESSOR__") // Replace preprocessor lines
+                           .replace (/\b(\d+\.)0\b/sg, "$1") // Remove trailing zeroes in numbers
+                           .replace (/\b0(\.\d+)\b/sg, "$1") // Remove leading zeroes in numbers
+                           .replace (/vec(\d)\s*\((\d+)\.\)/sg, "vec$1($2)") // Remove trailing dot in vecN
+                           .replace (/\s+/sg, " ") // Remove multiple spaces
+                           .replace (/\s*([(){}\[\],;=<>!+\-*\/&|?:\.])\s*/sg, "$1") // Remove spaces around operators
+                           .replace (/(#.*?)__PREPROCESSOR__\s*/sg, "$1\n") // Restore preprocessor lines
+                           .replace (/(.)#/sg, "$1\n#") // Restore preprocessor lines
+                           .replace (/^\s+/mg, "") // Remove leading spaces
+                           .replace (/$/, "\n") // Remove trailing spaces
+                           .replace (/(\})\s+$/s, "$1") // Remove trailing spaces after closing braces
+                           .replace (/\n+/sg, "\n") // Remove multiple newlines
                            .replace (/__EXPRESSION_(\d+)__/sg, (_, i) =>
                            {
                               return `${e [i]
@@ -110,7 +113,7 @@ export default Namespace .add ("${base}", __default__);`;
                                  .replace (/\n+/sg, "\n")}`
                            }) + "`";
 
-                        return s .replace (/[\n\s]{2,}/sg, "\n");
+                        return s .replace (/[\n\s]{2,}/sg, "\n"); // Remove multiple newlines and spaces
                      },
                   },
                ],

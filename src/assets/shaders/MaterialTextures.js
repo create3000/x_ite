@@ -11,22 +11,11 @@ export default
       "x3d_SpecularGlossinessTexture",
       "x3d_OcclusionTexture",
       "x3d_NormalTexture",
-
-      "x3d_AnisotropyTextureEXT",
-      "x3d_ClearcoatNormalTextureEXT",
-      "x3d_ClearcoatRoughnessTextureEXT",
-      "x3d_ClearcoatTextureEXT",
-      "x3d_DiffuseTransmissionColorTextureEXT",
-      "x3d_DiffuseTransmissionTextureEXT",
-      "x3d_IridescenceTextureEXT",
-      "x3d_IridescenceThicknessTextureEXT",
-      "x3d_SheenColorTextureEXT",
-      "x3d_SheenRoughnessTextureEXT",
-      "x3d_SpecularColorTextureEXT",
-      "x3d_SpecularTextureEXT",
-      "x3d_ThicknessTextureEXT",
-      "x3d_TransmissionTextureEXT",
    ],
+   add (name)
+   {
+      this .names .push (name);
+   },
    texture (name, components = "rgba", colorSpace = "")
    {
       const ext = !!name .match (/EXT$/);

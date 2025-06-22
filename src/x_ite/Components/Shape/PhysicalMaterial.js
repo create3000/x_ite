@@ -191,6 +191,8 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_extensionsKey__ ()
    {
+      // Make sure to use the right base for the extension key depending on the number of extensions!
+
       const extensionsKey = this .extensionNodes
          .map (extensionNode => `${extensionNode .getExtensionKey () .toString (16)}${extensionNode .getTextureBits () .toString (16)}`)
          .join ("");
@@ -200,8 +202,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    createShader (key, geometryContext, renderContext)
    {
       const
-         browser = this .getBrowser (),
-         options = this .getShaderOptions (geometryContext, renderContext);
+         browser  = this .getBrowser (),
+         options  = this .getShaderOptions (geometryContext, renderContext),
+         uniforms = [ ];
 
       for (const extensionNode of this .extensionNodes)
          extensionNode .getShaderOptions (options);
@@ -215,7 +218,10 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          this .occlusionTextureNode         ?.getShaderOptions (options, "OCCLUSION");
       }
 
-      const shaderNode = browser .createShader ("Physical", "Default", "Physical", options);
+      for (const extensionNode of this .extensionNodes)
+         extensionNode .getShaderUniforms (uniforms);
+
+      const shaderNode = browser .createShader ("Physical", "Default", "Physical", options, uniforms);
 
       browser .getShaders () .set (key, shaderNode);
 

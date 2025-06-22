@@ -64,7 +64,6 @@ import Perlin2     from "../../../assets/shaders/webgl2/common/Perlin2.glsl.js";
 import Point2      from "../../../assets/shaders/webgl2/common/Point2.glsl.js";
 import PointSize2  from "../../../assets/shaders/webgl2/common/PointSize2.glsl.js";
 import Shadow2     from "../../../assets/shaders/webgl2/common/Shadow2.glsl.js";
-import Skin2       from "../../../assets/shaders/webgl2/common/Skin2.glsl.js";
 import Stipple2    from "../../../assets/shaders/webgl2/common/Stipple2.glsl.js";
 import Texture2    from "../../../assets/shaders/webgl2/common/Texture2.glsl.js";
 import Unlit2      from "../../../assets/shaders/webgl2/common/Unlit2.glsl.js";
@@ -124,7 +123,6 @@ const ShaderRegistry = {
          // PBR
          BRDF: BRDF2,
          IBL: IBL2,
-         Iridescence: "",
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
@@ -144,7 +142,6 @@ const ShaderRegistry = {
          Point: Point2,
          PointSize: PointSize2,
          Shadow: Shadow2,
-         Skin: Skin2,
          Stipple: Stipple2,
          Texture: Texture2,
          Unlit: Unlit2,
@@ -153,7 +150,6 @@ const ShaderRegistry = {
          // PBR
          BRDF: BRDF2,
          IBL: IBL2,
-         Iridescence: "",
          MaterialInfo: MaterialInfo2,
          PBR: PBR2,
          Punctual: Punctual2,
@@ -192,6 +188,16 @@ const ShaderRegistry = {
          Pointing: PointingFragment2,
          Unlit: UnlitFragment2,
       },
+   },
+   addInclude: function (name, shader1, shader2 = shader1)
+   {
+      this .includes [1] [name] = shader1;
+      this .includes [2] [name] = shader2;
+   },
+   addFragment: function (name, shader1, shader2)
+   {
+      this .fragment [1] [name] = shader1;
+      this .fragment [2] [name] = shader2;
    },
 };
 

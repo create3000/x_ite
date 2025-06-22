@@ -53,6 +53,10 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+// Register key.
+
+ExtensionKeys .add ("DISPERSION_MATERIAL_EXTENSION");
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -85,6 +89,10 @@ Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, 
    getShaderOptions (options)
    {
       options .push ("X3D_DISPERSION_MATERIAL_EXT");
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_DispersionEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

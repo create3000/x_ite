@@ -55,6 +55,18 @@ import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
 
+// Register key.
+
+ExtensionKeys .add ("CLEARCOAT_MATERIAL_EXTENSION");
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_ClearcoatTextureEXT");
+MaterialTextures .add ("x3d_ClearcoatRoughnessTextureEXT");
+MaterialTextures .add ("x3d_ClearcoatNormalTextureEXT");
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -126,6 +138,11 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       this .clearcoatTextureNode          ?.getShaderOptions (options, "CLEARCOAT",           true);
       this .clearcoatRoughnessTextureNode ?.getShaderOptions (options, "CLEARCOAT_ROUGHNESS", true);
       this .clearcoatNormalTextureNode    ?.getShaderOptions (options, "CLEARCOAT_NORMAL",    true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_ClearcoatEXT");
+      uniforms .push ("x3d_ClearcoatRoughnessEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

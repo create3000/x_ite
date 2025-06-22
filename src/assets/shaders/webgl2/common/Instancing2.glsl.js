@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 #if defined (X3D_INSTANCING)
 
 #if defined (X3D_TEX_COORD_RAMP)

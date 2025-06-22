@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 #if defined (X3D_SKINNING)
 
 in float x3d_CoordIndex;
@@ -134,9 +134,5 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal, const in vec3 tangent
 
    return skin;
 }
-#else
-   #define getSkinVertex(vertex,normal,tangent) (vertex)
-   #define getSkinNormal(normal) (normal)
-   #define getSkinTangent(tangent) (tangent)
 #endif
 `;

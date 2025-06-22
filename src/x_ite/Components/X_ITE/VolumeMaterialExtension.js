@@ -54,6 +54,16 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+// Register key.
+
+ExtensionKeys .add ("VOLUME_MATERIAL_EXTENSION");
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_ThicknessTextureEXT");
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -122,6 +132,12 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
       options .push ("X3D_MATERIAL_TEXTURES");
 
       this .thicknessTextureNode ?.getShaderOptions (options, "THICKNESS", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_ThicknessEXT");
+      uniforms .push ("x3d_AttenuationDistanceEXT");
+      uniforms .push ("x3d_AttenuationColorEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

@@ -6,7 +6,7 @@ import TextureCoordinateGeneratorModeType from "../../x_ite/Browser/Texturing/Te
 import { maxClipPlanes }                  from "../../x_ite/Browser/Rendering/RenderingConfiguration.js";
 import { maxTextures }                    from "../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
-export default /* glsl */ `
+export default () => /* glsl */ `
 
 ///
 /// Defines

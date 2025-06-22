@@ -234,6 +234,7 @@ main.color-management #browser {
    padding-left: 10px;
    border-left: 1px solid var(--text-color);
    color: inherit;
+   word-break: normal;
 }
 
 #file.loaded a {
@@ -380,8 +381,8 @@ main.color-management #browser {
    border-left: 1px solid white;
 }
 
-.min-links,
-.min-links a:last-child {
+.buttons:has(a[href$="x_ite.html"]),
+.buttons:has(a[href$="x_ite.html"]) a:last-child {
    color: var(--min-color);
    border-color: var(--min-color);
 }

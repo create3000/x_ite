@@ -210,10 +210,12 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getTransmissionBuffer ()
    {
-      return this [_transmissionBuffer] ??= (() =>
-      {
-         return new TextureBuffer (this, this ._viewport [2], this ._viewport [3], false, true);
-      })();
+      return this [_transmissionBuffer] ??= new TextureBuffer ({
+         browser: this,
+         width: this ._viewport [2],
+         height: this ._viewport [3],
+         mipMaps: true,
+      });
    },
    getFullscreenVertexArrayObject ()
    {
@@ -376,23 +378,23 @@ Object .assign (X3DRenderingContext .prototype,
 
       frameBuffer ?.dispose ();
 
-      this [_framebuffers] [i] = new MultiSampleFramebuffer (this, x, y, width, height, samples, oit);
+      this [_framebuffers] [i] = new MultiSampleFramebuffer ({ browser: this, x, y, width, height, samples, oit });
 
-      this .reshapeTransmissionBuffer (width, height);
+      this .reshapeTextureBuffer (_transmissionBuffer, width, height);
    },
-   reshapeTransmissionBuffer (width, height)
+   reshapeTextureBuffer (key, width, height)
    {
-      if (!this [_transmissionBuffer])
+      const textureBuffer = this [key];
+
+      if (!textureBuffer)
          return;
 
-      if (width  === this [_transmissionBuffer] .getWidth () &&
-          height === this [_transmissionBuffer] .getHeight ())
-      {
+      if (width === textureBuffer .getWidth () && height === textureBuffer .getHeight ())
          return;
-      }
 
-      this [_transmissionBuffer] .dispose ();
-      this [_transmissionBuffer] = new TextureBuffer (this, width, height, false, true);
+      textureBuffer .dispose ();
+
+      this [key] = undefined;
    },
    onfullscreen ()
    {

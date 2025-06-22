@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-function MultiSampleFramebuffer (browser, x, y, width, height, samples, oit)
+function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
 {
    const gl = browser .getContext ();
 

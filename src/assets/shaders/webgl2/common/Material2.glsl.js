@@ -1,6 +1,6 @@
 import MaterialTextures from "../../MaterialTextures.js";
 
-export default /* glsl */ `
+export default () => /* glsl */ `
 #pragma X3D include "Fragment.glsl"
 
 uniform x3d_MaterialParameters x3d_Material;

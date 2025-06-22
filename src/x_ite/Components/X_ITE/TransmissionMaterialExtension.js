@@ -53,6 +53,17 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+import Algorithm                from "../../../standard/Math/Algorithm.js";
+
+// Register key.
+
+ExtensionKeys .add ("TRANSMISSION_MATERIAL_EXTENSION");
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_TransmissionTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -79,7 +90,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
    set_transmission__ ()
    {
-      this .transmission = Math .max (this ._transmission .getValue (), 0);
+      this .transmission = Algorithm .clamp (this ._transmission .getValue (), 0, 1);
    },
    set_transmissionTexture__ ()
    {
@@ -101,6 +112,11 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       options .push ("X3D_MATERIAL_TEXTURES");
 
       this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_TransmissionEXT");
+      uniforms .push ("x3d_TransmissionSamplerEXT");
    },
    setShaderUniforms: (() =>
    {

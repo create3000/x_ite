@@ -55,6 +55,17 @@ import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
 
+// Register key.
+
+ExtensionKeys .add ("SHEEN_MATERIAL_EXTENSION");
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_SheenColorTextureEXT");
+MaterialTextures .add ("x3d_SheenRoughnessTextureEXT");
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -123,6 +134,12 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
 
       this .sheenColorTextureNode     ?.getShaderOptions (options, "SHEEN_COLOR",     true);
       this .sheenRoughnessTextureNode ?.getShaderOptions (options, "SHEEN_ROUGHNESS", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_SheenColorEXT");
+      uniforms .push ("x3d_SheenRoughnessEXT");
+      uniforms .push ("x3d_SheenELUTTextureEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

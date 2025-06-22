@@ -53,6 +53,18 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+import Algorithm                from "../../../standard/Math/Algorithm.js";
+
+// Register key.
+
+ExtensionKeys .add ("DIFFUSE_TRANSMISSION_MATERIAL_EXTENSION");
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_DiffuseTransmissionTextureEXT");
+MaterialTextures .add ("x3d_DiffuseTransmissionColorTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -85,7 +97,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    set_diffuseTransmission__ ()
    {
-      this .diffuseTransmission = Math .max (this ._diffuseTransmission .getValue (), 0);
+      this .diffuseTransmission = Algorithm .clamp (this ._diffuseTransmission .getValue (), 0, 1);
    },
    set_diffuseTransmissionTexture__ ()
    {
@@ -105,7 +117,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    getExtensionKey ()
    {
-      return ExtensionKeys .DIFFUSE_TRANSMISSION_EXTENSION;
+      return ExtensionKeys .DIFFUSE_TRANSMISSION_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -118,6 +130,11 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
 
       this .diffuseTransmissionTextureNode      ?.getShaderOptions (options, "DIFFUSE_TRANSMISSION",       true);
       this .diffuseTransmissionColorTextureNode ?.getShaderOptions (options, "DIFFUSE_TRANSMISSION_COLOR", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_DiffuseTransmissionEXT");
+      uniforms .push ("x3d_DiffuseTransmissionColorEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

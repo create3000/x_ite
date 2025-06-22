@@ -54,13 +54,23 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+// Register key.
+
+ExtensionKeys .add ("IRIDESCENCE_MATERIAL_EXTENSION");
+
 // Register shaders.
 
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 import Iridescence2   from "../../../assets/shaders/webgl2/pbr/Iridescence2.glsl.js";
 
-ShaderRegistry .includes [1] .Iridescence = Iridescence2;
-ShaderRegistry .includes [2] .Iridescence = Iridescence2;
+ShaderRegistry .addInclude ("Iridescence", Iridescence2);
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_IridescenceTextureEXT");
+MaterialTextures .add ("x3d_IridescenceThicknessTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -136,6 +146,13 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
 
       this .iridescenceTextureNode          ?.getShaderOptions (options, "IRIDESCENCE",           true);
       this .iridescenceThicknessTextureNode ?.getShaderOptions (options, "IRIDESCENCE_THICKNESS", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_IridescenceEXT");
+      uniforms .push ("x3d_IridescenceIndexOfRefractionEXT");
+      uniforms .push ("x3d_IridescenceThicknessMinimumEXT");
+      uniforms .push ("x3d_IridescenceThicknessMaximumEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

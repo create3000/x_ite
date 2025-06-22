@@ -54,6 +54,17 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+// Register key.
+
+ExtensionKeys .add ("SPECULAR_MATERIAL_EXTENSION");
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_SpecularTextureEXT");
+MaterialTextures .add ("x3d_SpecularColorTextureEXT");
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -118,6 +129,11 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
 
       this .specularTextureNode      ?.getShaderOptions (options, "SPECULAR",       true);
       this .specularColorTextureNode ?.getShaderOptions (options, "SPECULAR_COLOR", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_SpecularEXT");
+      uniforms .push ("x3d_SpecularColorEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
