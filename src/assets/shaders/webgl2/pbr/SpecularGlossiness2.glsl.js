@@ -134,17 +134,13 @@ getMaterialColor ()
          // Calculation of analytical light
          // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
          vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
+         vec3 intensity      = lightIntensity;
 
          #if defined (X3D_SHADOWS)
             lightIntensity = mix (lightIntensity, light .shadowColor, getShadowIntensity (i, light));
          #endif
 
-         vec3 l_diffuse = lightIntensity * NdotL * BRDF_lambertian (baseColor .rgb);
-
-         // Calculation of analytical light
-         // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
-         vec3 intensity = lightIntensity;
-
+         vec3 l_diffuse             = lightIntensity * NdotL * BRDF_lambertian (baseColor .rgb);
          vec3 l_specular_dielectric = intensity * NdotL * BRDF_specularGGX (materialInfo .alphaRoughness, NdotL, NdotV, NdotH);
          vec3 l_dielectric_brdf     = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel); // Do we need to handle vec3 fresnel here?
 
