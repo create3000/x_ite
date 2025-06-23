@@ -121,28 +121,15 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      const browser = this .getBrowser ();
+      // These shapes must not be rendered during transmission pass!
+
+      const
+         browser                   = this .getBrowser (),
+         transmissionBuffer        = browser .getTransmissionBuffer (),
+         transmissionUnit          = browser .getTexture2DUnit (),
+         transmissionBufferTexture = transmissionBuffer .getColorTexture ();
 
       gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
-
-      // Transmission framebuffer texture
-
-      if (renderObject .getRenderPass () === RenderPass .TRANSMISSION)
-      {
-         // Avoid feedback loop by using the default texture.
-         // Object is not rendered in the transmission pass.
-
-         var
-            transmissionUnit          = browser .getDefaultTexture2DUnit (),
-            transmissionBufferTexture = browser .getDefaultTexture2D ();
-      }
-      else
-      {
-         var
-            transmissionBuffer        = browser .getTransmissionBuffer (),
-            transmissionUnit          = browser .getTexture2DUnit (),
-            transmissionBufferTexture = transmissionBuffer .getColorTexture ();
-      }
 
       gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
       gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
