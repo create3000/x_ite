@@ -394,7 +394,7 @@ getMaterialColor ()
       // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
       vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, x3d_ScatterSamplerEXT, baseColor .rgb);
 
-      color += l_color * (1.0 - materialInfo .metallic);
+      color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel);
    #endif
 
    f_emissive = getEmissiveColor ();

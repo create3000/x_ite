@@ -21,7 +21,8 @@ getMaterialColor ()
    #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
       NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale);
 
-      vec3 n = normalInfo .n;
+      vec3  n     = normalInfo .n;
+      float NdotV = clamp (dot (n, v), 0.0, 1.0);
    #endif
 
    MaterialInfo materialInfo;
@@ -42,6 +43,10 @@ getMaterialColor ()
 
    #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
       materialInfo = getMetallicRoughnessInfo (materialInfo);
+   #endif
+
+   #if defined (X3D_SHEEN_MATERIAL_EXT)
+      materialInfo = getSheenInfo (materialInfo);
    #endif
 
    #if defined (X3D_SPECULAR_MATERIAL_EXT)
@@ -67,9 +72,10 @@ getMaterialColor ()
    materialInfo .alphaRoughness = materialInfo .perceptualRoughness * materialInfo .perceptualRoughness;
 
    // LIGHTING
-   vec3 f_specular_dielectric = vec3 (0.0);
-   vec3 f_diffuse             = vec3 (0.0);
-   vec3 f_dielectric_brdf_ibl = vec3 (0.0);
+   vec3  f_specular_dielectric = vec3 (0.0);
+   vec3  f_diffuse             = vec3 (0.0);
+   vec3  f_dielectric_brdf_ibl = vec3 (0.0);
+   float albedoSheenScaling    = 1.0;
 
    float diffuseTransmissionThickness = 1.0;
 
@@ -160,8 +166,13 @@ getMaterialColor ()
             }
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
+         // We need to multiply with sheen scaling, since we aggregate all lights in one texture, for IBL this can be done in the normal PBR shader
+         #if defined (X3D_SHEEN_MATERIAL_EXT)
+            albedoSheenScaling = min (1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo.sheenRoughnessFactor), 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotL, materialInfo.sheenRoughnessFactor));
+         #endif
+
          l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel); // Do we need to handle vec3 fresnel here?
-         color            += l_dielectric_brdf;
+         color            += l_dielectric_brdf * albedoSheenScaling;
       }
    }
    #endif
