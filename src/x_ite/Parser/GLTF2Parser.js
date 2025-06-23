@@ -188,7 +188,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Parse root objects.
 
-      this .assetObject      (glTF .asset);
+      this .assetObject      (glTF .asset, glTF .extensions);
       this .extensionsArray  (glTF .extensionsRequired, this .extensions);
       this .extensionsArray  (glTF .extensionsUsed, this .extensions);
       this .extensionsObject (glTF .extensions);
@@ -227,7 +227,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return scene;
    },
-   assetObject (asset)
+   assetObject (asset, extensions)
    {
       if (!(asset instanceof Object))
          return;
@@ -269,6 +269,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             worldInfoNode ._title = "glTF Model";
          else
             worldInfoNode ._title = decodeURIComponent (url .pathname .split ("/") .at (-1) || worldURL);
+      }
+
+      if (asset .extensions ?.KHR_xmp_json_ld instanceof Object)
+      {
+         const packet = asset .extensions .KHR_xmp_json_ld .packet;
+
+         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld, worldInfoNode);
       }
 
       worldInfoNode .setup ();
@@ -561,6 +568,23 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       this .materialVariants = variants;
+   },
+   khrXmpJsonLdObject (index, KHR_xmp_json_ld, worldInfoNode)
+   {
+      if (!(KHR_xmp_json_ld instanceof Object))
+         return;
+
+      const packet = KHR_xmp_json_ld .packets [index];
+
+      for (const [key, value] of Object .entries (packet))
+      {
+         const match = key .match (/\w+:(.*)/);
+
+         if (!match)
+            continue
+
+         worldInfoNode ._info .push (`${match [1]}: ${value}`);
+      }
    },
    async buffersArray (buffers)
    {
