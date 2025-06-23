@@ -659,8 +659,7 @@ Object .assign (X3DRenderObject .prototype,
          const renderContext = this .pointingShapes [num];
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
-
-         renderContext .viewport  = viewVolume .getViewport ();
+         renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
@@ -751,6 +750,7 @@ Object .assign (X3DRenderObject .prototype,
             const renderContext = {
                renderObject: this,
                modelViewMatrix: new Float32Array (16),
+               viewport: new Vector4 (),
                clipPlanes: [ ]
             };
 
@@ -762,8 +762,7 @@ Object .assign (X3DRenderObject .prototype,
          const renderContext = this .shadowShapes [num];
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
-
-         renderContext .viewport  = viewVolume .getViewport ();
+         renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
@@ -818,8 +817,8 @@ Object .assign (X3DRenderObject .prototype,
          this .renderPasses |= shapeNode .getRenderPasses ();
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .viewport .assign (viewVolume .getViewport ());
 
-         renderContext .viewport        = viewVolume .getViewport ();
          renderContext .shadows         = this .localShadows .at (-1);
          renderContext .fogNode         = this .localFogs .at (-1);
          renderContext .hAnimNode       = this .hAnimNode .at (-1);
@@ -840,6 +839,7 @@ Object .assign (X3DRenderObject .prototype,
          renderObject: this,
          transparent: transparent,
          modelViewMatrix: new Float32Array (16),
+         viewport: new Vector4 (),
          localObjects: [ ],
          localObjectsKeys: [ ], // [clip planes, lights]
          get shapeNode () { return this .renderPassNodes [0]; },

@@ -108,13 +108,11 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
          {
             case TraverseType .POINTER:
             {
-               const
-                  browser  = this .getBrowser (),
-                  viewport = this .rectangle;
+               const browser = this .getBrowser ();
 
                if (!browser .getPointingLayer ())
                {
-                  if (!browser .isPointerInRectangle (viewport))
+                  if (!browser .isPointerInRectangle (this .rectangle))
                      return;
                }
 
