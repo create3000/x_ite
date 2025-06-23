@@ -114,18 +114,6 @@ function X3DRenderObject (executionContext)
    this .renderPass               = RenderPass .RENDER;
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true });
-
-   this .volumeScatterShapes =
-   {
-      numOpaqueShapes: 0,
-      numTransparentShapes: 0,
-      opaqueShapes: [ ],
-      transparentShapes: [ ],
-   };
-
-   this .volumeScatterShapes .transparencySorter = new MergeSort (
-      this .volumeScatterShapes .transparentShapes,
-      (a, b) => a .distance < b .distance);
 }
 
 Object .assign (X3DRenderObject .prototype,
@@ -830,11 +818,12 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
-         renderContext .shadows        = this .localShadows .at (-1);
-         renderContext .fogNode        = this .localFogs .at (-1);
-         renderContext .hAnimNode      = this .hAnimNode .at (-1);
-         renderContext .shapeNode      = shapeNode;
-         renderContext .appearanceNode = shapeNode .getAppearance ();
+
+         renderContext .shadows         = this .localShadows .at (-1);
+         renderContext .fogNode         = this .localFogs .at (-1);
+         renderContext .hAnimNode       = this .hAnimNode .at (-1);
+         renderContext .renderPassNodes = shapeNode .getRenderPassNodes ();
+         renderContext .appearanceNode  = shapeNode .getAppearance ();
 
          // Clip planes and local lights
 
@@ -853,6 +842,7 @@ Object .assign (X3DRenderObject .prototype,
          viewport: new Vector4 (),
          localObjects: [ ],
          localObjectsKeys: [ ], // [clip planes, lights]
+         get shapeNode () { return this .renderPassNodes [0]; },
       };
 
       renderContext .renderContext = renderContext;
@@ -1193,11 +1183,6 @@ Object .assign (X3DRenderObject .prototype,
 
          for (const generatedCubeMapTexture of generatedCubeMapTextures)
             generatedCubeMapTexture .renderTexture (this);
-
-         // Sort out volume scatter shapes.
-
-         if (this .renderPasses & RenderPass .VOLUME_SCATTER)
-            this .prepareVolumeScatterShapes ();
       }
 
       this .globalShadow = globalShadows .at (-1);
@@ -1244,7 +1229,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
-               this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport, this);
+               this .drawShapes (1, gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
                // Mipmap is later selected based on roughness and ior.
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
@@ -1260,7 +1245,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-               this .drawShapes (gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport, this .volumeScatterShapes);
+               this .drawShapes (2, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
          }
 
@@ -1271,7 +1256,7 @@ Object .assign (X3DRenderObject .prototype,
 
          const frameBuffer = framebuffers [i];
 
-         this .drawShapes (gl, browser, frameBuffer, 0, viewport, this);
+         this .drawShapes (0, gl, browser, frameBuffer, 0, viewport);
       }
 
       this .view = null;
@@ -1303,49 +1288,9 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   prepareVolumeScatterShapes ()
+   drawShapes (renderPass, gl, browser, frameBuffer, clearBits, viewport)
    {
-      // Find all volume scatter shapes.
-
-      const
-         { numOpaqueShapes, opaqueShapes, numTransparentShapes, transparentShapes } = this,
-         { opaqueShapes: volumeScatterOpaqueShapes, transparentShapes: volumeScatterTransparentShapes } = this .volumeScatterShapes;
-
-      // Find opaque shapes that are rendered in the volume scatter pass.
-
-      volumeScatterOpaqueShapes .length = 0;
-
-      for (let i = 0; i < numOpaqueShapes; ++ i)
-      {
-         const { renderContext, shapeNode } = opaqueShapes [i];
-
-         if (!(shapeNode .getRenderPasses () & RenderPass .VOLUME_SCATTER))
-            continue;
-
-         volumeScatterOpaqueShapes .push (renderContext);
-      }
-
-      this .volumeScatterShapes .numOpaqueShapes = volumeScatterOpaqueShapes .length;
-
-      // Find transparent shapes that are rendered in the volume scatter pass.
-
-      volumeScatterTransparentShapes .length = 0;
-
-      for (let i = 0; i < numTransparentShapes; ++ i)
-      {
-         const { renderContext, shapeNode } = transparentShapes [i];
-
-         if (!(shapeNode .getRenderPasses () & RenderPass .VOLUME_SCATTER))
-            continue;
-
-         volumeScatterTransparentShapes .push (renderContext);
-      }
-
-      this .volumeScatterShapes .numTransparentShapes = volumeScatterTransparentShapes .length;
-   },
-   drawShapes (gl, browser, frameBuffer, clearBits, viewport, shapes)
-   {
-      const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter } = shapes;
+      const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter } = this;
 
       this .advanceRenderCount ();
 
@@ -1369,11 +1314,11 @@ Object .assign (X3DRenderObject .prototype,
 
       for (let i = 0; i < numOpaqueShapes; ++ i)
       {
-         const { renderContext, shapeNode, viewport } = opaqueShapes [i];
+         const { renderContext, renderPassNodes, viewport } = opaqueShapes [i];
 
          gl .viewport (... viewport);
 
-         shapeNode .display (gl, renderContext);
+         renderPassNodes [renderPass] ?.display (gl, renderContext);
          browser .resetTextureUnits ();
       }
 
@@ -1389,11 +1334,11 @@ Object .assign (X3DRenderObject .prototype,
 
       for (let i = 0; i < numTransparentShapes; ++ i)
       {
-         const { renderContext, shapeNode, viewport } = transparentShapes [i];
+         const { renderContext, renderPassNodes, viewport } = transparentShapes [i];
 
          gl .viewport (... viewport);
 
-         shapeNode .display (gl, renderContext);
+         renderPassNodes [renderPass] ?.display (gl, renderContext);
          browser .resetTextureUnits ();
       }
 

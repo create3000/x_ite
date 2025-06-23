@@ -74,10 +74,11 @@ function X3DShapeNode (executionContext)
 
    // Private properties
 
-   this .bbox         = new Box3 ();
-   this .bboxSize     = new Vector3 ();
-   this .bboxCenter   = new Vector3 ();
-   this .renderPasses = 0;
+   this .bbox            = new Box3 ();
+   this .bboxSize        = new Vector3 ();
+   this .bboxCenter      = new Vector3 ();
+   this .renderPasses    = 0;
+   this .renderPassNodes = [this];
 }
 
 Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .prototype),
@@ -156,6 +157,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    getRenderPasses ()
    {
       return this .renderPasses;
+   },
+   getRenderPassNodes ()
+   {
+      return this .renderPassNodes;
    },
    getAppearance ()
    {
@@ -248,10 +253,16 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    set_transmission__ ()
    {
       this .set_renderPass__ (this .appearanceNode .isTransmission (), RenderPass .TRANSMISSION);
+
+      if (!this .appearanceNode .isTransmission ())
+         this .renderPassNodes [1] = this;
    },
    set_volumeScatter__ ()
    {
       this .set_renderPass__ (this .appearanceNode .isVolumeScatter (), RenderPass .VOLUME_SCATTER);
+
+      if (this .appearanceNode .isVolumeScatter ())
+         this .renderPassNodes [2] = this;
    },
    set_renderPass__ (value, bit)
    {
