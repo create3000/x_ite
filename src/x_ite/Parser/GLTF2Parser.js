@@ -598,6 +598,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             }
          };
 
+         if (typeof value !== "string")
+            continue;
+
          worldInfoNode ._info .push (`${match [1]}: ${value}`);
       }
    },
