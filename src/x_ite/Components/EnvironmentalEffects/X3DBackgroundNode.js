@@ -86,6 +86,7 @@ function X3DBackgroundNode (executionContext)
    this .sphereContext    = new GeometryContext ({ colorMaterial: true });
    this .texturesContext  = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys });
    this .localObjectsKeys = this .sphereContext .localObjectsKeys;
+   this .renderPassNodes  = [this, this, undefined]
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
@@ -142,6 +143,10 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       }
 
       return false;
+   },
+   getRenderPassNodes ()
+   {
+      return this .renderPassNodes;
    },
    set_texture__ (index, textureNode)
    {
