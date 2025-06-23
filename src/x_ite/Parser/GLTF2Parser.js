@@ -259,8 +259,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
-      worldInfoNode ._info .sort ();
-
       if (!worldInfoNode ._title .getValue ())
       {
          const url = new URL (worldURL);
@@ -278,6 +276,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld, worldInfoNode);
       }
 
+      worldInfoNode ._info .sort ();
       worldInfoNode .setup ();
 
       scene .getRootNodes () .push (worldInfoNode);
@@ -581,7 +580,24 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          const match = key .match (/\w+:(.*)/);
 
          if (!match)
-            continue
+            continue;
+
+         if (value instanceof Object)
+         {
+            const array = value ["@set"] ?? value ["@list"];
+
+            if (array instanceof Array)
+            {
+               worldInfoNode ._info .push (`${match [1]}: ${array .map (v => v .toString ()) .join (", ")}`);
+               continue;
+            }
+
+            if (value ["rdf:_1"] ?.["@value"])
+            {
+               worldInfoNode ._info .push (`${match [1]}: ${JSON .stringify (value ["rdf:_1"] ["@value"])}`);
+               continue;
+            }
+         };
 
          worldInfoNode ._info .push (`${match [1]}: ${value}`);
       }
