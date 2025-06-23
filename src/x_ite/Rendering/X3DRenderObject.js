@@ -112,6 +112,7 @@ function X3DRenderObject (executionContext)
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .renderPasses             = 0;
    this .renderPass               = RenderPass .RENDER;
+   this .renderPassNodes         = [this, this, undefined];
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true });
 }
@@ -1301,7 +1302,7 @@ Object .assign (X3DRenderObject .prototype,
       gl .clear (gl .DEPTH_BUFFER_BIT | clearBits);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
-      this .getBackground () .display (gl, this);
+      this .renderPassNodes [renderPass] ?.getBackground () .display (gl, this);
 
       // Use sorted blend or order independent transparency.
       // Render opaque objects first.

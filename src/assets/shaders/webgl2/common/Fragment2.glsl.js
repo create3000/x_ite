@@ -99,20 +99,6 @@ weight (const in float z, const in float a)
 void
 fragment_main ()
 {
-   #if defined (X3D_TRANSMISSION_PASS) && defined (X3D_TRANSMISSION_MATERIAL_EXT)
-      x3d_FragColor = vec4 (0.0);
-      discard;
-   #endif
-
-   #if defined (X3D_VOLUME_SCATTER_PASS)
-      x3d_FragColor = vec4 (0.0);
-      x3d_IBLColor  = vec4 (0.0);
-
-      #if !(defined (X3D_VOLUME_SCATTER_MATERIAL_EXT) && defined (X3D_VOLUME_MATERIAL_EXT))
-         discard;
-      #endif
-   #endif
-
    #if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
       generateFlatNormals ();
    #endif
