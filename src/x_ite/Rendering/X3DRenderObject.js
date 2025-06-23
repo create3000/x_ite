@@ -649,9 +649,8 @@ Object .assign (X3DRenderObject .prototype,
                viewport: new Vector4 (),
                clipPlanes: [ ],
                sensors: [ ],
+               get renderContext () { return this; },
             };
-
-            renderContext .renderContext = renderContext;
 
             this .pointingShapes .push (renderContext);
          }
@@ -700,9 +699,8 @@ Object .assign (X3DRenderObject .prototype,
                modelViewMatrix: new Float32Array (16),
                collisions: [ ],
                clipPlanes: [ ],
+               get renderContext () { return this; },
             };
-
-            renderContext .renderContext = renderContext;
 
             this .collisionShapes .push (renderContext);
          }
@@ -751,10 +749,9 @@ Object .assign (X3DRenderObject .prototype,
                renderObject: this,
                modelViewMatrix: new Float32Array (16),
                viewport: new Vector4 (),
-               clipPlanes: [ ]
+               clipPlanes: [ ],
+               get renderContext () { return this; },
             };
-
-            renderContext .renderContext = renderContext;
 
             this .shadowShapes .push (renderContext);
          }
@@ -835,19 +832,16 @@ Object .assign (X3DRenderObject .prototype,
    })(),
    createRenderContext (transparent)
    {
-      const renderContext = {
+      return {
          renderObject: this,
          transparent: transparent,
          modelViewMatrix: new Float32Array (16),
          viewport: new Vector4 (),
          localObjects: [ ],
          localObjectsKeys: [ ], // [clip planes, lights]
+         get renderContext () { return this; },
          get shapeNode () { return this .renderPassNodes [0]; },
       };
-
-      renderContext .renderContext = renderContext;
-
-      return renderContext;
    },
    pointing: (() =>
    {
