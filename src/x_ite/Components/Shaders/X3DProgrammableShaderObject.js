@@ -365,13 +365,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       gl .uniform1f (this .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
 
-      for (const uniform of this .x3d_ShadowMap)
       {
          const textureUnit = browser .getDefaultTexture2DUnit ();
 
-         gl .activeTexture (gl .TEXTURE0 + textureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, browser .getDefaultTexture2D ());
-         gl .uniform1i (uniform, textureUnit);
+         for (const uniform of this .x3d_ShadowMap)
+            gl .uniform1i (uniform, textureUnit);
       }
    },
    getUniformLocation (gl, program, name, depreciated)
