@@ -100,6 +100,7 @@ Object .assign (X3DTexturingContext .prototype,
 
       this [_defaultTexture2D] = gl .createTexture ();
 
+      gl .activeTexture (gl .TEXTURE0 + this [_defaultTexture2DUnit]);
       gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
@@ -125,7 +126,9 @@ Object .assign (X3DTexturingContext .prototype,
       gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
       gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-      // Init texture units.
+      // Reset texture units.
+
+      gl .activeTexture (gl .TEXTURE0 + this [_combinedTextureUnits] [0]);
 
       this .resetTextureUnits ();
 
