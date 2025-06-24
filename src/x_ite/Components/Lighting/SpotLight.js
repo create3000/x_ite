@@ -197,14 +197,6 @@ Object .assign (SpotLightContainer .prototype,
 
          gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
       }
-      else
-      {
-         const textureUnit = browser .getDefaultTexture2DUnit ();
-
-         gl .activeTexture (gl .TEXTURE0 + textureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, browser .getDefaultTexture2D ());
-         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
-      }
 
       if (shaderObject .hasLight (i, this))
          return;
@@ -239,6 +231,12 @@ Object .assign (SpotLightContainer .prototype,
       else
       {
          gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
+
+         const textureUnit = browser .getDefaultTexture2DUnit ();
+
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, browser .getDefaultTexture2D ());
+         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
       }
    },
    dispose ()
