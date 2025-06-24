@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    this .scatterSamples);
       gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  this .scatterMinRadius);
 
-      // Scatter framebuffer texture
+      // Set scatter framebuffer textures.
 
       const
          scatterSampleBuffer       = browser .getVolumeScatterBuffer (),
