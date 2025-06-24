@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
 
       if (this .applied)
       {
-         const textureUnit = browser .getTexture2DUnit ();
+         const textureUnit = browser .getTextureUnit ();
 
          if (!this .transformLines)
             gl .lineWidth (this .linewidthScaleFactor);

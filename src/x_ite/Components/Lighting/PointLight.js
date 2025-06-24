@@ -191,29 +191,32 @@ Object .assign (PointLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const i = shaderObject .numLights ++;
+      const
+         browser = this .browser,
+         i       = shaderObject .numLights ++;
 
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTexture2DUnit ())
-            : this .browser .getTexture2DUnit ();
+            ? (this .textureUnit = this .textureUnit ?? browser .popTextureUnit ())
+            : browser .getTextureUnit ();
 
-         if (textureUnit !== undefined)
-         {
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
 
-            if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-            else
-               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-            gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
-         }
+         if (gl .HAS_FEATURE_DEPTH_TEXTURE)
+            gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
          else
-         {
-            console .warn ("Not enough combined texture units for shadow map available.");
-         }
+            gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
+      }
+      else
+      {
+         const textureUnit = browser .getDefaultTexture2DUnit ();
+
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, browser .getDefaultTexture2D ());
+         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
       }
 
       if (shaderObject .hasLight (i, this))
@@ -251,7 +254,7 @@ Object .assign (PointLightContainer .prototype,
    dispose ()
    {
       this .browser .pushShadowBuffer (this .shadowBuffer);
-      this .browser .pushTexture2DUnit (this .textureUnit);
+      this .browser .pushTextureUnit (this .textureUnit);
 
       this .modelViewMatrix .clear ();
 

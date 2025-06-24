@@ -192,7 +192,7 @@ Object .assign (X3DRenderObject .prototype,
    },
    getLogarithmicDepthBuffer ()
    {
-      return this .logarithmicDepthBuffer ;
+      return this .logarithmicDepthBuffer;
    },
    getOrderIndependentTransparency ()
    {
