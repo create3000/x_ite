@@ -135,14 +135,6 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
                                                                       false,
                                                                       false);
    },
-   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
-   {
-      const textureUnit = this .getBrowser () .getTextureUnit ();
-
-      gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
-      gl .uniform1i (channel .textureCube, textureUnit);
-   },
 });
 
 Object .defineProperties (X3DEnvironmentTextureNode, X3DNode .getStaticProperties ("X3DEnvironmentTextureNode", "CubeMapTexturing", 1));
