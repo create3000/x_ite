@@ -168,14 +168,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
                                                                       this ._repeatT .getValue (),
                                                                       false);
    },
-   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
-   {
-      const textureUnit = this .getBrowser () .getTextureUnit ();
-
-      gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-      gl .uniform1i (channel .texture2D, textureUnit);
-   },
 });
 
 Object .defineProperties (X3DTexture2DNode, X3DNode .getStaticProperties ("X3DTexture2DNode", "Texturing", 1));
