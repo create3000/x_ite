@@ -191,15 +191,13 @@ Object .assign (PointLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const
-         browser = this .browser,
-         i       = shaderObject .numLights ++;
+      const i = shaderObject .numLights ++;
 
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? browser .popTextureUnit ())
-            : browser .getTextureUnit ();
+            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
+            : this .browser .getTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
 
@@ -241,12 +239,6 @@ Object .assign (PointLightContainer .prototype,
       else
       {
          gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
-
-         const textureUnit = browser .getDefaultTexture2DUnit ();
-
-         gl .activeTexture (gl .TEXTURE0 + textureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, browser .getDefaultTexture2D ());
-         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
       }
    },
    dispose ()
