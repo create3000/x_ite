@@ -59,6 +59,8 @@ const
    _combinedTextureUnits     = Symbol (),
    _textureUnitIndex         = Symbol (),
    _defaultTexture2DUnit     = Symbol (),
+   _defaultTexture3DUnit     = Symbol (),
+   _defaultTextureCubeUnit   = Symbol (),
    _defaultTexture2D         = Symbol (),
    _defaultTexture3D         = Symbol (),
    _defaultTextureCube       = Symbol (),
@@ -92,7 +94,10 @@ Object .assign (X3DTexturingContext .prototype,
       const maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
 
       this [_combinedTextureUnits] = [... Array (maxCombinedTextureUnits) .keys ()] .reverse ();
-      this [_defaultTexture2DUnit] = this [_combinedTextureUnits] .pop ();
+
+      this [_defaultTexture2DUnit]   = this [_combinedTextureUnits] .pop ();
+      this [_defaultTexture3DUnit]   = this [_combinedTextureUnits] .pop ();
+      this [_defaultTextureCubeUnit] = this [_combinedTextureUnits] .pop ();
 
       // Default Texture 2D Unit
 
@@ -110,6 +115,7 @@ Object .assign (X3DTexturingContext .prototype,
       {
          this [_defaultTexture3D] = gl .createTexture ();
 
+         gl .activeTexture (gl .TEXTURE0 + this [_defaultTexture3DUnit]);
          gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
          gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
       }
@@ -118,6 +124,7 @@ Object .assign (X3DTexturingContext .prototype,
 
       this [_defaultTextureCube] = gl .createTexture ();
 
+      gl .activeTexture (gl .TEXTURE0 + this [_defaultTextureCubeUnit]);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
       gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
       gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
@@ -231,6 +238,14 @@ Object .assign (X3DTexturingContext .prototype,
    getDefaultTexture2DUnit ()
    {
       return this [_defaultTexture2DUnit];
+   },
+   getDefaultTexture3DUnit ()
+   {
+      return this [_defaultTexture3DUnit];
+   },
+   getDefaultTextureCubeUnit ()
+   {
+      return this [_defaultTextureCubeUnit];
    },
    getDefaultTexture2D ()
    {
