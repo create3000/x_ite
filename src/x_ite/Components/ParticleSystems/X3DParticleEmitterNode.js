@@ -995,7 +995,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       {
          const location = gl .getUniformLocation (program, name);
 
-         gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTexture2DUnit ());
+         gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTextureUnit ());
       }
 
       browser .resetTextureUnits ();
@@ -1028,12 +1028,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       return texture;
    },
-   getTexture2DUnit (browser, object, property)
+   getTextureUnit (browser, object, property)
    {
       const textureUnit = object [property];
 
       if (textureUnit === undefined)
-         return object [property] = browser .getTexture2DUnit ();
+         return object [property] = browser .getTextureUnit ();
 
       return textureUnit;
    },

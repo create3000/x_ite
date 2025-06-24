@@ -366,44 +366,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       // Fill browser options.
 
       gl .uniform1f (this .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
-
-      // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
-
-      gl .uniform1i  (this .x3d_LinePropertiesTexture, browser .getDefaultTexture2DUnit ());
-      gl .uniform1i  (this .x3d_FillPropertiesTexture, browser .getDefaultTexture2DUnit ());
-
-      for (const materialTexture of MaterialTextures .names)
-      {
-         gl .uniform1i (this [materialTexture] .texture2D,   browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (this [materialTexture] .texture3D,   browser .getDefaultTexture3DUnit ());
-         gl .uniform1i (this [materialTexture] .textureCube, browser .getDefaultTextureCubeUnit ());
-      }
-
-      for (const uniforms of this .x3d_Texture)
-      {
-         gl .uniform1i (uniforms .texture2D, browser .getDefaultTexture2DUnit ());
-
-         if (gl .getVersion () >= 2)
-            gl .uniform1i (uniforms .texture3D, browser .getDefaultTexture3DUnit ());
-
-         gl .uniform1i (uniforms .textureCube, browser .getDefaultTextureCubeUnit ());
-      }
-
-      for (const uniform of this .x3d_ShadowMap)
-         gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
-
-      gl .uniform1i (this .x3d_EnvironmentLightDiffuseTexture,    browser .getDefaultTextureCubeUnit ());
-      gl .uniform1i (this .x3d_EnvironmentLightSpecularTexture,   browser .getDefaultTextureCubeUnit ());
-      gl .uniform1i (this .x3d_EnvironmentLightGGXLUTTexture,     browser .getDefaultTexture2DUnit ());
-      gl .uniform1i (this .x3d_EnvironmentLightCharlieLUTTexture, browser .getDefaultTexture2DUnit ());
-
-      for (const uniform of this .x3d_TextureProjectorTexture)
-         gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
-
-      gl .uniform1i (this .x3d_TexCoordRamp,         browser .getDefaultTexture2DUnit ());
-      gl .uniform1i (this .x3d_JointsTexture,        browser .getDefaultTexture2DUnit ());
-      gl .uniform1i (this .x3d_DisplacementsTexture, browser .getDefaultTexture2DUnit ());
-      gl .uniform1i (this .x3d_JointMatricesTexture, browser .getDefaultTexture2DUnit ());
    },
    getUniformLocation (gl, program, name, depreciated)
    {
@@ -1133,7 +1095,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       {
          const
             texture     = location .texture,
-            textureUnit = this .getBrowser () .getTextureUnit (texture .getTextureType ());
+            textureUnit = this .getBrowser () .getTextureUnit ();
 
          if (textureUnit === undefined)
          {

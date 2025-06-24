@@ -149,7 +149,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
       const
          browser              = this .getBrowser (),
          SheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
-         SheenELUTTextureUnit = browser .getTexture2DUnit ();
+         SheenELUTTextureUnit = browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + SheenELUTTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, SheenELUTTexture .getTexture ());

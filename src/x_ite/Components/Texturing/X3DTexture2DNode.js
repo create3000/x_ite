@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    },
    setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
    {
-      const textureUnit = this .getBrowser () .getTexture2DUnit ();
+      const textureUnit = this .getBrowser () .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());

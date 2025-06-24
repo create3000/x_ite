@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
          if (renderObject .isTransmission ())
          {
             var
-               transmissionUnit          = browser .getDefaultTexture2DUnit (),
+               transmissionUnit          = browser .getTextureUnit (),
                transmissionBufferTexture = browser .getDefaultTexture2D ();
 
             // Hide object by using a model view matrix with zeros.
@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
          {
             var
                transmissionBuffer        = browser .getTransmissionBuffer (),
-               transmissionUnit          = browser .getTexture2DUnit (),
+               transmissionUnit          = browser .getTextureUnit (),
                transmissionBufferTexture = transmissionBuffer .getColorTexture ();
          }
 

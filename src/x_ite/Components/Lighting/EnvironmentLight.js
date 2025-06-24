@@ -101,16 +101,16 @@ Object .assign (EnvironmentLightContainer .prototype,
          GGXLUTTexture     = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
-         ? this .diffuseTextureUnit = this .diffuseTextureUnit ?? browser .popTextureCubeUnit ()
-         : browser .getTextureCubeUnit ();
+         ? this .diffuseTextureUnit = this .diffuseTextureUnit ?? browser .popTextureUnit ()
+         : browser .getTextureUnit ();
 
       const specularTextureUnit = global
-         ? this .specularTextureUnit = this .specularTextureUnit ?? browser .popTextureCubeUnit ()
-         : browser .getTextureCubeUnit ();
+         ? this .specularTextureUnit = this .specularTextureUnit ?? browser .popTextureUnit ()
+         : browser .getTextureUnit ();
 
       const GGXLUTTextureUnit = global
-         ? this .GGXLUTTextureUnit = this .GGXLUTTextureUnit ?? browser .popTexture2DUnit ()
-         : browser .getTexture2DUnit ();
+         ? this .GGXLUTTextureUnit = this .GGXLUTTextureUnit ?? browser .popTextureUnit ()
+         : browser .getTextureUnit ();
 
       gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
@@ -137,8 +137,8 @@ Object .assign (EnvironmentLightContainer .prototype,
          const CharlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
 
          const CharlieLUTTextureUnit = global
-            ? this .CharlieLUTTextureUnit = this .CharlieLUTTextureUnit ?? browser .popTexture2DUnit ()
-            : browser .getTexture2DUnit ();
+            ? this .CharlieLUTTextureUnit = this .CharlieLUTTextureUnit ?? browser .popTextureUnit ()
+            : browser .getTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + CharlieLUTTextureUnit);
          gl .bindTexture (gl .TEXTURE_2D, CharlieLUTTexture .getTexture ());
@@ -149,10 +149,10 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       const browser = this .browser;
 
-      browser .pushTextureCubeUnit (this .diffuseTextureUnit);
-      browser .pushTextureCubeUnit (this .specularTextureUnit);
-      browser .pushTexture2DUnit   (this .GGXLUTTextureUnit);
-      browser .pushTexture2DUnit   (this .CharlieLUTTextureUnit);
+      browser .pushTextureUnit (this .diffuseTextureUnit);
+      browser .pushTextureUnit (this .specularTextureUnit);
+      browser .pushTextureUnit   (this .GGXLUTTextureUnit);
+      browser .pushTextureUnit   (this .CharlieLUTTextureUnit);
 
       this .modelViewMatrix .clear ();
 

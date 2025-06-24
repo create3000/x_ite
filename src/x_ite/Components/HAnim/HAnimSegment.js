@@ -312,9 +312,9 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    {
       const
          browser                               = this .getBrowser (),
-         displacementsTextureTextureUnit       = browser .getTexture2DUnit (),
-         displacementWeightsTextureTextureUnit = browser .getTexture2DUnit (),
-         jointMatricesTextureUnit              = browser .getTexture2DUnit ();
+         displacementsTextureTextureUnit       = browser .getTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .getTextureUnit (),
+         jointMatricesTextureUnit              = browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);

@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearance
          const
             browser     = this .getBrowser (),
             texture     = browser .getHatchStyleTexture (this .hatchStyle),
-            textureUnit = browser .getTexture2DUnit ();
+            textureUnit = browser .getTextureUnit ();
 
          gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
          gl .uniform1f  (shaderObject .x3d_FillPropertiesScale,      browser .getRenderingProperty ("ContentScale"));

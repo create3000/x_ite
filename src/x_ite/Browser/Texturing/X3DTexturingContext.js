@@ -57,12 +57,8 @@ import { maxTextureTransforms, maxTexCoords, maxTextures } from "./TexturingConf
 const
    _maxTextures              = Symbol (),
    _combinedTextureUnits     = Symbol (),
-   _texture2DUnits           = Symbol (),
-   _texture3DUnits           = Symbol (),
-   _textureCubeUnits         = Symbol (),
-   _texture2DUnitIndex       = Symbol (),
-   _texture3DUnitIndex       = Symbol (),
-   _textureCubeUnitIndex     = Symbol (),
+   _textureUnitIndex         = Symbol (),
+   _defaultTexture2DUnit     = Symbol (),
    _defaultTexture2D         = Symbol (),
    _defaultTexture3D         = Symbol (),
    _defaultTextureCube       = Symbol (),
@@ -95,10 +91,8 @@ Object .assign (X3DTexturingContext .prototype,
 
       const maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
 
-      this [_combinedTextureUnits] = [...Array (maxCombinedTextureUnits) .keys ()] .reverse ();
-      this [_texture2DUnits]       = [this [_combinedTextureUnits] .pop ()];
-      this [_texture3DUnits]       = [this [_combinedTextureUnits] .pop ()];
-      this [_textureCubeUnits]     = [this [_combinedTextureUnits] .pop ()];
+      this [_combinedTextureUnits] = [... Array (maxCombinedTextureUnits) .keys ()] .reverse ();
+      this [_defaultTexture2DUnit] = this [_combinedTextureUnits] .pop ();
 
       // Default Texture 2D Unit
 
@@ -106,7 +100,6 @@ Object .assign (X3DTexturingContext .prototype,
 
       this [_defaultTexture2D] = gl .createTexture ();
 
-      gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnits] [0]);
       gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
@@ -116,7 +109,6 @@ Object .assign (X3DTexturingContext .prototype,
       {
          this [_defaultTexture3D] = gl .createTexture ();
 
-         gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnits] [0]);
          gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
          gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
       }
@@ -125,7 +117,6 @@ Object .assign (X3DTexturingContext .prototype,
 
       this [_defaultTextureCube] = gl .createTexture ();
 
-      gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnits] [0]);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
       gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
       gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
@@ -141,6 +132,10 @@ Object .assign (X3DTexturingContext .prototype,
       // Set texture quality.
 
       this .setTextureQuality (this .getBrowserOptions () .getTextureQuality ());
+   },
+   getTextureMemory ()
+   {
+      return NaN;
    },
    getMaxTextures ()
    {
@@ -201,117 +196,38 @@ Object .assign (X3DTexturingContext .prototype,
 
       return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS)
    },
-   popTexture2DUnit ()
+   popTextureUnit ()
    {
-      if (this [_texture2DUnitIndex] > 0)
-      {
-         -- this [_texture2DUnitIndex];
+      if (this [_textureUnitIndex] === 0)
+         return;
 
-         return this [_texture2DUnits] .pop ();
-      }
-      else
-      {
-         return this [_combinedTextureUnits] .pop ();
-      }
+      -- this [_textureUnitIndex];
+
+      return this [_combinedTextureUnits] .pop ();
    },
-   pushTexture2DUnit (textureUnit)
+   pushTextureUnit (textureUnit)
    {
       if (textureUnit === undefined)
          return;
 
-      ++ this [_texture2DUnitIndex];
+      ++ this [_textureUnitIndex];
 
-      this [_texture2DUnits] .push (textureUnit);
+      this [_combinedTextureUnits] .push (textureUnit);
    },
-   getTexture2DUnit ()
+   getTextureUnit ()
    {
-      if (this [_texture2DUnitIndex] > 0)
-         return this [_texture2DUnits] [-- this [_texture2DUnitIndex]];
-
-      const textureUnit = this [_combinedTextureUnits] .pop ();
-
-      if (textureUnit !== undefined)
-         this [_texture2DUnits] .push (textureUnit);
-
-      return textureUnit;
-   },
-   getTexture3DUnit ()
-   {
-      if (this [_texture3DUnitIndex] > 0)
-         return this [_texture3DUnits] [-- this [_texture3DUnitIndex]];
-
-      const textureUnit = this [_combinedTextureUnits] .pop ();
-
-      if (textureUnit !== undefined)
-         this [_texture3DUnits] .push (textureUnit);
-
-      return textureUnit;
-   },
-   popTextureCubeUnit ()
-   {
-      if (this [_textureCubeUnitIndex] > 0)
-      {
-         -- this [_textureCubeUnitIndex];
-
-         return this [_textureCubeUnits] .pop ();
-      }
-      else
-      {
-         return this [_combinedTextureUnits] .pop ();
-      }
-   },
-   pushTextureCubeUnit (textureUnit)
-   {
-      if (textureUnit === undefined)
+      if (this [_textureUnitIndex] === 0)
          return;
 
-      ++ this [_textureCubeUnitIndex];
-
-      this [_textureCubeUnits] .push (textureUnit);
-   },
-   getTextureCubeUnit ()
-   {
-      if (this [_textureCubeUnitIndex] > 0)
-         return this [_textureCubeUnits] [-- this [_textureCubeUnitIndex]];
-
-      const textureUnit = this [_combinedTextureUnits] .pop ();
-
-      if (textureUnit !== undefined)
-         this [_textureCubeUnits] .push (textureUnit);
-
-      return textureUnit;
-   },
-   getTextureUnit (textureType)
-   {
-      switch (textureType)
-      {
-         case 1:
-         case 2: return this .getTexture2DUnit ();
-         case 3: return this .getTexture3DUnit ();
-         case 4: return this .getTextureCubeUnit ();
-      }
+      return this [_combinedTextureUnits] [-- this [_textureUnitIndex]];
    },
    resetTextureUnits ()
    {
-      this [_texture2DUnitIndex]   = this [_texture2DUnits]   .length;
-      this [_texture3DUnitIndex]   = this [_texture3DUnits]   .length;
-      this [_textureCubeUnitIndex] = this [_textureCubeUnits] .length;
+      this [_textureUnitIndex] = this [_combinedTextureUnits] .length;
    },
    getDefaultTexture2DUnit ()
    {
-      return this [_texture2DUnits] [0];
-   },
-   getDefaultTexture3DUnit ()
-   {
-      return this [_texture3DUnits] [0];
-   },
-   getDefaultTextureCubeUnit ()
-   {
-      return this [_textureCubeUnits] [0];
-   },
-   getTextureMemory ()
-   {
-      return NaN;
+      return this [_defaultTexture2DUnit];
    },
    getDefaultTexture2D ()
    {
