@@ -133,6 +133,8 @@ Object .assign (X3DNavigationContext .prototype,
    },
    remove_world__ ()
    {
+      this [_viewerNode] ?.disconnect ();
+
       this .getWorld () ._activeLayer .removeInterest ("set_activeLayer__", this);
    },
    set_world__ ()
