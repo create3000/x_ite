@@ -220,7 +220,7 @@ getMaterialColor ()
          // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
          f_dielectric_brdf_ibl  = f_specular_dielectric * f_dielectric_fresnel_ibl;
          f_dielectric_brdf_ibl += (1.0 - f_dielectric_fresnel_ibl) * f_diffuse * (1.0 - materialInfo .diffuseTransmissionFactor);
-         f_dielectric_brdf_ibl += getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, x3d_ScatterIBLSamplerEXT, baseColor .rgb);
+         f_dielectric_brdf_ibl += getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, x3d_ScatterIBLSamplerEXT, materialInfo .diffuseTransmissionColorFactor);
       #else
          f_dielectric_brdf_ibl = mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl);
       #endif
@@ -392,7 +392,7 @@ getMaterialColor ()
 
    #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
-      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, x3d_ScatterSamplerEXT, baseColor .rgb);
+      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, x3d_ScatterSamplerEXT, materialInfo .diffuseTransmissionColorFactor);
 
       color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel);
    #endif

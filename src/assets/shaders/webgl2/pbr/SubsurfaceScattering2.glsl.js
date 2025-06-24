@@ -34,7 +34,7 @@ burley_eval (const in vec3 d, const in float r)
 }
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const sampler2D scatterLUT, const in vec3 baseColor)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const sampler2D scatterLUT, const in vec3 diffuseColor)
 {
    vec3  scatterDistance     = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color
    float maxColor            = max3 (scatterDistance);
@@ -59,14 +59,14 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    float maxRadiusPixels    = maxColor / mPerPixel; // Calculate the maximum radius in pixels
 
    if (maxRadiusPixels <= 1.0)
-      return baseColor * centerSample .rgb; // If the maximum color is less than or equal to the pixel size, return the base color
+      return diffuseColor * centerSample .rgb; // If the maximum color is less than or equal to the pixel size, return the base color
 
    centerDepth = fragViewPosition .z; // Extract the depth value
 
    vec3 totalWeight  = vec3 (0.0);
    vec3 totalDiffuse = vec3 (0.0);
 
-   vec3 albedo                 = baseColor / max (0.00001, max3 (baseColor)); // Normalize the albedo color to avoid division by zero
+   vec3 albedo                 = diffuseColor / max (0.00001, max3 (diffuseColor)); // Normalize the albedo color to avoid division by zero
    vec3 clampedScatterDistance = max (vec3 (x3d_ScatterMinRadiusEXT), scatterDistance / maxColor) * maxColor;
    vec3 d                      = burley_setup (clampedScatterDistance, albedo); // Setup the Burley model parameters
 
@@ -111,7 +111,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
    totalWeight = max (totalWeight, vec3 (0.0001)); // Avoid division by zero
 
-   return baseColor * (totalDiffuse / totalWeight);
+   return diffuseColor * (totalDiffuse / totalWeight);
 }
 #endif
 `;

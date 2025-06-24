@@ -87,7 +87,7 @@ getMaterialColor ()
 
    // Calculate lighting contribution from image based lighting source (IBL)
    #if defined (X3D_USE_IBL)
-      f_diffuse = getDiffuseLight (n);
+      f_diffuse = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor;
 
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
          vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
@@ -96,8 +96,8 @@ getMaterialColor ()
             diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
          #endif
 
+         f_diffuse += diffuseTransmissionIBL;
          f_diffuse *= materialInfo .diffuseTransmissionFactor;
-         f_diffuse += diffuseTransmissionIBL * materialInfo .diffuseTransmissionFactor;
       #endif
 
       // Calculate fresnel mix for IBL
@@ -139,16 +139,16 @@ getMaterialColor ()
 
          vec3 dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (VdotH));
 
-         // Calculation of analytical light
-         // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
-         vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
-
-         vec3 l_diffuse             = lightIntensity * NdotL / M_PI;
+         vec3 l_diffuse             = vec3 (0.0);
          vec3 l_specular_dielectric = vec3 (0.0);
          vec3 l_dielectric_brdf     = vec3 (0.0);
 
          #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-            l_diffuse *= materialInfo .diffuseTransmissionFactor;
+            // Calculation of analytical light
+            // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
+            vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
+
+            l_diffuse = lightIntensity * NdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
             if (dot (n, l) < 0.0)
             {
@@ -164,7 +164,8 @@ getMaterialColor ()
                   diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
                #endif
 
-               l_diffuse += diffuse_btdf * materialInfo .diffuseTransmissionFactor;
+               l_diffuse += diffuse_btdf;
+               l_diffuse *= materialInfo .diffuseTransmissionFactor;
             }
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
