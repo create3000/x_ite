@@ -172,7 +172,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this ._rebuild .addInterest ("rebuild", this);
 
       this .frontFace             = gl .CCW;
-      this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
       this .coordIndexBuffer      = gl .createBuffer ();
       this .attribBuffers         = [ ];
       this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
@@ -257,6 +256,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       const gl = this .getBrowser () .getContext ();
 
       this .frontFace = value ? gl .CCW : gl .CW;
+      this .backFace  = value ? gl .CW  : gl .CCW;
    },
    getCoordIndices ()
    {
@@ -993,7 +993,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 
-      gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+      gl .frontFace (positiveScale ? this .frontFace : this .backFace);
 
       // Draw front and back faces.
 
@@ -1132,7 +1132,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 
-      gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+      gl .frontFace (positiveScale ? this .frontFace : this .backFace);
 
       // Draw front and back faces.
 

@@ -897,7 +897,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          case GeometryType .SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
-            // [fall trough]
+            // Proceed with next case:
          }
          default:
          {
@@ -936,7 +936,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          case GeometryType .SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
-            // [fall trough]
+            // Proceed with next case:
          }
          case GeometryType .QUAD:
          case GeometryType .TRIANGLE:
@@ -946,7 +946,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
 
-            // [fall trough]
+            // Proceed with next case:
          }
          default:
          {

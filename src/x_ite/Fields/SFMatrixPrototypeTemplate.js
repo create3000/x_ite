@@ -82,7 +82,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       {
          this .getValue () .assign (value);
       },
-      setTransform: (function ()
+      setTransform: (() =>
       {
          const args = [ ];
 
@@ -107,7 +107,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
             args .length = 0;
          };
       })(),
-      getTransform: (function ()
+      getTransform: (() =>
       {
          const args = [ ];
 

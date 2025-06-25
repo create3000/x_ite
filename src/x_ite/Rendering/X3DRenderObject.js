@@ -208,7 +208,7 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .renderCount;
    },
-   advanceRenderCount: (function ()
+   advanceRenderCount: (() =>
    {
       let renderCount = 0;
 

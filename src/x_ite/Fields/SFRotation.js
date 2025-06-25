@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    {
       return new SFMatrix3f (this .getValue () .getMatrix ());
    },
-   setQuaternion: (function ()
+   setQuaternion: (() =>
    {
       const q = new Quaternion ();
 
@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
          this .addEvent ();
       };
    })(),
-   getQuaternion: (function ()
+   getQuaternion: (() =>
    {
       const q = new Quaternion ();
 

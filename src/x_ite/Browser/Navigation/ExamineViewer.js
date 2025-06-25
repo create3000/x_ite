@@ -700,7 +700,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    {
       this .getPointOnCenterPlane (x, y, this .fromPoint);
    },
-   pan: (function ()
+   pan: (() =>
    {
       const fromPoint = new Vector3 ();
 

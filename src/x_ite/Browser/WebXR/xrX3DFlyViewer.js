@@ -5,7 +5,7 @@ const GAMEPAD_SPEED_FACTOR = new Vector3 (300); // 143 would be right
 
 Object .assign (X3DFlyViewer .prototype,
 {
-   gamepads: (function ()
+   gamepads: (() =>
    {
       const axis = new Vector3 ();
 
