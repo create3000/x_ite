@@ -3574,7 +3574,7 @@ function eventsProcessed ()
          }
       }
    },
-   createAnimationPointerInterpolator: (function ()
+   createAnimationPointerInterpolator: (() =>
    {
       const interpolators = new Map ([
          [X3DConstants .SFBool,  { typeName: "BooleanSequencer" }],
@@ -4044,7 +4044,7 @@ function eventsProcessed ()
          }
       }
    },
-   applyMorphTargets: (function ()
+   applyMorphTargets: (() =>
    {
       const value = new Vector3 ();
 

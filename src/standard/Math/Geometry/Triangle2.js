@@ -102,7 +102,7 @@ const Triangle2 =
     * @param {Vector2} c third point of triangle
     * @returns
     */
-   toBarycentric: (function ()
+   toBarycentric: (() =>
    {
       const
          v0 = new Vector2 (),

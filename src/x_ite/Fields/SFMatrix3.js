@@ -93,7 +93,7 @@ function SFMatrix3Template (TypeName, double)
 
    return SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, double,
    {
-      setTransform: (function ()
+      setTransform: (() =>
       {
          const args = [ ];
 

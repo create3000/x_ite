@@ -222,7 +222,7 @@ Object .assign (X3DWebXRContext .prototype,
 
       this .setDefaultFramebuffer (baseLayer .framebuffer);
    },
-   xrUpdateNearFarPlanes: (function ()
+   xrUpdateNearFarPlanes: (() =>
    {
       const nearFarPlanes = { };
 
@@ -371,7 +371,7 @@ Object .assign (X3DWebXRContext .prototype,
       this .getFramebuffers () .length = i;
       pose .views .length              = i;
    },
-   xrUpdatePointers: (function ()
+   xrUpdatePointers: (() =>
    {
       const
          blue           = new Color3 (0.5, 0.75, 1),
