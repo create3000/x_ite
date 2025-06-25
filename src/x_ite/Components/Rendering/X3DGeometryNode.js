@@ -171,8 +171,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .addInterest ("requestRebuild", this);
       this ._rebuild .addInterest ("rebuild", this);
 
-      this .frontFace             = gl .CCW;
-      this .backFace              = gl .CW;
       this .coordIndexBuffer      = gl .createBuffer ();
       this .attribBuffers         = [ ];
       this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
@@ -184,6 +182,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .vertexBuffer          = gl .createBuffer ();
       this .vertexArrayObject     = new VertexArray (gl);
 
+      this .setCCW (true);
       this .set_live__ ();
    },
    getGeometryType ()
