@@ -984,8 +984,18 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
 
+      // Enable render mode nodes.
+
       for (const node of renderModeNodes)
          node .enable (gl);
+
+      // Handle negative scale.
+
+      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+
+      gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+
+      // Draw front and back faces.
 
       if (this .solid || !appearanceNode .getBackMaterial ())
       {
@@ -998,6 +1008,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .displayGeometry (gl, renderContext, backShaderNode, true,  false);
          this .displayGeometry (gl, renderContext, shaderNode,     false, true);
       }
+
+      // Disable render mode nodes.
 
       for (const node of renderModeNodes)
          node .disable (gl);
@@ -1040,10 +1052,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       }
 
       // Draw depending on wireframe, solid and transparent.
-
-      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
-
-      gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
 
       if (renderContext .transparent || back !== front)
       {
@@ -1115,8 +1123,18 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
 
+      // Enable render mode nodes.
+
       for (const node of renderModeNodes)
          node .enable (gl);
+
+      // Handle negative scale.
+
+      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+
+      gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+
+      // Draw front and back faces.
 
       if (this .solid || !appearanceNode .getBackMaterial ())
       {
@@ -1130,14 +1148,16 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .displayInstancedGeometry (gl, renderContext, shaderNode,     false, true,  shapeNode);
       }
 
+      // Disable render mode nodes.
+
       for (const node of renderModeNodes)
          node .disable (gl);
    },
    displayInstancedGeometry (gl, renderContext, shaderNode, back, front, shapeNode)
    {
       const
-         browser         = this .getBrowser (),
-         primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
+         browser       = this .getBrowser (),
+         primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
 
       // Setup shader.
 
@@ -1190,10 +1210,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       }
 
       // Draw depending on wireframe, solid and transparent.
-
-      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
-
-      gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
 
       if (renderContext .transparent || back !== front)
       {
