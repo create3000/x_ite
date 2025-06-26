@@ -123,9 +123,6 @@ getMaterialColor ()
    // convert to material roughness by squaring the perceptual roughness.
    materialInfo .alphaRoughness = materialInfo .perceptualRoughness * materialInfo .perceptualRoughness;
 
-   // Compute reflectance.
-   float reflectance = max3 (materialInfo .f0_dielectric);
-
    // LIGHTING
    vec3 f_specular_dielectric   = vec3 (0.0);
    vec3 f_specular_metal        = vec3 (0.0);
