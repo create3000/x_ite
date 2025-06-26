@@ -57,7 +57,7 @@ getMaterialColor ()
 
    vec3 v = normalize (-vertex);
 
-   #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING) || defined (X3D_ANISOTROPY_MATERIAL_EXT) || defined (X3D_CLEARCOAT_MATERIAL_EXT)
+   #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
       NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale);
 
       vec3  n     = normalInfo .n;
@@ -122,9 +122,6 @@ getMaterialColor ()
    // Roughness is authored as perceptual roughness; as is convention,
    // convert to material roughness by squaring the perceptual roughness.
    materialInfo .alphaRoughness = materialInfo .perceptualRoughness * materialInfo .perceptualRoughness;
-
-   // Compute reflectance.
-   float reflectance = max3 (materialInfo .f0_dielectric);
 
    // LIGHTING
    vec3 f_specular_dielectric   = vec3 (0.0);
@@ -306,7 +303,7 @@ getMaterialColor ()
                float diffuseNdotL = clamp (dot (-n, l), 0.0, 1.0);
                vec3  diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
-               vec3  l_mirror     = normalize (l + 2.0 * n * dot (-l, n)); // Mirror light reflection vector on surface
+               vec3  l_mirror     = normalize (reflect (l, n)); // Mirror light reflection vector on surface
                float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
 
                dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
