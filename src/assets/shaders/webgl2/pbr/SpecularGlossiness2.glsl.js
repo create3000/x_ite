@@ -19,6 +19,32 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #pragma X3D include "pbr/Punctual.glsl"
 #pragma X3D include "pbr/IBL.glsl"
 
+${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "linear")}
+
+vec4
+getBaseColor ()
+{
+   // Get base parameter.
+
+   float alpha     = 1.0 - x3d_Material .transparency;
+   vec4  baseColor = vec4 (x3d_Material .diffuseColor, alpha);
+
+   // In addition to the material properties, if a primitive specifies a vertex color using the attribute semantic property COLOR_0, then this value acts as an additional linear multiplier to base color.
+   #if defined (X3D_COLOR_MATERIAL)
+      baseColor *= color;
+   #endif
+
+   // Get texture color.
+
+   #if defined (X3D_DIFFUSE_TEXTURE)
+      baseColor *= getDiffuseTexture ();
+   #elif defined (X3D_TEXTURE)
+      baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
+   #endif
+
+   return baseColor;
+}
+
 ${MaterialTextures .texture ("x3d_SpecularGlossinessTexture", "rgba", "linear")}
 
 MaterialInfo
