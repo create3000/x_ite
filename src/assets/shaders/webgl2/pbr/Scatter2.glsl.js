@@ -87,9 +87,9 @@ getMaterialColor ()
 
    // Calculate lighting contribution from image based lighting source (IBL)
    #if defined (X3D_USE_IBL)
-      f_diffuse = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor;
-
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+         f_diffuse = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor;
+
          vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
 
          #if defined (X3D_VOLUME_MATERIAL_EXT)
