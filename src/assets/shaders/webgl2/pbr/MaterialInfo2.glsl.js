@@ -83,9 +83,6 @@ getBaseColor ()
 
    return baseColor;
 }
-#endif
-
-#if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
 
 ${MaterialTextures .texture ("x3d_MetallicRoughnessTexture")}
 
