@@ -66,10 +66,11 @@ export default class KTXDecoder
       this .transcode (ktxTexture);
 
       const
+         gl           = this .gl,
          uploadResult = ktxTexture .glUpload (),
          texture      = uploadResult .object;
 
-      if (!texture)
+      if (uploadResult .error != gl .NO_ERROR || !texture)
          throw new Error ("Could not load KTX data");
 
       texture .baseWidth     = ktxTexture .baseWidth;
