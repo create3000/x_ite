@@ -155,7 +155,7 @@ getMaterialColor ()
                float diffuseNdotL = clamp (dot (-n, l), 0.0, 1.0);
                vec3  diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
-               vec3  l_mirror     = normalize (l + 2.0 * n * dot (-l, n)); // Mirror light reflection vector on surface
+               vec3  l_mirror     = normalize (reflect (l, n)); // Mirror light reflection vector on surface
                float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
 
                dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
