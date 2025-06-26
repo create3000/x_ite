@@ -71,7 +71,7 @@ export default class KTXDecoder
          texture      = uploadResult .object;
 
       if (uploadResult .error != gl .NO_ERROR || !texture)
-         throw new Error ("Could not load KTX data");
+         throw new Error ("Could not load KTX data.");
 
       texture .baseWidth     = ktxTexture .baseWidth;
       texture .baseHeight    = ktxTexture .baseHeight;
