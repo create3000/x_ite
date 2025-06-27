@@ -32,7 +32,6 @@ Object .assign (X3DShapeContext .prototype,
       {
          const defaultAppearance = new Appearance (this .getPrivateScene ());
 
-         defaultAppearance .setPrivate (true);
          defaultAppearance .setup ();
 
          return defaultAppearance;
@@ -48,7 +47,6 @@ Object .assign (X3DShapeContext .prototype,
       {
          const defaultPointProperties = new PointProperties (this .getPrivateScene ());
 
-         defaultPointProperties .setPrivate (true);
          defaultPointProperties .setup ();
 
          return defaultPointProperties;
@@ -61,7 +59,7 @@ Object .assign (X3DShapeContext .prototype,
          const defaultLineProperties = new LineProperties (this .getPrivateScene ());
 
          defaultLineProperties ._applied = false;
-         defaultLineProperties .setPrivate (true);
+
          defaultLineProperties .setup ();
 
          return defaultLineProperties;
@@ -73,7 +71,6 @@ Object .assign (X3DShapeContext .prototype,
       {
          const defaultMaterial = new UnlitMaterial (this .getPrivateScene ());
 
-         defaultMaterial .setPrivate (true);
          defaultMaterial .setup ();
 
          return defaultMaterial;
@@ -87,7 +84,7 @@ Object .assign (X3DShapeContext .prototype,
 
          linetypeTextures ._url [0]           = URLs .getLinetypeURL ();
          linetypeTextures ._textureProperties = this .getLineFillTextureProperties ();
-         linetypeTextures .setPrivate (true);
+
          linetypeTextures .setup ();
 
          return linetypeTextures;
@@ -101,7 +98,7 @@ Object .assign (X3DShapeContext .prototype,
 
          hatchStyleTexture ._url [0]           = URLs .getHatchingURL (index);
          hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
-         hatchStyleTexture .setPrivate (true);
+
          hatchStyleTexture .setup ();
 
          return hatchStyleTexture;
@@ -116,7 +113,7 @@ Object .assign (X3DShapeContext .prototype,
          lineFillTextureProperties ._minificationFilter  = "NEAREST_PIXEL";
          lineFillTextureProperties ._magnificationFilter = "NEAREST_PIXEL";
          lineFillTextureProperties ._textureCompression  = "DEFAULT";
-         lineFillTextureProperties .setPrivate (true);
+
          lineFillTextureProperties .setup ();
 
          return lineFillTextureProperties;

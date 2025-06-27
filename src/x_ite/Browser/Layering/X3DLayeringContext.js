@@ -11,7 +11,6 @@ Object .assign (X3DLayeringContext .prototype,
 {
    initialize ()
    {
-      this [_defaultViewport] .setPrivate (true);
       this [_defaultViewport] .setup ();
    },
    getDefaultViewport ()

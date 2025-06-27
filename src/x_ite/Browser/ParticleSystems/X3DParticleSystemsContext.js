@@ -12,7 +12,6 @@ Object .assign (X3DParticleSystemsContext .prototype,
       {
          const defaultEmitter = new PointEmitter (this .getPrivateScene ());
 
-         defaultEmitter .setPrivate (true);
          defaultEmitter .setup ();
 
          return defaultEmitter;

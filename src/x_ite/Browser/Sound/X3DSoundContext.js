@@ -54,7 +54,6 @@ Object .assign (X3DSoundContext .prototype,
       {
          const defaultPeriodicWave = new PeriodicWave (this .getPrivateScene ());
 
-         defaultPeriodicWave .setPrivate (true);
          defaultPeriodicWave .setup ();
 
          return defaultPeriodicWave;

@@ -28,8 +28,6 @@ function ShaderPart (executionContext)
    X3DUrlObject .call (this, executionContext);
 
    this .addType (X3DConstants .ShaderPart);
-
-   this .options = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototype),
@@ -40,8 +38,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
 
-      if (!this .isPrivate ())
-         this .options = customOptions .slice ();
+      this .options ??= customOptions .slice ();
 
       this ._type .addInterest ("set_type__", this);
 

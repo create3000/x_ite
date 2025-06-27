@@ -27,7 +27,6 @@ Object .assign (X3DTextContext .prototype,
       {
          const defaultFontStyle = new FontStyle (this .getPrivateScene ());
 
-         defaultFontStyle .setPrivate (true);
          defaultFontStyle .setup ();
 
          return defaultFontStyle;

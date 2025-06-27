@@ -233,7 +233,6 @@ Object .assign (X3DTexturingContext .prototype,
       {
          const defaultTextureTransform = new TextureTransform (this .getPrivateScene ());
 
-         defaultTextureTransform .setPrivate (true);
          defaultTextureTransform .setup ();
 
          return defaultTextureTransform;
@@ -245,7 +244,6 @@ Object .assign (X3DTexturingContext .prototype,
       {
          const defaultTextureCoordinate = new TextureCoordinate (this .getPrivateScene ());
 
-         defaultTextureCoordinate .setPrivate (true);
          defaultTextureCoordinate .setup ();
 
          return defaultTextureCoordinate;
