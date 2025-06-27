@@ -39,7 +39,7 @@ export default class KTXDecoder
       else if (etcSupported)
          var format = libktx .TranscodeTarget .ETC;
       else
-         var format = libktx .TranscodeTarget .RGBA8888;
+         var format = libktx .TranscodeTarget .RGBA4444;
 
       if (ktxTexture .transcodeBasis (format, 0) !== libktx .ErrorCode .SUCCESS)
          console .warn ("Texture transcode failed. See console for details.");
@@ -66,11 +66,12 @@ export default class KTXDecoder
       this .transcode (ktxTexture);
 
       const
+         gl           = this .gl,
          uploadResult = ktxTexture .glUpload (),
-         texture      = uploadResult .texture;
+         texture      = uploadResult .object;
 
-      if (!texture)
-         throw new Error ("Could not load KTX data");
+      if (uploadResult .error !== gl .NO_ERROR || !texture)
+         throw new Error ("Could not load KTX data.");
 
       texture .baseWidth     = ktxTexture .baseWidth;
       texture .baseHeight    = ktxTexture .baseHeight;
