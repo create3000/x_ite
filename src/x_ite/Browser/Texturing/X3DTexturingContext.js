@@ -299,7 +299,7 @@ Object .assign (X3DTexturingContext .prototype,
          const
             response = await fetch (URLs .getLibraryURL ("libktx.js")),
             text     = await response .text (),
-            libKTX   = await new Function (text) (),
+            libKTX   = new Function (text) (),
             decoder  = new KTXDecoder (this .getContext (), libKTX, URLs .getLibraryURL (""));
 
          return decoder;
