@@ -20,6 +20,7 @@ import X3DCoordinateNode        from "./Rendering/X3DCoordinateNode.js";
 import X3DGeometricPropertyNode from "./Rendering/X3DGeometricPropertyNode.js";
 import X3DGeometryNode          from "./Rendering/X3DGeometryNode.js";
 import X3DNormalNode            from "./Rendering/X3DNormalNode.js";
+import X3DTangentNode           from "./Rendering/X3DTangentNode.js";
 
 export default {
    name: "Rendering",
@@ -50,5 +51,6 @@ export default {
       X3DGeometricPropertyNode,
       X3DGeometryNode,
       X3DNormalNode,
+      X3DTangentNode,
    ],
 };
