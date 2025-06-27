@@ -454,6 +454,7 @@ const X_ITE_TESTS = [
    { path: "TextureProjection/Perspective.x3d" },
    { component: "Texturing" },
    { path: "Texturing/AnimatedGIF.x3dv" },
+   { path: "Texturing/AnimatedPNG.x3dv" },
    { path: "Texturing/ColorManagement.x3d" },
    { path: "Texturing/ColorMaterial.x3d" },
    { path: "Texturing/DataURL.x3d" },
