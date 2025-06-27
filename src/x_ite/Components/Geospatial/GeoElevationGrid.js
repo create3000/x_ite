@@ -248,7 +248,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
          normalArray        = this .getNormals (),
-         tangentArray       = this .getTangent (),
+         tangentArray       = this .getTangents (),
          vertexArray        = this .getVertices ();
 
       let face = 0;
