@@ -20,7 +20,7 @@ const
    _defaultTextureProperties = Symbol (),
    _defaultTextureTransform  = Symbol (),
    _defaultTextureCoordinate = Symbol (),
-   _libktx                   = Symbol ();
+   _libKTX                   = Symbol ();
 
 function X3DTexturingContext ()
 {
@@ -294,19 +294,17 @@ Object .assign (X3DTexturingContext .prototype,
    },
    async getKTXDecoder ()
    {
-      return new KTXDecoder (this .getContext (), await this .getLibKTX (), URLs .getLibraryURL (""));
-   },
-   getLibKTX ()
-   {
-      return this [_libktx] ??= (async () =>
+      this [_libKTX] ??= await (async () =>
       {
          const
             response = await fetch (URLs .getLibraryURL ("libktx.js")),
             text     = await response .text (),
-            libktx   = await new Function (text) ();
+            libKTX   = await new Function (text) ();
 
-         return libktx;
+         return libKTX;
       })();
+
+      return new KTXDecoder (this .getContext (), this [_libKTX], URLs .getLibraryURL (""));
    },
 });
 
