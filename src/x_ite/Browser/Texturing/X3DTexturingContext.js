@@ -294,11 +294,7 @@ Object .assign (X3DTexturingContext .prototype,
    },
    async getKTXDecoder ()
    {
-      return new KTXDecoder (this .getContext (), await this .getLibKTX (), URLs .getLibraryURL (""));
-   },
-   getLibKTX ()
-   {
-      return this [_libktx] ??= (async () =>
+      this [_libktx] ??= await (async () =>
       {
          const
             response = await fetch (URLs .getLibraryURL ("libktx.js")),
@@ -307,6 +303,8 @@ Object .assign (X3DTexturingContext .prototype,
 
          return libktx;
       })();
+
+      return new KTXDecoder (this .getContext (), this [_libktx], URLs .getLibraryURL (""));
    },
 });
 
