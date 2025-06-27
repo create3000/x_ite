@@ -262,7 +262,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
          normalArray        = this .getNormals (),
-         tangentArray       = this .getTangent (),
+         tangentArray       = this .getTangents (),
          vertexArray        = this .getVertices ();
 
       let face = 0;
