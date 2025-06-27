@@ -288,12 +288,12 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 Any video file format supported by the web browser, but at least:
 
-| Encoding | File Extension | MIME Type  |
-|----------|----------------|------------|
-| MP4      | .mp4           | video/mp4  |
-| WebM     | .webm          | video/webm |
-| OGG      | .ogv           | video/ogg  |
-| GIF      | .gif           | image/gif  |
+| Encoding | File Extension | MIME Type  | Comment      |
+|----------|----------------|------------|--------------|
+| MP4      | .mp4           | video/mp4  |              |
+| WebM     | .webm          | video/webm |              |
+| OGG      | .ogv           | video/ogg  |              |
+| GIF      | .gif           | image/gif  | Animated GIF |
 
 ## Advice
 
