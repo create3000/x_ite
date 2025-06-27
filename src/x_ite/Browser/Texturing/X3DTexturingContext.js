@@ -253,7 +253,9 @@ Object .assign (X3DTexturingContext .prototype,
    },
    setTextureQuality (textureQuality)
    {
-      const textureProperties = this .getDefaultTextureProperties ();
+      const
+         gl                = this .getContext (),
+         textureProperties = this .getDefaultTextureProperties ();
 
       switch (textureQuality)
       {
@@ -264,8 +266,8 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._textureCompression  = "FASTEST";
             textureProperties ._generateMipMaps     = true;
 
-            //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-            //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+            gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
+            //gl .hint (gl .PERSPECTIVE_CORRECTION_HINT, gl .FASTEST);
             break;
          }
          case TextureQuality .MEDIUM:
@@ -275,8 +277,8 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._textureCompression  = "NICEST";
             textureProperties ._generateMipMaps     = true;
 
-            //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-            //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+            gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
+            //gl .hint (gl .PERSPECTIVE_CORRECTION_HINT, gl .FASTEST);
             break;
          }
          case TextureQuality .HIGH:
@@ -286,8 +288,8 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._textureCompression  = "NICEST";
             textureProperties ._generateMipMaps     = true;
 
-            //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
-            //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+            gl .hint (gl .GENERATE_MIPMAP_HINT, gl .NICEST);
+            //gl .hint (gl .PERSPECTIVE_CORRECTION_HINT, gl .NICEST);
             break;
          }
       }
