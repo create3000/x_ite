@@ -22,7 +22,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
          defaultVoxelsNode .repeatS = true;
          defaultVoxelsNode .repeatT = true;
          defaultVoxelsNode .repeatR = true;
-         defaultVoxelsNode .setPrivate (true);
+
          defaultVoxelsNode .setup ();
 
          return defaultVoxelsNode;
@@ -34,7 +34,6 @@ Object .assign (X3DVolumeRenderingContext .prototype,
       {
          const defaultVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
 
-         defaultVolumeStyle .setPrivate (true);
          defaultVolumeStyle .setup ();
 
          return defaultVolumeStyle;
@@ -46,7 +45,6 @@ Object .assign (X3DVolumeRenderingContext .prototype,
       {
          const defaultBlendedVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
 
-         defaultBlendedVolumeStyle .setPrivate (true);
          defaultBlendedVolumeStyle .setup ();
 
          return defaultBlendedVolumeStyle;
@@ -64,7 +62,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
          textureProperties ._minificationFilter  = "DEFAULT";
          textureProperties ._generateMipMaps     = true;
          textureProperties ._textureCompression  = "DEFAULT";
-         textureProperties .setPrivate (true);
+
          textureProperties .setup ();
 
          const defaultTransferFunction = new PixelTexture (this .getPrivateScene ());
@@ -74,7 +72,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
          defaultTransferFunction ._image .height     = 1;
          defaultTransferFunction ._image .comp       = 2;
          defaultTransferFunction ._image .array      = Array .from ({ length: 256 }, (v, i) => (i << 8) | i);
-         defaultTransferFunction .setPrivate (true);
+
          defaultTransferFunction .setup ();
 
          return defaultTransferFunction;
