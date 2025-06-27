@@ -1,9 +1,9 @@
-import Fields                   from "../../Fields.js";
-import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
-import X3DNode                  from "../Core/X3DNode.js";
-import X3DGeometricPropertyNode from "./X3DGeometricPropertyNode.js";
-import X3DConstants             from "../../Base/X3DConstants.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
+import X3DTangentNode       from "./X3DTangentNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -11,16 +11,16 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 
 function Tangent (executionContext)
 {
-   X3DGeometricPropertyNode .call (this, executionContext);
+   X3DTangentNode .call (this, executionContext);
 
    this .addType (X3DConstants .Tangent);
 }
 
-Object .assign (Object .setPrototypeOf (Tangent .prototype, X3DGeometricPropertyNode .prototype),
+Object .assign (Object .setPrototypeOf (Tangent .prototype, X3DTangentNode .prototype),
 {
    initialize ()
    {
-      X3DGeometricPropertyNode .prototype .initialize .call (this);
+      X3DTangentNode .prototype .initialize .call (this);
 
       this ._vector .addInterest ("set_vector__", this);
 
