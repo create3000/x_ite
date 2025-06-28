@@ -108,7 +108,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          const parseAPNG = typeof APNG !== "undefined" ? APNG .default : window ["apng-js"] .default;
 
-         fetch (this .URL)
+         fetch (this .URL, { cache: this .getCache () ? "default" : "reload" })
             .then (response => response .arrayBuffer ())
             .then (arrayBuffer => parseAPNG (arrayBuffer))
             .then (apng => this .setAPNG (apng))
