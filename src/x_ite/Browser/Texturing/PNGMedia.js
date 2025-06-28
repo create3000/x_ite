@@ -81,7 +81,8 @@ async function PNGMedia (apng, movieTexture)
          },
          set (value)
          {
-            player .playbackRate = value;
+            // No support for negative values.
+            player .playbackRate = Math .max (value, 0);
          },
       },
    });
