@@ -166,6 +166,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             throw new Error ("The movie texture is a non power-of-two texture.");
 
          this ._duration_changed = video .duration;
+         video .currentFrame     = video;
 
          this .setMediaElement (video);
          this .setTextureData (width, height, true, false, video);
@@ -253,7 +254,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       const media = this .getMediaElement ();
 
       if (media)
-         this .updateTextureData (media .currentFrame ?? media);
+         this .updateTextureData (media .currentFrame);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
    dispose ()
