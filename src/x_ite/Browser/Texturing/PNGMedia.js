@@ -9,6 +9,8 @@ async function PNGMedia (apng, movieTexture)
    canvas .width  = apng .width;
    canvas .height = apng .height;
 
+   player .renderNextFrame ();
+
    Object .defineProperties (apng,
    {
       currentTime:

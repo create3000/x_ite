@@ -181,6 +181,7 @@ export default Namespace .add ("${base}", __default__);`;
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
             SuperGif: path .resolve (__dirname, "src/lib/libgif/libgif.js"),
+            APNG: "apng-js",
          }),
          new WebpackShellPluginNext ({
             logging: false,
@@ -326,6 +327,7 @@ export default Namespace .add ("${base}", __default__);`;
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
             SuperGif: path .resolve (__dirname, "src/lib/libgif/libgif.js"),
+            APNG: "apng-js",
          }),
          new WebpackShellPluginNext ({
             logging: false,
