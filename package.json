@@ -129,5 +129,8 @@
     "webpack-shell-plugin-next": "^2.3.2",
     "woff2-encoder": "^2.0.0",
     "wrapper-webpack-plugin": "^2.2.2"
+  },
+  "dependencies": {
+    "apng-js": "^1.1.5"
   }
 }
