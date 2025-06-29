@@ -107,6 +107,7 @@
   },
   "devDependencies": {
     "ammojs": "^0.0.2",
+    "apng-js": "^1.1.5",
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
     "fast-xml-parser": "^5.2.3",
@@ -129,8 +130,5 @@
     "webpack-shell-plugin-next": "^2.3.2",
     "woff2-encoder": "^2.0.0",
     "wrapper-webpack-plugin": "^2.2.2"
-  },
-  "dependencies": {
-    "apng-js": "^1.1.5"
   }
 }
