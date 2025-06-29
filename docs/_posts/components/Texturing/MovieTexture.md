@@ -43,8 +43,8 @@ The MovieTexture node belongs to the [Texturing](/x_ite/components/overview/#tex
 | SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
 | SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFFloat | [in, out] | [speed](#fields-speed) | 1  |
 | SFFloat | [in, out] | [pitch](#fields-pitch) | 1  |
+| SFFloat | [in, out] | [speed](#fields-speed) | 1  |
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
 | SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
 | SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
@@ -148,6 +148,15 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
+### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
+{: #fields-pitch }
+
+Multiplier for the rate at which sampled sound is played. Changing *pitch* also changes playback speed.
+
+#### Hint
+
+- Changing the *pitch* field does not trigger a duration_changed event. Playback interval may vary but duration of the original media data remains unmodified.
+
 ### SFFloat [in, out] **speed** 1 <small>(-∞,∞)</small>
 {: #fields-speed }
 
@@ -157,15 +166,6 @@ Factor for how fast the movie (or soundtrack) is played.
 
 - A MovieTexture node shall display frame 0 if *speed* = 0.
 - A negative *speed* value sets the movie to play in reverse.
-
-### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
-{: #fields-pitch }
-
-Multiplier for the rate at which sampled sound is played. Changing *pitch* also changes playback speed.
-
-#### Hint
-
-- Changing the *pitch* field does not trigger a duration_changed event. Playback interval may vary but duration of the original media data remains unmodified.
 
 ### SFBool [in, out] **loop** FALSE
 {: #fields-loop }
@@ -288,12 +288,12 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 Any video file format supported by the web browser, but at least:
 
-| Encoding | File Extension | MIME Type  |
-|----------|----------------|------------|
-| MP4      | .mp4           | video/mp4  |
-| WebM     | .webm          | video/webm |
-| OGG      | .ogv           | video/ogg  |
-| GIF      | .gif           | image/gif  |
+| Encoding | File Extension | MIME Type  | Comment      |
+|----------|----------------|------------|--------------|
+| MP4      | .mp4           | video/mp4  |              |
+| WebM     | .webm          | video/webm |              |
+| OGG      | .ogv           | video/ogg  |              |
+| GIF      | .gif           | image/gif  | Animated GIF |
 
 ## Advice
 
