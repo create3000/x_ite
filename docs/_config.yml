@@ -22,13 +22,13 @@ description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser and VRML Viewer, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.
 
 x3d_latest_version: 4.0 # x3d latest version
-x_ite_latest_version: 11.5.12 # x_ite latest version
+x_ite_latest_version: 11.5.14 # x_ite latest version
 x_ite_compressed_size: 268 # size in kb
-x_ite_js_integrity: sha384-WMWxF4388jNVhAJz50Xcc+NDAG7rZ26x8trVZ+gG3fu8GSqiqzY+ZA72sdylkvqG
-x_ite_min_js_integrity: sha384-Ga6z31voV9CDnWUoWuc6ZBCbC5z29TTw/LvbSxo+ZB2tCOSVuUt7cTsLgQkXfftn
-x_ite_mjs_integrity: sha384-+e94LdsaXNIafjINZdt/DWniFimQAzBu2dmiCvDeC4GMtF7AdsRePFAH/ecFCc9s
-x_ite_min_mjs_integrity: sha384-huv9DCJ3DLVoZrRXgU7BOgb6HE8LTb4jEV3WrWRYXlnWVM2WskIgULxTniKlujQS
-x_ite_css_integrity: sha384-IvkdhmEx48xp9iRqFOfHycyBQfPdKeLktS0gFrdPdD0/NhfWdkflkZcq3lR0I49+
+x_ite_js_integrity: sha384-Wxf6yzMA0yOCrfjihGkFff/qQwEvn1d3mlX6q3NGPzbd/ohLpDyzNa9ON6Edu74w
+x_ite_min_js_integrity: sha384-kBCQYCJuaweiTEKz3Knf5gZ3MtSCj2rXhHymnoKP5tgmwjP/dRC6sWzmUyUTABPT
+x_ite_mjs_integrity: sha384-31d50VURo6PAzClsOzAX+4mxsGq5XddVEB4cxi1lKUZSLk8qh7juPCDHgV38cr5w
+x_ite_min_mjs_integrity: sha384-kcpfM0Ee6Vim29GXoftfMSrhqPrjYAK67IcBOWS3nzV+zXSMXx9Cph3YyMZfDz36
+x_ite_css_integrity: sha384-ioqcaM+1PvA9GCXBhtRo7MkLIXh0uY0iTbzksGwHkgX8Q2WPPvnp5vaJTOdgkuIq
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
