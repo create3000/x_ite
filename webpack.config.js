@@ -180,7 +180,7 @@ export default Namespace .add ("${base}", __default__);`;
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
-            SuperGif: path .resolve (__dirname, "src/lib/libgif/libgif.js"),
+            SuperGif: "@create3000/libgif/libgif.js",
             APNG: "apng-js",
          }),
          new WebpackShellPluginNext ({
@@ -326,7 +326,7 @@ export default Namespace .add ("${base}", __default__);`;
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
-            SuperGif: path .resolve (__dirname, "src/lib/libgif/libgif.js"),
+            SuperGif: "@create3000/libgif/libgif.js",
             APNG: "apng-js",
          }),
          new WebpackShellPluginNext ({
