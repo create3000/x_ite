@@ -9,7 +9,8 @@ async function PNGMedia (apng, movieTexture)
    canvas .width  = apng .width;
    canvas .height = apng .height;
 
-   player .renderNextFrame ();
+   // Render first frame after load.
+   player .stop ();
 
    Object .defineProperties (apng,
    {
