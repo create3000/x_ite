@@ -351,6 +351,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       if (Grammar .Header .parse (this))
       {
+         ++ this .lineNumber;
+
          this .getScene () .setSpecificationVersion (this .result [2]);
 
          if (this .getScene () .getSpecificationVersion () <= 3.2)
@@ -1458,7 +1460,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          if (!this .unknownValue ())
             throw new Error (`Couldn't read value for field '${fieldId}'.`);
 
-         console .warn (`Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
+         console .warn (`Parser error at line ${this .lineNumber}: Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
          return true;
       }
 
