@@ -1455,7 +1455,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          // Parse value of a inputOnly or outputOnly, and output a warning.
 
-         if (!this .fieldValue (field .copy ()))
+         if (!this .unknownValue ())
             throw new Error (`Couldn't read value for field '${fieldId}'.`);
 
          console .warn (`Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
