@@ -1,6 +1,6 @@
 {
   "name": "x_ite",
-  "version": "11.5.11",
+  "version": "11.5.14",
   "description": "X_ITE X3D Browser, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.",
   "main": "dist/x_ite.js",
   "module": "dist/x_ite.mjs",
@@ -106,6 +106,7 @@
     "url": "https://patreon.com/X_ITE"
   },
   "devDependencies": {
+    "@create3000/libgif": "^0.0.5",
     "ammojs": "^0.0.2",
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
@@ -114,7 +115,6 @@
     "jpeg-lossless-decoder-js": "2.1.2",
     "jquery": "^3.7.1",
     "jquery-mousewheel": "^3.2.2",
-    "libgif": "^0.0.3",
     "libtess": "^1.2.2",
     "madge": "^8.0.0",
     "nurbs": "^1.1.1",

@@ -25,7 +25,8 @@ The Tangent node belongs to the **Rendering** component and requires at least su
 ```
 + X3DNode
   + X3DGeometricPropertyNode
-   + Tangent
+    + X3DTangentNode
+      + Tangent
 ```
 
 ## Fields

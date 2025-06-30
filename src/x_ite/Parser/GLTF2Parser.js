@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
@@ -188,7 +141,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Parse root objects.
 
-      this .assetObject      (glTF .asset);
+      this .assetObject      (glTF .asset, glTF .extensions);
       this .extensionsArray  (glTF .extensionsRequired, this .extensions);
       this .extensionsArray  (glTF .extensionsUsed, this .extensions);
       this .extensionsObject (glTF .extensions);
@@ -227,7 +180,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return scene;
    },
-   assetObject (asset)
+   assetObject (asset, extensions)
    {
       if (!(asset instanceof Object))
          return;
@@ -259,8 +212,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
-      worldInfoNode ._info .sort ();
-
       if (!worldInfoNode ._title .getValue ())
       {
          const url = new URL (worldURL);
@@ -271,6 +222,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             worldInfoNode ._title = decodeURIComponent (url .pathname .split ("/") .at (-1) || worldURL);
       }
 
+      if (asset .extensions ?.KHR_xmp_json_ld instanceof Object)
+      {
+         const packet = asset .extensions .KHR_xmp_json_ld .packet;
+
+         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld, worldInfoNode);
+      }
+
+      worldInfoNode ._info .sort ();
       worldInfoNode .setup ();
 
       scene .getRootNodes () .push (worldInfoNode);
@@ -560,6 +519,43 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       this .materialVariants = variants;
+   },
+   khrXmpJsonLdObject (index, KHR_xmp_json_ld, worldInfoNode)
+   {
+      if (!(KHR_xmp_json_ld instanceof Object))
+         return;
+
+      const packet = KHR_xmp_json_ld .packets [index];
+
+      for (const [key, value] of Object .entries (packet))
+      {
+         const match = key .match (/\w+:(.*)/);
+
+         if (!match)
+            continue;
+
+         if (value instanceof Object)
+         {
+            const array = value ["@set"] ?? value ["@list"];
+
+            if (array instanceof Array)
+            {
+               worldInfoNode ._info .push (`${match [1]}: ${array .map (v => v .toString ()) .join (", ")}`);
+               continue;
+            }
+
+            if (value ["rdf:_1"] ?.["@value"])
+            {
+               worldInfoNode ._info .push (`${match [1]}: ${JSON .stringify (value ["rdf:_1"] ["@value"])}`);
+               continue;
+            }
+         };
+
+         if (typeof value !== "string")
+            continue;
+
+         worldInfoNode ._info .push (`${match [1]}: ${value}`);
+      }
    },
    async buffersArray (buffers)
    {
@@ -3508,7 +3504,7 @@ function eventsProcessed ()
          }
       }
    },
-   createAnimationPointerInterpolator: (function ()
+   createAnimationPointerInterpolator: (() =>
    {
       const interpolators = new Map ([
          [X3DConstants .SFBool,  { typeName: "BooleanSequencer" }],
@@ -3978,7 +3974,7 @@ function eventsProcessed ()
          }
       }
    },
-   applyMorphTargets: (function ()
+   applyMorphTargets: (() =>
    {
       const value = new Vector3 ();
 

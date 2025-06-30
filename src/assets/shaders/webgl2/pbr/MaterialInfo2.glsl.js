@@ -56,24 +56,17 @@ struct MaterialInfo
    float dispersion;
 };
 
-#if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
-   ${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "linear")}
-#elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
-   ${MaterialTextures .texture ("x3d_BaseTexture", "rgba", "linear")}
-#endif
+#if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
+
+${MaterialTextures .texture ("x3d_BaseTexture", "rgba", "linear")}
 
 vec4
 getBaseColor ()
 {
    // Get base parameter.
 
-   float alpha = 1.0 - x3d_Material .transparency;
-
-   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
-      vec4 baseColor = vec4 (x3d_Material .diffuseColor, alpha);
-   #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
-      vec4 baseColor = vec4 (x3d_Material .baseColor, alpha);
-   #endif
+   float alpha     = 1.0 - x3d_Material .transparency;
+   vec4  baseColor = vec4 (x3d_Material .baseColor, alpha);
 
    // In addition to the material properties, if a primitive specifies a vertex color using the attribute semantic property COLOR_0, then this value acts as an additional linear multiplier to base color.
    #if defined (X3D_COLOR_MATERIAL)
@@ -82,24 +75,14 @@ getBaseColor ()
 
    // Get texture color.
 
-   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
-      #if defined (X3D_DIFFUSE_TEXTURE)
-         baseColor *= getDiffuseTexture ();
-      #elif defined (X3D_TEXTURE)
-         baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
-      #endif
-   #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
-      #if defined (X3D_BASE_TEXTURE)
-         baseColor *= getBaseTexture ();
-      #elif defined (X3D_TEXTURE)
-         baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
-      #endif
+   #if defined (X3D_BASE_TEXTURE)
+      baseColor *= getBaseTexture ();
+   #elif defined (X3D_TEXTURE)
+      baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
    #endif
 
    return baseColor;
 }
-
-#if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
 
 ${MaterialTextures .texture ("x3d_MetallicRoughnessTexture")}
 

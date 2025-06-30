@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -97,16 +50,16 @@ Object .assign (EnvironmentLightContainer .prototype,
          GGXLUTTexture     = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
-         ? this .diffuseTextureUnit = this .diffuseTextureUnit ?? browser .popTextureCubeUnit ()
-         : browser .getTextureCubeUnit ();
+         ? this .diffuseTextureUnit = this .diffuseTextureUnit ?? browser .popTextureUnit ()
+         : browser .getTextureUnit ();
 
       const specularTextureUnit = global
-         ? this .specularTextureUnit = this .specularTextureUnit ?? browser .popTextureCubeUnit ()
-         : browser .getTextureCubeUnit ();
+         ? this .specularTextureUnit = this .specularTextureUnit ?? browser .popTextureUnit ()
+         : browser .getTextureUnit ();
 
       const GGXLUTTextureUnit = global
-         ? this .GGXLUTTextureUnit = this .GGXLUTTextureUnit ?? browser .popTexture2DUnit ()
-         : browser .getTexture2DUnit ();
+         ? this .GGXLUTTextureUnit = this .GGXLUTTextureUnit ?? browser .popTextureUnit ()
+         : browser .getTextureUnit ();
 
       gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
@@ -133,8 +86,8 @@ Object .assign (EnvironmentLightContainer .prototype,
          const CharlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
 
          const CharlieLUTTextureUnit = global
-            ? this .CharlieLUTTextureUnit = this .CharlieLUTTextureUnit ?? browser .popTexture2DUnit ()
-            : browser .getTexture2DUnit ();
+            ? this .CharlieLUTTextureUnit = this .CharlieLUTTextureUnit ?? browser .popTextureUnit ()
+            : browser .getTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + CharlieLUTTextureUnit);
          gl .bindTexture (gl .TEXTURE_2D, CharlieLUTTexture .getTexture ());
@@ -145,10 +98,10 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       const browser = this .browser;
 
-      browser .pushTextureCubeUnit (this .diffuseTextureUnit);
-      browser .pushTextureCubeUnit (this .specularTextureUnit);
-      browser .pushTexture2DUnit   (this .GGXLUTTextureUnit);
-      browser .pushTexture2DUnit   (this .CharlieLUTTextureUnit);
+      browser .pushTextureUnit (this .diffuseTextureUnit);
+      browser .pushTextureUnit (this .specularTextureUnit);
+      browser .pushTextureUnit   (this .GGXLUTTextureUnit);
+      browser .pushTextureUnit   (this .CharlieLUTTextureUnit);
 
       this .modelViewMatrix .clear ();
 
