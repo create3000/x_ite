@@ -1453,7 +1453,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error (`Couldn't read value for field '${fieldId}'.`);
          }
 
-         throw new Error (`Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
+         // Parse value of a inputOnly or outputOnly, and output a warning.
+
+         this .fieldValue (field .copy ());
+
+         console .warn (`Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
+         return true;
       }
 
       return false;
