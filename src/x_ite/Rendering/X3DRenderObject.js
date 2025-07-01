@@ -1261,11 +1261,14 @@ Object .assign (X3DRenderObject .prototype,
 
       for (let i = 0; i < numOpaqueShapes; ++ i)
       {
-         const { renderContext, renderPassNodes, viewport } = opaqueShapes [i];
+         const { renderContext, renderPassNodes: { [renderPass]: shapeNode }, viewport } = opaqueShapes [i];
+
+         if (!shapeNode)
+            continue;
 
          gl .viewport (... viewport);
 
-         renderPassNodes [renderPass] ?.display (gl, renderContext);
+         shapeNode .display (gl, renderContext);
          browser .resetTextureUnits ();
       }
 
@@ -1281,11 +1284,14 @@ Object .assign (X3DRenderObject .prototype,
 
       for (let i = 0; i < numTransparentShapes; ++ i)
       {
-         const { renderContext, renderPassNodes, viewport } = transparentShapes [i];
+         const { renderContext, renderPassNodes: { [renderPass]: shapeNode }, viewport } = transparentShapes [i];
+
+         if (!shapeNode)
+            continue;
 
          gl .viewport (... viewport);
 
-         renderPassNodes [renderPass] ?.display (gl, renderContext);
+         shapeNode .display (gl, renderContext);
          browser .resetTextureUnits ();
       }
 
