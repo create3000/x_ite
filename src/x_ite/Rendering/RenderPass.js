@@ -1,8 +1,8 @@
 const RenderPass =
 {
-   RENDER:         0b001,
-   TRANSMISSION:   0b010,
-   VOLUME_SCATTER: 0b100,
+   RENDER:         0b00,
+   TRANSMISSION:   0b01,
+   VOLUME_SCATTER: 0b10,
 };
 
 export default RenderPass;
