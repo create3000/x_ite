@@ -142,6 +142,7 @@ getMaterialColor ()
 
    float albedoSheenScaling           = 1.0;
    float diffuseTransmissionThickness = 1.0;
+   vec3  diffuseTransmissionIBL       = vec3 (0.0);
 
    #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
    // Holger: Values are only used if X3D_USE_IBL or X3D_LIGHTING is defined.
@@ -160,6 +161,10 @@ getMaterialColor ()
    #endif
    #endif
 
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      vec3 singleScatter = multiToSingleScatter ();
+   #endif
+
    #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
       clearcoatFactor  = materialInfo .clearcoatFactor;
       clearcoatFresnel = F_Schlick (materialInfo .clearcoatF0, materialInfo .clearcoatF90, clamp (dot (materialInfo .clearcoatNormal, v), 0.0, 1.0));
@@ -170,7 +175,7 @@ getMaterialColor ()
       f_diffuse = getDiffuseLight (n) * baseColor .rgb;
 
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-         vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
+         diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
 
          #if defined (X3D_VOLUME_MATERIAL_EXT)
             diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
@@ -218,6 +223,7 @@ getMaterialColor ()
          f_dielectric_brdf_ibl  = f_specular_dielectric * f_dielectric_fresnel_ibl;
          f_dielectric_brdf_ibl += (1.0 - f_dielectric_fresnel_ibl) * f_diffuse * (1.0 - materialInfo .diffuseTransmissionFactor);
          f_dielectric_brdf_ibl += getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, x3d_ScatterIBLSamplerEXT, materialInfo .diffuseTransmissionColorFactor);
+         f_dielectric_brdf_ibl += diffuseTransmissionIBL * (1.0 - singleScatter);
       #else
          f_dielectric_brdf_ibl = mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl);
       #endif
@@ -303,6 +309,7 @@ getMaterialColor ()
          vec3  l_clearcoat_brdf      = vec3 (0.0);
          vec3  l_sheen               = vec3 (0.0);
          float l_albedoSheenScaling  = 1.0;
+         vec3  l_diffuse_btdf        = vec3 (0.0);
 
          #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
             l_diffuse *= 1.0 - materialInfo .diffuseTransmissionFactor;
@@ -310,7 +317,8 @@ getMaterialColor ()
             if (dot (n, l) < 0.0)
             {
                float diffuseNdotL = clamp (dot (-n, l), 0.0, 1.0);
-               vec3  diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
+
+               l_diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
                vec3  l_mirror     = normalize (reflect (l, n)); // Mirror light reflection vector on surface
                float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
@@ -318,10 +326,10 @@ getMaterialColor ()
                dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
 
                #if defined (X3D_VOLUME_MATERIAL_EXT)
-                  diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+                  l_diffuse_btdf = applyVolumeAttenuation (l_diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
                #endif
 
-               l_diffuse += diffuse_btdf * materialInfo .diffuseTransmissionFactor;
+               l_diffuse += l_diffuse_btdf * materialInfo .diffuseTransmissionFactor;
             }
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
@@ -360,6 +368,7 @@ getMaterialColor ()
          #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
             l_dielectric_brdf  = l_specular_dielectric * dielectric_fresnel;
             l_dielectric_brdf += (1.0 - dielectric_fresnel) * l_diffuse * (1.0 - materialInfo .diffuseTransmissionFactor);
+            l_dielectric_brdf += l_diffuse_btdf * (1.0 - singleScatter);
          #else
             l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel); // Do we need to handle vec3 fresnel here?
          #endif
@@ -391,7 +400,7 @@ getMaterialColor ()
       // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
       vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, x3d_ScatterSamplerEXT, materialInfo .diffuseTransmissionColorFactor);
 
-      color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel);
+      color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * (1.0 - materialInfo .iridescenceFactor);
    #endif
 
    f_emissive = getEmissiveColor ();

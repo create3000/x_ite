@@ -8,7 +8,8 @@ uniform float x3d_ScatterMaterialIdEXT;
 vec4
 getMaterialColor ()
 {
-   vec4 baseColor = getBaseColor ();
+   vec3 singleScatter = multiToSingleScatter ();
+   vec4 baseColor     = getBaseColor ();
 
    #if defined (X3D_TEXTURE_PROJECTION)
       baseColor .rgb *= getTextureProjectorColor ();
@@ -88,7 +89,7 @@ getMaterialColor ()
    // Calculate lighting contribution from image based lighting source (IBL)
    #if defined (X3D_USE_IBL)
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-         f_diffuse = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor;
+         f_diffuse = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor * singleScatter;
 
          vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
 
@@ -96,7 +97,7 @@ getMaterialColor ()
             diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
          #endif
 
-         f_diffuse += diffuseTransmissionIBL;
+         f_diffuse += diffuseTransmissionIBL * (1.0 - singleScatter) * singleScatter;
          f_diffuse *= materialInfo .diffuseTransmissionFactor;
       #endif
 
@@ -148,7 +149,7 @@ getMaterialColor ()
             // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
             vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
 
-            l_diffuse = lightIntensity * NdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
+            l_diffuse = lightIntensity * NdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor) * singleScatter;
 
             if (dot (n, l) < 0.0)
             {
@@ -164,7 +165,7 @@ getMaterialColor ()
                   diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
                #endif
 
-               l_diffuse += diffuse_btdf;
+               l_diffuse += diffuse_btdf * (1.0 - singleScatter) * singleScatter;
                l_diffuse *= materialInfo .diffuseTransmissionFactor;
             }
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT

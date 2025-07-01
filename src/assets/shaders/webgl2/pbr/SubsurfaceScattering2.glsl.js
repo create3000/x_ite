@@ -15,6 +15,14 @@ const float M_PHI          = (1.0 + sqrt (5.0)) / 2.0;
 const float M_GOLDEN_ANGLE = M_PI * (3.0f - sqrt (5.0));
 
 vec3
+multiToSingleScatter ()
+{
+   vec3 s = 4.09712 + 4.20863 * x3d_MultiscatterColorEXT - sqrt (9.59217 + 41.6808 * x3d_MultiscatterColorEXT + 17.7126 * x3d_MultiscatterColorEXT * x3d_MultiscatterColorEXT);
+
+   return 1.0 - s * s;
+}
+
+vec3
 burley_setup (const in vec3 radius, const in vec3 albedo)
 {
    vec3 a = albedo - 0.8;

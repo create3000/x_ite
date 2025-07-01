@@ -185,7 +185,8 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       if (renderObject .getRenderPass () === RenderPass .VOLUME_SCATTER)
       {
-         gl .uniform1f (shaderObject .x3d_ScatterMaterialIdEXT, this .getId ());
+         gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, this .getId ());
+         gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
          return;
       }
 
