@@ -73,16 +73,15 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          projectedPoint0           = new Vector2 (),
          projectedPoint1           = new Vector2 ();
 
-      return function (gl, renderContext)
+      return function (gl, { viewport, renderObject, modelViewMatrix })
       {
          const
-            viewport         = renderContext .renderObject .getViewVolume () .getViewport (),
-            projectionMatrix = renderContext .renderObject .getProjectionMatrix () .get (),
+            projectionMatrix = renderObject .getProjectionMatrix () .get (),
             lineStipples     = this .lineStipples,
             vertices         = this .getVertices () .getValue (),
             numVertices      = vertices .length;
 
-         modelViewProjectionMatrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix);
+         modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
 
          let lengthSoFar = 0;
 
@@ -280,11 +279,17 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          return;
 
       const
-         browser         = this .getBrowser (),
-         appearanceNode  = renderContext .appearanceNode,
-         shaderNode      = appearanceNode .getShader (this, renderContext),
-         renderModeNodes = appearanceNode .getRenderModes (),
-         primitiveMode   = browser .getPrimitiveMode (this .getPrimitiveMode ());
+         { viewport, appearanceNode } = renderContext,
+         browser                      = this .getBrowser (),
+         primitiveMode                = browser .getPrimitiveMode (this .getPrimitiveMode ()),
+         shaderNode                   = appearanceNode .getShader (this, renderContext),
+         renderModeNodes              = appearanceNode .getRenderModes ();
+
+      // Set viewport.
+
+      gl .viewport (... viewport);
+
+      // Enable render mode nodes.
 
       for (const node of renderModeNodes)
          node .enable (gl);
@@ -327,8 +332,14 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       gl .drawArrays (primitiveMode, 0, this .vertexCount);
 
+      // Disable render mode nodes.
+
       for (const node of renderModeNodes)
          node .disable (gl);
+
+      // Reset texture units.
+
+      browser .resetTextureUnits ();
 
       gl .lineWidth (1);
    },
@@ -342,8 +353,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       return function (gl, renderContext)
       {
          const
-            appearanceNode     = renderContext .appearanceNode,
-            linePropertiesNode = appearanceNode .getStyleProperties (1);
+            { renderObject, viewport, modelViewMatrix, appearanceNode } = renderContext,
+            linePropertiesNode                                          = appearanceNode .getStyleProperties (1);
 
          if (!linePropertiesNode)
             return false;
@@ -359,20 +370,18 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             browser             = this .getBrowser (),
             shaderNode          = appearanceNode .getShader (this, renderContext),
             renderModeNodes     = appearanceNode .getRenderModes (),
-            renderObject        = renderContext .renderObject,
-            viewport            = renderObject .getViewVolume () .getViewport (),
             projectionMatrix    = renderObject .getProjectionMatrix () .get (),
             primitiveMode       = browser .getPrimitiveMode (gl .TRIANGLES),
             transformShaderNode = browser .getLineTransformShader ();
 
-         modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
+         modelViewProjectionMatrixArray .set (matrix .assign (modelViewMatrix) .multRight (projectionMatrix));
          invModelViewProjectionMatrixArray .set (matrix .inverse ());
 
          // Pass 1
 
          transformShaderNode .enable (gl);
 
-         gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
+         gl .uniform4f (transformShaderNode .viewport, ... viewport);
          gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
          gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
          gl .uniform1f (transformShaderNode .linewidthScaleFactor1_2, linePropertiesNode .getLinewidthScaleFactor () / 2);
@@ -521,7 +530,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             // console .log (data);
          }
 
-         // Render triangles.
+         // Set viewport.
+
+         gl .viewport (... viewport);
+
+         // Enable render mode nodes.
 
          for (const node of renderModeNodes)
             node .enable (gl);
@@ -575,8 +588,14 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          gl .enable (gl .CULL_FACE);
          gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
 
+         // Disable render mode nodes.
+
          for (const node of renderModeNodes)
             node .disable (gl);
+
+         // Reset texture units.
+
+         browser .resetTextureUnits ();
 
          return true;
       };
@@ -587,12 +606,18 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          return;
 
       const
-         browser         = this .getBrowser (),
-         geometryContext = shapeNode .getGeometryContext (),
-         appearanceNode  = renderContext .appearanceNode,
-         shaderNode      = appearanceNode .getShader (geometryContext, renderContext),
-         renderModeNodes = appearanceNode .getRenderModes (),
-         primitiveMode   = browser .getPrimitiveMode (this .getPrimitiveMode ());
+         { viewport, appearanceNode } = renderContext,
+         browser                      = this .getBrowser (),
+         geometryContext              = shapeNode .getGeometryContext (),
+         shaderNode                   = appearanceNode .getShader (geometryContext, renderContext),
+         renderModeNodes              = appearanceNode .getRenderModes (),
+         primitiveMode                = browser .getPrimitiveMode (this .getPrimitiveMode ());
+
+      // Set viewport.
+
+      gl .viewport (... viewport);
+
+      // Enable render mode nodes.
 
       for (const node of renderModeNodes)
          node .enable (gl);
@@ -657,8 +682,14 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
 
+      // Disable render mode nodes.
+
       for (const node of renderModeNodes)
          node .disable (gl);
+
+      // Reset texture units.
+
+      browser .resetTextureUnits ();
 
       gl .lineWidth (1);
    },
@@ -672,8 +703,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       return function (gl, renderContext, shapeNode)
       {
          const
-            appearanceNode     = renderContext .appearanceNode,
-            linePropertiesNode = appearanceNode .getStyleProperties (1);
+            { renderObject, viewport, appearanceNode } = renderContext,
+            linePropertiesNode                         = appearanceNode .getStyleProperties (1);
 
          if (!linePropertiesNode)
             return false;
@@ -690,8 +721,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             geometryContext      = shapeNode .getGeometryContext (),
             shaderNode           = appearanceNode .getShader (geometryContext, renderContext),
             renderModeNodes      = appearanceNode .getRenderModes (),
-            renderObject         = renderContext .renderObject,
-            viewport             = renderObject .getViewVolume () .getViewport (),
             projectionMatrix     = renderObject .getProjectionMatrix () .get (),
             primitiveMode        = browser .getPrimitiveMode (gl .TRIANGLES),
             transformShaderNode0 = browser .getLineTransformInstancedShader (0);
@@ -703,7 +732,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          transformShaderNode0 .enable (gl);
 
-         gl .uniform4f (transformShaderNode0 .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
+         gl .uniform4f (transformShaderNode0 .viewport, ... viewport);
          gl .uniformMatrix4fv (transformShaderNode0 .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
          gl .uniformMatrix4fv (transformShaderNode0 .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
          gl .uniform1f (transformShaderNode0 .linewidthScaleFactor1_2, linePropertiesNode .getLinewidthScaleFactor () / 2);
@@ -916,7 +945,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             // console .log (data);
          }
 
-         // Render triangles.
+         // Set viewport.
+
+         gl .viewport (... viewport);
+
+         // Enable render mode nodes.
 
          for (const node of renderModeNodes)
             node .enable (gl);
@@ -978,8 +1011,14 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          gl .enable (gl .CULL_FACE);
          gl .drawArrays (primitiveMode, 0, this .vertexCount * 3 * shapeNode .getNumInstances ());
 
+         // Disable render mode nodes.
+
          for (const node of renderModeNodes)
             node .disable (gl);
+
+         // Reset texture units.
+
+         browser .resetTextureUnits ();
 
          return true;
       };

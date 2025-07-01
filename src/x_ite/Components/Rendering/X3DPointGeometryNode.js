@@ -27,9 +27,10 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    display (gl, renderContext)
    {
       const
-         appearanceNode  = renderContext .appearanceNode,
-         shaderNode      = appearanceNode .getShader (this, renderContext),
-         renderModeNodes = appearanceNode .getRenderModes ();
+         { viewport, appearanceNode} = renderContext,
+         browser                     = this .getBrowser (),
+         shaderNode                  = appearanceNode .getShader (this, renderContext),
+         renderModeNodes             = appearanceNode .getRenderModes ();
 
       if (!renderContext .transparent)
       {
@@ -37,6 +38,12 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          gl .enable (gl .BLEND);
          gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
       }
+
+      // Set viewport.
+
+      gl .viewport (... viewport);
+
+      // Enable render mode nodes.
 
       for (const node of renderModeNodes)
          node .enable (gl);
@@ -77,8 +84,14 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
 
+      // Disable render mode nodes.
+
       for (const node of renderModeNodes)
          node .disable (gl);
+
+      // Reset texture units.
+
+      browser .resetTextureUnits ();
 
       if (!renderContext .transparent)
       {
@@ -90,9 +103,10 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         appearanceNode  = renderContext .appearanceNode,
-         shaderNode      = appearanceNode .getShader (this, renderContext),
-         renderModeNodes = appearanceNode .getRenderModes ();
+         { viewport, appearanceNode} = renderContext,
+         browser                     = this .getBrowser (),
+         shaderNode                  = appearanceNode .getShader (this, renderContext),
+         renderModeNodes             = appearanceNode .getRenderModes ();
 
       if (!renderContext .transparent)
       {
@@ -100,6 +114,12 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          gl .enable (gl .BLEND);
          gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
       }
+
+      // Set viewport.
+
+      gl .viewport (... viewport);
+
+      // Enable render mode nodes.
 
       for (const node of renderModeNodes)
          node .enable (gl);
@@ -159,8 +179,14 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
 
+      // Disable render mode nodes.
+
       for (const node of renderModeNodes)
          node .disable (gl);
+
+      // Reset texture units.
+
+      browser .resetTextureUnits ();
 
       if (!renderContext .transparent)
       {

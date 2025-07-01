@@ -933,9 +933,15 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    display (gl, renderContext)
    {
       const
-         appearanceNode  = renderContext .appearanceNode,
-         renderModeNodes = appearanceNode .getRenderModes (),
-         shaderNode      = appearanceNode .getShader (this, renderContext);
+         { viewport, appearanceNode } = renderContext,
+         browser                      = this .getBrowser (),
+         primitiveMode                = browser .getPrimitiveMode (this .primitiveMode),
+         renderModeNodes              = appearanceNode .getRenderModes (),
+         shaderNode                   = appearanceNode .getShader (this, renderContext);
+
+      // Set viewport.
+
+      gl .viewport (... viewport);
 
       // Enable render mode nodes.
 
@@ -952,27 +958,27 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (this .solid || !appearanceNode .getBackMaterial ())
       {
-         this .displayGeometry (gl, renderContext, shaderNode, true, true);
+         this .displayGeometry (gl, renderContext, shaderNode, primitiveMode, true, true);
       }
       else
       {
          const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
-         this .displayGeometry (gl, renderContext, backShaderNode, true,  false);
-         this .displayGeometry (gl, renderContext, shaderNode,     false, true);
+         this .displayGeometry (gl, renderContext, backShaderNode, primitiveMode, true,  false);
+         this .displayGeometry (gl, renderContext, shaderNode,     primitiveMode, false, true);
       }
 
       // Disable render mode nodes.
 
       for (const node of renderModeNodes)
          node .disable (gl);
-   },
-   displayGeometry (gl, renderContext, shaderNode, back, front)
-   {
-      const
-         browser       = this .getBrowser (),
-         primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
 
+      // Reset texture units.
+
+      browser .resetTextureUnits ();
+   },
+   displayGeometry (gl, renderContext, shaderNode, primitiveMode, back, front)
+   {
       shaderNode .enable (gl);
       shaderNode .setUniforms (gl, renderContext, this, front);
 
@@ -1071,10 +1077,15 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         browser         = this .getBrowser (),
-         appearanceNode  = renderContext .appearanceNode,
-         renderModeNodes = appearanceNode .getRenderModes (),
-         shaderNode      = appearanceNode .getShader (this, renderContext);
+         { viewport, appearanceNode} = renderContext,
+         browser                     = this .getBrowser (),
+         primitiveMode               = browser .getPrimitiveMode (this .primitiveMode),
+         renderModeNodes             = appearanceNode .getRenderModes (),
+         shaderNode                  = appearanceNode .getShader (this, renderContext);
+
+      // Set viewport.
+
+      gl .viewport (... viewport);
 
       // Enable render mode nodes.
 
@@ -1091,27 +1102,27 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (this .solid || !appearanceNode .getBackMaterial ())
       {
-         this .displayInstancedGeometry (gl, renderContext, shaderNode, true, true, shapeNode);
+         this .displayInstancedGeometry (gl, renderContext, shaderNode, primitiveMode, true, true, shapeNode);
       }
       else
       {
          const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
-         this .displayInstancedGeometry (gl, renderContext, backShaderNode, true,  false, shapeNode);
-         this .displayInstancedGeometry (gl, renderContext, shaderNode,     false, true,  shapeNode);
+         this .displayInstancedGeometry (gl, renderContext, backShaderNode, primitiveMode, true,  false, shapeNode);
+         this .displayInstancedGeometry (gl, renderContext, shaderNode,     primitiveMode, false, true,  shapeNode);
       }
 
       // Disable render mode nodes.
 
       for (const node of renderModeNodes)
          node .disable (gl);
-   },
-   displayInstancedGeometry (gl, renderContext, shaderNode, back, front, shapeNode)
-   {
-      const
-         browser       = this .getBrowser (),
-         primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
+      
+      // Reset texture units.
 
+      browser .resetTextureUnits ();
+   },
+   displayInstancedGeometry (gl, renderContext, shaderNode, primitiveMode, back, front, shapeNode)
+   {
       // Setup shader.
 
       shaderNode .enable (gl);
