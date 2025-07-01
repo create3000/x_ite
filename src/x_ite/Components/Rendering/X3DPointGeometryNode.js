@@ -27,14 +27,14 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    display (gl, renderContext)
    {
       const
-         { viewport, appearanceNode } = renderContext,
-         browser                      = this .getBrowser (),
-         shaderNode                   = appearanceNode .getShader (this, renderContext),
-         renderModeNodes              = appearanceNode .getRenderModes ();
+         { viewport, appearanceNode, transparent } = renderContext,
+         browser                                   = this .getBrowser (),
+         shaderNode                                = appearanceNode .getShader (this, renderContext),
+         renderModeNodes                           = appearanceNode .getRenderModes ();
 
       // Enable sample alpha to coverage if not transparent.
 
-      if (!renderContext .transparent)
+      if (!transparent)
       {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .enable (gl .BLEND);
@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       // Disable sample alpha to coverage if not transparent.
 
-      if (!renderContext .transparent)
+      if (!transparent)
       {
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .disable (gl .BLEND);
@@ -107,14 +107,14 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         { viewport, appearanceNode } = renderContext,
-         browser                      = this .getBrowser (),
-         shaderNode                   = appearanceNode .getShader (this, renderContext),
-         renderModeNodes              = appearanceNode .getRenderModes ();
+         { viewport, appearanceNode, transparent } = renderContext,
+         browser                                   = this .getBrowser (),
+         shaderNode                                = appearanceNode .getShader (this, renderContext),
+         renderModeNodes                           = appearanceNode .getRenderModes ();
 
       // Enable sample alpha to coverage if not transparent.
 
-      if (!renderContext .transparent)
+      if (!transparent)
       {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .enable (gl .BLEND);
@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       // Disable sample alpha to coverage if not transparent.
 
-      if (!renderContext .transparent)
+      if (!transparent)
       {
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .disable (gl .BLEND);
