@@ -27,10 +27,10 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    display (gl, renderContext)
    {
       const
-         { viewport, appearanceNode} = renderContext,
-         browser                     = this .getBrowser (),
-         shaderNode                  = appearanceNode .getShader (this, renderContext),
-         renderModeNodes             = appearanceNode .getRenderModes ();
+         { viewport, appearanceNode } = renderContext,
+         browser                      = this .getBrowser (),
+         shaderNode                   = appearanceNode .getShader (this, renderContext),
+         renderModeNodes              = appearanceNode .getRenderModes ();
 
       if (!renderContext .transparent)
       {
@@ -103,10 +103,10 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         { viewport, appearanceNode} = renderContext,
-         browser                     = this .getBrowser (),
-         shaderNode                  = appearanceNode .getShader (this, renderContext),
-         renderModeNodes             = appearanceNode .getRenderModes ();
+         { viewport, appearanceNode } = renderContext,
+         browser                      = this .getBrowser (),
+         shaderNode                   = appearanceNode .getShader (this, renderContext),
+         renderModeNodes              = appearanceNode .getRenderModes ();
 
       if (!renderContext .transparent)
       {

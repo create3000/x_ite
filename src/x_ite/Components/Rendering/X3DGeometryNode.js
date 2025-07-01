@@ -1077,11 +1077,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         { viewport, appearanceNode} = renderContext,
-         browser                     = this .getBrowser (),
-         primitiveMode               = browser .getPrimitiveMode (this .primitiveMode),
-         renderModeNodes             = appearanceNode .getRenderModes (),
-         shaderNode                  = appearanceNode .getShader (this, renderContext);
+         { viewport, appearanceNode } = renderContext,
+         browser                      = this .getBrowser (),
+         primitiveMode                = browser .getPrimitiveMode (this .primitiveMode),
+         renderModeNodes              = appearanceNode .getRenderModes (),
+         shaderNode                   = appearanceNode .getShader (this, renderContext);
 
       // Set viewport.
 
@@ -1116,7 +1116,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       for (const node of renderModeNodes)
          node .disable (gl);
-      
+
       // Reset texture units.
 
       browser .resetTextureUnits ();
