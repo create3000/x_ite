@@ -32,6 +32,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          shaderNode                   = appearanceNode .getShader (this, renderContext),
          renderModeNodes              = appearanceNode .getRenderModes ();
 
+      // Enable sample alpha to coverage if not transparent.
+
       if (!renderContext .transparent)
       {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
@@ -93,6 +95,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       browser .resetTextureUnits ();
 
+      // Disable sample alpha to coverage if not transparent.
+
       if (!renderContext .transparent)
       {
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
@@ -107,6 +111,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          browser                      = this .getBrowser (),
          shaderNode                   = appearanceNode .getShader (this, renderContext),
          renderModeNodes              = appearanceNode .getRenderModes ();
+
+      // Enable sample alpha to coverage if not transparent.
 
       if (!renderContext .transparent)
       {
@@ -187,6 +193,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       // Reset texture units.
 
       browser .resetTextureUnits ();
+
+      // Disable sample alpha to coverage if not transparent.
 
       if (!renderContext .transparent)
       {
