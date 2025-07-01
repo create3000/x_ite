@@ -1136,6 +1136,15 @@ Object .assign (X3DRenderObject .prototype,
 
       // DRAW
 
+      // Sort transparent shapes.
+
+      if (!this .orderIndependentTransparency)
+      {
+         const { numTransparentShapes, transparencySorter } = this;
+
+         transparencySorter .sort (0, numTransparentShapes);
+      }
+
       // Draw to all framebuffers.
 
       for (let i = 0; i < numFramebuffers; ++ i)
@@ -1237,7 +1246,7 @@ Object .assign (X3DRenderObject .prototype,
    },
    drawShapes (renderPass, gl, browser, frameBuffer, clearBits, viewport)
    {
-      const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter } = this;
+      const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes } = this;
 
       this .advanceRenderCount ();
 
@@ -1270,8 +1279,6 @@ Object .assign (X3DRenderObject .prototype,
 
       if (frameBuffer .getOIT ())
          frameBuffer .bindTransparency ();
-      else
-         transparencySorter .sort (0, numTransparentShapes);
 
       gl .depthMask (false);
       gl .enable (gl .BLEND);
