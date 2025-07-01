@@ -28,9 +28,9 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    {
       const
          { viewport, appearanceNode, transparent } = renderContext,
-         browser                                   = this .getBrowser (),
-         shaderNode                                = appearanceNode .getShader (this, renderContext),
-         renderModeNodes                           = appearanceNode .getRenderModes ();
+         browser         = this .getBrowser (),
+         shaderNode      = appearanceNode .getShader (this, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes ();
 
       // Enable sample alpha to coverage if not transparent.
 
@@ -108,9 +108,9 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    {
       const
          { viewport, appearanceNode, transparent } = renderContext,
-         browser                                   = this .getBrowser (),
-         shaderNode                                = appearanceNode .getShader (this, renderContext),
-         renderModeNodes                           = appearanceNode .getRenderModes ();
+         browser         = this .getBrowser (),
+         shaderNode      = appearanceNode .getShader (this, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes ();
 
       // Enable sample alpha to coverage if not transparent.
 

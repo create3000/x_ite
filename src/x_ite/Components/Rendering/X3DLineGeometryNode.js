@@ -280,10 +280,10 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       const
          { viewport, appearanceNode } = renderContext,
-         browser                      = this .getBrowser (),
-         primitiveMode                = browser .getPrimitiveMode (this .getPrimitiveMode ()),
-         shaderNode                   = appearanceNode .getShader (this, renderContext),
-         renderModeNodes              = appearanceNode .getRenderModes ();
+         browser         = this .getBrowser (),
+         primitiveMode   = browser .getPrimitiveMode (this .getPrimitiveMode ()),
+         shaderNode      = appearanceNode .getShader (this, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes ();
 
       // Set viewport.
 
@@ -354,7 +354,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       {
          const
             { renderObject, viewport, modelViewMatrix, appearanceNode } = renderContext,
-            linePropertiesNode                                          = appearanceNode .getStyleProperties (1);
+            linePropertiesNode = appearanceNode .getStyleProperties (1);
 
          if (!linePropertiesNode)
             return false;
@@ -607,11 +607,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       const
          { viewport, appearanceNode } = renderContext,
-         browser                      = this .getBrowser (),
-         geometryContext              = shapeNode .getGeometryContext (),
-         shaderNode                   = appearanceNode .getShader (geometryContext, renderContext),
-         renderModeNodes              = appearanceNode .getRenderModes (),
-         primitiveMode                = browser .getPrimitiveMode (this .getPrimitiveMode ());
+         browser         = this .getBrowser (),
+         geometryContext = shapeNode .getGeometryContext (),
+         shaderNode      = appearanceNode .getShader (geometryContext, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         primitiveMode   = browser .getPrimitiveMode (this .getPrimitiveMode ());
 
       // Set viewport.
 
@@ -704,7 +704,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       {
          const
             { renderObject, viewport, appearanceNode } = renderContext,
-            linePropertiesNode                         = appearanceNode .getStyleProperties (1);
+            linePropertiesNode = appearanceNode .getStyleProperties (1);
 
          if (!linePropertiesNode)
             return false;

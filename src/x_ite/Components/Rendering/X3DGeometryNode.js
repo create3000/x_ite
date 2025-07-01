@@ -933,11 +933,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    display (gl, renderContext)
    {
       const
-         { viewport, appearanceNode } = renderContext,
-         browser                      = this .getBrowser (),
-         primitiveMode                = browser .getPrimitiveMode (this .primitiveMode),
-         renderModeNodes              = appearanceNode .getRenderModes (),
-         shaderNode                   = appearanceNode .getShader (this, renderContext);
+         { viewport, appearanceNode, modelViewMatrix } = renderContext,
+         browser         = this .getBrowser (),
+         primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         shaderNode      = appearanceNode .getShader (this, renderContext);
 
       // Set viewport.
 
@@ -950,7 +950,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Handle negative scale.
 
-      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) > 0;
 
       gl .frontFace (positiveScale ? this .frontFace : this .backFace);
 
@@ -1077,11 +1077,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         { viewport, appearanceNode } = renderContext,
-         browser                      = this .getBrowser (),
-         primitiveMode                = browser .getPrimitiveMode (this .primitiveMode),
-         renderModeNodes              = appearanceNode .getRenderModes (),
-         shaderNode                   = appearanceNode .getShader (this, renderContext);
+         { viewport, appearanceNode, modelViewMatrix } = renderContext,
+         browser         = this .getBrowser (),
+         primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         shaderNode      = appearanceNode .getShader (this, renderContext);
 
       // Set viewport.
 
@@ -1094,7 +1094,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Handle negative scale.
 
-      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) > 0;
 
       gl .frontFace (positiveScale ? this .frontFace : this .backFace);
 
