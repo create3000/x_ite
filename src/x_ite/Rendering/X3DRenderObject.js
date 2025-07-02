@@ -777,7 +777,7 @@ Object .assign (X3DRenderObject .prototype,
 
          // Clip planes and local lights
 
-         assign (renderContext .localObjects,     this .localObjects); // Fog, ClipPane, X3DLightNode
+         assign (renderContext .localObjects,     this .localObjects); // ClipPane, X3DLightNode
          assign (renderContext .localObjectsKeys, this .localObjectsKeys);
 
          return true;
