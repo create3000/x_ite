@@ -1,7 +1,11 @@
 export default () => /* glsl */ `
-
 // Originally from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/scatter.frag
+
+// This fragment shader accumulates the diffuse light contribution for subsurface scattering in two color attachments for ibl and punctual lighting.
+// Light passing the surface is modulated by diffuseTransmissionColorFactor
+// diffuseTransmissionFactor defines the ratio of diffuse light passing the surface
+// Light which is scattered at the surface is modulated by the single scatter color, while diffuse transmission is additionally modulated by the absorption ratio (1 - singleScatter).
 
 uniform float x3d_ScatterMaterialIdEXT;
 
@@ -166,8 +170,9 @@ getMaterialColor ()
                #endif
 
                l_diffuse += diffuse_btdf * (1.0 - singleScatter) * singleScatter;
-               l_diffuse *= materialInfo .diffuseTransmissionFactor;
             }
+            
+            l_diffuse *= materialInfo .diffuseTransmissionFactor;
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
          // We need to multiply with sheen scaling, since we aggregate all lights in one texture, for IBL this can be done in the normal PBR shader
@@ -175,7 +180,7 @@ getMaterialColor ()
             albedoSheenScaling = min (1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor), 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotL, materialInfo .sheenRoughnessFactor));
          #endif
 
-         l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel); // Do we need to handle vec3 fresnel here?
+         l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel);
          color            += l_dielectric_brdf * albedoSheenScaling;
       }
    }

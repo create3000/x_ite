@@ -1,4 +1,5 @@
 export default () => /* glsl */ `
+// Subsurface scattering based on the blender implementation of the Burley model.
 #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
 
 uniform vec3  x3d_MultiscatterColorEXT;
@@ -14,6 +15,7 @@ const float M_1_PI         = 1.0 / M_PI;
 const float M_PHI          = (1.0 + sqrt (5.0)) / 2.0;
 const float M_GOLDEN_ANGLE = M_PI * (3.0f - sqrt (5.0));
 
+// glTF specification for converting multi-scatter color to single scatter color.
 vec3
 multiToSingleScatter ()
 {
@@ -46,7 +48,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 {
    vec3  scatterDistance     = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color
    float maxColor            = max3 (scatterDistance);
-   vec3  vMaxColor           = max (vec3 (maxColor, maxColor, maxColor), vec3 (0.00001));
+   vec3  vMaxColor           = max (vec3 (maxColor), vec3 (0.00001));
    vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);
    mat4  invProjectionMatrix = inverse (projectionMatrix);
    vec2  uv                  = gl_FragCoord .xy * texelSize;
@@ -60,14 +62,14 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    vec4 upos              = invProjectionMatrix * clipSpacePosition; // Convert to view space coordinates
    vec3 fragViewPosition  = upos .xyz / upos .w; // Normalize the coordinates
 
-   upos = invProjectionMatrix * vec4 (clipUV .x + texelSize .x, clipUV .y, centerDepth, 1.0);
+   upos = invProjectionMatrix * vec4 (clipUV .x + texelSize .x, clipUV .y, centerDepth, 1.0); // Get position of the next texel to the right
 
-   vec3  offsetViewPosition = upos .xyz / upos .w; // Normalize the coordinates
+   vec3  offsetViewPosition = upos .xyz / upos .w;
    float mPerPixel          = distance (fragViewPosition, offsetViewPosition);
    float maxRadiusPixels    = maxColor / mPerPixel; // Calculate the maximum radius in pixels
 
    if (maxRadiusPixels <= 1.0)
-      return diffuseColor * centerSample .rgb; // If the maximum color is less than or equal to the pixel size, return the base color
+      return diffuseColor * centerSample .rgb; // If the maximum radius is less than or equal to the pixel size, the pixel itself defines the scatter color.
 
    centerDepth = fragViewPosition .z; // Extract the depth value
 
@@ -78,6 +80,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    vec3 clampedScatterDistance = max (vec3 (x3d_ScatterMinRadiusEXT), scatterDistance / maxColor) * maxColor;
    vec3 d                      = burley_setup (clampedScatterDistance, albedo); // Setup the Burley model parameters
 
+   // Use random noise to generate a pseudo-random angle for rotation
    float randomTheta    = fract (tan (distance (uv * M_PHI, uv) * 1.0) * uv .x) * M_GOLDEN_ANGLE;
    mat2  rotationMatrix = mat2 (cos (randomTheta), -sin (randomTheta), sin (randomTheta), cos (randomTheta));
 
@@ -91,7 +94,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
       vec2  sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
       vec4  textureSample = texture (scatterLUT, sampleUV);
 
-      // Check volume scatter material id.
+      // Check if sample originates from same mesh/material.
       if (centerSample .w != textureSample .w)
          continue;
 
@@ -102,17 +105,11 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
       vec2  sampleClipUV       = sampleUV * 2.0 - 1.0; // Convert to clip space coordinates
       vec4  sampleUpos         = invProjectionMatrix * vec4 (sampleClipUV .xy, sampleDepth, 1.0);
       vec3  sampleViewPosition = sampleUpos .xyz / sampleUpos .w; // Normalize the coordinates
+      // Distance between center and sample in comparison to maximum radius is used for weighting the scattering contribution
       float sampleDistance     = distance (sampleViewPosition, fragViewPosition);
-
-      //vec3 exp_13 = exp2(((1.4426950408889634 * (-1.0/3.0)) * c) * vec3(0.5, 0.9, 0.0));
-      //vec3 expSum = exp_13 * (1.0 + exp_13 * exp_13);
-
-      //vec3 diffusion = (exp(-c / scatterDistance) + exp(-c / (scatterDistance * 3.0))) / (8.0 * M_PI * scatterDistance) / c;
-      //vec3 pdf = (exp(-r / vMaxColor) + exp(-r / (vMaxColor * 3.0))) / (8.0 * M_PI * vMaxColor);
 
       vec3 weight = burley_eval (d, sampleDistance) * rcpPdf;
 
-      //vec3 weight = diffusion / pdf;
       totalWeight  += weight;
       totalDiffuse += weight * textureSample .rgb;
    }
