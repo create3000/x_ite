@@ -1252,7 +1252,7 @@ Object .assign (X3DRenderObject .prototype,
 
       frameBuffer .bind ();
 
-      // Configure viewport and background
+      // Configure viewport and background.
 
       gl .viewport (... viewport);
       gl .scissor (... viewport);
