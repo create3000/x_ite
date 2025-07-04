@@ -40,10 +40,10 @@ function X3DBackgroundNode (executionContext)
    this .sphereContext    = new GeometryContext ({ colorMaterial: true });
    this .texturesContext  = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys });
    this .localObjectsKeys = this .sphereContext .localObjectsKeys;
-   this .renderPassNodes  = [this]
 
-   this .renderPassNodes [RenderPass .TRANSMISSION_INDEX]   = this;
-   this .renderPassNodes [RenderPass .VOLUME_SCATTER_INDEX] = null;
+   this [RenderPass .RENDER_INDEX]         = this;
+   this [RenderPass .TRANSMISSION_INDEX]   = this;
+   this [RenderPass .VOLUME_SCATTER_INDEX] = null;
 
 }
 

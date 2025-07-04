@@ -1263,7 +1263,7 @@ Object .assign (X3DRenderObject .prototype,
       gl .clear (gl .DEPTH_BUFFER_BIT | clearBits);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
-      this .getBackground () .getRenderPassNodes () [renderPass] ?.display (gl, this);
+      this .getBackground () [renderPass] ?.display (gl, this);
 
       // Use sorted blend or order independent transparency.
       // Render opaque objects first.
