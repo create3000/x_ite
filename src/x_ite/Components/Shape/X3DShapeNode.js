@@ -207,13 +207,13 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       this .set_renderPass__ (this .appearanceNode .isTransmission (), RenderPass .TRANSMISSION);
 
-      this .renderPassNodes [1] = this .appearanceNode .isTransmission () ? undefined : this;
+      this .renderPassNodes [RenderPass .TRANSMISSION_INDEX] = this .appearanceNode .isTransmission () ? null : this;
    },
    set_volumeScatter__ ()
    {
       this .set_renderPass__ (this .appearanceNode .isVolumeScatter (), RenderPass .VOLUME_SCATTER);
 
-      this .renderPassNodes [2] = this .appearanceNode .isVolumeScatter () ? this : undefined;
+      this .renderPassNodes [RenderPass .VOLUME_SCATTER_INDEX] = this .appearanceNode .isVolumeScatter () ? this : null;
    },
    set_renderPass__ (value, bit)
    {

@@ -6,6 +6,7 @@ import VertexArray     from "../../Rendering/VertexArray.js";
 import TraverseType    from "../../Rendering/TraverseType.js";
 import AlphaMode       from "../../Browser/Shape/AlphaMode.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
+import RenderPass      from "../../Rendering/RenderPass.js";
 import Complex         from "../../../standard/Math/Numbers/Complex.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4       from "../../../standard/Math/Numbers/Rotation4.js";
@@ -39,7 +40,11 @@ function X3DBackgroundNode (executionContext)
    this .sphereContext    = new GeometryContext ({ colorMaterial: true });
    this .texturesContext  = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys });
    this .localObjectsKeys = this .sphereContext .localObjectsKeys;
-   this .renderPassNodes  = [this, this, undefined]
+   this .renderPassNodes  = [this]
+
+   this .renderPassNodes [RenderPass .TRANSMISSION_INDEX]   = this;
+   this .renderPassNodes [RenderPass .VOLUME_SCATTER_INDEX] = null;
+
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),

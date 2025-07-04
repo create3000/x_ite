@@ -1185,7 +1185,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-               this .drawShapes (2, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .VOLUME_SCATTER_INDEX, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
             // Render to transmission buffer.
@@ -1197,7 +1197,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
-               this .drawShapes (1, gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .TRANSMISSION_INDEX, gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
                // Mipmap is later selected based on roughness and ior.
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
@@ -1212,7 +1212,7 @@ Object .assign (X3DRenderObject .prototype,
 
          const frameBuffer = framebuffers [i];
 
-         this .drawShapes (0, gl, browser, frameBuffer, 0, viewport);
+         this .drawShapes (RenderPass .RENDER_INDEX, gl, browser, frameBuffer, 0, viewport);
       }
 
       this .view = null;
