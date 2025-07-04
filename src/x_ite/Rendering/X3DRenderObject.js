@@ -1180,7 +1180,7 @@ Object .assign (X3DRenderObject .prototype,
 
             if (this .renderPasses & RenderPass .VOLUME_SCATTER_BIT)
             {
-               this .renderPass = RenderPass .VOLUME_SCATTER_BIT;
+               this .renderPass = RenderPass .VOLUME_SCATTER_INDEX;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
@@ -1192,7 +1192,7 @@ Object .assign (X3DRenderObject .prototype,
 
             if (this .renderPasses & RenderPass .TRANSMISSION_BIT)
             {
-               this .renderPass = RenderPass .TRANSMISSION_BIT;
+               this .renderPass = RenderPass .TRANSMISSION_INDEX;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
@@ -1207,7 +1207,7 @@ Object .assign (X3DRenderObject .prototype,
 
          // Draw with sorted blend or OIT.
 
-         this .renderPass = RenderPass .RENDER_BIT;
+         this .renderPass = RenderPass .RENDER_INDEX;
          this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
          const frameBuffer = framebuffers [i];
