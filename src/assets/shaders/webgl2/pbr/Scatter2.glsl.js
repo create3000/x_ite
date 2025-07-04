@@ -171,7 +171,7 @@ getMaterialColor ()
 
                l_diffuse += diffuse_btdf * (1.0 - singleScatter) * singleScatter;
             }
-            
+
             l_diffuse *= materialInfo .diffuseTransmissionFactor;
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
