@@ -1176,6 +1176,18 @@ Object .assign (X3DRenderObject .prototype,
 
          if (independent && this .renderPasses)
          {
+            // Render to volume scatter buffer.
+
+            if (this .renderPasses & RenderPass .VOLUME_SCATTER)
+            {
+               this .renderPass = RenderPass .VOLUME_SCATTER;
+               this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
+
+               const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
+
+               this .drawShapes (2, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+            }
+
             // Render to transmission buffer.
 
             if (this .renderPasses & RenderPass .TRANSMISSION)
@@ -1190,18 +1202,6 @@ Object .assign (X3DRenderObject .prototype,
                // Mipmap is later selected based on roughness and ior.
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
                gl .generateMipmap (gl .TEXTURE_2D);
-            }
-
-            // Render to volume scatter buffer.
-
-            if (this .renderPasses & RenderPass .VOLUME_SCATTER)
-            {
-               this .renderPass = RenderPass .VOLUME_SCATTER;
-               this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
-
-               const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
-
-               this .drawShapes (2, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
          }
 
