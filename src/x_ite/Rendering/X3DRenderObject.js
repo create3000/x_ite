@@ -64,7 +64,7 @@ function X3DRenderObject (executionContext)
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .renderPasses             = 0;
-   this .renderPass               = RenderPass .RENDER;
+   this .renderPass               = RenderPass .RENDER_BIT;
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true });
 }
@@ -1178,9 +1178,9 @@ Object .assign (X3DRenderObject .prototype,
          {
             // Render to volume scatter buffer.
 
-            if (this .renderPasses & RenderPass .VOLUME_SCATTER)
+            if (this .renderPasses & RenderPass .VOLUME_SCATTER_BIT)
             {
-               this .renderPass = RenderPass .VOLUME_SCATTER;
+               this .renderPass = RenderPass .VOLUME_SCATTER_BIT;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
@@ -1190,9 +1190,9 @@ Object .assign (X3DRenderObject .prototype,
 
             // Render to transmission buffer.
 
-            if (this .renderPasses & RenderPass .TRANSMISSION)
+            if (this .renderPasses & RenderPass .TRANSMISSION_BIT)
             {
-               this .renderPass = RenderPass .TRANSMISSION;
+               this .renderPass = RenderPass .TRANSMISSION_BIT;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
@@ -1207,7 +1207,7 @@ Object .assign (X3DRenderObject .prototype,
 
          // Draw with sorted blend or OIT.
 
-         this .renderPass = RenderPass .RENDER;
+         this .renderPass = RenderPass .RENDER_BIT;
          this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
          const frameBuffer = framebuffers [i];
