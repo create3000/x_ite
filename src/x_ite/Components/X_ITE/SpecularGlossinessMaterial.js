@@ -17,6 +17,12 @@ import SpecularGlossinessFragment2 from "../../../assets/shaders/webgl2/Specular
 ShaderRegistry .addInclude  ("SpecularGlossiness", SpecularGlossiness2);
 ShaderRegistry .addFragment ("SpecularGlossiness", SpecularGlossinessFragment1, SpecularGlossinessFragment2);
 
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_SpecularGlossinessTexture");
+
 /**
  * THIS NODE IS DEPRECIATED SINCE X3D VERSION 4.0.
  */
