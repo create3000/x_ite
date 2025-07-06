@@ -1,5 +1,5 @@
-/* X_ITE v11.5.14 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.14")];
+/* X_ITE v11.5.15 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.15")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1649,6 +1649,12 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 
 external_X_ITE_X3D_ShaderRegistry_default().addInclude  ("SpecularGlossiness", SpecularGlossiness2_glsl);
 external_X_ITE_X3D_ShaderRegistry_default().addFragment ("SpecularGlossiness", SpecularGlossiness1_fs, SpecularGlossiness2_fs);
+
+// Register textures.
+
+
+
+external_X_ITE_X3D_MaterialTextures_default().add ("x3d_SpecularGlossinessTexture");
 
 /**
  * THIS NODE IS DEPRECIATED SINCE X3D VERSION 4.0.
