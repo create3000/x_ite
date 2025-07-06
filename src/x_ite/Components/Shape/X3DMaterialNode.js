@@ -300,12 +300,12 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       switch (renderObject .getRenderPass ())
       {
-         case RenderPass .TRANSMISSION_INDEX:
+         case RenderPass .TRANSMISSION_KEY:
          {
             options .push ("X3D_TRANSMISSION_PASS");
             break;
          }
-         case RenderPass .VOLUME_SCATTER_INDEX:
+         case RenderPass .VOLUME_SCATTER_KEY:
          {
             options .push ("X3D_VOLUME_SCATTER_PASS");
             break;
@@ -331,7 +331,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             options .push ("X3D_ALPHA_MODE_BLEND");
 
-            if (renderObject .getRenderPass () === RenderPass .RENDER_INDEX)
+            if (renderObject .getRenderPass () === RenderPass .RENDER_KEY)
             {
                if (renderObject .getOrderIndependentTransparency ())
                   options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");

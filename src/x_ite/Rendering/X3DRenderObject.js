@@ -1179,24 +1179,24 @@ Object .assign (X3DRenderObject .prototype,
 
             if (this .renderPasses & RenderPass .VOLUME_SCATTER_BIT)
             {
-               this .renderPass = RenderPass .VOLUME_SCATTER_INDEX;
+               this .renderPass = RenderPass .VOLUME_SCATTER_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-               this .drawShapes (RenderPass .VOLUME_SCATTER_INDEX, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
             // Render to transmission buffer.
 
             if (this .renderPasses & RenderPass .TRANSMISSION_BIT)
             {
-               this .renderPass = RenderPass .TRANSMISSION_INDEX;
+               this .renderPass = RenderPass .TRANSMISSION_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
-               this .drawShapes (RenderPass .TRANSMISSION_INDEX, gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .TRANSMISSION_KEY, gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
                // Mipmap is later selected based on roughness and ior.
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
@@ -1206,12 +1206,12 @@ Object .assign (X3DRenderObject .prototype,
 
          // Draw with sorted blend or OIT.
 
-         this .renderPass = RenderPass .RENDER_INDEX;
+         this .renderPass = RenderPass .RENDER_KEY;
          this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
          const frameBuffer = framebuffers [i];
 
-         this .drawShapes (RenderPass .RENDER_INDEX, gl, browser, frameBuffer, 0, viewport);
+         this .drawShapes (RenderPass .RENDER_KEY, gl, browser, frameBuffer, 0, viewport);
       }
 
       this .view = null;
