@@ -772,7 +772,7 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .shadows         = this .localShadows .at (-1);
          renderContext .fogNode         = this .localFogs .at (-1);
          renderContext .hAnimNode       = this .hAnimNode .at (-1);
-         renderContext .renderPassNodes = shapeNode .getRenderPassNodes ();
+         renderContext .shapeNode = shapeNode;
          renderContext .appearanceNode  = shapeNode .getAppearance ();
 
          // Clip planes and local lights
@@ -793,7 +793,6 @@ Object .assign (X3DRenderObject .prototype,
          localObjects: [ ],
          localObjectsKeys: [ ], // [clip planes, lights]
          get renderContext () { return this; },
-         get shapeNode () { return this .renderPassNodes [0]; },
       };
    },
    pointing: (() =>
@@ -1270,9 +1269,9 @@ Object .assign (X3DRenderObject .prototype,
 
       for (let i = 0; i < numOpaqueShapes; ++ i)
       {
-         const { renderContext, renderPassNodes } = opaqueShapes [i];
+         const { renderContext, shapeNode } = opaqueShapes [i];
 
-         renderPassNodes [renderPass] ?.display (gl, renderContext);
+         shapeNode [renderPass] ?.display (gl, renderContext);
       }
 
       // Render transparent objects.
@@ -1285,9 +1284,9 @@ Object .assign (X3DRenderObject .prototype,
 
       for (let i = 0; i < numTransparentShapes; ++ i)
       {
-         const { renderContext, renderPassNodes } = transparentShapes [i];
+         const { renderContext, shapeNode } = transparentShapes [i];
 
-         renderPassNodes [renderPass] ?.display (gl, renderContext);
+         shapeNode [renderPass] ?.display (gl, renderContext);
       }
 
       gl .depthMask (true);
