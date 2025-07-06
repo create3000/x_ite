@@ -1441,7 +1441,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   throw new Error (`Field '${field .getName ()}' and '${reference .getName ()}' in PROTO ${this .getOuterNode () .getName ()} have different types.`);
                }
 
-               throw new Error("No name give after IS statement.");
+               throw new Error ("No name give after IS statement.");
             }
 
             throw new Error ("IS statement outside PROTO definition.");
@@ -1461,6 +1461,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error (`Couldn't read value for field '${fieldId}'.`);
 
          console .warn (`Parser error at line ${this .lineNumber}: Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
+
          return true;
       }
 
