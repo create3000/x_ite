@@ -34,8 +34,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_texCoord__ ();
-      this .set_normal__ ();
       this .set_tangent__ ();
+      this .set_normal__ ();
       this .set_coord__ ();
    },
    getFogCoord ()
@@ -118,14 +118,6 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       this .setTextureCoordinate (this .texCoordNode);
    },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
    set_tangent__ ()
    {
       this .tangentNode ?.removeInterest ("requestRebuild", this);
@@ -133,6 +125,14 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       this .tangentNode = X3DCast (X3DConstants .X3DTangentNode, this ._tangent);
 
       this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
+   set_normal__ ()
+   {
+      this .normalNode ?.removeInterest ("requestRebuild", this);
+
+      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
+
+      this .normalNode ?.addInterest ("requestRebuild", this);
    },
    set_coord__ ()
    {
