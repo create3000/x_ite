@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    {
       this .tangentNode ?.removeInterest ("requestRebuild", this);
 
-      this .tangentNode = X3DCast (X3DConstants .Tangent, this ._tangent);
+      this .tangentNode = X3DCast (X3DConstants .X3DTangentNode, this ._tangent);
 
       this .tangentNode ?.addInterest ("requestRebuild", this);
    },

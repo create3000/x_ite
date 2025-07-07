@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
    {
       this .tangentNode ?.removeInterest ("requestRebuild", this);
 
-      this .tangentNode = X3DCast (X3DConstants .Tangent, this ._tangent);
+      this .tangentNode = X3DCast (X3DConstants .X3DTangentNode, this ._tangent);
 
       this .tangentNode ?.addInterest ("requestRebuild", this);
    },

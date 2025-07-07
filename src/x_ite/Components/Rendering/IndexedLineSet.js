@@ -94,7 +94,7 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
    {
       this .tangentNode ?.removeInterest ("requestRebuild", this);
 
-      this .tangentNode = X3DCast (X3DConstants .Tangent, this ._tangent);
+      this .tangentNode = X3DCast (X3DConstants .X3DTangentNode, this ._tangent);
 
       this .tangentNode ?.addInterest ("requestRebuild", this);
    },
