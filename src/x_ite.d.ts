@@ -402,7 +402,7 @@ declare namespace X3D
       TextCompression:              "CHAR_SPACING" | "SCALING",
       Timings:                      boolean,
       ToneMapping:                  ToneMappingTypes,
-      XRSessionMode:                "NONE" | "IMMERSIVE_VR" | "IMMERSIVE_AR",
+      XRSessionMode:                "NONE" | "IMMERSIVE_VR" | "IMMERSIVE_AR" | "INLINE",
    };
 
    type ColorSpaceTypes   = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
