@@ -50,13 +50,13 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    {
       return this .texCoordNode;
    },
-   getNormal ()
-   {
-      return this .normalNode;
-   },
    getTangent ()
    {
       return this .tangentNode;
+   },
+   getNormal ()
+   {
+      return this .normalNode;
    },
    getCoord ()
    {
@@ -188,14 +188,14 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          fogCoordNode       = this .getFogCoord (),
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
-         normalNode         = this .getNormal (),
          tangentNode        = this .getTangent (),
+         normalNode         = this .getNormal (),
          coordNode          = this .getCoord (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
-         normalArray        = this .getNormals (),
          tangentArray       = this .getTangents (),
+         normalArray        = this .getNormals (),
          vertexArray        = this .getVertices (),
          polygons           = this .createPolygons (polygonsSize, this .polygons),
          triangles          = this .createTriangles (trianglesSize, this .triangles);
@@ -223,8 +223,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
          texCoordNode ?.addPoint (index, multiTexCoordArray);
 
-         normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
          tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
+         normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
 
          coordNode .addPoint (index, vertexArray);
       }

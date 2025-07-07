@@ -88,14 +88,14 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          fogCoordNode       = this .getFogCoord (),
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
-         normalNode         = this .getNormal (),
          tangentNode        = this .getTangent (),
+         normalNode         = this .getNormal (),
          coordNode          = this .getCoord (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
-         normalArray        = this .getNormals (),
          tangentArray       = this .getTangents (),
+         normalArray        = this .getNormals (),
          vertexArray        = this .getVertices ();
 
       texCoordNode ?.init (multiTexCoordArray);
@@ -117,8 +117,8 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
             texCoordNode ?.addPoint (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
-            normalNode  ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalPerFaceIndex (face), normalArray);
             tangentNode ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalPerFaceIndex (face), tangentArray);
+            normalNode  ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalPerFaceIndex (face), normalArray);
 
             coordNode .addPoint (index, vertexArray);
          }

@@ -35,12 +35,14 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
       this ._fogCoord   .addInterest ("set_fogCoord__", this);
       this ._color      .addInterest ("set_color__",    this);
       this ._texCoord   .addInterest ("set_texCoord__", this);
+      this ._tangent    .addInterest ("set_tangent__",  this);
       this ._normal     .addInterest ("set_normal__",   this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_texCoord__ ();
+      this .set_tangent__ ();
       this .set_normal__ ();
    },
    set_attrib__ ()
@@ -99,6 +101,14 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
 
       this .setTextureCoordinate (this .texCoordNode);
    },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = X3DCast (X3DConstants .X3DTangentNode, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
    set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
@@ -115,13 +125,13 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
    {
       return this .texCoordNode;
    },
-   getNormal ()
-   {
-      return this .normalNode;
-   },
    getTangent ()
    {
       return this .tangentNode;
+   },
+   getNormal ()
+   {
+      return this .normalNode;
    },
    getHeight (index)
    {
@@ -255,14 +265,14 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          fogCoordNode       = this .fogCoordNode,
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
-         normalNode         = this .getNormal (),
          tangentNode        = this .getTangent (),
+         normalNode         = this .getNormal (),
          points             = this .createPoints (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
-         normalArray        = this .getNormals (),
          tangentArray       = this .getTangents (),
+         normalArray        = this .getNormals (),
          vertexArray        = this .getVertices ();
 
       let face = 0;
@@ -310,8 +320,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
                texCoordArray .push (x, y, 0, 1);
             }
 
-            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
             tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
+            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
 
             vertexArray .push (x, y, z, 1);
          }

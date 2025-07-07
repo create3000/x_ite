@@ -22,15 +22,15 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
       this ._attrib   .addInterest ("set_attrib__",   this);
       this ._fogCoord .addInterest ("set_fogCoord__", this);
       this ._color    .addInterest ("set_color__",    this);
-      this ._normal   .addInterest ("set_normal__",   this);
       this ._tangent  .addInterest ("set_tangent__",  this);
+      this ._normal   .addInterest ("set_normal__",   this);
       this ._coord    .addInterest ("set_coord__",    this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
       this .set_color__ ();
-      this .set_normal__ ();
       this .set_tangent__ ();
+      this .set_normal__ ();
       this .set_coord__ ();
    },
    getCoord ()
@@ -81,14 +81,6 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
 
       this .colorNode ?.addInterest ("requestRebuild", this);
    },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
    set_tangent__ ()
    {
       this .tangentNode ?.removeInterest ("requestRebuild", this);
@@ -96,6 +88,14 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
       this .tangentNode = X3DCast (X3DConstants .X3DTangentNode, this ._tangent);
 
       this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
+   set_normal__ ()
+   {
+      this .normalNode ?.removeInterest ("requestRebuild", this);
+
+      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
+
+      this .normalNode ?.addInterest ("requestRebuild", this);
    },
    set_coord__ ()
    {
@@ -120,10 +120,10 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
          colorNode         = this .colorNode,
          colorArray        = this .getColors (),
          coordNode         = this .coordNode,
-         normalArray       = this .getNormals (),
-         normalNode        = this .normalNode,
          tangentArray      = this .getTangents (),
          tangentNode       = this .tangentNode,
+         normalArray       = this .getNormals (),
+         normalNode        = this .normalNode,
          vertexArray       = this .getVertices (),
          numPoints         = coordNode ._point .length;
 
@@ -138,8 +138,8 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
 
       fogCoordNode ?.addDepths  (fogDepthArray, numPoints);
       colorNode    ?.addColors  (colorArray,    numPoints);
-      normalNode   ?.addVectors (normalArray,   numPoints);
       tangentNode  ?.addVectors (tangentArray,  numPoints);
+      normalNode   ?.addVectors (normalArray,   numPoints);
 
       coordNode .addPoints (vertexArray);
    },
