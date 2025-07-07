@@ -5,7 +5,6 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
 import X3DGeospatialObject  from "./X3DGeospatialObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import X3DCast              from "../../Base/X3DCast.js";
 import Triangle3            from "../../../standard/Math/Geometry/Triangle3.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
@@ -42,58 +41,6 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
       this .set_texCoord__ ();
       this .set_tangent__ ();
       this .set_normal__ ();
-   },
-   set_color__ ()
-   {
-      this .colorNode ?.removeInterest ("requestRebuild", this);
-
-      this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
-
-      this .colorNode ?.addInterest ("requestRebuild", this);
-
-      this .setTransparent (this .colorNode ?.isTransparent ());
-   },
-   set_texCoord__ ()
-   {
-      this .texCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
-
-      this .texCoordNode ?.addInterest ("requestRebuild", this);
-
-      this .setTextureCoordinate (this .texCoordNode);
-   },
-   set_tangent__ ()
-   {
-      this .tangentNode ?.removeInterest ("requestRebuild", this);
-
-      this .tangentNode = X3DCast (X3DConstants .X3DTangentNode, this ._tangent);
-
-      this .tangentNode ?.addInterest ("requestRebuild", this);
-   },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
-   getColor ()
-   {
-      return this .colorNode;
-   },
-   getTexCoord ()
-   {
-      return this .texCoordNode;
-   },
-   getTangent ()
-   {
-      return this .tangentNode;
-   },
-   getNormal ()
-   {
-      return this .normalNode;
    },
    getHeight (index)
    {

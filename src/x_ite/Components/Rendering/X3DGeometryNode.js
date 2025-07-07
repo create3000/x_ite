@@ -2,6 +2,7 @@ import Fields       from "../../Fields.js";
 import VertexArray  from "../../Rendering/VertexArray.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast      from "../../Base/X3DCast.js";
 import MikkTSpace   from "../../Browser/Rendering/MikkTSpace.js";
 import Vector2      from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
@@ -18,7 +19,7 @@ const boxNormals = [
    new Vector3 (0,  1,  0), // top
    new Vector3 (0, -1,  0), // bottom
    new Vector3 (1,  0,  0)  // right
-   // left: We do not have to test for left.
+   // left: We do not need to test for left.
 ];
 
 function X3DGeometryNode (executionContext)
@@ -1193,6 +1194,113 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
       }
+   },
+},
+// Common functions for all X3DComposedGeometryNode types and some other nodes:
+{
+   getFogCoord ()
+   {
+      return this .fogCoordNode;
+   },
+   getColor ()
+   {
+      return this .colorNode;
+   },
+   getTexCoord ()
+   {
+      return this .texCoordNode;
+   },
+   getTangent ()
+   {
+      return this .tangentNode;
+   },
+   getNormal ()
+   {
+      return this .normalNode;
+   },
+   getCoord ()
+   {
+      return this .coordNode;
+   },
+   set_attrib__ ()
+   {
+      const attribNodes = this .getAttrib ();
+
+      for (const attribNode of attribNodes)
+      {
+         attribNode .removeInterest ("requestRebuild", this);
+         attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+      }
+
+      attribNodes .length = 0;
+
+      for (const node of this ._attrib)
+      {
+         const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
+
+         if (attribNode)
+            attribNodes .push (attribNode);
+      }
+
+      for (const attribNode of attribNodes)
+      {
+         attribNode .addInterest ("requestRebuild", this);
+         attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+      }
+
+      this .updateVertexArrays ();
+   },
+   set_fogCoord__ ()
+   {
+      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
+
+      this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
+
+      this .fogCoordNode ?.addInterest ("requestRebuild", this);
+   },
+   set_color__ ()
+   {
+      this .colorNode ?.removeInterest ("requestRebuild", this);
+
+      this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
+
+      this .colorNode ?.addInterest ("requestRebuild", this);
+
+      this .setTransparent (this .colorNode ?.isTransparent ());
+   },
+   set_texCoord__ ()
+   {
+      this .texCoordNode ?.removeInterest ("requestRebuild", this);
+
+      this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
+
+      this .texCoordNode ?.addInterest ("requestRebuild", this);
+
+      this .setTextureCoordinate (this .texCoordNode);
+   },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = X3DCast (X3DConstants .X3DTangentNode, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
+   set_normal__ ()
+   {
+      this .normalNode ?.removeInterest ("requestRebuild", this);
+
+      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
+
+      this .normalNode ?.addInterest ("requestRebuild", this);
+   },
+   set_coord__ ()
+   {
+      this .coordNode ?.removeInterest ("requestRebuild", this);
+
+      this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
+
+      this .coordNode ?.addInterest ("requestRebuild", this);
    },
 });
 
