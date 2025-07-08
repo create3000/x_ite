@@ -28,7 +28,7 @@ class ScatterSamples
 
          min_radius = Math .min (min_radius, r);
 
-         uniformArray .push (theta, r , 1 / this .#burleyPdf (d, r));
+         uniformArray .push (theta, r, 1 / this .#burleyPdf (d, r));
       }
 
       // Avoid float imprecision.
