@@ -1,7 +1,14 @@
 class ScatterSamples
 {
    static SCATTER_SAMPLES_COUNT = 64; // Number of samples for the Burley diffusion profile.
-   static SCATTER_SAMPLES       = this .#computeScatterSamples ();
+
+   static
+   {
+      const [scatterSamples, minRadius] = this .#computeScatterSamples ();
+
+      this .SCATTER_SAMPLES    = scatterSamples;
+      this .SCATTER_MIN_RADIUS = minRadius;
+   }
 
    /**
     * Using blender implementation of Burley diffusion profile.

@@ -43,10 +43,8 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      const [scatterSamples, minRadius] = ScatterSamples .SCATTER_SAMPLES;
-
-      this .scatterSamples   = scatterSamples;
-      this .scatterMinRadius = minRadius;
+      this .scatterSamples   = ScatterSamples .SCATTER_SAMPLES;
+      this .scatterMinRadius = ScatterSamples .SCATTER_MIN_RADIUS;
 
       this ._multiscatterColor .addInterest ("set_multiscatterColor__", this);
       this ._scatterAnisotropy .addInterest ("set_scatterAnisotropy__", this);
