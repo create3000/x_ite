@@ -206,9 +206,9 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       return shaderNode;
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+      X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, textureTransformMapping, textureCoordinateMapping);
 
       gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
       gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColorArray);
@@ -220,7 +220,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       this .ambientTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_AmbientTexture,
          this ._ambientTextureMapping .getValue (),
          textureTransformMapping,
@@ -228,7 +227,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_DiffuseTexture,
          this ._diffuseTextureMapping .getValue (),
          textureTransformMapping,
@@ -236,7 +234,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       this .specularTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_SpecularTexture,
          this ._specularTextureMapping .getValue (),
          textureTransformMapping,
@@ -244,7 +241,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       this .shininessTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_ShininessTexture,
          this ._shininessTextureMapping .getValue (),
          textureTransformMapping,
@@ -256,7 +252,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
          this .occlusionTextureNode .setNamedShaderUniforms (gl,
             shaderObject,
-            renderObject,
             shaderObject .x3d_OcclusionTexture,
             this ._occlusionTextureMapping .getValue (),
             textureTransformMapping,

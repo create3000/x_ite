@@ -578,15 +578,15 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
             gl .uniform1f (shaderNode .x3d_Exposure,                           1);
 
-            this .drawRectangle (gl, browser, shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
+            this .drawRectangle (gl, browser, shaderNode, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
 
             gl .uniform1f (shaderNode .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
          }
       };
    })(),
-   drawRectangle (gl, browser, shaderNode, renderObject, textureNode, buffer, vertexArray)
+   drawRectangle (gl, browser, shaderNode, textureNode, buffer, vertexArray)
    {
-      textureNode .setShaderUniforms (gl, shaderNode, renderObject);
+      textureNode .setShaderUniforms (gl, shaderNode);
 
       if (vertexArray .enable (shaderNode .getProgram ()))
       {

@@ -86,13 +86,12 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       uniforms .push ("x3d_AnisotropyEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform3fv (shaderObject .x3d_AnisotropyEXT, this .anisotropyArray);
 
       this .anisotropyTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_AnisotropyTextureEXT,
          this ._anisotropyTextureMapping .getValue (),
          textureTransformMapping,

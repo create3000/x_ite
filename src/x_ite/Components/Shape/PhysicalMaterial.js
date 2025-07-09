@@ -185,14 +185,16 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       browser .getShaders () .set (key, shaderNode);
 
+      shaderNode .volumeScatterPass = options .includes ("X3D_VOLUME_SCATTER_PASS");
+
       return shaderNode;
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+      X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, textureTransformMapping, textureCoordinateMapping);
 
       for (const extensionNode of this .extensionNodes)
-         extensionNode .setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+         extensionNode .setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping);
 
       gl .uniform3fv (shaderObject .x3d_BaseColor, this .baseColorArray);
       gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
@@ -203,7 +205,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       this .baseTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_BaseTexture,
          this ._baseTextureMapping .getValue (),
          textureTransformMapping,
@@ -211,7 +212,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       this .metallicRoughnessTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_MetallicRoughnessTexture,
          this ._metallicRoughnessTextureMapping .getValue (),
          textureTransformMapping,
@@ -223,7 +223,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
          this .occlusionTextureNode .setNamedShaderUniforms (gl,
             shaderObject,
-            renderObject,
             shaderObject .x3d_OcclusionTexture,
             this ._occlusionTextureMapping .getValue (),
             textureTransformMapping,

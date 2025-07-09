@@ -47,7 +47,7 @@ Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .proto
    {
       uniforms .push ("x3d_EmissiveStrengthEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_EmissiveStrengthEXT, this .emissiveStrength);
    },

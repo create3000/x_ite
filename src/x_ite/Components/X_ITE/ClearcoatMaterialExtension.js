@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       uniforms .push ("x3d_ClearcoatEXT");
       uniforms .push ("x3d_ClearcoatRoughnessEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_ClearcoatEXT,          this .clearcoat);
       gl .uniform1f (shaderObject .x3d_ClearcoatRoughnessEXT, this .clearcoatRoughness);
@@ -107,7 +107,6 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
 
       this .clearcoatTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_ClearcoatTextureEXT,
          this ._clearcoatTextureMapping .getValue (),
          textureTransformMapping,
@@ -115,7 +114,6 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
 
       this .clearcoatRoughnessTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_ClearcoatRoughnessTextureEXT,
          this ._clearcoatRoughnessTextureMapping .getValue (),
          textureTransformMapping,
@@ -123,7 +121,6 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
 
       this .clearcoatNormalTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_ClearcoatNormalTextureEXT,
          this ._clearcoatNormalTextureMapping .getValue (),
          textureTransformMapping,

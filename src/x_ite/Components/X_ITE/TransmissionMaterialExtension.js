@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       uniforms .push ("x3d_TransmissionEXT");
       uniforms .push ("x3d_TransmissionSamplerEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       // These shapes must not be rendered during transmission pass!
 
@@ -93,7 +93,6 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
       this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_TransmissionTextureEXT,
          this ._transmissionTextureMapping .getValue (),
          textureTransformMapping,

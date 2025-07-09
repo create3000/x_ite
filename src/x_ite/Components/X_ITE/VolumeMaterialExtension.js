@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
       uniforms .push ("x3d_AttenuationDistanceEXT");
       uniforms .push ("x3d_AttenuationColorEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f  (shaderObject .x3d_ThicknessEXT,           this .thickness);
       gl .uniform1f  (shaderObject .x3d_AttenuationDistanceEXT, this .attenuationDistance);
@@ -103,7 +103,6 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
 
       this .thicknessTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_ThicknessTextureEXT,
          this ._thicknessTextureMapping .getValue (),
          textureTransformMapping,

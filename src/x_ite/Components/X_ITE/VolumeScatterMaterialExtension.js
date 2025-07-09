@@ -82,9 +82,9 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       uniforms .push ("x3d_ScatterIBLSamplerEXT");
       uniforms .push ("x3d_ScatterDepthSamplerEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      if (renderObject .getRenderPass () === RenderPass .VOLUME_SCATTER_KEY)
+      if (shaderObject .volumeScatterPass)
       {
          gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, this .getId ());
          gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);

@@ -197,9 +197,9 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
             options .push (`X3D_${name}_TEXTURE${ext}_LINEAR`);
       }
    },
-   setNamedShaderUniforms (gl, shaderObject, renderObject, uniformStruct, mapping, textureTransformMapping, textureCoordinateMapping)
+   setNamedShaderUniforms (gl, shaderObject, uniformStruct, mapping, textureTransformMapping, textureCoordinateMapping)
    {
-      this .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
+      this .setShaderUniforms (gl, shaderObject, uniformStruct);
 
       gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
       gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);

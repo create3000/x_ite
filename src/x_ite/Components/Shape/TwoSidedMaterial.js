@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    getMaterialKey: Material .prototype .getMaterialKey,
    getBaseTexture: Material .prototype .getBaseTexture,
    createShader: Material .prototype .createShader,
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping, front)
    {
       if (!front && this ._separateBackColor .getValue ())
       {

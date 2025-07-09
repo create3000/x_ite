@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       return options;
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColorArray);
       gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
@@ -92,7 +92,6 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       this .emissiveTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_EmissiveTexture,
          this ._emissiveTextureMapping .getValue (),
          textureTransformMapping,
@@ -103,7 +102,6 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       this .normalTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
-         renderObject,
          shaderObject .x3d_NormalTexture,
          this ._normalTextureMapping .getValue (),
          textureTransformMapping,

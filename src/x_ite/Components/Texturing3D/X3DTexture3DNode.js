@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
                                                                       this ._repeatT .getValue (),
                                                                       this ._repeatR .getValue ());
    },
-   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, shaderObject, channel = shaderObject .x3d_Texture [0])
    {
       const textureUnit = this .getBrowser () .getTextureUnit ();
 
