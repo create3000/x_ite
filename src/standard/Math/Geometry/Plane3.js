@@ -2,7 +2,6 @@ import Vector3 from "../Numbers/Vector3.js";
 import Matrix4 from "../Numbers/Matrix4.js";
 
 const
-   normal    = new Vector3 (),
    point     = new Vector3 (),
    invMatrix = new Matrix4 ();
 
@@ -53,7 +52,7 @@ Object .assign (Plane3 .prototype,
       // of the matrix so that normals are not scaled incorrectly.
       // n' = !~m * n = n * ~m
       invMatrix .assign (matrix) .submatrix .inverse ()
-         .multVecMatrix (normal .assign (this .normal)) .normalize ();
+         .multVecMatrix (this .normal) .normalize ();
 
       // Transform the point by the matrix
       matrix .multMatrixVec (point);
@@ -61,8 +60,7 @@ Object .assign (Plane3 .prototype,
       // The new distance is the projected distance of the vector to the
       // transformed point onto the (unit) transformed normal. This is
       // just a dot product.
-      this .normal .assign (normal);
-      this .distanceFromOrigin = normal .dot (point);
+      this .distanceFromOrigin = this .normal .dot (point);
 
       return this;
    },
@@ -78,7 +76,7 @@ Object .assign (Plane3 .prototype,
       // of the matrix so that normals are not scaled incorrectly.
       // n' = n * !~m = ~m * n
       invMatrix .assign (matrix) .submatrix .inverse ()
-         .multMatrixVec (normal .assign (this .normal)) .normalize ();
+         .multMatrixVec (this .normal) .normalize ();
 
       // Transform the point by the matrix
       matrix .multVecMatrix (point);
@@ -86,8 +84,7 @@ Object .assign (Plane3 .prototype,
       // The new distance is the projected distance of the vector to the
       // transformed point onto the (unit) transformed normal. This is
       // just a dot product.
-      this .normal .assign (normal);
-      this .distanceFromOrigin = normal .dot (point);
+      this .distanceFromOrigin = this .normal .dot (point);
 
       return this;
    },
