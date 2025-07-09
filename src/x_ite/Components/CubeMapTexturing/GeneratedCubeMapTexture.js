@@ -121,7 +121,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
       return function (renderObject)
       {
-         this .textureRendering = true;
+         this .textureRenderingPass = true;
 
          if (!this .dependentRenderers .has (renderObject))
          {
@@ -204,12 +204,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          if (this ._update .getValue () === "NEXT_FRAME_ONLY")
             this ._update = "NONE";
 
-         this .textureRendering = false;
+         this .textureRenderingPass = false;
       };
    })(),
    setShaderUniforms (gl, channel)
    {
-      if (this .textureRendering)
+      if (this .textureRenderingPass)
       {
          // Hide object by making fully transparent.
 
