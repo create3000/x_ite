@@ -43,9 +43,6 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      this .scatterSamples   = ScatterSamples .SCATTER_SAMPLES;
-      this .scatterMinRadius = ScatterSamples .SCATTER_MIN_RADIUS;
-
       this ._multiscatterColor .addInterest ("set_multiscatterColor__", this);
       this ._scatterAnisotropy .addInterest ("set_scatterAnisotropy__", this);
 
@@ -98,8 +95,8 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
 
       gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
       gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
-      gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    this .scatterSamples);
-      gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  this .scatterMinRadius);
+      gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    ScatterSamples .SCATTER_SAMPLES);
+      gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  ScatterSamples .SCATTER_MIN_RADIUS);
 
       // Set scatter framebuffer textures.
 
