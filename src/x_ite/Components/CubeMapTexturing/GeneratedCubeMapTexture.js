@@ -209,22 +209,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    })(),
    setShaderUniforms (gl, channel)
    {
+      X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
+
       if (this .textureRenderingPass)
-      {
-         // Hide object by making fully transparent.
-
-         const
-            browser     = this .getBrowser (),
-            textureUnit = browser .getTextureUnit ();
-
-         gl .activeTexture (gl .TEXTURE0 + textureUnit);
-         gl .bindTexture (gl .TEXTURE_CUBE_MAP, browser .getTransparentTextureCube ());
-         gl .uniform1i (channel .textureCube, textureUnit);
-      }
-      else
-      {
-         X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
-      }
+         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
    },
 });
 
