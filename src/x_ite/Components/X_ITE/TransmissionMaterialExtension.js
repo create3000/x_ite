@@ -92,7 +92,6 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
          return;
 
       this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_TransmissionTextureEXT,
          this ._transmissionTextureMapping .getValue (),
          textureTransformMapping,

@@ -169,14 +169,12 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
          return;
 
       this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_DiffuseTexture,
          this ._diffuseTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .specularGlossinessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_SpecularGlossinessTexture,
          this ._specularGlossinessTextureMapping .getValue (),
          textureTransformMapping,
@@ -187,7 +185,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
          gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
          this .occlusionTextureNode .setNamedShaderUniforms (gl,
-            shaderObject,
             shaderObject .x3d_OcclusionTexture,
             this ._occlusionTextureMapping .getValue (),
             textureTransformMapping,

@@ -1049,7 +1049,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Texture
 
-         textureNode ?.setShaderUniforms (gl, this);
+         textureNode ?.setShaderUniforms (gl, this .x3d_Texture [0], this);
 
          appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
          geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);

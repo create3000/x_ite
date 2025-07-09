@@ -118,14 +118,12 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
          return;
 
       this .iridescenceTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_IridescenceTextureEXT,
          this ._iridescenceTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .iridescenceThicknessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_IridescenceThicknessTextureEXT,
          this ._iridescenceThicknessTextureMapping .getValue (),
          textureTransformMapping,

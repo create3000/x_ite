@@ -204,14 +204,12 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          return;
 
       this .baseTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_BaseTexture,
          this ._baseTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .metallicRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_MetallicRoughnessTexture,
          this ._metallicRoughnessTextureMapping .getValue (),
          textureTransformMapping,
@@ -222,7 +220,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
          this .occlusionTextureNode .setNamedShaderUniforms (gl,
-            shaderObject,
             shaderObject .x3d_OcclusionTexture,
             this ._occlusionTextureMapping .getValue (),
             textureTransformMapping,

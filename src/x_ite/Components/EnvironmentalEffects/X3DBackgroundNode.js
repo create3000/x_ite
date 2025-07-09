@@ -586,7 +586,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    })(),
    drawRectangle (gl, browser, shaderNode, textureNode, buffer, vertexArray)
    {
-      textureNode .setShaderUniforms (gl, shaderNode);
+      textureNode .setShaderUniforms (gl, shaderNode .x3d_Texture [0]);
 
       if (vertexArray .enable (shaderNode .getProgram ()))
       {

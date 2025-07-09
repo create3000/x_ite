@@ -102,7 +102,6 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
          return;
 
       this .thicknessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_ThicknessTextureEXT,
          this ._thicknessTextureMapping .getValue (),
          textureTransformMapping,

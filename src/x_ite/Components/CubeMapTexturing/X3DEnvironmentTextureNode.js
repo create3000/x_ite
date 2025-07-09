@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
                                                                       false,
                                                                       false);
    },
-   setShaderUniforms (gl, shaderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, channel)
    {
       const textureUnit = this .getBrowser () .getTextureUnit ();
 

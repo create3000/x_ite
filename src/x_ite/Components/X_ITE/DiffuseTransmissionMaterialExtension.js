@@ -98,14 +98,12 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
          return;
 
       this .diffuseTransmissionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_DiffuseTransmissionTextureEXT,
          this ._diffuseTransmissionTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .diffuseTransmissionColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_DiffuseTransmissionColorTextureEXT,
          this ._diffuseTransmissionColorTextureMapping .getValue (),
          textureTransformMapping,

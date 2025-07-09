@@ -240,7 +240,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
       for (const textureNode of this .textureNodes)
          textureNode .traverse (type, renderObject);
    },
-   setShaderUniforms (gl, shaderObject)
+   setShaderUniforms (gl, uniformStruct, shaderObject)
    {
       const
          textureNodes = this .textureNodes,
@@ -250,7 +250,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
 
       for (let i = 0; i < channels; ++ i)
       {
-         textureNodes [i] .setShaderUniforms (gl, shaderObject, shaderObject .x3d_Texture [i]);
+         textureNodes [i] .setShaderUniforms (gl, shaderObject .x3d_Texture [i]);
 
          gl .uniform1i  (shaderObject .x3d_MultiTextureMode [i],      this .getMode (i));
          gl .uniform1i  (shaderObject .x3d_MultiTextureAlphaMode [i], this .getAlphaMode (i));

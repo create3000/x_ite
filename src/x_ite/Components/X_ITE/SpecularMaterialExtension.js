@@ -97,14 +97,12 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
          return;
 
       this .specularTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_SpecularTextureEXT,
          this ._specularTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .specularColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_SpecularColorTextureEXT,
          this ._specularColorTextureMapping .getValue (),
          textureTransformMapping,

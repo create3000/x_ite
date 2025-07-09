@@ -219,28 +219,24 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          return;
 
       this .ambientTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_AmbientTexture,
          this ._ambientTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_DiffuseTexture,
          this ._diffuseTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .specularTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_SpecularTexture,
          this ._specularTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .shininessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_ShininessTexture,
          this ._shininessTextureMapping .getValue (),
          textureTransformMapping,
@@ -251,7 +247,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
          this .occlusionTextureNode .setNamedShaderUniforms (gl,
-            shaderObject,
             shaderObject .x3d_OcclusionTexture,
             this ._occlusionTextureMapping .getValue (),
             textureTransformMapping,

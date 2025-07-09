@@ -106,21 +106,18 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
          return;
 
       this .clearcoatTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_ClearcoatTextureEXT,
          this ._clearcoatTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .clearcoatRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_ClearcoatRoughnessTextureEXT,
          this ._clearcoatRoughnessTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .clearcoatNormalTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_ClearcoatNormalTextureEXT,
          this ._clearcoatNormalTextureMapping .getValue (),
          textureTransformMapping,

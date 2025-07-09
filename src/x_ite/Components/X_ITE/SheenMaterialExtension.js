@@ -112,14 +112,12 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
          return;
 
       this .sheenColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_SheenColorTextureEXT,
          this ._sheenColorTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .sheenRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
          shaderObject .x3d_SheenRoughnessTextureEXT,
          this ._sheenRoughnessTextureMapping .getValue (),
          textureTransformMapping,

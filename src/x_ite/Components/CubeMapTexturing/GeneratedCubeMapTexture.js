@@ -207,18 +207,25 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          this .textureRendering = false;
       };
    })(),
-   setShaderUniforms: (() =>
+   setShaderUniforms (gl, channel)
    {
-      const zeros = new Float32Array (16); // Trick: zero model view matrix to hide object.
-
-      return function (gl, shaderObject, channel)
+      if (this .textureRendering)
       {
-         X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, channel);
+         // Hide object by making fully transparent.
 
-         if (this .textureRendering)
-            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-      };
-   })(),
+         const
+            browser     = this .getBrowser (),
+            textureUnit = browser .getTextureUnit ();
+
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, browser .getTransparentTextureCube ());
+         gl .uniform1i (channel .textureCube, textureUnit);
+      }
+      else
+      {
+         X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
+      }
+   },
 });
 
 Object .defineProperties (GeneratedCubeMapTexture,
