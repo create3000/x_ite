@@ -90,10 +90,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return true;
    },
-   getNode ()
-   {
-      return null;
-   },
    set_renderKey__ ()
    {
       const browser = this .getBrowser ();
