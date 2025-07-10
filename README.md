@@ -120,7 +120,7 @@ document .body .appendChild (canvas);
 
 // Change Browser Options (this could also be done by setting the attributes of the canvas):
 
-browser .setBrowserOption ("AutoUpdate",   true); // Disable animations if x3d-canvas is not visible.
+browser .setBrowserOption ("AutoUpdate",   true); // Disable animations if <x3d-canvas> is not visible.
 browser .setBrowserOption ("ContentScale", -1);   // Increase resolution for HiDPI displays.
 
 // Create Viewpoint:

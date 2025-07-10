@@ -48,9 +48,11 @@ function GifMedia (gif, movieTexture)
       {
          get ()
          {
-            const length = this .get_length ();
+            const
+               length = this .get_length (),
+               frame  = Math .max (Math .ceil (this .currentTime / this .duration * length) - 1, 0);
 
-            return this .get_frames () [Math .max (Math .ceil (this .currentTime / this .duration * length) - 1, 0)];
+            return this .get_frames () [frame] .data;
          },
       },
       play:

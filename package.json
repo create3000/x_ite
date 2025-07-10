@@ -109,6 +109,7 @@
   "devDependencies": {
     "@create3000/libgif": "^0.0.5",
     "ammojs": "^0.0.2",
+    "apng-js": "^1.1.5",
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
     "fast-xml-parser": "^5.2.3",

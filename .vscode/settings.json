@@ -14,6 +14,7 @@
    "files.eol": "\n",
    "cSpell.words": [
       "ammojs",
+      "APNG",
       "bbox",
       "BDRF",
       "Biquad",
@@ -44,6 +45,7 @@
       "onshutdown",
       "opentype",
       "pako",
+      "playsinline",
       "polylines",
       "Schlick",
       "spatialize",
