@@ -1,7 +1,6 @@
 import Fields                 from "../../Fields.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFramebuffer from "../../Rendering/MultiSampleFramebuffer.js";
-import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
 
@@ -9,8 +8,7 @@ const
    _session             = Symbol (),
    _framebuffers        = Symbol (),
    _defaultFramebuffer  = Symbol (),
-   _transmissionBuffer  = Symbol (),
-   _volumeScatterBuffer = Symbol (),
+   _textureBuffers      = Symbol (),
    _resizer             = Symbol (),
    _localObjects        = Symbol (),
    _fullscreenArray     = Symbol (),
@@ -24,9 +22,10 @@ function X3DRenderingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .SFVec4f (0, 0, 300, 150));
 
-   this [_framebuffers] = [ ];
-   this [_depthShaders] = new Map ();
-   this [_localObjects] = [ ]; // shader objects dumpster
+   this [_framebuffers]   = [ ];
+   this [_textureBuffers] = [ ];
+   this [_depthShaders]   = new Map ();
+   this [_localObjects]   = [ ]; // shader objects dumpster
 
    // WebXR support
 
@@ -163,23 +162,9 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .reshape ();
    },
-   getTransmissionBuffer ()
+   addTextureBuffer (key)
    {
-      return this [_transmissionBuffer] ??= new TextureBuffer ({
-         browser: this,
-         width: this ._viewport [2],
-         height: this ._viewport [3],
-         mipMaps: true,
-      });
-   },
-   getVolumeScatterBuffer ()
-   {
-      return this [_volumeScatterBuffer] ??= new TextureBuffer ({
-         browser: this,
-         width: this ._viewport [2],
-         height: this ._viewport [3],
-         float: true,
-      });
+      this [_textureBuffers] .push (key);
    },
    getFullscreenVertexArrayObject ()
    {
@@ -344,8 +329,8 @@ Object .assign (X3DRenderingContext .prototype,
 
       this [_framebuffers] [i] = new MultiSampleFramebuffer ({ browser: this, x, y, width, height, samples, oit });
 
-      this .reshapeTextureBuffer (_transmissionBuffer,  width, height);
-      this .reshapeTextureBuffer (_volumeScatterBuffer, width, height);
+      for (const key of this [_textureBuffers])
+         this .reshapeTextureBuffer (key, width, height);
    },
    reshapeTextureBuffer (key, width, height)
    {

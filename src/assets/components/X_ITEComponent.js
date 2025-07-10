@@ -1,4 +1,5 @@
 import Components                           from "../../x_ite/Components.js";
+import X3DX_ITEContext                      from "../../x_ite/Browser/X_ITE/X3DX_ITEContext.js";
 import AnisotropyMaterialExtension          from "../../x_ite/Components/X_ITE/AnisotropyMaterialExtension.js";
 import BlendMode                            from "../../x_ite/Components/X_ITE/BlendMode.js";
 import ClearcoatMaterialExtension           from "../../x_ite/Components/X_ITE/ClearcoatMaterialExtension.js";
@@ -42,6 +43,7 @@ Components .add ({
    [
       X3DMaterialExtensionNode,
    ],
+   browserContext: X3DX_ITEContext,
 });
 
 export default undefined;

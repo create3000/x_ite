@@ -323,15 +323,18 @@ Object .assign (MultiSampleFramebuffer .prototype,
 
       if (DEVELOPMENT)
       {
-         const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
+         const volumeScatterBuffer = browser .getVolumeScatterBuffer ?.();
 
-         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, volumeScatterBuffer .frameBuffer);
-         gl .readBuffer (gl .COLOR_ATTACHMENT0);
-         gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFramebuffer ());
+         if (volumeScatterBuffer)
+         {
+            gl .bindFramebuffer (gl .READ_FRAMEBUFFER, volumeScatterBuffer .frameBuffer);
+            gl .readBuffer (gl .COLOR_ATTACHMENT0);
+            gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFramebuffer ());
 
-         gl .blitFramebuffer (0, 0, width, height,
-                              0, 0, width / 4, height / 4,
-                              gl .COLOR_BUFFER_BIT, gl .NEAREST);
+            gl .blitFramebuffer (0, 0, width, height,
+                                 0, 0, width / 4, height / 4,
+                                 gl .COLOR_BUFFER_BIT, gl .NEAREST);
+         }
       }
       // DEBUG end
 
