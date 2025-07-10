@@ -6,6 +6,7 @@ import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DSoundSourceNode   from "../Sound/X3DSoundSourceNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import GifMedia             from "../../Browser/Texturing/GifMedia.js";
+import PNGMedia             from "../../Browser/Texturing/PNGMedia.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
@@ -97,11 +98,22 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          const
             img = $("<img></img>") .appendTo ($("<div></div>")),
-            gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type: type }) });
+            gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
 
          gif .load_url (this .URL, () => this .setGif (gif));
 
          // this .setTimeout ({ type: "timeout" });
+      }
+      else if (this .URL .pathname .endsWith (".png"))
+      {
+         const parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default;
+
+         fetch (this .URL, { cache: this .getCache () ? "default" : "reload" })
+            .then (response => response .arrayBuffer ())
+            .then (arrayBuffer => parseAPNG (arrayBuffer))
+            .then (apng => this .setAPNG (apng))
+            .catch (error => this .setError ({ type: error .message}));
+
       }
       else
       {
@@ -154,6 +166,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             throw new Error ("The movie texture is a non power-of-two texture.");
 
          this ._duration_changed = video .duration;
+         video .currentFrame     = video;
 
          this .setMediaElement (video);
          this .setTextureData (width, height, true, false, video);
@@ -177,6 +190,26 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
          this .setMediaElement (gif);
          this .setTextureData (gif .get_canvas () .width, gif .get_canvas () .height, true, false, gif .get_frames () [0] .data);
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+
+         this .set_speed__ ();
+      }
+      catch (error)
+      {
+         // Catch security error from cross origin requests.
+         this .setError ({ type: error .message });
+      }
+   },
+   async setAPNG (apng)
+   {
+      try
+      {
+         await PNGMedia (apng, this);
+
+         this ._duration_changed = apng .duration;
+
+         this .setMediaElement (apng);
+         this .setTextureData (apng .width, apng .height, true, false, apng .currentFrame);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -221,7 +254,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       const media = this .getMediaElement ();
 
       if (media)
-         this .updateTextureData (media .currentFrame ?.data ?? media);
+         this .updateTextureData (media .currentFrame);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
    dispose ()
