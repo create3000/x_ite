@@ -1,6 +1,6 @@
 class ScatterSamples
 {
-   static SCATTER_SAMPLES_COUNT = 64; // Number of samples for the Burley diffusion profile.
+   static SCATTER_SAMPLES_COUNT = 55; // Number of samples for the Burley diffusion profile.
 
    static
    {
