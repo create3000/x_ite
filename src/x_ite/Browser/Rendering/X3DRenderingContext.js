@@ -17,6 +17,7 @@ const
    _fullscreenBuffer    = Symbol (),
    _composeShader       = Symbol (),
    _depthShaders        = Symbol (),
+   _shapeId             = Symbol (),
    _buttonLock          = Symbol ();
 
 function X3DRenderingContext ()
@@ -359,6 +360,14 @@ Object .assign (X3DRenderingContext .prototype,
       textureBuffer .dispose ();
 
       this [key] = undefined;
+   },
+   resetShapeId ()
+   {
+      this [_shapeId] = 0;
+   },
+   getShapeId ()
+   {
+      return ++ this [_shapeId];
    },
    onfullscreen ()
    {

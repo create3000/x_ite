@@ -82,14 +82,14 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    },
    setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      const browser = this .getBrowser ();
+
       if (shaderObject .volumeScatterPass)
       {
-         gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, this .getId ());
+         gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, browser .getShapeId ());
          gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
          return;
       }
-
-      const browser = this .getBrowser ();
 
       gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
       gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);

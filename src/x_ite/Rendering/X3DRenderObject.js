@@ -1175,6 +1175,8 @@ Object .assign (X3DRenderObject .prototype,
 
             if (this .renderPasses & RenderPass .VOLUME_SCATTER_BIT)
             {
+               browser .resetShapeId ();
+               
                this .renderPass = RenderPass .VOLUME_SCATTER_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
