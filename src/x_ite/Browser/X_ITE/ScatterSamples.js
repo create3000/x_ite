@@ -18,7 +18,7 @@ class ScatterSamples
       // Precompute sample position with white albedo.
       const d = this .#burleySetup (1, 1);
 
-      const randU = 0.2; // Random value between 0 and 1, fixed here for determinism.
+      const randU = 0.5; // Random value between 0 and 1, fixed here for determinism.
       const randV = 0.5;
 
       // Find minimum radius that we can represent because we are only sampling the largest radius.

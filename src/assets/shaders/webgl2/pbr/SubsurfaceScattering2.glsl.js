@@ -10,9 +10,7 @@ uniform float x3d_ScatterMinRadiusEXT;
 uniform sampler2D x3d_ScatterSamplerEXT;
 uniform sampler2D x3d_ScatterDepthSamplerEXT;
 
-const float M_1_PI         = 1.0 / M_PI;
-const float M_PHI          = (1.0 + sqrt (5.0)) / 2.0;
-const float M_GOLDEN_ANGLE = M_PI * (3.0f - sqrt (5.0));
+const float M_1_PI = 1.0 / M_PI;
 
 // glTF specification for converting multi-scatter color to single scatter color.
 vec3
@@ -79,17 +77,13 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    vec3 clampedScatterDistance = max (vec3 (x3d_ScatterMinRadiusEXT), scatterDistance / maxColor) * maxColor;
    vec3 d                      = burley_setup (clampedScatterDistance, albedo); // Setup the Burley model parameters
 
-   // Use random noise to generate a pseudo-random angle for rotation
-   float randomTheta    = fract (tan (distance (uv * M_PHI, uv) * 1.0) * uv .x) * M_GOLDEN_ANGLE;
-   mat2  rotationMatrix = mat2 (cos (randomTheta), -sin (randomTheta), sin (randomTheta), cos (randomTheta));
-
    for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
    {
       vec3  scatterSample = x3d_ScatterSamplesEXT [i];
       float fabAngle      = scatterSample .x;
       float r             = scatterSample .y * maxRadiusPixels * texelSize .x;
       float rcpPdf        = scatterSample .z;
-      vec2  sampleCoords  = rotationMatrix * (vec2 (cos (fabAngle), sin (fabAngle)) * r); // Rotate the sample coordinates
+      vec2  sampleCoords  = vec2 (cos (fabAngle), sin (fabAngle)) * r;
       vec2  sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
       vec4  textureSample = texture (x3d_ScatterSamplerEXT, sampleUV);
 
