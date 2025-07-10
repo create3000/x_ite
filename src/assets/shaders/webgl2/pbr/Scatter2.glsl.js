@@ -113,7 +113,7 @@ getMaterialColor ()
 
       vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
 
-      frontColor += mix (f_diffuse, f_specular_dielectric,  f_dielectric_fresnel_ibl) * albedoSheenScaling;
+      frontColor += mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl) * albedoSheenScaling;
    #endif
 
    #if defined (X3D_LIGHTING)
