@@ -365,13 +365,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    toVRMLStream (generator)
    {
-      const version = this .getSpecificationVersion () > LATEST_VERSION
-         ? this .getSpecificationVersion ()
-         : LATEST_VERSION;
-
       generator .string += generator .Indent ();
       generator .string += "#X3D V";
-      generator .string += version;
+      generator .string += LATEST_VERSION;
       generator .string += generator .Space ();
       generator .string += "utf8";
       generator .string += generator .Space ();
@@ -456,10 +452,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    toXMLStream (generator)
    {
-      const version = this .getSpecificationVersion () > LATEST_VERSION
-         ? this .getSpecificationVersion ()
-         : LATEST_VERSION;
-
       if (!generator .html)
       {
          generator .string += generator .Indent ();
@@ -467,9 +459,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          generator .string += generator .TidyBreak ();
          generator .string += generator .Indent ();
          generator .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
-         generator .string += version;
+         generator .string += LATEST_VERSION;
          generator .string += "//EN\" \"https://www.web3d.org/specifications/x3d-";
-         generator .string += version;
+         generator .string += LATEST_VERSION;
          generator .string += ".dtd\">";
          generator .string += generator .TidyBreak ();
       }
@@ -482,13 +474,13 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "version='";
-      generator .string += version;
+      generator .string += LATEST_VERSION;
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'";
       generator .string += generator .Space ();
       generator .string += "xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-";
-      generator .string += version;
+      generator .string += LATEST_VERSION;
       generator .string += ".xsd'>";
       generator .string += generator .TidyBreak ();
 
@@ -594,10 +586,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    toJSONStream (generator)
    {
-      const version = this .getSpecificationVersion () > LATEST_VERSION
-         ? this .getSpecificationVersion ()
-         : LATEST_VERSION;
-
       // X3D
 
       generator .string += generator .Indent ();
@@ -653,7 +641,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += version;
+      generator .string += LATEST_VERSION;
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -669,7 +657,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += generator .TidySpace ();
       generator .string += '"';
       generator .string += "https://www.web3d.org/specifications/x3d-";
-      generator .string += version;
+      generator .string += LATEST_VERSION;
       generator .string += ".xsd";
       generator .string += '"';
       generator .string += ',';
@@ -686,7 +674,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += generator .TidySpace ();
       generator .string += '"';
       generator .string += "https://www.web3d.org/specifications/x3d-";
-      generator .string += version;
+      generator .string += LATEST_VERSION;
       generator .string += "-JSONSchema.json";
       generator .string += '"';
       generator .string += ',';
