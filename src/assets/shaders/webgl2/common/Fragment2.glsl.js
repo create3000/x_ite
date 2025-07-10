@@ -69,10 +69,6 @@ in vec3 vertex;
    layout(location = 1) out vec4 x3d_FragData1;
 #else
    layout(location = 0) out vec4 x3d_FragColor;
-
-   #if defined (X3D_VOLUME_SCATTER_PASS)
-      layout(location = 1) out vec4 x3d_IBLColor;
-   #endif
 #endif
 
 #pragma X3D include "../pbr/ToneMapping.glsl"

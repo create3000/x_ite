@@ -178,7 +178,6 @@ Object .assign (X3DRenderingContext .prototype,
          width: this ._viewport [2],
          height: this ._viewport [3],
          float: true,
-         colorTextures: 2,
       });
    },
    getFullscreenVertexArrayObject ()

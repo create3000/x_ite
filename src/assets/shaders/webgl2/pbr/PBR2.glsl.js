@@ -162,6 +162,7 @@ getMaterialColor ()
    #endif
 
    #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      // Used for weighting absorption and scattering.
       vec3 singleScatter = multiToSingleScatter ();
    #endif
 
@@ -223,11 +224,6 @@ getMaterialColor ()
       vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
 
       f_dielectric_brdf_ibl = mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl);
-
-      #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-         // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
-         f_dielectric_brdf_ibl += getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, x3d_ScatterIBLSamplerEXT, materialInfo .diffuseTransmissionColorFactor) * (1.0 - materialInfo .transmissionFactor);
-      #endif
 
       #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
          f_metal_brdf_ibl      = mix (f_metal_brdf_ibl, f_specular_metal * iridescenceFresnel_metallic, materialInfo .iridescenceFactor);
@@ -396,7 +392,7 @@ getMaterialColor ()
 
    #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
-      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, x3d_ScatterSamplerEXT, materialInfo .diffuseTransmissionColorFactor);
+      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .diffuseTransmissionColorFactor);
 
       color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * (1.0 - materialInfo .iridescenceFactor) * (1.0 - materialInfo .transmissionFactor);
    #endif

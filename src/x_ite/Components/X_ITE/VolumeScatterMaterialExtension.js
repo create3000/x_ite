@@ -7,7 +7,6 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import ScatterSamples           from "../../Browser/X_ITE/ScatterSamples.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
-import RenderPass               from "../../Rendering/RenderPass.js";
 
 // Register key.
 
@@ -79,7 +78,6 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       uniforms .push ("x3d_ScatterSamplesEXT");
       uniforms .push ("x3d_ScatterMinRadiusEXT");
       uniforms .push ("x3d_ScatterSamplerEXT");
-      uniforms .push ("x3d_ScatterIBLSamplerEXT");
       uniforms .push ("x3d_ScatterDepthSamplerEXT");
    },
    setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
@@ -103,19 +101,13 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       const
          scatterSampleBuffer       = browser .getVolumeScatterBuffer (),
          scatterSampleUnit         = browser .getTextureUnit (),
-         scatterIBLSampleUnit      = browser .getTextureUnit (),
          scatterDepthSampleUnit    = browser .getTextureUnit (),
-         scatterSampleTexture      = scatterSampleBuffer .getColorTexture (0),
-         scatterIBLSampleTexture   = scatterSampleBuffer .getColorTexture (1),
+         scatterSampleTexture      = scatterSampleBuffer .getColorTexture (),
          scatterDepthSampleTexture = scatterSampleBuffer .getDepthTexture ();
 
       gl .activeTexture (gl .TEXTURE0 + scatterSampleUnit);
       gl .bindTexture (gl .TEXTURE_2D, scatterSampleTexture);
       gl .uniform1i (shaderObject .x3d_ScatterSamplerEXT, scatterSampleUnit);
-
-      gl .activeTexture (gl .TEXTURE0 + scatterIBLSampleUnit);
-      gl .bindTexture (gl .TEXTURE_2D, scatterIBLSampleTexture);
-      gl .uniform1i (shaderObject .x3d_ScatterIBLSamplerEXT, scatterIBLSampleUnit);
 
       gl .activeTexture (gl .TEXTURE0 + scatterDepthSampleUnit);
       gl .bindTexture (gl .TEXTURE_2D, scatterDepthSampleTexture);

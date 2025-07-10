@@ -8,7 +8,6 @@ uniform vec3  x3d_ScatterSamplesEXT [X3D_SCATTER_SAMPLES_COUNT_EXT];
 uniform float x3d_ScatterMinRadiusEXT;
 
 uniform sampler2D x3d_ScatterSamplerEXT;
-uniform sampler2D x3d_ScatterIBLSamplerEXT;
 uniform sampler2D x3d_ScatterDepthSamplerEXT;
 
 const float M_1_PI         = 1.0 / M_PI;
@@ -44,7 +43,7 @@ burley_eval (const in vec3 d, const in float r)
 }
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const sampler2D scatterLUT, const in vec3 diffuseColor)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 diffuseColor)
 {
    vec3  scatterDistance     = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color
    float maxColor            = max3 (scatterDistance);
@@ -52,7 +51,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);
    mat4  invProjectionMatrix = inverse (projectionMatrix);
    vec2  uv                  = gl_FragCoord .xy * texelSize;
-   vec4  centerSample        = texture (scatterLUT, uv); // Sample the LUT at the current UV coordinates
+   vec4  centerSample        = texture (x3d_ScatterSamplerEXT, uv); // Sample the LUT at the current UV coordinates
    float centerDepth         = texture (x3d_ScatterDepthSamplerEXT, uv) .r; // Get depth from the framebuffer
 
    centerDepth = centerDepth * 2.0 - 1.0; // Convert to normalized device coordinates
@@ -92,7 +91,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
       float rcpPdf        = scatterSample .z;
       vec2  sampleCoords  = rotationMatrix * (vec2 (cos (fabAngle), sin (fabAngle)) * r); // Rotate the sample coordinates
       vec2  sampleUV      = uv + sampleCoords; // + (randomTheta * 2.0 - 1.0) * 0.01;
-      vec4  textureSample = texture (scatterLUT, sampleUV);
+      vec4  textureSample = texture (x3d_ScatterSamplerEXT, sampleUV);
 
       // Check if sample originates from same mesh/material.
       if (centerSample .w != textureSample .w)

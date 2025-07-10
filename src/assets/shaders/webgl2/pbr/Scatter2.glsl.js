@@ -19,7 +19,7 @@ getMaterialColor ()
       baseColor .rgb *= getTextureProjectorColor ();
    #endif
 
-   vec3 color = vec3 (0.0);
+   vec3 frontColor = vec3 (0.0);
 
    vec3 v = normalize (-vertex);
 
@@ -105,13 +105,15 @@ getMaterialColor ()
          f_diffuse *= materialInfo .diffuseTransmissionFactor;
       #endif
 
+      #if defined (X3D_SHEEN_MATERIAL_EXT)
+         albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor);
+      #endif
+
       // Calculate fresnel mix for IBL
 
       vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
 
-      x3d_IBLColor = vec4 (mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl), x3d_ScatterMaterialIdEXT);
-   #else
-      x3d_IBLColor = vec4 (0.0);
+      frontColor += mix (f_diffuse, f_specular_dielectric,  f_dielectric_fresnel_ibl) * albedoSheenScaling;
    #endif
 
    #if defined (X3D_LIGHTING)
@@ -181,11 +183,11 @@ getMaterialColor ()
          #endif
 
          l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel);
-         color            += l_dielectric_brdf * albedoSheenScaling;
+         frontColor       += l_dielectric_brdf * albedoSheenScaling;
       }
    }
    #endif
 
-   return vec4 (color, x3d_ScatterMaterialIdEXT);
+   return vec4 (frontColor, x3d_ScatterMaterialIdEXT);
 }
 `;
