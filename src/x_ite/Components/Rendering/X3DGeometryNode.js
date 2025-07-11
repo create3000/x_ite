@@ -515,10 +515,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       const
          min    = new Vector3 (),
          max    = new Vector3 (),
-         planes = [ ];
-
-      for (let i = 0; i < 5; ++ i)
-         planes [i] = new Plane3 ();
+         planes = Array .from ({ length: 5 }, () => new Plane3 ());
 
       return function (minX, minY, minZ, maxX, maxY, maxZ)
       {
