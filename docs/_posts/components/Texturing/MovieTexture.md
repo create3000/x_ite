@@ -290,9 +290,9 @@ Any video file format supported by the web browser, but at least:
 
 | Encoding | File Extension | MIME Type  | Comment      |
 |----------|----------------|------------|--------------|
-| MP4      | .mp4           | video/mp4  |              |
-| WebM     | .webm          | video/webm |              |
-| OGG      | .ogv           | video/ogg  |              |
+| MP4      | .mp4           | video/mp4  | Audio/Video  |
+| WebM     | .webm          | video/webm | Audio/Video  |
+| OGG      | .ogv           | video/ogg  | Audio/Video  |
 | PNG      | .png           | image/png  | Animated PNG |
 | GIF      | .gif           | image/gif  | Animated GIF |
 
