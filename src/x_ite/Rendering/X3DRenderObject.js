@@ -765,11 +765,11 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
 
-         renderContext .shadows         = this .localShadows .at (-1);
-         renderContext .fogNode         = this .localFogs .at (-1);
-         renderContext .hAnimNode       = this .hAnimNode .at (-1);
-         renderContext .shapeNode = shapeNode;
-         renderContext .appearanceNode  = shapeNode .getAppearance ();
+         renderContext .shadows        = this .localShadows .at (-1);
+         renderContext .fogNode        = this .localFogs .at (-1);
+         renderContext .hAnimNode      = this .hAnimNode .at (-1);
+         renderContext .shapeNode      = shapeNode;
+         renderContext .appearanceNode = shapeNode .getAppearance ();
 
          // Clip planes and local lights
 
@@ -1176,7 +1176,7 @@ Object .assign (X3DRenderObject .prototype,
             if (this .renderPasses & RenderPass .VOLUME_SCATTER_BIT)
             {
                browser .resetShapeId ();
-               
+
                this .renderPass = RenderPass .VOLUME_SCATTER_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
