@@ -202,10 +202,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       return this .viewpointStack;
    },
-   getCollisionTime ()
-   {
-      return this .collisionTime;
-   },
    viewAll (transitionTime = 1, factor = 1, straighten = false)
    {
       const
