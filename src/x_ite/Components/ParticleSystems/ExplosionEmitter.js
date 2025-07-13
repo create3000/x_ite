@@ -23,9 +23,6 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticle
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
-      if (this .getBrowser () .getContext () .getVersion () < 2)
-         return;
-
       this ._position .addInterest ("set_position__", this);
 
       this .addDefine ("#define X3D_EXPLOSION_EMITTER");

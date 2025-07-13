@@ -64,14 +64,11 @@ Object .assign (X3DTexturingContext .prototype,
 
       // Default Texture 3D Unit
 
-      if (gl .getVersion () >= 2)
-      {
-         this [_defaultTexture3D] = gl .createTexture ();
+      this [_defaultTexture3D] = gl .createTexture ();
 
-         gl .activeTexture (gl .TEXTURE0 + this [_defaultTexture3DUnit]);
-         gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
-         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      }
+      gl .activeTexture (gl .TEXTURE0 + this [_defaultTexture3DUnit]);
+      gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
+      gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
       // Default Texture Cube Unit
 

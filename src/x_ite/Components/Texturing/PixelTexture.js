@@ -150,56 +150,9 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
             return;
          }
 
-         if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
-         {
-            data = new Uint8Array (width * height * 4);
+         data = new Uint8Array (width * height * 4);
 
-            this .convert (data, comp, array .getValue (), array .length);
-         }
-         else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && !this ._textureProperties .getValue ())
-         {
-            data = new Uint8Array (width * height * 4);
-
-            this .convert (data, comp, array .getValue (), array .length);
-
-            const
-               inputWidth  = width,
-               inputHeight = height;
-
-            width  = Algorithm .nextPowerOfTwo (inputWidth)  * 8;
-            height = Algorithm .nextPowerOfTwo (inputHeight) * 8;
-            data   = this .resize (data, inputWidth, inputHeight, width, height);
-         }
-         else
-         {
-            this .canvas ??= [document .createElement ("canvas"), document .createElement ("canvas")];
-
-            const
-               canvas1   = this .canvas [0],
-               canvas2   = this .canvas [1],
-               cx1       = canvas1 .getContext ("2d", { willReadFrequently: true }),
-               cx2       = canvas2 .getContext ("2d", { willReadFrequently: true }),
-               imageData = cx1 .createImageData (width, height);
-
-            // Use .canvas to support foreign 2d libs.
-            cx1 .canvas .width  = width;
-            cx1 .canvas .height = height;
-
-            this .convert (imageData .data, comp, array .getValue (), array .length);
-            cx1 .putImageData (imageData, 0, 0);
-
-            width  = Algorithm .nextPowerOfTwo (width);
-            height = Algorithm .nextPowerOfTwo (height);
-
-            // Use .canvas to support foreign 2d libs.
-            cx2 .canvas .width  = width;
-            cx2 .canvas .height = height;
-
-            cx2 .clearRect (0, 0, width, height);
-            cx2 .drawImage (canvas1, 0, 0, canvas1 .width, canvas1 .height, 0, 0, width, height);
-
-            data = new Uint8Array (cx2 .getImageData (0, 0, width, height) .data .buffer);
-         }
+         this .convert (data, comp, array .getValue (), array .length);
 
          this .setTextureData (width, height, true, transparent && this .isImageTransparent (data), data);
 

@@ -44,9 +44,6 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      if (gl .getVersion () === 1)
-         return;
-
       // Textures
 
       this .displacementsTexture       = gl .createTexture ();

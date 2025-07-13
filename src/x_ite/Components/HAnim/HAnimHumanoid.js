@@ -123,9 +123,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      if (gl .getVersion () === 1)
-         return;
-
       // Textures
 
       this .jointsTexture              = gl .createTexture ();

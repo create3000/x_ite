@@ -19,11 +19,6 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DCompos
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._weightTransferFunction1 .addInterest ("set_weightTransferFunction1__", this);
       this ._weightTransferFunction2 .addInterest ("set_weightTransferFunction2__", this);
       this ._renderStyle             .addInterest ("set_renderStyle__",             this);

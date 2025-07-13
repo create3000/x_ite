@@ -48,10 +48,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
-
       this ._bboxDisplay .addFieldInterest (this .groupNode ._bboxDisplay);
 
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
@@ -120,9 +116,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .groupNode                .setup ();
 
       this .connectChildNode (this .groupNode);
-
-      if (gl .getVersion () < 2)
-         return;
 
       this .getLive () .addInterest ("set_live__", this, true);
 

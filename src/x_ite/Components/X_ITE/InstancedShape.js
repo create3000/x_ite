@@ -44,11 +44,6 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      // Check version.
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
-
       this .instances = Object .assign (gl .createBuffer (),
       {
          vertexArrayObject: new VertexArray (gl),
