@@ -1267,86 +1267,87 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl .vertexAttribDivisor (location, divisor);
       }
    },
-   getProgramInfo ()
-   {
-      function cmp (lhs, rhs) { return lhs < rhs ? -1 : lhs > rhs ? 1 : 0; }
+   // getProgramInfo ()
+   // {
+   //    function cmp (lhs, rhs) { return lhs < rhs ? -1 : lhs > rhs ? 1 : 0; }
 
-      const
-         program = this .getProgram (),
-         gl      = this .getBrowser () .getContext ();
+   //    const
+   //       program = this .getProgram (),
+   //       gl      = this .getBrowser () .getContext ();
 
-      const
-         result = {
-            attributes: [ ],
-            uniforms: [ ],
-            attributeCount: 0,
-            uniformCount: 0,
-         },
-         activeUniforms   = gl .getProgramParameter (program, gl .ACTIVE_UNIFORMS),
-         activeAttributes = gl .getProgramParameter (program, gl .ACTIVE_ATTRIBUTES);
+   //    const
+   //       result = {
+   //          attributes: [ ],
+   //          uniforms: [ ],
+   //          attributeCount: 0,
+   //          uniformCount: 0,
+   //       },
+   //       activeUniforms   = gl .getProgramParameter (program, gl .ACTIVE_UNIFORMS),
+   //       activeAttributes = gl .getProgramParameter (program, gl .ACTIVE_ATTRIBUTES);
 
-      // Taken from the WebGl spec:
-      // https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.14
-      const enums = {
-         0x8B50: 'vec2',
-         0x8B51: 'vec3',
-         0x8B52: 'vec4',
-         0x8B53: 'ivec2',
-         0x8B54: 'ivec3',
-         0x8B55: 'ivec4',
-         0x8B56: 'bool',
-         0x8B57: 'bvec2',
-         0x8B58: 'bvec3',
-         0x8B59: 'bvec4',
-         0x8B5A: 'mat2',
-         0x8B5B: 'mat3',
-         0x8B5C: 'mat4',
-         0x8B5E: 'sampler2D',
-         0x8B60: 'samplerCube',
-         0x1400: 'byte',
-         0x1401: 'ubyte',
-         0x1402: 'short',
-         0x1403: 'ushort',
-         0x1404: 'int',
-         0x1405: 'uint',
-         0x1406: 'float',
-      };
+   //    // Taken from the WebGl spec:
+   //    // https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.14
+   //    const enums = {
+   //       0x8B50: 'vec2',
+   //       0x8B51: 'vec3',
+   //       0x8B52: 'vec4',
+   //       0x8B53: 'ivec2',
+   //       0x8B54: 'ivec3',
+   //       0x8B55: 'ivec4',
+   //       0x8B56: 'bool',
+   //       0x8B57: 'bvec2',
+   //       0x8B58: 'bvec3',
+   //       0x8B59: 'bvec4',
+   //       0x8B5A: 'mat2',
+   //       0x8B5B: 'mat3',
+   //       0x8B5C: 'mat4',
+   //       0x8B5E: 'sampler2D',
+   //       0x8B60: 'samplerCube',
+   //       0x1400: 'byte',
+   //       0x1401: 'ubyte',
+   //       0x1402: 'short',
+   //       0x1403: 'ushort',
+   //       0x1404: 'int',
+   //       0x1405: 'uint',
+   //       0x1406: 'float',
+   //    };
 
-      // Loop through active uniforms
-      for (let i = 0; i < activeUniforms; ++ i)
-      {
-         const uniform = gl .getActiveUniform (program, i);
-         uniform .typeName = enums [uniform.type];
-         result .uniforms .push (Object .assign ({ }, uniform));
-         result .uniformCount += uniform .size;
-      }
+   //    // Loop through active uniforms
+   //    for (let i = 0; i < activeUniforms; ++ i)
+   //    {
+   //       const uniform = gl .getActiveUniform (program, i);
+   //       uniform .typeName = enums [uniform.type];
+   //       result .uniforms .push (Object .assign ({ }, uniform));
+   //       result .uniformCount += uniform .size;
+   //    }
 
-      // Loop through active attributes
-      for (let i = 0; i < activeAttributes; ++ i)
-      {
-         const attribute = gl .getActiveAttrib (program, i);
-         attribute .typeName = enums [attribute .type];
-         result .attributes .push (Object .assign ({ }, attribute));
-         result .attributeCount += attribute .size;
-      }
+   //    // Loop through active attributes
+   //    for (let i = 0; i < activeAttributes; ++ i)
+   //    {
+   //       const attribute = gl .getActiveAttrib (program, i);
+   //       attribute .typeName = enums [attribute .type];
+   //       result .attributes .push (Object .assign ({ }, attribute));
+   //       result .attributeCount += attribute .size;
+   //    }
 
-      result .uniforms   .sort ((a, b) => cmp (a .name, b .name));
-      result .attributes .sort ((a, b) => cmp (a .name, b .name));
+   //    result .uniforms   .sort ((a, b) => cmp (a .name, b .name));
+   //    result .attributes .sort ((a, b) => cmp (a .name, b .name));
 
-      return result;
-   },
-   printProgramInfo ()
-   {
-      const programInfo = this .getProgramInfo ();
+   //    return result;
+   // },
+   // printProgramInfo ()
+   // {
+   //    const programInfo = this .getProgramInfo ();
 
-      console .log (this .getName ());
-      console .table (programInfo .attributes);
-      console .log (this .getName (), "attributeCount", programInfo .attributeCount);
-      console .log (this .getName ());
-      console .table (programInfo .uniforms);
-      console .log (this .getName (), "uniformCount", programInfo .uniformCount);
-   },
-   dispose () { },
+   //    console .log (this .getName ());
+   //    console .table (programInfo .attributes);
+   //    console .log (this .getName (), "attributeCount", programInfo .attributeCount);
+   //    console .log (this .getName ());
+   //    console .table (programInfo .uniforms);
+   //    console .log (this .getName (), "uniformCount", programInfo .uniformCount);
+   // },
+   dispose ()
+   { },
 });
 
 Object .defineProperties (X3DProgrammableShaderObject, X3DNode .getStaticProperties ("X3DProgrammableShaderObject", "Shaders", 1));
