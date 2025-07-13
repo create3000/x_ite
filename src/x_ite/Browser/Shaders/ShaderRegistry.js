@@ -18,7 +18,15 @@ import Unlit2      from "../../../assets/shaders/webgl2/common/Unlit2.glsl.js";
 import Utils2      from "../../../assets/shaders/webgl2/common/Utils2.glsl.js";
 import Vertex2     from "../../../assets/shaders/webgl2/common/Vertex2.glsl.js";
 
-/* WebGL 2 */
+/* PBR 2 */
+import BRDF2         from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
+import IBL2          from "../../../assets/shaders/webgl2/pbr/IBL2.glsl.js";
+import MaterialInfo2 from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
+import PBR2          from "../../../assets/shaders/webgl2/pbr/PBR2.glsl.js";
+import Punctual2     from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
+import ToneMapping2  from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
+
+/* WebGL 2 Vertex and Fragment */
 import FullScreenVertex2      from "../../../assets/shaders/webgl2/FullScreen2.vs.js";
 import DefaultVertex2         from "../../../assets/shaders/webgl2/Default2.vs.js";
 import DepthFragment2         from "../../../assets/shaders/webgl2/Depth2.fs.js";
@@ -31,14 +39,6 @@ import PhysicalFragment2      from "../../../assets/shaders/webgl2/Physical2.fs.
 import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.js";
 import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.js";
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
-
-/* PBR 2 */
-import BRDF2         from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
-import IBL2          from "../../../assets/shaders/webgl2/pbr/IBL2.glsl.js";
-import MaterialInfo2 from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
-import PBR2          from "../../../assets/shaders/webgl2/pbr/PBR2.glsl.js";
-import Punctual2     from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
-import ToneMapping2  from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
 
 const ShaderRegistry = {
    includes: {
