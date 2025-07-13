@@ -41,7 +41,7 @@ function main ()
    copy_files ();
    systemSync (`npx webpack`);
    html ();
-	// curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '
+	systemSync (`curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '`);
    systemSync (`brotli -4 dist/x_ite.min.mjs --stdout | wc -c`);
    systemSync (`du -h dist/x_ite.min.js`);
 }
