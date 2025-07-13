@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v11.6 Series
 
-*Leipzig, 12th April 2025:* This new series 11.6 comes with Animated PNG support for MovieTexture node. The MoveTexture node has been able to handle Animated GIFs for quite a while, and can now also handle Animated PNGs.
+*Leipzig, 12th July 2025:* This new series 11.6 comes with Animated PNG support for MovieTexture node. The MoveTexture node has been able to handle Animated GIFs for quite a while, and can now also handle Animated PNGs.
 
 For a first impression of how the whole thing looks now, here are two example files to test:
 
