@@ -1,5 +1,4 @@
-import MOBILE      from "../../MOBILE.js";
-import DEVELOPMENT from "../../DEVELOPMENT.js";
+import MOBILE from "../../MOBILE.js";
 
 const Context =
 {
