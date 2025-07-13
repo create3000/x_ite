@@ -48,9 +48,9 @@ function docs (version)
 	// curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '
 	const size = Math .floor (parseInt (sh (`brotli -q 4 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000);
 
-	if (size < 280)
+	if (size < 300)
 		var color = "green";
-	else if (size < 300)
+	else if (size < 310)
 		var color = "cyan";
 	else
 		var color = "blue";
