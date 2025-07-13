@@ -17,7 +17,7 @@ import Algorithm            from "../../../standard/Math/Algorithm.js";
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 import Skin2          from "../../../assets/shaders/webgl2/common/Skin2.glsl.js";
 
-ShaderRegistry .addInclude ("Skin", undefined, Skin2);
+ShaderRegistry .addInclude ("Skin", Skin2);
 
 /**
  * HAnimHumanoid

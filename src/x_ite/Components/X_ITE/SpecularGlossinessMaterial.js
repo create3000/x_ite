@@ -11,11 +11,10 @@ import Algorithm               from "../../../standard/Math/Algorithm.js";
 
 import ShaderRegistry              from "../../Browser/Shaders/ShaderRegistry.js";
 import SpecularGlossiness2         from "../../../assets/shaders/webgl2/pbr/SpecularGlossiness2.glsl.js";
-import SpecularGlossinessFragment1 from "../../../assets/shaders/webgl1/SpecularGlossiness1.fs.js";
 import SpecularGlossinessFragment2 from "../../../assets/shaders/webgl2/SpecularGlossiness2.fs.js";
 
 ShaderRegistry .addInclude  ("SpecularGlossiness", SpecularGlossiness2);
-ShaderRegistry .addFragment ("SpecularGlossiness", SpecularGlossinessFragment1, SpecularGlossinessFragment2);
+ShaderRegistry .addFragment ("SpecularGlossiness", SpecularGlossinessFragment2);
 
 // Register textures.
 

@@ -1,8 +1,3 @@
-/* WebGL 1 */
-import Fragment1 from "../../../assets/shaders/webgl1/common/Fragment1.glsl.js";
-import Texture1  from "../../../assets/shaders/webgl1/common/Texture1.glsl.js";
-import Vertex1   from "../../../assets/shaders/webgl1/common/Vertex1.glsl.js";
-
 /* WebGL 2 */
 import ClipPlanes2 from "../../../assets/shaders/webgl2/common/ClipPlanes2.glsl.js";
 import Fog2        from "../../../assets/shaders/webgl2/common/Fog2.glsl.js";
@@ -22,17 +17,6 @@ import Texture2    from "../../../assets/shaders/webgl2/common/Texture2.glsl.js"
 import Unlit2      from "../../../assets/shaders/webgl2/common/Unlit2.glsl.js";
 import Utils2      from "../../../assets/shaders/webgl2/common/Utils2.glsl.js";
 import Vertex2     from "../../../assets/shaders/webgl2/common/Vertex2.glsl.js";
-
-/* WebGL 1 */
-import FullScreenVertex1 from "../../../assets/shaders/webgl1/FullScreen1.vs.js";
-import DefaultVertex1    from "../../../assets/shaders/webgl1/Default1.vs.js";
-import DepthFragment1    from "../../../assets/shaders/webgl1/Depth1.fs.js";
-import DepthVertex1      from "../../../assets/shaders/webgl1/Depth1.vs.js";
-import MaterialFragment1 from "../../../assets/shaders/webgl1/Material1.fs.js";
-import PhysicalFragment1 from "../../../assets/shaders/webgl1/Physical1.fs.js";
-import PointingFragment1 from "../../../assets/shaders/webgl1/Pointing1.fs.js";
-import PointingVertex1   from "../../../assets/shaders/webgl1/Pointing1.vs.js";
-import UnlitFragment1    from "../../../assets/shaders/webgl1/Unlit1.fs.js";
 
 /* WebGL 2 */
 import FullScreenVertex2      from "../../../assets/shaders/webgl2/FullScreen2.vs.js";
@@ -58,29 +42,6 @@ import ToneMapping2  from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.
 
 const ShaderRegistry = {
    includes: {
-      1: {
-         ClipPlanes: ClipPlanes2,
-         Fog: Fog2,
-         Fragment: Fragment1,
-         Hatch: Hatch2,
-         Lighting: Lighting2,
-         Material: Material2,
-         Normal: Normal2,
-         Perlin: Perlin2,
-         Point: Point2,
-         PointSize: PointSize2,
-         Shadow: Shadow2,
-         Texture: Texture1,
-         Unlit: Unlit2,
-         Vertex: Vertex1,
-         // PBR
-         BRDF: BRDF2,
-         IBL: IBL2,
-         MaterialInfo: MaterialInfo2,
-         PBR: PBR2,
-         Punctual: Punctual2,
-         ToneMapping: ToneMapping2,
-      },
       2: {
          ClipPlanes: ClipPlanes2,
          Fog: Fog2,
@@ -110,12 +71,6 @@ const ShaderRegistry = {
       },
    },
    vertex: {
-      1: {
-         Default: DefaultVertex1,
-         Depth: DepthVertex1,
-         FullScreen: FullScreenVertex1,
-         Pointing: PointingVertex1,
-      },
       2: {
          Default: DefaultVertex2,
          Depth: DepthVertex2,
@@ -125,13 +80,6 @@ const ShaderRegistry = {
       },
    },
    fragment: {
-      1: {
-         Depth: DepthFragment1,
-         Material: MaterialFragment1,
-         Physical: PhysicalFragment1,
-         Pointing: PointingFragment1,
-         Unlit: UnlitFragment1,
-      },
       2: {
          Depth: DepthFragment2,
          LineTransform: LineTransformFragment2,
@@ -142,14 +90,12 @@ const ShaderRegistry = {
          Unlit: UnlitFragment2,
       },
    },
-   addInclude: function (name, shader1, shader2 = shader1)
+   addInclude: function (name, shader2)
    {
-      this .includes [1] [name] = shader1;
       this .includes [2] [name] = shader2;
    },
-   addFragment: function (name, shader1, shader2)
+   addFragment: function (name, shader2)
    {
-      this .fragment [1] [name] = shader1;
       this .fragment [2] [name] = shader2;
    },
 };

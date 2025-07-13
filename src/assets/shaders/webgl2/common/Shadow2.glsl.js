@@ -5,22 +5,6 @@ export default () => /* glsl */ `
 
 uniform sampler2D x3d_ShadowMap [X3D_NUM_LIGHTS];
 
-#if __VERSION__ == 100
-float
-getShadowDepth (const in int index, const in vec2 shadowCoord)
-{
-   ${Array .from ({ length: maxLights }, (_, i) => /* glsl */ `
-
-   #if X3D_NUM_LIGHTS > ${i}
-   if (index == ${i})
-      return texture2D (x3d_ShadowMap [${i}], shadowCoord) .r;
-   #endif
-
-   `) .join ("\n")}
-
-   return 0.0;
-}
-#else
 float
 getShadowDepth (const in int index, const in vec2 shadowCoord)
 {
@@ -38,7 +22,6 @@ getShadowDepth (const in int index, const in vec2 shadowCoord)
 
    return 0.0;
 }
-#endif
 
 float
 texture2DCompare (const in int index, const in vec2 texCoord, const in float compare)
