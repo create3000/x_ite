@@ -57,28 +57,17 @@ function TextureBuffer ({ browser, width, height, float = false, mipMaps = false
 
    // Create depth buffer.
 
-   if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-   {
-      this .depthTexture = gl .createTexture ();
+   this .depthTexture = gl .createTexture ();
 
-      gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
+   gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
 
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .DEPTH_COMPONENT24, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
-      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
-   }
-   else
-   {
-      this .depthBuffer = gl .createRenderbuffer ();
-
-      gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
-      gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
-   }
+   gl .texImage2D (gl .TEXTURE_2D, 0, gl .DEPTH_COMPONENT24, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
+   gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
@@ -169,11 +158,7 @@ Object .assign (TextureBuffer .prototype,
 
       gl .deleteFramebuffer (this .frameBuffer);
       gl .deleteTexture (this .colorTexture);
-
-      if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-         gl .deleteTexture (this .depthTexture);
-      else
-         gl .deleteRenderbuffer (this .depthBuffer);
+      gl .deleteTexture (this .depthTexture);
     },
 });
 

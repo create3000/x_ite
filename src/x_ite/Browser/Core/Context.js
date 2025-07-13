@@ -25,9 +25,6 @@ const Context =
 
       // Feature detection:
 
-      gl .HAS_FEATURE_DEPTH_TEXTURE = true;
-      gl .HAS_FEATURE_FRAG_DEPTH    = true;
-
       if (MOBILE)
       {
          // At least on iOS and Samsung Galaxy, float 32 textures are not supported.
