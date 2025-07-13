@@ -117,13 +117,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this .connectChildNode (this .transformNode);
 
-      // Check WebGL version.
+      // Textures
 
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      // Textures
 
       this .jointsTexture              = gl .createTexture ();
       this .displacementsTexture       = gl .createTexture ();

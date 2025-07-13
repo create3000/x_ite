@@ -95,50 +95,18 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
          }
       }
    },
-   resize (input, inputWidth, inputHeight, outputWidth, outputHeight)
-   {
-      // Nearest neighbor scaling algorithm for very small images for WebGL 1.
-
-      const
-         output = new Uint8Array (outputWidth * outputHeight * 4),
-         scaleX = outputWidth / inputWidth,
-         scaleY = outputHeight / inputHeight;
-
-      for (let y = 0; y < outputHeight; ++ y)
-      {
-         const
-            inputW  = Math .floor (y / scaleY) * inputWidth,
-            outputW = y * outputWidth;
-
-         for (let x = 0; x < outputWidth; ++ x)
-         {
-            const
-               index       = (inputW + Math .floor (x / scaleX)) * 4,
-               indexScaled = (outputW + x) * 4;
-
-            output [indexScaled]     = input [index];
-            output [indexScaled + 1] = input [index + 1];
-            output [indexScaled + 2] = input [index + 2];
-            output [indexScaled + 3] = input [index + 3];
-         }
-      }
-
-      return output;
-   },
    set_image__ ()
    {
       try
       {
          const
-            gl          = this .getBrowser () .getContext (),
             comp        = this ._image .comp,
             array       = this ._image .array,
             transparent = !(comp % 2);
 
-         let
+         const
             width  = this ._image .width,
-            height = this ._image .height,
-            data   = null;
+            height = this ._image .height;
 
          if (width < 0 || height < 0 || comp < 0 || comp > 4)
             throw new Error (`At least one dimension (${width} × ${height} or components ${comp}) is invalid.`);
@@ -150,10 +118,9 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
             return;
          }
 
-         data = new Uint8Array (width * height * 4);
+         const data = new Uint8Array (width * height * 4);
 
          this .convert (data, comp, array .getValue (), array .length);
-
          this .setTextureData (width, height, true, transparent && this .isImageTransparent (data), data);
 
          this ._loadState = X3DConstants .COMPLETE_STATE;

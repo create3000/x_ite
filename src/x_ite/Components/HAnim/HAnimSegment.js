@@ -38,13 +38,11 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
-      // Check WebGL version.
+      // Textures
 
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      // Textures
 
       this .displacementsTexture       = gl .createTexture ();
       this .displacementWeightsTexture = gl .createTexture ();
