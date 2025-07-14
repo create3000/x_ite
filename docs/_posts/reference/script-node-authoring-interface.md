@@ -330,7 +330,7 @@ function eventsProcessed ()
 
 ## Script Execution
 
-A Script node is activated when it receives an event. The X3D browser will then execute the program in the Script node's url field.
+A Script node is activated when it receives an event. The X3D browser will then execute the program in the Script node's url field, but there exist four special event handler which are processed to certain times.
 
 ### initialize () Method
 
