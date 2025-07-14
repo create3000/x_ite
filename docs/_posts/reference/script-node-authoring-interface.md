@@ -284,30 +284,30 @@ When a Script node receives an `inputOnly` or `inputOutput` field, a correspondi
 
 ### initialize () Method
 
-Authors may define a function named *initialize* which is called when the corresponding Script node has been loaded and before any events are processed. This can be used to prepare for processing before events are received, such as constructing geometry or initializing external mechanisms.
+Authors may define a function named `initialize` which is called when the corresponding Script node has been loaded and before any events are processed. This can be used to prepare for processing before events are received, such as constructing geometry or initializing external mechanisms.
 
-The *initialize* function takes no parameters. Events generated from it are given the timestamp of when the Script node was loaded.
+The `initialize` function takes no parameters. Events generated from it are given the timestamp of when the Script node was loaded.
 
 ### prepareEvents () Method
 
-Authors may define a prepareEvents () method that is called only once per frame. prepareEvents () is called before any ROUTE processing and allows a Script to collect any asynchronously generated data, such as input from a network queue or the results of calling field listeners, and generate events to be handled by the browser's normal event processing sequence as if it were a built-in sensor node.
+Authors may define a `prepareEvents` method that is called only once per frame. `prepareEvents` is called before any ROUTE processing and allows a Script to collect any asynchronously generated data, such as input from a network queue or the results of calling field listeners, and generate events to be handled by the browser's normal event processing sequence as if it were a built-in sensor node.
 
 ### eventsProcessed () Method
 
-Authors may define a function named *eventsProcessed* which will be called after some set of events has been received. Some implementations will call this function after the return from each `inputOnly` field function, while others will call it only after processing a number of `inputOnly` field functions. In the latter case an author can improve performance by placing lengthy processing algorithms which do not need to be executed for every event received into the
-*eventsProcessed* function.
+Authors may define a function named `eventsProcessed` which will be called after some set of events has been received. Some implementations will call this function after the return from each `inputOnly` or `inputOutput` field function, while others will call it only after processing a number of `inputOnly` or `inputOutput` field functions. In the latter case an author can improve performance by placing lengthy processing algorithms which do not need to be executed for every event received into the
+`eventsProcessed` function.
 
 **Example:**
 
-The author needs to compute a complex inverse kinematics operation at each time step of an animation sequence. The sequence is single-stepped using a TouchSensor and button geometry. Normally the author would have an `inputOnly` field function execute whenever the button is pressed. This function would increment the time step then run the inverse kinematics algorithm. But this would execute the complex algorithm at every button press and the user could easily get ahead of the algorithm by clicking on the button rapidly. To solve this the `inputOnly` field function can be changed to simply increment the time step and the IK algorithm can be moved to an eventsProcessed function. In an efficient implementation the clicks would be queued. When the user clicks quickly the time step would be incremented once for each button click but the complex algorithm will be executed only once. This way the animation sequence will keep up with the user.
+The author needs to compute a complex inverse kinematics operation at each time step of an animation sequence. The sequence is single-stepped using a TouchSensor and button geometry. Normally the author would have an `inputOnly` field function execute whenever the button is pressed. This function would increment the time step then run the inverse kinematics algorithm. But this would execute the complex algorithm at every button press and the user could easily get ahead of the algorithm by clicking on the button rapidly. To solve this the `inputOnly` field function can be changed to simply increment the time step and the IK algorithm can be moved to an `eventsProcessed` function. In an efficient implementation the clicks would be queued. When the user clicks quickly the time step would be incremented once for each button click but the complex algorithm will be executed only once. This way the animation sequence will keep up with the user.
 
-The *eventsProcessed* function takes no parameters. Events generated from it are given the timestamp of the last event processed.
+The `eventsProcessed` function takes no parameters. Events generated from it are given the timestamp of the last event processed.
 
 ### shutdown () Method
 
-Authors may define a function named *shutdown* which is called when the corresponding Script node is deleted or the world containing the Script node is unloaded or replaced by another world. This can be used to send events informing external mechanisms that the Script node is being deleted so they can clean up files, etc.
+Authors may define a function named `shutdown` which is called when the corresponding Script node is deleted or the world containing the Script node is unloaded or replaced by another world. This can be used to send events informing external mechanisms that the Script node is being deleted so they can clean up files, etc.
 
-The *shutdown* function takes no parameters. Events generated from it are given the timestamp of when the Script node was deleted.
+The `shutdown` function takes no parameters. Events generated from it are given the timestamp of when the Script node was deleted.
 
 ## Accessing the Script Directly
 
