@@ -284,7 +284,7 @@ When a Script node receives an `inputOnly` or `inputOutput` field, a correspondi
 
 ## Sending Events through outputOnly or inputOutput Fields
 
-When a value is assign to an `outputOnly` field then an event is send, probably to a routed input field. It is also possible to assign a value to an `inputOutput` field, either by using the plain name of the field or by appending `_changed` to the field name.
+When a value is assigned to an `outputOnly` field then an event is send, probably to a routed input field. It is also possible to assign a value to an `inputOutput` field, either by using the plain name of the field or by appending `_changed` to the field name.
 
 ```vrml
 Script {
@@ -295,6 +295,29 @@ Script {
 function set_active (value, time)
 {
   transparency_changed = value ? 0.5 : 0;
+}
+  "
+}
+```
+
+## Store Values in initializeOnly or inputOutput Fields
+
+When a value is assigned to an `initializeOnly` field, the value is stored and can be accessed later. The same is true for `inputOutput` fields.
+
+```vrml
+Script {
+  inputOnly SFBool set_active
+  initializeOnly SFBool active
+  url "ecmascript:
+
+function set_active (value, time)
+{
+  active = value;
+}
+
+function eventsProcessed ()
+{
+  print (active);
 }
   "
 }
