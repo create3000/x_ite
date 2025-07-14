@@ -17,6 +17,7 @@ Object .assign (Object .setPrototypeOf (CoordinateInterpolator2D .prototype, X3D
 {
    set_keyValue__ ()
    {
+      // If there was already an set_fraction event in this frame, send a new value_changed to prevent glitches.
       if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
          this .set_fraction__ ();
    },

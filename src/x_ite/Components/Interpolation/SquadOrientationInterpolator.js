@@ -43,6 +43,7 @@ Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype,
                              this ._key,
                              this ._keyValue);
 
+      // If there was already an set_fraction event in this frame, send a new value_changed to prevent glitches.
       if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
          this .set_fraction__ ();
    },

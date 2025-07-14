@@ -30,6 +30,7 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, X3DIn
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec2f ());
 
+      // If there was already an set_fraction event in this frame, send a new value_changed to prevent glitches.
       if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
          this .set_fraction__ ();
    },

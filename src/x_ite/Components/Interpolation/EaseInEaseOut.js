@@ -25,6 +25,7 @@ Object .assign (Object .setPrototypeOf (EaseInEaseOut .prototype, X3DInterpolato
       if (this ._easeInEaseOut .length < this ._key .length)
          this ._easeInEaseOut .resize (this ._key .length, this ._easeInEaseOut .length ? this ._easeInEaseOut [this ._easeInEaseOut .length - 1] : new Fields .SFVec2f ());
 
+      // If there was already an set_fraction event in this frame, send a new value_changed to prevent glitches.
       if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
          this .set_fraction__ ();
    },
