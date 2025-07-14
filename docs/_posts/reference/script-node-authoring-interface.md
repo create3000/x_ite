@@ -207,7 +207,7 @@ Most SF objects in ECMAScript have a corresponding MF object. An MFObject is ess
 
 Dereferencing an MF object creates a new object of the corresponding SF object type with the contents of the dereferenced element. Assigning an SF object to a dereferenced MF object (which must be of the corresponding type) copies the contents of the SF object into the dereferenced element.
 
-## Supported Protocol in the Script Node's *url* Field
+## Supported Protocol in the Script Node's **url** Field
 
 The *url* field of the Script node may contain a URL that references ECMAScript code:
 
