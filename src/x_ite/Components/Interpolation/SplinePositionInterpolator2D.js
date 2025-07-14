@@ -54,7 +54,8 @@ Object .assign (Object .setPrototypeOf (SplinePositionInterpolator2D .prototype,
                               this ._keyVelocity,
                               this ._normalizeVelocity .getValue ());
 
-      this .set_fraction__ ();
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate (index0, index1, weight)
    {

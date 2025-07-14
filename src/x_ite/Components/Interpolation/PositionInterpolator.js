@@ -30,7 +30,8 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator .prototype, X3DInte
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
 
-      this .set_fraction__ ();
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate: (() =>
    {

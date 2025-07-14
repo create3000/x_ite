@@ -35,7 +35,8 @@ Object .assign (Object .setPrototypeOf (OrientationInterpolator .prototype, X3DI
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
 
-      this .set_fraction__ ();
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate: (() =>
    {

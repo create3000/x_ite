@@ -17,7 +17,8 @@ Object .assign (Object .setPrototypeOf (CoordinateInterpolator2D .prototype, X3D
 {
    set_keyValue__ ()
    {
-      this .set_fraction__ ();
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate (index0, index1, weight)
    {

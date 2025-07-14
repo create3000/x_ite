@@ -24,7 +24,8 @@ Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, X3DInterp
    },
    set_keyValue__ ()
    {
-      this .set_fraction__ ();
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate: (() =>
    {

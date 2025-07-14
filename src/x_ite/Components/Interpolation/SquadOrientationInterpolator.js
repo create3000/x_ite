@@ -43,7 +43,8 @@ Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype,
                              this ._key,
                              this ._keyValue);
 
-      this .set_fraction__ ();
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate (index0, index1, weight)
    {

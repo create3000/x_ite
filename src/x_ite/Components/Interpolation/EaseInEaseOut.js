@@ -25,7 +25,8 @@ Object .assign (Object .setPrototypeOf (EaseInEaseOut .prototype, X3DInterpolato
       if (this ._easeInEaseOut .length < this ._key .length)
          this ._easeInEaseOut .resize (this ._key .length, this ._easeInEaseOut .length ? this ._easeInEaseOut [this ._easeInEaseOut .length - 1] : new Fields .SFVec2f ());
 
-      this .set_fraction__ ();
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate (index0, index1, weight)
    {
