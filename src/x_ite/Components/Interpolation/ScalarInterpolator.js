@@ -29,6 +29,8 @@ Object .assign (Object .setPrototypeOf (ScalarInterpolator .prototype, X3DInterp
 
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
+
+      this .set_fraction__ ();
    },
    interpolate (index0, index1, weight)
    {

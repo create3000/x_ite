@@ -29,6 +29,8 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, X3DIn
 
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec2f ());
+
+      this .set_fraction__ ();
    },
    interpolate:  (() =>
    {

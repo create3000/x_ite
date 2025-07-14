@@ -22,7 +22,10 @@ Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, X3DInterp
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__ () { },
+   set_keyValue__ ()
+   {
+      this .set_fraction__ ();
+   },
    interpolate: (() =>
    {
       const

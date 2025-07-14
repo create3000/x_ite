@@ -20,9 +20,6 @@ Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChild
 
       this .set_key__ ();
 
-      if (this ._key .length)
-         this .interpolate (0, 0, 0);
-
       X3DChildNode .prototype .setup .call (this);
    },
    initialize ()

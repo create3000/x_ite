@@ -42,6 +42,8 @@ Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype,
       this .squad .generate (this ._closed .getValue (),
                              this ._key,
                              this ._keyValue);
+
+      this .set_fraction__ ();
    },
    interpolate (index0, index1, weight)
    {

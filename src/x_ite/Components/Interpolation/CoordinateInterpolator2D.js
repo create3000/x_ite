@@ -15,7 +15,10 @@ function CoordinateInterpolator2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (CoordinateInterpolator2D .prototype, X3DInterpolatorNode .prototype),
 {
-   set_keyValue__ () { },
+   set_keyValue__ ()
+   {
+      this .set_fraction__ ();
+   },
    interpolate (index0, index1, weight)
    {
       const keyValue = this ._keyValue .getValue ();

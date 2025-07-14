@@ -34,6 +34,8 @@ Object .assign (Object .setPrototypeOf (ColorInterpolator .prototype, X3DInterpo
 
       for (const value of keyValue)
          this .hsv .push (value .getHSV ());
+
+      this .set_fraction__ ();
    },
    interpolate: (() =>
    {
