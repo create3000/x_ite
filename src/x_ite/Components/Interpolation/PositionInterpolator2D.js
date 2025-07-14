@@ -33,7 +33,7 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, X3DIn
       if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
          this .set_fraction__ ();
    },
-   interpolate:  (() =>
+   interpolate: (() =>
    {
       const keyValue = new Vector2 ();
 

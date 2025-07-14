@@ -68,8 +68,6 @@ Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChild
    {
       this .set_keyValue__ ();
    },
-   set_keyValue__ () { },
-   interpolate () { },
 });
 
 Object .defineProperties (X3DInterpolatorNode, X3DNode .getStaticProperties ("X3DInterpolatorNode", "Interpolation", 1));

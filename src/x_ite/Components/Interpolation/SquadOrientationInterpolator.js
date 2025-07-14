@@ -48,14 +48,7 @@ Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype,
    },
    interpolate (index0, index1, weight)
    {
-      try
-      {
-         this ._value_changed = this .squad .interpolate (index0, index1, weight, this ._keyValue);
-      }
-      catch (error)
-      {
-         console .error (error);
-      }
+      this ._value_changed = this .squad .interpolate (index0, index1, weight, this ._keyValue);
    },
 });
 
