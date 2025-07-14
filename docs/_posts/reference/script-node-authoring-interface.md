@@ -276,11 +276,33 @@ function set_duration (value, time)
 }
 ```
 
-In the above example, when the *start* `inputOnly` field is sent the start () function is executed.
+In the above example, when the *start* `inputOnly` field is sent then the start () function is executed.
 
 ### Parameter Passing and the inputOnly and inputOutput Field Function
 
 When a Script node receives an `inputOnly` or `inputOutput` field, a corresponding method in the file specified in the *url* field of the Script node is called, which has two arguments. The value of the `inputOnly` or `inputOutput` field is passed as the first argument and timestamp of the `inputOnly` field is passed as the second argument. The type of the value is the same as the type of the `inputOnly` field and the type of the timestamp is **Number**. The unit of the timestamp is Seconds.
+
+## Sending Events through outputOnly or inputOutput Fields
+
+When a value is assign to an `outputOnly` field then an event is send, probably to a routed input field. It is also possible to assign a value to an `inputOutput` field, either by using the plain name of the field or by appending `_changed` to the field name.
+
+```vrml
+Script {
+  inputOnly SFBool set_active
+  outputOnly SFFloat transparency_changed
+  url "ecmascript:
+
+function set_active (value, time)
+{
+  transparency_changed = value ? 0.5 : 0;
+}
+  "
+}
+```
+
+## Script Execution
+
+A Script node is activated when it receives an event. The X3D browser will then execute the program in the Script node's url field.
 
 ### initialize () Method
 
