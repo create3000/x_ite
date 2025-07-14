@@ -386,6 +386,8 @@ function set_active (value, this)
 }
 ```
 
+Additionally it is always possible to get a node by name using `Browser.currentScene.getNamedNode(name)` or by adding a `USE` reference as seen above (TouchSensor).
+
 ## Accessing initializeOnly and outputOnly Fields of Other Nodes
 
 The script can access any `inputOutput`, `inputOnly` or `outputOnly` fields of any node to which it has a pointer and when the `directOutput` field is set to `TRUE`:
