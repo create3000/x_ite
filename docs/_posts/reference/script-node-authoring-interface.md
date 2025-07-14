@@ -263,11 +263,13 @@ Script {
   inputOutput SFTime duration 10
   url "ecmascript:
 
+// Callback for 'inputOnly SFBool start'.
 function start (value, time)
 {
  ...
 }
 
+// Callback for 'inputOutput SFTime duration'.
 function set_duration (value, time)
 {
  ...
@@ -292,6 +294,7 @@ Script {
   outputOnly SFFloat transparency_changed
   url "ecmascript:
 
+// Callback for 'inputOnly SFBool set_active'.
 function set_active (value, time)
 {
   transparency_changed = value ? 0.5 : 0;
@@ -310,11 +313,13 @@ Script {
   initializeOnly SFBool active
   url "ecmascript:
 
+// Callback for 'inputOnly SFBool set_active'.
 function set_active (value, time)
 {
   active = value;
 }
 
+// Function to be called after all input fields are processed.
 function eventsProcessed ()
 {
   print (active);
@@ -361,7 +366,7 @@ Sometimes it is necessary to get access to the corresponding Script node. For th
 ```vrml
 DEF Touch TouchSensor { }
 
-Script {
+DEF SomeScript Script {
   inputOnly      SFBool set_active
   initializeOnly SFNode touch USE Touch
   url "ecmascript:
@@ -373,12 +378,13 @@ function initialize ()
   // Add route from TouchSensor to this Script.
   const scene = Browser .currentScene;
   const route = scene .addRoute (touch, 'isActive', this, 'set_active');
-  print (this .getNodeName ());
+  print (`initialize`, this .getNodeName ());
 }
 
 // Callback for 'inputOnly SFBool set_active'.
-function set_active (value, this)
+function set_active (value, time)
 {
+  print (`set_active`, this .getNodeName ());
   // ...
 }
   "
