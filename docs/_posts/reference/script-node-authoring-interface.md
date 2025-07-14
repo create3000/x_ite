@@ -251,11 +251,11 @@ The MIME type for ECMAScript source code is defined as follows:
 application/javascript
 ```
 
-## InputOnly/InputOutput Field Handling
+## inputOnly and inputOutput Field Handling
 
 Events sent to the Script node are passed to the corresponding ECMAScript function in the script. It is necessary to specify the script in the *url* field of the Script node. The function's name is the same as the `inputOnly` field's name, and for `inputOutput` fields the name is the same as the inputOutput field's name with a `set_` prepended, and this function is passed two arguments, the event value and its timestamp. If there isn't a corresponding ECMAScript function in the script, the browser's behavior is undefined, and the event is probably ignored.
 
-For example, the following Script node has two field, an inputOnly field, and an inputOutput field, named *start* and *duration*:
+For example, the following Script node has two fields, an inputOnly field, and an inputOutput field, named *start* and *duration*:
 
 ```vrml
 Script {
@@ -278,9 +278,9 @@ function set_duration (value, time)
 
 In the above example, when the *start* inputOnly field is sent the start () function is executed.
 
-### Parameter Passing and the InputOnly Field Function
+### Parameter Passing and the inputOnly and inputOutput Field Function
 
-When a Script node receives an inputOnly field, a corresponding method in the file specified in the *url* field of the Script node is called, which has two arguments. The value of the inputOnly field is passed as the first argument and timestamp of the inputOnly field is passed as the second argument. The type of the value is the same as the type of the inputOnly field and the type of the timestamp is **SFTime**.
+When a Script node receives an inputOnly or inputOutput field, a corresponding method in the file specified in the *url* field of the Script node is called, which has two arguments. The value of the inputOnly or inputOutput field is passed as the first argument and timestamp of the inputOnly field is passed as the second argument. The type of the value is the same as the type of the inputOnly field and the type of the timestamp is **Number**. The unit of the timestamp is Seconds.
 
 ### initialize () Method
 
@@ -357,20 +357,20 @@ The script can access any inputOutput, inputOnly or outputOnly fields of any nod
 DEF SomeNode Transform { }
 
 Script {
-  inputOnly      SFVec3f    set_pos
-  inputOutput    SFRotation rot
+  inputOnly      SFVec3f    set_position
+  inputOutput    SFRotation rotation
   initializeOnly SFNode     node USE SomeNode
   url "ecmascript:
 ...
 
-// Callback for 'inputOnly SFVec3f set_pos'.
-function set_pos (value)
+// Callback for 'inputOnly SFVec3f set_position'.
+function set_position (value)
 {
   node .translation = value;
 }
 
-// Callback for 'inputOutput SFRotation rot'.
-function set_rot (value)
+// Callback for 'inputOutput SFRotation rotation'.
+function set_rotation (value)
 {
   node .rotation = value;
 }
@@ -379,7 +379,7 @@ function set_rot (value)
 }
 ```
 
-This sends a set_translation inputOnly field to the Transform node. An inputOnly field on a passed node can appear only on the left side of the assignment. An outputOnly fields or inputOutput field in the passed node can appear only on the right side, which reads the last value sent out. Fields in the passed node cannot be accessed, but inputOutput fields can either send an event to the »set_...« inputOnly field, or read the current value of the »..._changed« outputOnly fields. This follows the routing model of the rest of X3D.
+This sends a set_translation inputOnly field to the Transform node. An inputOnly field on a passed node can appear only on the left side of the assignment. An outputOnly fields or inputOutput field in the passed node can appear only on the right side, which reads the last value sent out. Fields in the passed node cannot be accessed, but inputOutput fields can either send an event to the `set_...` inputOnly field, or read the current value of the `..._changed` outputOnly fields. This follows the routing model of the rest of X3D.
 
 ### Sending OutputOnly Fields
 
