@@ -386,17 +386,9 @@ function set_active (value, this)
 }
 ```
 
-## Accessing Fields
+## Accessing initializeOnly and outputOnly Fields of Other Nodes
 
-The `initializeOnly`, `inputOnly`, `outputOnly`, and `inputOutput` fields of a Script node are accessible from its ECMAScript functions. As in all other nodes the fields are accessible only within the Script. The Script's `inputOnly` fields can be routed to and its `outputOnly` fields can be routed from. Another Script node with a pointer to this node can access its `inputOnly` fields and `outputOnly` fields just like any other node.
-
-### Accessing initializeOnly and outputOnly Fields of the Script
-
-Fields defined in the Script node are available to the script by using its name. It's value can be read or written. This value is persistent across function calls. `outputOnly` fields defined in the script node can also be read. The value is the last value sent.
-
-### Accessing initializeOnly and outputOnly Fields of Other Nodes
-
-The script can access any `inputOutput`, `inputOnly` or `outputOnly` fields of any node to which it has a pointer:
+The script can access any `inputOutput`, `inputOnly` or `outputOnly` fields of any node to which it has a pointer and when the `directOutput` field is set to `TRUE`:
 
 ```vrml
 DEF SomeNode Transform { }
@@ -425,7 +417,3 @@ function set_rotation (value)
 ```
 
 This sends a set_translation `inputOnly` field to the Transform node. An `inputOnly` field on a passed node can appear only on the left side of the assignment. An `outputOnly` fields or `inputOutput` field in the passed node can appear only on the right side, which reads the last value sent out. Fields in the passed node cannot be accessed, but `inputOutput` fields can either send an event to the `set_...` inputOnly field, or read the current value of the `..._changed` `outputOnly` fields. This follows the routing model of the rest of X3D.
-
-### Sending OutputOnly Fields
-
-Assigning to an `outputOnly` field or `inputOutput` field sends that event at the completion of the currently executing function. This implies that assigning to the `outputOnly` field or `inputOutput` field multiple times during one execution of the function still only sends one event and that event is the last value assigned.
