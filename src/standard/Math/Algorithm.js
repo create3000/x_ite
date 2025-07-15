@@ -50,6 +50,7 @@ const Algorithm =
       let cosom = source .dot (destination);
 
       // if (cosom <= -1) ... vectors are inverse colinear.
+      // ; // This case is not handled.
 
       if (cosom >= 1) // Both normal vectors are equal.
          return source;

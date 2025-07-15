@@ -29,7 +29,7 @@ A ECMAScript variable holds an instance of an object. If a name is defined as a 
 
 The names specified in the declaration of a function (the data value and the timestamp) are local to the function in which they are declared. It is a run-time error to assign to these variables.
 
-Local variables can be created simply by assigning to a name that does not yet exist. Assigning to such a variable causes it take the type of the expression, so these local variables always have the type of the last assignment. Local variables are scoped by the block in which they were first introduced. Once that block is exited, the variable ceases to exist. Variables corresponding to outputOnly fields or initializeOnly fields of the Script node are global in scope.
+Local variables can be created simply by assigning to a name that does not yet exist. Assigning to such a variable causes it take the type of the expression, so these local variables always have the type of the last assignment. Local variables are scoped by the block in which they were first introduced. Once that block is exited, the variable ceases to exist. Variables corresponding to `inputOutput`, `outputOnly` fields or `initializeOnly` fields of the Script node are global in scope.
 
 Variable names must start with the a lowercase character ('a' through 'z'), an uppercase character ('A' through 'Z'), or an underscore ('_'). Subsequent characters can be any of these or a digit ('0' through '9'). Variable names are case sensitive.
 
@@ -88,11 +88,11 @@ function anInputField (value, time)
 
 ### Objects and Fields
 
-For each field and outputOnly fields in the Script node containing the script there is a corresponding global variable with the same name. Field variables are persistent; they keep their last stored value across function calls. Local variables, on the other hand, are destroyed on exit from the block in which they were defined. Local variables defined in the outermost block of a function are destroyed when the function exits so they do not persist across function calls.
+For each `inputOutput`, `outputOnly` and `initializeOnly` fields in the Script node containing the script there is a corresponding global variable with the same name. Field variables are persistent; they keep their last stored value across function calls. Local variables, on the other hand, are destroyed on exit from the block in which they were defined. Local variables defined in the outermost block of a function are destroyed when the function exits so they do not persist across function calls.
 
-OutputOnly fields are very similar to field variables in that their values persist across function calls. But when an assignment is made to an outputOnly fields an event is generated.
+`outputOnly` fields are very similar to field variables in that their values persist across function calls. But when an assignment is made to an `outputOnly` field an event is generated. The same happens with `inputOutput` fields.
 
-Every object has a set of *properties* and *methods*. Properties are names on the object that can be selected (using the '.' operator) then used in an expression or as the target of an expression. Methods are names on the object that can be called (using the function call operator) to perform some operation on the object. For example:
+Every object has a set of *properties* and *methods*. Properties are names on the object that can be selected (using the `.` operator) then used in an expression or as the target of an expression. Methods are names on the object that can be called (using the function call operator) to perform some operation on the object. For example:
 
 ```js
 function someFunction ()
@@ -103,11 +103,11 @@ function someFunction ()
 }
 ```
 
-The value *a.r* selects the property which corresponds to the red component of the color. The value *a .setHSV ()* selects the method which sets the color in HSV space.
+The value `a.r` selects the property which corresponds to the red component of the color. The value `a .setHSV ()` selects the method which sets the color in HSV space.
 
 ### Object Construction
 
-For each object type there is a corresponding constructor. Constructors typically take a flexible set of parameters to allow construction of objects with any initial value. MF objects are essentially arrays so they always take 0 or more parameters of the corresponding SF object type. A value of a given data type is created using the *new* keyword with the data type name. For instance:
+For each object type there is a corresponding constructor. Constructors typically take a flexible set of parameters to allow construction of objects with any initial value. MF objects are essentially arrays so they always take 0 or more parameters of the corresponding SF object type. A value of a given data type is created using the `new` keyword with the data type name. For instance:
 
 ```js
 let a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0.
@@ -134,7 +134,7 @@ Combining objects of different types in a single expression or assignment statem
       </tr>
       <tr>
          <td><b>Number and boolean types</b></td>
-         <td>Assigning a number or boolean expression to a fixed variable (initializeOnly field, outputOnly fields, or inputOutput fields) of scalar type (SFBool, SFDouble, SFFloat, SFInt32, SFTime) converts to the type of the fixed variable.
+         <td>Assigning a number or boolean expression to a fixed variable (<code>initializeOnly</code> field, <code>outputOnly</code> fields, or <code>inputOutput</code> fields) of scalar type (SFBool, SFDouble, SFFloat, SFInt32, SFTime) converts to the type of the fixed variable.
          </td>
       </tr>
       <tr>
@@ -207,7 +207,7 @@ Most SF objects in ECMAScript have a corresponding MF object. An MFObject is ess
 
 Dereferencing an MF object creates a new object of the corresponding SF object type with the contents of the dereferenced element. Assigning an SF object to a dereferenced MF object (which must be of the corresponding type) copies the contents of the SF object into the dereferenced element.
 
-## Supported Protocol in the Script Node's *url* Field
+## Supported Protocol in the Script Node's **url** Field
 
 The *url* field of the Script node may contain a URL that references ECMAScript code:
 
@@ -251,11 +251,11 @@ The MIME type for ECMAScript source code is defined as follows:
 application/javascript
 ```
 
-## InputOnly/InputOutput Field Handling
+## inputOnly and inputOutput Field Handling
 
-Events sent to the Script node are passed to the corresponding ECMAScript function in the script. It is necessary to specify the script in the *url* field of the Script node. The function's name is the same as the `inputOnly` field's name, and for `inputOutput` fields the name is the same as the inputOutput field's name with a `set_` prepended, and this function is passed two arguments, the event value and its timestamp. If there isn't a corresponding ECMAScript function in the script, the browser's behavior is undefined, and the event is probably ignored.
+Events sent to the Script node are passed to the corresponding ECMAScript function in the script. It is necessary to specify the script in the *url* field of the Script node. The function's name is the same as the `inputOnly` field's name, and for `inputOutput` fields the name is the same as the `inputOutput` field's name with a `set_` prepended, and this function is passed two arguments, the event value and its timestamp. If there isn't a corresponding ECMAScript function in the script, the browser's behavior is undefined, and the event is probably ignored.
 
-For example, the following Script node has two field, an inputOnly field, and an inputOutput field, named *start* and *duration*:
+For example, the following Script node has two fields, an `inputOnly` field, and an `inputOutput` field, named *start* and *duration*:
 
 ```vrml
 Script {
@@ -263,11 +263,13 @@ Script {
   inputOutput SFTime duration 10
   url "ecmascript:
 
+// Callback for 'inputOnly SFBool start'.
 function start (value, time)
 {
  ...
 }
 
+// Callback for 'inputOutput SFTime duration'.
 function set_duration (value, time)
 {
  ...
@@ -276,47 +278,95 @@ function set_duration (value, time)
 }
 ```
 
-In the above example, when the *start* inputOnly field is sent the start () function is executed.
+In the above example, when the *start* `inputOnly` field is sent then the start () function is executed.
 
-### Parameter Passing and the InputOnly Field Function
+### Parameter Passing and the inputOnly and inputOutput Field Function
 
-When a Script node receives an inputOnly field, a corresponding method in the file specified in the *url* field of the Script node is called, which has two arguments. The value of the inputOnly field is passed as the first argument and timestamp of the inputOnly field is passed as the second argument. The type of the value is the same as the type of the inputOnly field and the type of the timestamp is **SFTime**.
+When a Script node receives an `inputOnly` or `inputOutput` field, a corresponding method in the file specified in the *url* field of the Script node is called, which has two arguments. The value of the `inputOnly` or `inputOutput` field is passed as the first argument and timestamp of the `inputOnly` field is passed as the second argument. The type of the value is the same as the type of the `inputOnly` field and the type of the timestamp is **Number**. The unit of the timestamp is Seconds.
+
+## Sending Events through outputOnly or inputOutput Fields
+
+When a value is assigned to an `outputOnly` field then an event is send, probably to a routed input field. It is also possible to assign a value to an `inputOutput` field, either by using the plain name of the field or by appending `_changed` to the field name.
+
+```vrml
+Script {
+  inputOnly SFBool set_active
+  outputOnly SFFloat transparency_changed
+  url "ecmascript:
+
+// Callback for 'inputOnly SFBool set_active'.
+function set_active (value, time)
+{
+  transparency_changed = value ? 0.5 : 0;
+}
+  "
+}
+```
+
+## Store Values in initializeOnly or inputOutput Fields
+
+When a value is assigned to an `initializeOnly` field, the value is stored and can be accessed later. The same is true for `inputOutput` fields.
+
+```vrml
+Script {
+  inputOnly SFBool set_active
+  initializeOnly SFBool active
+  url "ecmascript:
+
+// Callback for 'inputOnly SFBool set_active'.
+function set_active (value, time)
+{
+  active = value;
+}
+
+// Function to be called after all input fields are processed.
+function eventsProcessed ()
+{
+  print (active);
+}
+  "
+}
+```
+
+## Script Execution
+
+A Script node is activated when it receives an event. The X3D browser will then execute the program in the Script node's url field, but there exist four special event handler which are processed to certain times.
 
 ### initialize () Method
 
-Authors may define a function named *initialize* which is called when the corresponding Script node has been loaded and before any events are processed. This can be used to prepare for processing before events are received, such as constructing geometry or initializing external mechanisms.
+Authors may define a function named `initialize` which is called when the corresponding Script node has been loaded and before any events are processed. This can be used to prepare for processing before events are received, such as constructing geometry or initializing external mechanisms.
 
-The *initialize* function takes no parameters. Events generated from it are given the timestamp of when the Script node was loaded.
+The `initialize` function takes no parameters. Events generated from it are given the timestamp of when the Script node was loaded.
 
 ### prepareEvents () Method
 
-Authors may define a prepareEvents () method that is called only once per frame. prepareEvents () is called before any ROUTE processing and allows a Script to collect any asynchronously generated data, such as input from a network queue or the results of calling field listeners, and generate events to be handled by the browser's normal event processing sequence as if it were a built-in sensor node.
+Authors may define a `prepareEvents` method that is called only once per frame. `prepareEvents` is called before any ROUTE processing and allows a Script to collect any asynchronously generated data, such as input from a network queue or the results of calling field listeners, and generate events to be handled by the browser's normal event processing sequence as if it were a built-in sensor node.
 
 ### eventsProcessed () Method
 
-Authors may define a function named *eventsProcessed* which will be called after some set of events has been received. Some implementations will call this function after the return from each inputOnly field function, while others will call it only after processing a number of inputOnly field functions. In the latter case an author can improve performance by placing lengthy processing algorithms which do not need to be executed for every event received into the
-*eventsProcessed* function.
+Authors may define a function named `eventsProcessed` which will be called after some set of events has been received. Some implementations will call this function after the return from each `inputOnly` or `inputOutput` field function, while others will call it only after processing a number of `inputOnly` or `inputOutput` field functions. In the latter case an author can improve performance by placing lengthy processing algorithms which do not need to be executed for every event received into the
+`eventsProcessed` function.
 
 **Example:**
 
-The author needs to compute a complex inverse kinematics operation at each time step of an animation sequence. The sequence is single-stepped using a TouchSensor and button geometry. Normally the author would have an inputOnly field function execute whenever the button is pressed. This function would increment the time step then run the inverse kinematics algorithm. But this would execute the complex algorithm at every button press and the user could easily get ahead of the algorithm by clicking on the button rapidly. To solve this the inputOnly field function can be changed to simply increment the time step and the IK algorithm can be moved to an eventsProcessed function. In an efficient implementation the clicks would be queued. When the user clicks quickly the time step would be incremented once for each button click but the complex algorithm will be executed only once. This way the animation sequence will keep up with the user.
+The author needs to compute a complex inverse kinematics operation at each time step of an animation sequence. The sequence is single-stepped using a TouchSensor and button geometry. Normally the author would have an `inputOnly` field function execute whenever the button is pressed. This function would increment the time step then run the inverse kinematics algorithm. But this would execute the complex algorithm at every button press and the user could easily get ahead of the algorithm by clicking on the button rapidly. To solve this the `inputOnly` field function can be changed to simply increment the time step and the IK algorithm can be moved to an `eventsProcessed` function. In an efficient implementation the clicks would be queued. When the user clicks quickly the time step would be incremented once for each button click but the complex algorithm will be executed only once. This way the animation sequence will keep up with the user.
 
-The *eventsProcessed* function takes no parameters. Events generated from it are given the timestamp of the last event processed.
+The `eventsProcessed` function takes no parameters. Events generated from it are given the timestamp of the last event processed.
 
 ### shutdown () Method
 
-Authors may define a function named *shutdown* which is called when the corresponding Script node is deleted or the world containing the Script node is unloaded or replaced by another world. This can be used to send events informing external mechanisms that the Script node is being deleted so they can clean up files, etc.
+Authors may define a function named `shutdown` which is called when the corresponding Script node is deleted or the world containing the Script node is unloaded or replaced by another world. This can be used to send events informing external mechanisms that the Script node is being deleted so they can clean up files, etc.
 
-The *shutdown* function takes no parameters. Events generated from it are given the timestamp of when the Script node was deleted.
+The `shutdown` function takes no parameters. Events generated from it are given the timestamp of when the Script node was deleted.
 
 ## Accessing the Script Directly
 
-Sometimes it is necessary to get access to the corresponding Script node. For this case, there is a special variable *this* in each callback function that holds a SFNode reference to the Script node.
+Sometimes it is necessary to get access to the corresponding Script node. For this case, there is a special variable `this` in each callback function that holds a SFNode reference to the Script node.
 
 ```vrml
 DEF Touch TouchSensor { }
 
-Script {
+DEF SomeScript Script {
   inputOnly      SFBool set_active
   initializeOnly SFNode touch USE Touch
   url "ecmascript:
@@ -328,12 +378,13 @@ function initialize ()
   // Add route from TouchSensor to this Script.
   const scene = Browser .currentScene;
   const route = scene .addRoute (touch, 'isActive', this, 'set_active');
-  print (this .getNodeName ());
+  print (`initialize`, this .getNodeName ());
 }
 
 // Callback for 'inputOnly SFBool set_active'.
-function set_active (value, this)
+function set_active (value, time)
 {
+  print (`set_active`, this .getNodeName ());
   // ...
 }
   "
@@ -341,36 +392,30 @@ function set_active (value, this)
 }
 ```
 
-## Accessing Fields
+Additionally it is always possible to get a node by name using `Browser.currentScene.getNamedNode(name)` or by adding a `USE` reference as seen above (TouchSensor).
 
-The initializeOnly, inputOnly, outputOnly, and inputOutput fields of a Script node are accessible from its ECMAScript functions. As in all other nodes the fields are accessible only within the Script. The Script's inputOnly fields can be routed to and its outputOnly fields can be routed from. Another Script node with a pointer to this node can access its inputOnly fields and outputOnly fields just like any other node.
+## Accessing initializeOnly and outputOnly Fields of Other Nodes
 
-### Accessing initializeOnly and outputOnly Fields of the Script
-
-Fields defined in the Script node are available to the script by using its name. It's value can be read or written. This value is persistent across function calls. outputOnly fields defined in the script node can also be read. The value is the last value sent.
-
-### Accessing initializeOnly and outputOnly Fields of Other Nodes
-
-The script can access any inputOutput, inputOnly or outputOnly fields of any node to which it has a pointer:
+The script can access any `inputOutput`, `inputOnly` or `outputOnly` fields of any node to which it has a pointer and when the `directOutput` field is set to `TRUE`:
 
 ```vrml
 DEF SomeNode Transform { }
 
 Script {
-  inputOnly      SFVec3f    set_pos
-  inputOutput    SFRotation rot
+  inputOnly      SFVec3f    set_position
+  inputOutput    SFRotation rotation
   initializeOnly SFNode     node USE SomeNode
   url "ecmascript:
 ...
 
-// Callback for 'inputOnly SFVec3f set_pos'.
-function set_pos (value)
+// Callback for 'inputOnly SFVec3f set_position'.
+function set_position (value)
 {
   node .translation = value;
 }
 
-// Callback for 'inputOutput SFRotation rot'.
-function set_rot (value)
+// Callback for 'inputOutput SFRotation rotation'.
+function set_rotation (value)
 {
   node .rotation = value;
 }
@@ -379,8 +424,4 @@ function set_rot (value)
 }
 ```
 
-This sends a set_translation inputOnly field to the Transform node. An inputOnly field on a passed node can appear only on the left side of the assignment. An outputOnly fields or inputOutput field in the passed node can appear only on the right side, which reads the last value sent out. Fields in the passed node cannot be accessed, but inputOutput fields can either send an event to the »set_...« inputOnly field, or read the current value of the »..._changed« outputOnly fields. This follows the routing model of the rest of X3D.
-
-### Sending OutputOnly Fields
-
-Assigning to an outputOnly fields or inputOutput field sends that event at the completion of the currently executing function. This implies that assigning to the outputOnly field or inputOutput field multiple times during one execution of the function still only sends one event and that event is the last value assigned.
+This sends a set_translation `inputOnly` field to the Transform node. An `inputOnly` field on a passed node can appear only on the left side of the assignment. An `outputOnly` fields or `inputOutput` field in the passed node can appear only on the right side, which reads the last value sent out. Fields in the passed node cannot be accessed, but `inputOutput` fields can either send an event to the `set_...` inputOnly field, or read the current value of the `..._changed` `outputOnly` fields. This follows the routing model of the rest of X3D.

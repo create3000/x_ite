@@ -19,9 +19,7 @@ Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChild
       // value for the respective field type is returned (EXAMPLE  (0, 0, 0) for Fields .SFVec3f);
 
       this .set_key__ ();
-
-      if (this ._key .length)
-         this .interpolate (0, 0, 0);
+      this .set_fraction__ ();
 
       X3DChildNode .prototype .setup .call (this);
    },
@@ -30,7 +28,7 @@ Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChild
       X3DChildNode .prototype .initialize .call (this);
 
       this ._set_fraction .addInterest ("set_fraction__", this);
-      this ._key          .addInterest ("set_key__", this);
+      this ._key          .addInterest ("set_key__",      this);
    },
    set_fraction__ ()
    {
@@ -70,8 +68,6 @@ Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChild
    {
       this .set_keyValue__ ();
    },
-   set_keyValue__ () { },
-   interpolate () { },
 });
 
 Object .defineProperties (X3DInterpolatorNode, X3DNode .getStaticProperties ("X3DInterpolatorNode", "Interpolation", 1));

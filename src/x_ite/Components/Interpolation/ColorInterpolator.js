@@ -34,6 +34,10 @@ Object .assign (Object .setPrototypeOf (ColorInterpolator .prototype, X3DInterpo
 
       for (const value of keyValue)
          this .hsv .push (value .getHSV ());
+
+      // If there already was an set_fraction event in this frame, send a new value_changed to prevent glitches.
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate: (() =>
    {
