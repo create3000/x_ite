@@ -7,6 +7,17 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v11.6 Series
+
+*Leipzig, 12th July 2025:* This new series 11.6 comes with Animated PNG support for MovieTexture node. The MoveTexture node has been able to handle Animated GIFs for quite a while, and can now also handle Animated PNGs.
+
+For a first impression of how the whole thing looks now, here are two example files to test:
+
+1. [Animated PNG as MovieTexture](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedPNG.x3d)
+2. [Animated GIF as MovieTexture](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedGIF.x3d)
+
+See also: [MovieTexture supported file formats](/x_ite/components/texturing/movietexture/#supported-file-formats).
+
 ## X_ITE v11.5 Series
 
 *Leipzig, 6th April 2025:* This series comes improvements in [Sunrize](/sunrize/).

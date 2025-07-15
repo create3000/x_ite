@@ -42,17 +42,14 @@ Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype,
       this .squad .generate (this ._closed .getValue (),
                              this ._key,
                              this ._keyValue);
+
+      // If there was already an set_fraction event in this frame, send a new value_changed to prevent glitches.
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate (index0, index1, weight)
    {
-      try
-      {
-         this ._value_changed = this .squad .interpolate (index0, index1, weight, this ._keyValue);
-      }
-      catch (error)
-      {
-         console .error (error);
-      }
+      this ._value_changed = this .squad .interpolate (index0, index1, weight, this ._keyValue);
    },
 });
 

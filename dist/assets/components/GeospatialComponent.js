@@ -1,5 +1,5 @@
-/* X_ITE v11.5.15 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.15")];
+/* X_ITE v11.6.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1092,7 +1092,6 @@ var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
-
 function GeoElevationGrid (executionContext)
 {
    external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
@@ -1116,57 +1115,15 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
       Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
       this ._set_height .addFieldInterest (this ._height);
-      this ._color      .addInterest ("set_color__", this);
+      this ._color      .addInterest ("set_color__",    this);
       this ._texCoord   .addInterest ("set_texCoord__", this);
-      this ._normal     .addInterest ("set_normal__", this);
+      this ._tangent    .addInterest ("set_tangent__",  this);
+      this ._normal     .addInterest ("set_normal__",   this);
 
       this .set_color__ ();
       this .set_texCoord__ ();
+      this .set_tangent__ ();
       this .set_normal__ ();
-   },
-   set_color__ ()
-   {
-      this .colorNode ?.removeInterest ("requestRebuild", this);
-
-      this .colorNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DColorNode, this ._color);
-
-      this .colorNode ?.addInterest ("requestRebuild", this);
-
-      this .setTransparent (this .colorNode ?.isTransparent ());
-   },
-   set_texCoord__ ()
-   {
-      this .texCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .texCoordNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTextureCoordinateNode, this ._texCoord);
-
-      this .texCoordNode ?.addInterest ("requestRebuild", this);
-
-      this .setTextureCoordinate (this .texCoordNode);
-   },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
-   getColor ()
-   {
-      return this .colorNode;
-   },
-   getTexCoord ()
-   {
-      return this .texCoordNode;
-   },
-   getNormal ()
-   {
-      return this .normalNode;
-   },
-   getTangent ()
-   {
-      return this .tangentNode;
    },
    getHeight (index)
    {
@@ -1325,13 +1282,13 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
          coordIndex         = this .createCoordIndex (),
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
-         normalNode         = this .getNormal (),
          tangentNode        = this .getTangent (),
+         normalNode         = this .getNormal (),
          points             = this .createPoints (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
-         normalArray        = this .getNormals (),
          tangentArray       = this .getTangents (),
+         normalArray        = this .getNormals (),
          vertexArray        = this .getVertices ();
 
       let face = 0;
@@ -1382,8 +1339,8 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
                texCoordArray .push (x, y, 0, 1);
             }
 
-            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
             tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
+            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
 
             vertexArray .push (x, y, z, 1);
          }
