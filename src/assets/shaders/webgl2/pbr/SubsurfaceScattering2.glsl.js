@@ -41,7 +41,7 @@ burley_eval (const in vec3 d, const in float r)
 }
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 diffuseColor)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance)
 {
    vec3  scatterDistance     = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color
    float maxColor            = max3 (scatterDistance);
@@ -66,16 +66,15 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    float maxRadiusPixels    = maxColor / mPerPixel; // Calculate the maximum radius in pixels
 
    if (maxRadiusPixels <= 1.0)
-      return diffuseColor * centerSample .rgb; // If the maximum radius is less than or equal to the pixel size, the pixel itself defines the scatter color.
+      return centerSample .rgb; // If the maximum radius is less than or equal to the pixel size, the pixel itself defines the scatter color.
 
    centerDepth = fragViewPosition .z; // Extract the depth value
 
    vec3 totalWeight  = vec3 (0.0);
    vec3 totalDiffuse = vec3 (0.0);
 
-   vec3 albedo                 = diffuseColor / max (0.00001, max3 (diffuseColor)); // Normalize the albedo color to avoid division by zero
    vec3 clampedScatterDistance = max (vec3 (x3d_ScatterMinRadiusEXT), scatterDistance / maxColor) * maxColor;
-   vec3 d                      = burley_setup (clampedScatterDistance, albedo); // Setup the Burley model parameters
+   vec3 d                      = burley_setup (clampedScatterDistance, vec3(1.0)); // Setup the Burley model parameters
 
    for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
    {
@@ -109,7 +108,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
    totalWeight = max (totalWeight, vec3 (0.0001)); // Avoid division by zero
 
-   return diffuseColor * (totalDiffuse / totalWeight);
+   return totalDiffuse / totalWeight;
 }
 #endif
 `;
