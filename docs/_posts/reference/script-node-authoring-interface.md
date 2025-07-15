@@ -29,7 +29,7 @@ A ECMAScript variable holds an instance of an object. If a name is defined as a 
 
 The names specified in the declaration of a function (the data value and the timestamp) are local to the function in which they are declared. It is a run-time error to assign to these variables.
 
-Local variables can be created simply by assigning to a name that does not yet exist. Assigning to such a variable causes it take the type of the expression, so these local variables always have the type of the last assignment. Local variables are scoped by the block in which they were first introduced. Once that block is exited, the variable ceases to exist. Variables corresponding to `outputOnly` fields or `initializeOnly` fields of the Script node are global in scope.
+Local variables can be created simply by assigning to a name that does not yet exist. Assigning to such a variable causes it take the type of the expression, so these local variables always have the type of the last assignment. Local variables are scoped by the block in which they were first introduced. Once that block is exited, the variable ceases to exist. Variables corresponding to `inputOutput`, `outputOnly` fields or `initializeOnly` fields of the Script node are global in scope.
 
 Variable names must start with the a lowercase character ('a' through 'z'), an uppercase character ('A' through 'Z'), or an underscore ('_'). Subsequent characters can be any of these or a digit ('0' through '9'). Variable names are case sensitive.
 
@@ -88,11 +88,11 @@ function anInputField (value, time)
 
 ### Objects and Fields
 
-For each field and `outputOnly` fields in the Script node containing the script there is a corresponding global variable with the same name. Field variables are persistent; they keep their last stored value across function calls. Local variables, on the other hand, are destroyed on exit from the block in which they were defined. Local variables defined in the outermost block of a function are destroyed when the function exits so they do not persist across function calls.
+For each `inputOutput`, `outputOnly` and `initializeOnly` fields in the Script node containing the script there is a corresponding global variable with the same name. Field variables are persistent; they keep their last stored value across function calls. Local variables, on the other hand, are destroyed on exit from the block in which they were defined. Local variables defined in the outermost block of a function are destroyed when the function exits so they do not persist across function calls.
 
-OutputOnly fields are very similar to field variables in that their values persist across function calls. But when an assignment is made to an `outputOnly` fields an event is generated.
+`outputOnly` fields are very similar to field variables in that their values persist across function calls. But when an assignment is made to an `outputOnly` field an event is generated. The same happens with `inputOutput` fields.
 
-Every object has a set of *properties* and *methods*. Properties are names on the object that can be selected (using the '.' operator) then used in an expression or as the target of an expression. Methods are names on the object that can be called (using the function call operator) to perform some operation on the object. For example:
+Every object has a set of *properties* and *methods*. Properties are names on the object that can be selected (using the `.` operator) then used in an expression or as the target of an expression. Methods are names on the object that can be called (using the function call operator) to perform some operation on the object. For example:
 
 ```js
 function someFunction ()
@@ -103,11 +103,11 @@ function someFunction ()
 }
 ```
 
-The value *a.r* selects the property which corresponds to the red component of the color. The value *a .setHSV ()* selects the method which sets the color in HSV space.
+The value `a.r` selects the property which corresponds to the red component of the color. The value `a .setHSV ()` selects the method which sets the color in HSV space.
 
 ### Object Construction
 
-For each object type there is a corresponding constructor. Constructors typically take a flexible set of parameters to allow construction of objects with any initial value. MF objects are essentially arrays so they always take 0 or more parameters of the corresponding SF object type. A value of a given data type is created using the *new* keyword with the data type name. For instance:
+For each object type there is a corresponding constructor. Constructors typically take a flexible set of parameters to allow construction of objects with any initial value. MF objects are essentially arrays so they always take 0 or more parameters of the corresponding SF object type. A value of a given data type is created using the `new` keyword with the data type name. For instance:
 
 ```js
 let a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0.
@@ -361,7 +361,7 @@ The `shutdown` function takes no parameters. Events generated from it are given 
 
 ## Accessing the Script Directly
 
-Sometimes it is necessary to get access to the corresponding Script node. For this case, there is a special variable *this* in each callback function that holds a SFNode reference to the Script node.
+Sometimes it is necessary to get access to the corresponding Script node. For this case, there is a special variable `this` in each callback function that holds a SFNode reference to the Script node.
 
 ```vrml
 DEF Touch TouchSensor { }
