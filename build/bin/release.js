@@ -48,15 +48,6 @@ function docs (version)
 	// curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '
 	const size = Math .floor (parseInt (sh (`brotli -q 4 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000);
 
-	if (size < 300)
-		var color = "green";
-	else if (size < 310)
-		var color = "cyan";
-	else
-		var color = "blue";
-
-	systemSync (`wget -q -O - https://badgen.net/static/compressed/${size}KB/${color} > docs/assets/img/badges/compressed.svg`);
-
 	let config = sh (`cat 'docs/_config.yml'`);
 
 	config = config .replace (/\x_ite_latest_version:\s*[\d\.]+/sg, `x_ite_latest_version: ${version}`);
