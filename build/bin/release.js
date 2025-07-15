@@ -45,16 +45,8 @@ function readme (version)
 
 function docs (version)
 {
-	const size = Math .floor (parseInt (sh (`brotli -q 6 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000);
-
-	if (size < 280)
-		var color = "green";
-	else if (size < 300)
-		var color = "cyan";
-	else
-		var color = "blue";
-
-	systemSync (`wget -q -O - https://badgen.net/static/compressed/${size}KB/${color} > docs/assets/img/badges/compressed.svg`);
+	// curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '
+	const size = Math .floor (parseInt (sh (`brotli -q 4 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000);
 
 	let config = sh (`cat 'docs/_config.yml'`);
 

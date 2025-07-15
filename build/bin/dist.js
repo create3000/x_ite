@@ -40,8 +40,16 @@ function main ()
    copy_files ();
    systemSync (`npx webpack`);
    html ();
-   systemSync (`brotli -6 dist/x_ite.min.mjs --stdout | wc -c`);
-   systemSync (`du -h dist/x_ite.min.js`);
+
+	// Output package sizes:
+
+	const online = sh (`curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '`) .trim ();
+	const local  = sh (`brotli -4 dist/x_ite.min.mjs --stdout | wc -c | tr -d ' '`) .trim ();
+	const min    = sh (`cat dist/x_ite.min.js | wc -c | tr -d ' '`) .trim ();
+
+   console .log (`Online: ${online .toLocaleString ("en")} bytes`);
+   console .log (`Local:  ${local  .toLocaleString ("en")} bytes`);
+	console .log (`Min:    ${min    .toLocaleString ("en")} bytes`);
 }
 
 main ();

@@ -29,6 +29,10 @@ Object .assign (Object .setPrototypeOf (ScalarInterpolator .prototype, X3DInterp
 
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
+
+      // If there was already an set_fraction event in this frame, send a new value_changed to prevent glitches.
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
    },
    interpolate (index0, index1, weight)
    {
