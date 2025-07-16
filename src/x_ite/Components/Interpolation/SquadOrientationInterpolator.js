@@ -3,7 +3,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DInterpolatorNode  from "./X3DInterpolatorNode.js";
-import SquatInterpolator    from "../../Browser/Interpolation/SquatInterpolator.js";
+import SquadInterpolator    from "../../Browser/Interpolation/SquadInterpolator.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 function SquadOrientationInterpolator (executionContext)
@@ -19,7 +19,7 @@ function SquadOrientationInterpolator (executionContext)
 
    // Private properties
 
-   this .squad = new SquatInterpolator ();
+   this .squad = new SquadInterpolator ();
 }
 
 Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype, X3DInterpolatorNode .prototype),
