@@ -89,7 +89,7 @@ Output values for nonlinear interpolation, each corresponding to an input-fracti
 
 - Number of keys must match number of keyValues!
 
-### SFBool [in, out] **normalizeVelocity**
+### SFBool [in, out] **normalizeVelocity** FALSE <small class="red">not supported</small>
 {: #fields-normalizeVelocity }
 
 *normalizeVelocity* field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.

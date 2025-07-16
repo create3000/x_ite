@@ -64,7 +64,7 @@ Object .defineProperties (SquadOrientationInterpolator,
          new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",               new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",          new Fields .MFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "normalizeVelocity", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalizeVelocity", new Fields .SFBool ()), // not supported
          new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed",     new Fields .SFRotation ()),
       ]),
       enumerable: true,
