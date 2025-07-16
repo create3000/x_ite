@@ -1,11 +1,11 @@
 import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
 
-function SquatInterpolator ()
+function SquadInterpolator ()
 {
    this .s = [ ];
 }
 
-Object .assign (SquatInterpolator .prototype,
+Object .assign (SquadInterpolator .prototype,
 {
    generate (closed, key, keyValue)
    {
@@ -62,4 +62,4 @@ Object .assign (SquatInterpolator .prototype,
    })(),
 });
 
-export default SquatInterpolator;
+export default SquadInterpolator;
