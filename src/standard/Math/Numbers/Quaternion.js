@@ -513,7 +513,9 @@ Object .assign (Quaternion .prototype,
    },
    squad (a, b, destination, t)
    {
-      // We must use shortest path slerp to prevent flipping.  Also see spline.
+      // Ken Shoemake defines Squad as:
+      // We must use shortest path slerp to prevent flipping. See also spline below.
+      // a = spline (si-1, si, si+1) and b = spline (di-1, di, di+1), where si = source and di = destination
 
       return Algorithm .slerp (Algorithm .slerp (this, t1 .assign (destination), t),
                                Algorithm .slerp (t2 .assign (a), t3 .assign (b), t),

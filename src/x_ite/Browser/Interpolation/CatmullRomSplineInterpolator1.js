@@ -31,6 +31,10 @@ Object .assign (Object .setPrototypeOf (CatmullRomSplineInterpolator1 .prototype
    {
       return Math .abs (value);
    },
+   distance (lhs, rhs)
+   {
+      return Math .abs (lhs - rhs);
+   },
    dot (SH, C0, C1, C2, C3)
    {
       return C0 * SH [0] + C1 * SH [1] + C2 * SH [2] + C3 * SH [3];

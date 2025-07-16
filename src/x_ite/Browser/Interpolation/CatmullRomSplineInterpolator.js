@@ -56,7 +56,7 @@ Object .assign (CatmullRomSplineInterpolator .prototype,
                   let Dtot = 0;
 
                   for (let i = 0, length = keyValue .length - 1; i < length; ++ i)
-                     Dtot += this .magnitude (this .subtract (keyValue [i], keyValue [i + 1]));
+                     Dtot += this .distance (keyValue [i], keyValue [i + 1]);
 
                   for (let i = 0, length = T .length - 1; i < length; ++ i)
                   {
