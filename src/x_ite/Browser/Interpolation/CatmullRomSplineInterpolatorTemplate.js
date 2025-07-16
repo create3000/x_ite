@@ -12,7 +12,7 @@ function CatmullRomSplineInterpolatorTemplate (Type)
    {
       create ()
       {
-         return Type .Zero .copy ();
+         return new Type ();
       },
       copy (value)
       {
