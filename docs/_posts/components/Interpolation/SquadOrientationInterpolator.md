@@ -35,7 +35,7 @@ The SquadOrientationInterpolator node belongs to the [Interpolation](/x_ite/comp
 | SFBool | [in, out] | [closed](#fields-closed) | FALSE |
 | MFFloat | [in, out] | [key](#fields-key) | [ ] |
 | MFRotation | [in, out] | [keyValue](#fields-keyValue) | [ ] |
-| SFBool | [in, out] | [normalizeVelocity](#fields-normalizeVelocity) |  |
+| SFBool | [in, out] | [normalizeVelocity](#fields-normalizeVelocity) | FALSE  |
 | SFRotation | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }
 
