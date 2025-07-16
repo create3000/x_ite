@@ -34,6 +34,10 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       {
          return value .magnitude ();
       },
+      distance (lhs, rhs)
+      {
+         return lhs .distance (rhs);
+      },
       dot: (() =>
       {
          const
