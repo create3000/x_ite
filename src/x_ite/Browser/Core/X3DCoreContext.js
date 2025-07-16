@@ -339,7 +339,7 @@ Object .assign (X3DCoreContext .prototype,
                this .getCanvas () .show ();
 
                this .getSplashScreen ()
-                  .removeClass ("x_ite-private-fade-out-2000")
+                  .removeClass ("x_ite-private-fade-out-splash-screen")
                   .addClass ("x_ite-private-hidden");
             }
 
