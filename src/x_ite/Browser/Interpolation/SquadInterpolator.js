@@ -55,9 +55,12 @@ Object .assign (SquadInterpolator .prototype,
 
       return function (index0, index1, weight, keyValue)
       {
-         return result .assign (keyValue [index0] .getValue ()) .squad (this .s [index0],
-                                                                        this .s [index1],
-                                                                        keyValue [index1] .getValue (), weight);
+         const s = this .s;
+
+         return result .assign (keyValue [index0] .getValue ()) .squad (s [index0],
+                                                                        s [index1],
+                                                                        keyValue [index1] .getValue (),
+                                                                        weight);
       };
    })(),
 });
