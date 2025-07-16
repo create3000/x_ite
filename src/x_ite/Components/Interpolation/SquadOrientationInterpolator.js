@@ -3,7 +3,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DInterpolatorNode  from "./X3DInterpolatorNode.js";
-import SquatInterpolator    from "../../Browser/Interpolation/SquatInterpolator.js";
+import SquadInterpolator    from "../../Browser/Interpolation/SquadInterpolator.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 function SquadOrientationInterpolator (executionContext)
@@ -19,7 +19,7 @@ function SquadOrientationInterpolator (executionContext)
 
    // Private properties
 
-   this .squad = new SquatInterpolator ();
+   this .squad = new SquadInterpolator ();
 }
 
 Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype, X3DInterpolatorNode .prototype),
@@ -59,12 +59,13 @@ Object .defineProperties (SquadOrientationInterpolator,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "closed",        new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",               new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",          new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalizeVelocity", new Fields .SFBool ()), // not supported
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed",     new Fields .SFRotation ()),
       ]),
       enumerable: true,
    },

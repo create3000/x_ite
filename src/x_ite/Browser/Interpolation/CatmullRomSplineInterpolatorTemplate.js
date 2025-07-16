@@ -12,7 +12,7 @@ function CatmullRomSplineInterpolatorTemplate (Type)
    {
       create ()
       {
-         return Type .Zero .copy ();
+         return new Type ();
       },
       copy (value)
       {
@@ -34,13 +34,17 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       {
          return value .magnitude ();
       },
+      distance (lhs, rhs)
+      {
+         return lhs .distance (rhs);
+      },
       dot: (() =>
       {
          const
-            c0 = new Type (0, 0, 0, 0),
-            c1 = new Type (0, 0, 0, 0),
-            c2 = new Type (0, 0, 0, 0),
-            c3 = new Type (0, 0, 0, 0);
+            c0 = new Type (),
+            c1 = new Type (),
+            c2 = new Type (),
+            c3 = new Type ();
 
          return function (SH, C0, C1, C2, C3)
          {
