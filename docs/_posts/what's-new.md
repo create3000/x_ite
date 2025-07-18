@@ -18,6 +18,10 @@ For a first impression of how the whole thing looks now, here are two example fi
 
 See also: [MovieTexture supported file formats](/x_ite/components/texturing/movietexture/#supported-file-formats).
 
+### Notable Changes
+
+* This series drops support for WebGL 1, because all known browsers support WebGL 2 now for quite a while.
+
 ## X_ITE v11.5 Series
 
 *Leipzig, 6th April 2025:* This series comes improvements in [Sunrize](/sunrize/).
