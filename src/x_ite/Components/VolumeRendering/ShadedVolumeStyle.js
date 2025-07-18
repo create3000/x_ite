@@ -19,11 +19,6 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._material       .addInterest ("set_material__",       this);
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 

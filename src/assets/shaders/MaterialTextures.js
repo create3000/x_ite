@@ -44,20 +44,12 @@ export default
             texCoord .t = 1.0 - texCoord .t;
          #endif
 
-         #if __VERSION__ == 100
-            #if defined (${define}${_EXT}_2D)
-               vec4 textureColor = texture2D (${name}${EXT} .texture2D, texCoord .st);
-            #elif defined (${define}${_EXT}_CUBE)
-               vec4 textureColor = textureCube (${name}${EXT} .textureCube, texCoord);
-            #endif
-         #else
-            #if defined (${define}${_EXT}_2D)
-               vec4 textureColor = texture (${name}${EXT} .texture2D, texCoord .st);
-            #elif defined (${define}${_EXT}_3D)
-               vec4 textureColor = texture (${name}${EXT} .texture3D, texCoord);
-            #elif defined (${define}${_EXT}_CUBE)
-               vec4 textureColor = texture (${name}${EXT} .textureCube, texCoord);
-            #endif
+         #if defined (${define}${_EXT}_2D)
+            vec4 textureColor = texture (${name}${EXT} .texture2D, texCoord .st);
+         #elif defined (${define}${_EXT}_3D)
+            vec4 textureColor = texture (${name}${EXT} .texture3D, texCoord);
+         #elif defined (${define}${_EXT}_CUBE)
+            vec4 textureColor = texture (${name}${EXT} .textureCube, texCoord);
          #endif
 
          ${type} textureColorComponents = textureColor .${components};
@@ -106,7 +98,7 @@ export default
             #if defined (${define}_2D)
             mediump sampler2D   texture2D;
             #endif
-            #if defined (${define}_3D) && __VERSION__ != 100
+            #if defined (${define}_3D)
             mediump sampler3D   texture3D;
             #endif
             #if defined (${define}_CUBE)

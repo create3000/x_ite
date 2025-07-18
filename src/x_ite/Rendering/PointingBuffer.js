@@ -12,19 +12,15 @@ function PointingBuffer ({ browser })
    // Create color buffers.
 
    this .colorBuffers = [ ];
-   this .framebuffers = [ ];
 
    for (let i = 0; i < 3; ++ i)
    {
       this .colorBuffers [i] = gl .createRenderbuffer ();
-      this .framebuffers [i] = gl .createFramebuffer ();
 
       gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffers [i]);
       gl .renderbufferStorage (gl .RENDERBUFFER, gl .RGBA32F, 1, 1);
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .RENDERBUFFER, this .colorBuffers [i]);
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffers [i]);
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorBuffers [i]);
    }
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
@@ -37,30 +33,17 @@ function PointingBuffer ({ browser })
 
    // Create depth buffer.
 
-   if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-   {
-      this .depthTexture = gl .createTexture ();
+   this .depthTexture = gl .createTexture ();
 
-      gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
+   gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
 
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-      const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
-
-      gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, 1, 1, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
-      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
-   }
-   else
-   {
-      this .depthBuffer = gl .createRenderbuffer ();
-
-      gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
-      gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, 1, 1);
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
-   }
+   gl .texImage2D (gl .TEXTURE_2D, 0, gl .DEPTH_COMPONENT24, 1, 1, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
+   gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
@@ -86,10 +69,11 @@ Object .assign (PointingBuffer .prototype,
    {
       const { context: gl, array } = this;
 
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+
       // Id, point
 
-      // gl .readBuffer (gl .COLOR_ATTACHMENT0); // WebGL 2
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffers [0]);
+      gl .readBuffer (gl .COLOR_ATTACHMENT0);
       gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .id = array [3];
@@ -97,30 +81,23 @@ Object .assign (PointingBuffer .prototype,
 
       // Normal
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffers [1]);
+      gl .readBuffer (gl .COLOR_ATTACHMENT1);
       gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .normal .set (array [0], array [1], array [2]);
 
       // TexCoord
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffers [2]);
+      gl .readBuffer (gl .COLOR_ATTACHMENT2);
       gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .texCoord .set (array [0], array [1], array [2], array [3]);
-
-      // Finish
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
    },
    dispose ()
    {
       const gl = this .context;
 
       gl .deleteFramebuffer (this .frameBuffer);
-
-      for (const framebuffer of this .framebuffers)
-         gl .deleteFramebuffer (framebuffer);
 
       for (const colorBuffer of this .colorBuffers)
          gl .deleteRenderbuffer (colorBuffer);

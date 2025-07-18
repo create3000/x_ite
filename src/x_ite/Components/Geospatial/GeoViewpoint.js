@@ -51,12 +51,6 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
       X3DViewpointNode    .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
 
-      // Logarithmic depth buffer support
-
-      const gl = this .getBrowser () .getContext ();
-
-      this .logarithmicDepthBuffer = gl .HAS_FEATURE_FRAG_DEPTH;
-
       // Fields
 
       this ._position       .addInterest ("set_position__", this);
@@ -85,7 +79,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    getProjectionMatrixWithLimits: Viewpoint .prototype .getProjectionMatrixWithLimits,
    getLogarithmicDepthBuffer ()
    {
-      return this .logarithmicDepthBuffer;
+      return true;
    },
    getPosition: (() =>
    {

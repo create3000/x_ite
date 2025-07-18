@@ -23,11 +23,6 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
    {
       X3DVolumeDataNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._gradients        .addInterest ("set_gradients__",   this);
       this ._renderStyle      .addInterest ("set_renderStyle__", this);
 

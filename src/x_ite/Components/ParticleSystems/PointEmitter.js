@@ -23,9 +23,6 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmit
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
-      if (this .getBrowser () .getContext () .getVersion () < 2)
-         return;
-
       this ._position  .addInterest ("set_position__",  this);
       this ._direction .addInterest ("set_direction__", this);
 

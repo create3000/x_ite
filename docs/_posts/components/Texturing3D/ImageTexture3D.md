@@ -140,11 +140,11 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 ## Supported File Formats
 
-| Encoding | File Extension  | MIME Type   | Comment             |
-|----------|-----------------|-------------|---------------------|
-| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D, WebGL 2 |
-| DICOM    | .dcm            | image/dicom |                     |
-| NRRD     | .nrrd, .nrrd.gz | image/nrrd  |                     |
+| Encoding | File Extension  | MIME Type   | Comment    |
+|----------|-----------------|-------------|------------|
+| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D |
+| DICOM    | .dcm            | image/dicom |            |
+| NRRD     | .nrrd, .nrrd.gz | image/nrrd  |            |
 
 ## Advice
 

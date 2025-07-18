@@ -23,11 +23,6 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolum
    {
       X3DVolumeDataNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
       this ._renderStyle        .addInterest ("set_renderStyle__",        this);
 

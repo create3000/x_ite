@@ -39,9 +39,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       const gl = this .getBrowser () .getContext ();
 
-      if (gl .getVersion () < 2)
-         return;
-
       // Create program.
 
       this .transformFeedback = gl .createTransformFeedback ();
