@@ -5,12 +5,6 @@ nav: laboratory
 categories: [Laboratory]
 tags: [Laboratory]
 ---
-<style>
-table.examples td {
-  width: 33.33333%;
-}
-</style>
-
 <table class="slim-table">
   <tr>
     <td>
