@@ -539,16 +539,16 @@ select.select option {
 
 /* Laboratory */
 
-table.slim-table {
-  line-height: 1;
-}
-
 table.slim-table tbody tr {
   padding: 0px;
 }
 
 table.slim-table tbody tr td {
   padding: 1px;
+}
+
+table.slim-table tbody tr td:has(img) {
+  line-height: 0;
 }
 
 /*
