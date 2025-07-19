@@ -44,7 +44,7 @@ tags: [Laboratory]
 
 Convert various 3D file formats using our [Online X3D File Format Converter](../x3d-file-converter/) powered by X_ITE.
 
-Looking for a command line tool to convert 3D file formats? Use [x3d-tidy](https://www.npmjs.com/package/x3d-tidy), a command line X3D file format converter, compressor and beautifier and available on NPM.
+Looking for a command line tool to convert 3D file formats? Use [x3d-tidy](https://www.npmjs.com/package/x3d-tidy), a command line X3D file format converter, compressor and beautifier and available on npm.
 
 ## D3-X3D
 
