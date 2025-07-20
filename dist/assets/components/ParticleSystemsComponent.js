@@ -1,5 +1,5 @@
-/* X_ITE v11.6.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.0")];
+/* X_ITE v11.6.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -149,9 +149,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
       external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       // Create program.
 
@@ -622,9 +619,6 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
    {
       ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
 
-      if (this .getBrowser () .getContext () .getVersion () < 2)
-         return;
-
       this ._position  .addInterest ("set_position__",  this);
       this ._direction .addInterest ("set_direction__", this);
 
@@ -865,9 +859,6 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_
    {
       ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
 
-      if (this .getBrowser () .getContext () .getVersion () < 2)
-         return;
-
       this ._position  .addInterest ("set_position__", this);
       this ._direction .addInterest ("set_direction__", this);
       this ._angle     .addInterest ("set_angle__", this);
@@ -985,9 +976,6 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSys
    initialize ()
    {
       ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
-
-      if (this .getBrowser () .getContext () .getVersion () < 2)
-         return;
 
       this ._position .addInterest ("set_position__", this);
 
@@ -1579,11 +1567,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      // Check version.
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
 
       // Connect fields.
 
@@ -2549,11 +2532,6 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
    {
       ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
 
-      const browser = this .getBrowser ();
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
-
       // Create GL stuff.
 
       this .polylinesTexture = this .createTexture ();
@@ -2764,11 +2742,6 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
    initialize ()
    {
       ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
-
-      const browser = this .getBrowser ();
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
 
       // Create GL stuff.
 
@@ -2998,11 +2971,6 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
    initialize ()
    {
       ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
-
-      const browser = this .getBrowser ();
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
 
       // Create GL stuff.
 

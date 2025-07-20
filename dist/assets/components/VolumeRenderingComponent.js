@@ -1,5 +1,5 @@
-/* X_ITE v11.6.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.0")];
+/* X_ITE v11.6.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -195,11 +195,6 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, Volume
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._transferFunction .addInterest ("set_transferFunction__", this);
 
@@ -400,11 +395,6 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._weightTransferFunction1 .addInterest ("set_weightTransferFunction1__", this);
       this ._weightTransferFunction2 .addInterest ("set_weightTransferFunction2__", this);
@@ -788,11 +778,6 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
       this .set_surfaceNormals__ ();
@@ -922,11 +907,6 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRe
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._renderStyle .addInterest ("set_renderStyle__", this);
 
@@ -1068,11 +1048,6 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, V
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
@@ -1422,10 +1397,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
       external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
-
       this ._bboxDisplay .addFieldInterest (this .groupNode ._bboxDisplay);
 
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
@@ -1494,9 +1465,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
       this .groupNode                .setup ();
 
       this .connectChildNode (this .groupNode);
-
-      if (gl .getVersion () < 2)
-         return;
 
       this .getLive () .addInterest ("set_live__", this, true);
 
@@ -1693,11 +1661,6 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
    initialize ()
    {
       VolumeRendering_X3DVolumeDataNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._gradients        .addInterest ("set_gradients__",   this);
       this ._renderStyle      .addInterest ("set_renderStyle__", this);
@@ -2176,11 +2139,6 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
    {
       VolumeRendering_X3DVolumeDataNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
       this ._renderStyle        .addInterest ("set_renderStyle__",        this);
 
@@ -2393,11 +2351,6 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._material       .addInterest ("set_material__",       this);
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
@@ -2602,11 +2555,6 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
       this .set_surfaceNormals__ ();
@@ -2719,11 +2667,6 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, Volume
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
@@ -2846,11 +2789,6 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
    initialize ()
    {
       VolumeRendering_X3DVolumeDataNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._renderStyle .addInterest ("set_renderStyle__", this);
       this ._voxels      .addInterest ("set_voxels__",      this);
