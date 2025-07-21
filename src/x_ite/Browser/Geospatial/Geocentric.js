@@ -15,8 +15,8 @@ Object .assign (Geocentric .prototype,
    slerp (source, destination, t)
    {
       const
-         sourceLength      = source      .magnitude (),
-         destinationLength = destination .magnitude ();
+         sourceLength      = source      .norm (),
+         destinationLength = destination .norm ();
 
       source      .normalize ();
       destination .normalize ();

@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
 
       const
          axis   = new Line3 (Vector3 .Zero, yAxis),
-         radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 ()) .magnitude ();
+         radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 ()) .norm ();
 
       this .cylinder = new Cylinder3 (axis, radius);
       this .disk     = Math .abs (cameraBack .dot (yAxis)) > Math .cos (this ._diskAngle .getValue ());

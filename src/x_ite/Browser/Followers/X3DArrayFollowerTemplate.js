@@ -88,7 +88,7 @@ function X3DArrayFollowerTemplate (Type)
          let distance = 0;
 
          for (let i = 0, length = lhs .length; i < length; ++ i)
-           distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .magnitude (), distance);
+           distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .norm (), distance);
 
          return distance < tolerance;
       },

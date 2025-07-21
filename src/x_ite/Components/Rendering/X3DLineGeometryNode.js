@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             lineStipples [l + 4] = projectedPoint0 .y;
             lineStipples [l + 5] = lengthSoFar;
 
-            lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .magnitude ();
+            lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .norm ();
          }
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);

@@ -61,7 +61,7 @@ Object .assign (Object .setPrototypeOf (X3DFollowerNode .prototype, X3DChildNode
    },
    equals (lhs, rhs, tolerance)
    {
-      return this .a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
+      return this .a .assign (lhs) .subtract (rhs) .norm () < tolerance;
    },
    interpolate (source, destination, weight)
    {

@@ -94,11 +94,11 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          ViewVolume .unProjectPoint (x, y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
 
          if (viewpointNode instanceof OrthoViewpoint)
-            return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .magnitude ());
+            return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .norm ());
 
          const direction = far .normalize ();
 
-         return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .magnitude () / direction .dot (axis));
+         return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .norm () / direction .dot (axis));
       };
    })(),
    getDistanceToCenter (distance, positionOffset)

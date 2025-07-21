@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
             }
          }
 
-         const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .magnitude ();
+         const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .norm ();
 
          return Algorithm .upperBound (this ._range, 0, this ._range .length, distance);
       };

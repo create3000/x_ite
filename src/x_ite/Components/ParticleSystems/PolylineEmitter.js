@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
             vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
             vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-            polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .magnitude ();
+            polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .norm ();
          }
 
          polylinesArray .set (vertices, verticesIndex * 4);

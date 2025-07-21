@@ -102,14 +102,14 @@ Object .assign (Vector2 .prototype,
       return this .x * x +
              this .y * y;
    },
-   norm ()
+   squaredNorm ()
    {
       const { x, y } = this;
 
       return x * x +
              y * y;
    },
-   magnitude ()
+   norm ()
    {
       return Math .hypot (this .x, this .y);
    },

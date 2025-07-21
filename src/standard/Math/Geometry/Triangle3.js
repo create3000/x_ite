@@ -17,7 +17,7 @@ const Triangle3 =
 
       return function (a, b, c)
       {
-         return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .magnitude () / 2;
+         return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .norm () / 2;
       };
    })(),
    /**
