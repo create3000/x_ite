@@ -174,12 +174,11 @@ Object .assign (TextureBuffer .prototype,
       const gl = this .context;
 
       gl .deleteFramebuffer (this .frameBuffer);
-      gl .deleteTexture (this .colorTexture);
 
-      if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-         gl .deleteTexture (this .depthTexture);
-      else
-         gl .deleteRenderbuffer (this .depthBuffer);
+      for (const colorTexture of this .colorTextures)
+         gl .deleteTexture (colorTexture);
+
+      gl .deleteTexture (this .depthTexture);
     },
 });
 
