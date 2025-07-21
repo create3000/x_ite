@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                                  b .assign (intersection .point) .subtract (point2);
 
                                  const
-                                    c = a .add (b) .magnitude (),
+                                    c = a .add (b) .norm (),
                                     s = point1 .distance (point2);
 
                                  if (c <= s)

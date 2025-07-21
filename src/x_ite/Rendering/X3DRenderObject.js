@@ -408,7 +408,7 @@ Object .assign (X3DRenderObject .prototype,
       {
          // Move.
 
-         const length = translation .magnitude ();
+         const length = translation .norm ();
 
          if (length > distance)
          {
@@ -582,7 +582,7 @@ Object .assign (X3DRenderObject .prototype,
          modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
          const
-            radius     = bboxSize .magnitude () / 2,
+            radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
@@ -633,7 +633,7 @@ Object .assign (X3DRenderObject .prototype,
          modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
          const
-            radius     = bboxSize .magnitude () / 2,
+            radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
@@ -684,7 +684,7 @@ Object .assign (X3DRenderObject .prototype,
          modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
          const
-            radius     = bboxSize .magnitude () / 2,
+            radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
@@ -733,7 +733,7 @@ Object .assign (X3DRenderObject .prototype,
          modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
          const
-            radius     = bboxSize .magnitude () / 2,
+            radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
          if (!viewVolume .intersectsSphere (radius, bboxCenter))

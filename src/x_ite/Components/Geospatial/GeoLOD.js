@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       {
          modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
-         const distance = modelViewMatrix .origin .magnitude ();
+         const distance = modelViewMatrix .origin .norm ();
 
          if (distance < this ._range .getValue ())
             return 1;

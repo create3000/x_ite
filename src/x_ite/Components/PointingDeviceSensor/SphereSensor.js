@@ -62,7 +62,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
             center   = new Vector3 ();
 
          this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
-         this .sphere = new Sphere3 (hitPoint .magnitude (), center);
+         this .sphere = new Sphere3 (hitPoint .norm (), center);
          this .behind = this .zPlane .getDistanceToPoint (hitPoint) < 0;
 
          this .fromVector  .assign (hitPoint);
@@ -111,7 +111,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
             dirFromCenter = trackPoint .copy () .subtract (this .sphere .center) .normalize (),
             normal        = triNormal .copy () .cross (dirFromCenter) .normalize ();
 
-         const point1 = trackPoint .copy () .subtract (normal .multiply (tangentPoint .copy () .subtract (trackPoint) .magnitude ()));
+         const point1 = trackPoint .copy () .subtract (normal .multiply (tangentPoint .copy () .subtract (trackPoint) .norm ()));
 
          hitRay .set (point1, this .sphere .center .copy () .subtract (point1) .normalize ());
 

@@ -682,7 +682,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          const viewpoint = this .getActiveViewpoint ();
 
          this .getDistanceToCenter (step) .multiply (zoomFactor);
-         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
+         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .norm ()));
 
          if (deltaY > 0)
             this .addMove (translation .negate (), Vector3 .Zero);

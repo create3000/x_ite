@@ -185,7 +185,7 @@ Object .assign (Rotation4 .prototype,
          const
             cos_angle = Algorithm .clamp (from .dot (to), -1, 1),
             crossvec  = cv .assign (from) .cross (to) .normalize (),
-            crosslen  = crossvec .magnitude ();
+            crosslen  = crossvec .norm ();
 
          if (crosslen === 0)
          {
@@ -202,7 +202,7 @@ Object .assign (Rotation4 .prototype,
                t .assign (from) .cross (Vector3 .xAxis);
 
                // If not ok, cross with y axis.
-               if (t .norm () === 0)
+               if (t .squaredNorm () === 0)
                   t .assign (from) .cross (Vector3 .yAxis);
 
                t .normalize ();

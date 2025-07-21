@@ -185,7 +185,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          viewpoint .transitionStop ();
 
          this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
-         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
+         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .norm ()));
 
          if (event .deltaY > 0)
             this .addMove (translation .negate (), Vector3 .Zero);

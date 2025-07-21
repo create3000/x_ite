@@ -48,7 +48,7 @@ Object .assign (Object .setPrototypeOf (ColorDamper .prototype, X3DDamperNode .p
    },
    equals (lhs, rhs, tolerance)
    {
-      return a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
+      return a .assign (lhs) .subtract (rhs) .norm () < tolerance;
    },
    interpolate (source, destination, weight)
    {

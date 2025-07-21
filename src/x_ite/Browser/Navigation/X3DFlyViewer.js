@@ -378,7 +378,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          else
             rubberBandRotation .setFromToVec (axis .set (0, 0, -1), this .direction);
 
-         const rubberBandLength = this .direction .magnitude ();
+         const rubberBandLength = this .direction .norm ();
 
          // Determine positionOffset.
 

@@ -247,7 +247,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    })(),
    getLookAtDistance (bbox)
    {
-      return bbox .size .magnitude () / 2 + 10;
+      return bbox .size .norm () / 2 + 10;
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {

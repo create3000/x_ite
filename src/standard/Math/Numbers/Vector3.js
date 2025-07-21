@@ -128,7 +128,7 @@ Object .assign (Vector3 .prototype,
              this .y * y +
              this .z * z;
    },
-   norm ()
+   squaredNorm ()
    {
       const { x, y, z } = this;
 
@@ -136,7 +136,7 @@ Object .assign (Vector3 .prototype,
              y * y +
              z * z;
    },
-   magnitude ()
+   norm ()
    {
       return Math .hypot (this .x, this .y, this .z);
    },

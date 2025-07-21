@@ -209,91 +209,91 @@ Object .assign (Box3 .prototype,
          y .assign (m .yAxis);
          z .assign (m .zAxis);
 
-         if (x .norm () === 0)
+         if (x .squaredNorm () === 0)
          {
             x .assign (y) .cross (z);
 
-            if (x .norm () === 0)
+            if (x .squaredNorm () === 0)
             {
                for (const axis of axes)
                {
                   x .assign (axis) .cross (y);
 
-                  if (x .norm () !== 0)
+                  if (x .squaredNorm () !== 0)
                      break;
                }
 
-               if (x .norm () === 0)
+               if (x .squaredNorm () === 0)
                {
                   for (const axis of axes)
                   {
                      x .assign (axis) .cross (z);
 
-                     if (x .norm () !== 0)
+                     if (x .squaredNorm () !== 0)
                         break;
                   }
 
-                  if (x .norm () === 0)
+                  if (x .squaredNorm () === 0)
                      x .assign (Vector3 .xAxis);
                }
             }
          }
 
-         if (y .norm () === 0)
+         if (y .squaredNorm () === 0)
          {
             y .assign (z) .cross (x);
 
-            if (y .norm () === 0)
+            if (y .squaredNorm () === 0)
             {
                for (const axis of axes)
                {
                   y .assign (axis) .cross (z);
 
-                  if (y .norm () !== 0)
+                  if (y .squaredNorm () !== 0)
                      break;
                }
 
-               if (y .norm () === 0)
+               if (y .squaredNorm () === 0)
                {
                   for (const axis of axes)
                   {
                      y .assign (axis) .cross (x);
 
-                     if (y .norm () !== 0)
+                     if (y .squaredNorm () !== 0)
                         break;
                   }
 
-                  if (y .norm () === 0)
+                  if (y .squaredNorm () === 0)
                      y .assign (Vector3 .yAxis);
                }
             }
          }
 
-         if (z .norm () === 0)
+         if (z .squaredNorm () === 0)
          {
             z .assign (x) .cross (y);
 
-            if (z .norm () === 0)
+            if (z .squaredNorm () === 0)
             {
                for (const axis of axes)
                {
                   z .assign (axis) .cross (x);
 
-                  if (z .norm () !== 0)
+                  if (z .squaredNorm () !== 0)
                      break;
                }
 
-               if (z .norm () === 0)
+               if (z .squaredNorm () === 0)
                {
                   for (const axis of axes)
                   {
                      z .assign (axis) .cross (y);
 
-                     if (z .norm () !== 0)
+                     if (z .squaredNorm () !== 0)
                         break;
                   }
 
-                  if (z .norm () === 0)
+                  if (z .squaredNorm () === 0)
                      z .assign (Vector3 .zAxis);
                }
             }

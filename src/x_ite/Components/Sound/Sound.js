@@ -219,7 +219,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
             else
             {
                const
-                  d1 = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
+                  d1 = max .intersection .norm (), // Viewer is here at (0, 0, 0)
                   d2 = max .intersection .distance (min .intersection),
                   d  = Math .min (d1 / d2, 1);
 
@@ -290,7 +290,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          sphere .intersectsLine (line, enterPoint, exitPoint);
 
          value .intersection .assign (sphereMatrix .multVecMatrix (enterPoint));
-         value .distance = viewer .magnitude ();
+         value .distance = viewer .norm ();
       };
    })(),
    getPan: (() =>

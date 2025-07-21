@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    {
       const
          numPlanes = this .getNumPlanes (quality),
-         size      = this ._dimensions .getValue () .magnitude (),
+         size      = this ._dimensions .getValue () .norm (),
          size1_2   = size / 2,
          points    = [ ];
 
