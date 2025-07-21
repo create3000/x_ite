@@ -18,8 +18,8 @@ import ShaderRegistry        from "../../Browser/Shaders/ShaderRegistry.js";
 import Scatter2              from "../../../assets/shaders/webgl2/pbr/Scatter2.glsl.js";
 import SubsurfaceScattering2 from "../../../assets/shaders/webgl2/pbr/SubsurfaceScattering2.glsl.js";
 
-ShaderRegistry .addInclude ("Scatter",              undefined, Scatter2);
-ShaderRegistry .addInclude ("SubsurfaceScattering", undefined, SubsurfaceScattering2);
+ShaderRegistry .addInclude ("Scatter",              Scatter2);
+ShaderRegistry .addInclude ("SubsurfaceScattering", SubsurfaceScattering2);
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
