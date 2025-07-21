@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
    })(),
    getLookAtDistance (bbox)
    {
-      return (bbox .size .magnitude () / 2) / Math .tan (this .getUserFieldOfView () / 2);
+      return (bbox .size .norm () / 2) / Math .tan (this .getUserFieldOfView () / 2);
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {

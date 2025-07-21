@@ -69,7 +69,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       length ()
       {
-         return this .getValue () .magnitude ();
+         return this .getValue () .norm ();
       },
       lerp (destination, t)
       {

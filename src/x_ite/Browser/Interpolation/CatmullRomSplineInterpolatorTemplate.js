@@ -32,7 +32,7 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       },
       magnitude (value)
       {
-         return value .magnitude ();
+         return value .norm ();
       },
       distance (lhs, rhs)
       {

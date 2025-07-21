@@ -432,7 +432,7 @@ Object .assign (Quaternion .prototype,
              this .z * quat .z +
              this .w * quat .w;
    },
-   norm ()
+   squaredNorm ()
    {
       const { x, y, z, w } = this;
 
@@ -441,7 +441,7 @@ Object .assign (Quaternion .prototype,
              z * z +
              w * w;
    },
-   magnitude ()
+   norm ()
    {
       return Math .hypot (this .x, this .y, this .z, this .w);
    },
@@ -454,9 +454,9 @@ Object .assign (Quaternion .prototype,
          return this .set (0, 0, 0, this .w ** exponent);
 
       const
-         l     = this .magnitude (),
+         l     = this .norm (),
          theta = Math .acos (this .w / l),
-         li    = this .imag .magnitude (),
+         li    = this .imag .norm (),
          ltoe  = l ** exponent,
          et    = exponent * theta,
          scale = ltoe / li * Math .sin (et);
@@ -479,7 +479,7 @@ Object .assign (Quaternion .prototype,
       }
 
       const
-         l = this .magnitude (),
+         l = this .norm (),
          v = this .imag .normalize () .multiply (Math .acos (this .w / l)),
          w = Math .log (l);
 
@@ -496,7 +496,7 @@ Object .assign (Quaternion .prototype,
 
       const
          i  = this .imag,
-         li = i .magnitude (),
+         li = i .norm (),
          ew = Math .exp (this .w),
          w  = ew * Math .cos (li),
          v  = i .multiply (ew * Math .sin (li) / li);
