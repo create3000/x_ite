@@ -17,7 +17,7 @@ import Algorithm            from "../../../standard/Math/Algorithm.js";
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 import Skin2          from "../../../assets/shaders/webgl2/common/Skin2.glsl.js";
 
-ShaderRegistry .addInclude ("Skin", undefined, Skin2);
+ShaderRegistry .addInclude ("Skin", Skin2);
 
 /**
  * HAnimHumanoid
@@ -117,16 +117,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this .connectChildNode (this .transformNode);
 
-      // Check WebGL version.
+      // Textures
 
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      if (gl .getVersion () === 1)
-         return;
-
-      // Textures
 
       this .jointsTexture              = gl .createTexture ();
       this .displacementsTexture       = gl .createTexture ();

@@ -12,11 +12,7 @@ setPointTexCoords ()
    ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
    #if X3D_NUM_TEXTURE_COORDINATES > ${i}
-      #if __VERSION__ == 100
-         texCoord${i} = texCoord;
-      #else
-         texCoords [${i}] = texCoord;
-      #endif
+      texCoords [${i}] = texCoord;
    #endif
 
    `) .join ("\n")}
@@ -26,11 +22,7 @@ setPointTexCoords ()
 
 #else
 
-#if __VERSION__ == 100
-   varying float pointSize;
-#else
-   in float pointSize;
-#endif
+in float pointSize;
 
 #define setPointTexCoords()
 

@@ -29,11 +29,6 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
-      const browser = this .getBrowser ();
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
-
       // Create GL stuff.
 
       this .volumeTexture = this .createTexture ();

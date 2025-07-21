@@ -21,11 +21,6 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, X3DCompo
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._renderStyle .addInterest ("set_renderStyle__", this);
 
       this .set_renderStyle__ ();
