@@ -19,11 +19,6 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, X3DCom
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._transferFunction .addInterest ("set_transferFunction__", this);
 
       this .set_transferFunction__ ();

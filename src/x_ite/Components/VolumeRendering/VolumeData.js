@@ -21,11 +21,6 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
    {
       X3DVolumeDataNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._renderStyle .addInterest ("set_renderStyle__", this);
       this ._voxels      .addInterest ("set_voxels__",      this);
       this ._renderStyle .addInterest ("updateShader",      this);

@@ -318,7 +318,10 @@ x3d-canvas {
     </style>
   </head>
   <body>
-    <x3d-canvas src="path/to/your/X3D/world.x3d"></x3d-canvas>
+    <x3d-canvas
+        contentScale="auto"
+        update="auto"
+        src="path/to/your/X3D/world.x3d"></x3d-canvas>
   </body>
 </html>
 ```

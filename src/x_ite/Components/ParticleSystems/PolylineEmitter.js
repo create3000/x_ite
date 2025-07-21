@@ -24,11 +24,6 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
-      const browser = this .getBrowser ();
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
-
       // Create GL stuff.
 
       this .polylinesTexture = this .createTexture ();

@@ -3,11 +3,7 @@ export default () => /* glsl */ `
 
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
-#if __VERSION__ == 100
-   varying float pointSize;
-#else
-   out float pointSize;
-#endif
+out float pointSize;
 
 float
 getPointSize (const in vec3 vertex)

@@ -114,7 +114,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const gl = this .getContext ();
 
-      return gl .getVersion () > 1 ? gl .getParameter (gl .MAX_SAMPLES) : 0;
+      return gl .getParameter (gl .MAX_SAMPLES);
    },
    getMaxClipPlanes ()
    {
@@ -365,9 +365,6 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async xrCheckSupport ()
    {
-      if (this .getContext () .getVersion () <= 1)
-         return false;
-
       if (!("xr" in navigator))
          return false;
 

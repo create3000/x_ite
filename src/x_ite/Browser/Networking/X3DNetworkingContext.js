@@ -76,7 +76,7 @@ Object .assign (X3DNetworkingContext .prototype,
          {
             this .getContextMenu () .hide ();
             this .getCanvas () .hide ();
-            this .getSplashScreen () .removeClass (["x_ite-private-fade-out-2000", "x_ite-private-hidden"]);
+            this .getSplashScreen () .removeClass (["x_ite-private-fade-out-splash-screen", "x_ite-private-hidden"]);
          }
       }
       else
@@ -89,7 +89,7 @@ Object .assign (X3DNetworkingContext .prototype,
             setTimeout (() =>
             {
                if (!this [_loading])
-                  this .getSplashScreen () .addClass ("x_ite-private-fade-out-2000");
+                  this .getSplashScreen () .addClass ("x_ite-private-fade-out-splash-screen");
             });
          }
       }

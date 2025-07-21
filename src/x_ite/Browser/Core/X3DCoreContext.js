@@ -17,8 +17,6 @@ import _                   from "../../../locale/gettext.js";
 
 import "./Fonts.js";
 
-const WEBGL_VERSION = 2;
-
 const
    _instanceId          = Symbol (),
    _element             = Symbol (),
@@ -96,7 +94,7 @@ function X3DCoreContext (element)
    this [_attributes]   = new Map ();
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>", { part: "canvas", class: "x_ite-private-canvas" }) .prependTo (surface);
-   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true");
+   this [_context]      = Context .create (this [_canvas] [0], element .attr ("preserveDrawingBuffer") === "true");
    this [_splashScreen] = splashScreen;
 
    this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
@@ -339,7 +337,7 @@ Object .assign (X3DCoreContext .prototype,
                this .getCanvas () .show ();
 
                this .getSplashScreen ()
-                  .removeClass ("x_ite-private-fade-out-2000")
+                  .removeClass ("x_ite-private-fade-out-splash-screen")
                   .addClass ("x_ite-private-hidden");
             }
 

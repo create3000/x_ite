@@ -99,11 +99,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      // Check version.
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
-
       // Connect fields.
 
       this .getLive () .addInterest ("set_live__", this);

@@ -193,11 +193,7 @@ uniform sampler2D x3d_SheenELUTTextureEXT;
 float
 albedoSheenScalingLUT (const in float NdotV, const in float sheenRoughnessFactor)
 {
-   #if __VERSION__ == 100
-      return texture2D (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
-   #else
-      return texture (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
-   #endif
+   return texture (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
 }
 #endif
 

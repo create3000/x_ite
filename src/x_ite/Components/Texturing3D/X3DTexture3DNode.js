@@ -30,9 +30,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
 
       const gl = this .getBrowser () .getContext ();
 
-      if (gl .getVersion () < 2)
-         return;
-
       gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
       gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
    },
@@ -80,12 +77,9 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
       this .height = height;
       this .depth  = depth;
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
-      const max = gl .getParameter (gl .MAX_3D_TEXTURE_SIZE);
+      const
+         gl  = this .getBrowser () .getContext (),
+         max = gl .getParameter (gl .MAX_3D_TEXTURE_SIZE);
 
       if (width > max || height > max || depth > max)
       {

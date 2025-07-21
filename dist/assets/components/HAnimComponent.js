@@ -1,5 +1,5 @@
-/* X_ITE v11.6.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.0")];
+/* X_ITE v11.6.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -213,7 +213,7 @@ return skin;}
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Skin", undefined, Skin2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Skin", Skin2_glsl);
 
 /**
  * HAnimHumanoid
@@ -313,16 +313,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       this .connectChildNode (this .transformNode);
 
-      // Check WebGL version.
+      // Textures
 
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      if (gl .getVersion () === 1)
-         return;
-
-      // Textures
 
       this .jointsTexture              = gl .createTexture ();
       this .displacementsTexture       = gl .createTexture ();
@@ -1387,16 +1382,11 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
    {
       external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
 
-      // Check WebGL version.
+      // Textures
 
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      if (gl .getVersion () === 1)
-         return;
-
-      // Textures
 
       this .displacementsTexture       = gl .createTexture ();
       this .displacementWeightsTexture = gl .createTexture ();

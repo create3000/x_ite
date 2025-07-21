@@ -19,11 +19,6 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
       this .set_surfaceNormals__ ();

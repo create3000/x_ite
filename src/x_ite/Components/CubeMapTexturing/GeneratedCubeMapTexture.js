@@ -45,9 +45,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
       // Transfer 6 textures of size x size pixels.
 
-      const size = gl .getVersion () >= 2
-         ? this ._size .getValue ()
-         : Algorithm .nextPowerOfTwo (this ._size .getValue ());
+      const size = this ._size .getValue ();
 
       if (size > 0)
       {

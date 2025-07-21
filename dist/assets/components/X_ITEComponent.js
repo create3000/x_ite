@@ -1,5 +1,5 @@
-/* X_ITE v11.6.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.0")];
+/* X_ITE v11.6.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -991,11 +991,6 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      // Check version.
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
-
       this .instances = Object .assign (gl .createBuffer (),
       {
          vertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
@@ -1611,17 +1606,6 @@ return vec4(color,baseColor.a);}void main(){fragment_main();}`
 ;
 
 /* harmony default export */ const SpecularGlossiness2_glsl = (external_X_ITE_X3D_Namespace_default().add ("SpecularGlossiness2.glsl", SpecularGlossiness2_glsl_default_));
-;// ./src/assets/shaders/webgl1/SpecularGlossiness1.fs.js
-const SpecularGlossiness1_fs_default_ = () => /* glsl */ `
-#extension GL_OES_standard_derivatives:enable
-#extension GL_EXT_frag_depth:enable
-#extension GL_EXT_shader_texture_lod:enable
-precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
-#pragma X3D include "pbr/SpecularGlossiness.glsl"
-`
-;
-
-/* harmony default export */ const SpecularGlossiness1_fs = (external_X_ITE_X3D_Namespace_default().add ("SpecularGlossiness1.fs", SpecularGlossiness1_fs_default_));
 ;// ./src/assets/shaders/webgl2/SpecularGlossiness2.fs.js
 const SpecularGlossiness2_fs_default_ = () => /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
@@ -1646,9 +1630,8 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 
 
 
-
 external_X_ITE_X3D_ShaderRegistry_default().addInclude  ("SpecularGlossiness", SpecularGlossiness2_glsl);
-external_X_ITE_X3D_ShaderRegistry_default().addFragment ("SpecularGlossiness", SpecularGlossiness1_fs, SpecularGlossiness2_fs);
+external_X_ITE_X3D_ShaderRegistry_default().addFragment ("SpecularGlossiness", SpecularGlossiness2_fs);
 
 // Register textures.
 

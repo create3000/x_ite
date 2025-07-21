@@ -94,20 +94,12 @@ getNormalInfo (const in float normalScale)
    info .ng = ng;
 
    #if defined (X3D_NORMAL_TEXTURE)
-      #if __VERSION__ == 100
-         #if defined (X3D_NORMAL_TEXTURE_2D)
-            vec3 ntex = texture2D (x3d_NormalTexture .texture2D, UV .st) .rgb;
-         #elif defined (X3D_NORMAL_TEXTURE_CUBE)
-            vec3 ntex = textureCube (x3d_NormalTexture .textureCube, UV) .rgb;
-         #endif
-      #else
-         #if defined (X3D_NORMAL_TEXTURE_2D)
-            vec3 ntex = texture (x3d_NormalTexture .texture2D, UV .st) .rgb;
-         #elif defined (X3D_NORMAL_TEXTURE_3D)
-            vec3 ntex = texture (x3d_NormalTexture .texture3D, UV) .rgb;
-         #elif defined (X3D_NORMAL_TEXTURE_CUBE)
-            vec3 ntex = texture (x3d_NormalTexture .textureCube, UV) .rgb;
-         #endif
+      #if defined (X3D_NORMAL_TEXTURE_2D)
+         vec3 ntex = texture (x3d_NormalTexture .texture2D, UV .st) .rgb;
+      #elif defined (X3D_NORMAL_TEXTURE_3D)
+         vec3 ntex = texture (x3d_NormalTexture .texture3D, UV) .rgb;
+      #elif defined (X3D_NORMAL_TEXTURE_CUBE)
+         vec3 ntex = texture (x3d_NormalTexture .textureCube, UV) .rgb;
       #endif
 
       // Convert from [0, 1] to [-1, 1] range.

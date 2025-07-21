@@ -1,5 +1,5 @@
-/* X_ITE v11.6.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.0")];
+/* X_ITE v11.6.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2397,12 +2397,6 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
       external_X_ITE_X3D_X3DViewpointNode_default().prototype .initialize .call (this);
       Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
-      // Logarithmic depth buffer support
-
-      const gl = this .getBrowser () .getContext ();
-
-      this .logarithmicDepthBuffer = gl .HAS_FEATURE_FRAG_DEPTH;
-
       // Fields
 
       this ._position       .addInterest ("set_position__", this);
@@ -2431,7 +2425,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
    getProjectionMatrixWithLimits: (external_X_ITE_X3D_Viewpoint_default()).prototype .getProjectionMatrixWithLimits,
    getLogarithmicDepthBuffer ()
    {
-      return this .logarithmicDepthBuffer;
+      return true;
    },
    getPosition: (() =>
    {

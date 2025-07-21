@@ -737,16 +737,16 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   opacity: 0;
 }
 
+.x_ite-private-fade-out-splash-screen {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 200ms, opacity 200ms ease-in-out;
+}
+
 .x_ite-private-fade-in-300 {
   visibility: visible;
   opacity: 1;
   transition: opacity 300ms ease-in-out;
-}
-
-.x_ite-private-fade-out-2000 {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 2s, opacity 2s ease-in-out;
 }
 
 .x_ite-private-fade-out-300 {

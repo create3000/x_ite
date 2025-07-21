@@ -5,7 +5,6 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Algorithm            from "../../../standard/Math/Algorithm.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTexture (executionContext)
@@ -133,56 +132,15 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       try
       {
          const
-            gl    = this .getBrowser () .getContext (),
-            image = this .image [0];
+            image             = this .image [0],
+            { width, height } = image;
 
-         // https://developer.mozilla.org/en-US/docs/Web/API/createImageBitmap
-         // createImageBitmap
+         // Upload image to GPU.
 
-         if (gl .getVersion () === 1)
-         {
-            const
-               canvas = document .createElement ("canvas"),
-               cx     = canvas .getContext ("2d", { willReadFrequently: true });
-
-            let { width, height } = image;
-
-            if (!(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
-            {
-               // Scale image to next power of two if needed.
-               width  = Algorithm .nextPowerOfTwo (width),
-               height = Algorithm .nextPowerOfTwo (height);
-            }
-
-            // Use .canvas to support foreign 2d libs.
-            cx .canvas .width  = width;
-            cx .canvas .height = height;
-
-            cx .clearRect (0, 0, width, height);
-            cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
-
-            // Determine image alpha.
-
-            const
-               data        = cx .getImageData (0, 0, width, height) .data,
-               transparent = this .isImageTransparent (data);
-
-            // Upload image to GPU.
-
-            this .setTextureData (width, height, false, transparent, data);
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
-         }
-         else
-         {
-            const { width, height } = image;
-
-            // Upload image to GPU.
-
-            this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
-            this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
-            this .addNodeEvent ();
-         }
+         this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
+         this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {

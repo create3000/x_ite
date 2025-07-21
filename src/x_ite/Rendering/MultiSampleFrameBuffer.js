@@ -4,9 +4,6 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
 {
    const gl = browser .getContext ();
 
-   if (gl .getVersion () === 1 || width === 0 || height === 0)
-      return new Fallback (browser, width, height, samples);
-
    this .browser = browser;
    this .context = gl;
    this .x       = x;
@@ -367,53 +364,6 @@ Object .assign (MultiSampleFramebuffer .prototype,
       gl .deleteTexture (this .accumRevealageTexture);
       gl .deleteTexture (this .alphaTexture);
    },
-});
-
-function Fallback (browser, x, y, width, height, samples)
-{
-   const gl = browser .getContext ();
-
-   this .browser     = browser;
-   this .context     = gl;
-   this .x           = x;
-   this .y           = y;
-   this .width       = width;
-   this .height      = height;
-   this .samples     = samples;
-   this .frameBuffer = browser .getDefaultFramebuffer ();
-}
-
-Object .assign (Fallback .prototype,
-{
-   getX () { return this .x; },
-   getY () { return this .y; },
-   getWidth () { return this .width; },
-   getHeight () { return this .height; },
-   getSamples () { return this .samples; },
-   getOIT () { return false; },
-   bind ()
-   {
-      const { context: gl, frameBuffer } = this;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-   },
-   clear ()
-   {
-      const { context: gl, width, height, frameBuffer } = this;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-      gl .viewport (0, 0, width, height);
-      gl .scissor  (0, 0, width, height);
-      gl .clearColor (0, 0, 0, 0);
-      gl .clear (gl .COLOR_BUFFER_BIT);
-      gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
-   },
-   blit: Function .prototype,
-   compose: Function .prototype,
-   dispose: Function .prototype,
 });
 
 export default MultiSampleFramebuffer;
