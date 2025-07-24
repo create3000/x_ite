@@ -1,16 +1,6 @@
 export default () => /* glsl */ `
-// Subsurface scattering based on the blender implementation of the Burley model.
 #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-
 uniform vec3  x3d_MultiscatterColorEXT;
-uniform float x3d_ScatterAnisotropyEXT;
-uniform vec3  x3d_ScatterSamplesEXT [X3D_SCATTER_SAMPLES_COUNT_EXT];
-uniform float x3d_ScatterMinRadiusEXT;
-
-uniform sampler2D x3d_ScatterSamplerEXT;
-uniform sampler2D x3d_ScatterDepthSamplerEXT;
-
-const float M_1_PI = 1.0 / M_PI;
 
 // glTF specification for converting multi-scatter color to single scatter color.
 vec3
@@ -20,6 +10,18 @@ multiToSingleScatter ()
 
    return 1.0 - s * s;
 }
+
+#if !defined (X3D_VOLUME_SCATTER_PASS)
+// Subsurface scattering based on the blender implementation of the Burley model.
+
+uniform float x3d_ScatterAnisotropyEXT;
+uniform vec3  x3d_ScatterSamplesEXT [X3D_SCATTER_SAMPLES_COUNT_EXT];
+uniform float x3d_ScatterMinRadiusEXT;
+
+uniform sampler2D x3d_ScatterSamplerEXT;
+uniform sampler2D x3d_ScatterDepthSamplerEXT;
+
+const float M_1_PI = 1.0 / M_PI;
 
 vec3
 burley_setup (const in vec3 radius, const in vec3 albedo)
@@ -111,5 +113,6 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
    return totalDiffuse / totalWeight;
 }
+#endif
 #endif
 `;
