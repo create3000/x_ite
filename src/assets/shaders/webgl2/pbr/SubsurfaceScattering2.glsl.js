@@ -6,7 +6,7 @@ uniform vec3  x3d_MultiscatterColorEXT;
 vec3
 multiToSingleScatter ()
 {
-   vec3 s = 4.09712 + 4.20863 * x3d_MultiscatterColorEXT - sqrt (9.59217 + 41.6808 * x3d_MultiscatterColorEXT + 17.7126 * x3d_MultiscatterColorEXT * x3d_MultiscatterColorEXT);
+   vec3 s = 4.09712 + 4.20863 * x3d_MultiscatterColorEXT - sqrt (9.59217 + (41.6808 + 17.7126 * x3d_MultiscatterColorEXT) * x3d_MultiscatterColorEXT);
 
    return 1.0 - s * s;
 }
