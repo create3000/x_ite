@@ -118,12 +118,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       if (name instanceof ComponentInfo)
          var { name, level } = name;
 
-      const component = this [_profile] .components .get (name) ?? this [_components] .get (name);
-
-      if (component)
-         return level <= component .level;
-
-      return false;
+      return [this [_profile] .components .get (name), this [_components] .get (name)]
+         .some (component => component && level <= component .level);
    },
    addComponent (component)
    {
