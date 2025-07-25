@@ -112,13 +112,14 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    hasComponent (name, level = 0)
    {
-      if (!this [_profile])
-         return true;
-
       if (name instanceof ComponentInfo)
          var { name, level } = name;
 
-      return [this [_profile] .components .get (name), this [_components] .get (name)]
+      const
+         browser = this .getBrowser (),
+         profile = this [_profile] ? this [_profile] : browser .getProfile ("Full");
+
+      return [profile .components .get (name), this [_components] .get (name)]
          .some (component => component && level <= component .level);
    },
    addComponent (component)
