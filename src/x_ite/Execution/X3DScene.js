@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       const
          browser = this .getBrowser (),
-         profile = this [_profile] ? this [_profile] : browser .getProfile ("Full");
+         profile = this [_profile] ?? browser .getProfile ("Full");
 
       return [profile .components .get (name), this [_components] .get (name)]
          .some (component => component && level <= component .level);
