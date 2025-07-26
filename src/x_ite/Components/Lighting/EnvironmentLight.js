@@ -54,15 +54,15 @@ Object .assign (EnvironmentLightContainer .prototype,
          GGXLUTTexture     = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
-         ? this .diffuseTextureUnit = this .diffuseTextureUnit ?? browser .popTextureUnit ()
+         ? this .diffuseTextureUnit ??= browser .popTextureUnit ()
          : browser .getTextureUnit ();
 
       const specularTextureUnit = global
-         ? this .specularTextureUnit = this .specularTextureUnit ?? browser .popTextureUnit ()
+         ? this .specularTextureUnit ??= browser .popTextureUnit ()
          : browser .getTextureUnit ();
 
       const GGXLUTTextureUnit = global
-         ? this .GGXLUTTextureUnit = this .GGXLUTTextureUnit ?? browser .popTextureUnit ()
+         ? this .GGXLUTTextureUnit ??= browser .popTextureUnit ()
          : browser .getTextureUnit ();
 
       gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
