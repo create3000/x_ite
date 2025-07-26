@@ -125,6 +125,8 @@ function EnvironmentLight (executionContext)
    X3DLightNode .call (this, executionContext);
 
    this .addType (X3DConstants .EnvironmentLight);
+
+   this .addChildObjects (X3DConstants .outputOnly, "generateDiffuseTexture", new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNode .prototype),
@@ -136,8 +138,9 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_ggx.png");
 
-      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
-      this ._specularTexture .addInterest ("set_specularTexture__", this);
+      this ._diffuseTexture         .addInterest ("set_diffuseTexture__",   this);
+      this ._specularTexture        .addInterest ("set_specularTexture__",  this);
+      this ._generateDiffuseTexture .addInterest ("generateDiffuseTexture", this);
 
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
@@ -161,10 +164,24 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    set_diffuseTexture__ ()
    {
       this .diffuseTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
+
+      this ._generateDiffuseTexture .addEvent ();
    },
    set_specularTexture__ ()
    {
       this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
+
+      this ._generateDiffuseTexture .addEvent ();
+   },
+   generateDiffuseTexture ()
+   {
+      if (this .diffuseTexture)
+         return;
+
+      if (!this .specularTexture)
+         return;
+
+      console .warn ("Generating diffuse texture for EnvironmentLight");
    },
 });
 
