@@ -138,10 +138,12 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_ggx.png");
 
-      this ._diffuseTexture         .addInterest ("set_diffuseTexture__",   this);
-      this ._specularTexture        .addInterest ("set_specularTexture__",  this);
-      this ._generateDiffuseTexture .addInterest ("generateDiffuseTexture", this);
+      this ._diffuseCoefficients    .addInterest ("set_diffuseCoefficients__", this);
+      this ._diffuseTexture         .addInterest ("set_diffuseTexture__",      this);
+      this ._specularTexture        .addInterest ("set_specularTexture__",     this);
+      this ._generateDiffuseTexture .addInterest ("generateDiffuseTexture",    this);
 
+      this .set_diffuseCoefficients__ ();
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
    },
@@ -151,7 +153,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    getDiffuseTexture ()
    {
-      return this .diffuseTexture;
+      return this .diffuseTexture ?? this .generatedDiffuseTexture;
    },
    getSpecularTexture ()
    {
@@ -160,6 +162,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    getLights ()
    {
       return EnvironmentLights;
+   },
+   set_diffuseCoefficients__ ()
+   {
+      this ._generateDiffuseTexture .addEvent ();
    },
    set_diffuseTexture__ ()
    {
@@ -179,7 +185,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          return;
 
       if (!this .specularTexture)
+      {
+         this .generatedDiffuseTexture = null;
          return;
+      }
 
       console .warn ("Generating diffuse texture for EnvironmentLight");
    },
