@@ -201,12 +201,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
       console .warn ("Generating diffuse texture for EnvironmentLight");
 
-      const texture = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
-
-      texture .setup ();
-
-      this .generatedDiffuseTexture = texture;
-
       // Render the texture.
 
       const
@@ -214,7 +208,22 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          gl          = browser .getContext (),
          shaderNode  = browser .getDiffuseTextureShader (),
          framebuffer = gl .createFramebuffer (),
-         size        = this .specularTexture .getSize ();
+         size        = this .specularTexture .getSize (),
+         texture     = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
+
+      // Setup texture.
+
+      texture .setup ();
+      texture .setSize (size);
+
+      this .generatedDiffuseTexture = texture;
+
+      // Resize texture.
+
+      gl .bindTexture (texture .getTarget (), texture .getTexture ());
+
+      for (const target of texture .getTargets ())
+         gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
       // Generate images.
 
