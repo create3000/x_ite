@@ -227,6 +227,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
       // Setup specular texture uniforms.
 
+      gl .useProgram (shaderNode .getProgram ());
+
       const specularTextureUnit = browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
