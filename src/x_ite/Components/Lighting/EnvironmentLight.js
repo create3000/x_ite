@@ -46,14 +46,8 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const i = shaderObject .numLights ++;
-
-      if (shaderObject .hasLight (i, this))
-         return;
-
       const
          { browser, lightNode, global } = this,
-         color             = lightNode .getColor (),
          diffuseTexture    = lightNode .getDiffuseTexture (),
          specularTexture   = lightNode .getSpecularTexture (),
          GGXLUTTexture     = browser .getLibraryTexture ("lut_ggx.png");
@@ -69,14 +63,6 @@ Object .assign (EnvironmentLightContainer .prototype,
       const GGXLUTTextureUnit = global
          ? this .GGXLUTTextureUnit ??= browser .popTextureUnit ()
          : browser .getTextureUnit ();
-
-      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
-      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
-      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       this .rotationMatrix);
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLinear,  diffuseTexture ?.isLinear ());
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLevels,  diffuseTexture ?.getLevels () ?? 0);
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLinear, specularTexture ?.isLinear ());
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTexture ?.getLevels () ?? 0);
 
       gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, diffuseTexture ?.getTexture () ?? browser .getDefaultTextureCube ());
@@ -102,6 +88,21 @@ Object .assign (EnvironmentLightContainer .prototype,
          gl .bindTexture (gl .TEXTURE_2D, CharlieLUTTexture .getTexture ());
          gl .uniform1i (shaderObject .x3d_EnvironmentLightCharlieLUTTexture, CharlieLUTTextureUnit);
       }
+
+      const i = shaderObject .numLights ++;
+
+      if (shaderObject .hasLight (i, this))
+         return;
+
+      const color = lightNode .getColor ();
+
+      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
+      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
+      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       this .rotationMatrix);
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLinear,  diffuseTexture ?.isLinear ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLevels,  diffuseTexture ?.getLevels () ?? 0);
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLinear, specularTexture ?.isLinear ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTexture ?.getLevels () ?? 0);
    },
    dispose ()
    {
