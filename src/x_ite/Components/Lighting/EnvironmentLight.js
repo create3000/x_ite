@@ -110,8 +110,8 @@ Object .assign (EnvironmentLightContainer .prototype,
 
       browser .pushTextureUnit (this .diffuseTextureUnit);
       browser .pushTextureUnit (this .specularTextureUnit);
-      browser .pushTextureUnit   (this .GGXLUTTextureUnit);
-      browser .pushTextureUnit   (this .CharlieLUTTextureUnit);
+      browser .pushTextureUnit (this .GGXLUTTextureUnit);
+      browser .pushTextureUnit (this .CharlieLUTTextureUnit);
 
       this .modelViewMatrix .clear ();
 
