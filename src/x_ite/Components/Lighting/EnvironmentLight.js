@@ -209,7 +209,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          texture     = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
 
       if (browser .getBrowserOption ("Debug"))
-         console .warn ("Generating diffuse texture for EnvironmentLight.");
+         console .info ("Generating diffuse texture for EnvironmentLight.");
 
       // Setup texture.
 
