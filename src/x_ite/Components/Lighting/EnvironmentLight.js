@@ -46,6 +46,11 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
+      const i = shaderObject .numLights ++;
+
+      if (shaderObject .hasLight (i, this))
+         return;
+
       const
          { browser, lightNode, global } = this,
          color             = lightNode .getColor (),
