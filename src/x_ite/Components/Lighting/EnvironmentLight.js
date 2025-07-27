@@ -181,14 +181,13 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    generateDiffuseTexture ()
    {
+      this .generatedDiffuseTexture = null;
+
       if (this .diffuseTexture)
          return;
 
       if (!this .specularTexture)
-      {
-         this .generatedDiffuseTexture = null;
          return;
-      }
 
       console .warn ("Generating diffuse texture for EnvironmentLight");
    },
