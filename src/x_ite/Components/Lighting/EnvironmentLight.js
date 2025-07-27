@@ -225,6 +225,14 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       for (const target of texture .getTargets ())
          gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
+      // Setup specular texture uniforms.
+
+      const specularTextureUnit = browser .getTextureUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .specularTexture .getTexture ());
+      gl .uniform1i (shaderNode .x3d_SpecularTextureEXT, specularTextureUnit);
+
       // Generate images.
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
@@ -235,12 +243,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       gl .frontFace (gl .CCW);
       gl .clearColor (0, 0, 0, 0);
       gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
-
-      const specularTextureUnit = browser .getTextureUnit ();
-
-      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
-      gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .specularTexture .getTexture ());
-      gl .uniform1i (shaderNode .x3d_SpecularTextureEXT, specularTextureUnit);
 
       for (let i = 0; i < 6; ++ i)
       {
