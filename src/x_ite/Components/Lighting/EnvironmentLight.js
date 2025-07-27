@@ -144,12 +144,11 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_ggx.png");
 
-      this ._diffuseCoefficients    .addInterest ("set_diffuseCoefficients__", this);
-      this ._diffuseTexture         .addInterest ("set_diffuseTexture__",      this);
-      this ._specularTexture        .addInterest ("set_specularTexture__",     this);
-      this ._generateDiffuseTexture .addInterest ("generateDiffuseTexture",    this);
+      this ._diffuseCoefficients    .addInterest ("requestGenerateDiffuseTexture", this);
+      this ._diffuseTexture         .addInterest ("set_diffuseTexture__",          this);
+      this ._specularTexture        .addInterest ("set_specularTexture__",         this);
+      this ._generateDiffuseTexture .addInterest ("generateDiffuseTexture",        this);
 
-      this .set_diffuseCoefficients__ ();
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
    },
@@ -169,24 +168,24 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    {
       return EnvironmentLights;
    },
-   set_diffuseCoefficients__ ()
-   {
-      this ._generateDiffuseTexture .addEvent ();
-   },
    set_diffuseTexture__ ()
    {
       this .diffuseTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
 
-      this ._generateDiffuseTexture .addEvent ();
+      this .requestGenerateDiffuseTexture ();
    },
    set_specularTexture__ ()
    {
-      this .specularTexture ?.removeInterest ("addEvent", this ._generateDiffuseTexture);
+      this .specularTexture ?.removeInterest ("requestGenerateDiffuseTexture", this);
 
       this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
 
-      this .specularTexture ?.addInterest ("addEvent", this ._generateDiffuseTexture);
+      this .specularTexture ?.addInterest ("requestGenerateDiffuseTexture", this);
 
+      this .requestGenerateDiffuseTexture ();
+   },
+   requestGenerateDiffuseTexture ()
+   {
       this ._generateDiffuseTexture .addEvent ();
    },
    generateDiffuseTexture ()
@@ -199,8 +198,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       if (!this .specularTexture)
          return;
 
-      console .warn ("Generating diffuse texture for EnvironmentLight");
-
       // Render the texture.
 
       const
@@ -211,8 +208,12 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          size        = this .specularTexture .getSize (),
          texture     = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
 
+      if (browser .getBrowserOption ("Debug"))
+         console .warn ("Generating diffuse texture for EnvironmentLight.", size);
+
       // Setup texture.
 
+      texture .setName ("GeneratedDiffuseTexture");
       texture .setup ();
       texture .setSize (size);
 

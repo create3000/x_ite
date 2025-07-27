@@ -55,6 +55,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       {
          this .clearTexture ();
          this .setLoadState (X3DConstants .FAILED_STATE);
+         this .addNodeEvent ();
          return;
       }
 
@@ -112,6 +113,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          this .updateTextureParameters ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {
@@ -147,6 +149,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          // Update load state.
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {

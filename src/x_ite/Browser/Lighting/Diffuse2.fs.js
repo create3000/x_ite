@@ -239,9 +239,8 @@ getMatrix (const in int face)
 void
 main ()
 {
-   mat3 matrix    = getMatrix (x3d_CurrentFaceEXT);
-   vec3 direction = vec3 (texCoord .xy, 1.0);
-   vec3 normal    = normalize (matrix * direction);
+   mat3 matrix = getMatrix (x3d_CurrentFaceEXT);
+   vec3 normal = normalize (matrix * vec3 (texCoord .xy, 1.0));
 
    x3d_FragColor = vec4 (filterColor (normal), 1.0);
 }
