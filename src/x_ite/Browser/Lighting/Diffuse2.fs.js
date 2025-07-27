@@ -175,7 +175,7 @@ filterColor (const in vec3 N)
       if (true)
       {
          // sample lambertian at a lower resolution to avoid fireflies
-         vec3 lambertian = textureLod (x3d_TextureEXT, H, lod) .rgb * x3d_IntensityEXT;
+         vec3 lambertian = textureLod (x3d_TextureEXT, H, lod) .rgb;
 
          //// the below operations cancel each other out
          // lambertian *= NdotH; // lamberts law
@@ -191,7 +191,7 @@ filterColor (const in vec3 N)
    else
       color /= float (x3d_SampleCountEXT);
 
-   return color;
+   return color * x3d_IntensityEXT;
 }
 
 mat3
