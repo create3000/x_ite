@@ -204,7 +204,7 @@ getNormal (const in int face, const in vec2 t)
    float y;
    float z;
 
-   switch (x3d_CurrentFaceEXT)
+   switch (face)
    {
       case 0: // front
          x = t .x;
