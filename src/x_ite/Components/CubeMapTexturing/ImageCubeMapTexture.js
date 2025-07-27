@@ -267,7 +267,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
-      gl .uniform1i (shaderNode .x3d_PanoramaTexture, textureUnit);
+      gl .uniform1i (shaderNode .x3d_PanoramaTextureEXT, textureUnit);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .viewport (0, 0, size, size);
@@ -284,7 +284,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       {
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, this .getTargets () [i], this .getTexture (), 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
-         gl .uniform1i (shaderNode .x3d_CurrentFace, i);
+         gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
          if (!transparent)

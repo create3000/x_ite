@@ -227,11 +227,17 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       gl .clearColor (0, 0, 0, 0);
       gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
 
+      const specularTextureUnit = browser .getTextureUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .specularTexture .getTexture ());
+      gl .uniform1i (shaderNode .x3d_SpecularTextureEXT, specularTextureUnit);
+
       for (let i = 0; i < 6; ++ i)
       {
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, texture .getTargets () [i], texture .getTexture (), 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
-         gl .uniform1i (shaderNode .x3d_CurrentFace, i);
+         gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
          gl .drawArrays (gl .TRIANGLES, 0, 6);
       }
 

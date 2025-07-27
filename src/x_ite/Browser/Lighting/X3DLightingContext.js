@@ -95,7 +95,7 @@ Object .assign (X3DLightingContext .prototype,
    },
    getDiffuseTextureShader ()
    {
-      return this [_diffuseShader] ??= this .createShader ("Panorama", "FullScreen", `data:x-shader/x-fragment,${Diffuse2FS}`, [ ], ["x3d_SpecularTexture", "x3d_CurrentFace"]);
+      return this [_diffuseShader] ??= this .createShader ("Panorama", "FullScreen", `data:x-shader/x-fragment,${Diffuse2FS}`, [ ], ["x3d_SpecularTextureEXT", "x3d_CurrentFaceEXT"]);
    },
 });
 
