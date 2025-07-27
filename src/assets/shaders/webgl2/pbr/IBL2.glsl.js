@@ -89,7 +89,7 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness)
    // Holger: https://blender.stackexchange.com/questions/93790/is-the-roughness-setting-is-based-on-a-standard-measuring-unit
    float NdotV         = clamp (dot (n, v), 0.0, 1.0);
    float lod           = sqrt (roughness) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added sqrt.
-   vec3  reflection    = normalize (reflect (-v, n));
+   vec3  reflection    = reflect (-v, n);
    vec3  specularLight = getSpecularLight (reflection, lod);
 
    return specularLight;
