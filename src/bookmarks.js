@@ -344,7 +344,6 @@ Object .assign (Bookmarks .prototype,
          components        = ["CubeMapTexturing", "Lighting", "Texturing"] .map (name => browser .getComponent (name)),
          scene             = await browser .createScene (profile, ... components),
          environmentLight  = scene .createNode ("EnvironmentLight"),
-         diffuseTexture    = scene .createNode ("ImageCubeMapTexture"),
          specularTexture   = scene .createNode ("ImageCubeMapTexture"),
          textureProperties = scene .createNode ("TextureProperties");
 
@@ -352,19 +351,11 @@ Object .assign (Bookmarks .prototype,
       textureProperties .minificationFilter  = "NICEST";
       textureProperties .magnificationFilter = "NICEST";
 
-      // diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-diffuse.png");
-      // diffuseTexture  .textureProperties = textureProperties;
-      // specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-specular.png");
-      // specularTexture .textureProperties = textureProperties;
-
-      diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-diffuse.jpg");
-      diffuseTexture  .textureProperties = textureProperties;
       specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
       specularTexture .textureProperties = textureProperties;
 
       environmentLight .intensity       = 1;
       environmentLight .color           = new X3D .SFColor (1,1,1);
-      environmentLight .diffuseTexture  = diffuseTexture;
       environmentLight .specularTexture = specularTexture;
 
       return this .environmentLight = environmentLight;

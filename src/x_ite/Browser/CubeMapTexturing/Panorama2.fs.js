@@ -9,8 +9,8 @@ const float M_PI = 3.1415926535897932384626433832795;
 in  vec2 texCoord;
 out vec4 x3d_FragColor;
 
-uniform sampler2D x3d_PanoramaTexture;
-uniform int       x3d_CurrentFace;
+uniform sampler2D x3d_PanoramaTextureEXT;
+uniform int       x3d_CurrentFaceEXT;
 
 vec3
 uvToXYZ (const in int face, const in vec2 uv)
@@ -40,12 +40,12 @@ panoramaToCubeMap (const in int face, const in vec2 texCoord)
    vec3 direction = normalize (scan);
    vec2 src       = dirToUV (direction);
 
-   return texture (x3d_PanoramaTexture, src) .rgb;
+   return texture (x3d_PanoramaTextureEXT, src) .rgb;
 }
 
 void
 main ()
 {
-   x3d_FragColor = vec4 (panoramaToCubeMap (x3d_CurrentFace, texCoord), 1.0);
+   x3d_FragColor = vec4 (panoramaToCubeMap (x3d_CurrentFaceEXT, texCoord), 1.0);
 }
 `;

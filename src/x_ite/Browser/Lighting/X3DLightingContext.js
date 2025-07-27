@@ -2,11 +2,13 @@ import TextureBuffer     from "../../Rendering/TextureBuffer.js";
 import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 import URLs              from "../Networking/URLs.js";
+import Diffuse2FS        from "./Diffuse2.fs.js";
 
 const
    _maxLights     = Symbol (),
    _textures      = Symbol (),
-   _shadowBuffers = Symbol ();
+   _shadowBuffers = Symbol (),
+   _diffuseShader = Symbol ();
 
 function X3DLightingContext ()
 {
@@ -90,6 +92,10 @@ Object .assign (X3DLightingContext .prototype,
    {
       if (buffer)
          this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);
+   },
+   getDiffuseTextureShader ()
+   {
+      return this [_diffuseShader] ??= this .createShader ("Diffuse", "FullScreen", `data:x-shader/x-fragment,${Diffuse2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSize", "x3d_CurrentFaceEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBias", "x3d_IntensityEXT"]);
    },
 });
 

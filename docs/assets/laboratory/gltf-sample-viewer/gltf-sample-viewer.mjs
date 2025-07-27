@@ -909,11 +909,7 @@ class SampleViewer
 
       const
          url         = new URL (`images/${image}`, import .meta .url),
-         diffuseURL  = new X3D .MFString (`${url}-diffuse.avif`,  `${url}-diffuse.jpg`),
          specularURL = new X3D .MFString (`${url}-specular.avif`, `${url}-specular.jpg`);
-
-      if (!environmentLight .diffuseTexture .url .equals (diffuseURL))
-         environmentLight .diffuseTexture .url = diffuseURL;
 
       if (!environmentLight .specularTexture .url .equals (specularURL))
          environmentLight .specularTexture .url = specularURL;
@@ -932,7 +928,6 @@ class SampleViewer
 
       const
          environmentLight  = this .scene .createNode ("EnvironmentLight"),
-         diffuseTexture    = this .scene .createNode ("ImageCubeMapTexture"),
          specularTexture   = this .scene .createNode ("ImageCubeMapTexture"),
          textureProperties = this .scene .createNode ("TextureProperties");
 
@@ -940,12 +935,10 @@ class SampleViewer
       textureProperties .minificationFilter  = "NICEST";
       textureProperties .magnificationFilter = "NICEST";
 
-      diffuseTexture  .textureProperties = textureProperties;
       specularTexture .textureProperties = textureProperties;
 
       environmentLight .intensity       = 1;
       environmentLight .color           = new X3D .SFColor (1, 1, 1);
-      environmentLight .diffuseTexture  = diffuseTexture;
       environmentLight .specularTexture = specularTexture;
 
       return this .environmentLight = environmentLight;

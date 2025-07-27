@@ -8,8 +8,6 @@ import X3DConstants              from "../../Base/X3DConstants.js";
 import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
 import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
-const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
 function ImageCubeMapTexture (executionContext)
 {
    X3DEnvironmentTextureNode .call (this, executionContext);
@@ -31,12 +29,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       // Upload default data.
 
-      const gl = this .getBrowser () .getContext ();
-
-      gl .bindTexture (this .getTarget (), this .getTexture ());
-
-      for (let i = 0; i < 6; ++ i)
-         gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      this .clearTexture ();
 
       // Initialize.
 
@@ -62,6 +55,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       {
          this .clearTexture ();
          this .setLoadState (X3DConstants .FAILED_STATE);
+         this .addNodeEvent ();
          return;
       }
 
@@ -119,6 +113,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          this .updateTextureParameters ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {
@@ -154,6 +149,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          // Update load state.
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {
@@ -274,7 +270,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
-      gl .uniform1i (shaderNode .x3d_PanoramaTexture, textureUnit);
+      gl .uniform1i (shaderNode .x3d_PanoramaTextureEXT, textureUnit);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .viewport (0, 0, size, size);
@@ -291,7 +287,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       {
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, this .getTargets () [i], this .getTexture (), 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
-         gl .uniform1i (shaderNode .x3d_CurrentFace, i);
+         gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
          if (!transparent)

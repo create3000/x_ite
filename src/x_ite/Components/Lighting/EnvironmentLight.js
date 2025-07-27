@@ -110,8 +110,8 @@ Object .assign (EnvironmentLightContainer .prototype,
 
       browser .pushTextureUnit (this .diffuseTextureUnit);
       browser .pushTextureUnit (this .specularTextureUnit);
-      browser .pushTextureUnit   (this .GGXLUTTextureUnit);
-      browser .pushTextureUnit   (this .CharlieLUTTextureUnit);
+      browser .pushTextureUnit (this .GGXLUTTextureUnit);
+      browser .pushTextureUnit (this .CharlieLUTTextureUnit);
 
       this .modelViewMatrix .clear ();
 
@@ -131,6 +131,8 @@ function EnvironmentLight (executionContext)
    X3DLightNode .call (this, executionContext);
 
    this .addType (X3DConstants .EnvironmentLight);
+
+   this .addChildObjects (X3DConstants .outputOnly, "generateDiffuseTexture", new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNode .prototype),
@@ -142,8 +144,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_ggx.png");
 
-      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
-      this ._specularTexture .addInterest ("set_specularTexture__", this);
+      this ._diffuseCoefficients    .addInterest ("requestGenerateDiffuseTexture", this);
+      this ._diffuseTexture         .addInterest ("set_diffuseTexture__",          this);
+      this ._specularTexture        .addInterest ("set_specularTexture__",         this);
+      this ._generateDiffuseTexture .addInterest ("generateDiffuseTexture",        this);
 
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
@@ -154,7 +158,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    getDiffuseTexture ()
    {
-      return this .diffuseTexture;
+      return this .diffuseTexture ?? this .generatedDiffuseTexture;
    },
    getSpecularTexture ()
    {
@@ -167,10 +171,97 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    set_diffuseTexture__ ()
    {
       this .diffuseTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
+
+      this .requestGenerateDiffuseTexture ();
    },
    set_specularTexture__ ()
    {
+      this .specularTexture ?.removeInterest ("requestGenerateDiffuseTexture", this);
+
       this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
+
+      this .specularTexture ?.addInterest ("requestGenerateDiffuseTexture", this);
+
+      this .requestGenerateDiffuseTexture ();
+   },
+   requestGenerateDiffuseTexture ()
+   {
+      this ._generateDiffuseTexture .addEvent ();
+   },
+   generateDiffuseTexture ()
+   {
+      this .generatedDiffuseTexture = null;
+
+      if (this .diffuseTexture)
+         return;
+
+      if (!this .specularTexture)
+         return;
+
+      // Render the texture.
+
+      const
+         browser     = this .getBrowser (),
+         gl          = browser .getContext (),
+         shaderNode  = browser .getDiffuseTextureShader (),
+         framebuffer = gl .createFramebuffer (),
+         size        = this .specularTexture .getSize (),
+         texture     = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
+
+      if (browser .getBrowserOption ("Debug"))
+         console .info ("Generating diffuse texture for EnvironmentLight.");
+
+      // Setup texture.
+
+      texture .setName ("GeneratedDiffuseTexture");
+      texture .setup ();
+      texture .setSize (size);
+
+      this .generatedDiffuseTexture = texture;
+
+      // Resize texture.
+
+      gl .bindTexture (texture .getTarget (), texture .getTexture ());
+
+      for (const target of texture .getTargets ())
+         gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+
+      // Setup specular texture uniforms.
+
+      gl .useProgram (shaderNode .getProgram ());
+
+      const specularTextureUnit = browser .getTextureUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .specularTexture .getTexture ());
+      gl .uniform1i (shaderNode .x3d_TextureEXT, specularTextureUnit);
+      gl .uniform1i (shaderNode .x3d_TextureSize, size);
+      gl .uniform1i (shaderNode .x3d_SampleCountEXT, 2048);
+      gl .uniform1f (shaderNode .x3d_RoughnessEXT, 0);
+      gl .uniform1f (shaderNode .x3d_LodBias, 0);
+      gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
+
+      // Generate images.
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
+      gl .viewport (0, 0, size, size);
+      gl .scissor (0, 0, size, size);
+      gl .disable (gl .DEPTH_TEST);
+      gl .enable (gl .CULL_FACE);
+      gl .frontFace (gl .CCW);
+      gl .clearColor (0, 0, 0, 0);
+      gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
+
+      for (let i = 0; i < 6; ++ i)
+      {
+         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, texture .getTargets () [i], texture .getTexture (), 0);
+         gl .clear (gl .COLOR_BUFFER_BIT);
+         gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
+         gl .drawArrays (gl .TRIANGLES, 0, 6);
+      }
+
+      gl .enable (gl .DEPTH_TEST);
+      gl .deleteFramebuffer (framebuffer);
    },
 });
 
