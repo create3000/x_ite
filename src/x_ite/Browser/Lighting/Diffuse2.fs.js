@@ -12,23 +12,55 @@ uniform int         x3d_CurrentFaceEXT;
 in vec2 texCoord; // [-1,1]
 out vec4 x3d_FragColor;
 
-const float x1 [] = float [] (0.0, -M_PI, -M_PI / 2.0, M_PI / 2.0, M_PI, M_PI); // f,b,r,l - t,b
-const float y1 [] = float [] (M_PI / 2.0, M_PI / 2.0, M_PI / 2.0, M_PI / 2.0, M_PI / 2.0, M_PI / 2.0);
+vec3
+getDirection (const in vec2 t)
+{
+   float x;
+   float y;
+   float z;
+
+   switch (x3d_CurrentFaceEXT)
+   {
+      case 0: // front
+         x = t .x;
+         y = -t .y;
+         z = 1.0;
+         break;
+      case 1: // back
+         x = -t .x;
+         y = -t .y;
+         z = -1.0;
+         break;
+      case 2: // right
+         x = -1.0;
+         y = -t .y;
+         z = t .x;
+         break;
+      case 3: // left
+         x = 1.0;
+         y = -t .y;
+         z = -t .x;
+         break;
+      case 4: // top
+         x = t .x;
+         y = 1.0;
+         z = t .y;
+         break;
+      case 5: // bottom
+         x = t .x;
+         y = -1.0;
+         z = -t .y;
+         break;
+   }
+
+   return vec3 (x, y, z);;
+}
 
 void
 main ()
 {
-   vec2 t = texCoord;
-
-   float a = x1 [x3d_CurrentFaceEXT] + atan (t .x);
-   float b = y1 [x3d_CurrentFaceEXT] + atan (t .y);
-
-   float x = sin (a) * sin (b);
-   float y = cos (b);
-   float z = cos (a) * sin (b);
-
-   vec3 normal = vec3 (x, y, z);
-   vec3 color  = texture (x3d_SpecularTextureEXT, normal) .rgb;
+   vec3 direction = getDirection (texCoord);
+   vec3 color     = texture (x3d_SpecularTextureEXT, direction) .rgb;
 
    x3d_FragColor = vec4 (color, 1.0);
 }
