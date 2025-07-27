@@ -203,7 +203,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       const
          browser     = this .getBrowser (),
          gl          = browser .getContext (),
-         shaderNode  = browser .getDiffuseTextureShader (),
+         shaderNode  = browser .getEnvironmentTextureShader (),
          framebuffer = gl .createFramebuffer (),
          size        = this .specularTexture .getSize (),
          texture     = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);

@@ -186,6 +186,9 @@ filterColor (const in vec3 N)
       }
    }
 
+   // DEBUG:
+   // return textureLod (x3d_TextureEXT, N, 0.0) .rgb;
+
    if(weight != 0.0f)
       color /= weight;
    else
@@ -194,53 +197,54 @@ filterColor (const in vec3 N)
    return color * x3d_IntensityEXT;
 }
 
-mat3
-getMatrix (const in int face)
+vec3
+getNormal (const in int face, const in vec2 t)
 {
-   mat3 m;
+   float x;
+   float y;
+   float z;
 
-   switch (face)
+   switch (x3d_CurrentFaceEXT)
    {
       case 0: // front
-         m = mat3 (vec3 (1.0, 0.0, 0.0),
-                   vec3 (0.0, -1.0, 0.0),
-                   vec3 (0.0, 0.0, 1.0));
+         x = t .x;
+         y = -t .y;
+         z = 1.0;
          break;
       case 1: // back
-         m = mat3 (vec3 (-1.0, 0.0, 0.0),
-                   vec3 (0.0, -1.0, 0.0),
-                   vec3 (0.0, 0.0, -1.0));
+         x = -t .x;
+         y = -t .y;
+         z = -1.0;
          break;
       case 2: // right
-         m = mat3 (vec3 (0.0, 0.0, 1.0),
-                   vec3 (0.0, -1.0, 0.0),
-                   vec3 (-1.0, 0.0, 0.0));
+         x = -1.0;
+         y = -t .y;
+         z = t .x;
          break;
       case 3: // left
-         m = mat3 (vec3 (0.0, 0.0, -1.0),
-                   vec3 (0.0, -1.0, 0.0),
-                   vec3 (1.0, 0.0, 0.0));
+         x = 1.0;
+         y = -t .y;
+         z = -t .x;
          break;
       case 4: // top
-         m = mat3 (vec3 (1.0, 0.0, 0.0),
-                   vec3 (0.0, 0.0, 1.0),
-                   vec3 (0.0, 1.0, 0.0));
+         x = t .x;
+         y = 1.0;
+         z = t .y;
          break;
       case 5: // bottom
-         m = mat3 (vec3 (1.0, 0.0, 0.0),
-                   vec3 (0.0, 0.0, -1.0),
-                   vec3 (0.0, -1.0, 0.0));
+         x = t .x;
+         y = -1.0;
+         z = -t .y;
          break;
    }
 
-   return m;
+   return normalize (vec3 (x, y, z));
 }
 
 void
 main ()
 {
-   mat3 matrix = getMatrix (x3d_CurrentFaceEXT);
-   vec3 normal = normalize (matrix * vec3 (texCoord .xy, 1.0));
+   vec3 normal = getNormal (x3d_CurrentFaceEXT, texCoord);
 
    x3d_FragColor = vec4 (filterColor (normal), 1.0);
 }
