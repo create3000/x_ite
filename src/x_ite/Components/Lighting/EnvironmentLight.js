@@ -196,6 +196,12 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          return;
 
       console .warn ("Generating diffuse texture for EnvironmentLight");
+
+      const texture = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
+
+      texture .setup ();
+
+      this .generatedDiffuseTexture = texture;
    },
 });
 

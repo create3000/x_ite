@@ -8,8 +8,6 @@ import X3DConstants              from "../../Base/X3DConstants.js";
 import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
 import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
-const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
 function ImageCubeMapTexture (executionContext)
 {
    X3DEnvironmentTextureNode .call (this, executionContext);
@@ -31,12 +29,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       // Upload default data.
 
-      const gl = this .getBrowser () .getContext ();
-
-      gl .bindTexture (this .getTarget (), this .getTexture ());
-
-      for (let i = 0; i < 6; ++ i)
-         gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      this .clearTexture ();
 
       // Initialize.
 
