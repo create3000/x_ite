@@ -208,8 +208,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          size        = this .specularTexture .getSize (),
          texture     = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
 
-      // if (browser .getBrowserOption ("Debug"))
-      //    console .info ("Generating diffuse texture for EnvironmentLight.");
+      if (browser .getBrowserOption ("Debug"))
+         console .info ("Generating diffuse texture for EnvironmentLight.");
 
       // Setup texture.
 
