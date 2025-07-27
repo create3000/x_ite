@@ -48,9 +48,9 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       const
          { browser, lightNode, global } = this,
-         diffuseTexture    = lightNode .getDiffuseTexture (),
-         specularTexture   = lightNode .getSpecularTexture (),
-         GGXLUTTexture     = browser .getLibraryTexture ("lut_ggx.png");
+         diffuseTexture  = lightNode .getDiffuseTexture (),
+         specularTexture = lightNode .getSpecularTexture (),
+         GGXLUTTexture   = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
          ? this .diffuseTextureUnit ??= browser .popTextureUnit ()
