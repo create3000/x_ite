@@ -213,7 +213,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
       // Setup texture.
 
+      texture ._textureProperties = this .specularTexture ._textureProperties;
+
       texture .setName ("GeneratedDiffuseTexture");
+      texture .setPrivate (true);
       texture .setup ();
       texture .setSize (size);
 
@@ -262,6 +265,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
       gl .enable (gl .DEPTH_TEST);
       gl .deleteFramebuffer (framebuffer);
+
+      texture .updateTextureParameters ();
    },
 });
 
