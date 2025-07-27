@@ -81,7 +81,7 @@ Object .assign (EnvironmentLightContainer .prototype,
          const CharlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
 
          const CharlieLUTTextureUnit = global
-            ? this .CharlieLUTTextureUnit = this .CharlieLUTTextureUnit ?? browser .popTextureUnit ()
+            ? this .CharlieLUTTextureUnit ??= browser .popTextureUnit ()
             : browser .getTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + CharlieLUTTextureUnit);
