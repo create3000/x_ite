@@ -181,7 +181,11 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    set_specularTexture__ ()
    {
+      this .specularTexture ?.removeInterest ("addEvent", this ._generateDiffuseTexture);
+
       this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
+
+      this .specularTexture ?.addInterest ("addEvent", this ._generateDiffuseTexture);
 
       this ._generateDiffuseTexture .addEvent ();
    },
@@ -202,6 +206,37 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       texture .setup ();
 
       this .generatedDiffuseTexture = texture;
+
+      // Render the texture.
+
+      const
+         browser     = this .getBrowser (),
+         gl          = browser .getContext (),
+         shaderNode  = browser .getDiffuseTextureShader (),
+         framebuffer = gl .createFramebuffer (),
+         size        = this .specularTexture .getSize ();
+
+      // Generate images.
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
+      gl .viewport (0, 0, size, size);
+      gl .scissor (0, 0, size, size);
+      gl .disable (gl .DEPTH_TEST);
+      gl .enable (gl .CULL_FACE);
+      gl .frontFace (gl .CCW);
+      gl .clearColor (0, 0, 0, 0);
+      gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
+
+      for (let i = 0; i < 6; ++ i)
+      {
+         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, texture .getTargets () [i], texture .getTexture (), 0);
+         gl .clear (gl .COLOR_BUFFER_BIT);
+         gl .uniform1i (shaderNode .x3d_CurrentFace, i);
+         gl .drawArrays (gl .TRIANGLES, 0, 6);
+      }
+
+      gl .enable (gl .DEPTH_TEST);
+      gl .deleteFramebuffer (framebuffer);
    },
 });
 
