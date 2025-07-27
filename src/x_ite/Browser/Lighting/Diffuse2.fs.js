@@ -12,22 +12,20 @@ uniform int         x3d_CurrentFaceEXT;
 in vec2 texCoord; // [-1,1]
 out vec4 x3d_FragColor;
 
-const float x1 [] = float [] ( M_PI / 2.0 + M_PI / 2.0);
-const float x2 [] = float [] (-M_PI / 2.0 + M_PI / 2.0);
-const float y1 [] = float [] ( M_PI / 4.0);
-const float y2 [] = float [] ( M_PI * 3.0 / 4.0);
+const float x1 [] = float [] (0.0, -M_PI, -M_PI / 2.0, M_PI / 2.0, M_PI, M_PI); // f,b,r,l - t,b
+const float y1 [] = float [] (M_PI / 2.0, M_PI / 2.0, M_PI / 2.0, M_PI / 2.0, M_PI / 2.0, M_PI / 2.0);
 
 void
 main ()
 {
-   vec2 t = texCoord * 0.5 + 0.5; // [0,1]
+   vec2 t = texCoord;
 
-   float a = mix (x1 [0], x2 [0], t .x);
-   float b = mix (y1 [0], y2 [0], t .y);
+   float a = x1 [x3d_CurrentFaceEXT] + atan (t .x);
+   float b = y1 [x3d_CurrentFaceEXT] + atan (t .y);
 
-   float x = cos (a) * sin (b);
+   float x = sin (a) * sin (b);
    float y = cos (b);
-   float z = sin (a) * sin (b);
+   float z = cos (a) * sin (b);
 
    vec3 normal = vec3 (x, y, z);
    vec3 color  = texture (x3d_SpecularTextureEXT, normal) .rgb;
