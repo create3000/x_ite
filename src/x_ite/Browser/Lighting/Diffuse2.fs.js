@@ -6,14 +6,19 @@ precision highp float;
 precision highp int;
 precision highp samplerCube;
 
+#define X3D_LAMBERTIAN 0
+#define X3D_GGX        1
+#define X3D_CHARLIE    2
+
 const float M_PI = 3.1415926535897932384626433832795;
 
 uniform samplerCube x3d_TextureEXT;
-uniform int         x3d_TextureSize;
+uniform int         x3d_TextureSizeEXT;
 uniform int         x3d_CurrentFaceEXT;
+uniform int         x3d_DistributionEXT;
 uniform int         x3d_SampleCountEXT;
 uniform float       x3d_RoughnessEXT;
-uniform float       x3d_LodBias;
+uniform float       x3d_LodBiasEXT;
 uniform float       x3d_IntensityEXT;
 
 in vec2 texCoord; // [-1,1]
@@ -106,9 +111,11 @@ getImportanceSample (const in int sampleIndex, const in vec3 N, const in float r
 
    // generate the points on the hemisphere with a fitting mapping for
    // the distribution (e.g. lambertian uses a cosine importance)
-   if (true)
+   switch (x3d_DistributionEXT)
    {
-      importanceSample = Lambertian (xi, roughness);
+      case X3D_LAMBERTIAN:
+         importanceSample = Lambertian (xi, roughness);
+         break;
    }
 
    // transform the hemisphere sample to the normal coordinate frame
@@ -149,7 +156,7 @@ computeLod (const in float pdf)
    // We achieved good results by using the original formulation from Krivanek & Colbert adapted to cubemaps
 
    // https://cgg.mff.cuni.cz/~jaroslav/papers/2007-sketch-fis/Final_sap_0073.pdf
-   float lod = 0.5 * log2 (6.0 * float (x3d_TextureSize) * float (x3d_TextureSize) / (float (x3d_SampleCountEXT) * pdf));
+   float lod = 0.5 * log2 (6.0 * float (x3d_TextureSizeEXT) * float (x3d_TextureSizeEXT) / (float (x3d_SampleCountEXT) * pdf));
 
    return lod;
 }
@@ -171,19 +178,23 @@ filterColor (const in vec3 N)
       float lod = computeLod (pdf);
 
       // apply the bias to the lod
-      lod += x3d_LodBias;
+      lod += x3d_LodBiasEXT;
 
-      if (true)
+      switch (x3d_DistributionEXT)
       {
-         // sample lambertian at a lower resolution to avoid fireflies
-         vec3 lambertian = textureLod (x3d_TextureEXT, H, lod) .rgb;
+         case X3D_LAMBERTIAN:
+         {
+            // sample lambertian at a lower resolution to avoid fireflies
+            vec3 lambertian = textureLod (x3d_TextureEXT, H, lod) .rgb;
 
-         //// the below operations cancel each other out
-         // lambertian *= NdotH; // lamberts law
-         // lambertian /= pdf; // invert bias from importance sampling
-         // lambertian /= UX3D_MATH_PI; // convert irradiance to radiance https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
+            //// the below operations cancel each other out
+            // lambertian *= NdotH; // lamberts law
+            // lambertian /= pdf; // invert bias from importance sampling
+            // lambertian /= UX3D_MATH_PI; // convert irradiance to radiance https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
 
-         color += lambertian;
+            color += lambertian;
+            break;
+         }
       }
    }
 

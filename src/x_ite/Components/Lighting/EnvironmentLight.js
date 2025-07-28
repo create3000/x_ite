@@ -238,10 +238,11 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .specularTexture .getTexture ());
       gl .uniform1i (shaderNode .x3d_TextureEXT, specularTextureUnit);
-      gl .uniform1i (shaderNode .x3d_TextureSize, size);
+      gl .uniform1i (shaderNode .x3d_TextureSizeEXT, size);
+      gl .uniform1i (shaderNode .x3d_DistributionEXT, 0);
       gl .uniform1i (shaderNode .x3d_SampleCountEXT, 2048);
       gl .uniform1f (shaderNode .x3d_RoughnessEXT, 0);
-      gl .uniform1f (shaderNode .x3d_LodBias, 0);
+      gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
       gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
 
       // Generate images.

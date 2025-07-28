@@ -95,7 +95,7 @@ Object .assign (X3DLightingContext .prototype,
    },
    getEnvironmentTextureShader ()
    {
-      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Diffuse2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSize", "x3d_CurrentFaceEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBias", "x3d_IntensityEXT"]);
+      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Diffuse2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
    },
 });
 
