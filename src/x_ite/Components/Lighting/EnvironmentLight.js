@@ -194,8 +194,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             console .info ("Generating diffuse texture for EnvironmentLight.");
 
          return this .filterTexture ({
-            texture: this .specularTexture,
             name: "GeneratedDiffuseTexture",
+            texture: this .specularTexture,
             distribution: LAMBERTIAN,
             sampleCount: 2048,
             roughness: 0
@@ -219,8 +219,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             console .info ("Generating sheen texture for EnvironmentLight.");
 
          return this .filterTexture ({
-            texture: this .specularTexture,
             name: "GeneratedSheenTexture",
+            texture: this .specularTexture,
             distribution: CHARLIE,
             sampleCount: 64,
             roughness: 1
@@ -252,7 +252,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this .generatedDiffuseTexture = null;
       this .generatedSheenTexture   = null;
    },
-   filterTexture ({ texture, name, distribution, sampleCount, roughness })
+   filterTexture ({ name, texture, distribution, sampleCount, roughness })
    {
       // Render the texture.
 
