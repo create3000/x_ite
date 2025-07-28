@@ -129,21 +129,24 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    dispose ()
    {
-      const browser = this .browser;
+      const { browser, global } = this;
 
-      browser .pushTextureUnit (this .diffuseTextureUnit);
-      browser .pushTextureUnit (this .specularTextureUnit);
-      browser .pushTextureUnit (this .sheenTextureUnit);
-      browser .pushTextureUnit (this .GGXLUTTextureUnit);
-      browser .pushTextureUnit (this .CharlieLUTTextureUnit);
+      if (global)
+      {
+         browser .pushTextureUnit (this .diffuseTextureUnit);
+         browser .pushTextureUnit (this .specularTextureUnit);
+         browser .pushTextureUnit (this .sheenTextureUnit);
+         browser .pushTextureUnit (this .GGXLUTTextureUnit);
+         browser .pushTextureUnit (this .CharlieLUTTextureUnit);
+
+         this .diffuseTextureUnit    = undefined;
+         this .specularTextureUnit   = undefined;
+         this .sheenTextureUnit      = undefined;
+         this .GGXLUTTextureUnit     = undefined;
+         this .CharlieLUTTextureUnit = undefined;
+      }
 
       this .modelViewMatrix .clear ();
-
-      this .diffuseTextureUnit    = undefined;
-      this .specularTextureUnit   = undefined;
-      this .sheenTextureUnit      = undefined;
-      this .GGXLUTTextureUnit     = undefined;
-      this .CharlieLUTTextureUnit = undefined;
 
       // Return container
 
