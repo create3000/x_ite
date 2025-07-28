@@ -242,13 +242,13 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       // Render the texture.
 
       const
-         browser     = this .getBrowser (),
-         gl          = browser .getContext (),
-         program     = gl .getParameter (gl .CURRENT_PROGRAM),
-         shaderNode  = browser .getEnvironmentTextureShader (),
-         framebuffer = gl .createFramebuffer (),
-         size        = texture .getSize (),
-         filtered    = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
+         browser        = this .getBrowser (),
+         gl             = browser .getContext (),
+         currentProgram = gl .getParameter (gl .CURRENT_PROGRAM),
+         shaderNode     = browser .getEnvironmentTextureShader (),
+         framebuffer    = gl .createFramebuffer (),
+         size           = texture .getSize (),
+         filtered       = this .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
 
       // Setup texture.
 
@@ -306,7 +306,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
       filtered .updateTextureParameters ();
 
-      gl .useProgram (program);
+      gl .useProgram (currentProgram);
 
       return filtered;
    },
