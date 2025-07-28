@@ -1,5 +1,5 @@
-/* X_ITE v11.6.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
+/* X_ITE v11.6.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -489,8 +489,8 @@ Object .assign (Geocentric .prototype,
    slerp (source, destination, t)
    {
       const
-         sourceLength      = source      .magnitude (),
-         destinationLength = destination .magnitude ();
+         sourceLength      = source      .norm (),
+         destinationLength = destination .norm ();
 
       source      .normalize ();
       destination .normalize ();
@@ -1587,7 +1587,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       {
          modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
-         const distance = modelViewMatrix .origin .magnitude ();
+         const distance = modelViewMatrix .origin .norm ();
 
          if (distance < this ._range .getValue ())
             return 1;
@@ -2520,7 +2520,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
 
       return function (dynamic = false)
       {
-         if (!dynamic || this .getUserPosition () .magnitude () < 6.5e6)
+         if (!dynamic || this .getUserPosition () .norm () < 6.5e6)
          {
             this .getCoord (this ._position .getValue (), position);
 
