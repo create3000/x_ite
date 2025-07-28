@@ -16,6 +16,11 @@ import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
 
 const EnvironmentLights = ObjectCache (EnvironmentLightContainer);
 
+const
+   LAMBERTIAN = 0,
+   GGX        = 1,
+   CHARLIE    = 2;
+
 function EnvironmentLightContainer ()
 {
    this .modelViewMatrix = new MatrixStack (Matrix4);
@@ -185,7 +190,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          if (this .getBrowser () .getBrowserOption ("Debug"))
             console .info ("Generating diffuse texture for EnvironmentLight.");
 
-         return this .filterTexture (this .specularTexture, "GeneratedDiffuseTexture", 0);
+         return this .filterTexture (this .specularTexture, "GeneratedDiffuseTexture", LAMBERTIAN, 2048, 0);
       })());
    },
    getSpecularTexture ()
@@ -204,7 +209,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          if (this .getBrowser () .getBrowserOption ("Debug"))
             console .info ("Generating sheen texture for EnvironmentLight.");
 
-         return this .filterTexture (this .specularTexture, "GeneratedSheenTexture", 0);
+         return this .filterTexture (this .specularTexture, "GeneratedSheenTexture", CHARLIE, 64, 1);
       })();
    },
    getLights ()
@@ -232,7 +237,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this .generatedDiffuseTexture = null;
       this .generatedSheenTexture   = null;
    },
-   filterTexture (texture, name, distribution)
+   filterTexture (texture, name, distribution, sampleCount, roughness)
    {
       // Render the texture.
 
@@ -272,8 +277,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       gl .uniform1i (shaderNode .x3d_TextureEXT, specularTextureUnit);
       gl .uniform1i (shaderNode .x3d_TextureSizeEXT, size);
       gl .uniform1i (shaderNode .x3d_DistributionEXT, distribution);
-      gl .uniform1i (shaderNode .x3d_SampleCountEXT, 2048);
-      gl .uniform1f (shaderNode .x3d_RoughnessEXT, 0);
+      gl .uniform1i (shaderNode .x3d_SampleCountEXT, sampleCount);
+      gl .uniform1f (shaderNode .x3d_RoughnessEXT, roughness);
       gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
       gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
 

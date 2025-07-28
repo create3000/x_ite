@@ -2,7 +2,7 @@ import TextureBuffer     from "../../Rendering/TextureBuffer.js";
 import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 import URLs              from "../Networking/URLs.js";
-import Diffuse2FS        from "./Diffuse2.fs.js";
+import Filter2FS         from "./Filter2.fs.js";
 
 const
    _maxLights                = Symbol (),
@@ -95,7 +95,7 @@ Object .assign (X3DLightingContext .prototype,
    },
    getEnvironmentTextureShader ()
    {
-      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Diffuse2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
+      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
    },
 });
 

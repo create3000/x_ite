@@ -100,6 +100,39 @@ Lambertian (const in vec2 xi, const in float roughness)
    return lambertian;
 }
 
+// NDF
+float
+D_Charlie (in float sheenRoughness, const in float NdotH)
+{
+    sheenRoughness = max (sheenRoughness, 0.000001); //clamp (0,1]
+
+    float invR  = 1.0 / sheenRoughness;
+    float cos2h = NdotH * NdotH;
+    float sin2h = 1.0 - cos2h;
+
+    return (2.0 + invR) * pow (sin2h, invR * 0.5) / (2.0 * M_PI);
+}
+
+MicrofacetDistributionSample
+Charlie (const in vec2 xi, const in float roughness)
+{
+    MicrofacetDistributionSample charlie;
+
+    float alpha = roughness * roughness;
+
+    charlie .sinTheta = pow (xi .y, alpha / (2.0 * alpha + 1.0));
+    charlie .cosTheta = sqrt (1.0 - charlie .sinTheta * charlie .sinTheta);
+    charlie .phi      = 2.0 * M_PI * xi .x;
+
+    // evaluate Charlie pdf (for half vector)
+    charlie .pdf = D_Charlie (alpha, charlie .cosTheta);
+
+    // Apply the Jacobian to obtain a pdf that is parameterized by l
+    charlie .pdf /= 4.0;
+
+    return charlie;
+}
+
 // getImportanceSample returns an importance sample direction with pdf in the .w component
 vec4
 getImportanceSample (const in int sampleIndex, const in vec3 N, const in float roughness)
@@ -114,8 +147,15 @@ getImportanceSample (const in int sampleIndex, const in vec3 N, const in float r
    switch (x3d_DistributionEXT)
    {
       case X3D_LAMBERTIAN:
+      {
          importanceSample = Lambertian (xi, roughness);
          break;
+      }
+      case X3D_CHARLIE:
+      {
+         importanceSample = Charlie (xi, roughness);
+         break;
+      }
    }
 
    // transform the hemisphere sample to the normal coordinate frame
@@ -193,6 +233,30 @@ filterColor (const in vec3 N)
             // lambertian /= UX3D_MATH_PI; // convert irradiance to radiance https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
 
             color += lambertian;
+            break;
+         }
+         case X3D_GGX:
+         case X3D_CHARLIE:
+         {
+            // Note: reflect takes incident vector.
+            vec3  V     = N;
+            vec3  L     = normalize (reflect (-V, H));
+            float NdotL = dot (N, L);
+
+            if (NdotL > 0.0)
+            {
+               if (x3d_RoughnessEXT == 0.0)
+               {
+                  // without this the roughness=0 lod is too high
+                  lod = x3d_LodBiasEXT;
+               }
+
+               vec3 sampleColor = textureLod (x3d_TextureEXT, L, lod) .rgb;
+
+               color  += sampleColor * NdotL;
+               weight += NdotL;
+            }
+
             break;
          }
       }
