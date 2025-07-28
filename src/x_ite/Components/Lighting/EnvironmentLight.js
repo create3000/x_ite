@@ -151,8 +151,6 @@ function EnvironmentLight (executionContext)
    X3DLightNode .call (this, executionContext);
 
    this .addType (X3DConstants .EnvironmentLight);
-
-   this .addChildObjects (X3DConstants .outputOnly, "generateTextures", new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNode .prototype),
@@ -167,7 +165,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this ._diffuseCoefficients .addInterest ("requestGenerateTextures", this);
       this ._diffuseTexture      .addInterest ("set_diffuseTexture__",    this);
       this ._specularTexture     .addInterest ("set_specularTexture__",   this);
-      this ._generateTextures    .addInterest ("generateTextures",        this);
 
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
@@ -178,7 +175,18 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    getDiffuseTexture ()
    {
-      return this .diffuseTexture ?? this .generatedDiffuseTexture;
+      return this .diffuseTexture ?? (this .generatedDiffuseTexture ??= (() =>
+      {
+         if (!this .specularTexture)
+            return;
+
+         // Render the texture.
+
+         if (this .getBrowser () .getBrowserOption ("Debug"))
+            console .info ("Generating diffuse texture for EnvironmentLight.");
+
+         return this .filterTexture (this .specularTexture, "GeneratedDiffuseTexture", 0);
+      })());
    },
    getSpecularTexture ()
    {
@@ -221,26 +229,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    requestGenerateTextures ()
    {
-      this .generatedSheenTexture = null;
-
-      this ._generateTextures .addEvent ();
-   },
-   generateTextures ()
-   {
       this .generatedDiffuseTexture = null;
-
-      if (this .diffuseTexture)
-         return;
-
-      if (!this .specularTexture)
-         return;
-
-      // Render the texture.
-
-      if (this .getBrowser () .getBrowserOption ("Debug"))
-         console .info ("Generating diffuse texture for EnvironmentLight.");
-
-      this .generatedDiffuseTexture = this .filterTexture (this .specularTexture, "GeneratedDiffuseTexture", 0);
+      this .generatedSheenTexture   = null;
    },
    filterTexture (texture, name, distribution)
    {
