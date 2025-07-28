@@ -200,7 +200,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             texture: this .specularTexture,
             distribution: LAMBERTIAN,
             sampleCount: 2048,
-            roughness: 0
+            roughness: 0,
          });
       })());
    },
@@ -227,7 +227,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             texture: this .specularTexture,
             distribution: CHARLIE,
             sampleCount: 64,
-            roughness: 1
+            roughness: 1,
          });
       })();
    },
