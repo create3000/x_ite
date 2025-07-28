@@ -10,6 +10,7 @@ const ibl_files = [
    "AttenuationTest",
    "BarramundiFish",
    "Bee",
+   "Bike",
    "BlackDragon",
    "Bonsai",
    "BoomBox",
