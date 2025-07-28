@@ -909,7 +909,7 @@ class SampleViewer
 
       const
          url         = new URL (`images/${image}`, import .meta .url),
-         specularURL = new X3D .MFString (`${url}-specular.avif`, `${url}-specular.jpg`);
+         specularURL = new X3D .MFString (`${url}.avif`, `${url}.jpg`);
 
       if (!environmentLight .specularTexture .url .equals (specularURL))
          environmentLight .specularTexture .url = specularURL;
