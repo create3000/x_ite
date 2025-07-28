@@ -1,5 +1,6 @@
 export default /* glsl */ `#version 300 es
-// https://github.com/KhronosGroup/glTF-IBL-Sampler/blob/main/lib/source/shaders/filter.frag
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/2ae24a17aa5f65604b8cdb9f5c8029f7b3347cf4/source/shaders/ibl_filtering.frag
+// https://github.com/KhronosGroup/glTF-Sample-Environments
 
 precision highp float;
 precision highp int;
