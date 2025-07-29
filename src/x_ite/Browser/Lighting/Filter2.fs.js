@@ -260,6 +260,9 @@ computeLod (const in float pdf)
 vec3
 filterColor (const in vec3 N)
 {
+   // DEBUG:
+   // return textureLod (x3d_TextureEXT, N, 0.0) .rgb;
+
    vec3  color  = vec3 (0.0);
    float weight = 0.0;
 
@@ -323,9 +326,6 @@ filterColor (const in vec3 N)
          }
       }
    }
-
-   // DEBUG:
-   // return textureLod (x3d_TextureEXT, N, 0.0) .rgb;
 
    if(weight != 0.0f)
       color /= weight;
