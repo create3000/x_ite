@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this .specularTexture ?.removeInterest ("requestGenerateTextures", this);
 
       this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture)
-         ?? await this .getBrowser () .getDefaultSpecularTexture ();
+         ?? await this .getBrowser () .getLibraryCubeTexture ("helipad.avif");
 
       this .specularTexture ?.addInterest ("requestGenerateTextures", this);
 

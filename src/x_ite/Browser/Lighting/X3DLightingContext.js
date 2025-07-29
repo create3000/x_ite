@@ -31,16 +31,15 @@ Object .assign (X3DLightingContext .prototype,
    {
       return this [_maxLights];
    },
-   async getDefaultSpecularTexture ()
-   {
-      await this .loadComponents ("CubeMapTexturing");
-
-      return this [_textures] .get ("helipad.avif")
-         ?? this .createLibraryTexture ("helipad.avif", "ImageCubeMapTexture");
-   },
    getLibraryTexture (name)
    {
       return this [_textures] .get (name) ?? this .createLibraryTexture (name);
+   },
+   async getLibraryCubeTexture (name)
+   {
+      await this .loadComponents ("CubeMapTexturing");
+
+      return this [_textures] .get (name) ?? this .createLibraryTexture (name, "ImageCubeMapTexture");
    },
    createLibraryTexture (name, typeName = "ImageTexture")
    {
