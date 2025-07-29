@@ -928,15 +928,8 @@ class SampleViewer
       await this .browser .loadComponents (this .scene);
 
       const
-         environmentLight  = this .scene .createNode ("EnvironmentLight"),
-         specularTexture   = this .scene .createNode ("ImageCubeMapTexture"),
-         textureProperties = this .scene .createNode ("TextureProperties");
-
-      textureProperties .generateMipMaps     = true;
-      textureProperties .minificationFilter  = "NICEST";
-      textureProperties .magnificationFilter = "NICEST";
-
-      specularTexture .textureProperties = textureProperties;
+         environmentLight = this .scene .createNode ("EnvironmentLight"),
+         specularTexture  = this .scene .createNode ("ImageCubeMapTexture");
 
       environmentLight .intensity       = 1;
       environmentLight .color           = new X3D .SFColor (1, 1, 1);

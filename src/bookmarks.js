@@ -344,15 +344,9 @@ Object .assign (Bookmarks .prototype,
          components        = ["CubeMapTexturing", "Lighting", "Texturing"] .map (name => browser .getComponent (name)),
          scene             = await browser .createScene (profile, ... components),
          environmentLight  = scene .createNode ("EnvironmentLight"),
-         specularTexture   = scene .createNode ("ImageCubeMapTexture"),
-         textureProperties = scene .createNode ("TextureProperties");
+         specularTexture   = scene .createNode ("ImageCubeMapTexture");
 
-      textureProperties .generateMipMaps     = true;
-      textureProperties .minificationFilter  = "NICEST";
-      textureProperties .magnificationFilter = "NICEST";
-
-      specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
-      specularTexture .textureProperties = textureProperties;
+      specularTexture .url = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
 
       environmentLight .intensity       = 1;
       environmentLight .color           = new X3D .SFColor (1,1,1);
