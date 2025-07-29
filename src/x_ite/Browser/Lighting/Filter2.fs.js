@@ -1,3 +1,5 @@
+import Distribution from "./Distribution.js";
+
 export default /* glsl */ `#version 300 es
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/2ae24a17aa5f65604b8cdb9f5c8029f7b3347cf4/source/shaders/ibl_filtering.frag
 // https://github.com/KhronosGroup/glTF-Sample-Environments
@@ -6,9 +8,7 @@ precision highp float;
 precision highp int;
 precision highp samplerCube;
 
-#define X3D_LAMBERTIAN 0
-#define X3D_GGX        1
-#define X3D_CHARLIE    2
+${Object .entries (Distribution) .map (([name, value]) => `#define X3D_${name} ${value}`) .join ("\n")}
 
 const float M_PI = 3.1415926535897932384626433832795;
 

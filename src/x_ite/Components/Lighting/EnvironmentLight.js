@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DLightNode         from "./X3DLightNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import Distribution         from "../../Browser/Lighting/Distribution.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
@@ -15,11 +16,6 @@ import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
  */
 
 const EnvironmentLights = ObjectCache (EnvironmentLightContainer);
-
-const
-   LAMBERTIAN = 0,
-   GGX        = 1,
-   CHARLIE    = 2;
 
 function EnvironmentLightContainer ()
 {
@@ -198,7 +194,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          return browser .filterEnvironmentTexture ({
             name: "GeneratedDiffuseTexture",
             texture: this .specularTexture,
-            distribution: LAMBERTIAN,
+            distribution: Distribution .LAMBERTIAN,
             sampleCount: 2048,
             roughness: [0],
          });
@@ -225,7 +221,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSpecularTexture",
             texture: this .specularTexture,
-            distribution: GGX,
+            distribution: Distribution .GGX,
             sampleCount: 1024,
             roughness,
          });
@@ -252,7 +248,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSheenTexture",
             texture: this .specularTexture,
-            distribution: CHARLIE,
+            distribution: Distribution .CHARLIE,
             sampleCount: 64,
             roughness: roughness,
          });
