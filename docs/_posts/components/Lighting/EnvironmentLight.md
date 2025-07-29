@@ -104,12 +104,12 @@ Input/Output field *rotation*.
 ### MFFloat [in, out] **diffuseCoefficients** [ ]
 {: #fields-diffuseCoefficients }
 
-Input/Output field *diffuseCoefficients*.
+Input/Output field *diffuseCoefficients*. Coefficients used during generation of diffuse texture from specular texture.
 
 ### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 {: #fields-diffuseTexture }
 
-Input/Output field *diffuseTexture*.
+Input/Output field *diffuseTexture*. If `NULL` the texture is generated from specular texture.
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 {: #fields-specularTexture }

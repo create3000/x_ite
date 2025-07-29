@@ -1,5 +1,5 @@
-/* X_ITE v11.6.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
+/* X_ITE v11.6.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1511,7 +1511,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
    {
       const
          numPlanes = this .getNumPlanes (quality),
-         size      = this ._dimensions .getValue () .magnitude (),
+         size      = this ._dimensions .getValue () .norm (),
          size1_2   = size / 2,
          points    = [ ];
 

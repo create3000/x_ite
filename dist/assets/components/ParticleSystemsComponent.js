@@ -1,5 +1,5 @@
-/* X_ITE v11.6.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
+/* X_ITE v11.6.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2662,7 +2662,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
             vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
             vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-            polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .magnitude ();
+            polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .norm ();
          }
 
          polylinesArray .set (vertices, verticesIndex * 4);

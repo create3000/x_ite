@@ -136,7 +136,7 @@ Object .assign (SpotLightContainer .prototype,
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
+            ? this .textureUnit ??= this .browser .popTextureUnit ()
             : this .browser .getTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);

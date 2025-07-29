@@ -191,6 +191,7 @@ const X_ITE_TESTS = [
    { path: "Lighting/DirectionalLight.x3d" },
    { path: "Lighting/EnvCubes.x3d" },
    { path: "Lighting/EnvironmentLight.x3d" },
+   { path: "Lighting/GeneratedDiffuseTexture.x3d" },
    { path: "Lighting/LightScale.x3d" },
    { path: "Lighting/LocalLight.x3d" },
    { path: "Lighting/LocalLightScale.x3d" },

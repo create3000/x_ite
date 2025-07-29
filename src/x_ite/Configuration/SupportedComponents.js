@@ -2,12 +2,12 @@ import ComponentInfoArray from "./ComponentInfoArray.js";
 
 const SupportedComponents = new ComponentInfoArray ([ ]);
 
-SupportedComponents .add ("Annotation",
-{
-   title: "Annotation",
-   level: 2,
-   external: true,
-});
+// SupportedComponents .add ("Annotation",
+// {
+//    title: "Annotation",
+//    level: 2,
+//    external: true,
+// });
 
 SupportedComponents .add ("CADGeometry",
 {

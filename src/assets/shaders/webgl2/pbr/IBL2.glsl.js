@@ -45,16 +45,14 @@ getSpecularLight (const in vec3 reflection, const in float lod)
 vec3
 getSheenLight (const in vec3 reflection, const in float lod)
 {
-   // TODO: use sheenTexture.
-
    vec3 texCoord     = x3d_EnvironmentLightSource .rotation * reflection * vec3 (-1.0, 1.0, 1.0);
-   vec3 textureColor = textureLod (x3d_EnvironmentLightSource .diffuseTexture, texCoord, lod) .rgb;
+   vec3 textureColor = textureLod (x3d_EnvironmentLightSource .sheenTexture, texCoord, lod) .rgb;
 
    #if defined (X3D_COLORSPACE_SRGB)
-      if (x3d_EnvironmentLightSource .diffuseTextureLinear)
+      if (x3d_EnvironmentLightSource .sheenTextureLinear)
          textureColor = linearToSRGB (textureColor);
    #else
-      if (!x3d_EnvironmentLightSource .diffuseTextureLinear)
+      if (!x3d_EnvironmentLightSource .sheenTextureLinear)
          textureColor = sRGBToLinear (textureColor);
    #endif
 
@@ -190,10 +188,8 @@ getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float rough
 vec3
 getIBLRadianceCharlie (const in vec3 n, const in vec3 v, const in float sheenRoughness, const in vec3 sheenColor)
 {
-   // TODO: use sheenTexture.
-
    float NdotV           = clamp (dot (n, v), 0.0, 1.0);
-   float lod             = sheenRoughness * float (x3d_EnvironmentLightSource .diffuseTextureLevels);
+   float lod             = sheenRoughness * float (x3d_EnvironmentLightSource .sheenTextureLevels);
    vec3  reflection      = normalize (reflect (-v, n));
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, sheenRoughness), vec2 (0.0), vec2 (1.0));
    float brdf            = texture (x3d_EnvironmentLightSource .CharlieLUTTexture, brdfSamplePoint) .b;

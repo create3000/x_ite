@@ -279,6 +279,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          const component = this .getBrowser () .getComponent (componentNameIdCharacters, parseInt (componentSupportLevel));
 
+         if (this .getScene () .hasComponent (component))
+            return;
+
          this .getScene () .updateComponent (component);
       }
       catch (error)

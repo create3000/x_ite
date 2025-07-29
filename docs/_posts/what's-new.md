@@ -21,6 +21,7 @@ See also: [MovieTexture supported file formats](/x_ite/components/texturing/movi
 ### Notable Changes
 
 * This series drops support for WebGL 1, because all known browsers support WebGL 2 now for quite a while.
+* [EnvironmentLight](/x_ite/components/lighting/environmentlight/) can now generate a diffuse texture from specular if *diffuseTexture* field is empty.
 
 ## X_ITE v11.5 Series
 
