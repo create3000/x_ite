@@ -31,15 +31,22 @@ Object .assign (X3DLightingContext .prototype,
    {
       return this [_maxLights];
    },
+   async getDefaultSpecularTexture ()
+   {
+      await this .loadComponents ("CubeMapTexturing");
+
+      return this [_textures] .get ("helipad.avif")
+         ?? this .createLibraryTexture ("helipad.avif", "ImageCubeMapTexture");
+   },
    getLibraryTexture (name)
    {
       return this [_textures] .get (name) ?? this .createLibraryTexture (name);
    },
-   createLibraryTexture (name)
+   createLibraryTexture (name, typeName = "ImageTexture")
    {
       const
-         texture           = new ImageTexture (this .getPrivateScene ()),
-         textureProperties = new TextureProperties (this .getPrivateScene ());
+         texture           = this .getPrivateScene () .createNode (typeName, false),
+         textureProperties = this .getPrivateScene () .createNode ("TextureProperties", false);
 
       textureProperties ._generateMipMaps     = false;
       textureProperties ._minificationFilter  = "AVG_PIXEL";
@@ -97,7 +104,7 @@ Object .assign (X3DLightingContext .prototype,
    {
       return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_TextureLinearEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
    },
-   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness })
+   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness, intensity = 1 })
    {
       // Render the texture.
 
@@ -153,7 +160,7 @@ Object .assign (X3DLightingContext .prototype,
       gl .uniform1i (shaderNode .x3d_DistributionEXT, distribution);
       gl .uniform1i (shaderNode .x3d_SampleCountEXT, sampleCount);
       gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
-      gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
+      gl .uniform1f (shaderNode .x3d_IntensityEXT, intensity);
 
       for (const [level, r] of roughness .entries ())
       {

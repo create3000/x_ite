@@ -264,11 +264,12 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
       this .requestGenerateTextures ();
    },
-   set_specularTexture__ ()
+   async set_specularTexture__ ()
    {
       this .specularTexture ?.removeInterest ("requestGenerateTextures", this);
 
-      this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
+      this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture)
+         ?? await this .getBrowser () .getDefaultSpecularTexture ();
 
       this .specularTexture ?.addInterest ("requestGenerateTextures", this);
 
