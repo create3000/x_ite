@@ -216,7 +216,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
          const
             levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .pow (i / (levels || 1), 2));
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
 
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSpecularTexture",
@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
          const
             levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .max (Math .pow (i / (levels || 1), 2), 0.000001));
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
 
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSheenTexture",
