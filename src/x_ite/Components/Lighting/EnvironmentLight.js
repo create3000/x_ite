@@ -200,13 +200,36 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             texture: this .specularTexture,
             distribution: LAMBERTIAN,
             sampleCount: 2048,
-            roughness: 0,
+            roughness: [0],
          });
       })());
    },
    getSpecularTexture ()
    {
-      return this .specularTexture;
+      return this .generatedSpecularTexture ??= (() =>
+      {
+         if (!this .specularTexture)
+            return;
+
+         // Render the texture.
+
+         const browser = this .getBrowser ();
+
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+            console .info ("Generating specular texture for EnvironmentLight.");
+
+         const
+            levels    = this .specularTexture .getLevels (),
+            roughness = levels ? Array .from ({ length: levels + 1 }, (_, i) => Math .pow (i / levels, 2)) : [0];
+
+         return browser .filterEnvironmentTexture ({
+            name: "GeneratedSpecularTexture",
+            texture: this .specularTexture,
+            distribution: GGX,
+            sampleCount: 1024,
+            roughness,
+         });
+      })();
    },
    getSheenTexture ()
    {
@@ -222,12 +245,16 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
             console .info ("Generating sheen texture for EnvironmentLight.");
 
+         const
+            levels    = this .specularTexture .getLevels (),
+            roughness = levels ? Array .from ({ length: levels + 1 }, (_, i) => Math .max (Math .pow (i / levels, 2), 0.000001)) : [1];
+
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSheenTexture",
             texture: this .specularTexture,
             distribution: CHARLIE,
             sampleCount: 64,
-            roughness: 1,
+            roughness: roughness,
          });
       })();
    },
@@ -253,8 +280,9 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    requestGenerateTextures ()
    {
-      this .generatedDiffuseTexture = null;
-      this .generatedSheenTexture   = null;
+      this .generatedDiffuseTexture  = null;
+      this .generatedSpecularTexture = null;
+      this .generatedSheenTexture    = null;
    },
 });
 

@@ -100,6 +100,51 @@ Lambertian (const in vec2 xi, const in float roughness)
    return lambertian;
 }
 
+float
+saturate (const in float v)
+{
+   return clamp (v, 0.0, 1.0);
+}
+
+float
+D_GGX (const in float NdotH, const in float roughness)
+{
+   float a = NdotH * roughness;
+   float k = roughness / (1.0 - NdotH * NdotH + a * a);
+
+   return k * k * (1.0 / M_PI);
+}
+
+// GGX microfacet distribution
+// https://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.html
+// This implementation is based on https://bruop.github.io/ibl/,
+//  https://www.tobias-franke.eu/log/2014/03/30/notes_on_importance_sampling.html
+// and https://developer.nvidia.com/gpugems/GPUGems3/gpugems3_ch20.html
+MicrofacetDistributionSample
+GGX (const in vec2 xi, const in float roughness)
+{
+   MicrofacetDistributionSample ggx;
+
+   // evaluate sampling equations
+   float alpha = roughness * roughness;
+
+   ggx .cosTheta = saturate (sqrt ((1.0 - xi .y) / (1.0 + (alpha * alpha - 1.0) * xi .y)));
+   ggx .sinTheta = sqrt (1.0 - ggx .cosTheta * ggx .cosTheta);
+   ggx .phi      = 2.0 * M_PI * xi .x;
+
+   // evaluate GGX pdf (for half vector)
+   ggx.pdf = D_GGX (ggx .cosTheta, alpha);
+
+   // Apply the Jacobian to obtain a pdf that is parameterized by l
+   // see https://bruop.github.io/ibl/
+   // Typically you'd have the following:
+   // float pdf = D_GGX(NoH, roughness) * NoH / (4.0 * VoH);
+   // but since V = N => VoH == NoH
+   ggx .pdf /= 4.0;
+
+   return ggx;
+}
+
 // NDF
 float
 D_Charlie (in float sheenRoughness, const in float NdotH)
@@ -149,6 +194,13 @@ getImportanceSample (const in int sampleIndex, const in vec3 N, const in float r
       case X3D_LAMBERTIAN:
       {
          importanceSample = Lambertian (xi, roughness);
+         break;
+      }
+      case X3D_GGX:
+      {
+         // Trowbridge-Reitz / GGX microfacet model (Walter et al)
+         // https://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.html
+         importanceSample = GGX (xi, roughness);
          break;
       }
       case X3D_CHARLIE:
