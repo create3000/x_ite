@@ -1,8 +1,6 @@
-import TextureBuffer     from "../../Rendering/TextureBuffer.js";
-import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
-import TextureProperties from "../../Components/Texturing/TextureProperties.js";
-import URLs              from "../Networking/URLs.js";
-import Filter2FS         from "./Filter2.fs.js";
+import TextureBuffer from "../../Rendering/TextureBuffer.js";
+import URLs          from "../Networking/URLs.js";
+import Filter2FS     from "./Filter2.fs.js";
 
 const
    _maxLights                = Symbol (),
