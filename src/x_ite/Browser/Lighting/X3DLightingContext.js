@@ -104,7 +104,7 @@ Object .assign (X3DLightingContext .prototype,
    {
       return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_TextureLinearEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
    },
-   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness, intensity = 1 })
+   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness })
    {
       // Render the texture.
 
@@ -160,7 +160,7 @@ Object .assign (X3DLightingContext .prototype,
       gl .uniform1i (shaderNode .x3d_DistributionEXT, distribution);
       gl .uniform1i (shaderNode .x3d_SampleCountEXT, sampleCount);
       gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
-      gl .uniform1f (shaderNode .x3d_IntensityEXT, intensity);
+      gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
 
       for (const [level, r] of roughness .entries ())
       {
