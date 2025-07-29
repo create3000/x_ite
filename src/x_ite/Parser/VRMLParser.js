@@ -385,7 +385,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       let component;
 
       while (component = this .componentStatement ())
+      {
+         if (this .getScene () .hasComponent (component))
+            continue;
+
          this .getScene () .updateComponent (component);
+      }
    },
    componentStatement ()
    {

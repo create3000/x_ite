@@ -1,5 +1,5 @@
-/* X_ITE v11.6.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
+/* X_ITE v11.6.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -661,7 +661,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
                                  b .assign (intersection .point) .subtract (point2);
 
                                  const
-                                    c = a .add (b) .magnitude (),
+                                    c = a .add (b) .norm (),
                                     s = point1 .distance (point2);
 
                                  if (c <= s)

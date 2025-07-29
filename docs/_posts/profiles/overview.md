@@ -51,7 +51,7 @@ Full
 - [EventUtilities](/x_ite/components/overview/#eventutilities) : **1**
 - [Followers](/x_ite/components/overview/#followers) : **1**
 - [Geometry2D](/x_ite/components/overview/#geometry2d) : **2**
-- [Geometry3D](/x_ite/components/overview/#geometry3d) : **3**
+- [Geometry3D](/x_ite/components/overview/#geometry3d) : **4**
 - [Geospatial](/x_ite/components/overview/#geospatial) : **2**
 - [Grouping](/x_ite/components/overview/#grouping) : **3**
 - [HAnim](/x_ite/components/overview/#hanim) : **3**
@@ -89,7 +89,7 @@ Immersive
 - [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) : **2**
 - [EventUtilities](/x_ite/components/overview/#eventutilities) : **1**
 - [Geometry2D](/x_ite/components/overview/#geometry2d) : **2**
-- [Geometry3D](/x_ite/components/overview/#geometry3d) : **3**
+- [Geometry3D](/x_ite/components/overview/#geometry3d) : **4**
 - [Grouping](/x_ite/components/overview/#grouping) : **2**
 - [Interpolation](/x_ite/components/overview/#interpolation) : **2**
 - [KeyDeviceSensor](/x_ite/components/overview/#keydevicesensor) : **2**
@@ -134,7 +134,7 @@ Interchange
 
 - [Core](/x_ite/components/overview/#core) : **1**
 - [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
-- [Geometry3D](/x_ite/components/overview/#geometry3d) : **3**
+- [Geometry3D](/x_ite/components/overview/#geometry3d) : **2**
 - [Grouping](/x_ite/components/overview/#grouping) : **1**
 - [Interpolation](/x_ite/components/overview/#interpolation) : **2**
 - [Lighting](/x_ite/components/overview/#lighting) : **1**

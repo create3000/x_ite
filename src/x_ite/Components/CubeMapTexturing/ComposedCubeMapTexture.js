@@ -160,10 +160,12 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .setMipMaps (textureNodes .every (textureNode => textureNode .canMipMaps ()));
          this .updateTextureParameters ();
+         this .addNodeEvent ();
       }
       else
       {
          this .clearTexture ();
+         this .addNodeEvent ();
       }
    },
 });

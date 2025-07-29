@@ -1,5 +1,5 @@
-/* X_ITE v11.6.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.1")];
+/* X_ITE v11.6.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -79,7 +79,7 @@ const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Browser/CubeMapTexturing/Panorama2.fs.js
 const __default__ = /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;const float M_PI=3.1415926535897932384626433832795;in vec2 texCoord;out vec4 x3d_FragColor;uniform sampler2D x3d_PanoramaTexture;uniform int x3d_CurrentFace;vec3 uvToXYZ(const in int face,const in vec2 uv){switch(face){case 0:return vec3(1.,uv.y,uv.x);case 1:return vec3(-1.,uv.y,-uv.x);case 2:return vec3(uv.x,uv.y,-1.);case 3:return vec3(-uv.x,uv.y,1.);case 4:return vec3(uv.y,-1.,uv.x);default:return vec3(-uv.y,1.,uv.x);}}vec2 dirToUV(const in vec3 dir){return vec2(.5+.5*atan(dir.z,dir.x)/M_PI,1.-acos(dir.y)/M_PI);}vec3 panoramaToCubeMap(const in int face,const in vec2 texCoord){vec3 scan=uvToXYZ(face,texCoord);vec3 direction=normalize(scan);vec2 src=dirToUV(direction);return texture(x3d_PanoramaTexture,src).rgb;}void main(){x3d_FragColor=vec4(panoramaToCubeMap(x3d_CurrentFace,texCoord),1.);}`
+precision highp float;precision highp int;precision highp sampler2D;const float M_PI=3.1415926535897932384626433832795;in vec2 texCoord;out vec4 x3d_FragColor;uniform sampler2D x3d_PanoramaTextureEXT;uniform int x3d_CurrentFaceEXT;vec3 uvToXYZ(const in int face,const in vec2 uv){switch(face){case 0:return vec3(1.,uv.y,uv.x);case 1:return vec3(-1.,uv.y,-uv.x);case 2:return vec3(uv.x,uv.y,-1.);case 3:return vec3(-uv.x,uv.y,1.);case 4:return vec3(uv.y,-1.,uv.x);default:return vec3(-uv.y,1.,uv.x);}}vec2 dirToUV(const in vec3 dir){return vec2(.5+.5*atan(dir.z,dir.x)/M_PI,1.-acos(dir.y)/M_PI);}vec3 panoramaToCubeMap(const in int face,const in vec2 texCoord){vec3 scan=uvToXYZ(face,texCoord);vec3 direction=normalize(scan);vec2 src=dirToUV(direction);return texture(x3d_PanoramaTextureEXT,src).rgb;}void main(){x3d_FragColor=vec4(panoramaToCubeMap(x3d_CurrentFaceEXT,texCoord),1.);}`
 ;
 
 /* harmony default export */ const Panorama2_fs = (external_X_ITE_X3D_Namespace_default().add ("Panorama2.fs", __default__));
@@ -94,7 +94,7 @@ Object .assign (X3DCubeMapTexturingContext .prototype,
 {
    getPanoramaShader ()
    {
-      return this [_panoramaShader] ??= this .createShader ("Panorama", "FullScreen", `data:x-shader/x-fragment,${Panorama2_fs}`, [ ], ["x3d_PanoramaTexture", "x3d_CurrentFace"]);
+      return this [_panoramaShader] ??= this .createShader ("Panorama", "FullScreen", `data:x-shader/x-fragment,${Panorama2_fs}`, [ ], ["x3d_PanoramaTextureEXT", "x3d_CurrentFaceEXT"]);
    },
 });
 
@@ -396,10 +396,12 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .setMipMaps (textureNodes .every (textureNode => textureNode .canMipMaps ()));
          this .updateTextureParameters ();
+         this .addNodeEvent ();
       }
       else
       {
          this .clearTexture ();
+         this .addNodeEvent ();
       }
    },
 });
@@ -607,6 +609,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    initialize ()
    {
       CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
+
+      // Upload default data.
+
+      this .clearTexture ();
+
+      // Initialize.
 
       this ._size .addInterest ("set_size__", this);
 
@@ -831,8 +839,6 @@ var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(
 
 
 
-const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
 function ImageCubeMapTexture (executionContext)
 {
    CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
@@ -854,12 +860,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       // Upload default data.
 
-      const gl = this .getBrowser () .getContext ();
-
-      gl .bindTexture (this .getTarget (), this .getTexture ());
-
-      for (let i = 0; i < 6; ++ i)
-         gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      this .clearTexture ();
 
       // Initialize.
 
@@ -885,6 +886,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       {
          this .clearTexture ();
          this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
+         this .addNodeEvent ();
          return;
       }
 
@@ -942,6 +944,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          this .updateTextureParameters ();
 
          this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {
@@ -977,6 +980,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          // Update load state.
 
          this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {
@@ -1097,7 +1101,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
-      gl .uniform1i (shaderNode .x3d_PanoramaTexture, textureUnit);
+      gl .uniform1i (shaderNode .x3d_PanoramaTextureEXT, textureUnit);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .viewport (0, 0, size, size);
@@ -1114,7 +1118,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       {
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, this .getTargets () [i], this .getTexture (), 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
-         gl .uniform1i (shaderNode .x3d_CurrentFace, i);
+         gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
          if (!transparent)
