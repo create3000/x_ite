@@ -188,11 +188,14 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          if (!this .specularTexture)
             return;
 
+         if (this .specularTexture .getSize () <= 1)
+            return;
+
          // Render the texture.
 
          const browser = this .getBrowser ();
 
-         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+         if (browser .getBrowserOption ("Debug"))
             console .info ("Generating diffuse texture for EnvironmentLight.");
 
          return browser .filterEnvironmentTexture ({
@@ -215,11 +218,14 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          if (!this .specularTexture)
             return;
 
+         if (this .specularTexture .getSize () <= 1)
+            return;
+
          // Render the texture.
 
          const browser = this .getBrowser ();
 
-         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+         if (browser .getBrowserOption ("Debug"))
             console .info ("Generating sheen texture for EnvironmentLight.");
 
          return browser .filterEnvironmentTexture ({
