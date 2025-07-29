@@ -1,3 +1,4 @@
+import ToneMapping2 from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
 import Distribution from "./Distribution.js";
 
 export default /* glsl */ `#version 300 es
@@ -8,12 +9,15 @@ precision highp float;
 precision highp int;
 precision highp samplerCube;
 
+${ToneMapping2 ()}
+
 ${Object .entries (Distribution) .map (([name, value]) => `#define X3D_${name} ${value}`) .join ("\n")}
 
 const float M_PI = 3.1415926535897932384626433832795;
 
 uniform samplerCube x3d_TextureEXT;
 uniform int         x3d_TextureSizeEXT;
+uniform bool        x3d_TextureLinearEXT;
 uniform int         x3d_CurrentFaceEXT;
 uniform int         x3d_DistributionEXT;
 uniform int         x3d_SampleCountEXT;
@@ -279,6 +283,9 @@ filterColor (const in vec3 N)
             // sample lambertian at a lower resolution to avoid fireflies
             vec3 lambertian = textureLod (x3d_TextureEXT, H, lod) .rgb;
 
+            if (!x3d_TextureLinearEXT)
+               lambertian = sRGBToLinear (lambertian);
+
             //// the below operations cancel each other out
             // lambertian *= NdotH; // lamberts law
             // lambertian /= pdf; // invert bias from importance sampling
@@ -304,6 +311,9 @@ filterColor (const in vec3 N)
                }
 
                vec3 sampleColor = textureLod (x3d_TextureEXT, L, lod) .rgb;
+
+               if (!x3d_TextureLinearEXT)
+                  sampleColor = sRGBToLinear (sampleColor);
 
                color  += sampleColor * NdotL;
                weight += NdotL;

@@ -95,7 +95,7 @@ Object .assign (X3DLightingContext .prototype,
    },
    getEnvironmentTextureShader ()
    {
-      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
+      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_TextureLinearEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
    },
    filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness })
    {
@@ -115,6 +115,7 @@ Object .assign (X3DLightingContext .prototype,
       filtered .setPrivate (true);
       filtered .setup ();
       filtered .setSize (size);
+      filtered .setLinear (true);
 
       // Resize texture.
 
@@ -147,6 +148,8 @@ Object .assign (X3DLightingContext .prototype,
       gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, texture .getTexture ());
       gl .uniform1i (shaderNode .x3d_TextureEXT, specularTextureUnit);
+      gl .uniform1i (shaderNode .x3d_TextureSizeEXT, size);
+      gl .uniform1i (shaderNode .x3d_TextureLinearEXT, texture .isLinear ());
       gl .uniform1i (shaderNode .x3d_DistributionEXT, distribution);
       gl .uniform1i (shaderNode .x3d_SampleCountEXT, sampleCount);
       gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
@@ -160,7 +163,6 @@ Object .assign (X3DLightingContext .prototype,
 
          // Setup mip level uniforms.
 
-         gl .uniform1i (shaderNode .x3d_TextureSizeEXT, mipSize);
          gl .uniform1f (shaderNode .x3d_RoughnessEXT, r);
 
          // Generate images.
