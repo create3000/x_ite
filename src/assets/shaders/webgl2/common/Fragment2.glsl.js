@@ -71,7 +71,8 @@ in vec3 vertex;
    out vec4 x3d_FragColor;
 #endif
 
-// There is a bug with Mali GPU when gl_FrontFacing is accessed often or in a deep nested function.
+// There is a bug with Mali GPU when gl_FrontFacing is accessed often or in a deep nested function,
+// but assigning it to a global variable in a top level function fixes this issue.
 bool frontFacing;
 
 #pragma X3D include "../pbr/ToneMapping.glsl"
