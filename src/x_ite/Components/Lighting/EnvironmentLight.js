@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DLightNode         from "./X3DLightNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import Distribution         from "../../Browser/Lighting/Distribution.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
@@ -15,11 +16,6 @@ import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
  */
 
 const EnvironmentLights = ObjectCache (EnvironmentLightContainer);
-
-const
-   LAMBERTIAN = 0,
-   GGX        = 1,
-   CHARLIE    = 2;
 
 function EnvironmentLightContainer ()
 {
@@ -192,21 +188,44 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
          const browser = this .getBrowser ();
 
-         if (browser .getBrowserOption ("Debug"))
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
             console .info ("Generating diffuse texture for EnvironmentLight.");
 
          return browser .filterEnvironmentTexture ({
             name: "GeneratedDiffuseTexture",
             texture: this .specularTexture,
-            distribution: LAMBERTIAN,
+            distribution: Distribution .LAMBERTIAN,
             sampleCount: 2048,
-            roughness: 0,
+            roughness: [0],
          });
       })());
    },
    getSpecularTexture ()
    {
-      return this .specularTexture;
+      return this .generatedSpecularTexture ??= (() =>
+      {
+         if (!this .specularTexture)
+            return;
+
+         // Render the texture.
+
+         const browser = this .getBrowser ();
+
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+            console .info ("Generating specular texture for EnvironmentLight.");
+
+         const
+            levels    = this .specularTexture .getLevels (),
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+
+         return browser .filterEnvironmentTexture ({
+            name: "GeneratedSpecularTexture",
+            texture: this .specularTexture,
+            distribution: Distribution .GGX,
+            sampleCount: 1024,
+            roughness,
+         });
+      })();
    },
    getSheenTexture ()
    {
@@ -219,15 +238,19 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
          const browser = this .getBrowser ();
 
-         if (browser .getBrowserOption ("Debug"))
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
             console .info ("Generating sheen texture for EnvironmentLight.");
+
+         const
+            levels    = this .specularTexture .getLevels (),
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
 
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSheenTexture",
             texture: this .specularTexture,
-            distribution: CHARLIE,
+            distribution: Distribution .CHARLIE,
             sampleCount: 64,
-            roughness: 1,
+            roughness: roughness,
          });
       })();
    },
@@ -253,8 +276,9 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    requestGenerateTextures ()
    {
-      this .generatedDiffuseTexture = null;
-      this .generatedSheenTexture   = null;
+      this .generatedDiffuseTexture  = null;
+      this .generatedSpecularTexture = null;
+      this .generatedSheenTexture    = null;
    },
 });
 
