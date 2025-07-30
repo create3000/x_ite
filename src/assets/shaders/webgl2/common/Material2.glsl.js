@@ -28,7 +28,7 @@ getAmbientColor (const in vec3 diffuseColor)
 ${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "sRGB")}
 
 vec4
-getDiffuseColor (const in bool frontFacing)
+getDiffuseColor ()
 {
    // Get diffuse parameter.
 
@@ -45,7 +45,7 @@ getDiffuseColor (const in bool frontFacing)
    #if defined (X3D_DIFFUSE_TEXTURE)
       diffuseColor *= getDiffuseTexture ();
    #elif defined (X3D_TEXTURE)
-      diffuseColor = getTextureColor (diffuseColor, vec4 (x3d_Material .specularColor, alpha), frontFacing);
+      diffuseColor = getTextureColor (diffuseColor, vec4 (x3d_Material .specularColor, alpha));
    #endif
 
    return diffuseColor;
@@ -183,7 +183,7 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
 // Simulate Gouraud shading. Although this is a Phong shader, we use the same
 // calculations as a Gouraud shader would do.
 vec4
-getMaterialColor (const in bool frontFacing)
+getMaterialColor ()
 {
    // Calculate diffuseColor & alpha
 
@@ -202,7 +202,7 @@ getMaterialColor (const in bool frontFacing)
       float shininess     = getShininessFactor ();
       float normalScale   = x3d_Material .normalScale;
 
-      vec4 finalColor = vec4 (getMaterialColor (vertex, getNormalVector (normalScale, frontFacing), ambientColor, diffuseColor, specularColor, shininess), alpha);
+      vec4 finalColor = vec4 (getMaterialColor (vertex, getNormalVector (normalScale), ambientColor, diffuseColor, specularColor, shininess), alpha);
    #else
       vec4 finalColor = vec4 (vec3 (0.0), alpha);
    #endif
@@ -216,11 +216,11 @@ getMaterialColor (const in bool frontFacing)
    #if defined (X3D_DIFFUSE_TEXTURE)
       finalColor *= getDiffuseTexture ();
    #elif defined (X3D_TEXTURE)
-      finalColor = getTextureColor (finalColor, vec4 (x3d_Material .specularColor, alpha), frontFacing);
+      finalColor = getTextureColor (finalColor, vec4 (x3d_Material .specularColor, alpha));
    #endif
 
    #if defined (X3D_TEXTURE_PROJECTION)
-      diffuseColor *= getTextureProjectorColor (frontFacing);
+      diffuseColor *= getTextureProjectorColor ();
    #endif
 
    return finalColor;
@@ -229,16 +229,16 @@ getMaterialColor (const in bool frontFacing)
 
 #if defined (X3D_PHONG_MATERIAL)
 vec4
-getMaterialColor (const in bool frontFacing)
+getMaterialColor ()
 {
    // Calculate diffuseColor & alpha
 
-   vec4  diffuseColorAlpha = getDiffuseColor (frontFacing);
+   vec4  diffuseColorAlpha = getDiffuseColor ();
    float alpha             = diffuseColorAlpha .a;
    vec3  diffuseColor      = diffuseColorAlpha .rgb;
 
    #if defined (X3D_TEXTURE_PROJECTION)
-      diffuseColor *= getTextureProjectorColor (frontFacing);
+      diffuseColor *= getTextureProjectorColor ();
    #endif
 
    #if defined (X3D_LIGHTING)
@@ -247,7 +247,7 @@ getMaterialColor (const in bool frontFacing)
       float shininess     = getShininessFactor ();
       float normalScale   = x3d_Material .normalScale;
 
-      vec3 finalColor = getMaterialColor (vertex, getNormalVector (normalScale, frontFacing), ambientColor, diffuseColor, specularColor, shininess);
+      vec3 finalColor = getMaterialColor (vertex, getNormalVector (normalScale), ambientColor, diffuseColor, specularColor, shininess);
    #else
       vec3 finalColor = vec3 (0.0);
    #endif

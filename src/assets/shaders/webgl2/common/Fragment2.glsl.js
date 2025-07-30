@@ -71,6 +71,9 @@ in vec3 vertex;
    out vec4 x3d_FragColor;
 #endif
 
+// There is a bug with Mali GPU when gl_FrontFacing is accessed often or in a deep nested function.
+bool frontFacing;
+
 #pragma X3D include "../pbr/ToneMapping.glsl"
 #pragma X3D include "Texture.glsl"
 #pragma X3D include "Normal.glsl"
@@ -81,7 +84,7 @@ in vec3 vertex;
 #pragma X3D include "Fog.glsl"
 
 vec4
-getMaterialColor (const in bool frontFacing);
+getMaterialColor ();
 
 #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 // https://learnopengl.com/Guest-Articles/2020/OIT/Weighted-Blended
@@ -95,6 +98,8 @@ weight (const in float z, const in float a)
 void
 fragment_main ()
 {
+   frontFacing = gl_FrontFacing;
+
    #if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
       generateFlatNormals ();
    #endif
@@ -113,7 +118,7 @@ fragment_main ()
       setTexCoords ();
    #endif
 
-   vec4 finalColor = getMaterialColor (gl_FrontFacing);
+   vec4 finalColor = getMaterialColor ();
 
    #if defined (X3D_ALPHA_MODE_OPAQUE)
       finalColor .a = 1.0;

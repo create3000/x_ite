@@ -61,7 +61,7 @@ struct MaterialInfo
 ${MaterialTextures .texture ("x3d_BaseTexture", "rgba", "linear")}
 
 vec4
-getBaseColor (const in bool frontFacing)
+getBaseColor ()
 {
    // Get base parameter.
 
@@ -78,7 +78,7 @@ getBaseColor (const in bool frontFacing)
    #if defined (X3D_BASE_TEXTURE)
       baseColor *= getBaseTexture ();
    #elif defined (X3D_TEXTURE)
-      baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha), frontFacing);
+      baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
    #endif
 
    return baseColor;

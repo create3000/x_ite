@@ -37,10 +37,10 @@ uniform x3d_NormalTextureParameters x3d_NormalTexture;
 #endif
 
 NormalInfo
-getNormalInfo (const in float normalScale, const in bool frontFacing)
+getNormalInfo (const in float normalScale)
 {
    #if defined (X3D_NORMAL_TEXTURE)
-      vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping, gl_FrontFacing);
+      vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
 
       #if defined (X3D_NORMAL_TEXTURE_FLIP_Y)
          UV .t = 1.0 - UV .t;
@@ -124,9 +124,9 @@ getNormalInfo (const in float normalScale, const in bool frontFacing)
 
 #if defined (X3D_LIGHTING)
 vec3
-getNormalVector (const in float normalScale, const in bool frontFacing)
+getNormalVector (const in float normalScale)
 {
-   return getNormalInfo (normalScale, frontFacing) .n;
+   return getNormalInfo (normalScale) .n;
 }
 #endif
 `;

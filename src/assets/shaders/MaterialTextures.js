@@ -38,7 +38,7 @@ export default
       {
          // Get texture color.
 
-         vec3 texCoord = getTexCoord (${name}${EXT} .textureTransformMapping, ${name}${EXT} .textureCoordinateMapping, gl_FrontFacing);
+         vec3 texCoord = getTexCoord (${name}${EXT} .textureTransformMapping, ${name}${EXT} .textureCoordinateMapping);
 
          #if defined (${define}${_EXT}_FLIP_Y)
             texCoord .t = 1.0 - texCoord .t;
