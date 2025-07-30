@@ -116,6 +116,10 @@ Input/Output field *diffuseTexture*. If `NULL` the texture is generated from spe
 
 Input/Output field *specularTexture*.
 
+#### Hint
+
+- [glTF Sample Environments](https://github.com/KhronosGroup/glTF-Sample-Environments)
+
 ### SFBool [in, out] **shadows** FALSE
 {: #fields-shadows }
 
@@ -144,3 +148,4 @@ Size of the shadow map in pixels, must be power of two.
 ## See Also
 
 - [X3D Specification of EnvironmentLight Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#EnvironmentLight)
+- [glTF Sample Environments](https://github.com/KhronosGroup/glTF-Sample-Environments)
