@@ -22,22 +22,18 @@ setTexCoords ()
 uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
 
 vec4
-getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
+getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping, const in bool frontFacing)
 {
    int mode = textureCoordinateGenerator .mode;
 
    switch (mode)
    {
-      case x3d_None:
-      {
-         return x3d_TextureMatrix [textureTransformMapping] * texCoords [textureCoordinateMapping];
-      }
       case x3d_Sphere:
       {
          #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
             vec2 N = normalize (normal) .xy;
          #else
-            vec2 N = normalize (gl_FrontFacing ? normal : -normal) .xy;
+            vec2 N = normalize (frontFacing == true ? normal : -normal) .xy;
          #endif
 
          return vec4 (N * 0.5 + 0.5, 0.0, 1.0);
@@ -47,7 +43,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
          #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
             vec3 N = normalize (normal);
          #else
-            vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+            vec3 N = normalize (frontFacing == true ? normal : -normal);
          #endif
 
          return vec4 (N, 1.0);
@@ -61,7 +57,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
          #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
             vec3 N = normalize (normal);
          #else
-            vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+            vec3 N = normalize (frontFacing == true ? normal : -normal);
          #endif
 
          return vec4 (reflect (normalize (vertex), -N), 1.0);
@@ -71,7 +67,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
          #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
             vec2 N = normalize (localNormal) .xy;
          #else
-            vec2 N = normalize (gl_FrontFacing ? localNormal : -localNormal) .xy;
+            vec2 N = normalize (frontFacing == true ? localNormal : -localNormal) .xy;
          #endif
 
          return vec4 (N * 0.5 + 0.5, 0.0, 1.0);
@@ -103,7 +99,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
          #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
             vec3 N = normalize (normal);
          #else
-            vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+            vec3 N = normalize (frontFacing == true ? normal : -normal);
          #endif
 
          float eta = textureCoordinateGenerator .parameter [0];
@@ -115,7 +111,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
          #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
             vec3 N = normalize (localNormal);
          #else
-            vec3 N = normalize (gl_FrontFacing ? localNormal : -localNormal);
+            vec3 N = normalize (frontFacing == true ? localNormal : -localNormal);
          #endif
 
          float eta = textureCoordinateGenerator .parameter [0];
@@ -133,14 +129,14 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURE_COORDINATES];
 
 vec3
-getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping, const in bool frontFacing)
 {
-   vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping);
+   vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping, frontFacing);
 
    texCoord .stp /= texCoord .q;
 
    #if defined (X3D_GEOMETRY_2D)
-      if (gl_FrontFacing == false)
+      if (frontFacing == false)
          texCoord .s = 1.0 - texCoord .s;
    #endif
 
@@ -220,7 +216,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
       {
          // Get texture color.
 
-         vec3 texCoord     = getTexCoord (min (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), min (i, X3D_NUM_TEXTURE_COORDINATES - 1));
+         vec3 texCoord     = getTexCoord (min (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), min (i, X3D_NUM_TEXTURE_COORDINATES - 1), gl_FrontFacing);
          vec4 textureColor = getTexture (i, texCoord);
 
          // Multi texturing
@@ -491,7 +487,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
    #else
       // Get texture color.
 
-      vec3 texCoord     = getTexCoord (0, 0);
+      vec3 texCoord     = getTexCoord (0, 0, gl_FrontFacing);
       vec4 textureColor = getTexture (0, texCoord);
 
       return diffuseColor * textureColor;
@@ -538,7 +534,7 @@ getTextureProjectorColor ()
    #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
       vec3 N = normal;
    #else
-      vec3 N = gl_FrontFacing ? normal : -normal;
+      vec3 N = gl_FrontFacing == true ? normal : -normal;
    #endif
 
    for (int i = 0; i < X3D_NUM_TEXTURE_PROJECTORS; ++ i)
