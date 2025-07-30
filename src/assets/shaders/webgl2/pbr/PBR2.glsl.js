@@ -41,16 +41,16 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #pragma X3D include "pbr/Iridescence.glsl"
 
 vec4
-getMaterialColor ()
+getMaterialColor (const in bool frontFacing)
 {
    #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
       mat4 modelViewMatrix = eye (x3d_ModelViewMatrix);
    #endif
 
-   vec4 baseColor = getBaseColor ();
+   vec4 baseColor = getBaseColor (frontFacing);
 
    #if defined (X3D_TEXTURE_PROJECTION)
-      baseColor .rgb *= getTextureProjectorColor ();
+      baseColor .rgb *= getTextureProjectorColor (frontFacing);
    #endif
 
    vec3 color = vec3 (0.0);
@@ -58,7 +58,7 @@ getMaterialColor ()
    vec3 v = normalize (-vertex);
 
    #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
-      NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale);
+      NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale, frontFacing);
 
       vec3  n     = normalInfo .n;
       float NdotV = clamp (dot (n, v), 0.0, 1.0);

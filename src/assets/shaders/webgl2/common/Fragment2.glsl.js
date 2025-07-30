@@ -81,7 +81,7 @@ in vec3 vertex;
 #pragma X3D include "Fog.glsl"
 
 vec4
-getMaterialColor ();
+getMaterialColor (const in bool frontFacing);
 
 #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 // https://learnopengl.com/Guest-Articles/2020/OIT/Weighted-Blended
@@ -113,7 +113,7 @@ fragment_main ()
       setTexCoords ();
    #endif
 
-   vec4 finalColor = getMaterialColor ();
+   vec4 finalColor = getMaterialColor (gl_FrontFacing);
 
    #if defined (X3D_ALPHA_MODE_OPAQUE)
       finalColor .a = 1.0;

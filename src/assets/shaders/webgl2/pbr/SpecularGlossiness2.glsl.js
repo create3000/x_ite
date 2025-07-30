@@ -22,7 +22,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 ${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "linear")}
 
 vec4
-getBaseColor ()
+getBaseColor (const in bool frontFacing)
 {
    // Get base parameter.
 
@@ -39,7 +39,7 @@ getBaseColor ()
    #if defined (X3D_DIFFUSE_TEXTURE)
       baseColor *= getDiffuseTexture ();
    #elif defined (X3D_TEXTURE)
-      baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
+      baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha), frontFacing);
    #endif
 
    return baseColor;
@@ -61,18 +61,18 @@ getSpecularGlossinessInfo (in MaterialInfo info)
    #endif
 
    info .perceptualRoughness = 1.0 - glossiness;
-   info .f0_dielectric       = min (specular, vec3(1.0)); // Use KHR_materials_specular calculation
+   info .f0_dielectric       = min (specular, vec3 (1.0)); // Use KHR_materials_specular calculation
 
    return info;
 }
 
 vec4
-getMaterialColor ()
+getMaterialColor (const in bool frontFacing)
 {
-   vec4 baseColor = getBaseColor ();
+   vec4 baseColor = getBaseColor (frontFacing);
 
    #if defined (X3D_TEXTURE_PROJECTION)
-      baseColor .rgb *= getTextureProjectorColor ();
+      baseColor .rgb *= getTextureProjectorColor (frontFacing);
    #endif
 
    vec3 color = vec3 (0.0);
@@ -80,7 +80,7 @@ getMaterialColor ()
    vec3 v = normalize (-vertex);
 
    #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
-      NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale);
+      NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale, frontFacing);
 
       vec3  n     = normalInfo .n;
       float NdotV = clamp (dot (n, v), 0.0, 1.0);

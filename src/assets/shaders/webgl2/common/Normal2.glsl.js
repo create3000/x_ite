@@ -37,7 +37,7 @@ uniform x3d_NormalTextureParameters x3d_NormalTexture;
 #endif
 
 NormalInfo
-getNormalInfo (const in float normalScale)
+getNormalInfo (const in float normalScale, const in bool frontFacing)
 {
    #if defined (X3D_NORMAL_TEXTURE)
       vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping, gl_FrontFacing);
@@ -80,7 +80,7 @@ getNormalInfo (const in float normalScale)
 
    #if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
    // For a back-facing surface, the tangential basis vectors are negated.
-   if (gl_FrontFacing == false)
+   if (frontFacing == false)
    {
       t  = -t;
       b  = -b;
@@ -124,9 +124,9 @@ getNormalInfo (const in float normalScale)
 
 #if defined (X3D_LIGHTING)
 vec3
-getNormalVector (const in float normalScale)
+getNormalVector (const in float normalScale, const in bool frontFacing)
 {
-   return getNormalInfo (normalScale) .n;
+   return getNormalInfo (normalScale, frontFacing) .n;
 }
 #endif
 `;

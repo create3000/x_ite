@@ -9,7 +9,7 @@ uniform x3d_UnlitMaterialParameters x3d_Material;
 ${MaterialTextures .texture ("x3d_EmissiveTexture", "rgba", "sRGB")}
 
 vec4
-getEmissiveColor ()
+getEmissiveColor (const in bool frontFacing)
 {
    // Get emissive parameter.
 
@@ -26,19 +26,19 @@ getEmissiveColor ()
    #if defined (X3D_EMISSIVE_TEXTURE)
       emissiveColor *= getEmissiveTexture ();
    #elif defined (X3D_TEXTURE)
-      emissiveColor = getTextureColor (emissiveColor, vec4 (vec3 (1.0), alpha));
+      emissiveColor = getTextureColor (emissiveColor, vec4 (vec3 (1.0), alpha), frontFacing);
    #endif
 
    return emissiveColor;
 }
 
 vec4
-getMaterialColor ()
+getMaterialColor (const in bool frontFacing)
 {
-   vec4 finalColor = getEmissiveColor ();
+   vec4 finalColor = getEmissiveColor (frontFacing);
 
    #if defined (X3D_TEXTURE_PROJECTION)
-      finalColor .rgb *= getTextureProjectorColor ();
+      finalColor .rgb *= getTextureProjectorColor (frontFacing);
    #endif
 
    return finalColor;

@@ -207,7 +207,7 @@ getTexture (const in int i, in vec3 texCoord)
 #endif
 
 vec4
-getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
+getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor, const in bool frontFacing)
 {
    #if defined (X3D_MULTI_TEXTURING)
       vec4 currentColor = diffuseColor;
@@ -216,7 +216,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
       {
          // Get texture color.
 
-         vec3 texCoord     = getTexCoord (min (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), min (i, X3D_NUM_TEXTURE_COORDINATES - 1), gl_FrontFacing);
+         vec3 texCoord     = getTexCoord (min (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), min (i, X3D_NUM_TEXTURE_COORDINATES - 1), frontFacing);
          vec4 textureColor = getTexture (i, texCoord);
 
          // Multi texturing
@@ -487,7 +487,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
    #else
       // Get texture color.
 
-      vec3 texCoord     = getTexCoord (0, 0, gl_FrontFacing);
+      vec3 texCoord     = getTexCoord (0, 0, frontFacing);
       vec4 textureColor = getTexture (0, texCoord);
 
       return diffuseColor * textureColor;
@@ -527,14 +527,14 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
 }
 
 vec3
-getTextureProjectorColor ()
+getTextureProjectorColor (const in bool frontFacing)
 {
    vec3 currentColor = vec3 (1.0);
 
    #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
       vec3 N = normal;
    #else
-      vec3 N = gl_FrontFacing == true ? normal : -normal;
+      vec3 N = frontFacing == true ? normal : -normal;
    #endif
 
    for (int i = 0; i < X3D_NUM_TEXTURE_PROJECTORS; ++ i)
