@@ -95,7 +95,7 @@ Object .assign (X3DLightingContext .prototype,
    },
    getEnvironmentTextureShader ()
    {
-      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
+      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_TextureLinearEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
    },
    filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness })
    {
@@ -111,12 +111,11 @@ Object .assign (X3DLightingContext .prototype,
 
       // Setup texture.
 
-      filtered ._textureProperties = texture ._textureProperties;
-
       filtered .setName (name);
       filtered .setPrivate (true);
       filtered .setup ();
       filtered .setSize (size);
+      filtered .setLinear (true);
 
       // Resize texture.
 
@@ -125,47 +124,67 @@ Object .assign (X3DLightingContext .prototype,
       for (const target of filtered .getTargets ())
          gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
-      // Setup specular texture uniforms.
+      if (roughness .length > 1)
+      {
+         gl .generateMipmap (gl .TEXTURE_CUBE_MAP);
+         gl .texParameteri (gl .TEXTURE_CUBE_MAP, gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
+         gl .texParameteri (gl .TEXTURE_CUBE_MAP, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      }
 
-      gl .useProgram (shaderNode .getProgram ());
-
-      const specularTextureUnit = this .getTextureUnit ();
-
-      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
-      gl .bindTexture (gl .TEXTURE_CUBE_MAP, texture .getTexture ());
-      gl .uniform1i (shaderNode .x3d_TextureEXT, specularTextureUnit);
-      gl .uniform1i (shaderNode .x3d_TextureSizeEXT, size);
-      gl .uniform1i (shaderNode .x3d_DistributionEXT, distribution);
-      gl .uniform1i (shaderNode .x3d_SampleCountEXT, sampleCount);
-      gl .uniform1f (shaderNode .x3d_RoughnessEXT, roughness);
-      gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
-      gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
-
-      // Generate images.
+      // Setup defaults.
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
-      gl .viewport (0, 0, size, size);
-      gl .scissor (0, 0, size, size);
       gl .disable (gl .DEPTH_TEST);
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);
       gl .clearColor (0, 0, 0, 0);
       gl .bindVertexArray (this .getFullscreenVertexArrayObject ());
 
-      for (let i = 0; i < 6; ++ i)
+      // Setup specular texture uniforms.
+
+      const specularTextureUnit = this .popTextureUnit ();
+
+      gl .useProgram (shaderNode .getProgram ());
+      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, texture .getTexture ());
+      gl .uniform1i (shaderNode .x3d_TextureEXT, specularTextureUnit);
+      gl .uniform1i (shaderNode .x3d_TextureSizeEXT, size);
+      gl .uniform1i (shaderNode .x3d_TextureLinearEXT, texture .isLinear ());
+      gl .uniform1i (shaderNode .x3d_DistributionEXT, distribution);
+      gl .uniform1i (shaderNode .x3d_SampleCountEXT, sampleCount);
+      gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
+      gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
+
+      for (const [level, r] of roughness .entries ())
       {
-         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, filtered .getTargets () [i], filtered .getTexture (), 0);
-         gl .clear (gl .COLOR_BUFFER_BIT);
-         gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
-         gl .drawArrays (gl .TRIANGLES, 0, 6);
+         const mipSize = size >> level;
+
+         // console .log (level, mipSize, r, filtered .getLevels ());
+
+         // Setup mip level uniforms.
+
+         gl .uniform1f (shaderNode .x3d_RoughnessEXT, r);
+
+         // Generate images.
+
+         gl .viewport (0, 0, mipSize, mipSize);
+         gl .scissor  (0, 0, mipSize, mipSize);
+
+         for (let i = 0; i < 6; ++ i)
+         {
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, filtered .getTargets () [i], filtered .getTexture (), level);
+
+            gl .clear (gl .COLOR_BUFFER_BIT);
+            gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
+            gl .drawArrays (gl .TRIANGLES, 0, 6);
+         }
       }
 
       gl .enable (gl .DEPTH_TEST);
       gl .deleteFramebuffer (framebuffer);
-
-      filtered .updateTextureParameters ();
-
       gl .useProgram (currentProgram);
+
+      this .pushTextureUnit (specularTextureUnit);
 
       return filtered;
    },

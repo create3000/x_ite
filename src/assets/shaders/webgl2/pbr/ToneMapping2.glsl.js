@@ -163,6 +163,8 @@ toneMap (in vec3 color)
       #endif
    #elif defined (X3D_COLORSPACE_LINEAR)
       return linearToSRGB (color);
+   #else
+      return color;
    #endif
 }
 `;

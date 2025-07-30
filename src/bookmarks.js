@@ -336,29 +336,22 @@ Object .assign (Bookmarks .prototype,
    },
    async getEnvironmentLight (browser)
    {
-      if (this .environmentLight)
-         return this .environmentLight;
+      return this .environmentLight ?? await (async () =>
+      {
+         const
+            profile          = browser .getProfile ("Core"),
+            components       = ["CubeMapTexturing", "Lighting"] .map (name => browser .getComponent (name)),
+            scene            = await browser .createScene (profile, ... components),
+            environmentLight = scene .createNode ("EnvironmentLight"),
+            specularTexture  = scene .createNode ("ImageCubeMapTexture");
 
-      const
-         profile           = browser .getProfile ("Interchange"),
-         components        = ["CubeMapTexturing", "Lighting", "Texturing"] .map (name => browser .getComponent (name)),
-         scene             = await browser .createScene (profile, ... components),
-         environmentLight  = scene .createNode ("EnvironmentLight"),
-         specularTexture   = scene .createNode ("ImageCubeMapTexture"),
-         textureProperties = scene .createNode ("TextureProperties");
+         specularTexture .url = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
 
-      textureProperties .generateMipMaps     = true;
-      textureProperties .minificationFilter  = "NICEST";
-      textureProperties .magnificationFilter = "NICEST";
+         environmentLight .intensity       = 1;
+         environmentLight .specularTexture = specularTexture;
 
-      specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
-      specularTexture .textureProperties = textureProperties;
-
-      environmentLight .intensity       = 1;
-      environmentLight .color           = new X3D .SFColor (1,1,1);
-      environmentLight .specularTexture = specularTexture;
-
-      return this .environmentLight = environmentLight;
+         return environmentLight;
+      })();
    }
 });
 

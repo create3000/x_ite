@@ -920,29 +920,22 @@ class SampleViewer
 
    async getEnvironmentLight ()
    {
-      if (this .environmentLight)
-         return this .environmentLight;
+      return this .environmentLight ??= await (async () =>
+      {
+         this .scene .addComponent (this .browser .getComponent ("CubeMapTexturing"));
 
-      this .scene .addComponent (this .browser .getComponent ("CubeMapTexturing"));
+         await this .browser .loadComponents (this .scene);
 
-      await this .browser .loadComponents (this .scene);
+         const
+            environmentLight = this .scene .createNode ("EnvironmentLight"),
+            specularTexture  = this .scene .createNode ("ImageCubeMapTexture");
 
-      const
-         environmentLight  = this .scene .createNode ("EnvironmentLight"),
-         specularTexture   = this .scene .createNode ("ImageCubeMapTexture"),
-         textureProperties = this .scene .createNode ("TextureProperties");
+         environmentLight .intensity       = 1;
+         environmentLight .color           = new X3D .SFColor (1, 1, 1);
+         environmentLight .specularTexture = specularTexture;
 
-      textureProperties .generateMipMaps     = true;
-      textureProperties .minificationFilter  = "NICEST";
-      textureProperties .magnificationFilter = "NICEST";
-
-      specularTexture .textureProperties = textureProperties;
-
-      environmentLight .intensity       = 1;
-      environmentLight .color           = new X3D .SFColor (1, 1, 1);
-      environmentLight .specularTexture = specularTexture;
-
-      return this .environmentLight = environmentLight;
+         return environmentLight;
+      })();
    }
 
    async setHeadlight (on)
@@ -968,12 +961,7 @@ class SampleViewer
 
    async getNavigationInfo ()
    {
-      if (this .navigationInfo)
-         return this .navigationInfo;
-
-      const navigationInfo = this .scene .createNode ("NavigationInfo");
-
-      return this .navigationInfo = navigationInfo;
+      return this .navigationInfo ??= this .scene .createNode ("NavigationInfo");
    }
 
    setExposure (value)
@@ -1023,17 +1011,17 @@ class SampleViewer
 
    async getBackground ()
    {
-      if (this .background)
-         return this .background;
+      return this .background ??= (() =>
+      {
+         const background = this .scene .createNode ("Background");
 
-      const background = this .scene .createNode ("Background");
+         background .skyAngle    = [0.8, 1.3, 1.4, 1.5708];
+         background .skyColor    = [0.21, 0.31, 0.59, 0.33, 0.45, 0.7, 0.57, 0.66, 0.85, 0.6, 0.73, 0.89, 0.7, 0.83, 0.98] .map (v => Math .pow (v, 2.2));
+         background .groundAngle = [0.659972, 1.2, 1.39912, 1.5708];
+         background .groundColor = [0.105712, 0.156051, 0.297, 0.187629, 0.255857, 0.398, 0.33604, 0.405546, 0.542, 0.3612, 0.469145, 0.602, 0.39471, 0.522059, 0.669] .map (v => Math .pow (v, 2.2));
 
-      background .skyAngle    = [0.8, 1.3, 1.4, 1.5708];
-      background .skyColor    = [0.21, 0.31, 0.59, 0.33, 0.45, 0.7, 0.57, 0.66, 0.85, 0.6, 0.73, 0.89, 0.7, 0.83, 0.98] .map (v => Math .pow (v, 2.2));
-      background .groundAngle = [0.659972, 1.2, 1.39912, 1.5708];
-      background .groundColor = [0.105712, 0.156051, 0.297, 0.187629, 0.255857, 0.398, 0.33604, 0.405546, 0.542, 0.3612, 0.469145, 0.602, 0.39471, 0.522059, 0.669] .map (v => Math .pow (v, 2.2));
-
-      return this .background = background;
+         return background;
+      })();
    }
 
    addScenes ()

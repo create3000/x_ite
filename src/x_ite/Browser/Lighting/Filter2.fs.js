@@ -1,3 +1,6 @@
+import ToneMapping2 from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
+import Distribution from "./Distribution.js";
+
 export default /* glsl */ `#version 300 es
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/2ae24a17aa5f65604b8cdb9f5c8029f7b3347cf4/source/shaders/ibl_filtering.frag
 // https://github.com/KhronosGroup/glTF-Sample-Environments
@@ -6,14 +9,15 @@ precision highp float;
 precision highp int;
 precision highp samplerCube;
 
-#define X3D_LAMBERTIAN 0
-#define X3D_GGX        1
-#define X3D_CHARLIE    2
+${ToneMapping2 ()}
+
+${Object .entries (Distribution) .map (([name, value]) => `#define X3D_${name} ${value}`) .join ("\n")}
 
 const float M_PI = 3.1415926535897932384626433832795;
 
 uniform samplerCube x3d_TextureEXT;
 uniform int         x3d_TextureSizeEXT;
+uniform bool        x3d_TextureLinearEXT;
 uniform int         x3d_CurrentFaceEXT;
 uniform int         x3d_DistributionEXT;
 uniform int         x3d_SampleCountEXT;
@@ -100,6 +104,51 @@ Lambertian (const in vec2 xi, const in float roughness)
    return lambertian;
 }
 
+float
+saturate (const in float v)
+{
+   return clamp (v, 0.0, 1.0);
+}
+
+float
+D_GGX (const in float NdotH, const in float roughness)
+{
+   float a = NdotH * roughness;
+   float k = roughness / (1.0 - NdotH * NdotH + a * a);
+
+   return k * k * (1.0 / M_PI);
+}
+
+// GGX microfacet distribution
+// https://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.html
+// This implementation is based on https://bruop.github.io/ibl/,
+//  https://www.tobias-franke.eu/log/2014/03/30/notes_on_importance_sampling.html
+// and https://developer.nvidia.com/gpugems/GPUGems3/gpugems3_ch20.html
+MicrofacetDistributionSample
+GGX (const in vec2 xi, const in float roughness)
+{
+   MicrofacetDistributionSample ggx;
+
+   // evaluate sampling equations
+   float alpha = roughness * roughness;
+
+   ggx .cosTheta = saturate (sqrt ((1.0 - xi .y) / (1.0 + (alpha * alpha - 1.0) * xi .y)));
+   ggx .sinTheta = sqrt (1.0 - ggx .cosTheta * ggx .cosTheta);
+   ggx .phi      = 2.0 * M_PI * xi .x;
+
+   // evaluate GGX pdf (for half vector)
+   ggx.pdf = D_GGX (ggx .cosTheta, alpha);
+
+   // Apply the Jacobian to obtain a pdf that is parameterized by l
+   // see https://bruop.github.io/ibl/
+   // Typically you'd have the following:
+   // float pdf = D_GGX(NoH, roughness) * NoH / (4.0 * VoH);
+   // but since V = N => VoH == NoH
+   ggx .pdf /= 4.0;
+
+   return ggx;
+}
+
 // NDF
 float
 D_Charlie (in float sheenRoughness, const in float NdotH)
@@ -151,6 +200,13 @@ getImportanceSample (const in int sampleIndex, const in vec3 N, const in float r
          importanceSample = Lambertian (xi, roughness);
          break;
       }
+      case X3D_GGX:
+      {
+         // Trowbridge-Reitz / GGX microfacet model (Walter et al)
+         // https://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.html
+         importanceSample = GGX (xi, roughness);
+         break;
+      }
       case X3D_CHARLIE:
       {
          importanceSample = Charlie (xi, roughness);
@@ -179,10 +235,10 @@ float
 computeLod (const in float pdf)
 {
    // // Solid angle of current sample -- bigger for less likely samples
-   // float omegaS = 1.0 / (float(FilterParameters.sampleCoun) * pdf);
+   // float omegaS = 1.0 / (float(u_sampleCount) * pdf);
    // // Solid angle of texel
-   // // note: the factor of 4.0 * UX3D_MATH_PI
-   // float omegaP = 4.0 * UX3D_MATH_PI / (6.0 * float(pFilterParameters.width) * float(pFilterParameters.width));
+   // // note: the factor of 4.0 * MATH_PI
+   // float omegaP = 4.0 * MATH_PI / (6.0 * float(u_width) * float(u_width));
    // // Mip level is determined by the ratio of our sample's solid angle to a texel's solid angle
    // // note that 0.5 * log2 is equivalent to log4
    // float lod = 0.5 * log2(omegaS / omegaP);
@@ -204,6 +260,9 @@ computeLod (const in float pdf)
 vec3
 filterColor (const in vec3 N)
 {
+   // DEBUG:
+   // return textureLod (x3d_TextureEXT, N, 0.0) .rgb;
+
    vec3  color  = vec3 (0.0);
    float weight = 0.0;
 
@@ -226,6 +285,9 @@ filterColor (const in vec3 N)
          {
             // sample lambertian at a lower resolution to avoid fireflies
             vec3 lambertian = textureLod (x3d_TextureEXT, H, lod) .rgb;
+
+            if (!x3d_TextureLinearEXT)
+               lambertian = sRGBToLinear (lambertian);
 
             //// the below operations cancel each other out
             // lambertian *= NdotH; // lamberts law
@@ -253,6 +315,9 @@ filterColor (const in vec3 N)
 
                vec3 sampleColor = textureLod (x3d_TextureEXT, L, lod) .rgb;
 
+               if (!x3d_TextureLinearEXT)
+                  sampleColor = sRGBToLinear (sampleColor);
+
                color  += sampleColor * NdotL;
                weight += NdotL;
             }
@@ -261,9 +326,6 @@ filterColor (const in vec3 N)
          }
       }
    }
-
-   // DEBUG:
-   // return textureLod (x3d_TextureEXT, N, 0.0) .rgb;
 
    if(weight != 0.0f)
       color /= weight;
