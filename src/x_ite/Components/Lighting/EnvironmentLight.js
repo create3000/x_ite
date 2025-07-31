@@ -107,7 +107,7 @@ Object .assign (EnvironmentLightContainer .prototype,
 
       const color = lightNode .getColor ();
 
-      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
+      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 ... color);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
       gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       this .rotationMatrix);
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLinear,  diffuseTexture ?.isLinear ());

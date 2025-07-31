@@ -153,12 +153,12 @@ Object .assign (SpotLightContainer .prototype,
          attenuation                        = lightNode .getAttenuation ();
 
       gl .uniform1i        (shaderObject .x3d_LightType [i],             3);
-      gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
+      gl .uniform3f        (shaderObject .x3d_LightColor [i],            ... color);
       gl .uniform1f        (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
       gl .uniform1f        (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-      gl .uniform3f        (shaderObject .x3d_LightAttenuation [i],      Math .max (0, attenuation .x), Math .max (0, attenuation .y), Math .max (0, attenuation .z));
-      gl .uniform3f        (shaderObject .x3d_LightLocation [i],         location .x, location .y, location .z);
-      gl .uniform3f        (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
+      gl .uniform3fv       (shaderObject .x3d_LightAttenuation [i],      attenuation);
+      gl .uniform3f        (shaderObject .x3d_LightLocation [i],         ... location);
+      gl .uniform3f        (shaderObject .x3d_LightDirection [i],        ... direction);
       gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
       gl .uniform1f        (shaderObject .x3d_LightBeamWidth [i],        lightNode .getBeamWidth ());
       gl .uniform1f        (shaderObject .x3d_LightCutOffAngle [i],      lightNode .getCutOffAngle ());
@@ -168,7 +168,7 @@ Object .assign (SpotLightContainer .prototype,
       {
          const shadowColor = lightNode .getShadowColor ();
 
-         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         ... shadowColor);
          gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
          gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
          gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
@@ -220,13 +220,33 @@ function SpotLight (executionContext)
       this ._beamWidth   = 1.5708;
       this ._cutOffAngle = 0.785398;
    }
+
+   // Private properties
+
+   this .attenuation = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (SpotLight .prototype, X3DLightNode .prototype),
 {
+   initialize ()
+   {
+      X3DLightNode .prototype .initialize .call (this);
+
+      this ._attenuation .addInterest ("set_attenuation__", this);
+
+      this .set_attenuation__ ();
+   },
+   set_attenuation__ ()
+   {
+      const attenuation = this ._attenuation .getValue ();
+
+      this .attenuation [0] = Math .max (0, attenuation .x);
+      this .attenuation [1] = Math .max (0, attenuation .y);
+      this .attenuation [2] = Math .max (0, attenuation .z);
+   },
    getAttenuation ()
    {
-      return this ._attenuation .getValue ();
+      return this .attenuation;
    },
    getLocation ()
    {
