@@ -261,10 +261,4 @@ getMaterialColor ()
    return vec4 (finalColor, alpha);
 }
 #endif
-
-void
-main ()
-{
-   fragment_main ();
-}
 `;
