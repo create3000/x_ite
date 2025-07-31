@@ -125,10 +125,12 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    dispose ()
    {
-      const { browser, global } = this;
+      const { global } = this;
 
       if (global)
       {
+         const { browser } = this;
+
          browser .pushTextureUnit (this .diffuseTextureUnit);
          browser .pushTextureUnit (this .specularTextureUnit);
          browser .pushTextureUnit (this .sheenTextureUnit);

@@ -191,13 +191,25 @@ Object .assign (PointLightContainer .prototype,
    },
    dispose ()
    {
-      this .browser .pushShadowBuffer (this .shadowBuffer);
-      this .browser .pushTextureUnit (this .textureUnit);
+      const { shadowBuffer } = this;
+
+      if (shadowBuffer)
+      {
+         const { browser, global } = this;
+
+         browser .pushShadowBuffer (shadowBuffer);
+
+         this .shadowBuffer = null;
+
+         if (global)
+         {
+            browser .pushTextureUnit (this .textureUnit);
+
+            this .textureUnit = undefined;
+         }
+      }
 
       this .modelViewMatrix .clear ();
-
-      this .shadowBuffer = null;
-      this .textureUnit  = undefined;
 
       // Return container
 
