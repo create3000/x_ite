@@ -39,6 +39,7 @@ function GLTF2Parser (scene)
    this .bufferViews           = [ ];
    this .accessors             = [ ];
    this .samplers              = [ ];
+   this .textureIndex          = new Map ();
    this .materials             = [ ];
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
@@ -842,12 +843,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(images instanceof Array))
          return;
 
-      this .images = await Promise .all (images .map (image => this .imageObject (image)));
+      this .images = await Promise .all (images .map ((image, index) => this .imageObject (image, index)));
    },
-   async imageObject (image)
+   async imageObject (image, index)
    {
       if (!(image instanceof Object))
          return;
+
+      image .index = index;
 
       if (image .uri)
          return image;
@@ -891,33 +894,46 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(texture instanceof Object))
          return;
 
+      if (texture .textureNode)
+         return texture .textureNode;
+
       const images = this .textureImageObject (texture);
 
       if (!images .length)
          return null;
 
-      if (texture .textureNode)
-         return texture .textureNode;
-
       const
-         scene       = this .getScene (),
-         textureNode = scene .createNode ("ImageTexture", false),
-         name        = this .sanitizeName (texture .name || images [0] .name);
+         key    = `${images .map (image => image .index) .join (",")}:${texture .sampler}`,
+         cached = this .textureIndex .get (key);
 
-      if (name)
-         scene .addNamedNode (scene .getUniqueName (name), textureNode);
+      if (cached)
+      {
+         return texture .textureNode = cached;
+      }
+      else
+      {
+         const
+            scene       = this .getScene (),
+            textureNode = scene .createNode ("ImageTexture", false),
+            name        = this .sanitizeName (texture .name || images [0] .name);
 
-      textureNode ._url                  = images .map (image => image .uri);
-      textureNode ._colorSpaceConversion = false;
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-      const sampler = this .samplers [texture .sampler];
+         textureNode ._url                  = images .map (image => image .uri);
+         textureNode ._colorSpaceConversion = false;
 
-      if (sampler instanceof Object)
-         textureNode ._textureProperties = sampler .texturePropertiesNode;
+         const sampler = this .samplers [texture .sampler];
 
-      textureNode .setup ();
+         if (sampler instanceof Object)
+            textureNode ._textureProperties = sampler .texturePropertiesNode;
 
-      return texture .textureNode = textureNode;
+         textureNode .setup ();
+
+         this .textureIndex .set (key, textureNode);
+
+         return texture .textureNode = textureNode;
+      }
    },
    textureImageObject (texture)
    {
