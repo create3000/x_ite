@@ -97,7 +97,7 @@ weight (const in float z, const in float a)
 #endif
 
 void
-fragment_main ()
+main ()
 {
    frontFacing = gl_FrontFacing;
 
