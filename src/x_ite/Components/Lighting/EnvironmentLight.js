@@ -100,9 +100,9 @@ Object .assign (EnvironmentLightContainer .prototype,
          gl .uniform1i (shaderObject .x3d_EnvironmentLightCharlieLUTTexture, CharlieLUTTextureUnit);
       }
 
-      const i = shaderObject .numLights ++;
+      const i = shaderObject .numEnvironmentLights ++;
 
-      if (shaderObject .hasLight (i, this))
+      if (shaderObject .hasEnvironmentLight (i, this))
          return;
 
       const color = lightNode .getColor ();

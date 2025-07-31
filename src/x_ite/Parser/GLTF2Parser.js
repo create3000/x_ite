@@ -489,7 +489,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._radius      = this .numberValue (light .range, 0) || -1;
       lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
       lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
-      lightNode ._attenuation = new Vector3 (0, 0, 1);
 
       this .addAnimationPointerAlias (lightNode, "range",          "radius");
       this .addAnimationPointerAlias (lightNode, "outerConeAngle", "cutOffAngle");
@@ -503,8 +502,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene     = this .getScene (),
          lightNode = scene .createNode ("PointLight", false);
 
-      lightNode ._radius      = this .numberValue (light .range, 0) || -1;
-      lightNode ._attenuation = new Vector3 (0, 0, 1);
+      lightNode ._radius = this .numberValue (light .range, 0) || -1;
 
       this .addAnimationPointerAlias (lightNode, "range", "radius");
 

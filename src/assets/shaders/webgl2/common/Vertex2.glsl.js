@@ -102,7 +102,7 @@ out vec3 vertex;
 #pragma X3D include "PointSize.glsl"
 
 void
-vertex_main ()
+main ()
 {
    #if defined (X3D_NORMALS)
       vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, x3d_Tangent .xyz));

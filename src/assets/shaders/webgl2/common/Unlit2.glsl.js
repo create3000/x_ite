@@ -43,10 +43,4 @@ getMaterialColor ()
 
    return finalColor;
 }
-
-void
-main ()
-{
-   fragment_main ();
-}
 `;

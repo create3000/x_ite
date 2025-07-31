@@ -71,6 +71,10 @@ in vec3 vertex;
    out vec4 x3d_FragColor;
 #endif
 
+// There is a bug with Mali GPU when gl_FrontFacing is accessed often or in a deep nested function,
+// but assigning it to a global variable in a top level function fixes this issue.
+bool frontFacing;
+
 #pragma X3D include "../pbr/ToneMapping.glsl"
 #pragma X3D include "Texture.glsl"
 #pragma X3D include "Normal.glsl"
@@ -93,8 +97,10 @@ weight (const in float z, const in float a)
 #endif
 
 void
-fragment_main ()
+main ()
 {
+   frontFacing = gl_FrontFacing;
+
    #if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
       generateFlatNormals ();
    #endif
