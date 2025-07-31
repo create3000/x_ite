@@ -39,7 +39,7 @@ function GLTF2Parser (scene)
    this .bufferViews           = [ ];
    this .accessors             = [ ];
    this .samplers              = [ ];
-   this .textureIndex          = new Map ();
+   this .textureCache          = new Map ();
    this .materials             = [ ];
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
@@ -904,7 +904,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          key    = `${images .map (image => image .index) .join (",")}:${texture .sampler}`,
-         cached = this .textureIndex .get (key);
+         cached = this .textureCache .get (key);
 
       if (cached)
       {
@@ -930,7 +930,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          textureNode .setup ();
 
-         this .textureIndex .set (key, textureNode);
+         this .textureCache .set (key, textureNode);
 
          return texture .textureNode = textureNode;
       }
