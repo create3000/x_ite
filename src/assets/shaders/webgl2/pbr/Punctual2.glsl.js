@@ -52,12 +52,14 @@ getSpotAttenuation (const in vec3 pointToLight, const in vec3 spotDirection, con
 vec3
 getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 pointToLight, const in float distanceToLight)
 {
-   float attenuation      = dot (light .attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
+   float attenuation      = 1.0;
    float rangeAttenuation = 1.0;
    float spotAttenuation  = 1.0;
 
    if (light .type != x3d_DirectionalLight)
    {
+      attenuation = dot (light .attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
+
       rangeAttenuation = getRangeAttenuation (light .radius, distanceToLight);
    }
 
