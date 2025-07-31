@@ -50,11 +50,11 @@ function X3DProgrammableShaderObject (executionContext)
 
    this .fogNode                    = null;
    this .numClipPlanes              = 0;
+   this .numEnvironmentLights       = 0;
+   this .environmentLightNodes      = [ ];
    this .numLights                  = 0;
-   this .numGlobalLights            = 0;
    this .lightNodes                 = [ ];
    this .numTextureProjectors       = 0;
-   this .numGlobalTextureProjectors = 0;
    this .textureProjectorNodes      = [ ];
    this .textures                   = new Set ();
 }
@@ -924,6 +924,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       return false;
    },
+   hasEnvironmentLight (i, lightNode)
+   {
+      if (this .environmentLightNodes [i] === lightNode)
+         return true;
+
+      this .environmentLightNodes [i] = lightNode;
+
+      return false;
+   },
    hasLight (i, lightNode)
    {
       if (this .lightNodes [i] === lightNode)
@@ -985,14 +994,18 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
             // Set global lights and global texture projectors.
 
-            this .numLights                     = 0;
-            this .numTextureProjectors          = 0;
+            this .numEnvironmentLights = 0;
+            this .numLights            = 0;
+            this .numTextureProjectors = 0;
+
+            this .environmentLightNodes .length = 0;
             this .lightNodes .length            = 0;
             this .textureProjectorNodes .length = 0;
 
             for (const globalLights of renderObject .getGlobalLights ())
                globalLights .setShaderUniforms (gl, this, renderObject);
 
+            this .numGlobalEnvironmentLights = this .numEnvironmentLights;
             this .numGlobalLights            = this .numLights;
             this .numGlobalTextureProjectors = this .numTextureProjectors;
 
@@ -1032,6 +1045,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          // Clip planes and local lights
 
          this .numClipPlanes        = 0;
+         this .numEnvironmentLights = this .numGlobalEnvironmentLights;
          this .numLights            = this .numGlobalLights;
          this .numTextureProjectors = this .numGlobalTextureProjectors;
 

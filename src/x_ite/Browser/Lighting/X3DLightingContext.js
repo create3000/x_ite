@@ -119,10 +119,12 @@ Object .assign (X3DLightingContext .prototype,
 
       // Resize texture.
 
+      const data = new Uint8Array (size * size * 4);
+
       gl .bindTexture (filtered .getTarget (), filtered .getTexture ());
 
       for (const target of filtered .getTargets ())
-         gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+         gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
       if (roughness .length > 1)
       {

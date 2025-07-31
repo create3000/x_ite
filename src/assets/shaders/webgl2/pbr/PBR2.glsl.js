@@ -385,10 +385,4 @@ getMaterialColor ()
 
    return vec4 (color, baseColor .a);
 }
-
-void
-main ()
-{
-   fragment_main ();
-}
 `;
