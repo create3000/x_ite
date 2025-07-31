@@ -84,6 +84,7 @@ const no_headlight = [
    "GlamVelvetSofa",
    "IridescenceSuzanne",
    "LightsPunctualLamp",
+   "Playset",
 ];
 
 // SAMPLES_BEGIN
