@@ -25,7 +25,7 @@ See also: [MovieTexture supported file formats](/x_ite/components/texturing/movi
 * Fixes a bug with Mali GPU when some objects are rendered completely black.
 * Fixes light calculations for [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/).
 * Speed of glTF image loading is now better in some cases.
-* Fixes a bug with Extrusion and closed *spine* when *orientations* are used.
+* Fixes a bug with [Extrusion](/x_ite/components/geometry3d/extrusion/) and closed *spine* when *orientations* are used.
 
 ## X_ITE v11.5 Series
 
