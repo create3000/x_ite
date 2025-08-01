@@ -23,6 +23,9 @@ See also: [MovieTexture supported file formats](/x_ite/components/texturing/movi
 * This series drops support for WebGL 1, because all known browsers support WebGL 2 now for quite a while.
 * [EnvironmentLight](/x_ite/components/lighting/environmentlight/) can now generate a diffuse texture from specular if *diffuseTexture* field is empty.
 * Fixes a bug with Mali GPU when some objects are rendered completely black.
+* Fixes light calculations for [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/).
+* Speed of glTF image loading is now better in some cases.
+* Fixes a bug with Extrusion and closed *spine* when *orientations* are used.
 
 ## X_ITE v11.5 Series
 
