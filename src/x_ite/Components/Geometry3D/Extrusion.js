@@ -315,7 +315,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          this .getMultiTexCoords () .push (texCoordArray);
 
-         const crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
+         const crossSectionSize = crossSection .length; // This one is only used in the INDEX macro.
 
          const INDEX = (n, k) => n * crossSectionSize + k;
 
