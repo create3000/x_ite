@@ -1,3 +1,6 @@
+// https://github.khronos.org/glTF-Sample-Viewer-Release/
+// https://github.khronos.org/3DC-Sample-Viewer/
+
 // EnvironmentLight
 
 const no_ibl = [
