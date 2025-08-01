@@ -881,6 +881,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   field .setAccessType (X3DConstants .initializeOnly);
                   field .setName (fieldId);
+
                   return field;
                }
 
@@ -922,6 +923,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   field .setAccessType (X3DConstants .inputOutput);
                   field .setName (fieldId);
+
                   return field;
                }
 
@@ -1025,6 +1027,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .inputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1050,6 +1053,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .outputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1075,6 +1079,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .initializeOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1100,6 +1105,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .inputOutput);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1464,8 +1470,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          // Parse value of a inputOnly or outputOnly, and output a warning.
 
-         if (this .fieldValue (field .copy ()))
-            console .warn (`Parser error at line ${this .lineNumber}: Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
+         if (!this .unknownValue ())
+            throw new Error (`Couldn't read value for field '${fieldId}'.`);
+
+         console .warn (`Parser error at line ${this .lineNumber}: Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
 
          return true;
       }
