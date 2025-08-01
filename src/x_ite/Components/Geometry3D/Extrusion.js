@@ -117,7 +117,6 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             numSpines = spine .length;
 
          const closedSpine = this .getClosed (spine)
-            && this .getClosed (this ._orientation)
             && this .getClosed (this ._scale);
 
          // Extend or shrink static rotations array:
@@ -321,7 +320,6 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          function INDEX (n, k) { return n * crossSectionSize + k; }
 
          const closedSpine = this .getClosed (spine)
-            && this .getClosed (this ._orientation)
             && this .getClosed (this ._scale);
 
          const closedCrossSection = this .getClosed (crossSection);
