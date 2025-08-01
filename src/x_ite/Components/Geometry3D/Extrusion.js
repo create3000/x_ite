@@ -317,7 +317,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          const crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
 
-         function INDEX (n, k) { return n * crossSectionSize + k; }
+         const INDEX = (n, k) => n * crossSectionSize + k;
 
          const closedSpine = this .getClosed (spine)
             && this .getClosed (this ._scale);
