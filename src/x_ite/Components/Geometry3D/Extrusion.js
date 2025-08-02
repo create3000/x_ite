@@ -390,8 +390,8 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                   c2 = INDEX (n,  k1), // normal indices
                   c3 = INDEX (s1, k1), // normal indices
                   c4 = INDEX (s1, k),  // normal indices
-                  i1 = INDEX (n,  k),  // point indices
-                  i2 = INDEX (n,  k1), // point indices
+                  i1 = c1,             // point indices
+                  i2 = c2,             // point indices
                   i3 = INDEX (n1, k1), // point indices
                   i4 = INDEX (n1, k),  // point indices
                   p1 = points [i1],
