@@ -908,33 +908,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          cached = this .textureCache .get (key);
 
       if (cached)
-      {
          return texture .textureNode = cached;
-      }
-      else
-      {
-         const
-            scene       = this .getScene (),
-            textureNode = scene .createNode ("ImageTexture", false),
-            name        = this .sanitizeName (texture .name || images [0] .name);
 
-         if (name)
-            scene .addNamedNode (scene .getUniqueName (name), textureNode);
+      const
+         scene       = this .getScene (),
+         textureNode = scene .createNode ("ImageTexture", false),
+         name        = this .sanitizeName (texture .name || images [0] .name);
 
-         textureNode ._url                  = images .map (image => image .uri);
-         textureNode ._colorSpaceConversion = false;
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-         const sampler = this .samplers [texture .sampler];
+      textureNode ._url                  = images .map (image => image .uri);
+      textureNode ._colorSpaceConversion = false;
 
-         if (sampler instanceof Object)
-            textureNode ._textureProperties = sampler .texturePropertiesNode;
+      const sampler = this .samplers [texture .sampler];
 
-         textureNode .setup ();
+      if (sampler instanceof Object)
+         textureNode ._textureProperties = sampler .texturePropertiesNode;
 
-         this .textureCache .set (key, textureNode);
+      textureNode .setup ();
 
-         return texture .textureNode = textureNode;
-      }
+      this .textureCache .set (key, textureNode);
+
+      return texture .textureNode = textureNode;
    },
    textureImageObject (texture)
    {
