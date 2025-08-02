@@ -317,8 +317,11 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          const INDEX = (n, k) => n * crossSectionSize + k;
 
-         const closedSpine = this .getClosed (spine) // Don't test for orientation for smooth normals.
+         const closed = this .getClosed (spine)
+            && this .getClosed (this ._orientation)
             && this .getClosed (this ._scale);
+
+         const closedSpine = this .getClosed (spine);
 
          const closedCrossSection = this .getClosed (crossSection);
 
@@ -359,15 +362,18 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             numSpine_1        = numSpines - 1;
 
          let
-            indexLeft  = INDEX (0, 0),
-            indexRight = INDEX (0, closedCrossSection ? 0 : numCrossSection_1);
+            indexLeftC  = INDEX (0, 0),
+            indexRightC = INDEX (0, closedCrossSection ? 0 : numCrossSection_1),
+            indexLeftI  = INDEX (0, 0),
+            indexRightI = INDEX (0, closedCrossSection ? 0 : numCrossSection_1);
 
          for (let n = 0; n < numSpine_1; ++ n)
          {
             for (let k = 0; k < numCrossSection_1; ++ k)
             {
                const
-                  n1 = closedSpine && n === numSpines - 2 ? 0 : n + 1,
+                  s1 = closedSpine && n === numSpines - 2 ? 0 : n + 1,
+                  n1 = closed && n === numSpines - 2 ? 0 : n + 1,
                   k1 = closedCrossSection && k === crossSection .length - 2 ? 0 : k + 1;
 
                // k      k+1
@@ -379,10 +385,14 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                // p1 ----- p2   n
 
                let
-                  i1 = INDEX (n,  k),
-                  i2 = INDEX (n,  k1),
-                  i3 = INDEX (n1, k1),
-                  i4 = INDEX (n1, k),
+                  c1 = INDEX (n,  k),  // normal indices
+                  c2 = INDEX (n,  k1), // normal indices
+                  c3 = INDEX (s1, k1), // normal indices
+                  c4 = INDEX (s1, k),  // normal indices
+                  i1 = INDEX (n,  k),  // point indices
+                  i2 = INDEX (n,  k1), // point indices
+                  i3 = INDEX (n1, k1), // point indices
+                  i4 = INDEX (n1, k),  // point indices
                   p1 = points [i1],
                   p2 = points [i2],
                   p3 = points [i3],
@@ -390,43 +400,44 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                   l1 = p2 .distance (p3) >= 1e-7,
                   l2 = p4 .distance (p1) >= 1e-7;
 
+               const
+                  normal1 = Triangle3 .normal (p1, p2, p3, new Vector3 ()),
+                  normal2 = Triangle3 .normal (p1, p3, p4, new Vector3 ());
+
                if (cw)
                {
-                  var
-                     normal1 = Triangle3 .normal (p3, p2, p1, new Vector3 ()),
-                     normal2 = Triangle3 .normal (p4, p3, p1, new Vector3 ());
-               }
-               else
-               {
-                  var
-                     normal1 = Triangle3 .normal (p1, p2, p3, new Vector3 ()),
-                     normal2 = Triangle3 .normal (p1, p3, p4, new Vector3 ());
+                  normal1 .negate ();
+                  normal2 .negate ();
                }
 
                // Merge points on the left and right side if spine is coincident for better normal generation.
 
-               if (k == 0)
+               if (k === 0)
                {
                   if (l2)
                   {
-                     indexLeft = i1;
+                     indexLeftC = c1;
+                     indexLeftI = i1;
                   }
                   else
                   {
-                     i1 = indexLeft;
+                     c1 = indexLeftC;
+                     i1 = indexLeftI;
                      p1 = points [i1];
                   }
                }
 
-               if (k == crossSection .length - 2)
+               if (k === crossSection .length - 2)
                {
                   if (l1)
                   {
-                     indexRight = i2;
+                     indexRightC = c2;
+                     indexRightI = i2;
                   }
                   else
                   {
-                     i3 = indexRight;
+                     c3 = indexRightC;
+                     i3 = indexRightI;
                      p3 = points [i3];
                   }
                }
@@ -452,21 +463,21 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                      texCoordArray .push (k / numCrossSection_1, y, 0, 1);
                   }
 
-                  normalIndex .get (i1) .push (normals .length);
+                  normalIndex .get (c1) .push (normals .length);
                   normals .push (normal1);
-                  vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
+                  vertexArray .push (... p1, 1);
 
                   // p2
                   texCoordArray .push ((k + 1) / numCrossSection_1, n / numSpine_1, 0, 1);
-                  normalIndex .get (i2) .push (normals .length);
+                  normalIndex .get (c2) .push (normals .length);
                   normals .push (normal1);
-                  vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
+                  vertexArray .push (... p2, 1);
 
                   // p3
                   texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
-                  normalIndex .get (i3) .push (normals .length);
+                  normalIndex .get (c3) .push (normals .length);
                   normals .push (normal1);
-                  vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
+                  vertexArray .push (... p3, 1);
                }
 
                // Triangle two
@@ -477,9 +488,9 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
                   // p1
                   texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
-                  normalIndex .get (i1) .push (normals .length);
+                  normalIndex .get (c1) .push (normals .length);
                   normals .push (normal2);
-                  vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
+                  vertexArray .push (... p1, 1);
 
                   // p3
                   if (l1)
@@ -494,15 +505,15 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                      texCoordArray .push ((k + 1) / numCrossSection_1, y, 0, 1);
                   }
 
-                  normalIndex .get (i3) .push (normals .length);
+                  normalIndex .get (c3) .push (normals .length);
                   normals .push (normal2);
-                  vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
+                  vertexArray .push (... p3, 1);
 
                   // p4
                   texCoordArray .push (k / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
-                  normalIndex .get (i4) .push (normals .length);
+                  normalIndex .get (c4) .push (normals .length);
                   normals .push (normal2);
-                  vertexArray .push (p4 .x, p4 .y, p4 .z, 1);
+                  vertexArray .push (... p4, 1);
                }
             }
          }
@@ -608,34 +619,27 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
       const
          coordIndicesArray = this .getCoordIndices (),
          normalArray       = this .getNormals (),
-         vertexArray       = this .getVertices ();
+         vertexArray       = this .getVertices (),
+         numTriangles      = triangles .length;
 
-      for (let i = 0, length = triangles .length; i < length; i += 3)
+      for (let i = 0; i < numTriangles; i += 3)
       {
          const
             i1 = triangles [i],
             i2 = triangles [i + 1],
             i3 = triangles [i + 2],
-            p0 = vertices [i1],
-            p1 = vertices [i2],
-            p2 = vertices [i3],
+            p1 = vertices [i1],
+            p2 = vertices [i2],
+            p3 = vertices [i3],
             t0 = texCoord [i1],
             t1 = texCoord [i2],
             t2 = texCoord [i3];
 
          coordIndicesArray .push (i1, i2, i3);
 
-         texCoordArray .push (t0 .x, t0 .y, 0, 1);
-         texCoordArray .push (t1 .x, t1 .y, 0, 1);
-         texCoordArray .push (t2 .x, t2 .y, 0, 1);
-
-         normalArray .push (normal .x, normal .y, normal .z,
-                            normal .x, normal .y, normal .z,
-                            normal .x, normal .y, normal .z);
-
-         vertexArray .push (p0 .x, p0 .y, p0 .z, 1,
-                            p1 .x, p1 .y, p1 .z, 1,
-                            p2 .x, p2 .y, p2 .z, 1);
+         texCoordArray .push (... t0, 0, 1, ... t1, 0, 1, ... t2, 0, 1);
+         normalArray   .push (... normal,   ... normal,   ... normal);
+         vertexArray   .push (... p1, 1,    ... p2, 1,    ... p3, 1);
       }
    },
 });
