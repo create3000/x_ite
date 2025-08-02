@@ -317,10 +317,12 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          const INDEX = (n, k) => n * crossSectionSize + k;
 
+         // Use this to determine if start and end points should be connected.
          const closed = this .getClosed (spine)
             && this .getClosed (this ._orientation)
             && this .getClosed (this ._scale);
 
+         // Use this to determine if normals should be connected.
          const closedSpine = this .getClosed (spine);
 
          const closedCrossSection = this .getClosed (crossSection);
