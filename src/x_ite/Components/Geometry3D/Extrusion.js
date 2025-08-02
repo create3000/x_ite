@@ -52,15 +52,15 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
       return function ()
       {
          const
-            crossSection    = this ._crossSection,
-            orientation     = this ._orientation,
-            scale           = this ._scale,
-            spine           = this ._spine,
-            numCrossSection = crossSection .length,
-            numOrientations = orientation .length,
-            numScales       = scale .length,
-            numSpines       = spine .length,
-            points          = [ ];
+            crossSection     = this ._crossSection,
+            orientation      = this ._orientation,
+            scale            = this ._scale,
+            spine            = this ._spine,
+            numCrossSections = crossSection .length,
+            numOrientations  = orientation .length,
+            numScales        = scale .length,
+            numSpines        = spine .length,
+            points           = [ ];
 
          // Calculate SCP rotations.
 
@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                matrix .scale (scale3 .set (s .x, 1, s .y));
             }
 
-            for (let cs = 0; cs < numCrossSection; ++ cs)
+            for (let cs = 0; cs < numCrossSections; ++ cs)
             {
                const vector = crossSection [cs] .getValue ();
                points .push (matrix .multVecMatrix (new Vector3 (vector .x, 0, vector .y)));
@@ -304,18 +304,17 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             cw                = !this ._ccw .getValue (),
             crossSection      = this ._crossSection,
             spine             = this ._spine,
+            numCrossSections  = crossSection .length,
             numSpines         = spine .length,
             coordIndicesArray = this .getCoordIndices (),
             texCoordArray     = this .getTexCoords ();
 
-         if (numSpines < 2 || crossSection .length < 2)
+         if (numSpines < 2 || numCrossSections < 2)
             return;
 
          this .getMultiTexCoords () .push (texCoordArray);
 
-         const numCrossSection = crossSection .length; // Define before INDEX macro.
-
-         const INDEX = (n, k) => n * numCrossSection + k;
+         const INDEX = (n, k) => n * numCrossSections + k;
 
          // Use this to determine if start and end points should be connected.
          const closed = this .getClosed (spine)
@@ -332,7 +331,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          min .assign (crossSection [0] .getValue ());
          max .assign (crossSection [0] .getValue ());
 
-         for (let k = 1; k < numCrossSection; ++ k)
+         for (let k = 1; k < numCrossSections; ++ k)
          {
             min .min (crossSection [k] .getValue ());
             max .max (crossSection [k] .getValue ());
@@ -341,7 +340,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          const
             capSize      = vector2 .assign (max) .subtract (min),
             capMax       = Math .max (capSize .x, capSize .y),
-            numCapPoints = closedCrossSection ? crossSection .length - 1 : crossSection .length;
+            numCapPoints = closedCrossSection ? numCrossSections - 1 : numCrossSections;
 
          // Create
 
@@ -360,7 +359,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             vertexArray = this .getVertices ();
 
          const
-            numCrossSection_1 = crossSection .length - 1,
+            numCrossSection_1 = numCrossSections - 1,
             numSpine_1        = numSpines - 1;
 
          let
@@ -376,7 +375,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                const
                   s1 = closedSpine && n === numSpines - 2 ? 0 : n + 1,
                   n1 = closed && n === numSpines - 2 ? 0 : n + 1,
-                  k1 = closedCrossSection && k === crossSection .length - 2 ? 0 : k + 1;
+                  k1 = closedCrossSection && k === numCrossSections - 2 ? 0 : k + 1;
 
                // k      k+1
                //
@@ -429,7 +428,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                   }
                }
 
-               if (k === crossSection .length - 2)
+               if (k === numCrossSections - 2)
                {
                   if (l1)
                   {
