@@ -37,7 +37,7 @@ sub media {
 sub glTF {
    my $folders = shift;
    my $suffix  = shift;
-   my $var    = shift;
+   my $var     = shift;
 
    @all = ();
 
@@ -45,12 +45,14 @@ sub glTF {
    {
       say "Getting $folder files ...";
 
-      @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
-      @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
-      @files  = (@models, @assets);
+      @models   = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @assets   = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @commerce = `find '$samples/3DC-Certification/models'  -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @files    = (@models, @assets, @commerce);
 
       s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
       s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
+      s|/3DC-Certification/|/3DC-Certification/main/|     foreach @files;
       s|$samples/|| foreach @files;
 
       @files = grep { m|/$folder/|i } @files;
@@ -74,6 +76,8 @@ sub glTF {
 # system "git pull origin";
 # chdir "$samples/glTF-Sample-Assets";
 # system "git pull origin";
+chdir "$samples/3DC-Certification";
+system "git pull origin";
 
 $string = "";
 $string .= "// SAMPLES_BEGIN\n\n";
