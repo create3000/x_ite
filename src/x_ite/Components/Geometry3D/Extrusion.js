@@ -313,9 +313,9 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          this .getMultiTexCoords () .push (texCoordArray);
 
-         const crossSectionSize = crossSection .length; // This one is only used in the INDEX macro.
+         const numCrossSection = crossSection .length; // Define before INDEX macro.
 
-         const INDEX = (n, k) => n * crossSectionSize + k;
+         const INDEX = (n, k) => n * numCrossSection + k;
 
          // Use this to determine if start and end points should be connected.
          const closed = this .getClosed (spine)
@@ -332,7 +332,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          min .assign (crossSection [0] .getValue ());
          max .assign (crossSection [0] .getValue ());
 
-         for (let k = 1, length = crossSection .length; k < length; ++ k)
+         for (let k = 1; k < numCrossSection; ++ k)
          {
             min .min (crossSection [k] .getValue ());
             max .max (crossSection [k] .getValue ());
