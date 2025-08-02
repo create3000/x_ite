@@ -113,11 +113,9 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          // calculate SCP rotations
 
          const
-            spine     = this ._spine,
-            numSpines = spine .length;
-
-         const closedSpine = this .getClosed (spine)
-            && this .getClosed (this ._scale);
+            spine       = this ._spine,
+            numSpines   = spine .length,
+            closedSpine = this .getClosed (spine); // Test only for closed spine.
 
          // Extend or shrink static rotations array:
          for (let i = rotations .length; i < numSpines; ++ i)
@@ -319,7 +317,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          const INDEX = (n, k) => n * crossSectionSize + k;
 
-         const closedSpine = this .getClosed (spine)
+         const closedSpine = this .getClosed (spine) // Don't test for orientation for smooth normals.
             && this .getClosed (this ._scale);
 
          const closedCrossSection = this .getClosed (crossSection);
