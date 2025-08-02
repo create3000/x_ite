@@ -1,5 +1,5 @@
-/* X_ITE v11.6.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.4")];
+/* X_ITE v11.6.5 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.5")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1602,7 +1602,7 @@ color=f_emissive+baseColor.rgb;
 #else
 color=f_emissive+color;
 #endif
-return vec4(color,baseColor.a);}void main(){fragment_main();}`
+return vec4(color,baseColor.a);}`
 ;
 
 /* harmony default export */ const SpecularGlossiness2_glsl = (external_X_ITE_X3D_Namespace_default().add ("SpecularGlossiness2.glsl", SpecularGlossiness2_glsl_default_));

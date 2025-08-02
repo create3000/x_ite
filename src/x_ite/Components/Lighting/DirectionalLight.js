@@ -134,17 +134,17 @@ Object .assign (DirectionalLightContainer .prototype,
          color                   = lightNode .getColor ();
 
       gl .uniform1i (shaderObject .x3d_LightType [i],             1);
-      gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
+      gl .uniform3f (shaderObject .x3d_LightColor [i],            ... color);
       gl .uniform1f (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
       gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-      gl .uniform3f (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
+      gl .uniform3f (shaderObject .x3d_LightDirection [i],        ... direction);
       gl .uniform1f (shaderObject .x3d_LightRadius [i],           -1);
 
       if (this .shadowBuffer)
       {
          const shadowColor = lightNode .getShadowColor ();
 
-         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         ... shadowColor);
          gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
          gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
          gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
@@ -157,13 +157,25 @@ Object .assign (DirectionalLightContainer .prototype,
    },
    dispose ()
    {
-      this .browser .pushShadowBuffer (this .shadowBuffer);
-      this .browser .pushTextureUnit (this .textureUnit);
+      const { shadowBuffer } = this;
+
+      if (shadowBuffer)
+      {
+         const { browser, global } = this;
+
+         browser .pushShadowBuffer (shadowBuffer);
+
+         this .shadowBuffer = null;
+
+         if (global)
+         {
+            browser .pushTextureUnit (this .textureUnit);
+
+            this .textureUnit = undefined;
+         }
+      }
 
       this .modelViewMatrix .clear ();
-
-      this .shadowBuffer = null;
-      this .textureUnit  = undefined;
 
       // Return container
 

@@ -1,80 +1,13 @@
+// https://github.khronos.org/glTF-Sample-Viewer-Release/
+// https://github.khronos.org/3DC-Sample-Viewer/
+
 // EnvironmentLight
 
-const ibl_files = [
-   "ABeautifulGame",
-   "AlphaBlendModeTest",
-   "AnimatedCube",
-   "AnimationPointerUVs",
-   "Anisotropy",
-   "AntiqueCamera",
-   "AttenuationTest",
-   "BarramundiFish",
-   "Bee",
-   "Bike",
-   "BlackDragon",
-   "Bonsai",
-   "BoomBox",
-   "Box With Spaces",
-   "BrainStem",
-   "CarbonFibre",
-   "CarConcept",
-   "Cesium",
-   "ChairDamaskPurplegold",
-   "Chronograph",
-   "Clearcoat",
-   "ClearCoat",
-   "CommercialRefrigerator",
-   "Compare",
-   "Corset",
-   "Cube",
-   "Dispersion",
-   "DragonAttenuation",
-   "EmissiveStrengthTest",
-   "Engine",
-   "EnvironmentTest",
-   "Glam",
-   "GlassBrokenWindow",
-   "GlassHurricaneCandleHolder",
-   "GlassVaseFlowers",
-   "GunBot",
-   "Helmet",
-   "IORTestGrid",
-   "Iridescence",
-   "Iridescent",
-   "Lantern",
-   "MandarinOrange",
-   "MaterialsVariantsShoe",
-   "MeshPrimitiveModes",
-   "MetalRoughSpheres",
-   "Morph",
-   "MosquitoInAmber",
-   "NegativeScaleTest",
-   "NeilArmstrong",
-   "NormalTangentMirrorTest",
-   "NormalTangentTest",
-   "OrientationTest",
-   "PotOfCoals",
-   "PrimitiveModeNormalsTest",
-   "ReciprocatingSaw",
-   "RecursiveSkeletons",
-   "ScatteringSkull",
-   "Sheen",
-   "SimpleInstancing",
-   "SpecGlossVsMetalRough",
-   "Specular",
-   "Sponza",
-   "StainedGlassLamp",
-   "SunglassesKhronos",
-   "Suzanne",
-   "Telephone",
-   "TextureEncodingTest",
-   "TextureTransformMultiTest",
-   "ToyCar",
-   "Transmission",
-   "Walking Alien",
-   "WaterBottle",
-   "WebP",
-   "YetiWarrior",
+const no_ibl = [
+   "DirectionalLight",
+   "LightsPunctualLamp",
+   "PlaysetLightTest",
+   "PointLightIntensityTest",
 ];
 
 // KHR_lights_punctual
@@ -106,6 +39,14 @@ const models = [
 ];
 
 const glTF = [
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalCubes/glTF/AnalyticalCubes.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalGrayscale/glTF/AnalyticalGrayscale.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalSpheres/glTF/AnalyticalSpheres.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/GreenChair/glTF/GreenChair.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/Mixer/glTF/Mixer.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/Shoe/glTF/Shoe.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/TennisRacquet/glTF/TennisRacquet.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/WickerChair/glTF/WickerChair.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ABeautifulGame/glTF/ABeautifulGame.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AlphaBlendModeTest/glTF/AlphaBlendModeTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnimatedColorsCube/glTF/AnimatedColorsCube.gltf",
@@ -355,6 +296,14 @@ const glTF = [
 ];
 
 const glb = [
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalCubes/glTF-Binary/AnalyticalCubes.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalGrayscale/glTF-Binary/AnalyticalGrayscale.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalSpheres/glTF-Binary/AnalyticalSpheres.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/GreenChair/glTF-Binary/GreenChair.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/Mixer/glTF-Binary/Mixer.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/Shoe/glTF-Binary/Shoe.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/TennisRacquet/glTF-Binary/TennisRacquet.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/WickerChair/glTF-Binary/WickerChair.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AlphaBlendModeTest/glTF-Binary/AlphaBlendModeTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnimatedColorsCube/glTF-Binary/AnimatedColorsCube.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnimatedMorphCube/glTF-Binary/AnimatedMorphCube.glb",
@@ -873,7 +822,7 @@ class SampleViewer
       await this .browser .loadURL (new X3D .MFString (filename));
 
       this .viewAll ();
-      this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
+      this .setEnvironmentLight (!no_ibl .some (name => filename .includes (name)));
       this .setHeadlight (!no_headlight .some (name => filename .includes (name)));
       this .setToneMapping (this .localStorage .toneMapping);
       this .setBackground (this .localStorage .background);

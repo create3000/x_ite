@@ -117,7 +117,6 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             numSpines = spine .length;
 
          const closedSpine = this .getClosed (spine)
-            && this .getClosed (this ._orientation)
             && this .getClosed (this ._scale);
 
          // Extend or shrink static rotations array:
@@ -195,10 +194,10 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          // Get first spine
          const s = spine .at (0) .getValue ();
 
-         rotations [0] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
-                             SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
-                             SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
-                             s .x,        s .y,        s .z,        1);
+         rotations [0] .set (... SCPxAxis, 0,
+                             ... SCPyAxis, 0,
+                             ... SCPzAxis, 0,
+                             ... s,        1);
 
          // For all points other than the first or last:
 
@@ -240,10 +239,10 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
             SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
 
-            rotations [i] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
-                                SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
-                                SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
-                                s .x,        s .y,        s .z,        1);
+            rotations [i] .set (... SCPxAxis, 0,
+                                ... SCPyAxis, 0,
+                                ... SCPzAxis, 0,
+                                ... s,        1);
          }
 
          // SCP for the last point
@@ -285,10 +284,10 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
             SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
 
-            rotations [numSpines - 1] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
-                                            SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
-                                            SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
-                                            s .x,        s .y,        s .z,        1);
+            rotations [numSpines - 1] .set (... SCPxAxis, 0,
+                                            ... SCPyAxis, 0,
+                                            ... SCPzAxis, 0,
+                                            ... s,        1);
          }
 
          return rotations;
@@ -316,12 +315,11 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          this .getMultiTexCoords () .push (texCoordArray);
 
-         const crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
+         const crossSectionSize = crossSection .length; // This one is only used in the INDEX macro.
 
-         function INDEX (n, k) { return n * crossSectionSize + k; }
+         const INDEX = (n, k) => n * crossSectionSize + k;
 
          const closedSpine = this .getClosed (spine)
-            && this .getClosed (this ._orientation)
             && this .getClosed (this ._scale);
 
          const closedCrossSection = this .getClosed (crossSection);

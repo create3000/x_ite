@@ -166,11 +166,11 @@ Object .assign (PointLightContainer .prototype,
          attenuation             = lightNode .getAttenuation ();
 
       gl .uniform1i        (shaderObject .x3d_LightType [i],             2);
-      gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
+      gl .uniform3f        (shaderObject .x3d_LightColor [i],            ... color);
       gl .uniform1f        (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
       gl .uniform1f        (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-      gl .uniform3f        (shaderObject .x3d_LightAttenuation [i],      Math .max (0, attenuation .x), Math .max (0, attenuation .y), Math .max (0, attenuation .z));
-      gl .uniform3f        (shaderObject .x3d_LightLocation [i],         location .x, location .y, location .z);
+      gl .uniform3fv       (shaderObject .x3d_LightAttenuation [i],      attenuation);
+      gl .uniform3f        (shaderObject .x3d_LightLocation [i],         ... location);
       gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
       gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
 
@@ -178,7 +178,7 @@ Object .assign (PointLightContainer .prototype,
       {
          const shadowColor = lightNode .getShadowColor ();
 
-         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         ... shadowColor);
          gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
          gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
          gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
@@ -191,13 +191,25 @@ Object .assign (PointLightContainer .prototype,
    },
    dispose ()
    {
-      this .browser .pushShadowBuffer (this .shadowBuffer);
-      this .browser .pushTextureUnit (this .textureUnit);
+      const { shadowBuffer } = this;
+
+      if (shadowBuffer)
+      {
+         const { browser, global } = this;
+
+         browser .pushShadowBuffer (shadowBuffer);
+
+         this .shadowBuffer = null;
+
+         if (global)
+         {
+            browser .pushTextureUnit (this .textureUnit);
+
+            this .textureUnit = undefined;
+         }
+      }
 
       this .modelViewMatrix .clear ();
-
-      this .shadowBuffer = null;
-      this .textureUnit  = undefined;
 
       // Return container
 
@@ -215,13 +227,33 @@ function PointLight (executionContext)
 
    this ._location .setUnit ("length");
    this ._radius   .setUnit ("length");
+
+   // Private properties
+
+   this .attenuation = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (PointLight .prototype, X3DLightNode .prototype),
 {
+   initialize ()
+   {
+      X3DLightNode .prototype .initialize .call (this);
+
+      this ._attenuation .addInterest ("set_attenuation__", this);
+
+      this .set_attenuation__ ();
+   },
+   set_attenuation__ ()
+   {
+      const attenuation = this ._attenuation .getValue ();
+
+      this .attenuation [0] = Math .max (0, attenuation .x);
+      this .attenuation [1] = Math .max (0, attenuation .y);
+      this .attenuation [2] = Math .max (0, attenuation .z);
+   },
    getAttenuation ()
    {
-      return this ._attenuation .getValue ();
+      return this .attenuation;
    },
    getLocation ()
    {

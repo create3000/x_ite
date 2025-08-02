@@ -827,6 +827,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .inputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -852,6 +853,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .outputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -879,6 +881,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   field .setAccessType (X3DConstants .initializeOnly);
                   field .setName (fieldId);
+
                   return field;
                }
 
@@ -920,6 +923,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   field .setAccessType (X3DConstants .inputOutput);
                   field .setName (fieldId);
+
                   return field;
                }
 
@@ -1023,6 +1027,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .inputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1048,6 +1053,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .outputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1073,6 +1079,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .initializeOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1098,6 +1105,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .inputOutput);
                field .setName (fieldId);
+
                return field;
             }
 
