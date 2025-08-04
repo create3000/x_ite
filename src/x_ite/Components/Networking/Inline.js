@@ -54,6 +54,10 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   getShapes (shapes, modelViewMatrix)
+   {
+      return this .groupNode .getShapes (shapes, modelViewMatrix);
+   },
    unloadData ()
    {
       this .abortLoading ();

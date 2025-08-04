@@ -45,6 +45,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   getShapes (shapes, modelViewMatrix)
+   {
+      return this .visibleObject ?.getShapes (shapes, modelViewMatrix) ?? shapes;
+   },
    requestRebuild ()
    {
       this ._rebuild .addEvent ();

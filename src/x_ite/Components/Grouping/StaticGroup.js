@@ -84,19 +84,18 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    set_children__ ()
    {
-      this .visibleNodes = null;
+      this .optimizedGroup = null;
    },
    traverse (type, renderObject)
    {
-      if (!this .visibleNodes)
-         this .createStaticShapes (renderObject);
+      if (!this .optimizedGroup)
+         this .createStaticShapes ();
 
-      for (const visibleNode of this .visibleNodes)
-         visibleNode .traverse (type, renderObject);
+      (this .optimizedGroup ?? this .groupNode) .traverse (type, renderObject);
    },
-   createStaticShapes (renderObject)
+   createStaticShapes ()
    {
-      this .visibleNodes = [this .groupNode];
+      this .optimizedGroup = undefined;
 
       // Check if scene is currently loading something.
 
@@ -118,73 +117,37 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       {
          // Create static shapes.
 
-         this .optimizeGroups (this .createGroups (renderObject));
+         this .optimizeGroups (this .createGroups ());
       }
    },
    createGroups: (() =>
    {
-      const
-         Statics    = ["Opaque", "Transparent"],
-         viewVolume = new ViewVolume (),
-         style      = { style: "CLEAN", names: false };
+      const style = { style: "CLEAN", names: false };
 
-      viewVolume .intersectsSphere = () => true;
-
-      return function (renderObject)
+      return function ()
       {
          // Traverse Group node to get render contexts.
 
-         const
-            browser          = this .getBrowser (),
-            viewVolumes      = renderObject .getViewVolumes (),
-            viewport         = renderObject .getViewport (),
-            projectionMatrix = renderObject .getProjectionMatrix (),
-            modelViewMatrix  = renderObject .getModelViewMatrix (),
-            firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ()),
-            renderContexts   = [ ];
+         const browser = this .getBrowser ();
 
          if (browser .getBrowserOption ("Debug"))
             console .info (`Rebuilding StaticGroup "${this .getName () || "unnamed"}".`);
 
-         viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-
-         modelViewMatrix .push ();
-         modelViewMatrix .identity ();
-
-         this .groupNode .traverse (TraverseType .DISPLAY, renderObject);
-
-         modelViewMatrix .pop ();
-         viewVolumes     .pop ();
-
-         for (const [i, Static] of Statics .entries ())
-         {
-            const
-               firstShape = firstShapes [i],
-               lastShape  = renderObject [`getNum${Static}Shapes`] (),
-               shapes     = renderObject [`get${Static}Shapes`] () .splice (firstShape, lastShape - firstShape);
-
-            renderObject [`setNum${Static}Shapes`] (firstShape);
-
-            if (Static .includes ("Transmission"))
-               continue;
-
-            for (const renderContext of shapes)
-               renderContexts .push (renderContext);
-         }
+         const shapes = this .groupNode .getShapes ([ ], Matrix4 .Identity);
 
          // Determine groups that can be combined.
          // Sort out ParticleSystem nodes.
          // Sort out TextureCoordinateGenerator nodes.
 
          const
-            clonesIndex  = new Map (renderContexts .map (({shapeNode}) => [shapeNode, [ ]])),
+            clonesIndex  = new Map (shapes .map (({shapeNode}) => [shapeNode, [ ]])),
             groupsIndex  = { },
             singlesIndex = { };
 
-         for (const renderContext of renderContexts)
+         for (const context of shapes)
          {
             const
-               shapeNode      = renderContext .shapeNode,
+               shapeNode      = context .shapeNode,
                appearanceNode = shapeNode .getAppearance (),
                geometryNode   = shapeNode .getGeometry ();
 
@@ -210,9 +173,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             // Sort out ParticleSystem and InstancedShape nodes.
             if (shapeNode .getShapeKey () > 0 || this .hasTextureCoordinateGenerator (geometryNode))
             {
-               const group = singlesIndex [renderContext .modelViewMatrix] ??= [ ];
+               const group = singlesIndex [context .modelViewMatrix] ??= [ ];
 
-               group .push (renderContext);
+               group .push (context);
                continue;
             }
 
@@ -232,8 +195,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                clones = clonesIndex .get (shapeNode),
                group  = groupsIndex [key] ??= [ ];
 
-            clones .push (renderContext);
-            group  .push (renderContext);
+            clones .push (context);
+            group  .push (context);
          }
 
          // Sort out shapes that are not cloned.
@@ -255,7 +218,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          if (browser .getBrowserOption ("Debug"))
          {
-            console .info (`StaticGroup will create ${clonesGroups .length + combineGroups .length + singlesGroups .length} static nodes from the previous ${renderContexts .length} nodes.`);
+            console .info (`StaticGroup will create ${clonesGroups .length + combineGroups .length + singlesGroups .length} static nodes from the previous ${shapes .length} nodes.`);
          }
 
          return { clonesGroups, combineGroups, singlesGroups };
@@ -292,7 +255,14 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       combineGroups .forEach (group => this .combineShapes (group, visibleNodes));
       singlesGroups .forEach (group => this .normalizeSingleShapes (group, visibleNodes));
 
-      this .visibleNodes = visibleNodes;
+      // Create group of all optimized shapes.
+
+      this .optimizedGroup = new Group (this .getExecutionContext ());
+
+      this .optimizedGroup ._children = visibleNodes;
+
+      this .optimizedGroup .setPrivate (true);
+      this .optimizedGroup .setup ();
 
       if (DEVELOPMENT)
          console .timeEnd ("StaticGroup");

@@ -58,6 +58,11 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       this .set_children__ ();
    },
+   addAllowedTypes (... types)
+   {
+      for (const type of types)
+         this .allowedTypes .add (type);
+   },
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
@@ -69,10 +74,12 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       return X3DBoundedObject .prototype .getBBox .call (this, this .boundedObjects, bbox, shadows);
    },
-   addAllowedTypes (... types)
+   getShapes (shapes, modelViewMatrix)
    {
-      for (const type of types)
-         this .allowedTypes .add (type);
+      for (const visibleObject of this .visibleObjects)
+         visibleObject .getShapes (shapes, modelViewMatrix);
+
+      return shapes;
    },
    requestRebuild ()
    {
