@@ -95,11 +95,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       if (!this .optimizedGroup)
          this .createStaticShapes ();
 
-      (this .optimizedGroup ?? this .groupNode) .traverse (type, renderObject);
+      this .optimizedGroup .traverse (type, renderObject);
    },
-   createStaticShapes ()
+   async createStaticShapes ()
    {
-      this .optimizedGroup = undefined;
+      // Temporarily assign Group node.
+
+      this .optimizedGroup = this .groupNode;
 
       // Check if scene is currently loading something.
 
@@ -121,7 +123,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       {
          // Create static shapes.
 
-         this .optimizeGroups (this .createGroups ());
+         this .optimizedGroup = await this .optimizeGroups (this .createGroups ());
       }
    },
    createGroups: (() =>
@@ -261,15 +263,17 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       // Create group of all optimized shapes.
 
-      this .optimizedGroup = new Group (this .getExecutionContext ());
+      const optimizedGroup = new Group (this .getExecutionContext ());
 
-      this .optimizedGroup ._children = visibleNodes;
+      optimizedGroup ._children = visibleNodes;
 
-      this .optimizedGroup .setPrivate (true);
-      this .optimizedGroup .setup ();
+      optimizedGroup .setPrivate (true);
+      optimizedGroup .setup ();
 
       if (DEVELOPMENT)
          console .timeEnd ("StaticGroup");
+
+      return optimizedGroup;
    },
    combineClones: (() =>
    {
