@@ -11,7 +11,7 @@ function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision 
    this .doublePrecision = Algorithm .clamp (doublePrecision, 1, 21);
    this .html            = html;
    this .closingTags     = html || closingTags;
-   this .outputNames     = names; // Currently only for toVRMLString.
+   this .outputNames     = names; // private option: used in StaticGroup for toVRMLString.
 
    this .floatFormat             = this .createFloatFormat (this .precision);
    this .floatExponentialFormat  = this .createFloatExponentialFormat (this .precision);
