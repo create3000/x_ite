@@ -36,7 +36,6 @@ function X3DGroupingNode (executionContext)
    this .childNodes                = new Set ();
    this .visibleObjects            = new Set ();
    this .boundedObjects            = new Set ();
-   this .bboxObjects               = new Set ();
    this .sensors                   = [ ];
 }
 
@@ -177,7 +176,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .shadowObjects             .clear ();
       this .childNodes                .clear ();
       this .visibleObjects            .clear ();
-      this .bboxObjects               .clear ();
    },
    addChildren (children)
    {
@@ -275,7 +273,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                   if (childNode .isBBoxVisible ())
-                     this .bboxObjects .add (childNode);
+                     this .visibleObjects .add (childNode .getBBoxNode ());
                }
 
                break;
@@ -354,7 +352,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                this .shadowObjects    .delete (childNode);
                this .childNodes       .delete (childNode);
                this .visibleObjects   .delete (childNode);
-               this .bboxObjects      .delete (childNode);
                break;
             }
             default:
@@ -400,7 +397,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size);
+      this .setVisibleObject (this .visibleObjects .size);
    },
    traverse (type, renderObject)
    {
@@ -519,9 +516,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
             for (const visibleObject of this .visibleObjects)
                visibleObject .traverse (type, renderObject);
-
-            for (const bboxObject of this .bboxObjects)
-               bboxObject .displayBBox (type, renderObject);
 
             for (const displayNode of displayNodes)
                displayNode .pop (renderObject);

@@ -1,6 +1,7 @@
 import Fields       from "../../Fields.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import TraverseType from "../../Rendering/TraverseType.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../../standard/Math/Geometry/Box3.js";
@@ -29,10 +30,12 @@ Object .assign (X3DBoundedObject .prototype,
    childBBox: new Box3 (), // X3DExecutionContext needs this.
    initialize ()
    {
-      this ._hidden  .addInterest ("set_visible_and_hidden__", this);
-      this ._visible .addInterest ("set_visible_and_hidden__", this);
+      this ._hidden      .addInterest ("set_visible_and_hidden__", this);
+      this ._visible     .addInterest ("set_visible_and_hidden__", this);
+      this ._bboxDisplay .addInterest ("set_bboxDisplay__",        this);
 
       this .set_visible_and_hidden__ ();
+      this .set_bboxDisplay__ ();
    },
    isVisible ()
    {
@@ -76,32 +79,10 @@ Object .assign (X3DBoundedObject .prototype,
 
       return bbox;
    },
-   displayBBox: (() =>
+   getBBoxNode ()
    {
-      const
-         bbox   = new Box3 (),
-         eps    = new Vector3 (1e-5),
-         matrix = new Matrix4 ();
-
-      return function (type, renderObject)
-      {
-         const
-            browser         = this .getBrowser (),
-            m               = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .Zero : eps,
-            modelViewMatrix = renderObject .getModelViewMatrix ();
-
-         this .getBBox (bbox);
-
-         matrix .set (bbox .center, null, bbox .size .max (m));
-
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (matrix);
-
-         browser .getBBoxNode () .traverse (type, renderObject);
-
-         modelViewMatrix .pop ();
-      };
-   })(),
+      return this .bboxNode;
+   },
    addTransformSensor (transformSensorNode)
    {
       this .transformSensorNodes .add (transformSensorNode);
@@ -127,6 +108,66 @@ Object .assign (X3DBoundedObject .prototype,
 
       this ._display = value;
    },
+   set_bboxDisplay__: (() =>
+   {
+      const
+         bbox   = new Box3 (),
+         matrix = new Matrix4 ();
+
+      return function ()
+      {
+         if (this ._bboxDisplay .getValue ())
+         {
+            this .bboxNode ??= (() =>
+            {
+               // Create dummy Transform.
+
+               const
+                  browser  = this .getBrowser (),
+                  bboxNode = this .getExecutionContext () .createNode ("Transform", false);
+
+               bboxNode ._children = [browser .getBBoxShape ()];
+
+               bboxNode .setPrivate (true);
+               bboxNode .setup ();
+
+               // Override traverse.
+
+               bboxNode .traverse = (type, renderObject) =>
+               {
+                  if (type === TraverseType .PICKING)
+                     return;
+
+                  const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+                  this .getBBox (bbox);
+
+                  const
+                     bboxSize   = bbox .size,
+                     bboxCenter = bbox .center;
+
+                  if (bboxSize .x === 0 || bboxSize .y === 0 || bboxSize .z === 0)
+                     return;
+
+                  matrix .set (bboxCenter, null, bboxSize);
+
+                  modelViewMatrix .push ();
+                  modelViewMatrix .multLeft (matrix);
+
+                  browser .getBBoxShape () .traverse (type, renderObject);
+
+                  modelViewMatrix .pop ();
+               };
+
+               return bboxNode;
+            })();
+         }
+         else
+         {
+            this .bboxNode = null;
+         }
+      };
+   })(),
    dispose () { },
 });
 

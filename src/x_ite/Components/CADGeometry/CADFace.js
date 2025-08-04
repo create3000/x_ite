@@ -22,6 +22,10 @@ function CADFace (executionContext)
    this .setCollisionObject (true);
    this .setShadowObject (true);
    this .setVisibleObject (true);
+
+   // Private properties
+
+   this .visibleObjects = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureChildNode .prototype),
@@ -47,7 +51,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    getShapes (shapes, modelViewMatrix)
    {
-      return this .visibleObject ?.getShapes (shapes, modelViewMatrix) ?? shapes;
+      for (const visibleObject of this .visibleObjects)
+         visibleObject .getShapes (shapes, modelViewMatrix);
+
+      return shapes;
    },
    requestRebuild ()
    {
@@ -89,8 +96,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleObject   = null;
-      this .bboxObject      = null;
+
+      this .visibleObjects .length = 0;
 
       // Add node.
 
@@ -137,7 +144,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                         this .shadowObject = childNode;
 
                      if (childNode .isVisibleObject ())
-                        this .visibleObject = childNode;
+                        this .visibleObjects .push (childNode);
                   }
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -146,7 +153,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                      childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                      if (childNode .isBBoxVisible ())
-                        this .bboxObject = childNode;
+                        this .visibleObjects .push (childNode .getBBoxNode ());
                   }
 
                   break;
@@ -193,7 +200,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleObject || this .bboxObject);
+      this .setVisibleObject (this .visibleObjects .length);
    },
    traverse (type, renderObject)
    {
@@ -215,9 +222,14 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
             // so we do not need to add this node to the pickingHierarchy.
 
             if (this .getBrowser () .getPickable () .at (-1))
-               this .visibleObject ?.traverse (type, renderObject);
+            {
+               for (const visibleObject of this .visibleObjects)
+                  visibleObject .traverse (type, renderObject);
+            }
             else
+            {
                this .pickableObject ?.traverse (type, renderObject);
+            }
 
             return;
          }
@@ -233,8 +245,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleObject ?.traverse    (type, renderObject);
-            this .bboxObject    ?.displayBBox (type, renderObject);
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
             return;
          }
       }
