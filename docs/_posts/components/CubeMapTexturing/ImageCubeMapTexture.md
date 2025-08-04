@@ -130,7 +130,7 @@ Any image file format supported by the web browser, but at least:
 | WebP     | .webp           | image/webp | lossless/lossy   |
 | JPEG     | .jpeg, .jpg     | image/jpeg | lossy            |
 | GIF      | .gif            | image/gif  | lossy            |
-| SVG      | .svg            | image/svg  |                  |
+| SVG      | .svg            | image/svg  | vector graphics  |
 | KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_CUBE_MAP |
 
 Images from PNG to SVG format can be in panorama format or skybox format.
