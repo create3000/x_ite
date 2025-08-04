@@ -120,11 +120,11 @@ Object .assign (X3DBoundedObject .prototype,
          {
             this .bboxNode ??= (() =>
             {
-               // Create dummy Transform.
+               // Create dummy Group.
 
                const
                   browser  = this .getBrowser (),
-                  bboxNode = this .getExecutionContext () .createNode ("Transform", false);
+                  bboxNode = this .getExecutionContext () .createNode ("Group", false);
 
                bboxNode ._children = [browser .getBBoxShape ()];
 
