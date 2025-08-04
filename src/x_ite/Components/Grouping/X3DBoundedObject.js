@@ -1,9 +1,8 @@
 import Fields       from "../../Fields.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
-import TraverseType from "../../Rendering/TraverseType.js";
+import X3DBBoxNode  from "../../Browser/Grouping/X3DBBoxNode.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../../standard/Math/Geometry/Box3.js";
 
 function X3DBoundedObject (executionContext)
@@ -108,66 +107,25 @@ Object .assign (X3DBoundedObject .prototype,
 
       this ._display = value;
    },
-   set_bboxDisplay__: (() =>
+   set_bboxDisplay__ ()
    {
-      const
-         bbox   = new Box3 (),
-         matrix = new Matrix4 ();
-
-      return function ()
+      if (this ._bboxDisplay .getValue ())
       {
-         if (this ._bboxDisplay .getValue ())
+         this .bboxNode ??= (() =>
          {
-            this .bboxNode ??= (() =>
-            {
-               // Create dummy Group.
+            const bboxNode = new X3DBBoxNode (this .getExecutionContext (), this);
 
-               const
-                  browser  = this .getBrowser (),
-                  bboxNode = this .getExecutionContext () .createNode ("Group", false);
+            bboxNode .setPrivate (true);
+            bboxNode .setup ();
 
-               bboxNode ._children = [browser .getBBoxShape ()];
-
-               bboxNode .setPrivate (true);
-               bboxNode .setup ();
-
-               // Override traverse.
-
-               bboxNode .traverse = (type, renderObject) =>
-               {
-                  if (type === TraverseType .PICKING)
-                     return;
-
-                  const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-                  this .getBBox (bbox);
-
-                  const
-                     bboxSize   = bbox .size,
-                     bboxCenter = bbox .center;
-
-                  if (bboxSize .x === 0 || bboxSize .y === 0 || bboxSize .z === 0)
-                     return;
-
-                  matrix .set (bboxCenter, null, bboxSize);
-
-                  modelViewMatrix .push ();
-                  modelViewMatrix .multLeft (matrix);
-
-                  browser .getBBoxShape () .traverse (type, renderObject);
-
-                  modelViewMatrix .pop ();
-               };
-
-               return bboxNode;
-            })();
-         }
-         else
-         {
-            this .bboxNode = null;
-         }
-      };
-   })(),
+            return bboxNode;
+         })();
+      }
+      else
+      {
+         this .bboxNode = null;
+      }
+   },
    dispose () { },
 });
 
