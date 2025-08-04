@@ -365,10 +365,13 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return this [_userDefinedFields];
    },
-   getChangedFields (extended)
+   /**
+    *
+    * @param {*} extended  also return user-defined fields and fields with routes
+    * @returns Array<X3DField>
+    */
+   getChangedFields (extended = false)
    {
-      /* param routes: also return fields with routes */
-
       const changedFields = [ ];
 
       if (extended)
