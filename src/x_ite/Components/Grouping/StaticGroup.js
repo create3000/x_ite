@@ -77,6 +77,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    {
       return bbox .assign (shadows ? this .shadowBBox : this .bbox);
    },
+   getShapes (shapes, modelViewMatrix)
+   {
+      return this .groupNode .getShapes (shapes, modelViewMatrix);
+   },
    set_rebuild__ ()
    {
       this .groupNode .getBBox (this .bbox);
