@@ -367,7 +367,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    /**
     *
-    * @param {*} extended  also return user-defined fields and fields with routes
+    * @param {boolean} extended  also return user-defined fields and fields with routes
     * @returns Array<X3DField>
     */
    getChangedFields (extended = false)
