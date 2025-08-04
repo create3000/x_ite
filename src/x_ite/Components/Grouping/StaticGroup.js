@@ -68,8 +68,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .groupNode ._rebuild  .addInterest ("set_rebuild__",  this);
       this .groupNode ._children .addInterest ("set_children__", this);
 
-      this .connectChildNode (this .groupNode, [TraverseType .CAMERA]);
-
       this .set_rebuild__ ();
       this .set_children__ ();
    },
@@ -88,6 +86,11 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    set_children__ ()
    {
+      if (this .optimizedGroup)
+         this .disconnectChildNode (this .optimizedGroup);
+
+      this .connectChildNode (this .groupNode, [TraverseType .CAMERA]);
+
       this .optimizedGroup = null;
    },
    traverse (type, renderObject)
@@ -124,6 +127,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Create static shapes.
 
          this .optimizedGroup = await this .optimizeGroups (this .createGroups ());
+
+         this .disconnectChildNode (this .groupNode);
+         this .connectChildNode (this .optimizedGroup, [TraverseType .CAMERA]);
       }
    },
    createGroups: (() =>
