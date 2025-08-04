@@ -2,7 +2,7 @@ import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, html = false, closingTags = false })
+function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, html = false, closingTags = false, names = true })
 {
    this .string          = "";
    this .indent          = indent;
@@ -11,6 +11,7 @@ function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision 
    this .doublePrecision = Algorithm .clamp (doublePrecision, 1, 21);
    this .html            = html;
    this .closingTags     = html || closingTags;
+   this .outputNames     = names; // Currently only for toVRMLString.
 
    this .floatFormat             = this .createFloatFormat (this .precision);
    this .floatExponentialFormat  = this .createFloatExponentialFormat (this .precision);

@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       const
          Statics    = ["Opaque", "Transparent"],
          viewVolume = new ViewVolume (),
-         style      = { style: "CLEAN" };
+         style      = { style: "CLEAN", names: false };
 
       viewVolume .intersectsSphere = () => true;
 
