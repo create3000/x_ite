@@ -438,12 +438,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (+appearanceNode .getTextureBits ())
          options .push ("X3D_TEXTURE");
 
-      if (hAnimNode)
-      {
-         options .push ("X3D_SKINNING");
-         options .push (`X3D_NUM_JOINT_SETS ${hAnimNode .getNumJoints () / 4}`);
-         options .push (`X3D_NUM_DISPLACEMENTS ${hAnimNode .getNumDisplacements ()}`);
-      }
+      hAnimNode ?.getShaderOptions (options);
 
       const shaderNode = this .createShader ("Pointing", "Pointing", "Pointing", options);
 
