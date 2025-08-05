@@ -256,20 +256,18 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const
-         browser                  = this .getBrowser (),
-         jointMatricesTextureUnit = browser .getTextureUnit ();
-
-      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
-
       if (!this .numDisplacements)
          return;
 
       const
+         browser                               = this .getBrowser (),
+         jointMatricesTextureUnit              = browser .getTextureUnit (),
          displacementsTextureTextureUnit       = browser .getTextureUnit (),
          displacementWeightsTextureTextureUnit = browser .getTextureUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
 
       gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
