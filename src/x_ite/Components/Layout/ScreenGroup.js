@@ -26,7 +26,10 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode 
 {
    getBBox (bbox, shadows)
    {
-      return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+      if (this .isDefaultBBoxSize ())
+         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getMatrix ()
    {

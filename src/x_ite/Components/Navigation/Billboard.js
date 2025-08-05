@@ -24,7 +24,10 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
 {
    getBBox (bbox, shadows)
    {
-      return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);
+      if (this .isDefaultBBoxSize ())
+         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getMatrix ()
    {

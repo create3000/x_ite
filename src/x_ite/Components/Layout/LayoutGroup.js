@@ -46,7 +46,10 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    { },
    getBBox (bbox, shadows)
    {
-      return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
+      if (this .isDefaultBBoxSize ())
+         return this .getSubBBox (bbox, shadows) .multRight (this .getMatrix ());
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getMatrix ()
    {
