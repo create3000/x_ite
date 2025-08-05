@@ -561,7 +561,6 @@ Object .defineProperties (X3DBaseNode .prototype,
 
             this [`_${name}`] .setValue (value);
          },
-         configurable: true,
       }];
    })),
    name_changed:
