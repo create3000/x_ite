@@ -45,8 +45,6 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
 
       return function (modelViewMatrix)
       {
-         // throws domain error
-
          inverseModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
          const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
@@ -55,9 +53,11 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
          {
             inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis)) .normalize (); // Normalized to get work with Geo
 
-            const x = viewerYAxis .cross (billboardToViewer);
+            const
+               z = billboardToViewer,
+               x = viewerYAxis .cross (billboardToViewer);
+
             y .assign (billboardToViewer) .cross (x);
-            const z = billboardToViewer;
 
             // Compose rotation
 
