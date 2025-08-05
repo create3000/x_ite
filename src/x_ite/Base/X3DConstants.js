@@ -102,8 +102,6 @@ Object .entries ({
    "MFVec4f",
 
    // Abstract and concrete nodes and nodes types are added later.
-
-   "X3DBaseNode",
 ]
 .forEach (name => X3DConstants .addConstant (name));
 
