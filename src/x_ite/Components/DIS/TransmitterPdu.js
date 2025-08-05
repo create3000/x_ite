@@ -33,6 +33,10 @@ Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, X3DSensorNode
       X3DSensorNode    .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
    },
+   getBBox (bbox, shadows)
+   {
+      return bbox .set ();
+   },
    dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
