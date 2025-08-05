@@ -19,52 +19,46 @@ function X3DBBoxNode (executionContext, boundedObject)
 
 Object .assign (Object .setPrototypeOf (X3DBBoxNode .prototype, X3DChildNode .prototype),
 {
-   getShapes (shapes, parentModelViewMatrix)
-   {
-      const
-         browser    = this .getBrowser (),
-         max        = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .Zero : new Vector3 (1e-6),
-         bbox       = this .boundedObject .getBBox (new Box3 ()),
-         bboxSize   = bbox .size .max (max),
-         bboxCenter = bbox .center;
-
-      const modelViewMatrix = new Matrix4 ()
-         .set (bboxCenter, null, bboxSize)
-         .multRight (parentModelViewMatrix);
-
-      return this .bboxShape .getShapes (shapes, modelViewMatrix);
-   },
-   traverse: (() =>
+   getMatrix: (() =>
    {
       const
          bbox    = new Box3 (),
          matrix  = new Matrix4 (),
          epsilon = new Vector3 (1e-6);
 
-      return function (type, renderObject)
+      return function ()
       {
-         if (type === TraverseType .PICKING)
-            return;
-
          this .boundedObject .getBBox (bbox);
 
          const
-            browser         = this .getBrowser (),
-            max             = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .Zero : epsilon,
-            bboxSize        = bbox .size .max (max),
-            bboxCenter      = bbox .center,
-            modelViewMatrix = renderObject .getModelViewMatrix ();
+            browser    = this .getBrowser (),
+            max        = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .Zero : epsilon,
+            bboxSize   = bbox .size .max (max),
+            bboxCenter = bbox .center;
 
-         matrix .set (bboxCenter, null, bboxSize);
-
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (matrix);
-
-         this .bboxShape .traverse (type, renderObject);
-
-         modelViewMatrix .pop ();
+         return matrix .set (bboxCenter, null, bboxSize);
       };
    })(),
+   getShapes (shapes, parentModelViewMatrix)
+   {
+      const modelViewMatrix = parentModelViewMatrix .copy () .multLeft (this .getMatrix ());
+
+      return this .bboxShape .getShapes (shapes, modelViewMatrix);
+   },
+   traverse (type, renderObject)
+   {
+      if (type === TraverseType .PICKING)
+         return;
+
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .getMatrix ());
+
+      this .bboxShape .traverse (type, renderObject);
+
+      modelViewMatrix .pop ();
+   },
 });
 
 Object .defineProperties (X3DBBoxNode,
