@@ -122,10 +122,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .getGeometry ();
    },
-   getShapes (shapes, modelViewMatrix)
+   getShapes (shapes, modelMatrix)
    {
       if (this .isVisibleObject ())
-         shapes .push ({ modelViewMatrix: modelViewMatrix .copy (), shapeNode: this });
+         shapes .push ({ modelMatrix: modelMatrix .copy (), shapeNode: this });
 
       return shapes;
    },

@@ -39,11 +39,11 @@ Object .assign (Object .setPrototypeOf (X3DBBoxNode .prototype, X3DChildNode .pr
          return matrix .set (bboxCenter, null, bboxSize);
       };
    })(),
-   getShapes (shapes, parentModelViewMatrix)
+   getShapes (shapes, parentModelMatrix)
    {
-      const modelViewMatrix = parentModelViewMatrix .copy () .multLeft (this .getMatrix ());
+      const modelMatrix = parentModelMatrix .copy () .multLeft (this .getMatrix ());
 
-      return this .bboxShape .getShapes (shapes, modelViewMatrix);
+      return this .bboxShape .getShapes (shapes, modelMatrix);
    },
    traverse (type, renderObject)
    {

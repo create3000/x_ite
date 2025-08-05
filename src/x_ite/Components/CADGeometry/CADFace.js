@@ -49,10 +49,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   getShapes (shapes, modelViewMatrix)
+   getShapes (shapes, modelMatrix)
    {
       for (const visibleObject of this .visibleObjects)
-         visibleObject .getShapes (shapes, modelViewMatrix);
+         visibleObject .getShapes (shapes, modelMatrix);
 
       return shapes;
    },

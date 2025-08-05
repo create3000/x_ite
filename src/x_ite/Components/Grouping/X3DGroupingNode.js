@@ -73,10 +73,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       return X3DBoundedObject .prototype .getBBox .call (this, this .boundedObjects, bbox, shadows);
    },
-   getShapes (shapes, modelViewMatrix)
+   getShapes (shapes, modelMatrix)
    {
       for (const visibleObject of this .visibleObjects)
-         visibleObject .getShapes (shapes, modelViewMatrix);
+         visibleObject .getShapes (shapes, modelMatrix);
 
       return shapes;
    },

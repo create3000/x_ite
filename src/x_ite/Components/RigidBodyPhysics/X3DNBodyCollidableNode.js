@@ -61,12 +61,12 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   getShapes (shapes, parentModelViewMatrix)
+   getShapes (shapes, parentModelMatrix)
    {
-      const modelViewMatrix = parentModelViewMatrix .copy () .multLeft (this .matrix);
+      const modelMatrix = parentModelMatrix .copy () .multLeft (this .matrix);
 
       for (const visibleObject of this .visibleObjects)
-         visibleObject .getShapes (shapes, modelViewMatrix);
+         visibleObject .getShapes (shapes, modelMatrix);
 
       return shapes;
    },

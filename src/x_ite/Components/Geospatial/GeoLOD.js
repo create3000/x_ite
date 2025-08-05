@@ -104,21 +104,21 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   getShapes (shapes, modelViewMatrix)
+   getShapes (shapes, modelMatrix)
    {
       switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
       {
          case 0:
          {
             if (this ._rootNode .length)
-               return this .rootGroupNode .getShapes (shapes, modelViewMatrix);
+               return this .rootGroupNode .getShapes (shapes, modelMatrix);
 
-            return this .rootInlineNode .getShapes (shapes, modelViewMatrix);
+            return this .rootInlineNode .getShapes (shapes, modelMatrix);
          }
          case 1:
          {
             for (const childInlineNode of this .childInlineNodes)
-               childInlineNode .getShapes (shapes, modelViewMatrix);
+               childInlineNode .getShapes (shapes, modelMatrix);
 
             return shapes;
          }

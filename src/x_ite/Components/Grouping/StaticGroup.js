@@ -75,9 +75,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    {
       return bbox .assign (shadows ? this .shadowBBox : this .bbox);
    },
-   getShapes (shapes, modelViewMatrix)
+   getShapes (shapes, modelMatrix)
    {
-      return this .groupNode .getShapes (shapes, modelViewMatrix);
+      return this .groupNode .getShapes (shapes, modelMatrix);
    },
    set_rebuild__ ()
    {
@@ -185,7 +185,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             // Sort out ParticleSystem and InstancedShape nodes.
             if (shapeNode .getShapeKey () > 0 || this .hasTextureCoordinateGenerator (geometryNode))
             {
-               const group = singlesIndex [context .modelViewMatrix] ??= [ ];
+               const group = singlesIndex [context .modelMatrix] ??= [ ];
 
                group .push (context);
                continue;
@@ -284,11 +284,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    combineClones: (() =>
    {
       const
-         modelMatrix = new Matrix4 (),
-         t           = new Vector3 (),
-         r           = new Rotation4 (),
-         s           = new Vector3 (),
-         so          = new Rotation4 ();
+         t  = new Vector3 (),
+         r  = new Rotation4 (),
+         s  = new Vector3 (),
+         so = new Rotation4 ();
 
       return function (group, visibleNodes)
       {
@@ -299,9 +298,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             instancedShape   = new InstancedShape (executionContext),
             shapeNode0       = group [0] .shapeNode;
 
-         for (const { modelViewMatrix } of group)
+         for (const { modelMatrix } of group)
          {
-            modelMatrix .assign (modelViewMatrix) .get (t, r, s, so);
+            modelMatrix .get (t, r, s, so);
 
             instancedShape ._translations      .push (t);
             instancedShape ._rotations         .push (r);
@@ -332,11 +331,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          newGeometryNode = null,
          numPoints       = 0;
 
-      for (const { modelViewMatrix, shapeNode } of group)
+      for (const { modelMatrix, shapeNode } of group)
       {
-         const
-            modelMatrix        = new Matrix4 (... modelViewMatrix),
-            normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode);
+         const normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode);
 
          if (!newGeometryNode)
          {
@@ -783,7 +780,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          const
             executionContext = this .getExecutionContext (),
             newTransformNode = new Transform (executionContext),
-            modelMatrix      = new Matrix4 (... group [0] .modelViewMatrix);
+            modelMatrix      = group [0] .modelMatrix;
 
          modelMatrix .get (t, r, s, so);
 

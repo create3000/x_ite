@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
       childNode ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
       childNode ._isVisibleObject   .removeFieldInterest (this ._isVisibleObject);
    },
-   getShapes (shapes, modelViewMatrix)
+   getShapes (shapes, modelMatrix)
    {
       return shapes;
    },
