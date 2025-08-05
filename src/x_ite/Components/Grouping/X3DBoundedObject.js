@@ -29,12 +29,10 @@ Object .assign (X3DBoundedObject .prototype,
    childBBox: new Box3 (), // X3DExecutionContext needs this.
    initialize ()
    {
-      this ._hidden      .addInterest ("set_visible_and_hidden__", this);
-      this ._visible     .addInterest ("set_visible_and_hidden__", this);
-      this ._bboxDisplay .addInterest ("set_bboxDisplay__",        this);
+      this ._hidden  .addInterest ("set_visible_and_hidden__", this);
+      this ._visible .addInterest ("set_visible_and_hidden__", this);
 
       this .set_visible_and_hidden__ ();
-      this .set_bboxDisplay__ ();
    },
    isVisible ()
    {
@@ -80,7 +78,15 @@ Object .assign (X3DBoundedObject .prototype,
    },
    getBBoxNode ()
    {
-      return this .bboxNode;
+      return this .bboxNode ??= (() =>
+      {
+         const bboxNode = new X3DBBoxNode (this .getExecutionContext (), this);
+
+         bboxNode .setPrivate (true);
+         bboxNode .setup ();
+
+         return bboxNode;
+      })();
    },
    addTransformSensor (transformSensorNode)
    {
@@ -106,25 +112,6 @@ Object .assign (X3DBoundedObject .prototype,
          return;
 
       this ._display = value;
-   },
-   set_bboxDisplay__ ()
-   {
-      if (this ._bboxDisplay .getValue ())
-      {
-         this .bboxNode ??= (() =>
-         {
-            const bboxNode = new X3DBBoxNode (this .getExecutionContext (), this);
-
-            bboxNode .setPrivate (true);
-            bboxNode .setup ();
-
-            return bboxNode;
-         })();
-      }
-      else
-      {
-         this .bboxNode = null;
-      }
    },
    dispose () { },
 });
