@@ -162,6 +162,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       return this .transformNode .getSubBBox (bbox, shadows);
    },
+   getShapes (shapes, modelMatrix)
+   {
+      return this .transformNode .getShapes (shapes, modelMatrix);
+   },
    getMatrix ()
    {
       return this .transformNode .getMatrix ();
