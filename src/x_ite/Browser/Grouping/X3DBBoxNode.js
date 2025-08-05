@@ -7,6 +7,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 function X3DBBoxNode (executionContext, boundedObject)
 {
@@ -21,12 +22,11 @@ Object .assign (Object .setPrototypeOf (X3DBBoxNode .prototype, X3DChildNode .pr
    getShapes (shapes, parentModelViewMatrix)
    {
       const
+         browser    = this .getBrowser (),
+         max        = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .Zero : new Vector3 (1e-6),
          bbox       = this .boundedObject .getBBox (new Box3 ()),
-         bboxSize   = bbox .size,
+         bboxSize   = bbox .size .max (max),
          bboxCenter = bbox .center;
-
-      if (bboxSize .x === 0 || bboxSize .y === 0 || bboxSize .z === 0)
-         return shapes;
 
       const modelViewMatrix = new Matrix4 ()
          .set (bboxCenter, null, bboxSize)
@@ -37,8 +37,9 @@ Object .assign (Object .setPrototypeOf (X3DBBoxNode .prototype, X3DChildNode .pr
    traverse: (() =>
    {
       const
-         bbox   = new Box3 (),
-         matrix = new Matrix4 ();
+         bbox    = new Box3 (),
+         matrix  = new Matrix4 (),
+         epsilon = new Vector3 (1e-6);
 
       return function (type, renderObject)
       {
@@ -48,13 +49,11 @@ Object .assign (Object .setPrototypeOf (X3DBBoxNode .prototype, X3DChildNode .pr
          this .boundedObject .getBBox (bbox);
 
          const
-            bboxSize   = bbox .size,
-            bboxCenter = bbox .center;
-
-         if (bboxSize .x === 0 || bboxSize .y === 0 || bboxSize .z === 0)
-            return;
-
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
+            browser         = this .getBrowser (),
+            max             = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .Zero : epsilon,
+            bboxSize        = bbox .size .max (max),
+            bboxCenter      = bbox .center,
+            modelViewMatrix = renderObject .getModelViewMatrix ();
 
          matrix .set (bboxCenter, null, bboxSize);
 
