@@ -13,6 +13,8 @@ function X3DBBoxNode (executionContext, boundedObject)
 {
    X3DChildNode .call (this, executionContext);
 
+   // Private properties
+
    this .boundedObject = boundedObject;
    this .bboxShape     = this .getBrowser () .getBBoxShape ();
 }
