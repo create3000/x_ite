@@ -36,7 +36,10 @@ Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, X3DSensorNode .p
    },
    getBBox (bbox, shadows)
    {
-      return bbox .set ();
+      if (this .isDefaultBBoxSize ())
+         return bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    dispose ()
    {

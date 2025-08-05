@@ -34,12 +34,17 @@ Object .assign (Object .setPrototypeOf (NurbsSet .prototype, X3DChildNode .proto
    },
    getBBox (bbox, shadows)
    {
-      // Add bounding boxes
+      if (this .isDefaultBBoxSize ())
+      {
+         // Add bounding boxes
 
-      for (const geometryNode of this .geometryNodes)
-         bbox .add (geometryNode .getBBox ());
+         for (const geometryNode of this .geometryNodes)
+            bbox .add (geometryNode .getBBox ());
 
-      return bbox;
+         return bbox;
+      }
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    set_tessellationScale__ ()
    {

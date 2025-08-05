@@ -54,35 +54,32 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._bboxSize   .addFieldInterest (this .groupNode ._bboxSize);
-      this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
-      this ._children   .addFieldInterest (this .groupNode ._children);
+      this ._children .addFieldInterest (this .groupNode ._children);
 
-      this .groupNode ._bboxSize   = this ._bboxSize;
-      this .groupNode ._bboxCenter = this ._bboxCenter;
-      this .groupNode ._children   = this ._children;
+      this .groupNode ._children = this ._children;
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
       // Connect after setup for correct order of events.
-      this .groupNode ._rebuild  .addInterest ("set_rebuild__",  this);
       this .groupNode ._children .addInterest ("set_children__", this);
 
-      this .set_rebuild__ ();
       this .set_children__ ();
    },
    getBBox (bbox, shadows)
    {
-      return bbox .assign (shadows ? this .shadowBBox : this .bbox);
+      if (this .isDefaultBBoxSize ())
+      {
+         if (this .optimizedGroup)
+            return bbox .assign (shadows ? this .shadowBBox : this .bbox);
+
+         return this .groupNode .getBBox (bbox, shadows);
+      }
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getShapes (shapes, modelMatrix)
    {
       return this .groupNode .getShapes (shapes, modelMatrix);
-   },
-   set_rebuild__ ()
-   {
-      this .groupNode .getBBox (this .bbox);
-      this .groupNode .getBBox (this .shadowBBox, true);
    },
    set_children__ ()
    {
@@ -130,6 +127,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          this .disconnectChildNode (this .groupNode);
          this .connectChildNode (this .optimizedGroup, [TraverseType .CAMERA]);
+
+         this .optimizedGroup .getBBox (this .bbox);
+         this .optimizedGroup .getBBox (this .shadowBBox, true);
       }
    },
    createGroups: (() =>
