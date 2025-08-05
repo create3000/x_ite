@@ -207,15 +207,20 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    },
    traverse (type, renderObject)
    {
-      if (this .coordNode)
+      if (this .coordNode && this .numDisplacements)
+      {
          renderObject .getHAnimNode () .push (this);
 
-      X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-      this .skinning (type, renderObject);
+         this .skinning (type, renderObject);
 
-      if (this .coordNode)
          renderObject .getHAnimNode () .pop ();
+      }
+      else
+      {
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+      }
    },
    skinning: (() =>
    {
@@ -256,9 +261,6 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    },
    setShaderUniforms (gl, shaderObject)
    {
-      if (!this .numDisplacements)
-         return;
-
       const
          browser                               = this .getBrowser (),
          jointMatricesTextureUnit              = browser .getTextureUnit (),
