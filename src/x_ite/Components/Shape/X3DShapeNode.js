@@ -125,7 +125,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    getShapes (shapes, modelMatrix)
    {
       if (this .isVisibleObject ())
-         shapes .push ({ modelMatrix: modelMatrix .copy (), shapeNode: this });
+         shapes .push ({ modelMatrix, shapeNode: this });
 
       return shapes;
    },
