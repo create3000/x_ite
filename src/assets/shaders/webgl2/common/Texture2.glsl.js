@@ -492,11 +492,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
       return currentColor;
    #else
-      // Get texture color.
-
-      vec4 textureColor = getTexture (0, 0, 0);
-
-      return diffuseColor * textureColor;
+      return diffuseColor * getTexture (0, 0, 0);
    #endif
 }
 
