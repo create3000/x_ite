@@ -168,9 +168,9 @@ getTexture (const in int i, const in int textureTransformMapping, const in int t
       case ${i}:
       {
          #if defined (X3D_TEXTURE${i}_FLIP_Y)
-            vec2 flipY = vec2 (-1.0, 1.0);
+            vec2 flipY = vec2 (-1.0, 1.0); // Flip Y
          #else
-            vec2 flipY = vec2 (1.0, 0.0);
+            vec2 flipY = vec2 (1.0, 0.0); // No flip
          #endif
 
          vec3 texCoord = getTexCoord (textureTransformMapping, textureCoordinateMapping, flipY);
