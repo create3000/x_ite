@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v12.0 Series
 
-*Leipzig, 9th August 2025:* This new series 11.7 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped, and when the glTF parser generates TextureTransform3D nodes.
+*Leipzig, 9th August 2025:* This new series 12.0 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped for the back face, and when a [ImageTexture](/x_ite/components/texturing/imagetexture/) or [MovieTexture](/x_ite/components/texturing/movietexture/) must be flipped, and when the glTF parser generates [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) nodes.
 
 ### Breaking Change
 
