@@ -13,7 +13,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ### Breaking Change
 
-* Fixes texture flipping about x-Axis for Geometry2D and about y-Axis for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) and [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) in glTF files.
+* Fixes texture flipping about x-Axis for Geometry2D and about y-Axis for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) and [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) in glTF converted files.
 
 ### Notable Changes
 
