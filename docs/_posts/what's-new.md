@@ -14,6 +14,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 ### Notable Changes
 
 * Fix texture flipping about x-Axis for Geometry2D and about y-Axis for glTF files.
+* Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
 
 ## X_ITE v11.6 Series
 
