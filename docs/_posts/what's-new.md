@@ -7,13 +7,16 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
-## X_ITE v11.7 Series
+## X_ITE v12.0 Series
 
 *Leipzig, 9th August 2025:* This new series 11.7 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped, and when the glTF parser generates TextureTransform3D nodes.
 
+### Breaking Change
+
+* Fixes texture flipping about x-Axis for Geometry2D and about y-Axis for glTF files.
+
 ### Notable Changes
 
-* Fix texture flipping about x-Axis for Geometry2D and about y-Axis for glTF files.
 * Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
 * Bug fixes in several nodes with bounding box calculations.
 
