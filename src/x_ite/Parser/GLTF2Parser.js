@@ -2469,7 +2469,6 @@ function eventsProcessed ()
       scene .addNamedNode    (scene .getUniqueName       (name), groupNode);
       scene .addExportedNode (scene .getUniqueExportName (name), groupNode);
 
-      groupNode ._visible  = false;
       groupNode ._children = nodes;
 
       groupNode .setup ();
@@ -2490,7 +2489,6 @@ function eventsProcessed ()
       scene .addExportedNode (scene .getUniqueExportName ("MaterialVariants"), switchNode);
 
       switchNode ._whichChoice = 0;
-      switchNode ._visible     = false;
 
       switchNode .setup ();
 
@@ -2532,7 +2530,7 @@ function eventsProcessed ()
       scene .addExportedNode (scene .getUniqueExportName (`Timer${id + 1}`), timeSensorNode);
 
       timeSensorNode ._description = this .description (animation .name) || `Animation ${id + 1}`;
-      groupNode ._visible = false;
+
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
