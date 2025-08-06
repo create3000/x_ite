@@ -1463,10 +1463,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scale       = new Vector2 (1),
          matrix      = new Matrix4 ();
 
-      // Flip Y
-      matrix .scale (new Vector3 (1, -1, 1));
-      matrix .translate (new Vector3 (0, -1, 0));
-
       if (this .vectorValue (KHR_texture_transform .offset, translation))
          matrix .translate (new Vector3 (... translation, 0));
 
@@ -1474,6 +1470,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (this .vectorValue (KHR_texture_transform .scale, scale))
          matrix .scale (new Vector3 (... scale, 1));
+
+      // Flip Y
+      matrix .scale (new Vector3 (1, -1, 1));
+      matrix .translate (new Vector3 (0, -1, 0));
 
       // Check for existing node.
 
@@ -1531,7 +1531,7 @@ function eventsProcessed ()
 {
    matrix .setTransform (translation, -rotation, scale);
 
-   const m = flipY .multLeft (matrix);
+   const m = flipY .multRight (matrix);
 
    value_changed [0]  = m [0];
    value_changed [1]  = m [1];

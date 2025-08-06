@@ -40,11 +40,13 @@ NormalInfo
 getNormalInfo (const in float normalScale)
 {
    #if defined (X3D_NORMAL_TEXTURE)
-      vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-
       #if defined (X3D_NORMAL_TEXTURE_FLIP_Y)
-         UV .t = 1.0 - UV .t;
+         mat4 flip = mat4 (1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
+      #else
+         mat4 flip = mat4 (1);
       #endif
+
+      vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping, flip);
    #else
       vec3 UV = vertex;
    #endif

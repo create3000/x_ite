@@ -22,16 +22,12 @@ setTexCoords ()
 uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
 
 vec4
-getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
+getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping, const in mat4 flip)
 {
    int mode = textureCoordinateGenerator .mode;
 
    switch (mode)
    {
-      case x3d_None:
-      {
-         return x3d_TextureMatrix [textureTransformMapping] * texCoords [textureCoordinateMapping];
-      }
       case x3d_Sphere:
       {
          #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
@@ -125,7 +121,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
       }
       default:
       {
-         return x3d_TextureMatrix [textureTransformMapping] * texCoords [textureCoordinateMapping];
+         return x3d_TextureMatrix [textureTransformMapping] * (flip * texCoords [textureCoordinateMapping]);
       }
    }
 }
@@ -133,16 +129,16 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURE_COORDINATES];
 
 vec3
-getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping, in mat4 flip)
 {
-   vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping);
-
-   texCoord .stp /= texCoord .q;
-
    #if defined (X3D_GEOMETRY_2D)
       if (frontFacing == false)
-         texCoord .s = 1.0 - texCoord .s;
+         flip *= mat4 (-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1);
    #endif
+
+   vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping, flip);
+
+   texCoord .stp /= texCoord .q;
 
    return texCoord .stp;
 }
@@ -156,7 +152,7 @@ uniform sampler3D   x3d_Texture3D   [X3D_NUM_TEXTURES];
 uniform samplerCube x3d_TextureCube [X3D_NUM_TEXTURES];
 
 vec4
-getTexture (const in int i, in vec3 texCoord)
+getTexture (const in int i, const in int textureTransformMapping, const in int textureCoordinateMapping)
 {
    vec4 textureColor = vec4 (1.0);
 
@@ -168,8 +164,12 @@ getTexture (const in int i, in vec3 texCoord)
       case ${i}:
       {
          #if defined (X3D_TEXTURE${i}_FLIP_Y)
-            texCoord .t = 1.0 - texCoord .t;
+            mat4 flip = mat4 (1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
+         #else
+            mat4 flip = mat4 (1);
          #endif
+
+         vec3 texCoord = getTexCoord (textureTransformMapping, textureCoordinateMapping, flip);
 
          #if defined (X3D_TEXTURE${i}_2D)
             textureColor = texture (x3d_Texture2D [${i}], texCoord .st);
@@ -220,8 +220,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
       {
          // Get texture color.
 
-         vec3 texCoord     = getTexCoord (min (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), min (i, X3D_NUM_TEXTURE_COORDINATES - 1));
-         vec4 textureColor = getTexture (i, texCoord);
+         vec4 textureColor = getTexture (i, min (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), min (i, X3D_NUM_TEXTURE_COORDINATES - 1));
 
          // Multi texturing
 
@@ -491,8 +490,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
    #else
       // Get texture color.
 
-      vec3 texCoord     = getTexCoord (0, 0);
-      vec4 textureColor = getTexture (0, texCoord);
+      vec4 textureColor = getTexture (0, 0, 0);
 
       return diffuseColor * textureColor;
    #endif
