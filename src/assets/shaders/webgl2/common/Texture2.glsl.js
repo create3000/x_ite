@@ -20,13 +20,14 @@ setTexCoords ()
 }
 
 uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
+uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURE_COORDINATES];
 
 vec4
-getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping, const in mat4 flip)
+getTexCoord (const in int textureCoordinateMapping, const in mat4 flip)
 {
-   int mode = textureCoordinateGenerator .mode;
+   x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator = x3d_TextureCoordinateGenerator [textureCoordinateMapping];
 
-   switch (mode)
+   switch (textureCoordinateGenerator .mode)
    {
       case x3d_Sphere:
       {
@@ -121,12 +122,10 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
       }
       default:
       {
-         return x3d_TextureMatrix [textureTransformMapping] * (flip * texCoords [textureCoordinateMapping]);
+         return flip * texCoords [textureCoordinateMapping];
       }
    }
 }
-
-uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURE_COORDINATES];
 
 vec3
 getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping, in mat4 flip)
@@ -137,7 +136,7 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
          flip *= mat4 (-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1);
    #endif
 
-   vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping, flip);
+   vec4 texCoord = x3d_TextureMatrix [textureTransformMapping] * getTexCoord (textureCoordinateMapping, flip);
 
    texCoord .stp /= texCoord .q;
 
