@@ -39,9 +39,9 @@ export default
          // Get texture color.
 
          #if defined (${define}${_EXT}_FLIP_Y)
-            mat4 flipY = mat4 (1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
+            vec2 flipY = vec2 (-1.0, 1.0);
          #else
-            mat4 flipY = mat4 (1);
+            vec2 flipY = vec2 (1.0, 0.0);
          #endif
 
          vec3 texCoord = getTexCoord (${name}${EXT} .textureTransformMapping, ${name}${EXT} .textureCoordinateMapping, flipY);

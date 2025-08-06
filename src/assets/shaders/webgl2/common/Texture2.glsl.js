@@ -128,12 +128,15 @@ getTexCoord (const in int textureCoordinateMapping)
 }
 
 vec3
-getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping, const in mat4 flipY)
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping, const in vec2 flipY)
 {
-   vec4 texCoord = flipY * getTexCoord (textureCoordinateMapping);
+   vec4 texCoord = getTexCoord (textureCoordinateMapping);
+
+   // Flip Y if needed.
+   texCoord .y = texCoord .y * flipY .x + flipY .y;
 
    #if defined (X3D_GEOMETRY_2D)
-      // Flip X
+      // Flip X if needed.
       if (frontFacing == false)
          texCoord .x = 1.0 - texCoord .x;
    #endif
@@ -165,9 +168,9 @@ getTexture (const in int i, const in int textureTransformMapping, const in int t
       case ${i}:
       {
          #if defined (X3D_TEXTURE${i}_FLIP_Y)
-            mat4 flipY = mat4 (1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
+            vec2 flipY = vec2 (-1.0, 1.0);
          #else
-            mat4 flipY = mat4 (1);
+            vec2 flipY = vec2 (1.0, 0.0);
          #endif
 
          vec3 texCoord = getTexCoord (textureTransformMapping, textureCoordinateMapping, flipY);
