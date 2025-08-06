@@ -102,6 +102,7 @@ const X_ITE_TESTS = [
    { path: "Follower/TexCoordChaser2D.x3d" },
    { path: "Follower/TexCoordDamper.x3d" },
    { component: "Geometry2D" },
+   { path: "Geometry2D/FlipTexture.x3d" },
    { path: "Geometry2D/Geometry2D.x3d" },
    { component: "Geometry3D" },
    { path: "Geometry3D/1728.x3dv" },
