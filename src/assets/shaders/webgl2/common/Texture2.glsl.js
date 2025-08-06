@@ -132,14 +132,14 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 {
    vec4 texCoord = getTexCoord (textureCoordinateMapping);
 
-   // Flip Y if needed.
-   texCoord .y = texCoord .y * flipY .x + flipY .y;
-
    #if defined (X3D_GEOMETRY_2D)
       // Flip X if needed.
       if (frontFacing == false)
          texCoord .x = 1.0 - texCoord .x;
    #endif
+
+   // Flip Y if needed.
+   texCoord .y = texCoord .y * flipY .x + flipY .y;
 
    texCoord       = x3d_TextureMatrix [textureTransformMapping] * texCoord;
    texCoord .stp /= texCoord .q;
