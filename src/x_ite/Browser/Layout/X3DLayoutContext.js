@@ -54,9 +54,9 @@ Object .assign (X3DLayoutContext .prototype,
             y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y * contentScale),
             z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x * contentScale);
 
-         screenMatrix .set (x .x, x .y, x .z, 0,
-                            y .x, y .y, y .z, 0,
-                            z .x, z .y, z .z, 0,
+         screenMatrix .set (... x, 0,
+                            ... y, 0,
+                            ... z, 0,
                             modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], 1);
 
          // Snap to whole pixel.

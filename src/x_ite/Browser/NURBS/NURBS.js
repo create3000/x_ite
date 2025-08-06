@@ -6,6 +6,10 @@ const NURBS =
 {
    getTessellation (tessellation, dimension)
    {
+      // This returns the number of tessellation faces,
+      // the number of tessellation points will be one higher,
+      // as required by the specification.
+      
       if (tessellation > 0)
          return tessellation;
 

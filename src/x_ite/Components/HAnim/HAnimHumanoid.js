@@ -162,6 +162,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       return this .transformNode .getSubBBox (bbox, shadows);
    },
+   getShapes (shapes, modelMatrix)
+   {
+      return this .transformNode .getShapes (shapes, modelMatrix);
+   },
    getMatrix ()
    {
       return this .transformNode .getMatrix ();
@@ -169,14 +173,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    getHAnimKey ()
    {
       return this .humanoidKey;
-   },
-   getNumJoints ()
-   {
-      return this .numJoints;
-   },
-   getNumDisplacements ()
-   {
-      return this .numDisplacements;
    },
    set_humanoidKey__ ()
    {
@@ -497,18 +493,33 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
    },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_SKINNING");
+      options .push (`X3D_NUM_JOINT_SETS ${this .numJoints / 4}`);
+      options .push (`X3D_NUM_DISPLACEMENTS ${this .numDisplacements}`);
+   },
    setShaderUniforms (gl, shaderObject)
    {
       const
-         browser                               = this .getBrowser (),
-         jointsTextureTextureUnit              = browser .getTextureUnit (),
-         displacementsTextureTextureUnit       = browser .getTextureUnit (),
-         displacementWeightsTextureTextureUnit = browser .getTextureUnit (),
-         jointMatricesTextureUnit              = browser .getTextureUnit ();
+         browser                  = this .getBrowser (),
+         jointsTextureTextureUnit = browser .getTextureUnit (),
+         jointMatricesTextureUnit = browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + jointsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
       gl .uniform1i (shaderObject .x3d_JointsTexture, jointsTextureTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
+
+      if (!this .numDisplacements)
+         return;
+
+      const
+         displacementsTextureTextureUnit       = browser .getTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
@@ -517,10 +528,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       gl .activeTexture (gl .TEXTURE0 + displacementWeightsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
       gl .uniform1i (shaderObject .x3d_DisplacementWeightsTexture, displacementWeightsTextureTextureUnit);
-
-      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
    },
    dispose ()
    {

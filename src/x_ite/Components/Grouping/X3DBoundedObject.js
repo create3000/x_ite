@@ -1,8 +1,8 @@
 import Fields       from "../../Fields.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import X3DBBoxNode  from "../../Browser/Grouping/X3DBBoxNode.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../../standard/Math/Geometry/Box3.js";
 
 function X3DBoundedObject (executionContext)
@@ -76,32 +76,18 @@ Object .assign (X3DBoundedObject .prototype,
 
       return bbox;
    },
-   displayBBox: (() =>
+   getBBoxNode ()
    {
-      const
-         bbox   = new Box3 (),
-         eps    = new Vector3 (1e-5),
-         matrix = new Matrix4 ();
-
-      return function (type, renderObject)
+      return this .bboxNode ??= (() =>
       {
-         const
-            browser         = this .getBrowser (),
-            m               = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .Zero : eps,
-            modelViewMatrix = renderObject .getModelViewMatrix ();
+         const bboxNode = new X3DBBoxNode (this .getExecutionContext (), this);
 
-         this .getBBox (bbox);
+         bboxNode .setPrivate (true);
+         bboxNode .setup ();
 
-         matrix .set (bbox .center, null, bbox .size .max (m));
-
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (matrix);
-
-         browser .getBBoxNode () .traverse (type, renderObject);
-
-         modelViewMatrix .pop ();
-      };
-   })(),
+         return bboxNode;
+      })();
+   },
    addTransformSensor (transformSensorNode)
    {
       this .transformSensorNodes .add (transformSensorNode);

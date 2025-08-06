@@ -24,19 +24,12 @@ function ScreenGroup (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode .prototype),
 {
-   initialize ()
-   {
-      X3DGroupingNode .prototype .initialize .call (this);
-
-      this ._bboxSize .addInterest ("set_visibleObjects__", this);
-   },
-   set_visibleObjects__ ()
-   {
-      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
-   },
    getBBox (bbox, shadows)
    {
-      return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+      if (this .isDefaultBBoxSize ())
+         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getMatrix ()
    {

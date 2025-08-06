@@ -3,6 +3,7 @@ import X3DFieldDefinition         from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
 import X3DNode                    from "../Core/X3DNode.js";
 import X3DNBodyCollisionSpaceNode from "./X3DNBodyCollisionSpaceNode.js";
+import X3DBoundedObject           from "../Grouping/X3DBoundedObject.js";
 import X3DConstants               from "../../Base/X3DConstants.js";
 import X3DCast                    from "../../Base/X3DCast.js";
 
@@ -30,9 +31,9 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
    {
       // TODO: add space node.
       if (this .isDefaultBBoxSize ())
-         return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadows);
+         return X3DBoundedObject .prototype .getBBox .call (this, this .collidableNodes, bbox, shadows);
 
-      return bbox;
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getCollidables ()
    {
@@ -52,12 +53,11 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
          const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
-         {
-            collisionSpaceNode .addInterest ("collect", this);
-
             collisionSpaceNodes .push (collisionSpaceNode);
-         }
       }
+
+      for (const collisionSpaceNode of collisionSpaceNodes)
+         collisionSpaceNode .addInterest ("collect", this);
 
       this .collect ();
    },
@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
 
          if (collisionSpaceNode)
          {
-            Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
+            collidableNodes .push (... collisionSpaceNode .getCollidables ());
             continue;
          }
       }

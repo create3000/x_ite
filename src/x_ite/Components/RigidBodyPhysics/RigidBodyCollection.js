@@ -65,7 +65,10 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    getBBox (bbox, shadows)
    {
-      return bbox .set ();
+      if (this .isDefaultBBoxSize ())
+         return bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getDynamicsWorld ()
    {
