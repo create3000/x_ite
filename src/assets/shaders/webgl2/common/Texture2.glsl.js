@@ -132,6 +132,7 @@ vec3
 getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping, in mat4 flip)
 {
    #if defined (X3D_GEOMETRY_2D)
+      // Flip X
       if (frontFacing == false)
          flip *= mat4 (-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1);
    #endif
