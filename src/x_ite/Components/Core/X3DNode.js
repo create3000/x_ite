@@ -618,29 +618,32 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (!generator .string .match (/^$|[ \t\r\n,\[\]\{\}]$/))
          generator .string += generator .Space ();
 
-      const name = generator .Name (this);
-
-      if (name .length)
+      if (generator .outputNames)
       {
-         if (generator .ExistsNode (this))
+         const name = generator .Name (this);
+
+         if (name .length)
          {
-            generator .string += "USE";
+            if (generator .ExistsNode (this))
+            {
+               generator .string += "USE";
+               generator .string += generator .Space ();
+               generator .string += name;
+
+               generator .LeaveScope ();
+               return;
+            }
+         }
+
+         if (name .length)
+         {
+            generator .AddNode (this);
+
+            generator .string += "DEF";
             generator .string += generator .Space ();
             generator .string += name;
-
-            generator .LeaveScope ();
-            return;
+            generator .string += generator .Space ();
          }
-      }
-
-      if (name .length)
-      {
-         generator .AddNode (this);
-
-         generator .string += "DEF";
-         generator .string += generator .Space ();
-         generator .string += name;
-         generator .string += generator .Space ();
       }
 
       generator .string += this .getTypeName ();

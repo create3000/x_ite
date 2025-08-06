@@ -23,6 +23,12 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   getShapes (shapes, parentModelMatrix)
+   {
+      const modelMatrix = parentModelMatrix .copy () .multLeft (this .matrix);
+
+      return X3DGroupingNode .prototype .getShapes .call (this, shapes, modelMatrix);
+   },
    getMatrix ()
    {
       return this .matrix;

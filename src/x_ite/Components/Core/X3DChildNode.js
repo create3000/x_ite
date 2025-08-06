@@ -145,6 +145,10 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
       childNode ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
       childNode ._isVisibleObject   .removeFieldInterest (this ._isVisibleObject);
    },
+   getShapes (shapes, modelMatrix)
+   {
+      return shapes;
+   },
 });
 
 Object .defineProperties (X3DChildNode, X3DNode .getStaticProperties ("X3DChildNode", "Core", 1));

@@ -28,7 +28,7 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    this [_browser]           = browser;
    this [_executionContext]  = executionContext;
-   this [_type]              = [ X3DConstants .X3DBaseNode ];
+   this [_type]              = [ ];
    this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this [_fieldDefinitions];
    this [_predefinedFields]  = new FieldArray ();
    this [_userDefinedFields] = new FieldArray ();
@@ -38,12 +38,6 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
-
-   // Create fields.
-
-   this .addChildObjects (X3DConstants .outputOnly, "name_changed",     new Fields .SFTime (),
-                          X3DConstants .outputOnly, "typeName_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "parents_changed",  new Fields .SFTime ())
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
@@ -365,10 +359,13 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return this [_userDefinedFields];
    },
-   getChangedFields (extended)
+   /**
+    *
+    * @param {boolean} extended  also return user-defined fields and fields with routes
+    * @returns Array<X3DField>
+    */
+   getChangedFields (extended = false)
    {
-      /* param routes: also return fields with routes */
-
       const changedFields = [ ];
 
       if (extended)
@@ -548,20 +545,35 @@ for (const key of Object .keys (X3DBaseNode .prototype))
 
 Object .defineProperties (X3DBaseNode .prototype,
 {
+   ... Object .fromEntries (["name_changed", "typeName_changed", "parents_changed"] .map (name =>
+   {
+      return [`_${name}`,
+      {
+         get ()
+         {
+            this .addChildObjects (X3DConstants .outputOnly, name, new Fields .SFTime ())
+
+            return this [`_${name}`];
+         },
+         set (value)
+         {
+            this .addChildObjects (X3DConstants .outputOnly, name, new Fields .SFTime ())
+
+            this [`_${name}`] .setValue (value);
+         },
+      }];
+   })),
    name_changed:
    {
       get () { return this ._name_changed; },
-      enumerable: false,
    },
    typeName_changed:
    {
       get () { return this ._typeName_changed; },
-      enumerable: false,
    },
    parents_changed:
    {
       get () { return this ._parents_changed; },
-      enumerable: false,
    },
 });
 

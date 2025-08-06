@@ -28,9 +28,8 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
-      this ._viewport .addInterest ("set_viewport__",       this);
-      this ._layout   .addInterest ("set_layout__",         this);
-      this ._bboxSize .addInterest ("set_visibleObjects__", this);
+      this ._viewport .addInterest ("set_viewport__", this);
+      this ._layout   .addInterest ("set_layout__",   this);
 
       this .set_viewport__ ();
       this .set_layout__ ();
@@ -45,13 +44,12 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    },
    set_collisionObjects__ ()
    { },
-   set_visibleObjects__ ()
-   {
-      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
-   },
    getBBox (bbox, shadows)
    {
-      return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
+      if (this .isDefaultBBoxSize ())
+         return this .getSubBBox (bbox, shadows) .multRight (this .getMatrix ());
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getMatrix ()
    {

@@ -33,9 +33,10 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Members
 
-   this .compoundShape = new Ammo .btCompoundShape ()
-   this .offset        = new Vector3 ();
-   this .matrix        = new Matrix4 ();
+   this .compoundShape  = new Ammo .btCompoundShape ()
+   this .offset         = new Vector3 ();
+   this .matrix         = new Matrix4 ();
+   this .visibleObjects = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DChildNode .prototype),
@@ -59,6 +60,15 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          return this .boundedObject ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   getShapes (shapes, parentModelMatrix)
+   {
+      const modelMatrix = parentModelMatrix .copy () .multLeft (this .matrix);
+
+      for (const visibleObject of this .visibleObjects)
+         visibleObject .getShapes (shapes, modelMatrix);
+
+      return shapes;
    },
    getLocalTransform: (() =>
    {
@@ -145,8 +155,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleObject   = null;
-      this .bboxObject      = null;
+
+      this .visibleObjects .length = 0;
 
       // Add node.
 
@@ -183,7 +193,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
                this .shadowObject = childNode;
 
             if (childNode .isVisibleObject ())
-               this .visibleObject = childNode;
+               this .visibleObjects .push (childNode);
          }
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -192,7 +202,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
             childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
             if (childNode .isBBoxVisible ())
-               this .bboxObject = childNode;
+               this .visibleObjects .push (childNode .getBBoxNode ());
          }
       }
 
@@ -230,7 +240,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleObject || this .bboxObject || !this .isDefaultBBoxSize ());
+      this .setVisibleObject (this .visibleObjects .length);
    },
    requestRebuild ()
    {
@@ -271,9 +281,14 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
             // so we do not need to add this node to the pickingHierarchy.
 
             if (this .getBrowser () .getPickable () .at (-1))
-               this .visibleObject ?.traverse (type, renderObject);
+            {
+               for (const visibleObject of this .visibleObjects)
+                  visibleObject .traverse (type, renderObject);
+            }
             else
+            {
                this .pickableObject ?.traverse (type, renderObject);
+            }
 
             break;
          }
@@ -289,8 +304,9 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleObject ?.traverse    (type, renderObject);
-            this .bboxObject    ?.displayBBox (type, renderObject);
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
             break;
          }
       }

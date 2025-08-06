@@ -1,5 +1,5 @@
-/* X_ITE v11.6.5 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.5")];
+/* X_ITE v11.6.6 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.6")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -291,6 +291,10 @@ const NURBS =
 {
    getTessellation (tessellation, dimension)
    {
+      // This returns the number of tessellation faces,
+      // the number of tessellation points will be one higher,
+      // as required by the specification.
+      
       if (tessellation > 0)
          return tessellation;
 

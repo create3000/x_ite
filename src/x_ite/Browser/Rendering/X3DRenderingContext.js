@@ -242,12 +242,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
 
-      if (hAnimNode)
-      {
-         options .push ("X3D_SKINNING");
-         options .push (`X3D_NUM_JOINT_SETS ${hAnimNode .getNumJoints () / 4}`);
-         options .push (`X3D_NUM_DISPLACEMENTS ${hAnimNode .getNumDisplacements ()}`);
-      }
+      hAnimNode ?.getShaderOptions (options);
 
       const shaderNode = this .createShader ("Depth", "Depth", "Depth", options);
 

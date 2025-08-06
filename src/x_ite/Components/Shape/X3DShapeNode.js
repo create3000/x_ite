@@ -124,6 +124,13 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .getGeometry ();
    },
+   getShapes (shapes, modelMatrix)
+   {
+      if (this .isVisibleObject ())
+         shapes .push ({ modelMatrix, shapeNode: this });
+
+      return shapes;
+   },
    set_bbox__ ()
    {
       if (this .isDefaultBBoxSize ())
