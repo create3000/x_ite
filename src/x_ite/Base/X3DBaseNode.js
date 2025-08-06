@@ -28,7 +28,7 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    this [_browser]           = browser;
    this [_executionContext]  = executionContext;
-   this [_type]              = [ X3DConstants .X3DBaseNode ];
+   this [_type]              = [ ];
    this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this [_fieldDefinitions];
    this [_predefinedFields]  = new FieldArray ();
    this [_userDefinedFields] = new FieldArray ();
