@@ -7,6 +7,14 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v11.7 Series
+
+*Leipzig, 9th August 2025:* This new series 11.7 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped, and when the glTF parser generates TextureTransform3D nodes.
+
+### Notable Changes
+
+* Fix texture flipping about x-Axis for Geometry2D and about y-Axis for glTF files.
+
 ## X_ITE v11.6 Series
 
 *Leipzig, 12th July 2025:* This new series 11.6 comes with Animated PNG support for MovieTexture node. The MoveTexture node has been able to handle Animated GIFs for quite a while, and can now also handle Animated PNGs.
