@@ -181,12 +181,12 @@ A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X,
 
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
-### SFFloat [in, out] **minAngle** 0 <small>(-2π,2π)</small>
+### SFFloat [in, out] **minAngle** 0 <small>(-∞,∞)</small>
 {: #fields-minAngle }
 
 Input/Output field *minAngle*.
 
-### SFFloat [in, out] **maxAngle** 0 <small>(-2π,2π)</small>
+### SFFloat [in, out] **maxAngle** 0 <small>(-∞,∞)</small>
 {: #fields-maxAngle }
 
 Input/Output field *maxAngle*.
