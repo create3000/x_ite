@@ -38,11 +38,13 @@ export default
       {
          // Get texture color.
 
-         vec3 texCoord = getTexCoord (${name}${EXT} .textureTransformMapping, ${name}${EXT} .textureCoordinateMapping);
-
          #if defined (${define}${_EXT}_FLIP_Y)
-            texCoord .t = 1.0 - texCoord .t;
+            vec2 flipY = vec2 (-1.0, 1.0); // Flip Y
+         #else
+            vec2 flipY = vec2 (1.0, 0.0); // No flip
          #endif
+
+         vec3 texCoord = getTexCoord (${name}${EXT} .textureTransformMapping, ${name}${EXT} .textureCoordinateMapping, flipY);
 
          #if defined (${define}${_EXT}_2D)
             vec4 textureColor = texture (${name}${EXT} .texture2D, texCoord .st);

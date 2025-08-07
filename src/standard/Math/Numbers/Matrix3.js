@@ -51,10 +51,6 @@ Object .assign (Matrix3 .prototype,
              this [7] === matrix [7] &&
              this [8] === matrix [8];
    },
-   rotation ()
-   {
-      return Math .atan2 (this [1], this [0]);
-   },
    set1 (r, c, value)
    {
       this [r * this .order + c] = value;

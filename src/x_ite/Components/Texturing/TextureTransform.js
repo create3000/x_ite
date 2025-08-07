@@ -50,19 +50,19 @@ Object .assign (Object .setPrototypeOf (TextureTransform .prototype, X3DSingleTe
 
          matrix3 .identity ();
 
-         if (! center .equals (Vector2 .Zero))
+         if (!center .equals (Vector2 .Zero))
             matrix3 .translate (vector .assign (center) .negate ());
 
-         if (! scale .equals (Vector2 .One))
+         if (!scale .equals (Vector2 .One))
             matrix3 .scale (scale);
 
          if (rotation !== 0)
             matrix3 .rotate (rotation);
 
-         if (! center .equals (Vector2 .Zero))
+         if (!center .equals (Vector2 .Zero))
             matrix3 .translate (center);
 
-         if (! translation .equals (Vector2 .Zero))
+         if (!translation .equals (Vector2 .Zero))
             matrix3 .translate (translation);
 
          matrix4 [ 0] = matrix3 [0];

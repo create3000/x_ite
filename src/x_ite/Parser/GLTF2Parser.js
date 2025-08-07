@@ -999,6 +999,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const textureTransformNode = scene .createNode ("TextureTransform", false);
 
+               // Flip Y
                textureTransformNode ._mapping        = mapping;
                textureTransformNode ._translation .y = -1;
                textureTransformNode ._scale .y       = -1;
@@ -1462,9 +1463,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scale       = new Vector2 (1),
          matrix      = new Matrix4 ();
 
-      matrix .scale (new Vector3 (1, -1, 1));
-      matrix .translate (new Vector3 (0, -1, 0));
-
       if (this .vectorValue (KHR_texture_transform .offset, translation))
          matrix .translate (new Vector3 (... translation, 0));
 
@@ -1472,6 +1470,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (this .vectorValue (KHR_texture_transform .scale, scale))
          matrix .scale (new Vector3 (... scale, 1));
+
+      // Flip Y
+      matrix .scale (new Vector3 (1, -1, 1));
+      matrix .translate (new Vector3 (0, -1, 0));
 
       // Check for existing node.
 
@@ -1522,14 +1524,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scriptNode ._url = [/* js */ `ecmascript:
 
 const
-   flip   = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
+   flipY  = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
    matrix = new SFMatrix3f ();
 
 function eventsProcessed ()
 {
    matrix .setTransform (translation, -rotation, scale);
 
-   const m = flip .multLeft (matrix);
+   const m = flipY .multRight (matrix);
 
    value_changed [0]  = m [0];
    value_changed [1]  = m [1];
@@ -2530,7 +2532,7 @@ function eventsProcessed ()
       scene .addExportedNode (scene .getUniqueExportName (`Timer${id + 1}`), timeSensorNode);
 
       timeSensorNode ._description = this .description (animation .name) || `Animation ${id + 1}`;
-      groupNode ._visible = false;
+
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
@@ -2749,19 +2751,20 @@ function eventsProcessed ()
       {
          case 0:
          {
-            if (this .textureTransformNode)
-               return this .textureTransformNode;
+            return this .textureTransformNode ??= (() =>
+            {
+               const
+                  scene                = this .getScene (),
+                  textureTransformNode = scene .createNode ("TextureTransform", false);
 
-            const
-               scene                = this .getScene (),
-               textureTransformNode = scene .createNode ("TextureTransform", false);
+               // Flip Y
+               textureTransformNode ._translation .y = -1;
+               textureTransformNode ._scale .y       = -1;
 
-            textureTransformNode ._translation .y = -1;
-            textureTransformNode ._scale .y       = -1;
+               textureTransformNode .setup ();
 
-            textureTransformNode .setup ();
-
-            return this .textureTransformNode = textureTransformNode;
+               return textureTransformNode;
+            })();
          }
          case 1:
          {
