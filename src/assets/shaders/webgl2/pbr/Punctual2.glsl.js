@@ -54,22 +54,20 @@ getSpotAttenuation (const in vec3 pointToLight, const in vec3 spotDirection, con
 vec3
 getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 pointToLight, const in float distanceToLight)
 {
-   float rangeAttenuation = 1.0;
-   float spotAttenuation  = 1.0;
+   float intensity = light .intensity;
 
    if (light .type != x3d_DirectionalLight)
    {
-      float attenuation = getAttenuation (light .attenuation, distanceToLight);
-
-      rangeAttenuation = attenuation * getRangeAttenuation (light .radius, distanceToLight);
+      intensity *= getAttenuation (light .attenuation, distanceToLight);
+      intensity *= getRangeAttenuation (light .radius, distanceToLight);
    }
 
    if (light .type == x3d_SpotLight)
    {
-      spotAttenuation = getSpotAttenuation (pointToLight, light .direction, cos (light .cutOffAngle), cos (light .beamWidth));
+      intensity *= getSpotAttenuation (pointToLight, light .direction, cos (light .cutOffAngle), cos (light .beamWidth));
    }
 
-   return rangeAttenuation * spotAttenuation * light .intensity * light .color;
+   return intensity * light .color;
 }
 
 #if defined (X3D_SHEEN_MATERIAL_EXT)
