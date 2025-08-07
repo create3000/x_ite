@@ -15,6 +15,8 @@ applyIorToRoughness (const in float roughness, const in float ior)
 
 #if defined (X3D_LIGHTING)
 
+#pragma X3D include "../common/Lighting.glsl"
+
 // https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#range-property
 float
 getRangeAttenuation (const in float radius, const in float distanceToLight)
@@ -57,7 +59,7 @@ getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 point
 
    if (light .type != x3d_DirectionalLight)
    {
-      float attenuation = dot (light .attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
+      float attenuation = getAttenuation (light .attenuation, distanceToLight);
 
       rangeAttenuation = attenuation * getRangeAttenuation (light .radius, distanceToLight);
    }
