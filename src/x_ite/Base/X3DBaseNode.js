@@ -224,7 +224,9 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    addChildObjects (/* accessType, name, field, ... */)
    {
-      for (let i = 0, length = arguments .length; i < length; i += 3)
+      const length = arguments .length;
+
+      for (let i = 0; i < length; i += 3)
          this .addChildObject (arguments [i], arguments [i + 1], arguments [i + 2]);
    },
    addChildObject (accessType, name, field)
@@ -232,7 +234,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       this [_childObjects] .push (field);
 
       field .setPrivate (true);
-      field .setTainted (true);
+      field .setTainted (!this .isInitialized ());
       field .addParent (this);
       field .setName (name);
       field .setAccessType (accessType);

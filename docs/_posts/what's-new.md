@@ -7,6 +7,21 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v12.0 Series
+
+*Leipzig, 9th August 2025:* This new series 12.0 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped for the back face, and when a [ImageTexture](/x_ite/components/texturing/imagetexture/) or [MovieTexture](/x_ite/components/texturing/movietexture/) must be flipped, and when the glTF parser generates [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) nodes. It will affect files with texture transform nodes and X3D files generated from glTF.
+
+There is now a test file that should show both the same image on the front and back face: [texture mapping on a Rectangle2D with TextureTransform](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Geometry2D/FlipTexture.x3d).
+
+### Breaking Change
+
+* Fixes texture flipping about x-Axis for Geometry2D and about y-Axis for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) and [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) in glTF converted files.
+
+### Notable Changes
+
+* Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
+* Bug fixes in several nodes with bounding box calculations.
+
 ## X_ITE v11.6 Series
 
 *Leipzig, 12th July 2025:* This new series 11.6 comes with Animated PNG support for MovieTexture node. The MoveTexture node has been able to handle Animated GIFs for quite a while, and can now also handle Animated PNGs.
