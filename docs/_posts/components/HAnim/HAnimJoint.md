@@ -42,6 +42,8 @@ The HAnimJoint node belongs to the [HAnim](/x_ite/components/overview/#hanim) co
 | MFFloat | [in, out] | [ulimit](#fields-ulimit) | [ 0, 0, 0 ] |
 | SFRotation | [in, out] | [limitOrientation](#fields-limitOrientation) | 0 0 1 0  |
 | MFFloat | [in, out] | [stiffness](#fields-stiffness) | [ 0, 0, 0 ] |
+| SFFloat | [in, out] | [minAngle](#fields-minAngle) |  |
+| SFFloat | [in, out] | [maxAngle](#fields-maxAngle) |  |
 | MFInt32 | [in, out] | [skinCoordIndex](#fields-skinCoordIndex) | [ ] |
 | MFFloat | [in, out] | [skinCoordWeight](#fields-skinCoordWeight) | [ ] |
 | MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
@@ -178,6 +180,16 @@ A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X,
 #### Warning
 
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
+
+### SFFloat [in, out] **minAngle** 0 <small>(-2π,2π)</small>
+{: #fields-minAngle }
+
+Input/Output field *minAngle*.
+
+### SFFloat [in, out] **maxAngle** 0 <small>(-2π,2π)</small>
+{: #fields-maxAngle }
+
+Input/Output field *maxAngle*.
 
 ### MFInt32 [in, out] **skinCoordIndex** [ ] <small>[0,∞)</small>
 {: #fields-skinCoordIndex }
