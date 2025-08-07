@@ -61,7 +61,7 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 #### Warning
 
-- (a, b, c) value of (0, 0, 0) is forbidden since the zero vector has ambiguous direction and is thus degenerate, not defining a *plane*.
+- (a, b, c, d) value of (0, 0, 0, d) is forbidden since the zero vector has ambiguous direction and is thus degenerate, not defining a *plane*.
 
 ## Advice
 
