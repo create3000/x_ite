@@ -42,8 +42,8 @@ The HAnimJoint node belongs to the [HAnim](/x_ite/components/overview/#hanim) co
 | MFFloat | [in, out] | [ulimit](#fields-ulimit) | [ 0, 0, 0 ] |
 | SFRotation | [in, out] | [limitOrientation](#fields-limitOrientation) | 0 0 1 0  |
 | MFFloat | [in, out] | [stiffness](#fields-stiffness) | [ 0, 0, 0 ] |
-| SFFloat | [in, out] | [minAngle](#fields-minAngle) |  |
-| SFFloat | [in, out] | [maxAngle](#fields-maxAngle) |  |
+| SFFloat | [in, out] | [minAngle](#fields-minAngle) | 0  |
+| SFFloat | [in, out] | [maxAngle](#fields-maxAngle) | 0  |
 | MFInt32 | [in, out] | [skinCoordIndex](#fields-skinCoordIndex) | [ ] |
 | MFFloat | [in, out] | [skinCoordWeight](#fields-skinCoordWeight) | [ ] |
 | MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
