@@ -666,18 +666,21 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .MFColor:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  arrayLength = array .length,
+                  fieldLength = field .length;
 
-               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               for (var i = 0, k = 0; i < fieldLength; ++ i)
                {
                   const color = field [i];
 
-                  array [k++] = color .r;
-                  array [k++] = color .g;
-                  array [k++] = color .b;
+                  array [k ++] = color .r;
+                  array [k ++] = color .g;
+                  array [k ++] = color .b;
                }
 
-               for (let length = array .length; k < length; ++ k)
+               for (; k < arrayLength; ++ k)
                   array [k] = 0;
 
                gl .uniform3fv (location, array);
@@ -685,19 +688,22 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .MFColorRGBA:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  arrayLength = array .length,
+                  fieldLength = field .length;
 
-               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               for (var i = 0, k = 0; i < fieldLength; ++ i)
                {
                   const color = field [i];
 
-                  array [k++] = color .r;
-                  array [k++] = color .g;
-                  array [k++] = color .b;
-                  array [k++] = color .a;
+                  array [k ++] = color .r;
+                  array [k ++] = color .g;
+                  array [k ++] = color .b;
+                  array [k ++] = color .a;
                }
 
-               for (let length = array .length; k < length; ++ k)
+               for (; k < arrayLength; ++ k)
                   array [k] = 0;
 
                gl .uniform4fv (location, array);
@@ -707,12 +713,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .MFFloat:
             case X3DConstants .MFTime:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  arrayLength = array .length,
+                  fieldLength = field .length;
 
-               for (var i = 0, length = field .length; i < length; ++ i)
+               for (var i = 0; i < fieldLength; ++ i)
                   array [i] = field [i];
 
-               for (let length = array .length; i < length; ++ i)
+               for (; i < arrayLength; ++ i)
                   array [i] = 0;
 
                gl .uniform1fv (location, array);
@@ -720,9 +729,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .MFImage:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  fieldLength = field .length;
 
-               for (let i = 0, a = 0, length = field .length; i < length; ++ i)
+               for (let i = 0, a = 0; i < fieldLength; ++ i)
                {
                   const
                      value  = field [i],
@@ -742,17 +753,20 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .MFMatrix3d:
             case X3DConstants .MFMatrix3f:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  arrayLength = array .length,
+                  fieldLength = field .length;
 
-               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               for (var i = 0, k = 0; i < fieldLength; ++ i)
                {
                   const matrix = field [i];
 
                   for (let m = 0; m < 9; ++ m)
-                     array [k++] = matrix [m];
+                     array [k ++] = matrix [m];
                }
 
-               for (let length = array .length; k < length; ++ k)
+               for (; k < arrayLength; ++ k)
                   array [k] = 0;
 
                gl .uniformMatrix3fv (location, false, array);
@@ -761,17 +775,20 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .MFMatrix4d:
             case X3DConstants .MFMatrix4f:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  arrayLength = array .length,
+                  fieldLength = field .length;
 
-               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               for (var i = 0, k = 0; i < fieldLength; ++ i)
                {
                   const matrix = field [i];
 
                   for (let m = 0; m < 16; ++ m)
-                     array [k++] = matrix [m];
+                     array [k ++] = matrix [m];
                }
 
-               for (let length = array .length; k < length; ++ k)
+               for (; k < arrayLength; ++ k)
                   array [k] = 0;
 
                gl .uniformMatrix4fv (location, false, array);
@@ -779,9 +796,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .MFNode:
             {
-               const locations = location .locations;
+               const
+                  locations   = location .locations,
+                  fieldLength = field .length;
 
-               for (let i = 0, length = field .length; i < length; ++ i)
+               for (let i = 0; i < fieldLength; ++ i)
                {
                   const texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
 
@@ -802,24 +821,27 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .MFRotation:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  arrayLength = array .length,
+                  fieldLength = field .length;
 
-               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               for (var i = 0, k = 0; i < fieldLength; ++ i)
                {
                   field [i] .getValue () .getMatrix (rotation);
 
-                  array [k++] = rotation [0];
-                  array [k++] = rotation [1];
-                  array [k++] = rotation [2];
-                  array [k++] = rotation [3];
-                  array [k++] = rotation [4];
-                  array [k++] = rotation [5];
-                  array [k++] = rotation [6];
-                  array [k++] = rotation [7];
-                  array [k++] = rotation [8];
+                  array [k ++] = rotation [0];
+                  array [k ++] = rotation [1];
+                  array [k ++] = rotation [2];
+                  array [k ++] = rotation [3];
+                  array [k ++] = rotation [4];
+                  array [k ++] = rotation [5];
+                  array [k ++] = rotation [6];
+                  array [k ++] = rotation [7];
+                  array [k ++] = rotation [8];
                }
 
-               for (let length = array .length; k < length; ++ k)
+               for (; k < arrayLength; ++ k)
                   array [k] = 0;
 
                gl .uniformMatrix3fv (location, false, array);
@@ -832,17 +854,20 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .MFVec2d:
             case X3DConstants .MFVec2f:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  arrayLength = array .length,
+                  fieldLength = field .length;
 
-               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               for (var i = 0, k = 0; i < fieldLength; ++ i)
                {
                   const vector = field [i];
 
-                  array [k++] = vector .x;
-                  array [k++] = vector .y;
+                  array [k ++] = vector .x;
+                  array [k ++] = vector .y;
                }
 
-               for (let length = array .length; k < length; ++ k)
+               for (; k < arrayLength; ++ k)
                   array [k] = 0;
 
                gl .uniform2fv (location, array);
@@ -851,18 +876,21 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .MFVec3d:
             case X3DConstants .MFVec3f:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  arrayLength = array .length,
+                  fieldLength = field .length;
 
-               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               for (var i = 0, k = 0; i < fieldLength; ++ i)
                {
                   const vector = field [i];
 
-                  array [k++] = vector .x;
-                  array [k++] = vector .y;
-                  array [k++] = vector .z;
+                  array [k ++] = vector .x;
+                  array [k ++] = vector .y;
+                  array [k ++] = vector .z;
                }
 
-               for (let length = array .length; k < length; ++ k)
+               for (; k < arrayLength; ++ k)
                   array [k] = 0;
 
                gl .uniform3fv (location, array);
@@ -871,19 +899,22 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .MFVec4d:
             case X3DConstants .MFVec4f:
             {
-               const array = location .array;
+               const
+                  array       = location .array,
+                  arrayLength = array .length,
+                  fieldLength = field .length;
 
-               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               for (var i = 0, k = 0; i < fieldLength; ++ i)
                {
                   const vector = field [i];
 
-                  array [k++] = vector .x;
-                  array [k++] = vector .y;
-                  array [k++] = vector .z;
-                  array [k++] = vector .w;
+                  array [k ++] = vector .x;
+                  array [k ++] = vector .y;
+                  array [k ++] = vector .z;
+                  array [k ++] = vector .w;
                }
 
-               for (let length = array .length; k < length; ++ k)
+               for (; k < arrayLength; ++ k)
                   array [k] = 0;
 
                gl .uniform4fv (location, array);
