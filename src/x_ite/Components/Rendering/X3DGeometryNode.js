@@ -534,11 +534,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       return function (hitRay, offsets)
       {
+         const { min, max } = this;
+
          if (offsets)
          {
             var
-               min    = this .min,
-               max    = this .max,
                minX   = min .x - offsets .x,
                maxX   = max .x + offsets .x,
                minY   = min .y - offsets .y,
@@ -550,8 +550,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          else
          {
             var
-               min    = this .min,
-               max    = this .max,
                minX   = min .x,
                maxX   = max .x,
                minY   = min .y,
