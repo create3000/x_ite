@@ -1,5 +1,5 @@
-/* X_ITE v11.6.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.6")];
+/* X_ITE v12.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -163,6 +163,10 @@ function CADFace (executionContext)
    this .setCollisionObject (true);
    this .setShadowObject (true);
    this .setVisibleObject (true);
+
+   // Private properties
+
+   this .visibleObjects = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProductStructureChildNode .prototype),
@@ -185,6 +189,13 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   getShapes (shapes, modelMatrix)
+   {
+      for (const visibleObject of this .visibleObjects)
+         visibleObject .getShapes (shapes, modelMatrix);
+
+      return shapes;
    },
    requestRebuild ()
    {
@@ -226,8 +237,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleObject   = null;
-      this .bboxObject      = null;
+
+      this .visibleObjects .length = 0;
 
       // Add node.
 
@@ -274,7 +285,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
                         this .shadowObject = childNode;
 
                      if (childNode .isVisibleObject ())
-                        this .visibleObject = childNode;
+                        this .visibleObjects .push (childNode);
                   }
 
                   if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
@@ -283,7 +294,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
                      childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                      if (childNode .isBBoxVisible ())
-                        this .bboxObject = childNode;
+                        this .visibleObjects .push (childNode .getBBoxNode ());
                   }
 
                   break;
@@ -330,7 +341,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleObject || this .bboxObject);
+      this .setVisibleObject (this .visibleObjects .length);
    },
    traverse (type, renderObject)
    {
@@ -352,9 +363,14 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
             // so we do not need to add this node to the pickingHierarchy.
 
             if (this .getBrowser () .getPickable () .at (-1))
-               this .visibleObject ?.traverse (type, renderObject);
+            {
+               for (const visibleObject of this .visibleObjects)
+                  visibleObject .traverse (type, renderObject);
+            }
             else
+            {
                this .pickableObject ?.traverse (type, renderObject);
+            }
 
             return;
          }
@@ -370,8 +386,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            this .visibleObject ?.traverse    (type, renderObject);
-            this .bboxObject    ?.displayBBox (type, renderObject);
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
             return;
          }
       }

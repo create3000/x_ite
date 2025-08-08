@@ -1,5 +1,5 @@
-/* X_ITE v11.6.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.6")];
+/* X_ITE v12.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -3292,12 +3292,17 @@ Object .assign (Object .setPrototypeOf (NurbsSet .prototype, (external_X_ITE_X3D
    },
    getBBox (bbox, shadows)
    {
-      // Add bounding boxes
+      if (this .isDefaultBBoxSize ())
+      {
+         // Add bounding boxes
 
-      for (const geometryNode of this .geometryNodes)
-         bbox .add (geometryNode .getBBox ());
+         for (const geometryNode of this .geometryNodes)
+            bbox .add (geometryNode .getBBox ());
 
-      return bbox;
+         return bbox;
+      }
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    set_tessellationScale__ ()
    {
