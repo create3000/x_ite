@@ -1067,7 +1067,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         browser         = this .getBrowser (),
          appearanceNode  = renderContext .appearanceNode,
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
