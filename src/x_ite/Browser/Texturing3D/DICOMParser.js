@@ -259,39 +259,41 @@ Object .assign (DicomParser .prototype,
    },
    getFrames (pixelElement)
    {
-      var frames = [ ];
+      const
+         frames = [ ],
+         length = this .dicom .depth;
 
       if (pixelElement && pixelElement .encapsulatedPixelData)
       {
          if (pixelElement .basicOffsetTable .length)
          {
-            for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+            for (let i = 0; i < length; ++ i)
                frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i));
          }
          else if (this .dicom .depth !== pixelElement .fragments .length)
          {
             var basicOffsetTable = dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
 
-            for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+            for (let i = 0; i < length; ++ i)
                frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable));
          }
          else
          {
-            for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+            for (let i = 0; i < length; ++ i)
                frames .push (dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i));
          }
       }
       else
       {
-         var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
+         const pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
 
          switch (this .bitsAllocated)
          {
             case 1:
             {
-               for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
+                  const frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
 
                   frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
                }
@@ -303,11 +305,11 @@ Object .assign (DicomParser .prototype,
             case 16:
             case 32:
             {
-               var bytesAllocated = this .bitsAllocated / 8;
+               const bytesAllocated = this .bitsAllocated / 8;
 
-               for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * bytesAllocated;
+                  const frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * bytesAllocated;
 
                   frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * bytesAllocated));
                }
