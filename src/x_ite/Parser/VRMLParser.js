@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    isValid ()
    {
-      if (!(typeof this .input === "string"))
+      if (typeof this .input !== "string")
          return false;
 
       return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
