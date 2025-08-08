@@ -14,25 +14,29 @@ function X3DArrayFollowerTemplate (Type)
 
          array .assign = function (value)
          {
+            const
+               minLength = Math .min (this .length, value .length),
+               maxLength = value .length;
+
             if (Array .isArray (value))
             {
-               for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+               for (let i = 0; i < minLength; ++ i)
                   this [i] .assign (value [i]);
 
-               for (var i = length, length = value .length; i < length; ++ i)
+               for (let i = minLength; i < maxLength; ++ i)
                   this [i] = value [i] .copy ();
 
-               this .length = length;
+               this .length = maxLength;
             }
             else
             {
-               for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+               for (let i = 0; i < minLength; ++ i)
                   this [i] .assign (value [i] .getValue ());
 
-               for (var i = length, length = value .length; i < length; ++ i)
+               for (let i = minLength; i < maxLength; ++ i)
                   this [i] = value [i] .getValue () .copy ();
 
-               this .length = length;
+               this .length = maxLength;
             }
          };
 
