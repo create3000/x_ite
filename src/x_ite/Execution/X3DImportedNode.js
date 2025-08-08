@@ -5,9 +5,7 @@ const
    _executionContext = Symbol (),
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
-   _importedName     = Symbol (),
-   _routes           = Symbol (),
-   _real             = Symbol ();
+   _importedName     = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {
