@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    async loadData ()
    {
       // See: 29.2.2 Script execution
-      await this .unloadData ();
+      this .unloadData ();
 
       new FileLoader (this) .loadDocument (this ._url, async data =>
       {
