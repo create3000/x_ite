@@ -357,8 +357,8 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
             {
                arrayOfStrings = false;
 
-               for (const str in localArray)
-                  localArray [str] = this .SFStringToXML (localArray [str]);
+               for (const [str, value] of localArray .entries ())
+                  localArray [str] = this .SFStringToXML (value);
 
                this .elementSetAttribute (element, parentkey .substring (1), '"' + localArray .join ('" "') + '"');
             }
