@@ -272,7 +272,7 @@ Object .assign (DicomParser .prototype,
          }
          else if (this .dicom .depth !== pixelElement .fragments .length)
          {
-            var basicOffsetTable = dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
+            const basicOffsetTable = dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
 
             for (let i = 0; i < length; ++ i)
                frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable));
