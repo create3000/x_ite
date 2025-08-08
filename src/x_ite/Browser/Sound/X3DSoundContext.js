@@ -1,5 +1,4 @@
 import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
-import X3DObject    from "../../Base/X3DObject.js";
 
 const
    _audioElements       = Symbol (),
