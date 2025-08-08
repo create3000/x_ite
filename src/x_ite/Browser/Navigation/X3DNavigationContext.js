@@ -127,11 +127,13 @@ Object .assign (X3DNavigationContext .prototype,
    {
       this ._activeNavigationInfo .getValue () ?._viewer .removeFieldInterest (this ._viewer);
 
-      this ._activeNavigationInfo = this ._activeLayer .getValue () ?.getNavigationInfo ();
+      const navigationInfo = this ._activeLayer .getValue () ?.getNavigationInfo ();
 
-      this ._activeNavigationInfo .getValue () ?._viewer .addFieldInterest (this ._viewer);
+      this ._activeNavigationInfo = navigationInfo;
 
-      this ._viewer = this ._activeNavigationInfo .getValue () ?._viewer ?? "NONE";
+      navigationInfo ?._viewer .addFieldInterest (this ._viewer);
+
+      this ._viewer = navigationInfo ?._viewer ?? "NONE";
    },
    set_activeViewpoint__ ()
    {
