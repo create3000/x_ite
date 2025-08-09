@@ -1,5 +1,6 @@
 import X3DField from "./X3DField.js";
-import Features from "../Features.js";
+
+import "../Features.js";
 
 function X3DArrayField (value)
 {
