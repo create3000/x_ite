@@ -4,7 +4,7 @@ import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 
-typeof jquery_mousewheel; // import plugin
+void (typeof jquery_mousewheel); // import plugin
 
 const macOS = /Mac OS X/i .test (navigator .userAgent)
 

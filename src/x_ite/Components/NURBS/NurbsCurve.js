@@ -111,9 +111,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
 
       // Knots
 
-      const
-         knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
-         scale = knots .at (-1) - knots [0];
+      const knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot);
 
       // Initialize NURBS tessellator
 

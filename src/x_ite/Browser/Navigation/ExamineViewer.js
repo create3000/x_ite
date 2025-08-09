@@ -7,19 +7,19 @@ import Vector2           from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 
-typeof jquery_mousewheel; // import plugin
+void (typeof jquery_mousewheel); // import plugin
 
 const macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
-   SPIN_RELEASE_TIME   = 20,
-   SPIN_ANGLE          = Algorithm .radians (2),
-   SPIN_FACTOR         = 0.3,
-   SCROLL_FACTOR       = macOS ? 1 / 120 : 1 / 20,
-   MOVE_TIME           = 0.2,
-   ROTATE_TIME         = 0.2,
-   DISK_ANGLE          = Algorithm .radians (15),
-   CRITICAL_ANGLE      = Algorithm .radians (0.1);
+   SPIN_RELEASE_TIME = 20,
+   SPIN_ANGLE        = Algorithm .radians (2),
+   SPIN_FACTOR       = 0.3,
+   SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
+   MOVE_TIME         = 0.2,
+   ROTATE_TIME       = 0.2,
+   DISK_ANGLE        = Algorithm .radians (15),
+   CRITICAL_ANGLE    = Algorithm .radians (0.1);
 
 function ExamineViewer (executionContext, navigationInfo)
 {

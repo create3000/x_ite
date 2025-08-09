@@ -67,8 +67,9 @@ Object .assign (X3DWebXRContext .prototype,
             gl             = this .getContext (),
             mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
             session        = await navigator .xr .requestSession (mode),
-            referenceSpace = await session .requestReferenceSpace ("local"),
-            compatible     = await gl .makeXRCompatible ();
+            referenceSpace = await session .requestReferenceSpace ("local");
+
+         await gl .makeXRCompatible ();
 
          this .finishedEvents () .addInterest ("xrUpdatePointers", this);
 
