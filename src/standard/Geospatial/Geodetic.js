@@ -23,12 +23,12 @@ Object .assign (Geodetic .prototype,
 
       if (this .longitudeFirst)
       {
-         latitude  = geodetic .y,
+         latitude  = geodetic .y;
          longitude = geodetic .x;
       }
       else
       {
-         latitude  = geodetic .x,
+         latitude  = geodetic .x;
          longitude = geodetic .y;
       }
 
