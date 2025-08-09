@@ -12,8 +12,8 @@ export const getUniqueName = function (map, name = "")
 
    let
       newName = "",
-      lo      = 1,
-      hi      = 1;
+      lo,
+      hi = 1;
 
    do
    {

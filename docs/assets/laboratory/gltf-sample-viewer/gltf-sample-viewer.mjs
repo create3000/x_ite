@@ -1137,6 +1137,13 @@ class SampleViewer
 
       $("#animations") .show () .find ("button") .first () .trigger ("click");
    }
+
+   log (... args)
+   {
+      console .log (... args);
+   }
 }
 
 const viewer = new SampleViewer (X3D .getBrowser ());
+
+viewer .log ("Added Sample Viewer.");

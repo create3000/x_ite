@@ -591,9 +591,16 @@ class Playground
          ],
       });
    }
+
+   log (... args)
+   {
+      console .log (... args);
+   }
 }
 
 const playground = new Playground ();
+
+playground .log ("Added Playground.");
 
 (() =>
 {
