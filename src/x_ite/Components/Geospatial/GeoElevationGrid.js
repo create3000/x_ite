@@ -208,8 +208,6 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
          normalArray        = this .getNormals (),
          vertexArray        = this .getVertices ();
 
-      let face = 0;
-
       // Vertex attribute
 
       //std::vector <std::vector <float>> attribArrays (attribNodes .size ());
@@ -217,20 +215,23 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
       //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
       //   attribArrays [a] .reserve (coordIndex .size ());
 
+      let texCoords, texCoordArray;
+
       if (texCoordNode)
       {
          texCoordNode .init (multiTexCoordArray);
       }
       else
       {
-         var
-            texCoords     = this .createTexCoords (),
-            texCoordArray = this .getTexCoords ();
+         texCoords     = this .createTexCoords (),
+         texCoordArray = this .getTexCoords ();
 
          multiTexCoordArray .push (texCoordArray);
       }
 
       // Build geometry
+
+      let face = 0;
 
       for (let c = 0; c < coordIndex .length; ++ face)
       {

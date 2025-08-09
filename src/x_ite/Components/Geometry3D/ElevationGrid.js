@@ -186,7 +186,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          normalArray        = this .getNormals (),
          vertexArray        = this .getVertices ();
 
-      let face = 0;
+      let texCoords, texCoordArray;
 
       if (texCoordNode)
       {
@@ -194,14 +194,15 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
       }
       else
       {
-         var
-            texCoords     = this .createTexCoords (),
-            texCoordArray = this .getTexCoords ();
+         texCoords     = this .createTexCoords (),
+         texCoordArray = this .getTexCoords ();
 
          multiTexCoordArray .push (texCoordArray);
       }
 
       // Build geometry
+
+      let face = 0;
 
       for (let c = 0, numCoordIndices = coordIndex .length; c < numCoordIndices; ++ face)
       {
