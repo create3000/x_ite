@@ -104,13 +104,15 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
        * containerField is set, then the containerField is set in the elemetn.
        */
 
+      let child;
+
       if (typeof this .namespace === "undefined")
       {
-         var child = document .createElement (key);
+         child = document .createElement (key);
       }
       else
       {
-         var child = document .createElementNS (this .namespace, key);
+         child = document .createElementNS (this .namespace, key);
 
          if (child === null || typeof child === "undefined")
          {
