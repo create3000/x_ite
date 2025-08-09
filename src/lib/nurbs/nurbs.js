@@ -10,7 +10,7 @@ import createTransform     from "./src/transform.js";
 import createSupport       from "./src/support.js";
 import sample              from "./extras/sample.js";
 
-var BOUNDARY_TYPES = {
+const BOUNDARY_TYPES = {
    open: "open",
    closed: "closed",
    clamped: "clamped"
@@ -21,8 +21,6 @@ function isBlank (x) {
 }
 
 function parseNURBS (points, degree, knots, weights, boundary, opts) {
-   var i, dflt;
-
    if (points && !isArrayLike(points) && !isNdarray(points)) {
       opts = points;
       this.debug = points.debug;
@@ -45,9 +43,9 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
       Object.defineProperty(this, "size", {value: opts.size, writable: true, configurable: true});
    }
 
-   var pointType  = inferType(this.points);
-   var weightType = inferType(this.weights);
-   var knotType   = inferType(this.knots);
+   const pointType  = inferType(this.points);
+   const weightType = inferType(this.weights);
+   const knotType   = inferType(this.knots);
 
    if (this.points) {
       //
@@ -82,10 +80,11 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
          case inferType.ARRAY_OF_OBJECTS:
          case inferType.ARRAY_OF_ARRAYS:
             // Follow the zeroth entries until we hit something that"s not an array
-            var splineDimension = 0;
-            var size = this.size || [];
+            const size = this.size || [];
+            let splineDimension = 0;
+            let ptr = this.points;
             size.length = 0;
-            for (var ptr = this.points; isArrayLike(ptr[0]); ptr = ptr[0]) {
+            for (; isArrayLike(ptr[0]); ptr = ptr[0]) {
                splineDimension++;
                size.push(ptr.length);
             }
@@ -106,9 +105,9 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
                },
                size: {
                   get: function () {
-                     var size = [];
+                     const size = [];
                      size.length = 0;
-                     for (var i = 0, ptr = this.points; i < this.splineDimension; i++, ptr = ptr[0]) {
+                     for (let i = 0, ptr = this.points; i < this.splineDimension; ++ i, ptr = ptr[0]) {
                         size[i] = ptr.length;
                      }
                      return size;
@@ -158,16 +157,16 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
    // Sanitize the degree into an array
    //
    if (isArrayLike(this.degree)) {
-      for (i = 0; i < this.splineDimension; i++) {
+      for (let i = 0; i < this.splineDimension; ++ i) {
          if (isBlank(this.degree[i])) {
             throw new Error("Missing degree in dimension " + (i + 1));
          }
       }
    } else {
-      var hasBaseDegree = !isBlank(this.degree);
-      var baseDegree = isBlank(this.degree) ? 2 : this.degree;
+      const hasBaseDegree = !isBlank(this.degree);
+      const baseDegree = isBlank(this.degree) ? 2 : this.degree;
       this.degree = [];
-      for (i = 0; i < this.splineDimension; i++) {
+      for (let i = 0; i < this.splineDimension; ++ i) {
          if (this.size[i] <= baseDegree) {
             if (hasBaseDegree) {
                throw new Error("Expected at least " + (baseDegree + 1) + " points for degree " + baseDegree + " spline in dimension " + (i + 1) + " but got only " + this.size[i]);
@@ -183,13 +182,13 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
    //
    // Sanitize boundaries
    //
-   dflt = (typeof this.boundary !== "string") ? "open" : this.boundary;
+   const dflt = (typeof this.boundary !== "string") ? "open" : this.boundary;
    if (!BOUNDARY_TYPES[dflt]) {
       throw new Error("Boundary type must be one of " + Object.keys(BOUNDARY_TYPES) + ". Got " + dflt);
    }
    this.boundary = isArrayLike(this.boundary) ? this.boundary : [];
    this.boundary.length = this.splineDimension;
-   for (i = 0; i < this.splineDimension; i++) {
+   for (let i = 0; i < this.splineDimension; ++ i) {
       this.boundary[i] = isBlank(this.boundary[i]) ? dflt : this.boundary[i];
 
       if (!BOUNDARY_TYPES[dflt]) {
@@ -207,7 +206,7 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
             this.knots = [this.knots];
          }
 
-         for (i = 0; i < this.splineDimension; i++) {
+         for (let i = 0; i < this.splineDimension; ++ i) {
             if (this.size[i] <= this.degree[i]) {
                throw new Error("Expected at least " + (this.degree[i] + 1) + " points in dimension " + (i + 1) + " but got " + this.size[i] + ".");
             }
@@ -219,7 +218,7 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
                   // Fudge factor allowance for just ignoring extra knots. This makes some allowance
                   // for passing regular clamped/open spline knots to a closed spline by ignoring extra
                   // knots instead of simply truncating.
-                  var canBeFudged = this.knots[i].length === this.size[i] + this.degree[i] + 1;
+                  const canBeFudged = this.knots[i].length === this.size[i] + this.degree[i] + 1;
                   if (!canBeFudged) {
                      throw new Error("Expected " + (this.size[i] + 1) + " knots for closed spline in dimension " + (i + 1) + " but got " + this.knots[i].length + ".");
                   }
@@ -234,12 +233,12 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
    //
    // Create evaluator
    //
-   var newCacheKey = computeCacheKey(this, this.debug, this.checkBounds, pointType, weightType, knotType);
+   const newCacheKey = computeCacheKey(this, this.debug, this.checkBounds, pointType, weightType, knotType);
 
    if (newCacheKey !== this.__cacheKey) {
       this.__cacheKey = newCacheKey;
 
-      var accessors = createAccessors(this);
+      const accessors = createAccessors(this);
 
       this.evaluate = createEvaluator(this.__cacheKey, this, accessors, this.debug, this.checkBounds, false);
       this.transform = createTransform(this.__cacheKey, this, accessors, this.debug);
@@ -256,8 +255,8 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
 }
 
 function domainGetter () {
-   var sizeArray;
-   var ret = [];
+   const ret = [];
+   let sizeArray;
 
    // If the reference to size is hard-coded, then the size cannot change, or
    // if you change points manually (like by appending a point) without re-running
@@ -265,7 +264,7 @@ function domainGetter () {
    // by querying the size directly, based on the point data type
    //
    // A pointer to the point array-of-arrays:
-   var ptr = this.points;
+   let ptr = this.points;
 
    if (!ptr) {
       // If there are no points, then just use this.size
@@ -275,13 +274,13 @@ function domainGetter () {
       sizeArray = ptr.shape;
    }
 
-   for (var d = 0; d < this.splineDimension; d++) {
-      var size = sizeArray ? sizeArray[d] : ptr.length;
-      var p = this.degree[d];
-      var isClosed = this.boundary[d] === "closed";
+   for (let d = 0; d < this.splineDimension; d++) {
+      const size = sizeArray ? sizeArray[d] : ptr.length;
+      const p = this.degree[d];
+      const isClosed = this.boundary[d] === "closed";
 
       if (this.knots && this.knots[d]) {
-         var k = this.knots[d];
+         const k = this.knots[d];
          ret[d] = [k[isClosed ? 0 : p], k[size]];
       } else {
          ret[d] = [isClosed ? 0 : p, size];
@@ -302,13 +301,13 @@ function domainGetter () {
 // @param opts {object} - additional options
 function nurbs (points, degree, knots, weights, boundary, opts)
 {
-   var ctor = function (points, degree, knots, weights, boundary, opts)
+   const ctor = function (points, degree, knots, weights, boundary, opts)
    {
       parseFcn (points, degree, knots, weights, boundary, opts);
       return ctor;
    };
 
-   var parseFcn = parseNURBS .bind (ctor);
+   const parseFcn = parseNURBS .bind (ctor);
 
    Object .defineProperty (ctor, "domain",
    {
