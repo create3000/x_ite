@@ -394,8 +394,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    addShaderFields ()
    {
       const
-         program = this .getProgram (),
-         gl      = this .getBrowser () .getContext ();
+         gl      = this .getBrowser () .getContext (),
+         program = this .getProgram ();
 
       gl .useProgram (program);
 
@@ -472,9 +472,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (let i = 0;; ++ i)
                {
-                  const l = gl .getUniformLocation (program, field .getName () + "[" + i + "]");
+                  const l = gl .getUniformLocation (program, `${field .getName ()}[${i}]`);
 
-                  if (! l)
+                  if (!l)
                      break;
 
                   locations .push (l);
@@ -899,9 +899,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (let i = 0; ; ++ i)
       {
-         const location = gl .getUniformLocation (program, name + "[" + i + "]");
+         const location = gl .getUniformLocation (program, `${name}[${i}]`);
 
-         if (! location)
+         if (!location)
             return i;
       }
    },
