@@ -716,19 +716,17 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .MFImage:
             {
-               const
-                  array       = location .array,
-                  fieldLength = field .length;
+               const array = location .array;
 
-               for (let i = 0, a = 0; i < fieldLength; ++ i)
+               let a = 0;
+
+               for (const image of field)
                {
-                  const
-                     value  = field [i],
-                     pixels = value .array;
+                  const pixels = image .array;
 
-                  array [a ++] = value .width;
-                  array [a ++] = value .height;
-                  array [a ++] = value .comp;
+                  array [a ++] = image .width;
+                  array [a ++] = image .height;
+                  array [a ++] = image .comp;
 
                   for (const pixel of pixels)
                      array [a ++] = pixel;
