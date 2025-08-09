@@ -184,7 +184,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          multiTexCoordArray = this .getMultiTexCoords (),
          tangentArray       = this .getTangents (),
          normalArray        = this .getNormals (),
-         vertexArray        = this .getVertices ();
+         vertexArray        = this .getVertices (),
+         numCoordIndices    = coordIndex .length;
 
       let texCoords, texCoordArray;
 
@@ -204,7 +205,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
 
       let face = 0;
 
-      for (let c = 0, numCoordIndices = coordIndex .length; c < numCoordIndices; ++ face)
+      for (let c = 0; c < numCoordIndices; ++ face)
       {
          for (let p = 0; p < 6; ++ p, ++ c)
          {

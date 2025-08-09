@@ -69,14 +69,15 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
    createNormals (points, coordIndex, creaseAngle)
    {
       const
-         cw          = !this ._ccw .getValue (),
-         normalIndex = new Map (),
-         normals     = [ ];
+         numCoordIndices = coordIndex .length,
+         cw              = !this ._ccw .getValue (),
+         normalIndex     = new Map (),
+         normals         = [ ];
 
       for (let p = 0; p < points .length; ++ p)
          normalIndex .set (p, [ ]);
 
-      for (let c = 0; c < coordIndex .length; c += 3)
+      for (let c = 0; c < numCoordIndices; c += 3)
       {
          const
             c0 = coordIndex [c],
@@ -206,7 +207,8 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
          multiTexCoordArray = this .getMultiTexCoords (),
          tangentArray       = this .getTangents (),
          normalArray        = this .getNormals (),
-         vertexArray        = this .getVertices ();
+         vertexArray        = this .getVertices (),
+         numCoordIndices    = coordIndex .length;
 
       // Vertex attribute
 
@@ -233,7 +235,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
 
       let face = 0;
 
-      for (let c = 0; c < coordIndex .length; ++ face)
+      for (let c = 0; c < numCoordIndices; ++ face)
       {
          for (let p = 0; p < 6; ++ p, ++ c)
          {
