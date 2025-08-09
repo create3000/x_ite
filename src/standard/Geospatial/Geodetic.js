@@ -19,17 +19,17 @@ Object .assign (Geodetic .prototype,
    {
       const elevation = geodetic .z;
 
+      let latitude, longitude;
+
       if (this .longitudeFirst)
       {
-         var
-            latitude  = geodetic .y,
-            longitude = geodetic .x;
+         latitude  = geodetic .y,
+         longitude = geodetic .x;
       }
       else
       {
-         var
-            latitude  = geodetic .x,
-            longitude = geodetic .y;
+         latitude  = geodetic .x,
+         longitude = geodetic .y;
       }
 
       if (this .degrees)
