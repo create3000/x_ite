@@ -594,17 +594,19 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const colorArray = geometryNode .getColors () .getValue ();
 
+         let newColor;
+
          if (colorArray .length)
          {
             if (shapeNode .isTransparent ())
             {
-               var newColor = new ColorRGBA (executionContext);
+               newColor = new ColorRGBA (executionContext);
 
                newColor ._color = colorArray;
             }
             else
             {
-               var newColor = new Color (executionContext);
+               newColor = new Color (executionContext);
 
                newColor ._color = colorArray .filter ((c, i) => i % 4 < 3);
             }
