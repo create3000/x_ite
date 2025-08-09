@@ -358,7 +358,7 @@ Object .assign (Bookmarks .prototype,
 
 function prevent (arg)
 {
-   return !!void (arg);
+   return !! void (arg);
 }
 
 export default Bookmarks;
