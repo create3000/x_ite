@@ -509,6 +509,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          else
             field [_uniformLocation] = location;
 
+         if (!field [_uniformLocation])
+            continue;
+
          field .addInterest ("set_field__", this);
 
          this .set_field__ (field);
@@ -529,9 +532,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             gl       = this .getBrowser () .getContext (),
             program  = this .getProgram (),
             location = field [_uniformLocation];
-
-         if (!location)
-            return;
 
          gl .useProgram (program);
 
