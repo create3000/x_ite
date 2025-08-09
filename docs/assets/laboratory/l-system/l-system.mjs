@@ -171,27 +171,26 @@ function generate ()
 {
 	try
 	{
-		var lsystem = new LSystem ();
+		const lsystem = new LSystem ();
 
 		lsystem .setIterations (+$("#iterations") .val ());
 		lsystem .setConstants ($("#constants") .val ());
 		lsystem .setAxiom ($("#axiom") .val ());
 
-		var rules = [ ];
+		const rules = [ ];
 
-		for (var i = 0; i < 6; ++ i)
+		for (let i = 0; i < 6; ++ i)
 		{
-			var rule = $("#rule-" + i) .val () .trim ();
+			const rule = $("#rule-" + i) .val () .trim ();
 
 			if (rule)
 				rules .push (rule);
 		}
 
 		lsystem .setRules (rules);
-
 		lsystem .generate ();
 
-		var renderer = new TurtleRenderer (lsystem);
+		const renderer = new TurtleRenderer (lsystem);
 
 		renderer .setXAngle (+$("#u-tilt") .val () / 180 * Math .PI);
 		renderer .setYAngle (+$("#twist") .val () / 180 * Math .PI);
@@ -201,31 +200,31 @@ function generate ()
 
 		renderer .generate ();
 
-		var stack      = [ ];
-		var root       = renderer .getTree ();
-		var colorIndex = new X3D .MFInt32 ();
-		var coordIndex = new X3D .MFInt32 ();
-		var points     = new X3D .MFVec3f ();
+		const stack      = [ ];
+		const root       = renderer .getTree ();
+		const colorIndex = new X3D .MFInt32 ();
+		const coordIndex = new X3D .MFInt32 ();
+		const points     = new X3D .MFVec3f ();
 
 		if (root)
 		{
-			var color = root .color;
-			var coord = points .length;
+			const color = root .color;
+			const coord = points .length;
 
 			points .push (root .point);
 
-			for (var i = 0, l = root .children .length; i < l; ++ i)
+			for (let i = 0, l = root .children .length; i < l; ++ i)
 				stack .push ({ child: root .children [i], color: color, coord: coord });
 
 			while (stack .length)
 			{
-				var first  = stack [stack .length - 1];
-				var second = first .child;
-				var color  = second .color;
-				var coord  = points .length;
+				const first  = stack [stack .length - 1];
+
+				let second = first .child;
+				let color  = second .color;
+				let coord  = points .length;
 
 				stack .pop ();
-
 				points .push (second .point);
 
 				colorIndex .push (first .color);
@@ -237,9 +236,8 @@ function generate ()
 					coordIndex .push (coord);
 
 					second = second .children [0];
-
-					color = second .color;
-					coord = points .length;
+					color  = second .color;
+					coord  = points .length;
 
 					points .push (second .point);
 				}
@@ -250,13 +248,13 @@ function generate ()
 				coordIndex .push (coord);
 				coordIndex .push (-1);
 
-				for (var i = 0, l = second .children .length; i < l; ++ i)
+				for (let i = 0, l = second .children .length; i < l; ++ i)
 					stack .push ({ child: second .children [i], color: color, coord: coord });
 			}
 
 			// Fit in box of size 1,1,1.
 
-			var
+			let
 				minX = Number .POSITIVE_INFINITY,
 				minY = Number .POSITIVE_INFINITY,
 				minZ = Number .POSITIVE_INFINITY,
@@ -264,9 +262,9 @@ function generate ()
 				maxY = Number .NEGATIVE_INFINITY,
 				maxZ = Number .NEGATIVE_INFINITY;
 
-			for (var i = 0, l = points .length; i < l; ++ i)
+			for (let i = 0, l = points .length; i < l; ++ i)
 			{
-				var p = points [i];
+				const p = points [i];
 
 				minX = Math .min (minX, p .x);
 				minY = Math .min (minY, p .y);
@@ -277,27 +275,27 @@ function generate ()
 				maxZ = Math .max (maxZ, p .z);
 			}
 
-			var size      = Math .max (maxX - minX, maxY - minY, maxZ - minZ);
-			var center    = [(minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2];
-			var normalize = false;
+			const size      = Math .max (maxX - minX, maxY - minY, maxZ - minZ);
+			const center    = [(minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2];
+			const normalize = false;
 
 			if (normalize)
 			{
-				var scaleMatrix = new X3D .SFMatrix4d (1/size, 0, 0, 0,  0, 1/size, 0, 0,  0, 0, 1/size, 0,  -center[0]/size, -center[1]/size, -center[2]/size, 1);
+				const scaleMatrix = new X3D .SFMatrix4d (1/size, 0, 0, 0,  0, 1/size, 0, 0,  0, 0, 1/size, 0,  -center[0]/size, -center[1]/size, -center[2]/size, 1);
 
-				for (var i = 0, l = points .length; i < l; ++ i)
+				for (let i = 0, l = points .length; i < l; ++ i)
 					points [i] = scaleMatrix .multVecMatrix (points [i]);
 			}
 			else
 			{
-				var transform = X3D .getBrowser () .currentScene .getNamedNode ("XForm");
+				const transform = X3D .getBrowser () .currentScene .getNamedNode ("XForm");
 
 				transform .translation = new X3D .SFVec3f (-center [0] / size, -center [1] / size, -center [2] / size);
 				transform .scale       = new X3D .SFVec3f (1 / size, 1 / size, 1 / size);
 			}
 		}
 
-		var indexedLineSet = X3D .getBrowser () .currentScene .getNamedNode ("L-System");
+		const indexedLineSet = X3D .getBrowser () .currentScene .getNamedNode ("L-System");
 
 		indexedLineSet .colorIndex   = colorIndex;
 		indexedLineSet .coordIndex   = coordIndex;
