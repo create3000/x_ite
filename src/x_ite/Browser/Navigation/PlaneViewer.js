@@ -1,7 +1,7 @@
 import X3DViewer from "./X3DViewer.js";
 import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 
-typeof jquery_mousewheel; // import plugin
+void (typeof jquery_mousewheel); // import plugin
 
 const macOS = /Mac OS X/i .test (navigator .userAgent)
 
