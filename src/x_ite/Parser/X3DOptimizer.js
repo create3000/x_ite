@@ -165,6 +165,8 @@ Object .assign (X3DOptimizer .prototype,
          {
             if (node .children .length !== 0)
                return node;
+
+            break;
          }
       }
 
