@@ -526,14 +526,14 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       return function (field)
       {
          const
-            program  = this .getProgram (),
             gl       = this .getBrowser () .getContext (),
+            program  = this .getProgram (),
             location = field [_uniformLocation];
-
-         gl .useProgram (program);
 
          if (!location)
             return;
+
+         gl .useProgram (program);
 
          switch (field .getType ())
          {
@@ -546,13 +546,13 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .SFColor:
             {
                const value = field .getValue ();
-               gl .uniform3f (location, value .r, value .g, value .b);
+               gl .uniform3f (location, ... value);
                return;
             }
             case X3DConstants .SFColorRGBA:
             {
                const value = field .getValue ();
-               gl .uniform4f (location, value .r, value .g, value .b, value .a);
+               gl .uniform4f (location, ... value);
                return;
             }
             case X3DConstants .SFDouble:
@@ -627,21 +627,21 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .SFVec2f:
             {
                const value = field .getValue ();
-               gl .uniform2f (location, value .x, value .y);
+               gl .uniform2f (location, ... value);
                return;
             }
             case X3DConstants .SFVec3d:
             case X3DConstants .SFVec3f:
             {
                const value = field .getValue ();
-               gl .uniform3f (location, value .x, value .y, value .z);
+               gl .uniform3f (location, ... value);
                return;
             }
             case X3DConstants .SFVec4d:
             case X3DConstants .SFVec4f:
             {
                const value = field .getValue ();
-               gl .uniform4f (location, value .x, value .y, value .z, value .w);
+               gl .uniform4f (location, ... value);
                return;
             }
             case X3DConstants .MFBool:
