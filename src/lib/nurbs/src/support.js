@@ -30,7 +30,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
    const knotIndex = variable(debug ? "knotIndex" : "i");
 
    let allDimensionUniform = true;
-   for (let d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       if (isArrayLike(knots) && isArrayLike(knots[d])) {
          allDimensionUniform = false;
       }
@@ -42,7 +42,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
    }
 
    const parameterArgs = [];
-   for (let i = 0; i < splineDimension; i++) {
+   for (let i = 0; i < splineDimension; ++ i) {
       parameterArgs.push(tVar([i]));
    }
 
@@ -51,9 +51,9 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
    let c = 0;
    function pushSupport (args, period) {
       if (period === undefined) {
-         line("out[" + (c++) + "] = " + args.join(" + ") + ";");
+         line("out[" + (c ++) + "] = " + args.join(" + ") + ";");
       } else {
-         line("out[" + (c++) + "] = (" + args.join(" + ") + " + " + period + ") % " + period + ";");
+         line("out[" + (c ++) + "] = (" + args.join(" + ") + " + " + period + ") % " + period + ";");
       }
    }
 
@@ -62,7 +62,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
 
    if (checkBounds) {
       line("var " + domainVar + " = this.domain;");
-      line("for (var i = 0; i < this.splineDimension; i++) {");
+      line("for (var i = 0; i < this.splineDimension; ++ i) {");
       line("  a = arguments[i + 1];");
       line("  if (a < " + domainVar + "[i][0] || a > " + domainVar + "[i][1] || a === undefined || isNaN(a)) {");
       line("    throw new Error(\"Invalid Spline parameter in dimension \"+i+\". Valid domain is [\"+" + domainVar + "[i][0]+\", \"+" + domainVar + "[i][1]+\"]. but got t\"+i+\" = \"+arguments[i + 1]+\".\");");
@@ -70,7 +70,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
       line("}");
    }
 
-   for (let d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       line("var " + sizeVar(d) + " = " + sizeGetter(nurbs.points, "this.points", d) + ";");
    }
 
@@ -79,7 +79,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
    }
 
    const hasKnots = [];
-   for (let d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       switch (inferType(knots)) {
          case inferType.NDARRAY:
             hasKnots[d] = true;
@@ -90,7 +90,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
       }
    }
 
-   for (let d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       if (hasKnots[d]) {
          line("var " + knotIndex(d) + " = 0;");
          line("h = " + sizeVar(d) + ";");
@@ -112,18 +112,18 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
 
    const n = [];
 
-   for (let d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       n[d] = degree[d] + 1;
    }
 
    ndloop(n, function (dst) {
       const readIdx = [];
       const period = [];
-      for (let d = 0; d < splineDimension; d++) {
+      for (let d = 0; d < splineDimension; ++ d) {
          readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
          if (boundary[d] === "closed" && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
       }
-      for (let d = 0; d < splineDimension; d++) {
+      for (let d = 0; d < splineDimension; ++ d) {
          pushSupport(readIdx[d], period[d]);
       }
    });
