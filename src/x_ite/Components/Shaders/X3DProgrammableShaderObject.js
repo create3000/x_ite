@@ -543,6 +543,13 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                gl .uniform1i (location, field .getValue ());
                return;
             }
+            case X3DConstants .SFDouble:
+            case X3DConstants .SFFloat:
+            case X3DConstants .SFTime:
+            {
+               gl .uniform1f (location, field .getValue ());
+               return;
+            }
             case X3DConstants .SFColor:
             {
                gl .uniform3f (location, ... field .getValue ());
@@ -551,13 +558,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .SFColorRGBA:
             {
                gl .uniform4f (location, ... field .getValue ());
-               return;
-            }
-            case X3DConstants .SFDouble:
-            case X3DConstants .SFFloat:
-            case X3DConstants .SFTime:
-            {
-               gl .uniform1f (location, field .getValue ());
                return;
             }
             case X3DConstants .SFImage:
@@ -647,48 +647,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                let k = 0;
 
                for (const value of field)
-                  array [++ k] = value;
+                  array [k ++] = value;
 
                array .fill (0, k);
 
                gl .uniform1iv (location, array);
-               return;
-            }
-            case X3DConstants .MFColor:
-            {
-               const array = location .array;
-
-               let k = 0;
-
-               for (const color of field)
-               {
-                  array [k ++] = color .r;
-                  array [k ++] = color .g;
-                  array [k ++] = color .b;
-               }
-
-               array .fill (0, k);
-
-               gl .uniform3fv (location, array);
-               return;
-            }
-            case X3DConstants .MFColorRGBA:
-            {
-               const array = location .array;
-
-               let k = 0;
-
-               for (const color of field)
-               {
-                  array [k ++] = color .r;
-                  array [k ++] = color .g;
-                  array [k ++] = color .b;
-                  array [k ++] = color .a;
-               }
-
-               array .fill (0, k);
-
-               gl .uniform4fv (location, array);
                return;
             }
             case X3DConstants .MFDouble:
@@ -705,6 +668,40 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                array .fill (0, k);
 
                gl .uniform1fv (location, array);
+               return;
+            }
+            case X3DConstants .MFColor:
+            {
+               const array = location .array;
+
+               let k = 0;
+
+               for (const color of field)
+               {
+                  for (const element of color)
+                     array [k ++] = element;
+               }
+
+               array .fill (0, k);
+
+               gl .uniform3fv (location, array);
+               return;
+            }
+            case X3DConstants .MFColorRGBA:
+            {
+               const array = location .array;
+
+               let k = 0;
+
+               for (const color of field)
+               {
+                  for (const element of color)
+                     array [k ++] = element;
+               }
+
+               array .fill (0, k);
+
+               gl .uniform4fv (location, array);
                return;
             }
             case X3DConstants .MFImage:
@@ -735,8 +732,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (const matrix of field)
                {
-                  for (let m = 0; m < 9; ++ m)
-                     array [k ++] = matrix [m];
+                  for (const element of matrix)
+                     array [k ++] = element;
                }
 
                array .fill (0, k);
@@ -753,8 +750,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (const matrix of field)
                {
-                  for (let m = 0; m < 16; ++ m)
-                     array [k ++] = matrix [m];
+                  for (const element of matrix)
+                     array [k ++] = element;
                }
 
                array .fill (0, k);
@@ -797,15 +794,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                {
                   rotation .getValue () .getMatrix (rotationMatrix);
 
-                  array [k ++] = rotationMatrix [0];
-                  array [k ++] = rotationMatrix [1];
-                  array [k ++] = rotationMatrix [2];
-                  array [k ++] = rotationMatrix [3];
-                  array [k ++] = rotationMatrix [4];
-                  array [k ++] = rotationMatrix [5];
-                  array [k ++] = rotationMatrix [6];
-                  array [k ++] = rotationMatrix [7];
-                  array [k ++] = rotationMatrix [8];
+                  for (const element of rotationMatrix)
+                     array [k ++] = element;
                }
 
                array .fill (0, k);
@@ -826,8 +816,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (const vector of field)
                {
-                  array [k ++] = vector .x;
-                  array [k ++] = vector .y;
+                  for (const element of vector)
+                     array [k ++] = element;
                }
 
                array .fill (0, k);
@@ -844,9 +834,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (const vector of field)
                {
-                  array [k ++] = vector .x;
-                  array [k ++] = vector .y;
-                  array [k ++] = vector .z;
+                  for (const element of vector)
+                     array [k ++] = element;
                }
 
                array .fill (0, k);
@@ -863,10 +852,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (const vector of field)
                {
-                  array [k ++] = vector .x;
-                  array [k ++] = vector .y;
-                  array [k ++] = vector .z;
-                  array [k ++] = vector .w;
+                  for (const element of vector)
+                     array [k ++] = element;
                }
 
                array .fill (0, k);
