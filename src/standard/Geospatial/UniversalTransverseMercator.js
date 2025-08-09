@@ -42,17 +42,17 @@ Object .assign (UniversalTransverseMercator .prototype,
    {
       // https://gist.github.com/duedal/840476
 
+      let northing, easting;
+
       if (this .eastingFirst)
       {
-         var
-            northing = utm .y,
-            easting  = utm .x;
+         northing = utm .y;
+         easting  = utm .x;
       }
       else
       {
-         var
-            northing = utm .x,
-            easting  = utm .y;
+         northing = utm .x;
+         easting  = utm .y;
       }
 
       // Check for southern hemisphere and remove offset from easting.
