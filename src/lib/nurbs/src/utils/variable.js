@@ -1,9 +1,9 @@
 
-var createVariable = function createVariable (name, nurbs) {
+const createVariable = function createVariable (name, nurbs) {
    return function (i, period) {
       if (i !== undefined && !Array.isArray(i)) i = [i];
-      var dimAccessors = [];
-      for (var j = 0; j < i.length; j++) {
+      const dimAccessors = [];
+      for (let j = 0; j < i.length; j++) {
          dimAccessors.push(createVariable.sum(i[j]));
       }
       if (period) {

@@ -3,7 +3,7 @@ import inferType from "./infer-type.js";
 
 export default function (nurbs, variableName, propertyName, data)
 {
-   var code = [ ];
+   const code = [ ];
 
    switch (inferType (data))
    {
@@ -12,7 +12,7 @@ export default function (nurbs, variableName, propertyName, data)
          code .push ("  var " + variableName + " = " + propertyName + ".data;");
          code .push ("  var " + variableName + "Offset = " + propertyName + ".offset;");
 
-         for (var i = 0; i < data .dimension; i++) {
+         for (let i = 0; i < data .dimension; ++ i) {
             code .push ("  var " + variableName + "Stride" + i + " = " + propertyName + ".stride[" + i + "];");
          }
 
