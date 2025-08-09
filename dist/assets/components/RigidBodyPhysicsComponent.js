@@ -1,5 +1,5 @@
-/* X_ITE v11.6.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.6")];
+/* X_ITE v12.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -524,9 +524,10 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Members
 
-   this .compoundShape = new AmmoClass .btCompoundShape ()
-   this .offset        = new (external_X_ITE_X3D_Vector3_default()) ();
-   this .matrix        = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .compoundShape  = new AmmoClass .btCompoundShape ()
+   this .offset         = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .matrix         = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .visibleObjects = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
@@ -550,6 +551,15 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
          return this .boundedObject ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   getShapes (shapes, parentModelMatrix)
+   {
+      const modelMatrix = parentModelMatrix .copy () .multLeft (this .matrix);
+
+      for (const visibleObject of this .visibleObjects)
+         visibleObject .getShapes (shapes, modelMatrix);
+
+      return shapes;
    },
    getLocalTransform: (() =>
    {
@@ -636,8 +646,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleObject   = null;
-      this .bboxObject      = null;
+
+      this .visibleObjects .length = 0;
 
       // Add node.
 
@@ -674,7 +684,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
                this .shadowObject = childNode;
 
             if (childNode .isVisibleObject ())
-               this .visibleObject = childNode;
+               this .visibleObjects .push (childNode);
          }
 
          if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
@@ -683,7 +693,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
             childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
             if (childNode .isBBoxVisible ())
-               this .bboxObject = childNode;
+               this .visibleObjects .push (childNode .getBBoxNode ());
          }
       }
 
@@ -721,7 +731,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleObject || this .bboxObject || !this .isDefaultBBoxSize ());
+      this .setVisibleObject (this .visibleObjects .length);
    },
    requestRebuild ()
    {
@@ -762,9 +772,14 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
             // so we do not need to add this node to the pickingHierarchy.
 
             if (this .getBrowser () .getPickable () .at (-1))
-               this .visibleObject ?.traverse (type, renderObject);
+            {
+               for (const visibleObject of this .visibleObjects)
+                  visibleObject .traverse (type, renderObject);
+            }
             else
+            {
                this .pickableObject ?.traverse (type, renderObject);
+            }
 
             break;
          }
@@ -780,8 +795,9 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            this .visibleObject ?.traverse    (type, renderObject);
-            this .bboxObject    ?.displayBBox (type, renderObject);
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
             break;
          }
       }
@@ -1275,7 +1291,10 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (externa
    },
    getBBox (bbox, shadows)
    {
-      return bbox .set ();
+      if (this .isDefaultBBoxSize ())
+         return bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getAppliedParameters ()
    {
@@ -1667,6 +1686,7 @@ const X3DNBodyCollisionSpaceNode_default_ = X3DNBodyCollisionSpaceNode;
 
 
 
+
 function CollisionSpace (executionContext)
 {
    RigidBodyPhysics_X3DNBodyCollisionSpaceNode .call (this, executionContext);
@@ -1691,9 +1711,9 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
    {
       // TODO: add space node.
       if (this .isDefaultBBoxSize ())
-         return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadows);
+         return external_X_ITE_X3D_X3DBoundedObject_default().prototype .getBBox .call (this, this .collidableNodes, bbox, shadows);
 
-      return bbox;
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getCollidables ()
    {
@@ -1713,12 +1733,11 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
          const collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
-         {
-            collisionSpaceNode .addInterest ("collect", this);
-
             collisionSpaceNodes .push (collisionSpaceNode);
-         }
       }
+
+      for (const collisionSpaceNode of collisionSpaceNodes)
+         collisionSpaceNode .addInterest ("collect", this);
 
       this .collect ();
    },
@@ -1745,7 +1764,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
 
          if (collisionSpaceNode)
          {
-            Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
+            collidableNodes .push (... collisionSpaceNode .getCollidables ());
             continue;
          }
       }
@@ -2253,7 +2272,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    },
    getBBox (bbox, shadows)
    {
-      return bbox .set ();
+      if (this .isDefaultBBoxSize ())
+         return bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    setCollection (value)
    {
@@ -2705,7 +2727,10 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
    },
    getBBox (bbox, shadows)
    {
-      return bbox .set ();
+      if (this .isDefaultBBoxSize ())
+         return bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getDynamicsWorld ()
    {

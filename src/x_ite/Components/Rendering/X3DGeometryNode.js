@@ -534,31 +534,36 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       return function (hitRay, offsets)
       {
+         const { min, max } = this;
+
+         let
+            minX,
+            maxX,
+            minY,
+            maxY,
+            minZ,
+            maxZ,
+            planes;
+
          if (offsets)
          {
-            var
-               min    = this .min,
-               max    = this .max,
-               minX   = min .x - offsets .x,
-               maxX   = max .x + offsets .x,
-               minY   = min .y - offsets .y,
-               maxY   = max .y + offsets .y,
-               minZ   = min .z - offsets .z,
-               maxZ   = max .z + offsets .z,
-               planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
+            minX   = min .x - offsets .x;
+            maxX   = max .x + offsets .x;
+            minY   = min .y - offsets .y;
+            maxY   = max .y + offsets .y;
+            minZ   = min .z - offsets .z;
+            maxZ   = max .z + offsets .z;
+            planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
          }
          else
          {
-            var
-               min    = this .min,
-               max    = this .max,
-               minX   = min .x,
-               maxX   = max .x,
-               minY   = min .y,
-               maxY   = max .y,
-               minZ   = min .z,
-               maxZ   = max .z,
-               planes = this .planes;
+            minX   = min .x;
+            maxX   = max .x;
+            minY   = min .y;
+            maxY   = max .y;
+            minZ   = min .z;
+            maxZ   = max .z;
+            planes = this .planes;
          }
 
          // front
@@ -1069,7 +1074,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         browser         = this .getBrowser (),
          appearanceNode  = renderContext .appearanceNode,
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);

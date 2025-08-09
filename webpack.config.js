@@ -269,10 +269,10 @@ export default Namespace .add ("${base}", __default__);`;
                      loader: StringReplacePlugin .replace ({
                         replacements: [
                            {
-                              pattern: /\/\/ var/sg,
+                              pattern: /\/\/ src/sg,
                               replacement: function (match, m, offset, string)
                               {
-                                 return "var";
+                                 return "src";
                               },
                            },
                         ],

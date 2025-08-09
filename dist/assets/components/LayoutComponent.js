@@ -1,5 +1,5 @@
-/* X_ITE v11.6.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.6")];
+/* X_ITE v12.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -114,9 +114,9 @@ Object .assign (X3DLayoutContext .prototype,
             y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y * contentScale),
             z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x * contentScale);
 
-         screenMatrix .set (x .x, x .y, x .z, 0,
-                            y .x, y .y, y .z, 0,
-                            z .x, z .y, z .z, 0,
+         screenMatrix .set (... x, 0,
+                            ... y, 0,
+                            ... z, 0,
                             modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], 1);
 
          // Snap to whole pixel.
@@ -809,9 +809,8 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
    {
       external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
 
-      this ._viewport .addInterest ("set_viewport__",       this);
-      this ._layout   .addInterest ("set_layout__",         this);
-      this ._bboxSize .addInterest ("set_visibleObjects__", this);
+      this ._viewport .addInterest ("set_viewport__", this);
+      this ._layout   .addInterest ("set_layout__",   this);
 
       this .set_viewport__ ();
       this .set_layout__ ();
@@ -826,13 +825,12 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
    },
    set_collisionObjects__ ()
    { },
-   set_visibleObjects__ ()
-   {
-      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
-   },
    getBBox (bbox, shadows)
    {
-      return external_X_ITE_X3D_X3DGroupingNode_default().prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
+      if (this .isDefaultBBoxSize ())
+         return this .getSubBBox (bbox, shadows) .multRight (this .getMatrix ());
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getMatrix ()
    {
@@ -1468,19 +1466,12 @@ function ScreenGroup (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
 {
-   initialize ()
-   {
-      external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
-
-      this ._bboxSize .addInterest ("set_visibleObjects__", this);
-   },
-   set_visibleObjects__ ()
-   {
-      this .setVisibleObject (this .visibleObjects .size || this .bboxObjects .size || this .boundedObjects .size || !this .isDefaultBBoxSize ());
-   },
    getBBox (bbox, shadows)
    {
-      return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+      if (this .isDefaultBBoxSize ())
+         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getMatrix ()
    {

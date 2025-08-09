@@ -69,14 +69,15 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
    createNormals (points, coordIndex, creaseAngle)
    {
       const
-         cw          = !this ._ccw .getValue (),
-         normalIndex = new Map (),
-         normals     = [ ];
+         numCoordIndices = coordIndex .length,
+         cw              = !this ._ccw .getValue (),
+         normalIndex     = new Map (),
+         normals         = [ ];
 
       for (let p = 0; p < points .length; ++ p)
          normalIndex .set (p, [ ]);
 
-      for (let c = 0; c < coordIndex .length; c += 3)
+      for (let c = 0; c < numCoordIndices; c += 3)
       {
          const
             c0 = coordIndex [c],
@@ -206,9 +207,8 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
          multiTexCoordArray = this .getMultiTexCoords (),
          tangentArray       = this .getTangents (),
          normalArray        = this .getNormals (),
-         vertexArray        = this .getVertices ();
-
-      let face = 0;
+         vertexArray        = this .getVertices (),
+         numCoordIndices    = coordIndex .length;
 
       // Vertex attribute
 
@@ -217,22 +217,25 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
       //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
       //   attribArrays [a] .reserve (coordIndex .size ());
 
+      let texCoords, texCoordArray;
+
       if (texCoordNode)
       {
          texCoordNode .init (multiTexCoordArray);
       }
       else
       {
-         var
-            texCoords     = this .createTexCoords (),
-            texCoordArray = this .getTexCoords ();
+         texCoords     = this .createTexCoords (),
+         texCoordArray = this .getTexCoords ();
 
          multiTexCoordArray .push (texCoordArray);
       }
 
       // Build geometry
 
-      for (let c = 0; c < coordIndex .length; ++ face)
+      let face = 0;
+
+      for (let c = 0; c < numCoordIndices; ++ face)
       {
          for (let p = 0; p < 6; ++ p, ++ c)
          {

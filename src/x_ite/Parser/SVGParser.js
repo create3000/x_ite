@@ -1580,6 +1580,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                            y += ay;
                         }
 
+                        let x1, y1;
+
                         switch (previous)
                         {
                            case 'Q':
@@ -1723,6 +1725,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                                  y  += ay;
                               }
 
+                              let x1, y1;
+
                               switch (previous)
                               {
                                  case 'C':
@@ -1730,14 +1734,14 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                                  case 'S':
                                  case 's':
                                  {
-                                    var x1 = ax + (ax - px);
-                                    var y1 = ay + (ay - py);
+                                    x1 = ax + (ax - px);
+                                    y1 = ay + (ay - py);
                                     break;
                                  }
                                  default:
                                  {
-                                    var x1 = ax;
-                                    var y1 = ay;
+                                    x1 = ax;
+                                    y1 = ay;
                                     break;
                                  }
                               }
@@ -1946,16 +1950,18 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                {
                   const tx = this .value;
 
+                  let ty;
+
                   if (this .comma ())
                   {
                      if (this .double ())
                      {
-                        var ty = this .value;
+                        ty = this .value;
                      }
                   }
                   else
                   {
-                     var ty = 0;
+                     ty = 0;
                   }
 
                   this .whitespaces ();
@@ -2026,16 +2032,18 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                {
                   const sx = this .value;
 
+                  let sy;
+
                   if (this .comma ())
                   {
                      if (this .double ())
                      {
-                        var sy = this .value;
+                        sy = this .value;
                      }
                   }
                   else
                   {
-                     var sy = sx;
+                     sy = sx;
                   }
 
                   this .whitespaces ();

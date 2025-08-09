@@ -3542,18 +3542,19 @@ function eventsProcessed ()
             {
                const interpolatorNodes = [ ];
 
+               let colors, transparencies;
+
                switch ((keyValues .array .length / times .length) % 3)
                {
                   case 0: // Color3 pointer
                   {
-                     var colors = keyValues .array;
+                     colors = keyValues .array;
                      break;
                   }
                   default: // Color4 pointer
                   {
-                     var
-                        colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
-                        transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
+                     colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
+                     transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
 
                      transparencies = transparencies .every (value => value >= 1)
                         ? undefined
@@ -3591,7 +3592,7 @@ function eventsProcessed ()
             {
                const interpolatorNodes = [ ];
 
-               var
+               let
                   colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
                   transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
 

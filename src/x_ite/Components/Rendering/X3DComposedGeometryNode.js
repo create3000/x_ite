@@ -186,26 +186,28 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       for (let index = 0; index < polygonsSize; index += verticesPerPolygon)
       {
+         let normal;
+
          switch (verticesPerPolygon)
          {
             case 3:
             {
-               var normal = coord .getNormal (polygons [index],
-                                              polygons [index + 1],
-                                              polygons [index + 2]);
+               normal = coord .getNormal (polygons [index],
+                                          polygons [index + 1],
+                                          polygons [index + 2]);
                break;
             }
             case 4:
             {
-               var normal = coord .getQuadNormal (polygons [index],
-                                                  polygons [index + 1],
-                                                  polygons [index + 2],
-                                                  polygons [index + 3]);
+               normal = coord .getQuadNormal (polygons [index],
+                                              polygons [index + 1],
+                                              polygons [index + 2],
+                                              polygons [index + 3]);
                break;
             }
             default:
             {
-               var normal = this .getPolygonNormal (index, verticesPerPolygon, polygons, coord);
+               normal = this .getPolygonNormal (index, verticesPerPolygon, polygons, coord);
                break;
             }
          }

@@ -129,6 +129,8 @@ function Node (tree, triangles, first, size)
 
    // Sort and split array
 
+   let leftSize;
+
    if (size > 2)
    {
       // Sort array
@@ -138,10 +140,12 @@ function Node (tree, triangles, first, size)
 
       // Split array
 
-      var leftSize = size >>> 1;
+      leftSize = size >>> 1;
    }
    else
-      var leftSize = 1;
+   {
+      leftSize = 1;
+   }
 
    // Split array
 

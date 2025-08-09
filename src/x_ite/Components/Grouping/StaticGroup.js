@@ -27,7 +27,6 @@ import Vector4                    from "../../../standard/Math/Numbers/Vector4.j
 import Rotation4                  from "../../../standard/Math/Numbers/Rotation4.js";
 import Box3                       from "../../../standard/Math/Geometry/Box3.js";
 import Matrix4                    from "../../../standard/Math/Numbers/Matrix4.js";
-import ViewVolume                 from "../../../standard/Math/Geometry/ViewVolume.js";
 import DEVELOPMENT                from "../../DEVELOPMENT.js";
 
 const CLONE_COUNT = 2; // Minimum number of shapes that must be cloned to become an InstancedShape.
@@ -595,17 +594,19 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const colorArray = geometryNode .getColors () .getValue ();
 
+         let newColor;
+
          if (colorArray .length)
          {
             if (shapeNode .isTransparent ())
             {
-               var newColor = new ColorRGBA (executionContext);
+               newColor = new ColorRGBA (executionContext);
 
                newColor ._color = colorArray;
             }
             else
             {
-               var newColor = new Color (executionContext);
+               newColor = new Color (executionContext);
 
                newColor ._color = colorArray .filter ((c, i) => i % 4 < 3);
             }

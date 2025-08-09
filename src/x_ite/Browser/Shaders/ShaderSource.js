@@ -62,12 +62,12 @@ const ShaderSource =
    },
 };
 
-function depreciatedWarning (source, depreciated, current)
-{
-   if (source .indexOf (depreciated) === -1)
-      return;
+// function depreciatedWarning (source, depreciated, current)
+// {
+//    if (source .indexOf (depreciated) === -1)
+//       return;
 
-   console .warn ("Use of '" + depreciated + "' is depreciated, use '" + current + "' instead. See https://create3000.github.io/x_ite/custom-shaders.");
-}
+//    console .warn ("Use of '" + depreciated + "' is depreciated, use '" + current + "' instead. See https://create3000.github.io/x_ite/custom-shaders.");
+// }
 
 export default ShaderSource;

@@ -164,6 +164,8 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          browser = this .getBrowser (),
          options = this .getShaderOptions (geometryContext, renderContext);
 
+      let shaderNode;
+
       if (geometryContext .hasNormals)
       {
          if (+this .getTextureBits ())
@@ -181,14 +183,14 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
             {
                options .push ("X3D_GOURAUD_MATERIAL");
 
-               var shaderNode = browser .createShader ("Gouraud", "Default", "Material", options);
+               shaderNode = browser .createShader ("Gouraud", "Default", "Material", options);
                break;
             }
             case 2:
             {
                options .push ("X3D_PHONG_MATERIAL");
 
-               var shaderNode = browser .createShader ("Phong", "Default", "Material", options);
+               shaderNode = browser .createShader ("Phong", "Default", "Material", options);
                break;
             }
          }
@@ -199,7 +201,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
          options .push ("X3D_UNLIT_MATERIAL");
 
-         var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
+         shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
       }
 
       browser .getShaders () .set (key, shaderNode);

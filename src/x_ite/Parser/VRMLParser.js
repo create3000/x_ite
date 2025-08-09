@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    isValid ()
    {
-      if (!(typeof this .input === "string"))
+      if (typeof this .input !== "string")
          return false;
 
       return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
@@ -531,16 +531,18 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
             const node = this .getScene () .getLocalNode (localNodeNameId);
 
+            let exportedNodeNameId;
+
             if (Grammar .AS .parse (this))
             {
                if (this .exportedNodeNameId ())
-                  var exportedNodeNameId = this .result [0];
+                  exportedNodeNameId = this .result [0];
                else
                   throw new Error ("No name given after AS.");
             }
             else
             {
-               var exportedNodeNameId = localNodeNameId;
+               exportedNodeNameId = localNodeNameId;
             }
 
             try
@@ -583,17 +585,19 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                   this .comments ();
 
+                  let nodeNameId;
+
                   if (Grammar .AS .parse (this))
                   {
                      if (this .nodeNameId ())
-                        var nodeNameId = this .result [0];
+                        nodeNameId = this .result [0];
 
                      else
                         throw new Error ("No name given after AS.");
                   }
                   else
                   {
-                     var nodeNameId = exportedNodeNameId;
+                     nodeNameId = exportedNodeNameId;
                   }
 
                   // Rename existing imported node.
@@ -1304,9 +1308,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                         {
                            const isId = this .result [0];
 
+                           let reference;
+
                            try
                            {
-                              var reference = this .getOuterNode () .getField (isId);
+                              reference = this .getOuterNode () .getField (isId);
                            }
                            catch
                            {
@@ -1396,9 +1402,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          const fieldId = this .result [0];
 
+         let field;
+
          try
          {
-            var field = baseNode .getPredefinedField (fieldId);
+            field = baseNode .getPredefinedField (fieldId);
          }
          catch
          {
@@ -1429,9 +1437,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   const isId = this .result [0];
 
+                  let reference;
+
                   try
                   {
-                     var reference = this .getOuterNode () .getField (isId);
+                     reference = this .getOuterNode () .getField (isId);
                   }
                   catch
                   {
