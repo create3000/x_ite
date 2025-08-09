@@ -49,13 +49,13 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds, isBasis
    const code = [];
    const functionName = "evaluate" + cacheKey;
 
-   const pointAccessor = accessors.point;
+   let pointAccessor = accessors.point;
    if (isBasis) {
       pointAccessor = function (src, period) {
          const terms = [];
          for (let i = 0; i < src.length; ++ i) {
-            const accessor = src[i];
             const terms2 = [];
+            let accessor = src[i];
             for (let j = 0; j < accessor.length; j++) {
                if (accessor[j] !== 0) terms2.push(accessor[j]);
             }
