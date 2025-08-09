@@ -361,10 +361,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       // Create Transform node.
 
       const
-         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
-         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
-         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
-         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height");
+         x = this .lengthAttribute (xmlElement .getAttribute ("x"), 0, "width"),
+         y = this .lengthAttribute (xmlElement .getAttribute ("y"), 0, "height");
 
       const transformNode = this .createTransform (xmlElement, new Vector2 (x, y));
 
