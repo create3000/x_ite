@@ -332,9 +332,11 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             valueType  = target .getValueType (),
             newLength  = length - 1;
 
+         let value;
+
          if (components === 1)
          {
-            var value = valueType (array [0]);
+            value = valueType (array [0]);
          }
          else
          {
@@ -343,7 +345,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             for (let c = 0; c < components; ++ c)
                tmp [c] = array [c];
 
-            var value = new valueType (... tmp);
+            value = new valueType (... tmp);
          }
 
          array .copyWithin (0, components, length * components);
@@ -404,9 +406,11 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             valueType  = target .getValueType (),
             newLength  = length - 1;
 
+         let value;
+
          if (components === 1)
          {
-            var value = valueType (array [length - 1]); // Don't use at(-1).
+            value = valueType (array [length - 1]); // Don't use at(-1).
          }
          else
          {
@@ -415,7 +419,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             for (let c = 0, a = newLength * components; c < components; ++ c, ++ a)
                tmp [c] = array [a];
 
-            var value = new valueType (... tmp);
+            value = new valueType (... tmp);
          }
 
          array .fill (0, newLength * components, length * components);
