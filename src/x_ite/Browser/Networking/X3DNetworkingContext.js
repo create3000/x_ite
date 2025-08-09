@@ -132,15 +132,17 @@ Object .assign (X3DNetworkingContext .prototype,
    {
       const loadingDisplay = this .getDisplayLoadCount ();
 
+      let string;
+
       if (this ._loadCount .getValue () || this [_loading])
       {
-         var string = ((loadingDisplay || 1) === 1
+         string = ((loadingDisplay || 1) === 1
             ? _ ("Loading %1 file")
             : _ ("Loading %1 files")) .replace ("%1", loadingDisplay || 1);
       }
       else
       {
-         var string = _("Loading done");
+         string = _("Loading done");
       }
 
       this .updateCursor ();
