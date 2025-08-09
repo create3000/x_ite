@@ -738,6 +738,8 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
+         let renderContext;
+
          if (viewVolume .intersectsSphere (radius, bboxCenter))
          {
             if (shapeNode .isTransparent ())
@@ -747,7 +749,7 @@ Object .assign (X3DRenderObject .prototype,
                if (num === this .transparentShapes .length)
                   this .transparentShapes .push (this .createRenderContext (true));
 
-               var renderContext = this .transparentShapes [num];
+               renderContext = this .transparentShapes [num];
 
                renderContext .distance = bboxCenter .z;
             }
@@ -758,7 +760,7 @@ Object .assign (X3DRenderObject .prototype,
                if (num === this .opaqueShapes .length)
                   this .opaqueShapes .push (this .createRenderContext (false));
 
-               var renderContext = this .opaqueShapes [num];
+               renderContext = this .opaqueShapes [num];
             }
 
             this .transmission ||= shapeNode .isTransmission ();
