@@ -272,26 +272,28 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
       {
          const length = vertices .length;
 
+         let normal;
+
          switch (length)
          {
             case 3:
             {
-               var normal = coord .getNormal (coordIndex [vertices [0]],
-                                              coordIndex [vertices [1]],
-                                              coordIndex [vertices [2]]);
+               normal = coord .getNormal (coordIndex [vertices [0]],
+                                          coordIndex [vertices [1]],
+                                        coordIndex [vertices [2]]);
                break;
             }
             case 4:
             {
-               var normal = coord .getQuadNormal (coordIndex [vertices [0]],
-                                                  coordIndex [vertices [1]],
-                                                  coordIndex [vertices [2]],
-                                                  coordIndex [vertices [3]]);
+               normal = coord .getQuadNormal (coordIndex [vertices [0]],
+                                              coordIndex [vertices [1]],
+                                              coordIndex [vertices [2]],
+                                              coordIndex [vertices [3]]);
                break;
             }
             default:
             {
-               var normal = this .getPolygonNormal (vertices, coordIndex, coord);
+               normal = this .getPolygonNormal (vertices, coordIndex, coord);
                break;
             }
          }
