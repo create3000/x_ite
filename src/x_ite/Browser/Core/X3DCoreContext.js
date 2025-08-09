@@ -53,10 +53,15 @@ function X3DCoreContext (element)
 
    const
       browser      = $("<div></div>", { class: "x_ite-private-browser", part: "browser", tabindex: 0 }),
-      surface      = $("<div></div>", { class: "x_ite-private-surface", part: "surface" }) .appendTo (browser),
-      splashScreen = $("<div></div>", { class: "x_ite-private-splash-screen x_ite-private-hidden" }) .appendTo (browser),
-      spinner      = $("<div></div>", { class: "x_ite-private-spinner" }) .appendTo (splashScreen),
-      progress     = $("<div></div>", { class: "x_ite-private-progress" }) .appendTo (splashScreen);
+      surface      = $("<div></div>", { class: "x_ite-private-surface", part: "surface" }),
+      splashScreen = $("<div></div>", { class: "x_ite-private-splash-screen x_ite-private-hidden" }),
+      spinner      = $("<div></div>", { class: "x_ite-private-spinner" }),
+      progress     = $("<div></div>", { class: "x_ite-private-progress" });
+
+   surface      .appendTo (browser);
+   splashScreen .appendTo (browser);
+   spinner      .appendTo (splashScreen);
+   progress     .appendTo (splashScreen);
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {

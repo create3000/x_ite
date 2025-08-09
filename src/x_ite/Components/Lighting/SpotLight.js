@@ -83,9 +83,12 @@ Object .assign (SpotLightContainer .prototype,
       invLightSpaceMatrix .inverse ();
 
       const
-         groupBBox        = this .groupNode .getSubBBox (this .bbox, true),                 // Group bbox.
-         lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                     // Group bbox from the perspective of the light.
-         lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax), // Result not used, but arguments.
+         groupBBox = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
+         lightBBox = groupBBox .multRight (invLightSpaceMatrix);     // Group bbox from the perspective of the light.
+
+      lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax); // Result not used, but arguments.
+
+      const
          shadowMapSize    = lightNode .getShadowMapSize (),
          farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
          viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
