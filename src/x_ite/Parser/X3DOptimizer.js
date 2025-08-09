@@ -158,6 +158,8 @@ Object .assign (X3DOptimizer .prototype,
          {
             if (node .skeleton .length || node .skin .length)
                return node;
+
+            break;
          }
          default:
          {
