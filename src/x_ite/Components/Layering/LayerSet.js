@@ -54,9 +54,11 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
    },
    set_activeLayer__ ()
    {
+      let activeLayerNode;
+
       if (this ._activeLayer .getValue () === 0)
       {
-         var activeLayerNode = this .layerNode0;
+         activeLayerNode = this .layerNode0;
       }
       else
       {
@@ -64,11 +66,11 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
 
          if (index >= 0 && index < this ._layers .length)
          {
-            var activeLayerNode = X3DCast (X3DConstants .X3DLayerNode, this ._layers [index]);
+            activeLayerNode = X3DCast (X3DConstants .X3DLayerNode, this ._layers [index]);
          }
          else
          {
-            var activeLayerNode = null;
+            activeLayerNode = null;
          }
       }
 
