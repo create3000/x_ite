@@ -553,13 +553,13 @@ Object .defineProperties (X3DBaseNode .prototype,
       {
          get ()
          {
-            this .addChildObjects (X3DConstants .outputOnly, name, new Fields .SFTime ())
+            this .addChildObjects (X3DConstants .outputOnly, name, new Fields .SFTime ());
 
             return this [`_${name}`];
          },
          set (value)
          {
-            this .addChildObjects (X3DConstants .outputOnly, name, new Fields .SFTime ())
+            this .addChildObjects (X3DConstants .outputOnly, name, new Fields .SFTime ());
 
             this [`_${name}`] .setValue (value);
          },
