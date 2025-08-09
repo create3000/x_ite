@@ -521,7 +521,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    },
    set_field__: (() =>
    {
-      const matrix = new Float32Array (9);
+      const rotationMatrix = new Float32Array (9);
 
       return function (field)
       {
@@ -804,17 +804,17 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (const rotation of field)
                {
-                  rotation .getValue () .getMatrix (matrix);
+                  rotation .getValue () .getMatrix (rotationMatrix);
 
-                  array [k ++] = matrix [0];
-                  array [k ++] = matrix [1];
-                  array [k ++] = matrix [2];
-                  array [k ++] = matrix [3];
-                  array [k ++] = matrix [4];
-                  array [k ++] = matrix [5];
-                  array [k ++] = matrix [6];
-                  array [k ++] = matrix [7];
-                  array [k ++] = matrix [8];
+                  array [k ++] = rotationMatrix [0];
+                  array [k ++] = rotationMatrix [1];
+                  array [k ++] = rotationMatrix [2];
+                  array [k ++] = rotationMatrix [3];
+                  array [k ++] = rotationMatrix [4];
+                  array [k ++] = rotationMatrix [5];
+                  array [k ++] = rotationMatrix [6];
+                  array [k ++] = rotationMatrix [7];
+                  array [k ++] = rotationMatrix [8];
                }
 
                array .fill (0, k);
