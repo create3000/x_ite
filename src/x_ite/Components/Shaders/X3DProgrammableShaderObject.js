@@ -644,12 +644,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const value of field)
-                  array [k ++] = value;
+                  array [a ++] = value;
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniform1iv (location, array);
                return;
@@ -660,12 +660,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const value of field)
-                  array [k ++] = value;
+                  array [a ++] = value;
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniform1fv (location, array);
                return;
@@ -674,15 +674,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const color of field)
                {
                   for (const element of color)
-                     array [k ++] = element;
+                     array [a ++] = element;
                }
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniform3fv (location, array);
                return;
@@ -691,15 +691,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const color of field)
                {
                   for (const element of color)
-                     array [k ++] = element;
+                     array [a ++] = element;
                }
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniform4fv (location, array);
                return;
@@ -728,15 +728,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const matrix of field)
                {
                   for (const element of matrix)
-                     array [k ++] = element;
+                     array [a ++] = element;
                }
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniformMatrix3fv (location, false, array);
                return;
@@ -746,15 +746,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const matrix of field)
                {
                   for (const element of matrix)
-                     array [k ++] = element;
+                     array [a ++] = element;
                }
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniformMatrix4fv (location, false, array);
                return;
@@ -788,17 +788,17 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const rotation of field)
                {
                   rotation .getValue () .getMatrix (rotationMatrix);
 
                   for (const element of rotationMatrix)
-                     array [k ++] = element;
+                     array [a ++] = element;
                }
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniformMatrix3fv (location, false, array);
                return;
@@ -812,15 +812,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const vector of field)
                {
                   for (const element of vector)
-                     array [k ++] = element;
+                     array [a ++] = element;
                }
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniform2fv (location, array);
                return;
@@ -830,15 +830,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const vector of field)
                {
                   for (const element of vector)
-                     array [k ++] = element;
+                     array [a ++] = element;
                }
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniform3fv (location, array);
                return;
@@ -848,15 +848,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               let k = 0;
+               let a = 0;
 
                for (const vector of field)
                {
                   for (const element of vector)
-                     array [k ++] = element;
+                     array [a ++] = element;
                }
 
-               array .fill (0, k);
+               array .fill (0, a);
 
                gl .uniform4fv (location, array);
                return;
