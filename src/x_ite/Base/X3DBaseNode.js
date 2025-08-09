@@ -230,12 +230,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          }
       }
    },
-   addChildObjects (/* accessType, name, field, ... */)
+   addChildObjects (... args /* accessType, name, field, ... */)
    {
-      const length = arguments .length;
+      const length = args .length;
 
       for (let i = 0; i < length; i += 3)
-         this .addChildObject (arguments [i], arguments [i + 1], arguments [i + 2]);
+         this .addChildObject (args [i], args [i + 1], args [i + 2]);
    },
    addChildObject (accessType, name, field)
    {
