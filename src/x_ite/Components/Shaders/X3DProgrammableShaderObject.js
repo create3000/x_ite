@@ -564,9 +564,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFImage:
             {
-               const
-                  array  = location .array,
-                  pixels = field .array;
+               const array = location .array;
 
                array [0] = field .width;
                array [1] = field .height;
@@ -574,8 +572,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                let a = 3;
 
-               for (const pixel of pixels)
-                  array [++ a] = pixel;
+               for (const pixel of field .array)
+                  array [a ++] = pixel;
 
                gl .uniform1iv (location, array);
                return;
@@ -722,13 +720,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (const image of field)
                {
-                  const pixels = image .array;
-
                   array [a ++] = image .width;
                   array [a ++] = image .height;
                   array [a ++] = image .comp;
 
-                  for (const pixel of pixels)
+                  for (const pixel of image .array)
                      array [a ++] = pixel;
                }
 
