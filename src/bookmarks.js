@@ -356,7 +356,7 @@ Object .assign (Bookmarks .prototype,
    }
 });
 
-function prevent ()
+function prevent (arg)
 {
    return false;
 }
