@@ -107,6 +107,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       if (this [_disposed])
          return;
 
+      let firstError, secondError;
+
       try
       {
          const sourceNode = this [_sourceNode] instanceof X3DNode
@@ -117,7 +119,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       catch (error)
       {
-         var firstError = error;
+         firstError = error;
       }
 
       try
@@ -131,7 +133,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       catch (error)
       {
-         var secondError = error;
+         secondError = error;
       }
 
       if (this [_sourceField] && this [_destinationField])

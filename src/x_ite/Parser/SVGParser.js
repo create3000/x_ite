@@ -1950,16 +1950,18 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                {
                   const tx = this .value;
 
+                  let ty;
+
                   if (this .comma ())
                   {
                      if (this .double ())
                      {
-                        var ty = this .value;
+                        ty = this .value;
                      }
                   }
                   else
                   {
-                     var ty = 0;
+                     ty = 0;
                   }
 
                   this .whitespaces ();
@@ -2030,16 +2032,18 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                {
                   const sx = this .value;
 
+                  let sy;
+
                   if (this .comma ())
                   {
                      if (this .double ())
                      {
-                        var sy = this .value;
+                        sy = this .value;
                      }
                   }
                   else
                   {
-                     var sy = sx;
+                     sy = sx;
                   }
 
                   this .whitespaces ();
