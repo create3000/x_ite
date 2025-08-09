@@ -328,13 +328,15 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
       {
          const targets = this .targets;
 
+         let target;
+
          if (targets .size < targets .length)
          {
-            var target = targets [targets .size];
+            target = targets [targets .size];
          }
          else
          {
-            var target = { modelMatrix: new Matrix4 (), pickingHierarchy: [ ], pickedPoint: [ ], intersections: [ ] };
+            target = { modelMatrix: new Matrix4 (), pickingHierarchy: [ ], pickedPoint: [ ], intersections: [ ] };
 
             targets .push (target);
          }
