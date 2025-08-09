@@ -179,7 +179,7 @@ function uSeam (u0, nuBound, nvBound, dimension, points, pointIndex, seamIndex)
    }
 }
 
-function vSeam (v0, nuBound, nvBound, dimension, points, pointIndex, seamIndex)
+function vSeam (v0, nuBound, _ /* nvBound */, dimension, points, pointIndex, seamIndex)
 {
    for (let u0 = 0; u0 < nuBound; ++ u0)
    {
