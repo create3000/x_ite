@@ -6,8 +6,8 @@ import inferType        from "./utils/infer-type.js";
 import isArrayLike      from "./utils/is-array-like.js";
 import sizeGetter       from "./utils/size-getter.js";
 
-var evaluatorCache = {};
-var codeCache = {};
+const evaluatorCache = {};
+const codeCache = {};
 
 export default function (cacheKey, nurbs, accessors, debug, checkBounds, isBasis, derivative) {
    const splineDimension = nurbs.splineDimension;
