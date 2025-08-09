@@ -21,9 +21,10 @@ Object .assign (Bookmarks .prototype,
                test      = bookmark .test,
                path      = bookmark .path;
 
+            let element;
             if (test)
             {
-               var element = $('<span/>')
+               element = $('<span/>')
                   .addClass ('example-box')
                   .attr ('title', component + ' » ' + test)
                   .append ($("<a/>")
@@ -41,7 +42,7 @@ Object .assign (Bookmarks .prototype,
                   basename = path .match (/([^\/]+)\.\w+$/),
                   name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
 
-               var element = $('<span/>')
+               element = $('<span/>')
                   .addClass ('example-box')
                   .attr ('title', path)
                   .append ($("<a/>")
@@ -52,7 +53,7 @@ Object .assign (Bookmarks .prototype,
             }
             else if (component)
             {
-               var element = $('<span/>')
+               element = $('<span/>')
                   .addClass ('example-box')
                   .attr ('title', path)
                   .addClass ('display-component')
