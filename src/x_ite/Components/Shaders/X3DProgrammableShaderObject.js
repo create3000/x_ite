@@ -550,16 +550,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                gl .uniform1f (location, field .getValue ());
                return;
             }
-            case X3DConstants .SFColor:
-            {
-               gl .uniform3f (location, ... field .getValue ());
-               return;
-            }
-            case X3DConstants .SFColorRGBA:
-            {
-               gl .uniform4f (location, ... field .getValue ());
-               return;
-            }
             case X3DConstants .SFImage:
             {
                const array = location .array;
@@ -627,12 +617,14 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                gl .uniform2f (location, ... field .getValue ());
                return;
             }
+            case X3DConstants .SFColor:
             case X3DConstants .SFVec3d:
             case X3DConstants .SFVec3f:
             {
                gl .uniform3f (location, ... field .getValue ());
                return;
             }
+            case X3DConstants .SFColorRGBA:
             case X3DConstants .SFVec4d:
             case X3DConstants .SFVec4f:
             {
@@ -668,40 +660,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                array .fill (0, a);
 
                gl .uniform1fv (location, array);
-               return;
-            }
-            case X3DConstants .MFColor:
-            {
-               const array = location .array;
-
-               let a = 0;
-
-               for (const color of field)
-               {
-                  for (const element of color)
-                     array [a ++] = element;
-               }
-
-               array .fill (0, a);
-
-               gl .uniform3fv (location, array);
-               return;
-            }
-            case X3DConstants .MFColorRGBA:
-            {
-               const array = location .array;
-
-               let a = 0;
-
-               for (const color of field)
-               {
-                  for (const element of color)
-                     array [a ++] = element;
-               }
-
-               array .fill (0, a);
-
-               gl .uniform4fv (location, array);
                return;
             }
             case X3DConstants .MFImage:
@@ -825,6 +783,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                gl .uniform2fv (location, array);
                return;
             }
+            case X3DConstants .MFColor:
             case X3DConstants .MFVec3d:
             case X3DConstants .MFVec3f:
             {
@@ -843,6 +802,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                gl .uniform3fv (location, array);
                return;
             }
+            case X3DConstants .MFColorRGBA:
             case X3DConstants .MFVec4d:
             case X3DConstants .MFVec4f:
             {
