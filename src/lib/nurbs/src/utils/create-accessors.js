@@ -2,7 +2,7 @@
 import inferType      from "./infer-type.js";
 import createVariable from "./variable.js";
 
-var properties = [".x", ".y", ".z", ".w"];
+const properties = [".x", ".y", ".z", ".w"];
 
 function wrapAccessor (callback)
 {
@@ -11,9 +11,9 @@ function wrapAccessor (callback)
       if (i !== undefined && ! Array .isArray(i))
          i = [i];
 
-      var dimAccessors = [ ];
+      const dimAccessors = [ ];
 
-      for (var j = 0; j < i .length; j ++)
+      for (let j = 0; j < i .length; j ++)
          dimAccessors .push (createVariable .sum (i [j]));
 
       if (period)
@@ -41,7 +41,7 @@ function createAccessor (name, data)
       {
          return wrapAccessor (accessors =>
          {
-            var e = accessors .pop ();
+            const e = accessors .pop ();
 
             return name + "[" + accessors .join ("][") + "]" + properties [e];
          });
@@ -64,9 +64,9 @@ function createAccessor (name, data)
       {
          return wrapAccessor (accessors =>
          {
-            var code = [name + "Offset"];
+            const code = [name + "Offset"];
 
-            for (var i = 0; i < accessors.length; i++)
+            for (let i = 0; i < accessors.length; i++)
             {
                code.push(name + "Stride" + i + " * (" + accessors[i] + ")");
             }
@@ -82,19 +82,19 @@ function createAccessor (name, data)
 
 export default function (nurbs)
 {
-   var accessors = { };
+   const accessors = { };
 
-   var accessor = createAccessor ("x", nurbs .points);
+   let accessor = createAccessor ("x", nurbs .points);
 
    if (accessor)
       accessors .point = accessor;
 
-   var accessor = createAccessor ("w", nurbs .weights);
+   accessor = createAccessor ("w", nurbs .weights);
 
    if (accessor)
       accessors .weight = accessor;
 
-   var accessor = createAccessor ("k", nurbs .knots);
+   accessor = createAccessor ("k", nurbs .knots);
 
    if (accessor)
       accessors .knot = accessor;
