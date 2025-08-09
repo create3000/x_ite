@@ -805,9 +805,16 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                for (const rotation of field)
                {
                   rotation .getValue () .getMatrix (matrix);
-                  array .set (matrix, k);
 
-                  k += 9;
+                  array [k ++] = matrix [0];
+                  array [k ++] = matrix [1];
+                  array [k ++] = matrix [2];
+                  array [k ++] = matrix [3];
+                  array [k ++] = matrix [4];
+                  array [k ++] = matrix [5];
+                  array [k ++] = matrix [6];
+                  array [k ++] = matrix [7];
+                  array [k ++] = matrix [8];
                }
 
                array .fill (0, k);
