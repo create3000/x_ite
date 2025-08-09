@@ -62,9 +62,11 @@ function X3DArrayFollowerTemplate (Type)
       {
          if (Array .isArray (value))
          {
-            const value_changed = this ._value_changed;
+            const
+               value_changed = this ._value_changed,
+               length        = value .length;
 
-            for (var i = 0, length = value .length; i < length; ++ i)
+            for (let i = 0; i < length; ++ i)
                value_changed [i] = value [i];
 
             value_changed .length = length;
