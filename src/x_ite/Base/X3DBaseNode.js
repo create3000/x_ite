@@ -242,7 +242,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       this [_childObjects] .push (field);
 
       field .setPrivate (true);
-      field .setTainted (!this .isInitialized ());
+      field .setTainted (true);
       field .addParent (this);
       field .setName (name);
       field .setAccessType (accessType);
