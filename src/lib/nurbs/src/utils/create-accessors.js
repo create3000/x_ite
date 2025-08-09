@@ -18,7 +18,7 @@ function wrapAccessor (callback)
 
       if (period)
       {
-         for (i = 0; i < dimAccessors .length; i++)
+         for (let i = 0; i < dimAccessors .length; i++)
          {
             if (period [i] === undefined)
                continue;

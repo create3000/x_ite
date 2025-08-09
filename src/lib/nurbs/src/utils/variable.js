@@ -6,8 +6,9 @@ const createVariable = function createVariable (name, nurbs) {
       for (let j = 0; j < i.length; j++) {
          dimAccessors.push(createVariable.sum(i[j]));
       }
-      if (period) {
-         for (i = 0; i < dimAccessors.length; i++) {
+      if (period)
+      {
+         for (let i = 0; i < dimAccessors.length; i++) {
             if (period[i] === undefined) continue;
             dimAccessors[i] = "(" + dimAccessors[i] + " + " + period[i] + ") % " + period[i];
          }
