@@ -322,7 +322,8 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             && this .getClosed (this ._scale);
 
          // Use this to determine if normals should be connected.
-         const closedSpine = this .getClosed (spine);
+         const closedSpine = this .getClosed (spine)
+            && this .getClosed (this ._orientation);
 
          const closedCrossSection = this .getClosed (crossSection);
 
@@ -347,9 +348,10 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          const
             normalIndex = new Map (),
             normals     = [ ],
-            points      = this .createPoints ();
+            points      = this .createPoints (),
+            numPoints   = points .length;
 
-         for (let p = 0, length = points .length; p < length; ++ p)
+         for (let p = 0; p < numPoints; ++ p)
             normalIndex .set (p, [ ]);
 
          // Build body.
