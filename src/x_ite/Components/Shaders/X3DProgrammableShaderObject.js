@@ -566,11 +566,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                const array = location .array;
 
-               array [0] = field .width;
-               array [1] = field .height;
-               array [2] = field .comp;
+               let a = 0;
 
-               let a = 3;
+               array [a ++] = field .width;
+               array [a ++] = field .height;
+               array [a ++] = field .comp;
 
                for (const pixel of field .array)
                   array [a ++] = pixel;
