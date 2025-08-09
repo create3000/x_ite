@@ -1,5 +1,5 @@
-/* X_ITE v11.6.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.6")];
+/* X_ITE v12.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1522,6 +1522,26 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       }
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   getShapes (shapes, modelMatrix)
+   {
+      switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
+      {
+         case 0:
+         {
+            if (this ._rootNode .length)
+               return this .rootGroupNode .getShapes (shapes, modelMatrix);
+
+            return this .rootInlineNode .getShapes (shapes, modelMatrix);
+         }
+         case 1:
+         {
+            for (const childInlineNode of this .childInlineNodes)
+               childInlineNode .getShapes (shapes, modelMatrix);
+
+            return shapes;
+         }
+      }
    },
    set_rootLoadState__ ()
    {

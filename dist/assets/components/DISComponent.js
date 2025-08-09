@@ -1,5 +1,5 @@
-/* X_ITE v11.6.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.6.6")];
+/* X_ITE v12.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -376,6 +376,13 @@ Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, (external_X_ITE_
       external_X_ITE_X3D_X3DSensorNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
    },
+   getBBox (bbox, shadows)
+   {
+      if (this .isDefaultBBoxSize ())
+         return bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
    dispose ()
    {
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
@@ -468,6 +475,13 @@ Object .assign (Object .setPrototypeOf (SignalPdu .prototype, (external_X_ITE_X3
       external_X_ITE_X3D_X3DSensorNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
    },
+   getBBox (bbox, shadows)
+   {
+      if (this .isDefaultBBoxSize ())
+         return bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
    dispose ()
    {
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
@@ -559,6 +573,13 @@ Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, (external_X_I
    {
       external_X_ITE_X3D_X3DSensorNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
+   },
+   getBBox (bbox, shadows)
+   {
+      if (this .isDefaultBBoxSize ())
+         return bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    dispose ()
    {

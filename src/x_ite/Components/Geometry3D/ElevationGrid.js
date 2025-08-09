@@ -184,9 +184,10 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          multiTexCoordArray = this .getMultiTexCoords (),
          tangentArray       = this .getTangents (),
          normalArray        = this .getNormals (),
-         vertexArray        = this .getVertices ();
+         vertexArray        = this .getVertices (),
+         numCoordIndices    = coordIndex .length;
 
-      let face = 0;
+      let texCoords, texCoordArray;
 
       if (texCoordNode)
       {
@@ -194,16 +195,17 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
       }
       else
       {
-         var
-            texCoords     = this .createTexCoords (),
-            texCoordArray = this .getTexCoords ();
+         texCoords     = this .createTexCoords (),
+         texCoordArray = this .getTexCoords ();
 
          multiTexCoordArray .push (texCoordArray);
       }
 
       // Build geometry
 
-      for (let c = 0, numCoordIndices = coordIndex .length; c < numCoordIndices; ++ face)
+      let face = 0;
+
+      for (let c = 0; c < numCoordIndices; ++ face)
       {
          for (let p = 0; p < 6; ++ p, ++ c)
          {

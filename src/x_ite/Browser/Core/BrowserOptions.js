@@ -319,9 +319,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_LogarithmicDepthBuffer__ (logarithmicDepthBuffer)
    {
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
+      const browser = this .getBrowser ();
 
       browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer .getValue ();
    },

@@ -5,7 +5,6 @@ import X3DNode                from "../Core/X3DNode.js";
 import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import Algorithm              from "../../../standard/Math/Algorithm.js";
-import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 
 function PointProperties (executionContext)
 {

@@ -104,13 +104,15 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
        * containerField is set, then the containerField is set in the elemetn.
        */
 
+      let child;
+
       if (typeof this .namespace === "undefined")
       {
-         var child = document .createElement (key);
+         child = document .createElement (key);
       }
       else
       {
-         var child = document .createElementNS (this .namespace, key);
+         child = document .createElementNS (this .namespace, key);
 
          if (child === null || typeof child === "undefined")
          {
@@ -357,8 +359,8 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
             {
                arrayOfStrings = false;
 
-               for (const str in localArray)
-                  localArray [str] = this .SFStringToXML (localArray [str]);
+               for (const [str, value] of localArray .entries ())
+                  localArray [str] = this .SFStringToXML (value);
 
                this .elementSetAttribute (element, parentkey .substring (1), '"' + localArray .join ('" "') + '"');
             }

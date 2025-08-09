@@ -131,7 +131,7 @@ Object .assign (X3DTextGeometry .prototype,
    {
       // Resize array in grow only fashion.
 
-      for (var i = array .length; i < size; ++ i)
+      for (let i = array .length; i < size; ++ i)
          array .push (new Vector2 ());
 
       array .length = size;

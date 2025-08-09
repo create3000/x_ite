@@ -60,7 +60,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
    },
    isValid ()
    {
-      if (!(typeof this .input === "string"))
+      if (typeof this .input !== "string")
          return false;
 
       return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\b(?:solid)\b/);

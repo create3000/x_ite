@@ -47,14 +47,10 @@ Object .assign (Quaternion .prototype,
    setMatrix (matrix)
    {
       // First, find largest diagonal in matrix:
-      if (matrix [0] > matrix [4])
-      {
-         var i = matrix [0] > matrix [8] ? 0 : 2;
-      }
-      else
-      {
-         var i = matrix [4] > matrix [8] ? 1 : 2;
-      }
+
+      const i = matrix [0] > matrix [4]
+         ? matrix [0] > matrix [8] ? 0 : 2
+         : matrix [4] > matrix [8] ? 1 : 2;
 
       const scaleRow = matrix [0] + matrix [4] + matrix [8];
 

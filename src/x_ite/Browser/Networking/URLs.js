@@ -5,21 +5,23 @@ const URLs =
 {
    getScriptURL: (() =>
    {
+      let src;
+
       switch (Features .ENVIRONMENT)
       {
          case "NODE":
          {
-            var src = global .require ("url") .pathToFileURL (__filename) .href;
+            src = global .require ("url") .pathToFileURL (__filename) .href;
             break;
          }
          case "BROWSER":
          {
-            var src = document .currentScript ?.src ?? document .location .href;
+            src = document .currentScript ?.src ?? document .location .href;
             break;
          }
          case "MODULE":
          {
-            // var src = import .meta .url;
+            // src = import .meta .url;
             break;
          }
       }

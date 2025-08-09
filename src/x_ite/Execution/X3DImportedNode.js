@@ -1,14 +1,11 @@
-import X3DObject    from "../Base/X3DObject.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import SFNodeCache  from "../Fields/SFNodeCache.js";
+import X3DObject   from "../Base/X3DObject.js";
+import SFNodeCache from "../Fields/SFNodeCache.js";
 
 const
    _executionContext = Symbol (),
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
-   _importedName     = Symbol (),
-   _routes           = Symbol (),
-   _real             = Symbol ();
+   _importedName     = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {

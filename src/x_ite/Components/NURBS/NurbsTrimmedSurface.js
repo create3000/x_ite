@@ -7,7 +7,6 @@ import X3DConstants                from "../../Base/X3DConstants.js";
 import X3DCast                     from "../../Base/X3DCast.js";
 import Vector3                     from "../../../standard/Math/Numbers/Vector3.js";
 import Triangle2                   from "../../../standard/Math/Geometry/Triangle2.js";
-import Algorithm                   from "../../../standard/Math/Algorithm.js";
 import libtess                     from "../../../lib/libtess.js";
 
 function NurbsTrimmedSurface (executionContext)

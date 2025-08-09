@@ -152,7 +152,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          }
 
          const
-            gl     = this .getBrowser () .getContext (),
             video  = this .video [0],
             width  = video .videoWidth,
             height = video .videoHeight;

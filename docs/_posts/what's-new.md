@@ -21,6 +21,7 @@ There is now a test file that should show both the same image on the front and b
 
 * Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
 * Bug fixes in several nodes with bounding box calculations.
+* Fixes bug with light *attenuation* handling in PBR shader.
 
 ## X_ITE v11.6 Series
 
