@@ -8,7 +8,7 @@ export default function (data, dataVariableName, dimension) {
       return dataVariableName + ".shape[" + dimension + "]";
    } else {
       let str = dataVariableName;
-      for (let i = 0; i < dimension; i++) {
+      for (let i = 0; i < dimension; ++ i) {
          str += "[0]";
       }
       return str + ".length";

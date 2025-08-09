@@ -85,7 +85,7 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
             let ptr = this.points;
             size.length = 0;
             for (; isArrayLike(ptr[0]); ptr = ptr[0]) {
-               splineDimension++;
+               ++ splineDimension;
                size.push(ptr.length);
             }
             if (splineDimension === 0) {
@@ -274,7 +274,7 @@ function domainGetter () {
       sizeArray = ptr.shape;
    }
 
-   for (let d = 0; d < this.splineDimension; d++) {
+   for (let d = 0; d < this.splineDimension; ++ d) {
       const size = sizeArray ? sizeArray[d] : ptr.length;
       const p = this.degree[d];
       const isClosed = this.boundary[d] === "closed";

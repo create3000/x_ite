@@ -28,7 +28,7 @@ export default function createTransform (cacheKey, nurbs, accessors, debug)
    for (let i = 0; i < nurbs .splineDimension; ++ i) {
       const iterator = "i" + i;
       iterators.push(iterator);
-      code.push("for (" + iterator + " = " + sizeVar(i) + "- 1; " + iterator + " >= 0; " + iterator + "--) {");
+      code.push("for (" + iterator + " = " + sizeVar(i) + "- 1; " + iterator + " >= 0; -- " + iterator + ") {");
    }
 
    for (let i = 0; i < nurbs.dimension; ++ i) {

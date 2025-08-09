@@ -3,12 +3,12 @@ const createVariable = function createVariable (name, nurbs) {
    return function (i, period) {
       if (i !== undefined && !Array.isArray(i)) i = [i];
       const dimAccessors = [];
-      for (let j = 0; j < i.length; j++) {
+      for (let j = 0; j < i.length; ++ j) {
          dimAccessors.push(createVariable.sum(i[j]));
       }
       if (period)
       {
-         for (let i = 0; i < dimAccessors.length; i++) {
+         for (let i = 0; i < dimAccessors.length; ++ i) {
             if (period[i] === undefined) continue;
             dimAccessors[i] = "(" + dimAccessors[i] + " + " + period[i] + ") % " + period[i];
          }

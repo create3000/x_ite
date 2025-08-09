@@ -8,7 +8,7 @@ function capitalize (str) {
 export default function (nurbs, debug, checkBounds, pointType, weightType, knotType) {
    const degreeParts = [];
    let hasAnyKnots = false;
-   for (let d = 0; d < nurbs.splineDimension; d++) {
+   for (let d = 0; d < nurbs.splineDimension; ++ d) {
       const hasKnots = isArrayLike(nurbs.knots) && isArrayLike(nurbs.knots[d]);
       if (hasKnots) hasAnyKnots = true;
       degreeParts.push(

@@ -13,12 +13,12 @@ function wrapAccessor (callback)
 
       const dimAccessors = [ ];
 
-      for (let j = 0; j < i .length; j ++)
+      for (let j = 0; j < i .length; ++ j)
          dimAccessors .push (createVariable .sum (i [j]));
 
       if (period)
       {
-         for (let i = 0; i < dimAccessors .length; i++)
+         for (let i = 0; i < dimAccessors .length; ++ i)
          {
             if (period [i] === undefined)
                continue;
@@ -66,7 +66,7 @@ function createAccessor (name, data)
          {
             const code = [name + "Offset"];
 
-            for (let i = 0; i < accessors.length; i++)
+            for (let i = 0; i < accessors.length; ++ i)
             {
                code.push(name + "Stride" + i + " * (" + accessors[i] + ")");
             }
