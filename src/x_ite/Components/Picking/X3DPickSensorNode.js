@@ -192,6 +192,9 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
       if (geometryNode .isPrivate ())
          return null;
 
+      if (geometryNode .getExecutionContext () .isPrivate ())
+         return null;
+
       return geometryNode;
    },
    getPickedTargets ()
