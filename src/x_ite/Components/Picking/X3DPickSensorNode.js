@@ -192,9 +192,9 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
       if (geometryNode .getExecutionContext () === executionContext)
          return geometryNode;
 
-      const instance = geometryNode .getExecutionContext ();
+      const instance = geometryNode .getExecutionContext () .getOuterNode ();
 
-      if (instance .getType () .includes (X3DConstants .X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
+      if (instance ?.getType () .includes (X3DConstants .X3DPrototypeInstance) && instance ?.getExecutionContext () === executionContext)
          return instance;
 
       const pickingHierarchy = target .pickingHierarchy;
