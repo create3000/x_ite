@@ -159,24 +159,24 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          }
          case SortOrder .ALL:
          {
-            const length = pickedTargets .length;
+            const numPickedTargets = pickedTargets .length;
 
-            for (let i = 0; i < length; ++ i)
+            for (let i = 0; i < numPickedTargets; ++ i)
                pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
-            pickedGeometries .length = length;
+            pickedGeometries .length = numPickedTargets;
             break;
          }
          case SortOrder .ALL_SORTED:
          {
-            const length = pickedTargets .length;
+            const numPickedTargets = pickedTargets .length;
 
-            this .pickedTargetsSorter .sort (0, length);
+            this .pickedTargetsSorter .sort (0, numPickedTargets);
 
-            for (let i = 0; i < length; ++ i)
+            for (let i = 0; i < numPickedTargets; ++ i)
                pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
-            pickedGeometries .length = length;
+            pickedGeometries .length = numPickedTargets;
             break;
          }
       }
@@ -206,9 +206,9 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          if (node .getExecutionContext () === executionContext)
             return node;
 
-         const instance = node .getExecutionContext ();
+         const instance = node .getExecutionContext () .getOuterNode ();
 
-         if (instance .getType () .includes (X3DConstants .X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
+         if (instance ?.getType () .includes (X3DConstants .X3DPrototypeInstance) && instance ?.getExecutionContext () === executionContext)
             return instance;
       }
 
