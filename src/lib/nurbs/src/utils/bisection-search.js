@@ -1,12 +1,12 @@
 export default function bisect (x, t, imin, imax)
 {
-   var
+   let
       lo = imin === undefined ? 0 : imin,
       hi = imax === undefined ? x .length - 1 : imax;
 
    while (hi - 1 > lo)
    {
-      var m = Math .floor (0.5 * (hi + lo));
+      const m = Math .floor (0.5 * (hi + lo));
 
       if (x [m] > t)
          hi = m;
@@ -15,7 +15,7 @@ export default function bisect (x, t, imin, imax)
 
    }
 
-   while (lo < imax && x [lo] === x[ lo + 1])
+   while (lo < imax && x [lo] === x [lo + 1])
       ++ lo;
 
    return lo;

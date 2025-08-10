@@ -37,7 +37,7 @@ Object .assign (Object .setPrototypeOf (WalkViewer .prototype, X3DFlyViewer .pro
             upVector  = viewpoint .getUpVector ();
 
          userOrientation .assign (viewpoint .getUserOrientation ());
-         userOrientation .multVecRot (localYAxis .assign (Vector3 .yAxis));
+         userOrientation .multVecRot (localYAxis .assign (Vector3 .Y_AXIS));
          rotation        .setFromToVec (localYAxis, upVector);
 
          const orientation = userOrientation .multRight (rotation);

@@ -68,9 +68,9 @@ Object .assign (DirectionalLightContainer .prototype,
          lightNode            = this .lightNode,
          cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .Identity);
+         invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .IDENTITY);
 
-      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
+      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
       invLightSpaceMatrix .inverse ();
 
       const
@@ -105,7 +105,7 @@ Object .assign (DirectionalLightContainer .prototype,
          return;
 
       this .shadowMatrix
-         .assign (renderObject .getView () ?.inverse ?? Matrix4 .Identity)
+         .assign (renderObject .getView () ?.inverse ?? Matrix4 .IDENTITY)
          .multRight (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invLightSpaceProjectionMatrix);
 

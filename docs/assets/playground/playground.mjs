@@ -3,6 +3,11 @@ class Playground
    autoUpdate = true;
    changed    = false;
 
+   static run ()
+   {
+      this .playground = new Playground ();
+   }
+
    constructor ()
    {
       // Also change version in playground.html!
@@ -591,16 +596,9 @@ class Playground
          ],
       });
    }
-
-   log (... args)
-   {
-      console .log (... args);
-   }
 }
 
-const playground = new Playground ();
-
-playground .log ("Added Playground.");
+Playground .run ();
 
 (() =>
 {

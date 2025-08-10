@@ -139,7 +139,7 @@ Object .assign (Rotation4 .prototype,
 
          if (Math .abs (quaternion .w) > 1)
          {
-            return Vector4 .zAxis;
+            return Vector4 .Z_AXIS;
          }
          else
          {
@@ -149,7 +149,7 @@ Object .assign (Rotation4 .prototype,
 
             if (scale === 0)
             {
-               return Vector4 .zAxis;
+               return Vector4 .Z_AXIS;
             }
             else
             {
@@ -199,11 +199,11 @@ Object .assign (Rotation4 .prototype,
             else
             {
                // Try crossing with x axis.
-               t .assign (from) .cross (Vector3 .xAxis);
+               t .assign (from) .cross (Vector3 .X_AXIS);
 
                // If not ok, cross with y axis.
                if (t .squaredNorm () === 0)
-                  t .assign (from) .cross (Vector3 .yAxis);
+                  t .assign (from) .cross (Vector3 .Y_AXIS);
 
                t .normalize ();
 
@@ -332,12 +332,12 @@ Object .assign (Rotation4 .prototype,
          upNormal   = new Vector3 (),
          rotation   = new Rotation4 ();
 
-      return function (upVector = Vector3 .yAxis)
+      return function (upVector = Vector3 .Y_AXIS)
       {
          upNormal .assign (upVector) .normalize ();
 
-         this .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
-         this .multVecRot (localZAxis .assign (Vector3 .zAxis));
+         this .multVecRot (localXAxis .assign (Vector3 .X_AXIS) .negate ());
+         this .multVecRot (localZAxis .assign (Vector3 .Z_AXIS));
 
          // If viewer looks along up vector.
          if (Math .abs (localZAxis .dot (upNormal)) >= 1)
@@ -347,7 +347,7 @@ Object .assign (Rotation4 .prototype,
 
          if (newXAxis .dot (localXAxis) <= -1)
          {
-            rotation .setAxisAngle (Vector3 .zAxis, Math .PI);
+            rotation .setAxisAngle (Vector3 .Z_AXIS, Math .PI);
 
             return this .multLeft (rotation);
          }
@@ -447,7 +447,7 @@ Object .defineProperties (Rotation4 .prototype,
 
 Object .assign (Rotation4,
 {
-   Identity: Object .freeze (new Rotation4 ()),
+   IDENTITY: Object .freeze (new Rotation4 ()),
    fromQuaternion (quaternion)
    {
       return new Rotation4 () .setQuaternion (quaternion);

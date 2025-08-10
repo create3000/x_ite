@@ -109,7 +109,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             this .startOrientation .assign (viewpoint .getUserOrientation ());
 
-            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, Rotation4 .Identity, viewpoint ._orientationOffset .getValue ());
+            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .IDENTITY, Rotation4 .IDENTITY, viewpoint ._orientationOffset .getValue ());
          }
       }
 
@@ -492,7 +492,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             const
                pixelPerRevolutionX = this .getViewport () [2] * 2,
                pixelPerRevolutionY = this .getViewport () [3] * 2,
-               startRoll           = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .zAxis)) .dot (upVector), -1, 1)),
+               startRoll           = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .Z_AXIS)) .dot (upVector), -1, 1)),
                roll                = Math .PI * 2 * +translation .y / pixelPerRevolutionY,
                clampedRoll         = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
 
@@ -534,7 +534,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             // Determine roll and rotation.
 
             this .deltaRotation .assign (this .rotation);
-            this .roll .assign (Rotation4 .Identity);
+            this .roll .assign (Rotation4 .IDENTITY);
             this .rotation .setFromToVec (toVector, this .fromVector);
             this .deltaRotation .inverse () .multRight (this .rotation);
          }
@@ -565,7 +565,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
          this .getOrientationOffset (roll, rotation, this .initialOrientationOffset);
 
-         this .rotationChaser ._set_value       = Rotation4 .Identity;
+         this .rotationChaser ._set_value       = Rotation4 .IDENTITY;
          this .rotationChaser ._set_destination = rotation;
       }
    },
@@ -640,11 +640,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          else
          {
-            rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR * 60 / this .getBrowser () .getCurrentFrameRate ());
+            rotation .assign (Rotation4 .IDENTITY) .slerp (this .rotation, SPIN_FACTOR * 60 / this .getBrowser () .getCurrentFrameRate ());
 
             this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
 
-            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, rotation, this .orientationOffset);
+            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .IDENTITY, rotation, this .orientationOffset);
             viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
          }
       };
@@ -685,10 +685,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .norm ()));
 
          if (deltaY > 0)
-            this .addMove (translation .negate (), Vector3 .Zero);
+            this .addMove (translation .negate (), Vector3 .ZERO);
 
          else if (deltaY < 0)
-            this .addMove (translation, Vector3 .Zero);
+            this .addMove (translation, Vector3 .ZERO);
       };
    })(),
    addMove: (() =>
@@ -813,10 +813,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       return function (rotation)
       {
-         rotation .multVecRot (V .assign (Vector3 .zAxis));
-         N .assign (Vector3 .yAxis) .cross (V);
-         H .assign (N) .cross (Vector3 .yAxis);
-         r .setFromToVec (Vector3 .zAxis, H);
+         rotation .multVecRot (V .assign (Vector3 .Z_AXIS));
+         N .assign (Vector3 .Y_AXIS) .cross (V);
+         H .assign (N) .cross (Vector3 .Y_AXIS);
+         r .setFromToVec (Vector3 .Z_AXIS, H);
 
          return r;
       };

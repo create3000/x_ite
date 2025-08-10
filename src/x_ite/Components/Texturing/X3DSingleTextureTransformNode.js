@@ -9,7 +9,7 @@ function X3DSingleTextureTransformNode (executionContext)
 
    this .addType (X3DConstants .X3DSingleTextureTransformNode);
 
-   this .matrixArray = new Float32Array (Matrix4 .Identity);
+   this .matrixArray = new Float32Array (Matrix4 .IDENTITY);
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureTransformNode .prototype, X3DTextureTransformNode .prototype),

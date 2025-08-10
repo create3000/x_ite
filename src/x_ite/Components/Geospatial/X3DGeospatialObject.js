@@ -87,7 +87,7 @@ Object .assign (X3DGeospatialObject .prototype,
          x .set (0, 0, 1) .cross (y);
 
          // Handle pole cases.
-         if (x .equals (Vector3 .Zero))
+         if (x .equals (Vector3 .ZERO))
             x .set (1, 0, 0);
 
          z .assign (x) .cross (y);
@@ -196,7 +196,7 @@ function getStandardLocationMatrix (geoPoint, result)
    x .set (0, 0, 1) .cross (y);
 
    // Handle pole cases.
-   if (x .equals (Vector3 .Zero))
+   if (x .equals (Vector3 .ZERO))
       x .set (1, 0, 0);
 
    z .assign (x) .cross (y);

@@ -973,8 +973,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       return function (modelViewMatrix)
       {
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .zAxis));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis));
+         invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .Z_AXIS));
+         invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .Y_AXIS));
 
          const x = viewerYAxis .cross (billboardToScreen);
          y .assign (billboardToScreen) .cross (x);

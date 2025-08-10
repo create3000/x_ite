@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
             projectionMatrix   = viewpointNode .getProjectionMatrixWithLimits (nearValue, farValue, viewport);
 
          // Far plane point
-         ViewVolume .unProjectPoint (x, y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
+         ViewVolume .unProjectPoint (x, y, 0.9, Matrix4 .IDENTITY, projectionMatrix, viewport, far);
 
          if (viewpointNode instanceof OrthoViewpoint)
             return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .norm ());

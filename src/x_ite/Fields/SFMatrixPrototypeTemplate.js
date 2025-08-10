@@ -29,7 +29,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       },
       isDefaultValue ()
       {
-         return this .getValue () .equals (Matrix .Identity);
+         return this .getValue () .equals (Matrix .IDENTITY);
       },
       set (value)
       {

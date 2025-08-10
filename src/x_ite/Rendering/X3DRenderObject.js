@@ -433,7 +433,7 @@ Object .assign (X3DRenderObject .prototype,
       if (stepBack)
          return this .constrainTranslation (translation .normalize () .multiply (distance), false);
 
-      return translation .assign (Vector3 .Zero);
+      return translation .assign (Vector3 .ZERO);
    },
    getDistance: (() =>
    {
@@ -478,7 +478,7 @@ Object .assign (X3DRenderObject .prototype,
             .multRight (viewpointNode .getOrientation ());
 
          rotation
-            .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ())
+            .setFromToVec (Vector3 .Z_AXIS, vector .assign (direction) .negate ())
             .multRight (localOrientation);
 
          viewpointNode .straightenHorizon (rotation);
@@ -507,7 +507,7 @@ Object .assign (X3DRenderObject .prototype,
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
          depthBufferViewVolume = new ViewVolume ();
 
-      depthBufferViewVolume .set (Matrix4 .Identity, depthBufferViewport);
+      depthBufferViewVolume .set (Matrix4 .IDENTITY, depthBufferViewport);
 
       return function (projectionMatrix)
       {
@@ -571,7 +571,7 @@ Object .assign (X3DRenderObject .prototype,
    },
    setHitRay (projectionMatrix, viewport, pointer)
    {
-      ViewVolume .unProjectRay (pointer .x, pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
+      ViewVolume .unProjectRay (pointer .x, pointer .y, Matrix4 .IDENTITY, projectionMatrix, viewport, this .hitRay);
    },
    addPointingShape: (() =>
    {
@@ -867,7 +867,7 @@ Object .assign (X3DRenderObject .prototype,
       const
          invModelViewMatrix = new Matrix4 (),
          modelViewMatrix    = new Matrix4 (),
-         collisionBox       = new Box3 (Vector3 .Zero, Vector3 .Zero),
+         collisionBox       = new Box3 (Vector3 .ZERO, Vector3 .ZERO),
          collisionSize      = new Vector3 ();
 
       return function ()
@@ -889,7 +889,7 @@ Object .assign (X3DRenderObject .prototype,
 
             if (collisions .length)
             {
-               collisionBox .set (collisionSize, Vector3 .Zero);
+               collisionBox .set (collisionSize, Vector3 .ZERO);
                collisionBox .multRight (invModelViewMatrix .assign (collisionContext .modelViewMatrix) .inverse ());
 
                if (collisionContext .shapeNode .intersectsBox (collisionBox, collisionContext .clipPlanes, modelViewMatrix .assign (collisionContext .modelViewMatrix)))
@@ -968,7 +968,7 @@ Object .assign (X3DRenderObject .prototype,
 
          const
             upVector = viewpointNode .getUpVector (),
-            down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
+            down     = rotation .setFromToVec (Vector3 .Z_AXIS, upVector);
 
          cameraSpaceProjectionMatrix
             .assign (viewpointNode .getModelMatrix ())
@@ -988,7 +988,7 @@ Object .assign (X3DRenderObject .prototype,
 
          distance -= avatarHeight;
 
-         const up = rotation .setFromToVec (Vector3 .yAxis, upVector);
+         const up = rotation .setFromToVec (Vector3 .Y_AXIS, upVector);
 
          if (distance > 0)
          {
@@ -1157,7 +1157,7 @@ Object .assign (X3DRenderObject .prototype,
          else
          {
             this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
-            this .eyeMatrixArray        .set (Matrix4 .Identity);
+            this .eyeMatrixArray        .set (Matrix4 .IDENTITY);
          }
 
          // Set up shadow matrix for all lights, and matrices for all projective textures.

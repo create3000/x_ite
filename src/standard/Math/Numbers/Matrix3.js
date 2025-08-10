@@ -73,14 +73,14 @@ Object .assign (Matrix3 .prototype,
          {
             case 1:
             {
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
                break;
             }
             case 2:
             {
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
                if (rotation)
@@ -90,26 +90,26 @@ Object .assign (Matrix3 .prototype,
             }
             case 3:
             {
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
                if (rotation)
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector2 .One))
+               if (scale && !scale .equals (Vector2 .ONE))
                   this .scale  (scale);
 
                break;
             }
             case 4:
             {
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
                if (rotation)
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector2 .One))
+               if (scale && !scale .equals (Vector2 .ONE))
                {
                   if (scaleOrientation)
                   {
@@ -128,10 +128,10 @@ Object .assign (Matrix3 .prototype,
             case 5:
             {
                // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
-               const hasCenter = center && !center .equals (Vector2 .Zero);
+               const hasCenter = center && !center .equals (Vector2 .ZERO);
 
                if (hasCenter)
                   this .translate (center);
@@ -139,7 +139,7 @@ Object .assign (Matrix3 .prototype,
                if (rotation)
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector2 .One))
+               if (scale && !scale .equals (Vector2 .ONE))
                {
                   if (scaleOrientation)
                   {
@@ -530,7 +530,7 @@ Object .defineProperties (Matrix3 .prototype,
          return function () { return vector .set (this [6], this [7], this [8]); };
       })(),
    },
-   xAxis:
+   X_AXIS:
    {
       get: (() =>
       {
@@ -539,7 +539,7 @@ Object .defineProperties (Matrix3 .prototype,
          return function () { return vector .set (this [0], this [1]); };
       })(),
    },
-   yAxis:
+   Y_AXIS:
    {
       get: (() =>
       {
@@ -575,7 +575,7 @@ Object .defineProperties (Matrix3 .prototype,
 
 Object .assign (Matrix3,
 {
-   Identity: Object .freeze (new Matrix3 ()),
+   IDENTITY: Object .freeze (new Matrix3 ()),
    Rotation (rotation)
    {
       const

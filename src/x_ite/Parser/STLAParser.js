@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       this .material   = scene .createNode ("Material");
       this .appearance = scene .createNode ("Appearance");
 
-      this .material .diffuseColor = Color3 .White;
+      this .material .diffuseColor = Color3 .WHITE;
       this .appearance .material   = this .material;
 
       // Parse scene.

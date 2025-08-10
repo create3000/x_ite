@@ -36,7 +36,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
    equals: SFColor .prototype .equals,
    isDefaultValue ()
    {
-      return this .getValue () .equals (Color4 .Transparent);
+      return this .getValue () .equals (Color4 .TRANSPARENT);
    },
    set: SFColor .prototype .set,
    getHSVA ()

@@ -92,17 +92,17 @@ function SVGParser (scene)
    this .styles = [{
       display: "inline",
       fillType: "COLOR",
-      fillColor: Color4 .Black,
+      fillColor: Color4 .BLACK,
       fillURL: "",
       fillOpacity: 1,
       fillRule: "nonzero",
       strokeType: "none",
-      strokeColor: Color4 .Black,
+      strokeColor: Color4 .BLACK,
       strokeURL: "",
       strokeOpacity: 1,
       strokeWidth: 1,
       opacity: 1,
-      stopColor: Color4 .Black,
+      stopColor: Color4 .BLACK,
       stopOpacity: 1,
       vectorEffect: "none",
    }];
@@ -1129,7 +1129,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       const m = new Matrix3 ();
 
       m .scale (new Vector2 (this .GRADIENT_SIZE / 2));
-      m .translate (Vector2 .One);
+      m .translate (Vector2 .ONE);
       m .scale (new Vector2 (1, -1));
 
       if (g .units === "userSpaceOnUse")
@@ -2359,7 +2359,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          return;
       }
 
-      if (this .colorValue (Color4 .Black))
+      if (this .colorValue (Color4 .BLACK))
       {
          this .style .stopColor = this .value .copy ();
          return;
@@ -2469,7 +2469,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       return `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`;
    },
-   createTransform (xmlElement, t = Vector2 .Zero, s = Vector2 .One)
+   createTransform (xmlElement, t = Vector2 .ZERO, s = Vector2 .ONE)
    {
       // Determine matrix.
 
@@ -2657,7 +2657,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          invMatrix    = bbox .matrix .copy () .inverse ();
 
       for (const point of coordinateNode .point)
-         texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .One) .divide (2));
+         texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .ONE) .divide (2));
 
       return texCoordNode;
    },

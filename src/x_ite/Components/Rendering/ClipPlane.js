@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prot
    {
       this .plane .assign (this ._plane .getValue ());
 
-      this .enabled = this ._enabled .getValue () && ! this .plane .equals (Vector4 .Zero);
+      this .enabled = this ._enabled .getValue () && ! this .plane .equals (Vector4 .ZERO);
    },
    push (renderObject)
    {

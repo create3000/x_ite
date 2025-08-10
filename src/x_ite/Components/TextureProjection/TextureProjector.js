@@ -46,9 +46,9 @@ Object .assign (TextureProjectorContainer .prototype,
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .IDENTITY);
 
-      this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setFromToVec (Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -79,7 +79,7 @@ Object .assign (TextureProjectorContainer .prototype,
    setGlobalVariables (renderObject)
    {
       this .matrix
-         .assign (renderObject .getView () ?.inverse ?? Matrix4 .Identity)
+         .assign (renderObject .getView () ?.inverse ?? Matrix4 .IDENTITY)
          .multRight (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invTextureSpaceProjectionMatrix);
 

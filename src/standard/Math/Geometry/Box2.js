@@ -120,8 +120,8 @@ Object .assign (Box2 .prototype,
       {
          const
             m = this .matrix,
-            x = m .xAxis,
-            y = m .yAxis;
+            x = m .X_AXIS,
+            y = m .Y_AXIS;
 
          p1 .assign (x) .add (y);
 

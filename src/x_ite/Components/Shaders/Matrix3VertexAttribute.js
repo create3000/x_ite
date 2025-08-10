@@ -48,7 +48,7 @@ Object .assign (Object .setPrototypeOf (Matrix3VertexAttribute .prototype, X3DVe
       }
       else
       {
-         const value = Matrix3 .Identity;
+         const value = Matrix3 .IDENTITY;
 
          for (let i = 0; i < 9; ++ i)
             array .push (value [i]);

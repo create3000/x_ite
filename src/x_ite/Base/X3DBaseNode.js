@@ -36,11 +36,19 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
    this [_live]              = true;
    this [_initialized]       = false;
 
+   // Create fields.
+
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
+
+   // Create events.
+
+   this .addChildObjects (X3DConstants .outputOnly, "name_changed",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "typeName_changed", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "parents_changed",  new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .prototype),
@@ -222,19 +230,19 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          }
       }
    },
-   addChildObjects (/* accessType, name, field, ... */)
+   addChildObjects (... args /* accessType, name, field, ... */)
    {
-      const length = arguments .length;
+      const length = args .length;
 
       for (let i = 0; i < length; i += 3)
-         this .addChildObject (arguments [i], arguments [i + 1], arguments [i + 2]);
+         this .addChildObject (args [i], args [i + 1], args [i + 2]);
    },
    addChildObject (accessType, name, field)
    {
       this [_childObjects] .push (field);
 
       field .setPrivate (true);
-      field .setTainted (!this .isInitialized ());
+      field .setTainted (true);
       field .addParent (this);
       field .setName (name);
       field .setAccessType (accessType);
@@ -547,24 +555,6 @@ for (const key of Object .keys (X3DBaseNode .prototype))
 
 Object .defineProperties (X3DBaseNode .prototype,
 {
-   ... Object .fromEntries (["name_changed", "typeName_changed", "parents_changed"] .map (name =>
-   {
-      return [`_${name}`,
-      {
-         get ()
-         {
-            this .addChildObjects (X3DConstants .outputOnly, name, new Fields .SFTime ())
-
-            return this [`_${name}`];
-         },
-         set (value)
-         {
-            this .addChildObjects (X3DConstants .outputOnly, name, new Fields .SFTime ())
-
-            this [`_${name}`] .setValue (value);
-         },
-      }];
-   })),
    name_changed:
    {
       get () { return this ._name_changed; },

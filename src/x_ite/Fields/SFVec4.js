@@ -29,7 +29,7 @@ function SFVec4Template (TypeName, double)
    {
       isDefaultValue ()
       {
-         return this .getValue () .equals (Vector4 .wAxis);
+         return this .getValue () .equals (Vector4 .W_AXIS);
       },
    });
 }

@@ -54,7 +54,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    { },
    set_enabled__ ()
    {
-      if (this .getLive () .getValue () && this .targetObjectNode && this ._enabled .getValue () && !this ._size. getValue () .equals (Vector3 .Zero))
+      if (this .getLive () .getValue () && this .targetObjectNode && this ._enabled .getValue () && !this ._size. getValue () .equals (Vector3 .ZERO))
       {
          this .setPickableObject (true);
          this .getBrowser () .addTransformSensor (this);

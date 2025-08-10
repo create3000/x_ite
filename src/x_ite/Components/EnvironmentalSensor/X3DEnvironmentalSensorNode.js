@@ -39,7 +39,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentalSensorNode .prototype, X
    },
    set_live__ ()
    {
-      if (this ._traversed .getValue () && this .getLive () .getValue () && this ._enabled .getValue () && !(this .zeroTest && this ._size. getValue () .equals (Vector3 .Zero)))
+      if (this ._traversed .getValue () && this .getLive () .getValue () && this ._enabled .getValue () && !(this .zeroTest && this ._size. getValue () .equals (Vector3 .ZERO)))
       {
          this .getBrowser () .sensorEvents () .addInterest ("update", this);
       }

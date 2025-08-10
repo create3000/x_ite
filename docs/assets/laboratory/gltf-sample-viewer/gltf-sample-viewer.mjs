@@ -647,6 +647,11 @@ $.try = function (callback)
 
 class SampleViewer
 {
+   static run (browser)
+   {
+      this .viewer = new SampleViewer (browser);
+   }
+
    constructor (browser)
    {
       browser .setBrowserOption ("ColorSpace", "LINEAR");
@@ -1137,13 +1142,6 @@ class SampleViewer
 
       $("#animations") .show () .find ("button") .first () .trigger ("click");
    }
-
-   log (... args)
-   {
-      console .log (... args);
-   }
 }
 
-const viewer = new SampleViewer (X3D .getBrowser ());
-
-viewer .log ("Added Sample Viewer.");
+SampleViewer .run (X3D .getBrowser ());

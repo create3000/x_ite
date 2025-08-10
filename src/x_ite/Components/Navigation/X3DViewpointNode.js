@@ -264,7 +264,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       // Local y-axis,
       // see https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo.
-      return Vector3 .yAxis;
+      return Vector3 .Y_AXIS;
    },
    getSpeedFactor ()
    {
@@ -397,11 +397,11 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    resetUserOffsets ()
    {
-      this ._positionOffset         = Vector3   .Zero;
-      this ._orientationOffset      = Rotation4 .Identity;
-      this ._scaleOffset            = Vector3   .One;
-      this ._scaleOrientationOffset = Rotation4 .Identity;
-      this ._centerOfRotationOffset = Vector3   .Zero;
+      this ._positionOffset         = Vector3   .ZERO;
+      this ._orientationOffset      = Rotation4 .IDENTITY;
+      this ._scaleOffset            = Vector3   .ONE;
+      this ._scaleOrientationOffset = Rotation4 .IDENTITY;
+      this ._centerOfRotationOffset = Vector3   .ZERO;
       this ._fieldOfViewScale       = 1;
 
       this .set_nearDistance__ ();
@@ -466,7 +466,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
-      if (bbox .size .equals (Vector3 .Zero))
+      if (bbox .size .equals (Vector3 .ZERO))
          return;
 
       bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
@@ -503,7 +503,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
       this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
-      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, Vector3 .One);
+      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, Vector3 .ONE);
       this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
       const relative = this .getRelativeTransformation (this);
@@ -551,7 +551,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
 
-      if (bbox .size .equals (Vector3 .Zero))
+      if (bbox .size .equals (Vector3 .ZERO))
       {
          this .set_nearDistance__ ();
          this .set_farDistance__ ();

@@ -189,8 +189,8 @@ Object .defineProperties (Color3 .prototype,
 
 Object .assign (Color3,
 {
-   Black: Object .freeze (new Color3 ()),
-   White: Object .freeze (new Color3 (1)),
+   BLACK: Object .freeze (new Color3 ()),
+   WHITE: Object .freeze (new Color3 (1)),
    HSV (h, s, v)
    {
       const color = Object .create (this .prototype);
