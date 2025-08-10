@@ -1,5 +1,5 @@
-/* X_ITE v12.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
+/* X_ITE v12.0.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1266,6 +1266,8 @@ function Node (tree, triangles, first, size)
 
    // Sort and split array
 
+   let leftSize;
+
    if (size > 2)
    {
       // Sort array
@@ -1275,10 +1277,12 @@ function Node (tree, triangles, first, size)
 
       // Split array
 
-      var leftSize = size >>> 1;
+      leftSize = size >>> 1;
    }
    else
-      var leftSize = 1;
+   {
+      leftSize = 1;
+   }
 
    // Split array
 

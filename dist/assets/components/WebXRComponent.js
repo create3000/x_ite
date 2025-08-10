@@ -1,5 +1,5 @@
-/* X_ITE v12.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
+/* X_ITE v12.0.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -485,8 +485,9 @@ Object .assign (X3DWebXRContext .prototype,
             gl             = this .getContext (),
             mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
             session        = await navigator .xr .requestSession (mode),
-            referenceSpace = await session .requestReferenceSpace ("local"),
-            compatible     = await gl .makeXRCompatible ();
+            referenceSpace = await session .requestReferenceSpace ("local");
+
+         await gl .makeXRCompatible ();
 
          this .finishedEvents () .addInterest ("xrUpdatePointers", this);
 

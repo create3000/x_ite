@@ -1,5 +1,5 @@
-/* X_ITE v12.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
+/* X_ITE v12.0.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -329,7 +329,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    {
       return this ._url;
    },
-   unloadData ()
+   async unloadData ()
    {
       // Call shutdown.
 
@@ -358,6 +358,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    async loadData ()
    {
       // See: 29.2.2 Script execution
+      // Wait a tick to get user-defined field with name self working.
       await this .unloadData ();
 
       new (external_X_ITE_X3D_FileLoader_default()) (this) .loadDocument (this ._url, async data =>
