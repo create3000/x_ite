@@ -189,7 +189,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          executionContext = this .getExecutionContext (),
          geometryNode     = target .geometryNode;
 
-      if (!geometryNode || geometryNode .getExecutionContext () === executionContext)
+      if (geometryNode .getExecutionContext () === executionContext)
          return geometryNode;
 
       const instance = geometryNode .getExecutionContext ();
@@ -349,12 +349,14 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          target .intersections .length = 0;
          target .modelMatrix .assign (modelMatrix);
 
-         const destPickingHierarchy = target .pickingHierarchy;
+         const
+            destPickingHierarchy = target .pickingHierarchy,
+            numPickingHierarchy  = pickingHierarchy .length;
 
-         for (let i = 0, length = pickingHierarchy .length; i < length; ++ i)
+         for (let i = 0; i < numPickingHierarchy; ++ i)
             destPickingHierarchy [i] = pickingHierarchy [i];
 
-         destPickingHierarchy .length = length;
+         destPickingHierarchy .length = numPickingHierarchy;
       }
    },
    process ()
