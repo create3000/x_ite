@@ -114,8 +114,6 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .assign (pickedGeometries .filter (node => node));
-
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 

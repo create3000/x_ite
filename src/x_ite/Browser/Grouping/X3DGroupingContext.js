@@ -24,6 +24,10 @@ Object .assign (X3DGroupingContext .prototype,
          bboxGeometry ._coord      = bboxCoordinate;
          bboxCoordinate ._point    = [0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5];
 
+         bboxCoordinate .setPrivate (true);
+         bboxGeometry   .setPrivate (true);
+         bboxShape      .setPrivate (true);
+
          bboxCoordinate .setup ();
          bboxGeometry   .setup ();
          bboxShape      .setup ();

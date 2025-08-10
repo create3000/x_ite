@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          case SortOrder .ANY:
          {
             pickedTargets .length    = 1;
-            pickedGeometries [0]     = pickedTargets [0] .geometryNode;
+            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
             pickedGeometries .length = 1;
             break;
          }
@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
             this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
             pickedTargets .length    = 1;
-            pickedGeometries [0]     = pickedTargets [0] .geometryNode;
+            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
             pickedGeometries .length = 1;
             break;
          }
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
             const numPickedTargets = pickedTargets .length;
 
             for (let i = 0; i < numPickedTargets; ++ i)
-               pickedGeometries [i] = pickedTargets [i] .geometryNode;
+               pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
             pickedGeometries .length = numPickedTargets;
             break;
@@ -174,14 +174,25 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
             this .pickedTargetsSorter .sort (0, numPickedTargets);
 
             for (let i = 0; i < numPickedTargets; ++ i)
-               pickedGeometries [i] = pickedTargets [i] .geometryNode;
+               pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
             pickedGeometries .length = numPickedTargets;
             break;
          }
       }
 
+      pickedGeometries .assign (pickedGeometries .filter (node => node));
+
       return pickedGeometries;
+   },
+   getPickedGeometry (target)
+   {
+      const geometryNode = target .geometryNode;
+
+      if (geometryNode .isPrivate ())
+         return null;
+
+      return geometryNode;
    },
    getPickedTargets ()
    {
