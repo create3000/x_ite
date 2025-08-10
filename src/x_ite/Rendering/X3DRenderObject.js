@@ -887,7 +887,7 @@ Object .assign (X3DRenderObject .prototype,
             if (collisions .length)
             {
                collisionBox .set (collisionSize, Vector3 .ZERO);
-               collisionBox .multRight (invModelViewMatrix .assign (collisionContext .modelViewMatrix) .inverse ());
+               collisionBox .multRight (invModelViewMatrix .assign (renderContext .modelViewMatrix) .inverse ());
 
                if (renderContext .shapeNode .intersectsBox (collisionBox, renderContext .clipPlanes, modelViewMatrix .assign (renderContext .modelViewMatrix)))
                {
