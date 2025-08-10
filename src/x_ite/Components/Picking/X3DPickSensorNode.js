@@ -141,37 +141,38 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
       switch (this .sortOrder)
       {
-         case SortOrder .ANY:
-         {
-            pickedTargets .length    = 1;
-            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-            pickedGeometries .length = 1;
-            break;
-         }
          case SortOrder .CLOSEST:
          {
             this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-            pickedTargets .length    = 1;
-            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-            pickedGeometries .length = 1;
-            break;
+            // Proceed with next case:
          }
-         case SortOrder .ALL:
+         case SortOrder .ANY:
          {
+            pickedGeometries [0] = null;
+
             const numPickedTargets = pickedTargets .length;
 
             for (let i = 0; i < numPickedTargets; ++ i)
-               pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
+            {
+               if (!(pickedGeometries [0] = this .getPickedGeometry (pickedTargets [i])))
+                  continue;
 
-            pickedGeometries .length = numPickedTargets;
+               break;
+            }
+
+            pickedGeometries .length = 1;
             break;
          }
          case SortOrder .ALL_SORTED:
          {
-            const numPickedTargets = pickedTargets .length;
+            this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-            this .pickedTargetsSorter .sort (0, numPickedTargets);
+            // Proceed with next case:
+         }
+         case SortOrder .ALL:
+         {
+            const numPickedTargets = pickedTargets .length;
 
             for (let i = 0; i < numPickedTargets; ++ i)
                pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
