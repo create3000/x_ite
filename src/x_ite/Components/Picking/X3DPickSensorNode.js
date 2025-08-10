@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          case SortOrder .ANY:
          {
             pickedTargets .length    = 1;
-            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
+            pickedGeometries [0]     = pickedTargets [0] .geometryNode;
             pickedGeometries .length = 1;
             break;
          }
@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
             this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
             pickedTargets .length    = 1;
-            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
+            pickedGeometries [0]     = pickedTargets [0] .geometryNode;
             pickedGeometries .length = 1;
             break;
          }
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
             const numPickedTargets = pickedTargets .length;
 
             for (let i = 0; i < numPickedTargets; ++ i)
-               pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
+               pickedGeometries [i] = pickedTargets [i] .geometryNode;
 
             pickedGeometries .length = numPickedTargets;
             break;
@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
             this .pickedTargetsSorter .sort (0, numPickedTargets);
 
             for (let i = 0; i < numPickedTargets; ++ i)
-               pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
+               pickedGeometries [i] = pickedTargets [i] .geometryNode;
 
             pickedGeometries .length = numPickedTargets;
             break;
@@ -182,37 +182,6 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
       }
 
       return pickedGeometries;
-   },
-   getPickedGeometry (target)
-   {
-      const
-         executionContext = this .getExecutionContext (),
-         geometryNode     = target .geometryNode;
-
-      if (geometryNode .getExecutionContext () === executionContext)
-         return geometryNode;
-
-      const instance = geometryNode .getExecutionContext () .getOuterNode ();
-
-      if (instance ?.getType () .includes (X3DConstants .X3DPrototypeInstance) && instance ?.getExecutionContext () === executionContext)
-         return instance;
-
-      const pickingHierarchy = target .pickingHierarchy;
-
-      for (let i = pickingHierarchy .length - 1; i >= 0; -- i)
-      {
-         const node = pickingHierarchy [i];
-
-         if (node .getExecutionContext () === executionContext)
-            return node;
-
-         const instance = node .getExecutionContext () .getOuterNode ();
-
-         if (instance ?.getType () .includes (X3DConstants .X3DPrototypeInstance) && instance ?.getExecutionContext () === executionContext)
-            return instance;
-      }
-
-      return null;
    },
    getPickedTargets ()
    {
