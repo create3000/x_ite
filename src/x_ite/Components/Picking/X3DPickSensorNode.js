@@ -155,10 +155,8 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
             for (let i = 0; i < numPickedTargets; ++ i)
             {
-               if (!(pickedGeometries [0] = this .getPickedGeometry (pickedTargets [i])))
-                  continue;
-
-               break;
+               if (pickedGeometries [0] = this .getPickedGeometry (pickedTargets [i]))
+                  break;
             }
 
             pickedGeometries .length = 1;
