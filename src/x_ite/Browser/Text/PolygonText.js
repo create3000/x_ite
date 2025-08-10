@@ -18,7 +18,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
 {
    getMatrix ()
    {
-      return Matrix4 .Identity;
+      return Matrix4 .IDENTITY;
    },
    build: (() =>
    {

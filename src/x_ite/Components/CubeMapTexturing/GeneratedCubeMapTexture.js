@@ -102,12 +102,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       // Rotations to negated normals of the texture cube.
 
       const rotations = [
-         new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0, -1)), // front
-         new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0,  1)), // back
-         new Rotation4 (Vector3 .zAxis, new Vector3 ( 1,  0,  0)), // left
-         new Rotation4 (Vector3 .zAxis, new Vector3 (-1,  0,  0)), // right
-         new Rotation4 (Vector3 .zAxis, new Vector3 ( 0, -1,  0)), // top
-         new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  1,  0)), // bottom
+         new Rotation4 (Vector3 .Z_AXIS, new Vector3 ( 0,  0, -1)), // front
+         new Rotation4 (Vector3 .Z_AXIS, new Vector3 ( 0,  0,  1)), // back
+         new Rotation4 (Vector3 .Z_AXIS, new Vector3 ( 1,  0,  0)), // left
+         new Rotation4 (Vector3 .Z_AXIS, new Vector3 (-1,  0,  0)), // right
+         new Rotation4 (Vector3 .Z_AXIS, new Vector3 ( 0, -1,  0)), // top
+         new Rotation4 (Vector3 .Z_AXIS, new Vector3 ( 0,  1,  0)), // bottom
       ];
 
       // Negated scales of the texture cube.

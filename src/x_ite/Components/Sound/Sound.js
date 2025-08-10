@@ -240,7 +240,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          invSphereMatrix = new Matrix4 (),
          rotation        = new Rotation4 (),
          scale           = new Vector3 (1),
-         sphere          = new Sphere3 (1, Vector3 .Zero),
+         sphere          = new Sphere3 (1, Vector3 .ZERO),
          normal          = new Vector3 (),
          line            = new Line3 (),
          enterPoint      = new Vector3 (),
@@ -271,7 +271,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          location .set (0, 0, e);
          scale    .set (b, b, a);
-         rotation .setFromToVec (Vector3 .zAxis, this ._direction .getValue ());
+         rotation .setFromToVec (Vector3 .Z_AXIS, this ._direction .getValue ());
 
          sphereMatrix
             .assign (modelViewMatrix)
@@ -313,14 +313,14 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          location  .assign (this ._location  .getValue ());
          direction .assign (this ._direction .getValue ());
-         rotation .setFromToVec (Vector3 .zAxis, direction) .straighten ();
-         rotation .multVecRot (xAxis .assign (Vector3 .xAxis));
+         rotation .setFromToVec (Vector3 .Z_AXIS, direction) .straighten ();
+         rotation .multVecRot (xAxis .assign (Vector3 .X_AXIS));
 
          modelViewMatrix .multVecMatrix (location) .normalize ();
          modelViewMatrix .multDirMatrix (xAxis)    .normalize ();
 
-         result .pan      = 1 - Math .acos (Algorithm .clamp (location .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
-         result .rotation =     Math .acos (Algorithm .clamp (xAxis    .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
+         result .pan      = 1 - Math .acos (Algorithm .clamp (location .dot (Vector3 .X_AXIS), -1, 1)) / Math .PI;
+         result .rotation =     Math .acos (Algorithm .clamp (xAxis    .dot (Vector3 .X_AXIS), -1, 1)) / Math .PI;
 
          return result;
       };

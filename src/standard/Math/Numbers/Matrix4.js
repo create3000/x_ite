@@ -84,45 +84,45 @@ Object .assign (Matrix4 .prototype,
          {
             case 1:
             {
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
                break;
             }
             case 2:
             {
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
-               if (rotation && !rotation .equals (Rotation4 .Identity))
+               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
                   this .rotate (rotation);
 
                break;
             }
             case 3:
             {
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
-               if (rotation && !rotation .equals (Rotation4 .Identity))
+               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector3 .One))
+               if (scale && !scale .equals (Vector3 .ONE))
                   this .scale (scale);
 
                break;
             }
             case 4:
             {
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
-               if (rotation && !rotation .equals (Rotation4 .Identity))
+               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector3 .One))
+               if (scale && !scale .equals (Vector3 .ONE))
                {
-                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .Identity))
+                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .IDENTITY))
                   {
                      this .rotate (scaleOrientation);
                      this .scale (scale);
@@ -139,20 +139,20 @@ Object .assign (Matrix4 .prototype,
             case 5:
             {
                // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
-               const hasCenter = center && !center .equals (Vector3 .Zero);
+               const hasCenter = center && !center .equals (Vector3 .ZERO);
 
                if (hasCenter)
                   this .translate (center);
 
-               if (rotation && !rotation .equals (Rotation4 .Identity))
+               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector3 .One))
+               if (scale && !scale .equals (Vector3 .ONE))
                {
-                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .Identity))
+                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .IDENTITY))
                   {
                      this .rotate (scaleOrientation);
                      this .scale (scale);
@@ -638,7 +638,7 @@ Object .defineProperties (Matrix4 .prototype,
          return function () { return vector .set (this [12], this [13], this [14], this [15]); };
       })(),
    },
-   xAxis:
+   X_AXIS:
    {
       get: (() =>
       {
@@ -647,7 +647,7 @@ Object .defineProperties (Matrix4 .prototype,
          return function () { return vector .set (this [0], this [1], this [2]); };
       })(),
    },
-   yAxis:
+   Y_AXIS:
    {
       get: (() =>
       {
@@ -656,7 +656,7 @@ Object .defineProperties (Matrix4 .prototype,
          return function () { return vector .set (this [4], this [5], this [6]); };
       })(),
    },
-   zAxis:
+   Z_AXIS:
    {
       get: (() =>
       {
@@ -693,7 +693,7 @@ Object .defineProperties (Matrix4 .prototype,
 
 Object .assign (Matrix4,
 {
-   Identity: Object .freeze (new Matrix4 ()),
+   IDENTITY: Object .freeze (new Matrix4 ()),
    Rotation (rotation)
    {
       return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));

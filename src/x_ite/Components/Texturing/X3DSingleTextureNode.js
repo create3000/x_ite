@@ -14,7 +14,7 @@ function X3DSingleTextureNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "linear", new Fields .SFBool ())
 
-   this .matrix = new Float32Array (Matrix4 .Identity);
+   this .matrix = new Float32Array (Matrix4 .IDENTITY);
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DTextureNode .prototype),

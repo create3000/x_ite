@@ -402,7 +402,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          // Determine userOrientation.
 
          userOrientation
-            .assign (Rotation4 .Identity)
+            .assign (Rotation4 .IDENTITY)
             .slerp (rubberBandRotation, weight)
             .multRight (viewpoint .getUserOrientation ());
 
@@ -450,7 +450,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          speedFactor *= dt;
 
          const
-            orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .yAxis)), upVector)),
+            orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .Y_AXIS)), upVector)),
             translation = orientation .multVecRot (direction .multiply (speedFactor));
 
          this .getActiveLayer () .constrainTranslation (translation, true);

@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
       const
-         axis   = new Line3 (Vector3 .Zero, yAxis),
+         axis   = new Line3 (Vector3 .ZERO, yAxis),
          radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 ()) .norm ();
 
       this .cylinder = new Cylinder3 (axis, radius);
@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          billboardToViewer = this .invModelViewMatrix .origin,
          sxNormal          = yAxis .copy () .cross (billboardToViewer) .normalize ();
 
-      this .sxPlane  = new Plane3 (Vector3 .Zero, sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
+      this .sxPlane  = new Plane3 (Vector3 .ZERO, sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
       this .szNormal = sxNormal .copy () .cross (yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
 
       const trackPoint = new Vector3 ();

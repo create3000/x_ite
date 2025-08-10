@@ -702,10 +702,10 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          if (this .getMetaDatas () .size)
          {
             // if (headLastProperty)
-            {
-               generator .string += ',';
-               generator .string += generator .TidyBreak ();
-            }
+            // {
+            //    generator .string += ',';
+            //    generator .string += generator .TidyBreak ();
+            // }
 
 
             // Meta data begin

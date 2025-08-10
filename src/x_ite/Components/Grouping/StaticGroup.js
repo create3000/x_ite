@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          if (browser .getBrowserOption ("Debug"))
             console .info (`Rebuilding StaticGroup "${this .getName () || "unnamed"}".`);
 
-         const shapes = this .groupNode .getShapes ([ ], Matrix4 .Identity);
+         const shapes = this .groupNode .getShapes ([ ], Matrix4 .IDENTITY);
 
          // Determine groups that can be combined.
          // Sort out ParticleSystem nodes.
@@ -411,7 +411,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             const color = newGeometryNode ._color .color;
 
             if (color .length < numPoints)
-               color .resize (numPoints, Color4 .White);
+               color .resize (numPoints, Color4 .WHITE);
 
             color .assign (color .concat (normalizedColor ._color));
          }

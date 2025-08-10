@@ -141,78 +141,60 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
       switch (this .sortOrder)
       {
-         case SortOrder .ANY:
-         {
-            pickedTargets .length    = 1;
-            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-            pickedGeometries .length = 1;
-            break;
-         }
          case SortOrder .CLOSEST:
          {
             this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-            pickedTargets .length    = 1;
-            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-            pickedGeometries .length = 1;
-            break;
+            // Proceed with next case:
          }
-         case SortOrder .ALL:
+         case SortOrder .ANY:
          {
-            const length = pickedTargets .length;
+            pickedGeometries [0] = null;
 
-            for (let i = 0; i < length; ++ i)
-               pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
+            const numPickedTargets = pickedTargets .length;
 
-            pickedGeometries .length = length;
+            for (let i = 0; i < numPickedTargets; ++ i)
+            {
+               if (pickedGeometries [0] = this .getPickedGeometry (pickedTargets [i]))
+                  break;
+            }
+
+            pickedGeometries .length = 1;
             break;
          }
          case SortOrder .ALL_SORTED:
          {
-            const length = pickedTargets .length;
+            this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-            this .pickedTargetsSorter .sort (0, length);
+            // Proceed with next case:
+         }
+         case SortOrder .ALL:
+         {
+            const numPickedTargets = pickedTargets .length;
 
-            for (let i = 0; i < length; ++ i)
+            for (let i = 0; i < numPickedTargets; ++ i)
                pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
-            pickedGeometries .length = length;
+            pickedGeometries .length = numPickedTargets;
             break;
          }
       }
+
+      pickedGeometries .assign (pickedGeometries .filter (node => node));
 
       return pickedGeometries;
    },
    getPickedGeometry (target)
    {
-      const
-         executionContext = this .getExecutionContext (),
-         geometryNode     = target .geometryNode;
+      const geometryNode = target .geometryNode;
 
-      if (geometryNode .getExecutionContext () === executionContext)
-         return geometryNode;
+      if (geometryNode .isPrivate ())
+         return null;
 
-      const instance = geometryNode .getExecutionContext ();
+      if (geometryNode .getExecutionContext () .isPrivate ())
+         return null;
 
-      if (instance .getType () .includes (X3DConstants .X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
-         return instance;
-
-      const pickingHierarchy = target .pickingHierarchy;
-
-      for (let i = pickingHierarchy .length - 1; i >= 0; -- i)
-      {
-         const node = pickingHierarchy [i];
-
-         if (node .getExecutionContext () === executionContext)
-            return node;
-
-         const instance = node .getExecutionContext ();
-
-         if (instance .getType () .includes (X3DConstants .X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
-            return instance;
-      }
-
-      return null;
+      return geometryNode;
    },
    getPickedTargets ()
    {
@@ -336,7 +318,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          }
          else
          {
-            target = { modelMatrix: new Matrix4 (), pickingHierarchy: [ ], pickedPoint: [ ], intersections: [ ] };
+            target = { modelMatrix: new Matrix4 (), pickedPoint: [ ], intersections: [ ] };
 
             targets .push (target);
          }
@@ -348,13 +330,6 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          target .pickedPoint .length   = 0;
          target .intersections .length = 0;
          target .modelMatrix .assign (modelMatrix);
-
-         const destPickingHierarchy = target .pickingHierarchy;
-
-         for (let i = 0, length = pickingHierarchy .length; i < length; ++ i)
-            destPickingHierarchy [i] = pickingHierarchy [i];
-
-         destPickingHierarchy .length = length;
       }
    },
    process ()

@@ -1,5 +1,5 @@
-/* X_ITE v12.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
+/* X_ITE v12.0.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -188,17 +188,17 @@ Object .assign (Geodetic .prototype,
    {
       const elevation = geodetic .z;
 
+      let latitude, longitude;
+
       if (this .longitudeFirst)
       {
-         var
-            latitude  = geodetic .y,
-            longitude = geodetic .x;
+         latitude  = geodetic .y;
+         longitude = geodetic .x;
       }
       else
       {
-         var
-            latitude  = geodetic .x,
-            longitude = geodetic .y;
+         latitude  = geodetic .x;
+         longitude = geodetic .y;
       }
 
       if (this .degrees)
@@ -355,17 +355,17 @@ Object .assign (UniversalTransverseMercator .prototype,
    {
       // https://gist.github.com/duedal/840476
 
+      let northing, easting;
+
       if (this .eastingFirst)
       {
-         var
-            northing = utm .y,
-            easting  = utm .x;
+         northing = utm .y;
+         easting  = utm .x;
       }
       else
       {
-         var
-            northing = utm .x,
-            easting  = utm .y;
+         northing = utm .x;
+         easting  = utm .y;
       }
 
       // Check for southern hemisphere and remove offset from easting.
@@ -1152,14 +1152,15 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
    createNormals (points, coordIndex, creaseAngle)
    {
       const
-         cw          = !this ._ccw .getValue (),
-         normalIndex = new Map (),
-         normals     = [ ];
+         numCoordIndices = coordIndex .length,
+         cw              = !this ._ccw .getValue (),
+         normalIndex     = new Map (),
+         normals         = [ ];
 
       for (let p = 0; p < points .length; ++ p)
          normalIndex .set (p, [ ]);
 
-      for (let c = 0; c < coordIndex .length; c += 3)
+      for (let c = 0; c < numCoordIndices; c += 3)
       {
          const
             c0 = coordIndex [c],
@@ -1289,9 +1290,8 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
          multiTexCoordArray = this .getMultiTexCoords (),
          tangentArray       = this .getTangents (),
          normalArray        = this .getNormals (),
-         vertexArray        = this .getVertices ();
-
-      let face = 0;
+         vertexArray        = this .getVertices (),
+         numCoordIndices    = coordIndex .length;
 
       // Vertex attribute
 
@@ -1300,22 +1300,25 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
       //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
       //   attribArrays [a] .reserve (coordIndex .size ());
 
+      let texCoords, texCoordArray;
+
       if (texCoordNode)
       {
          texCoordNode .init (multiTexCoordArray);
       }
       else
       {
-         var
-            texCoords     = this .createTexCoords (),
-            texCoordArray = this .getTexCoords ();
+         texCoords     = this .createTexCoords (),
+         texCoordArray = this .getTexCoords ();
 
          multiTexCoordArray .push (texCoordArray);
       }
 
       // Build geometry
 
-      for (let c = 0; c < coordIndex .length; ++ face)
+      let face = 0;
+
+      for (let c = 0; c < numCoordIndices; ++ face)
       {
          for (let p = 0; p < 6; ++ p, ++ c)
          {

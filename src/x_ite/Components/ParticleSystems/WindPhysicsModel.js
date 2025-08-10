@@ -46,7 +46,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticle
                speed       = this .getRandomSpeed (emitterNode),
                pressure    = 10 ** (2 * Math .log (speed)) * 0.64615;
 
-            if (this ._direction .getValue () .equals (Vector3 .Zero))
+            if (this ._direction .getValue () .equals (Vector3 .ZERO))
                emitterNode .getRandomNormal (force);
             else
                force .assign (this ._direction .getValue ()) .normalize ();

@@ -58,7 +58,7 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
    },
    set_size__ ()
    {
-      this .proximitySensor ._enabled = !this ._size .getValue () .equals (Vector3 .Zero);
+      this .proximitySensor ._enabled = !this ._size .getValue () .equals (Vector3 .ZERO);
 
       this .set_active__ ();
    },

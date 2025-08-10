@@ -542,7 +542,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    drawCube: (() =>
    {
-      const textureMatrixArray = new Float32Array (Matrix4 .Identity);
+      const textureMatrixArray = new Float32Array (Matrix4 .IDENTITY);
 
       return function (renderObject, modelViewMatrixArray, projectionMatrixArray)
       {

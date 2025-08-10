@@ -54,7 +54,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .protot
          for (let i = 0, length = defaultNormals .length; i < length; i += 3)
          {
             v1 .set (defaultNormals [i], 0, defaultNormals [i + 2]),
-            rx .setFromToVec (Vector3 .zAxis, v1) .multLeft (rz) .multVecRot (v1 .set (0, 0, 1));
+            rx .setFromToVec (Vector3 .Z_AXIS, v1) .multLeft (rz) .multVecRot (v1 .set (0, 0, 1));
 
             normalArray .push (... v1);
          }

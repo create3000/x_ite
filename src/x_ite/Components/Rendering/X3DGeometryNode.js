@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    getMatrix ()
    {
-      return Matrix4 .Identity;
+      return Matrix4 .IDENTITY;
    },
    getPrimitiveMode ()
    {

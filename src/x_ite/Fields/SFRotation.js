@@ -67,7 +67,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    },
    isDefaultValue ()
    {
-      return this .getValue () .equals (Rotation4 .Identity);
+      return this .getValue () .equals (Rotation4 .IDENTITY);
    },
    set (value)
    {

@@ -1,6 +1,6 @@
 import Vector3 from "../Numbers/Vector3.js";
 
-function Line3 (point = Vector3 .Zero, direction = Vector3 .zAxis)
+function Line3 (point = Vector3 .ZERO, direction = Vector3 .Z_AXIS)
 {
    this .point     = new Vector3 ();
    this .direction = new Vector3 ();
@@ -30,7 +30,7 @@ Object .assign (Line3 .prototype,
    {
       return this .point .equals (line .point) && this .direction .equals (line .direction);
    },
-   set (point = Vector3 .Zero, direction = Vector3 .zAxis)
+   set (point = Vector3 .ZERO, direction = Vector3 .Z_AXIS)
    {
       this .point     .assign (point);
       this .direction .assign (direction);

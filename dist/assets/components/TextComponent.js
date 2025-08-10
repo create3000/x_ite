@@ -1,5 +1,5 @@
-/* X_ITE v12.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.0")];
+/* X_ITE v12.0.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -487,7 +487,7 @@ Object .assign (X3DTextGeometry .prototype,
    {
       // Resize array in grow only fashion.
 
-      for (var i = array .length; i < size; ++ i)
+      for (let i = array .length; i < size; ++ i)
          array .push (new (external_X_ITE_X3D_Vector2_default()) ());
 
       array .length = size;

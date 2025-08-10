@@ -35,7 +35,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
    },
    setMatrix (matrix)
    {
-      if (matrix .equals (Matrix4 .Identity))
+      if (matrix .equals (Matrix4 .IDENTITY))
       {
          this .matrix .identity ();
 
@@ -56,7 +56,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
    },
    setTransform (t, r, s, so, c)
    {
-      if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
+      if (t .equals (Vector3 .ZERO) && r .equals (Rotation4 .IDENTITY) && s .equals (Vector3 .ONE))
       {
          this .matrix .identity ();
 

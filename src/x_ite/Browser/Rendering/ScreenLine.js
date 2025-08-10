@@ -37,7 +37,7 @@ function ScreenLine (browser, fromWidth, toWidth, tipStart)
       6, 7, 9,  6, 9, 8,  8, 9, 11,  8, 11, 10, // white
    ]), gl .STATIC_DRAW);
 
-   this .setColor (Color3 .White);
+   this .setColor (Color3 .WHITE);
 
    // Set black and white line quad vertices.
 
@@ -110,9 +110,9 @@ Object .assign (ScreenLine .prototype,
          xAxis                 = new Vector3 (),
          yAxis                 = new Vector3 (),
          projectionMatrix      = new Matrix4 (),
-         projectionMatrixArray = new Float32Array (Matrix4 .Identity),
-         modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
-         identity              = new Float32Array (Matrix4 .Identity),
+         projectionMatrixArray = new Float32Array (Matrix4 .IDENTITY),
+         modelViewMatrixArray  = new Float32Array (Matrix4 .IDENTITY),
+         identity              = new Float32Array (Matrix4 .IDENTITY),
          clipPlanes            = [ ];
 
       return function (fromPoint, toPoint, frameBuffer)
