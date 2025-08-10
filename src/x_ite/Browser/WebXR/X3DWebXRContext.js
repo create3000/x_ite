@@ -458,13 +458,13 @@ Object .assign (X3DWebXRContext .prototype,
 
                const
                   pressed = gamepad ?.buttons .some (button => button .pressed),
-                  color   = pressed ? blue : Color3 .White;
+                  color   = pressed ? blue : Color3 .WHITE;
 
                inputRayMatrix
                   .assign (matrix)
                   .multRight (viewMatrix);
 
-               inputRayMatrix .multVecMatrix (fromPoint .assign (Vector3 .Zero));
+               inputRayMatrix .multVecMatrix (fromPoint .assign (Vector3 .ZERO));
                inputRayMatrix .multVecMatrix (toPoint   .assign (toVector));
                inputRayMatrix .multVecMatrix (hitPoint  .assign (hit .originalPoint));
 
@@ -496,7 +496,7 @@ Object .assign (X3DWebXRContext .prototype,
                   .assign (matrix)
                   .multRight (viewMatrix)
                   .translate (hit .originalPoint)
-                  .rotate (hitRotation .setFromToVec (Vector3 .zAxis, hit .originalNormal));
+                  .rotate (hitRotation .setFromToVec (Vector3 .Z_AXIS, hit .originalNormal));
 
                this [_inputPoint] .display (radius, color, 0.3, 0.8, inputRayMatrix, projectionMatrix, frameBuffer);
             }

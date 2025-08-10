@@ -38,7 +38,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    },
    isDefaultValue ()
    {
-      return this .getValue () .equals (Color3 .Black);
+      return this .getValue () .equals (Color3 .BLACK);
    },
    set (value)
    {

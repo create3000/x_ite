@@ -98,9 +98,9 @@ Object .assign (Box3 .prototype,
       {
          const
             m = this .matrix,
-            x = m .xAxis,
-            y = m .yAxis,
-            z = m .zAxis;
+            x = m .X_AXIS,
+            y = m .Y_AXIS,
+            z = m .Z_AXIS;
 
          r1 .assign (y) .add (z);
 
@@ -149,9 +149,9 @@ Object .assign (Box3 .prototype,
 
          const m = this .matrix;
 
-         x .assign (m .xAxis);
-         y .assign (m .yAxis);
-         z .assign (m .zAxis);
+         x .assign (m .X_AXIS);
+         y .assign (m .Y_AXIS);
+         z .assign (m .Z_AXIS);
 
          r1 .assign (y) .add (z);
 
@@ -186,9 +186,9 @@ Object .assign (Box3 .prototype,
    {
       const m = this .matrix;
 
-      axes [0] .assign (m .xAxis);
-      axes [1] .assign (m .yAxis);
-      axes [2] .assign (m .zAxis);
+      axes [0] .assign (m .X_AXIS);
+      axes [1] .assign (m .Y_AXIS);
+      axes [2] .assign (m .Z_AXIS);
 
       return axes;
    },
@@ -199,15 +199,15 @@ Object .assign (Box3 .prototype,
          y = new Vector3 (),
          z = new Vector3 ();
 
-      const axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
+      const axes = [ Vector3 .X_AXIS, Vector3 .Y_AXIS, Vector3 .Z_AXIS ];
 
       return function (normals)
       {
          const m = this .matrix;
 
-         x .assign (m .xAxis);
-         y .assign (m .yAxis);
-         z .assign (m .zAxis);
+         x .assign (m .X_AXIS);
+         y .assign (m .Y_AXIS);
+         z .assign (m .Z_AXIS);
 
          if (x .squaredNorm () === 0)
          {
@@ -234,7 +234,7 @@ Object .assign (Box3 .prototype,
                   }
 
                   if (x .squaredNorm () === 0)
-                     x .assign (Vector3 .xAxis);
+                     x .assign (Vector3 .X_AXIS);
                }
             }
          }
@@ -264,7 +264,7 @@ Object .assign (Box3 .prototype,
                   }
 
                   if (y .squaredNorm () === 0)
-                     y .assign (Vector3 .yAxis);
+                     y .assign (Vector3 .Y_AXIS);
                }
             }
          }
@@ -294,7 +294,7 @@ Object .assign (Box3 .prototype,
                   }
 
                   if (z .squaredNorm () === 0)
-                     z .assign (Vector3 .zAxis);
+                     z .assign (Vector3 .Z_AXIS);
                }
             }
          }

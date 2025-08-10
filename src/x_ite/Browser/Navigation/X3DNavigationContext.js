@@ -43,7 +43,7 @@ Object .assign (X3DNavigationContext .prototype,
 
       const headlightContainer = headlight .getLights () .pop ();
 
-      headlightContainer .set (headlight, null, Matrix4 .Identity);
+      headlightContainer .set (headlight, null, Matrix4 .IDENTITY);
       headlightContainer .dispose = Function .prototype;
 
       return headlightContainer;

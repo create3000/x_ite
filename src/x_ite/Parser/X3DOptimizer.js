@@ -111,13 +111,13 @@ Object .assign (X3DOptimizer .prototype,
       {
          node = this .combineSingleChild (node, removedNodes);
 
-         if (!node .translation ?.getValue () .equals (Vector3 .Zero))
+         if (!node .translation ?.getValue () .equals (Vector3 .ZERO))
             return node;
 
-         if (!node .rotation ?.getValue () .equals (Rotation4 .Identity))
+         if (!node .rotation ?.getValue () .equals (Rotation4 .IDENTITY))
             return node;
 
-         if (!node .scale ?.getValue () .equals (Vector3 .One))
+         if (!node .scale ?.getValue () .equals (Vector3 .ONE))
             return node;
       }
 

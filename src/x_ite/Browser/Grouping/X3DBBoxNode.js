@@ -34,7 +34,7 @@ Object .assign (Object .setPrototypeOf (X3DBBoxNode .prototype, X3DChildNode .pr
 
          const
             browser    = this .getBrowser (),
-            max        = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .Zero : epsilon,
+            max        = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .ZERO : epsilon,
             bboxSize   = bbox .size .max (max),
             bboxCenter = bbox .center;
 

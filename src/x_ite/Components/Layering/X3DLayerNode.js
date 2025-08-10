@@ -208,7 +208,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          viewpointNode = this .getViewpoint (),
          bbox          = this .getBBox (new Box3 ()) .multRight (viewpointNode .getModelMatrix () .copy () .inverse ());
 
-      if (bbox .size .equals (Vector3 .Zero))
+      if (bbox .size .equals (Vector3 .ZERO))
          return;
 
       viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), transitionTime, factor, straighten);
@@ -390,7 +390,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    camera (type, renderObject)
    {
-      this .getModelViewMatrix () .push (Matrix4 .Identity);
+      this .getModelViewMatrix () .push (Matrix4 .IDENTITY);
 
       this .viewportNode .push (this);
       this .groupNodes .traverse (type, renderObject);
@@ -410,7 +410,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       if (!this ._pickable .getValue ())
          return;
 
-      this .getModelViewMatrix () .push (Matrix4 .Identity);
+      this .getModelViewMatrix () .push (Matrix4 .IDENTITY);
 
       this .viewportNode .push (this);
       this .groupNodes .traverse (type, renderObject);

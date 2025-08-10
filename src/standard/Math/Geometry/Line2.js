@@ -1,6 +1,6 @@
 import Vector2 from "../Numbers/Vector2.js";
 
-function Line2 (point = Vector2 .Zero, direction = Vector2 .yAxis)
+function Line2 (point = Vector2 .ZERO, direction = Vector2 .Y_AXIS)
 {
    this .point     = new Vector2 ();
    this .direction = new Vector2 ();
@@ -30,7 +30,7 @@ Object .assign (Line2 .prototype,
    {
       return this .point .equals (line .point) && this .direction .equals (line .direction);
    },
-   set (point = Vector2 .Zero, direction = Vector2 .yAxis)
+   set (point = Vector2 .ZERO, direction = Vector2 .Y_AXIS)
    {
       this .point     .assign (point);
       this .direction .assign (direction);

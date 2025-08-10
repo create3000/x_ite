@@ -1,6 +1,6 @@
 import Vector3 from "../Numbers/Vector3.js";
 
-function Sphere3 (radius = 1, center = Vector3 .Zero)
+function Sphere3 (radius = 1, center = Vector3 .ZERO)
 {
    this .center = new Vector3 ();
 
@@ -29,7 +29,7 @@ Object .assign (Sphere3 .prototype,
    {
       return this .radius === sphere .radius && this .center .equals (sphere .center);
    },
-   set (radius = 1, center = Vector3 .Zero)
+   set (radius = 1, center = Vector3 .ZERO)
    {
       this .radius = radius;
       this .center .assign (center);

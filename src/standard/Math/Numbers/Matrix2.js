@@ -209,7 +209,7 @@ Object .defineProperties (Matrix2 .prototype,
          return function () { return vector .set (this [2], this [3]); };
       })(),
    },
-   xAxis:
+   X_AXIS:
    {
       get () { return this [0]; },
    },
@@ -225,7 +225,7 @@ Object .defineProperties (Matrix2 .prototype,
 
 Object .assign (Matrix2,
 {
-   Identity: Object .freeze (new Matrix2 ()),
+   IDENTITY: Object .freeze (new Matrix2 ()),
 });
 
 export default Matrix2;

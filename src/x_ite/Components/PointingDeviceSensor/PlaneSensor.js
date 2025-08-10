@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
             this .trackStart (this .startPoint);
          }
 
-         // new Plane3 (Vector3 .Zero, this .plane .normal) .intersectsLine (hitRay, trackPoint);
+         // new Plane3 (Vector3 .ZERO, this .plane .normal) .intersectsLine (hitRay, trackPoint);
       }
       else
       {
@@ -184,7 +184,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
             {
                try
                {
-                  this .getLineTrackPoint (hit .pointer, new Line3 (Vector3 .Zero, this .line .direction), trackPoint);
+                  this .getLineTrackPoint (hit .pointer, new Line3 (Vector3 .ZERO, this .line .direction), trackPoint);
                }
                catch
                {

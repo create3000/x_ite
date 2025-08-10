@@ -29,7 +29,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       isDefaultValue ()
       {
-         return this .getValue () .equals (Vector .Zero);
+         return this .getValue () .equals (Vector .ZERO);
       },
       set (value)
       {

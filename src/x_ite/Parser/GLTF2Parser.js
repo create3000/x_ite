@@ -1113,7 +1113,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (this .vectorValue (pbrSpecularGlossiness .specularFactor, specularFactor))
          materialNode ._specularColor = specularFactor;
       else
-         materialNode ._specularColor = Color3 .White;
+         materialNode ._specularColor = Color3 .WHITE;
 
       materialNode ._glossiness = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
@@ -1915,7 +1915,7 @@ function eventsProcessed ()
       }
 
       viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
-      viewpointNode ._position    = Vector3 .Zero;
+      viewpointNode ._position    = Vector3 .ZERO;
 
       return camera .node = viewpointNode;
    },
@@ -2226,7 +2226,7 @@ function eventsProcessed ()
          {
             const
                jointNode         = this .nodes [joint] ?.transformNode,
-               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
+               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
 
             if (!jointNode)
                continue;

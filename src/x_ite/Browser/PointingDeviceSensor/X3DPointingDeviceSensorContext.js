@@ -292,7 +292,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          if (geometryContext .hasNormals)
             hit .modelViewMatrix .submatrix .inverse () .multMatrixVec (hit .normal);
          else
-            hit .normal .assign (Vector3 .zAxis);
+            hit .normal .assign (Vector3 .Z_AXIS);
       }
       else
       {
@@ -304,8 +304,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .layerNode = null;
          hit .shapeNode = null;
 
-         hit .viewMatrix      .assign (Matrix4 .Identity);
-         hit .modelViewMatrix .assign (Matrix4 .Identity);
+         hit .viewMatrix      .assign (Matrix4 .IDENTITY);
+         hit .modelViewMatrix .assign (Matrix4 .IDENTITY);
       }
 
       // Dispose unused sensors.

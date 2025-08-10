@@ -257,12 +257,12 @@ Object .defineProperties (Vector4 .prototype,
 
 Object .assign (Vector4,
 {
-   Zero: Object .freeze (new Vector4 ()),
-   One: Object .freeze (new Vector4 (1)),
-   xAxis: Object .freeze (new Vector4 (1, 0, 0, 0)),
-   yAxis: Object .freeze (new Vector4 (0, 1, 0, 0)),
-   zAxis: Object .freeze (new Vector4 (0, 0, 1, 0)),
-   wAxis: Object .freeze (new Vector4 (0, 0, 0, 1)),
+   ZERO: Object .freeze (new Vector4 ()),
+   ONE: Object .freeze (new Vector4 (1)),
+   X_AXIS: Object .freeze (new Vector4 (1, 0, 0, 0)),
+   Y_AXIS: Object .freeze (new Vector4 (0, 1, 0, 0)),
+   Z_AXIS: Object .freeze (new Vector4 (0, 0, 1, 0)),
+   W_AXIS: Object .freeze (new Vector4 (0, 0, 0, 1)),
 });
 
 export default Vector4;

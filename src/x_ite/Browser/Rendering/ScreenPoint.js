@@ -55,9 +55,9 @@ Object .assign (ScreenPoint .prototype,
    display: (() =>
    {
       const
-         projectionMatrixArray = new Float32Array (Matrix4 .Identity),
-         modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
-         identity              = new Float32Array (Matrix4 .Identity),
+         projectionMatrixArray = new Float32Array (Matrix4 .IDENTITY),
+         modelViewMatrixArray  = new Float32Array (Matrix4 .IDENTITY),
+         identity              = new Float32Array (Matrix4 .IDENTITY),
          screenMatrix          = new Matrix4 (),
          clipPlanes            = [ ];
 
@@ -85,9 +85,9 @@ Object .assign (ScreenPoint .prototype,
             scale       = radius * screenScale;
 
          const
-            x = modelViewMatrix .xAxis .normalize () .multiply (scale),
-            y = modelViewMatrix .yAxis .normalize () .multiply (scale),
-            z = modelViewMatrix .zAxis .normalize () .multiply (scale);
+            x = modelViewMatrix .X_AXIS .normalize () .multiply (scale),
+            y = modelViewMatrix .Y_AXIS .normalize () .multiply (scale),
+            z = modelViewMatrix .Z_AXIS .normalize () .multiply (scale);
 
          screenMatrix .set (... x, 0, ... y, 0, ... z, 0, ... modelViewMatrix .origin, 1);
 

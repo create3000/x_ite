@@ -49,9 +49,9 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
 
          const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
 
-         if (this ._axisOfRotation .getValue () .equals (Vector3 .Zero))
+         if (this ._axisOfRotation .getValue () .equals (Vector3 .ZERO))
          {
-            inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis)) .normalize (); // Normalized to get work with Geo
+            inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .Y_AXIS)) .normalize (); // Normalized to get work with Geo
 
             const
                z = billboardToViewer,
@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
          else
          {
             N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
-            N2 .assign (this ._axisOfRotation .getValue ()) .cross (Vector3 .zAxis);    // Normal vector of plane between axisOfRotation and zAxis
+            N2 .assign (this ._axisOfRotation .getValue ()) .cross (Vector3 .Z_AXIS);    // Normal vector of plane between axisOfRotation and zAxis
 
             this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
          }

@@ -5,7 +5,7 @@ const
    point     = new Vector3 (),
    invMatrix = new Matrix4 ();
 
-function Plane3 (point = Vector3 .Zero, normal = Vector3 .zAxis)
+function Plane3 (point = Vector3 .ZERO, normal = Vector3 .Z_AXIS)
 {
    this .normal = new Vector3 ();
 
@@ -34,7 +34,7 @@ Object .assign (Plane3 .prototype,
    {
       return this .distanceFromOrigin === plane .distanceFromOrigin && this .normal .equals (plane .normal);
    },
-   set (point = Vector3 .Zero, normal = Vector3 .zAxis)
+   set (point = Vector3 .ZERO, normal = Vector3 .Z_AXIS)
    {
       this .normal .assign (normal);
       this .distanceFromOrigin = normal .dot (point);

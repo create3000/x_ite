@@ -188,10 +188,10 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .norm ()));
 
          if (event .deltaY > 0)
-            this .addMove (translation .negate (), Vector3 .Zero);
+            this .addMove (translation .negate (), Vector3 .ZERO);
 
          else if (event .deltaY < 0)
-            this .addMove (translation, Vector3 .Zero);
+            this .addMove (translation, Vector3 .ZERO);
       };
    })(),
    touchstart (event)

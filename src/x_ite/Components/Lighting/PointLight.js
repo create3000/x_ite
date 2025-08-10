@@ -23,12 +23,12 @@ import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
 // yyYY      Case: Sign
 
 const orientationMatrices = [
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .zAxis)), // left
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 (-1,  0,  0), Vector3 .zAxis)), // right
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0, -1), Vector3 .zAxis)), // front
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0,  1), Vector3 .zAxis)), // back
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  1,  0), Vector3 .zAxis)), // bottom
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0, -1,  0), Vector3 .zAxis)), // top
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .Z_AXIS)), // left
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 (-1,  0,  0), Vector3 .Z_AXIS)), // right
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0, -1), Vector3 .Z_AXIS)), // front
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0,  1), Vector3 .Z_AXIS)), // back
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  1,  0), Vector3 .Z_AXIS)), // bottom
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0, -1,  0), Vector3 .Z_AXIS)), // top
 ];
 
 const viewports = [
@@ -95,7 +95,7 @@ Object .assign (PointLightContainer .prototype,
          lightNode           = this .lightNode,
          cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invLightSpaceMatrix = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .Identity);
+         invLightSpaceMatrix = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .IDENTITY);
 
       invLightSpaceMatrix .translate (lightNode .getLocation ());
       invLightSpaceMatrix .inverse ();
@@ -136,7 +136,7 @@ Object .assign (PointLightContainer .prototype,
          return;
 
       this .shadowMatrix
-         .assign (renderObject .getView () ?.inverse ?? Matrix4 .Identity)
+         .assign (renderObject .getView () ?.inverse ?? Matrix4 .IDENTITY)
          .multRight (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invLightSpaceProjectionMatrix);
 

@@ -182,7 +182,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
          }
          else
          {
-            return upVector .assign (Vector3 .zAxis);
+            return upVector .assign (Vector3 .Z_AXIS);
          }
       };
    })(),

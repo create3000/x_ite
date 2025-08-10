@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                   .subtract (vector3 .assign (spine [length] .getValue ()) .subtract (s) .normalize ())
                   .normalize ();
 
-               if (!SCPyAxis .equals (Vector3 .Zero))
+               if (!SCPyAxis .equals (Vector3 .ZERO))
                   break;
             }
 
@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                   .cross (vector3 .assign (spine [length] .getValue ()) .subtract (spine [i] .getValue ()))
                   .normalize ();
 
-               if (!SCPzAxis .equals (Vector3 .Zero))
+               if (!SCPzAxis .equals (Vector3 .ZERO))
                   break;
             }
          }
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             {
                SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ()) .normalize ();
 
-               if (!SCPyAxis .equals (Vector3 .Zero))
+               if (!SCPyAxis .equals (Vector3 .ZERO))
                   break;
             }
 
@@ -173,18 +173,18 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                   .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
                   .normalize ();
 
-               if (!SCPzAxis .equals (Vector3 .Zero))
+               if (!SCPzAxis .equals (Vector3 .ZERO))
                   break;
             }
          }
 
          // The entire spine is coincident:
-         if (SCPyAxis .equals (Vector3 .Zero))
+         if (SCPyAxis .equals (Vector3 .ZERO))
             SCPyAxis .set (0, 1, 0);
 
          // The entire spine is collinear:
-         if (SCPzAxis .equals (Vector3 .Zero))
-            rotation .setFromToVec (Vector3 .yAxis, SCPyAxis) .multVecRot (SCPzAxis .assign (Vector3 .zAxis));
+         if (SCPzAxis .equals (Vector3 .ZERO))
+            rotation .setFromToVec (Vector3 .Y_AXIS, SCPyAxis) .multVecRot (SCPzAxis .assign (Vector3 .Z_AXIS));
 
          // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
          SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
@@ -223,13 +223,13 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                SCPzAxis .negate ();
 
             // The two points used in computing the Y-axis are coincident.
-            if (SCPyAxis .equals (Vector3 .Zero))
+            if (SCPyAxis .equals (Vector3 .ZERO))
                SCPyAxis .assign (SCPyAxisPrevious);
             else
                SCPyAxisPrevious .assign (SCPyAxis);
 
             // The three points used in computing the Z-axis are collinear.
-            if (SCPzAxis .equals (Vector3 .Zero))
+            if (SCPzAxis .equals (Vector3 .ZERO))
                SCPzAxis .assign (SCPzAxisPrevious);
             else
                SCPzAxisPrevious .assign (SCPzAxis);
@@ -272,11 +272,11 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                SCPzAxis .negate ();
 
             // The two points used in computing the Y-axis are coincident.
-            if (SCPyAxis .equals (Vector3 .Zero))
+            if (SCPyAxis .equals (Vector3 .ZERO))
                SCPyAxis .assign (SCPyAxisPrevious);
 
             // The three points used in computing the Z-axis are collinear.
-            if (SCPzAxis .equals (Vector3 .Zero))
+            if (SCPzAxis .equals (Vector3 .ZERO))
                SCPzAxis .assign (SCPzAxisPrevious);
 
             // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
