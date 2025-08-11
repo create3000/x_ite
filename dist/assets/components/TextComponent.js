@@ -1,5 +1,5 @@
-/* X_ITE v12.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -1016,7 +1016,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
 {
    getMatrix ()
    {
-      return (external_X_ITE_X3D_Matrix4_default()).Identity;
+      return (external_X_ITE_X3D_Matrix4_default()).IDENTITY;
    },
    build: (() =>
    {

@@ -1,5 +1,5 @@
-/* X_ITE v12.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -764,7 +764,7 @@ Object .assign (X3DGeospatialObject .prototype,
          x .set (0, 0, 1) .cross (y);
 
          // Handle pole cases.
-         if (x .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
+         if (x .equals ((external_X_ITE_X3D_Vector3_default()).ZERO))
             x .set (1, 0, 0);
 
          z .assign (x) .cross (y);
@@ -873,7 +873,7 @@ function getStandardLocationMatrix (geoPoint, result)
    x .set (0, 0, 1) .cross (y);
 
    // Handle pole cases.
-   if (x .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
+   if (x .equals ((external_X_ITE_X3D_Vector3_default()).ZERO))
       x .set (1, 0, 0);
 
    z .assign (x) .cross (y);
@@ -2551,7 +2551,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
          }
          else
          {
-            return upVector .assign ((external_X_ITE_X3D_Vector3_default()).zAxis);
+            return upVector .assign ((external_X_ITE_X3D_Vector3_default()).Z_AXIS);
          }
       };
    })(),

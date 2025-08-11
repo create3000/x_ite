@@ -1,5 +1,5 @@
-/* X_ITE v12.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2446,8 +2446,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       return function (modelViewMatrix)
       {
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign ((external_X_ITE_X3D_Vector3_default()).zAxis));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign ((external_X_ITE_X3D_Vector3_default()).yAxis));
+         invModelViewMatrix .multDirMatrix (billboardToScreen .assign ((external_X_ITE_X3D_Vector3_default()).Z_AXIS));
+         invModelViewMatrix .multDirMatrix (viewerYAxis .assign ((external_X_ITE_X3D_Vector3_default()).Y_AXIS));
 
          const x = viewerYAxis .cross (billboardToScreen);
          y .assign (billboardToScreen) .cross (x);
@@ -3267,7 +3267,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSys
                speed       = this .getRandomSpeed (emitterNode),
                pressure    = 10 ** (2 * Math .log (speed)) * 0.64615;
 
-            if (this ._direction .getValue () .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
+            if (this ._direction .getValue () .equals ((external_X_ITE_X3D_Vector3_default()).ZERO))
                emitterNode .getRandomNormal (force);
             else
                force .assign (this ._direction .getValue ()) .normalize ();

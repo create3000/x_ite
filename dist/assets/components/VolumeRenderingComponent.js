@@ -1,5 +1,5 @@
-/* X_ITE v12.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1479,7 +1479,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return bbox .set (this ._dimensions .getValue (), (external_X_ITE_X3D_Vector3_default()).Zero);
+         return bbox .set (this ._dimensions .getValue (), (external_X_ITE_X3D_Vector3_default()).ZERO);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
