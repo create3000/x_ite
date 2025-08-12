@@ -128,7 +128,7 @@ getTexCoord (const in int textureCoordinateMapping)
 }
 
 vec3
-getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping, const in vec2 flipY)
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
 {
    vec4 texCoord = getTexCoord (textureCoordinateMapping);
 
@@ -140,9 +140,6 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 
    texCoord       = x3d_TextureMatrix [textureTransformMapping] * texCoord;
    texCoord .stp /= texCoord .q;
-
-   // Flip Y if needed. Must be done after.
-   texCoord .y = texCoord .y * flipY .x + flipY .y;
 
    return texCoord .stp;
 }
@@ -167,13 +164,12 @@ getTexture (const in int i, const in int textureTransformMapping, const in int t
       #if X3D_NUM_TEXTURES > ${i}
       case ${i}:
       {
-         #if defined (X3D_TEXTURE${i}_FLIP_Y)
-            vec2 flipY = vec2 (-1.0, 1.0); // Flip Y
-         #else
-            vec2 flipY = vec2 (1.0, 0.0); // No flip
-         #endif
+         vec3 texCoord = getTexCoord (textureTransformMapping, textureCoordinateMapping);
 
-         vec3 texCoord = getTexCoord (textureTransformMapping, textureCoordinateMapping, flipY);
+         #if defined (X3D_TEXTURE${i}_FLIP_Y)
+            // Flip Y if needed. Must be done after.
+            texCoord .y = 1.0 - texCoord .y;
+         #endif
 
          #if defined (X3D_TEXTURE${i}_2D)
             textureColor = texture (x3d_Texture2D [${i}], texCoord .st);
