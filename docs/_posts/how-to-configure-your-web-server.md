@@ -19,7 +19,7 @@ The base MIME type for X3D files is: model/x3d. Each file format has its own mod
 | JSON         | .x3dj, .x3djz  | model/x3d+json   |
 | Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml   |
 | Binary       | .x3db, .x3dbz  | model/x3d+binary |
-| VRML         | .wrl, .wrz     | model/vrml       |
+| VRML 2.0     | .wrl, .wrz     | model/vrml       |
 
 The standard mechanism for indicating gzipped files is for the web server to set a special header field called »Content-Encoding«. This field indicates if the content has been encoding beyond that present in the media. This is the field that is used to indicate that the file has been compressed with gzip. When the web browser detects this field, it is responsible for gunzipping the file prior to passing it to the X3D browser.
 
