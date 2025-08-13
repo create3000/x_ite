@@ -43,3 +43,13 @@ In X3D, you can create a clipped background by combining a [Background](/x_ite/c
 **Scrolling Text**
 
 In X3D, scrolling text effects can be achieved by animating the position of text geometry while a [ClipPlane](/x_ite/components/rendering/clipplane/) hides the overflow outside a defined area. Combining [TimeSensor](/x_ite/components/time/timesensor/), [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator/), and routing creates smooth, continuous text movement for banners, tickers, or credits.
+
+---
+
+## Textures
+
+[![Animated PNG](https://create3000.github.io/media/x_ite/examples/animated-png/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/animated-png/animated-png.x3d){: .left .w-25 }
+
+**Animated PNG**
+
+In X3D, an animated PNG can be displayed using [MovieTexture](/x_ite/components/texturing/movietexture/), allowing frame-by-frame playback directly on 3D geometry. Custom controls implemented with sensors and scripts can start, pause, or resume the animation, giving users interactive control over the playback.
