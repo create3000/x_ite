@@ -22,6 +22,12 @@ In X3D, a virtual keyboard can be dynamically created by defining reusable key s
 
 In X3D, draggable nodes can be made interactive by using [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) to capture user movements. By connecting these sensors to other nodes with `ROUTE` statements, you can dynamically update positions, orientations, or other properties in real time.
 
+[![Particle Simulation](https://create3000.github.io/media/x_ite/examples/particle-simulation/screenshot.png)](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/particle-simulation/particle-simulation.x3d){: .left .w-25 }
+
+**Particle Simulation**
+
+In X3D, particle simulations can be built using `ProtoDeclare` to define customizable particle simulations and appearance settings. JavaScript or ECMAScript scripts can control particle behavior over time, enabling dynamic effects like translation, and rotation.
+
 ---
 
 ## Effects
