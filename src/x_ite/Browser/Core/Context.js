@@ -24,7 +24,7 @@ const Context =
 
       // Feature detection:
 
-      if (MOBILE)
+      // if (MOBILE)
       {
          // At least on iOS and Samsung Galaxy, float 32 textures are not supported.
          // We use half float textures instead.
