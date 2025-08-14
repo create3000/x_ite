@@ -1,5 +1,3 @@
-import MOBILE from "../../MOBILE.js";
-
 const Context =
 {
    excludes: new Set ([
@@ -26,15 +24,11 @@ const Context =
 
       // if (MOBILE)
       {
-         // We better only use float 16 textures.
-         // It can be that a mobile device does not send a proper user-agent.
-         // At least on iOS and Samsung Galaxy, float 32 textures are not supported.
-         // We use half float textures instead.
-
          // Use defineProperty to overwrite property.
          Object .defineProperty (gl, "RGBA32F",
          {
             value: gl .RGBA16F,
+            configurable: true,
             enumerable: true,
          });
       }
