@@ -30,6 +30,16 @@ In X3D, particle simulations can be built using `ProtoDeclare` to define customi
 
 ---
 
+## Navigation
+
+[![Keyboard Navigation](https://create3000.github.io/media/x_ite/examples/keyboard-navigation/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/keyboard-navigation/keyboard-navigation.x3d){: .left .w-25 }
+
+**Keyboard Navigation**
+
+In X3D, keyboard navigation can be implemented by using [KeySensor](/x_ite/components/keydevicesensor/keysensor/) nodes to capture user input and control viewpoint movement or scene interactions. This allows users to explore the 3D environment intuitively, similar to navigating in a game or virtual tour.
+
+---
+
 ## Effects
 
 [![Clipped Background](https://create3000.github.io/media/x_ite/examples/clipped-background/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/clipped-background/clipped-background.x3d){: .left .w-25 }
