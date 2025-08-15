@@ -119,7 +119,7 @@ main ()
    gl .uniform1i (sampler, 0);
    gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 1, 1, 0, gl .RGBA, gl .FLOAT, pixelData);
 
-   gl .clearColor (0, 0, 0, 1);
+   gl .clearColor (0, 0, 0, 0);
    gl .clear (gl .COLOR_BUFFER_BIT);
    gl .drawArrays (gl .TRIANGLES, 0, 6);
 
