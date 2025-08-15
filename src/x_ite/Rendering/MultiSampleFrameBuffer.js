@@ -119,6 +119,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       this .accumRevealageTexture = gl .createTexture ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .accumRevealageTexture);
+
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
@@ -138,6 +139,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       this .alphaTexture = gl .createTexture ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .alphaTexture);
+
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
@@ -153,6 +155,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       this .accumRevealageTexture = gl .createTexture ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .accumRevealageTexture);
+
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
@@ -166,6 +169,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       this .alphaTexture = gl .createTexture ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .alphaTexture);
+
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
