@@ -6,9 +6,7 @@ const Context =
    ]),
    create (canvas, preserveDrawingBuffer)
    {
-      const options = { preserveDrawingBuffer };
-
-      const gl = canvas .getContext ("webgl2", { ... options, antialias: false });
+      const gl = canvas .getContext ("webgl2", { antialias: false, preserveDrawingBuffer });
 
       if (!gl)
          throw new Error ("Couldn't create WebGL context.");
