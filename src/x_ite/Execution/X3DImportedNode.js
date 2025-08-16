@@ -5,9 +5,10 @@ const
    _executionContext = Symbol (),
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
-   _importedName     = Symbol ();
+   _importedName     = Symbol (),
+   _description      = Symbol ();
 
-function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
+function X3DImportedNode (executionContext, inlineNode, exportedName, importedName, description)
 {
    X3DObject .call (this);
 
@@ -15,6 +16,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
+   this [_description]      = description;
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
@@ -43,6 +45,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       this [_importedName] = importName;
    },
+   getDescription ()
+   {
+      return this [_description];
+   },
    toVRMLStream (generator)
    {
       if (!generator .ExistsNode (this .getInlineNode ()))
@@ -65,6 +71,16 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          generator .string += "AS";
          generator .string += generator .Space ();
          generator .string += importedName;
+      }
+
+      if (this [_description])
+      {
+         generator .string += generator .Space ();
+         generator .string += "DESCRIPTION";
+         generator .string += generator .Space ();
+         generator .string += '"';
+         generator .string += this [_description];
+         generator .string += '"';
       }
    },
    toXMLStream (generator)
@@ -92,6 +108,14 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          generator .string += generator .Space ();
          generator .string += "AS='";
          generator .string += generator .XMLEncode (importedName);
+         generator .string += "'";
+      }
+
+      if (this [_description])
+      {
+         generator .string += generator .Space ();
+         generator .string += "DESCRIPTION='";
+         generator .string += this [_description];
          generator .string += "'";
       }
 
@@ -154,6 +178,21 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          generator .string += generator .TidySpace ();
          generator .string += '"';
          generator .string += generator .JSONEncode (importedName);
+         generator .string += '"';
+      }
+
+      if (this [_description])
+      {
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "@DESCRIPTION";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '"';
+         generator .string += generator .JSONEncode (this [_description]);
          generator .string += '"';
          generator .string += generator .TidyBreak ();
       }
@@ -225,6 +264,14 @@ Object .defineProperties (X3DImportedNode .prototype,
       get ()
       {
          return this [_importedName];
+      },
+      enumerable: true,
+   },
+   description:
+   {
+      get ()
+      {
+         return this [_description];
       },
       enumerable: true,
    },

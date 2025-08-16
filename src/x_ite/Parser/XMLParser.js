@@ -807,7 +807,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          const
             inlineNodeName   = xmlElement .getAttribute ("inlineDEF"),
             exportedNodeName = xmlElement .getAttribute ("importedDEF") || xmlElement .getAttribute ("exportedDEF"),
-            localNodeName    = xmlElement .getAttribute ("AS") || exportedNodeName;
+            localNodeName    = xmlElement .getAttribute ("AS") || exportedNodeName,
+            description      = xmlElement .getAttribute ("DESCRIPTION") || "";
 
          if (inlineNodeName === null)
             throw new Error ("Bad IMPORT statement: Expected inlineDEF attribute.");
@@ -823,7 +824,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          // Add new imported node.
 
-         this .getExecutionContext () .addImportedNode (inlineNode, exportedNodeName, localNodeName);
+         this .getExecutionContext () .addImportedNode (inlineNode, exportedNodeName, localNodeName, description);
       }
       catch (error)
       {
@@ -836,7 +837,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          const
             localNodeName    = xmlElement .getAttribute ("localDEF"),
-            exportedNodeName = xmlElement .getAttribute ("AS") || localNodeName;
+            exportedNodeName = xmlElement .getAttribute ("AS") || localNodeName,
+            description      = xmlElement .getAttribute ("DESCRIPTION") || "";
 
          if (localNodeName === null)
             throw new Error ("Bad EXPORT statement: Expected localDEF attribute.");
@@ -852,7 +854,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          catch
          { }
 
-         this .getScene () .updateExportedNode (exportedNodeName, localNode);
+         this .getScene () .updateExportedNode (exportedNodeName, localNode, description);
       }
       catch (error)
       {

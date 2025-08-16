@@ -4,15 +4,17 @@ import SFNodeCache from "../Fields/SFNodeCache.js";
 const
    _executionContext = Symbol (),
    _exportedName     = Symbol (),
-   _localNode        = Symbol ();
+   _localNode        = Symbol (),
+   _description      = Symbol ();
 
-function X3DExportedNode (executionContext, exportedName, localNode)
+function X3DExportedNode (executionContext, exportedName, localNode, description)
 {
    X3DObject .call (this);
 
    this [_executionContext] = executionContext;
    this [_exportedName]     = exportedName;
    this [_localNode]        = localNode;
+   this [_description]      = description;
 }
 
 Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .prototype),
@@ -29,6 +31,10 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    {
       return this [_localNode];
    },
+   getDescription ()
+   {
+      return this [_description];
+   },
    toVRMLStream (generator)
    {
       const localName = generator .Name (this .getLocalNode ());
@@ -44,6 +50,16 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
          generator .string += "AS";
          generator .string += generator .Space ();
          generator .string += this [_exportedName];
+      }
+
+      if (this [_description])
+      {
+         generator .string += generator .Space ();
+         generator .string += "DESCRIPTION";
+         generator .string += generator .Space ();
+         generator .string += '"';
+         generator .string += this [_description];
+         generator .string += '"';
       }
    },
    toXMLStream (generator)
@@ -62,6 +78,14 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
          generator .string += generator .Space ();
          generator .string += "AS='";
          generator .string += generator .XMLEncode (this [_exportedName]);
+         generator .string += "'";
+      }
+
+      if (this [_description])
+      {
+         generator .string += generator .Space ();
+         generator .string += "DESCRIPTION='";
+         generator .string += this [_description];
          generator .string += "'";
       }
 
@@ -108,6 +132,21 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
          generator .string += '"';
          generator .string += generator .JSONEncode (this [_exportedName]);
          generator .string += '"';
+      }
+
+      if (this [_description])
+      {
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "@DESCRIPTION";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '"';
+         generator .string += generator .JSONEncode (this [_description]);
+         generator .string += '"';
          generator .string += generator .TidyBreak ();
       }
       else
@@ -143,6 +182,14 @@ Object .defineProperties (X3DExportedNode .prototype,
       get ()
       {
          return SFNodeCache .get (this [_localNode]);
+      },
+      enumerable: true,
+   },
+   description:
+   {
+      get ()
+      {
+         return this [_description];
       },
       enumerable: true,
    },
