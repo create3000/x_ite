@@ -1,5 +1,5 @@
-/* X_ITE v12.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -153,9 +153,9 @@ Object .assign (ScreenPoint .prototype,
    display: (() =>
    {
       const
-         projectionMatrixArray = new Float32Array ((external_X_ITE_X3D_Matrix4_default()).Identity),
-         modelViewMatrixArray  = new Float32Array ((external_X_ITE_X3D_Matrix4_default()).Identity),
-         identity              = new Float32Array ((external_X_ITE_X3D_Matrix4_default()).Identity),
+         projectionMatrixArray = new Float32Array ((external_X_ITE_X3D_Matrix4_default()).IDENTITY),
+         modelViewMatrixArray  = new Float32Array ((external_X_ITE_X3D_Matrix4_default()).IDENTITY),
+         identity              = new Float32Array ((external_X_ITE_X3D_Matrix4_default()).IDENTITY),
          screenMatrix          = new (external_X_ITE_X3D_Matrix4_default()) (),
          clipPlanes            = [ ];
 
@@ -183,9 +183,9 @@ Object .assign (ScreenPoint .prototype,
             scale       = radius * screenScale;
 
          const
-            x = modelViewMatrix .xAxis .normalize () .multiply (scale),
-            y = modelViewMatrix .yAxis .normalize () .multiply (scale),
-            z = modelViewMatrix .zAxis .normalize () .multiply (scale);
+            x = modelViewMatrix .X_AXIS .normalize () .multiply (scale),
+            y = modelViewMatrix .Y_AXIS .normalize () .multiply (scale),
+            z = modelViewMatrix .Z_AXIS .normalize () .multiply (scale);
 
          screenMatrix .set (... x, 0, ... y, 0, ... z, 0, ... modelViewMatrix .origin, 1);
 
@@ -876,13 +876,13 @@ Object .assign (X3DWebXRContext .prototype,
 
                const
                   pressed = gamepad ?.buttons .some (button => button .pressed),
-                  color   = pressed ? blue : (external_X_ITE_X3D_Color3_default()).White;
+                  color   = pressed ? blue : (external_X_ITE_X3D_Color3_default()).WHITE;
 
                inputRayMatrix
                   .assign (matrix)
                   .multRight (viewMatrix);
 
-               inputRayMatrix .multVecMatrix (fromPoint .assign ((external_X_ITE_X3D_Vector3_default()).Zero));
+               inputRayMatrix .multVecMatrix (fromPoint .assign ((external_X_ITE_X3D_Vector3_default()).ZERO));
                inputRayMatrix .multVecMatrix (toPoint   .assign (toVector));
                inputRayMatrix .multVecMatrix (hitPoint  .assign (hit .originalPoint));
 
@@ -914,7 +914,7 @@ Object .assign (X3DWebXRContext .prototype,
                   .assign (matrix)
                   .multRight (viewMatrix)
                   .translate (hit .originalPoint)
-                  .rotate (hitRotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, hit .originalNormal));
+                  .rotate (hitRotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, hit .originalNormal));
 
                this [_inputPoint] .display (radius, color, 0.3, 0.8, inputRayMatrix, projectionMatrix, frameBuffer);
             }

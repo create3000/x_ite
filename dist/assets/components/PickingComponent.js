@@ -1,5 +1,5 @@
-/* X_ITE v12.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -423,31 +423,33 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
          pickTargetNodes = this .pickTargetNodes,
          haveTarget      = pickingHierarchy .some (node => pickTargetNodes .has (node));
 
-      if (haveTarget)
+      if (!haveTarget)
+         return;
+
+      const targets = this .targets;
+
+      let target;
+
+      if (targets .size < targets .length)
       {
-         const targets = this .targets;
-
-         let target;
-
-         if (targets .size < targets .length)
-         {
-            target = targets [targets .size];
-         }
-         else
-         {
-            target = { modelMatrix: new (external_X_ITE_X3D_Matrix4_default()) (), pickedPoint: [ ], intersections: [ ] };
-
-            targets .push (target);
-         }
-
-         ++ targets .size;
-
-         target .intersected           = false;
-         target .geometryNode          = geometryNode;
-         target .pickedPoint .length   = 0;
-         target .intersections .length = 0;
-         target .modelMatrix .assign (modelMatrix);
+         target = targets [targets .size];
       }
+      else
+      {
+         targets .push (target = {
+            modelMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+            pickedPoint: [ ],
+            intersections: [ ],
+         });
+      }
+
+      ++ targets .size;
+
+      target .intersected           = false;
+      target .geometryNode          = geometryNode;
+      target .pickedPoint .length   = 0;
+      target .intersections .length = 0;
+      target .modelMatrix .assign (modelMatrix);
    },
    process ()
    {

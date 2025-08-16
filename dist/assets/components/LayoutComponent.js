@@ -1,5 +1,5 @@
-/* X_ITE v12.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -110,9 +110,9 @@ Object .assign (X3DLayoutContext .prototype,
          renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
 
          const
-            x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x * contentScale),
-            y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y * contentScale),
-            z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x * contentScale);
+            x = modelViewMatrix .X_AXIS .normalize () .multiply (screenScale .x * contentScale),
+            y = modelViewMatrix .Y_AXIS .normalize () .multiply (screenScale .y * contentScale),
+            z = modelViewMatrix .Z_AXIS .normalize () .multiply (screenScale .x * contentScale);
 
          screenMatrix .set (... x, 0,
                             ... y, 0,
@@ -123,7 +123,7 @@ Object .assign (X3DLayoutContext .prototype,
 
          if (snap)
          {
-            external_X_ITE_X3D_ViewVolume_default().projectPoint ((external_X_ITE_X3D_Vector3_default()).Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
+            external_X_ITE_X3D_ViewVolume_default().projectPoint ((external_X_ITE_X3D_Vector3_default()).ZERO, screenMatrix, projectionMatrix, viewport, screenPoint);
 
             screenPoint .x = Math .round (screenPoint .x);
             screenPoint .y = Math .round (screenPoint .y);

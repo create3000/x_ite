@@ -15,7 +15,7 @@ There is now a test file that should show both the same image on the front and b
 
 ### Breaking Change
 
-* Fixes texture flipping about x-Axis for Geometry2D and about y-Axis for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) and [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) in glTF converted files.
+* Fixes texture flipping about x-Axis for Geometry2D for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) and [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) in glTF converted files.
 
 ### Notable Changes
 
