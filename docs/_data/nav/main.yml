@@ -10,6 +10,8 @@
       url: /browser-support/
     - title: "Supported Nodes"
       url: /supported-nodes/
+    - title: "X3D Examples"
+      url: /x3d-examples/
     - title: "Accessing the External Browser"
       url: /accessing-the-external-browser/
     - title: "DOM Integration"
@@ -18,8 +20,6 @@
       url: /how-to-use-x-ite-with-electron/
     - title: "Custom Shaders"
       url: /custom-shaders/
-    - title: "X3D Examples"
-      url: /x3d-examples/
     - title: "Setup a localhost Server"
       url: /setup-a-localhost-server/
     - title: "How to Configure Your Web Server"
