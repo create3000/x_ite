@@ -179,7 +179,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | X3D XML          | .x3d, .x3dz    | model/x3d+xml   |
 | X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |
 | X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
-| VRML             | .wrl, .wrz     | model/vrml      |
+| VRML 2.0         | .wrl, .wrz     | model/vrml      |
 | glTF             | .gltf, .glb    | model/gltf+json |
 | Wavefront OBJ    | .obj           | model/obj       |
 | STL              | .stl           | model/stl       |

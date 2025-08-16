@@ -1,5 +1,5 @@
-/* X_ITE v12.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2725,7 +2725,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
 
          this .derivative (direction, u);
 
-         this ._value_changed = rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, direction);
+         this ._value_changed = rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, direction);
       };
    })(),
 });

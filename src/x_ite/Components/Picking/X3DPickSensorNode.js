@@ -306,31 +306,33 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          pickTargetNodes = this .pickTargetNodes,
          haveTarget      = pickingHierarchy .some (node => pickTargetNodes .has (node));
 
-      if (haveTarget)
+      if (!haveTarget)
+         return;
+
+      const targets = this .targets;
+
+      let target;
+
+      if (targets .size < targets .length)
       {
-         const targets = this .targets;
-
-         let target;
-
-         if (targets .size < targets .length)
-         {
-            target = targets [targets .size];
-         }
-         else
-         {
-            target = { modelMatrix: new Matrix4 (), pickedPoint: [ ], intersections: [ ] };
-
-            targets .push (target);
-         }
-
-         ++ targets .size;
-
-         target .intersected           = false;
-         target .geometryNode          = geometryNode;
-         target .pickedPoint .length   = 0;
-         target .intersections .length = 0;
-         target .modelMatrix .assign (modelMatrix);
+         target = targets [targets .size];
       }
+      else
+      {
+         targets .push (target = {
+            modelMatrix: new Matrix4 (),
+            pickedPoint: [ ],
+            intersections: [ ],
+         });
+      }
+
+      ++ targets .size;
+
+      target .intersected           = false;
+      target .geometryNode          = geometryNode;
+      target .pickedPoint .length   = 0;
+      target .intersections .length = 0;
+      target .modelMatrix .assign (modelMatrix);
    },
    process ()
    {

@@ -163,6 +163,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (typeof this .input !== "string")
          return false;
 
+      if (this .input .match (/^#VRML V1.0/))
+         return false;
+
       return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
    },
    parseIntoScene (resolve, reject)
@@ -354,6 +357,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          this .lines (this .result [0]);
 
          this .getScene () .setSpecificationVersion (this .result [2]);
+
+         console .log (this .result [2]);
 
          if (this .getScene () .getSpecificationVersion () <= 3.2)
             this .Grammar .Comment = Grammar .Comment3_2;

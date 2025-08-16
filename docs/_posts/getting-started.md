@@ -7,7 +7,7 @@ tags: [Getting Started]
 permalink: /
 ---
 [![npm Version](https://badgen.net/npm/v/x_ite)](https://www.npmjs.com/package/x_ite){: .badge-link }
-[![Build Size](https://img.shields.io/bundlephobia/minzip/x_ite)](https://bundlephobia.com/package/x_ite){: .badge-link }
+[![Build Size](https://badgen.net/bundlephobia/minzip/x_ite)](https://bundlephobia.com/package/x_ite){: .badge-link }
 [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/x_ite/badge?style=rounded)](https://www.jsdelivr.com/package/npm/x_ite){: .badge-link }
 [![npm Downloads](https://badgen.net/npm/dm/x_ite)](https://npmtrends.com/x_ite){: .badge-link }
 [![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447){: .badge-link }
@@ -340,7 +340,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 | X3D XML          | .x3d, .x3dz    | model/x3d+xml   |
 | X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |
 | X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
-| VRML             | .wrl, .wrz     | model/vrml      |
+| VRML 2.0         | .wrl, .wrz     | model/vrml      |
 | glTF             | .gltf, .glb    | model/gltf+json |
 | Wavefront OBJ    | .obj           | model/obj       |
 | STL              | .stl           | model/stl       |

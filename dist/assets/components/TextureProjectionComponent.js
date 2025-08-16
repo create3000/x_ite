@@ -1,5 +1,5 @@
-/* X_ITE v12.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -262,9 +262,9 @@ Object .assign (TextureProjectorContainer .prototype,
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
-      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -295,7 +295,7 @@ Object .assign (TextureProjectorContainer .prototype,
    setGlobalVariables (renderObject)
    {
       this .matrix
-         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).Identity)
+         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).IDENTITY)
          .multRight (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invTextureSpaceProjectionMatrix);
 
@@ -461,9 +461,9 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
-      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -515,7 +515,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
    setGlobalVariables (renderObject)
    {
       this .matrix
-         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).Identity)
+         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).IDENTITY)
          .multRight (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invTextureSpaceProjectionMatrix);
 
