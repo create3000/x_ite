@@ -15,7 +15,7 @@ tags: [SplineScalarInterpolator, Interpolation]
 
 SplineScalarInterpolator performs non-linear interpolation among paired lists of float values and velocities to produce an SFFloat value_changed output event.
 
-The SplineScalarInterpolator node belongs to the **Interpolation** component and requires at least support level **4,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The SplineScalarInterpolator node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **4,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -135,7 +135,7 @@ Nonlinearly interpolated output value computed by using current time fraction al
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/SplineScalarInterpolator.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/SplineScalarInterpolator.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/screenshot.avif" alt="SplineScalarInterpolator"/>
 </x3d-canvas>
 

@@ -15,7 +15,7 @@ tags: [MovieTexture, Texturing]
 
 MovieTexture applies a 2D movie image to surface geometry, or provides audio for a Sound node. First define as texture, then USE as Sound source to see it/hear it/save memory. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The MovieTexture node belongs to the **Texturing** component and requires at least support level **3,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The MovieTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **3,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -43,8 +43,8 @@ The MovieTexture node belongs to the **Texturing** component and requires at lea
 | SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
 | SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFFloat | [in, out] | [speed](#fields-speed) | 1  |
 | SFFloat | [in, out] | [pitch](#fields-pitch) | 1  |
+| SFFloat | [in, out] | [speed](#fields-speed) | 1  |
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
 | SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
 | SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
@@ -148,6 +148,15 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
+### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
+{: #fields-pitch }
+
+Multiplier for the rate at which sampled sound is played. Changing *pitch* also changes playback speed.
+
+#### Hint
+
+- Changing the *pitch* field does not trigger a duration_changed event. Playback interval may vary but duration of the original media data remains unmodified.
+
 ### SFFloat [in, out] **speed** 1 <small>(-∞,∞)</small>
 {: #fields-speed }
 
@@ -157,15 +166,6 @@ Factor for how fast the movie (or soundtrack) is played.
 
 - A MovieTexture node shall display frame 0 if *speed* = 0.
 - A negative *speed* value sets the movie to play in reverse.
-
-### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
-{: #fields-pitch }
-
-Multiplier for the rate at which sampled sound is played. Changing *pitch* also changes playback speed.
-
-#### Hint
-
-- Changing the *pitch* field does not trigger a duration_changed event. Playback interval may vary but duration of the original media data remains unmodified.
 
 ### SFBool [in, out] **loop** FALSE
 {: #fields-loop }
@@ -288,12 +288,16 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 Any video file format supported by the web browser, but at least:
 
-| Encoding | File Extension | MIME Type  |
-|----------|----------------|------------|
-| MP4      | .mp4           | video/mp4  |
-| WebM     | .webm          | video/webm |
-| OGG      | .ogv           | video/ogg  |
-| GIF      | .gif           | image/gif  |
+| Encoding | File Extension | MIME Type  | Comment          |
+|----------|----------------|------------|------------------|
+| MP4      | .mp4           | video/mp4  | Audio/Video      |
+| WebM     | .webm          | video/webm | Audio/Video      |
+| OGG      | .ogv           | video/ogg  | Audio/Video      |
+| PNG      | .png           | image/png  | [Animated PNG][] |
+| GIF      | .gif           | image/gif  | [Animated GIF][] |
+
+  [Animated PNG]: /x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedPNG.x3d
+  [Animated GIF]: /x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedGIF.x3d
 
 ## Advice
 
@@ -317,7 +321,7 @@ Any video file format supported by the web browser, but at least:
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/MovieTexture/MovieTexture.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/MovieTexture/MovieTexture.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Texturing/MovieTexture/screenshot.avif" alt="MovieTexture"/>
 </x3d-canvas>
 

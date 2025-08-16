@@ -15,7 +15,7 @@ tags: [FontStyle, Text]
 
 FontStyle is an X3DFontStyleNode that defines the size, family, justification, and other styles used by Text nodes.
 
-The FontStyle node belongs to the **Text** component and requires at least support level **1,** its default container field is *fontStyle.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The FontStyle node belongs to the [Text](/x_ite/components/overview/#text) component and requires at least support level **1,** its default container field is *fontStyle.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -200,7 +200,7 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Text/FontStyle/FontStyle.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Text/FontStyle/FontStyle.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Text/FontStyle/screenshot.avif" alt="FontStyle"/>
 </x3d-canvas>
 

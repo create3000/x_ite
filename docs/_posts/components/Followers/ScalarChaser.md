@@ -15,7 +15,7 @@ tags: [ScalarChaser, Followers]
 
 ScalarChaser generates a series of single floating-point values that progressively change from initial value to destination value.
 
-The ScalarChaser node belongs to the **Followers** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The ScalarChaser node belongs to the [Followers](/x_ite/components/overview/#followers) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -113,7 +113,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ## Example
 
-<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/Followers/ScalarChaser/ScalarChaser.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/Followers/ScalarChaser/ScalarChaser.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Followers/ScalarChaser/screenshot.avif" alt="ScalarChaser"/>
 </x3d-canvas>
 

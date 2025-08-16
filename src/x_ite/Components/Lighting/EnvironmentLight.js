@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -52,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DLightNode         from "./X3DLightNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import Distribution         from "../../Browser/Lighting/Distribution.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
@@ -95,30 +49,21 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       const
          { browser, lightNode, global } = this,
-         color             = lightNode .getColor (),
-         diffuseTexture    = lightNode .getDiffuseTexture (),
-         specularTexture   = lightNode .getSpecularTexture (),
-         GGXLUTTexture     = browser .getLibraryTexture ("lut_ggx.png");
+         diffuseTexture  = lightNode .getDiffuseTexture (),
+         specularTexture = lightNode .getSpecularTexture (),
+         GGXLUTTexture   = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
-         ? this .diffuseTextureUnit = this .diffuseTextureUnit ?? browser .popTextureCubeUnit ()
-         : browser .getTextureCubeUnit ();
+         ? this .diffuseTextureUnit ??= browser .popTextureUnit ()
+         : browser .getTextureUnit ();
 
       const specularTextureUnit = global
-         ? this .specularTextureUnit = this .specularTextureUnit ?? browser .popTextureCubeUnit ()
-         : browser .getTextureCubeUnit ();
+         ? this .specularTextureUnit ??= browser .popTextureUnit ()
+         : browser .getTextureUnit ();
 
       const GGXLUTTextureUnit = global
-         ? this .GGXLUTTextureUnit = this .GGXLUTTextureUnit ?? browser .popTexture2DUnit ()
-         : browser .getTexture2DUnit ();
-
-      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
-      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
-      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       this .rotationMatrix);
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLinear,  diffuseTexture ?.isLinear ());
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLevels,  diffuseTexture ?.getLevels () ?? 0);
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLinear, specularTexture ?.isLinear ());
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTexture ?.getLevels () ?? 0);
+         ? this .GGXLUTTextureUnit ??= browser .popTextureUnit ()
+         : browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, diffuseTexture ?.getTexture () ?? browser .getDefaultTextureCube ());
@@ -132,34 +77,74 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .bindTexture (gl .TEXTURE_2D, GGXLUTTexture .getTexture ());
       gl .uniform1i (shaderObject .x3d_EnvironmentLightGGXLUTTexture, GGXLUTTextureUnit);
 
-      if (shaderObject .x3d_EnvironmentLightCharlieLUTTexture)
+      if (shaderObject .x3d_EnvironmentLightSheenTexture)
       {
-         const CharlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
+         const
+            sheenTexture      = lightNode .getSheenTexture (),
+            CharlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
+
+         const sheenTextureUnit = global
+            ? this .sheenTextureUnit ??= browser .popTextureUnit ()
+            : browser .getTextureUnit ();
 
          const CharlieLUTTextureUnit = global
-            ? this .CharlieLUTTextureUnit = this .CharlieLUTTextureUnit ?? browser .popTexture2DUnit ()
-            : browser .getTexture2DUnit ();
+            ? this .CharlieLUTTextureUnit ??= browser .popTextureUnit ()
+            : browser .getTextureUnit ();
+
+         gl .activeTexture (gl .TEXTURE0 + sheenTextureUnit);
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, sheenTexture ?.getTexture () ?? browser .getDefaultTextureCube ());
+         gl .uniform1i (shaderObject .x3d_EnvironmentLightSheenTexture, sheenTextureUnit);
 
          gl .activeTexture (gl .TEXTURE0 + CharlieLUTTextureUnit);
          gl .bindTexture (gl .TEXTURE_2D, CharlieLUTTexture .getTexture ());
          gl .uniform1i (shaderObject .x3d_EnvironmentLightCharlieLUTTexture, CharlieLUTTextureUnit);
       }
+
+      const i = shaderObject .numEnvironmentLights ++;
+
+      if (shaderObject .hasEnvironmentLight (i, this))
+         return;
+
+      const color = lightNode .getColor ();
+
+      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 ... color);
+      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
+      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       this .rotationMatrix);
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLinear,  diffuseTexture ?.isLinear ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLevels,  diffuseTexture ?.getLevels () ?? 0);
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLinear, specularTexture ?.isLinear ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTexture ?.getLevels () ?? 0);
+
+      if (shaderObject .x3d_EnvironmentLightSheenTexture)
+      {
+         const sheenTexture = lightNode .getSheenTexture ();
+
+         gl .uniform1i (shaderObject .x3d_EnvironmentLightSheenTextureLinear, sheenTexture ?.isLinear ());
+         gl .uniform1i (shaderObject .x3d_EnvironmentLightSheenTextureLevels, sheenTexture ?.getLevels () ?? 0);
+      }
    },
    dispose ()
    {
-      const browser = this .browser;
+      const { global } = this;
 
-      browser .pushTextureCubeUnit (this .diffuseTextureUnit);
-      browser .pushTextureCubeUnit (this .specularTextureUnit);
-      browser .pushTexture2DUnit   (this .GGXLUTTextureUnit);
-      browser .pushTexture2DUnit   (this .CharlieLUTTextureUnit);
+      if (global)
+      {
+         const { browser } = this;
+
+         browser .pushTextureUnit (this .diffuseTextureUnit);
+         browser .pushTextureUnit (this .specularTextureUnit);
+         browser .pushTextureUnit (this .sheenTextureUnit);
+         browser .pushTextureUnit (this .GGXLUTTextureUnit);
+         browser .pushTextureUnit (this .CharlieLUTTextureUnit);
+
+         this .diffuseTextureUnit    = undefined;
+         this .specularTextureUnit   = undefined;
+         this .sheenTextureUnit      = undefined;
+         this .GGXLUTTextureUnit     = undefined;
+         this .CharlieLUTTextureUnit = undefined;
+      }
 
       this .modelViewMatrix .clear ();
-
-      this .diffuseTextureUnit    = undefined;
-      this .specularTextureUnit   = undefined;
-      this .GGXLUTTextureUnit     = undefined;
-      this .CharlieLUTTextureUnit = undefined;
 
       // Return container
 
@@ -183,8 +168,9 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_ggx.png");
 
-      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
-      this ._specularTexture .addInterest ("set_specularTexture__", this);
+      this ._diffuseCoefficients .addInterest ("requestGenerateTextures", this);
+      this ._diffuseTexture      .addInterest ("set_diffuseTexture__",    this);
+      this ._specularTexture     .addInterest ("set_specularTexture__",   this);
 
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
@@ -195,11 +181,80 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    getDiffuseTexture ()
    {
-      return this .diffuseTexture;
+      return this .diffuseTexture ?? (this .generatedDiffuseTexture ??= (() =>
+      {
+         if (!this .specularTexture)
+            return;
+
+         // Render the texture.
+
+         const browser = this .getBrowser ();
+
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+            console .info ("Generating diffuse texture for EnvironmentLight.");
+
+         return browser .filterEnvironmentTexture ({
+            name: "GeneratedDiffuseTexture",
+            texture: this .specularTexture,
+            distribution: Distribution .LAMBERTIAN,
+            sampleCount: 2048,
+            roughness: [0],
+         });
+      })());
    },
    getSpecularTexture ()
    {
-      return this .specularTexture;
+      return this .generatedSpecularTexture ??= (() =>
+      {
+         if (!this .specularTexture)
+            return;
+
+         // Render the texture.
+
+         const browser = this .getBrowser ();
+
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+            console .info ("Generating specular texture for EnvironmentLight.");
+
+         const
+            levels    = this .specularTexture .getLevels (),
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+
+         return browser .filterEnvironmentTexture ({
+            name: "GeneratedSpecularTexture",
+            texture: this .specularTexture,
+            distribution: Distribution .GGX,
+            sampleCount: 1024,
+            roughness,
+         });
+      })();
+   },
+   getSheenTexture ()
+   {
+      return this .generatedSheenTexture ??= (() =>
+      {
+         if (!this .specularTexture)
+            return;
+
+         // Render the texture.
+
+         const browser = this .getBrowser ();
+
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+            console .info ("Generating sheen texture for EnvironmentLight.");
+
+         const
+            levels    = this .specularTexture .getLevels (),
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
+
+         return browser .filterEnvironmentTexture ({
+            name: "GeneratedSheenTexture",
+            texture: this .specularTexture,
+            distribution: Distribution .CHARLIE,
+            sampleCount: 64,
+            roughness: roughness,
+         });
+      })();
    },
    getLights ()
    {
@@ -208,10 +263,24 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    set_diffuseTexture__ ()
    {
       this .diffuseTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
+
+      this .requestGenerateTextures ();
    },
    set_specularTexture__ ()
    {
+      this .specularTexture ?.removeInterest ("requestGenerateTextures", this);
+
       this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
+
+      this .specularTexture ?.addInterest ("requestGenerateTextures", this);
+
+      this .requestGenerateTextures ();
+   },
+   requestGenerateTextures ()
+   {
+      this .generatedDiffuseTexture  = null;
+      this .generatedSpecularTexture = null;
+      this .generatedSheenTexture    = null;
    },
 });
 

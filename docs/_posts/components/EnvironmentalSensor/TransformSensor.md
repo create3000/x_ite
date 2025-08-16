@@ -15,7 +15,7 @@ tags: [TransformSensor, EnvironmentalSensor]
 
 TransformSensor generates output events when its targetObject enters, exits, and moves within a region in space (defined by a box).
 
-The TransformSensor node belongs to the **EnvironmentalSensor** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The TransformSensor node belongs to the [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -142,7 +142,7 @@ Sends rotation event relative to center whenever the target object is contained 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalSensor/TransformSensor/TransformSensor.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalSensor/TransformSensor/TransformSensor.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/TransformSensor/screenshot.avif" alt="TransformSensor"/>
 </x3d-canvas>
 

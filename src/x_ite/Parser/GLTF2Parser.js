@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
@@ -86,6 +39,7 @@ function GLTF2Parser (scene)
    this .bufferViews           = [ ];
    this .accessors             = [ ];
    this .samplers              = [ ];
+   this .textureCache          = new Map ();
    this .materials             = [ ];
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
@@ -188,7 +142,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Parse root objects.
 
-      this .assetObject      (glTF .asset);
+      this .assetObject      (glTF .asset, glTF .extensions);
       this .extensionsArray  (glTF .extensionsRequired, this .extensions);
       this .extensionsArray  (glTF .extensionsUsed, this .extensions);
       this .extensionsObject (glTF .extensions);
@@ -227,7 +181,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return scene;
    },
-   assetObject (asset)
+   assetObject (asset, extensions)
    {
       if (!(asset instanceof Object))
          return;
@@ -259,8 +213,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
-      worldInfoNode ._info .sort ();
-
       if (!worldInfoNode ._title .getValue ())
       {
          const url = new URL (worldURL);
@@ -271,6 +223,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             worldInfoNode ._title = decodeURIComponent (url .pathname .split ("/") .at (-1) || worldURL);
       }
 
+      if (asset .extensions ?.KHR_xmp_json_ld instanceof Object)
+      {
+         const packet = asset .extensions .KHR_xmp_json_ld .packet;
+
+         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld, worldInfoNode);
+      }
+
+      worldInfoNode ._info .sort ();
       worldInfoNode .setup ();
 
       scene .getRootNodes () .push (worldInfoNode);
@@ -334,8 +294,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       for (const component of components)
       {
-         if (!scene .hasComponent (component))
-            scene .addComponent (component);
+         if (scene .hasComponent (component))
+            continue;
+
+         scene .updateComponent (component);
       }
    },
    extensionsObject (extensions)
@@ -482,7 +444,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene = this .getScene (),
          name  = this .sanitizeName (light .name) || `Light${id + 1}`;
 
-      const color = new Color3 (1, 1, 1);
+      const color = new Color3 (1);
 
       if (this .vectorValue (light .color, color))
          lightNode ._color = color;
@@ -528,7 +490,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._radius      = this .numberValue (light .range, 0) || -1;
       lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
       lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
-      lightNode ._attenuation = new Vector3 (0, 0, 1);
 
       this .addAnimationPointerAlias (lightNode, "range",          "radius");
       this .addAnimationPointerAlias (lightNode, "outerConeAngle", "cutOffAngle");
@@ -542,8 +503,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene     = this .getScene (),
          lightNode = scene .createNode ("PointLight", false);
 
-      lightNode ._radius      = this .numberValue (light .range, 0) || -1;
-      lightNode ._attenuation = new Vector3 (0, 0, 1);
+      lightNode ._radius = this .numberValue (light .range, 0) || -1;
 
       this .addAnimationPointerAlias (lightNode, "range", "radius");
 
@@ -560,6 +520,43 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       this .materialVariants = variants;
+   },
+   khrXmpJsonLdObject (index, KHR_xmp_json_ld, worldInfoNode)
+   {
+      if (!(KHR_xmp_json_ld instanceof Object))
+         return;
+
+      const packet = KHR_xmp_json_ld .packets [index];
+
+      for (const [key, value] of Object .entries (packet))
+      {
+         const match = key .match (/\w+:(.*)/);
+
+         if (!match)
+            continue;
+
+         if (value instanceof Object)
+         {
+            const array = value ["@set"] ?? value ["@list"];
+
+            if (array instanceof Array)
+            {
+               worldInfoNode ._info .push (`${match [1]}: ${array .map (v => v .toString ()) .join (", ")}`);
+               continue;
+            }
+
+            if (value ["rdf:_1"] ?.["@value"])
+            {
+               worldInfoNode ._info .push (`${match [1]}: ${JSON .stringify (value ["rdf:_1"] ["@value"])}`);
+               continue;
+            }
+         };
+
+         if (typeof value !== "string")
+            continue;
+
+         worldInfoNode ._info .push (`${match [1]}: ${value}`);
+      }
    },
    async buffersArray (buffers)
    {
@@ -846,12 +843,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(images instanceof Array))
          return;
 
-      this .images = await Promise .all (images .map (image => this .imageObject (image)));
+      this .images = await Promise .all (images .map ((image, index) => this .imageObject (image, index)));
    },
-   async imageObject (image)
+   async imageObject (image, index)
    {
       if (!(image instanceof Object))
          return;
+
+      image .index = index;
 
       if (image .uri)
          return image;
@@ -895,13 +894,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(texture instanceof Object))
          return;
 
+      if (texture .textureNode)
+         return texture .textureNode;
+
       const images = this .textureImageObject (texture);
 
       if (!images .length)
          return null;
 
-      if (texture .textureNode)
-         return texture .textureNode;
+      const
+         key    = `${images .map (image => image .index) .join (",")}:${texture .sampler}`,
+         cached = this .textureCache .get (key);
+
+      if (cached)
+         return texture .textureNode = cached;
 
       const
          scene       = this .getScene (),
@@ -920,6 +926,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          textureNode ._textureProperties = sampler .texturePropertiesNode;
 
       textureNode .setup ();
+
+      this .textureCache .set (key, textureNode);
 
       return texture .textureNode = textureNode;
    },
@@ -991,6 +999,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const textureTransformNode = scene .createNode ("TextureTransform", false);
 
+               // Flip Y
                textureTransformNode ._mapping        = mapping;
                textureTransformNode ._translation .y = -1;
                textureTransformNode ._scale .y       = -1;
@@ -1104,7 +1113,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (this .vectorValue (pbrSpecularGlossiness .specularFactor, specularFactor))
          materialNode ._specularColor = specularFactor;
       else
-         materialNode ._specularColor = Color3 .White;
+         materialNode ._specularColor = Color3 .WHITE;
 
       materialNode ._glossiness = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
@@ -1155,6 +1164,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    materialExtensions (extensions, materialNode)
    {
       if (!(extensions instanceof Object))
+         return;
+
+      if (!materialNode .getType () .includes (X3DConstants .PhysicalMaterial))
          return;
 
       for (const [key, value] of Object .entries (extensions))
@@ -1448,9 +1460,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          translation = new Vector2 (),
-         scale       = new Vector2 (1, 1),
+         scale       = new Vector2 (1),
          matrix      = new Matrix4 ();
 
+      // Flip Y
       matrix .scale (new Vector3 (1, -1, 1));
       matrix .translate (new Vector3 (0, -1, 0));
 
@@ -1511,14 +1524,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scriptNode ._url = [/* js */ `ecmascript:
 
 const
-   flip   = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
+   flipY  = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
    matrix = new SFMatrix3f ();
 
 function eventsProcessed ()
 {
    matrix .setTransform (translation, -rotation, scale);
 
-   const m = flip .multLeft (matrix);
+   const m = flipY .multLeft (matrix);
 
    value_changed [0]  = m [0];
    value_changed [1]  = m [1];
@@ -1902,7 +1915,7 @@ function eventsProcessed ()
       }
 
       viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
-      viewpointNode ._position    = Vector3 .Zero;
+      viewpointNode ._position    = Vector3 .ZERO;
 
       return camera .node = viewpointNode;
    },
@@ -2104,7 +2117,7 @@ function eventsProcessed ()
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1, 1, 1),
+         scale            = new Vector3 (1),
          scaleOrientation = new Rotation4 (),
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
@@ -2213,7 +2226,7 @@ function eventsProcessed ()
          {
             const
                jointNode         = this .nodes [joint] ?.transformNode,
-               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
+               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
 
             if (!jointNode)
                continue;
@@ -2519,7 +2532,7 @@ function eventsProcessed ()
       scene .addExportedNode (scene .getUniqueExportName (`Timer${id + 1}`), timeSensorNode);
 
       timeSensorNode ._description = this .description (animation .name) || `Animation ${id + 1}`;
-      groupNode ._visible = false;
+
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
@@ -2738,19 +2751,20 @@ function eventsProcessed ()
       {
          case 0:
          {
-            if (this .textureTransformNode)
-               return this .textureTransformNode;
+            return this .textureTransformNode ??= (() =>
+            {
+               const
+                  scene                = this .getScene (),
+                  textureTransformNode = scene .createNode ("TextureTransform", false);
 
-            const
-               scene                = this .getScene (),
-               textureTransformNode = scene .createNode ("TextureTransform", false);
+               // Flip Y
+               textureTransformNode ._translation .y = -1;
+               textureTransformNode ._scale .y       = -1;
 
-            textureTransformNode ._translation .y = -1;
-            textureTransformNode ._scale .y       = -1;
+               textureTransformNode .setup ();
 
-            textureTransformNode .setup ();
-
-            return this .textureTransformNode = textureTransformNode;
+               return textureTransformNode;
+            })();
          }
          case 1:
          {
@@ -2825,7 +2839,7 @@ function eventsProcessed ()
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2843,7 +2857,7 @@ function eventsProcessed ()
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       switch (mode)
@@ -2931,7 +2945,7 @@ function eventsProcessed ()
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2952,7 +2966,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2973,7 +2987,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2995,7 +3009,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -3016,7 +3030,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -3046,7 +3060,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -3067,7 +3081,7 @@ function eventsProcessed ()
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -3218,8 +3232,15 @@ function eventsProcessed ()
 
       return normal .normalNode = normalNode;
    },
-   createTangent (tangent)
+   createTangent (tangent, normal)
    {
+      // When the base mesh primitive does not specify normals, client implementations
+      // MUST calculate flat normals for each morph target; the provided tangents and
+      // their displacements (if present) MUST be ignored.
+
+      if (normal ?.type !== "VEC3")
+         return null;
+
       if (tangent ?.type !== "VEC4")
          return null;
 
@@ -3498,7 +3519,7 @@ function eventsProcessed ()
          }
       }
    },
-   createAnimationPointerInterpolator: (function ()
+   createAnimationPointerInterpolator: (() =>
    {
       const interpolators = new Map ([
          [X3DConstants .SFBool,  { typeName: "BooleanSequencer" }],
@@ -3521,18 +3542,19 @@ function eventsProcessed ()
             {
                const interpolatorNodes = [ ];
 
+               let colors, transparencies;
+
                switch ((keyValues .array .length / times .length) % 3)
                {
                   case 0: // Color3 pointer
                   {
-                     var colors = keyValues .array;
+                     colors = keyValues .array;
                      break;
                   }
                   default: // Color4 pointer
                   {
-                     var
-                        colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
-                        transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
+                     colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
+                     transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
 
                      transparencies = transparencies .every (value => value >= 1)
                         ? undefined
@@ -3570,7 +3592,7 @@ function eventsProcessed ()
             {
                const interpolatorNodes = [ ];
 
-               var
+               let
                   colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
                   transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
 
@@ -3968,7 +3990,7 @@ function eventsProcessed ()
          }
       }
    },
-   applyMorphTargets: (function ()
+   applyMorphTargets: (() =>
    {
       const value = new Vector3 ();
 

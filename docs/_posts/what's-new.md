@@ -7,6 +7,42 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v12.0 Series
+
+*Leipzig, 9th August 2025:* This new series 12.0 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped for the back face, and when a [ImageTexture](/x_ite/components/texturing/imagetexture/) or [MovieTexture](/x_ite/components/texturing/movietexture/) must be flipped, and when the glTF parser generates [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) nodes. It will affect files with texture transform nodes and X3D files generated from glTF.
+
+There is now a test file that should show both the same image on the front and back face: [texture mapping on a Rectangle2D with TextureTransform](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Geometry2D/FlipTexture.x3d).
+
+### Breaking Change
+
+* Fixes texture flipping about x-Axis for Geometry2D for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) and [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) in glTF converted files.
+
+### Notable Changes
+
+* Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
+* Bug fixes in several nodes with bounding box calculations.
+* Fixes bug with light *attenuation* handling in PBR shader.
+
+## X_ITE v11.6 Series
+
+*Leipzig, 12th July 2025:* This new series 11.6 comes with Animated PNG support for MovieTexture node. The MoveTexture node has been able to handle Animated GIFs for quite a while, and can now also handle Animated PNGs.
+
+For a first impression of how the whole thing looks now, here are two example files to test:
+
+1. [Animated PNG as MovieTexture](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedPNG.x3d)
+2. [Animated GIF as MovieTexture](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedGIF.x3d)
+
+See also: [MovieTexture supported file formats](/x_ite/components/texturing/movietexture/#supported-file-formats).
+
+### Notable Changes
+
+* This series drops support for WebGL 1, because all known browsers support WebGL 2 now for quite a while.
+* [EnvironmentLight](/x_ite/components/lighting/environmentlight/) can now generate a diffuse texture from specular if *diffuseTexture* field is empty.
+* Fixes a bug with Mali GPU when some objects are rendered completely black.
+* Fixes light calculations for [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/).
+* Speed of glTF image loading is now better in some cases.
+* Fixes a bug with [Extrusion](/x_ite/components/geometry3d/extrusion/) and closed *spine* when *orientations* are used.
+
 ## X_ITE v11.5 Series
 
 *Leipzig, 6th April 2025:* This series comes improvements in [Sunrize](/sunrize/).
@@ -20,12 +56,19 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ### X_ITE
 
-* New `theme` attribute for the \<x3d-canvas\> element.
+* New `theme` [attribute](/x_ite/#attributes-of-the-x3d-canvas-element) for the \<x3d-canvas\> element.
 * New icon concept for context menu, timings and notifications.
+* X3DVolumeDataNode now supports [browser option](/x_ite/reference/browser-services/#browser-options) `QualityWhenMoving`.
+* Improved [LineProperties](/x_ite/components/shape/lineproperties/) `linewidthScaleFactor` handling to support a greater range of values.
 * Fixed various minor bugs in [MovieTexture](/x_ite/components/texturing/movietexture/).
 * Fixed issue with animation getting stuck when in transition, viewAll or lookAt animation.
 * Fixed issue with [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) sending »old« *touchTime* values.
 * Fixed issue in normal calculations in rare cases.
+* Fixed [Switch](/x_ite/components/grouping/switch/) and [LOD](/x_ite/components/navigation/lod/) `addChildren` and `removeChildren` events handling.
+* If the *min* package is selected, the correct files are now loaded from the assets folder.
+* Fixed fatal bug in PBR shader when [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) and [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) are present at the same time.
+* Fixed bug when Order Independent Transparency (OIT) and [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) are used together.
+* Fixed a bug in PBR shader when points and lines are rendered without normals.
 * Other bug fixes.
 
 ## X_ITE v11.4 Series
@@ -33,9 +76,9 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 *Leipzig, 23rd March 2025:* This series comes with a lot of small but important changes and features.
 
 * Improved WOFF2 font files handling.
-* New dragging cursor when a X3DDragSensorNode is dragged.
+* New dragging cursor when an X3DDragSensorNode is dragged.
 * New [Mute](/x_ite/reference/browser-services/#getbrowseroption-name-string-any) browser option.
-* Fixed a issue when a X3DBindableNode receives a *set_bind* `FALSE` event.
+* Fixed a issue when an X3DBindableNode receives a *set_bind* `FALSE` event.
 * Fixed an issue with viewpoint binding at initialization of world and when the viewpoint has received an additional *set_bind* `TRUE` event.
 * The pixel data of a [PixelTexture](/x_ite/components/texturing/pixeltexture/) node are now checked for transparent pixels if necessary, to automatically determine alpha mode of [Appearance](/x_ite/components/shape/appearance/) node.
 

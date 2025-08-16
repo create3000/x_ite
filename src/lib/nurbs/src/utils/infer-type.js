@@ -5,7 +5,7 @@ import isArrayLike   from "./is-array-like.js";
 
 function inferType (x)
 {
-   if (! x)
+   if (!x)
       return undefined;
 
    if (isNdarray (x) || isNdarrayLike (x))
@@ -19,8 +19,10 @@ function inferType (x)
    {
       if (isArrayLike (x))
       {
-         for (var ptr = x; isArrayLike (ptr [0]); ptr = ptr [0])
-            ;
+         let ptr = x;
+
+         while (isArrayLike (ptr [0]))
+            ptr = ptr [0];
 
          if ("x" in ptr)
             return inferType .ARRAY_OF_OBJECTS;

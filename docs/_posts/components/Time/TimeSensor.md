@@ -15,7 +15,7 @@ tags: [TimeSensor, Time]
 
 TimeSensor continuously generates events as time passes. Typical use: ROUTE thisTimeSensorDEF.fraction_changed TO someInterpolatorDEF.set_fraction. Interchange profile
 
-The TimeSensor node belongs to the **Time** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The TimeSensor node belongs to the [Time](/x_ite/components/overview/#time) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -217,7 +217,7 @@ Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) i
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Time/TimeSensor/screenshot.avif" alt="TimeSensor"/>
 </x3d-canvas>
 

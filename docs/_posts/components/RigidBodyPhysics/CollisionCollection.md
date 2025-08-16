@@ -15,7 +15,7 @@ tags: [CollisionCollection, RigidBodyPhysics]
 
 CollisionCollection holds a collection of objects that can be managed as a single entity for resolution of inter-object collisions.
 
-The CollisionCollection node belongs to the **RigidBodyPhysics** component and requires at least support level **1,** its default container field is *collider.* It is available from X3D version 3.2 or higher.
+The CollisionCollection node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *collider.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -170,7 +170,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/screenshot.avif" alt="CollisionCollection"/>
 </x3d-canvas>
 

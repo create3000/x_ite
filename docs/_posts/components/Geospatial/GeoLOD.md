@@ -15,7 +15,7 @@ tags: [GeoLOD, Geospatial]
 
 GeoLOD provides quadtree level-of-detail loading/unloading for multi-resolution terrains. GeoLOD can contain children and GeoOrigin nodes.
 
-The GeoLOD node belongs to the **Geospatial** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The GeoLOD node belongs to the [Geospatial](/x_ite/components/overview/#geospatial) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -216,7 +216,7 @@ The outputOnly *children* field exposes a portion of the scene graph for the cur
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoLOD/GeoLOD.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoLOD/GeoLOD.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geospatial/GeoLOD/screenshot.avif" alt="GeoLOD"/>
 </x3d-canvas>
 

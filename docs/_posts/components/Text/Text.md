@@ -15,7 +15,7 @@ tags: [Text, Text]
 
 Text is a 2D (flat) geometry node that can contain multiple lines of string values. Layout and styling is controlled by a contained FontStyle node.
 
-The Text node belongs to the **Text** component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Text node belongs to the [Text](/x_ite/components/overview/#text) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -139,7 +139,7 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Text/Text/Text.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Text/Text/Text.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Text/Text/screenshot.avif" alt="Text"/>
 </x3d-canvas>
 

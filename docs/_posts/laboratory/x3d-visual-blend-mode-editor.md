@@ -50,7 +50,7 @@ select.select {
 <div class="viewer">
 <div class="viewer-row">
   <div class="viewer-column-70">
-    <x3d-canvas class="blend-mode checkerboard" src="/x_ite/assets/laboratory/blend-mode/blend-mode.x3d" splashScreen="false"></x3d-canvas>
+    <x3d-canvas class="blend-mode checkerboard" src="/x_ite/assets/laboratory/blend-mode/blend-mode.x3d" splashScreen="false" update="auto"></x3d-canvas>
   </div>
   <div class="viewer-column-30">
     <small class="small">Source (foreground):</small>

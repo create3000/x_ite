@@ -1,5 +1,5 @@
-/* X_ITE v11.5.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.6")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -67,53 +67,6 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -199,53 +152,6 @@ const __default__ = X3DVolumeRenderStyleNode;
 
 /* harmony default export */ const VolumeRendering_X3DVolumeRenderStyleNode = (external_X_ITE_X3D_Namespace_default().add ("X3DVolumeRenderStyleNode", __default__));
 ;// ./src/x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -269,53 +175,6 @@ const X3DComposableVolumeRenderStyleNode_default_ = X3DComposableVolumeRenderSty
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// ./src/x_ite/Components/VolumeRendering/OpacityMapVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -336,11 +195,6 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, Volume
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._transferFunction .addInterest ("set_transferFunction__", this);
 
@@ -434,53 +288,6 @@ const OpacityMapVolumeStyle_default_ = OpacityMapVolumeStyle;
 
 /* harmony default export */ const VolumeRendering_OpacityMapVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("OpacityMapVolumeStyle", OpacityMapVolumeStyle_default_));
 ;// ./src/x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -505,7 +312,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
          defaultVoxelsNode .repeatS = true;
          defaultVoxelsNode .repeatT = true;
          defaultVoxelsNode .repeatR = true;
-         defaultVoxelsNode .setPrivate (true);
+
          defaultVoxelsNode .setup ();
 
          return defaultVoxelsNode;
@@ -517,7 +324,6 @@ Object .assign (X3DVolumeRenderingContext .prototype,
       {
          const defaultVolumeStyle = new VolumeRendering_OpacityMapVolumeStyle (this .getPrivateScene ());
 
-         defaultVolumeStyle .setPrivate (true);
          defaultVolumeStyle .setup ();
 
          return defaultVolumeStyle;
@@ -529,7 +335,6 @@ Object .assign (X3DVolumeRenderingContext .prototype,
       {
          const defaultBlendedVolumeStyle = new VolumeRendering_OpacityMapVolumeStyle (this .getPrivateScene ());
 
-         defaultBlendedVolumeStyle .setPrivate (true);
          defaultBlendedVolumeStyle .setup ();
 
          return defaultBlendedVolumeStyle;
@@ -547,7 +352,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
          textureProperties ._minificationFilter  = "DEFAULT";
          textureProperties ._generateMipMaps     = true;
          textureProperties ._textureCompression  = "DEFAULT";
-         textureProperties .setPrivate (true);
+
          textureProperties .setup ();
 
          const defaultTransferFunction = new (external_X_ITE_X3D_PixelTexture_default()) (this .getPrivateScene ());
@@ -557,7 +362,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
          defaultTransferFunction ._image .height     = 1;
          defaultTransferFunction ._image .comp       = 2;
          defaultTransferFunction ._image .array      = Array .from ({ length: 256 }, (v, i) => (i << 8) | i);
-         defaultTransferFunction .setPrivate (true);
+
          defaultTransferFunction .setup ();
 
          return defaultTransferFunction;
@@ -570,53 +375,6 @@ const X3DVolumeRenderingContext_default_ = X3DVolumeRenderingContext;
 
 /* harmony default export */ const VolumeRendering_X3DVolumeRenderingContext = (external_X_ITE_X3D_Namespace_default().add ("X3DVolumeRenderingContext", X3DVolumeRenderingContext_default_));
 ;// ./src/x_ite/Components/VolumeRendering/BlendedVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -637,11 +395,6 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._weightTransferFunction1 .addInterest ("set_weightTransferFunction1__", this);
       this ._weightTransferFunction2 .addInterest ("set_weightTransferFunction2__", this);
@@ -911,53 +664,6 @@ const BlendedVolumeStyle_default_ = BlendedVolumeStyle;
 
 /* harmony default export */ const VolumeRendering_BlendedVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("BlendedVolumeStyle", BlendedVolumeStyle_default_));
 ;// ./src/x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1051,53 +757,6 @@ const BoundaryEnhancementVolumeStyle_default_ = BoundaryEnhancementVolumeStyle;
 
 /* harmony default export */ const VolumeRendering_BoundaryEnhancementVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("BoundaryEnhancementVolumeStyle", BoundaryEnhancementVolumeStyle_default_));
 ;// ./src/x_ite/Components/VolumeRendering/CartoonVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1118,11 +777,6 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
@@ -1231,53 +885,6 @@ const CartoonVolumeStyle_default_ = CartoonVolumeStyle;
 
 /* harmony default export */ const VolumeRendering_CartoonVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("CartoonVolumeStyle", CartoonVolumeStyle_default_));
 ;// ./src/x_ite/Components/VolumeRendering/ComposedVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1300,11 +907,6 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRe
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._renderStyle .addInterest ("set_renderStyle__", this);
 
@@ -1426,53 +1028,6 @@ const ComposedVolumeStyle_default_ = ComposedVolumeStyle;
 
 /* harmony default export */ const VolumeRendering_ComposedVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("ComposedVolumeStyle", ComposedVolumeStyle_default_));
 ;// ./src/x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1493,11 +1048,6 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, V
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
@@ -1619,7 +1169,7 @@ position=x3d_EyeMatrix*position;
 #endif
 vertex=position.xyz;texCoord=x3d_TextureMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
-depth=1.0+gl_Position.w;
+depth=1.+gl_Position.w;
 #endif
 }`
 ;
@@ -1631,7 +1181,7 @@ precision highp float;precision highp int;precision highp sampler3D;in vec3 vert
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
 uniform float x3d_LogarithmicFarFactor1_2;in float depth;
 #endif
-uniform sampler3D x3d_Texture3D[1];uniform mat3 x3d_TextureNormalMatrix;uniform x3d_LightSourceParameters x3d_LightSource[x3d_MaxLights];const float M_PI=3.141592653589793;const float M_SQRT2=1.4142135623730951;const float M_SQRT1_2=0.7071067811865476;
+uniform sampler3D x3d_Texture3D[1];uniform mat3 x3d_TextureNormalMatrix;uniform x3d_LightSourceParameters x3d_LightSource[x3d_MaxLights];const float M_PI=3.141592653589793;const float M_SQRT2=1.4142135623730951;const float M_SQRT1_2=.7071067811865476;
 #if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 layout(location=0)out vec4 x3d_FragData0;layout(location=1)out vec4 x3d_FragData1;
 #else
@@ -1641,17 +1191,17 @@ out vec4 x3d_FragColor;
 #pragma X3D include "includes/Fog.glsl"
 __VOLUME_STYLES_DEFINES__
 #if defined(X3D_HSV)
-vec3 rgb2hsv(in vec3 color){float h=0.0;float s=0.0;float v=0.0;float min=min(min(color.r,color.g),color.b);float max=max(max(color.r,color.g),color.b);v=max;float delta=max-min;if(max!=0.0&&delta!=0.0){s=delta/max;if(color.r==max)h=(color.g-color.b)/delta;else if(color.g==max)h=2.0+(color.b-color.r)/delta;else h=4.0+(color.r-color.g)/delta;h*=M_PI/3.0;if(h<0.0)h+=M_PI*2.0;}else s=h=0.0;return vec3(h,s,v);}vec3 hsv2rgb(in vec3 hsv){float h=hsv[0];float s=clamp(hsv[1],0.0,1.0);float v=clamp(hsv[2],0.0,1.0);if(s==0.0){return vec3(v,v,v);}else{float w=(h*(180.0/M_PI))/60.0;float i=floor(w);float f=w-i;float p=v*(1.0-s);float q=v*(1.0-s*f);float t=v*(1.0-s*(1.0-f));switch(int(i)% 6){case 0:return vec3(v,t,p);case 1:return vec3(q,v,p);case 2:return vec3(p,v,t);case 3:return vec3(p,q,v);case 4:return vec3(t,p,v);default:return vec3(v,p,q);}}return vec3(0.0);}vec3 mix_hsv(in vec3 a,in vec3 b,in float t){float ha=a[0];float sa=a[1];float va=a[2];float hb=b[0];float sb=b[1];float vb=b[2];if(sa==0.0)ha=hb;if(sb==0.0)hb=ha;float range=abs(hb-ha);if(range<=M_PI){float h=ha+t*(hb-ha);float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}float PI2=M_PI*2.0;float step=(PI2-range)*t;float h=ha<hb?ha-step:ha+step;if(h<0.0)h+=PI2;else if(h>PI2)h-=PI2;float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}
+vec3 rgb2hsv(in vec3 color){float h=0.;float s=0.;float v=0.;float min=min(min(color.r,color.g),color.b);float max=max(max(color.r,color.g),color.b);v=max;float delta=max-min;if(max!=0.&&delta!=0.){s=delta/max;if(color.r==max)h=(color.g-color.b)/delta;else if(color.g==max)h=2.+(color.b-color.r)/delta;else h=4.+(color.r-color.g)/delta;h*=M_PI/3.;if(h<0.)h+=M_PI*2.;}else s=h=0.;return vec3(h,s,v);}vec3 hsv2rgb(in vec3 hsv){float h=hsv[0];float s=clamp(hsv[1],0.,1.);float v=clamp(hsv[2],0.,1.);if(s==0.){return vec3(v,v,v);}else{float w=(h*(180./M_PI))/60.;float i=floor(w);float f=w-i;float p=v*(1.-s);float q=v*(1.-s*f);float t=v*(1.-s*(1.-f));switch(int(i)% 6){case 0:return vec3(v,t,p);case 1:return vec3(q,v,p);case 2:return vec3(p,v,t);case 3:return vec3(p,q,v);case 4:return vec3(t,p,v);default:return vec3(v,p,q);}}return vec3(0);}vec3 mix_hsv(in vec3 a,in vec3 b,in float t){float ha=a[0];float sa=a[1];float va=a[2];float hb=b[0];float sb=b[1];float vb=b[2];if(sa==0.)ha=hb;if(sb==0.)hb=ha;float range=abs(hb-ha);if(range<=M_PI){float h=ha+t*(hb-ha);float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}float PI2=M_PI*2.;float step=(PI2-range)*t;float h=ha<hb?ha-step:ha+step;if(h<0.)h+=PI2;else if(h>PI2)h-=PI2;float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}
 #endif
 #if defined(X3D_PLANE)
 struct Plane3{vec3 normal;float distanceFromOrigin;};Plane3 plane3(const in vec3 point,const in vec3 normal){return Plane3(normal,dot(normal,point));}vec3 plane3_perpendicular_vector(const in Plane3 plane,const in vec3 point){return plane.normal*(dot(point,plane.normal)-plane.distanceFromOrigin);}
 #endif
 #if defined(X3D_SHADING)
-float getSpotFactor(const in float cutOffAngle,const in float beamWidth,const in vec3 L,const in vec3 d){float spotAngle=acos(clamp(dot(-L,d),-1.0,1.0));if(spotAngle>=cutOffAngle)return 0.0;else if(spotAngle<=beamWidth)return 1.0;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
+float getSpotFactor(const in float cutOffAngle,const in float beamWidth,const in vec3 L,const in vec3 d){float spotAngle=acos(clamp(dot(-L,d),-1.,1.));if(spotAngle>=cutOffAngle)return 0.;else if(spotAngle<=beamWidth)return 1.;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
 #endif
-__VOLUME_STYLES_UNIFORMS__ vec4 getTextureColor(in vec3 texCoord){if(any(greaterThan(abs(texCoord-0.5),vec3(0.5))))discard;vec4 textureColor=texture(x3d_Texture3D[0],texCoord);__VOLUME_STYLES_FUNCTIONS__ return textureColor;}
+__VOLUME_STYLES_UNIFORMS__ vec4 getTextureColor(in vec3 texCoord){if(any(greaterThan(abs(texCoord-.5),vec3(.5))))discard;vec4 textureColor=texture(x3d_Texture3D[0],texCoord);__VOLUME_STYLES_FUNCTIONS__ return textureColor;}
 #if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-float weight(const in float z,const in float a){return clamp(pow(min(1.0,a*10.0)+0.01,3.0)*1e8*pow(1.0-z*0.9,3.0),1e-2,3e3);}
+float weight(const in float z,const in float a){return clamp(pow(min(1.,a*10.)+.01,3.)*1e8*pow(1.-z*.9,3.),1e-2,3e3);}
 #endif
 void main(){
 #if defined(X3D_CLIP_PLANES)
@@ -1674,53 +1224,6 @@ gl_FragDepth=log2(depth)*x3d_LogarithmicFarFactor1_2;
 
 /* harmony default export */ const VolumeStyle_fs = (external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.fs", VolumeStyle_fs_default_));
 ;// ./src/x_ite/Browser/VolumeRendering/VolumeMaterial.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1844,53 +1347,6 @@ var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
 ;// ./src/x_ite/Components/VolumeRendering/X3DVolumeDataNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1919,13 +1375,17 @@ function X3DVolumeDataNode (executionContext)
    this .groupNode                = privateScene .createNode ("Group",               false);
    this .proximitySensorNode      = privateScene .createNode ("ProximitySensor",     false);
    this .transformNode            = privateScene .createNode ("Transform",           false);
-   this .shapeNode                = privateScene .createNode ("Shape",               false);
-   this .appearanceNode           = privateScene .createNode ("Appearance",          false);
-   this .textureTransformNode     = privateScene .createNode ("TextureTransform3D",  false);
-   this .geometryNode             = privateScene .createNode ("QuadSet",             false);
-   this .textureCoordinateNode    = privateScene .createNode ("TextureCoordinate3D", false);
-   this .coordinateNode           = privateScene .createNode ("Coordinate",          false);
    this .volumeMaterialNode       = new VolumeRendering_VolumeMaterial (privateScene, this);
+   this .textureTransformNode     = privateScene .createNode ("TextureTransform3D",  false);
+   this .appearanceNode           = privateScene .createNode ("Appearance",          false);
+   this .lowShapeNode             = privateScene .createNode ("Shape",               false);
+   this .lowGeometryNode          = privateScene .createNode ("QuadSet",             false);
+   this .lowTextureCoordinateNode = privateScene .createNode ("TextureCoordinate3D", false);
+   this .lowCoordinateNode        = privateScene .createNode ("Coordinate",          false);
+   this .hiShapeNode              = privateScene .createNode ("Shape",               false);
+   this .hiGeometryNode           = privateScene .createNode ("QuadSet",             false);
+   this .hiTextureCoordinateNode  = privateScene .createNode ("TextureCoordinate3D", false);
+   this .hiCoordinateNode         = privateScene .createNode ("Coordinate",          false);
    this .textureNormalMatrixArray = new Float32Array (9);
 }
 
@@ -1937,70 +1397,89 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
       external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
-
       this ._bboxDisplay .addFieldInterest (this .groupNode ._bboxDisplay);
 
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
+      this .proximitySensorNode ._isActive .addInterest ("set_active__", this);
 
-      this .groupNode ._children               = [this .proximitySensorNode, this .transformNode];
-      this .proximitySensorNode ._size         = new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1);
-      this .transformNode ._children           = [this .shapeNode];
-      this .shapeNode ._pointerEvents          = false;
-      this .shapeNode ._castShadow             = false;
-      this .shapeNode ._appearance             = this .appearanceNode;
-      this .shapeNode ._geometry               = this .geometryNode;
+      this .groupNode ._children     = [this .proximitySensorNode, this .transformNode];
+      this .transformNode ._children = [this .lowShapeNode, this .hiShapeNode];
+
+      this .textureTransformNode ._translation = new (external_X_ITE_X3D_Fields_default()).SFVec3f (0.5, 0.5, 0.5);
+      this .textureTransformNode ._center      = new (external_X_ITE_X3D_Fields_default()).SFVec3f (-0.5, -0.5, -0.5);
       this .appearanceNode ._alphaMode         = "BLEND";
       this .appearanceNode ._material          = this .volumeMaterialNode;
       this .appearanceNode ._textureTransform  = this .textureTransformNode;
-      this .textureTransformNode ._translation = new (external_X_ITE_X3D_Fields_default()).SFVec3f (0.5, 0.5, 0.5);
-      this .textureTransformNode ._center      = new (external_X_ITE_X3D_Fields_default()).SFVec3f (-0.5, -0.5, -0.5);
-      this .geometryNode ._texCoord            = this .textureCoordinateNode;
-      this .geometryNode ._coord               = this .coordinateNode;
 
-      this .coordinateNode        .setPrivate (true);
-      this .textureCoordinateNode .setPrivate (true);
-      this .geometryNode          .setPrivate (true);
-      this .textureTransformNode  .setPrivate (true);
-      this .volumeMaterialNode    .setPrivate (true);
-      this .appearanceNode        .setPrivate (true);
-      this .shapeNode             .setPrivate (true);
-      this .transformNode         .setPrivate (true);
-      this .proximitySensorNode   .setPrivate (true);
-      this .groupNode             .setPrivate (true);
+      this .lowShapeNode ._pointerEvents = false;
+      this .lowShapeNode ._castShadow    = false;
+      this .lowShapeNode ._visible       = false;
+      this .lowShapeNode ._appearance    = this .appearanceNode;
+      this .lowShapeNode ._geometry      = this .lowGeometryNode;
+      this .lowGeometryNode ._texCoord   = this .lowTextureCoordinateNode;
+      this .lowGeometryNode ._coord      = this .lowCoordinateNode;
 
-      this .coordinateNode        .setup ();
-      this .textureCoordinateNode .setup ();
-      this .geometryNode          .setup ();
-      this .textureTransformNode  .setup ();
-      this .volumeMaterialNode    .setup ();
-      this .appearanceNode        .setup ();
-      this .shapeNode             .setup ();
-      this .transformNode         .setup ();
-      this .proximitySensorNode   .setup ();
-      this .groupNode             .setup ();
+      this .hiShapeNode ._pointerEvents = false;
+      this .hiShapeNode ._castShadow    = false;
+      this .hiShapeNode ._visible       = false;
+      this .hiShapeNode ._appearance    = this .appearanceNode;
+      this .hiShapeNode ._geometry      = this .hiGeometryNode;
+      this .hiGeometryNode ._texCoord   = this .hiTextureCoordinateNode;
+      this .hiGeometryNode ._coord      = this .hiCoordinateNode;
+
+      this .volumeMaterialNode       .setPrivate (true);
+      this .textureTransformNode     .setPrivate (true);
+      this .appearanceNode           .setPrivate (true);
+
+      this .lowCoordinateNode        .setPrivate (true);
+      this .lowTextureCoordinateNode .setPrivate (true);
+      this .lowGeometryNode          .setPrivate (true);
+      this .lowShapeNode             .setPrivate (true);
+
+      this .hiCoordinateNode         .setPrivate (true);
+      this .hiTextureCoordinateNode  .setPrivate (true);
+      this .hiGeometryNode           .setPrivate (true);
+      this .hiShapeNode              .setPrivate (true);
+
+      this .transformNode            .setPrivate (true);
+      this .proximitySensorNode      .setPrivate (true);
+      this .groupNode                .setPrivate (true);
+
+      this .volumeMaterialNode       .setup ();
+      this .textureTransformNode     .setup ();
+      this .appearanceNode           .setup ();
+
+      this .lowCoordinateNode        .setup ();
+      this .lowTextureCoordinateNode .setup ();
+      this .lowGeometryNode          .setup ();
+      this .lowShapeNode             .setup ();
+
+      this .hiCoordinateNode         .setup ();
+      this .hiTextureCoordinateNode  .setup ();
+      this .hiGeometryNode           .setup ();
+      this .hiShapeNode              .setup ();
+
+      this .transformNode            .setup ();
+      this .proximitySensorNode      .setup ();
+      this .groupNode                .setup ();
 
       this .connectChildNode (this .groupNode);
 
-      if (gl .getVersion () < 2)
-         return;
-
       this .getLive () .addInterest ("set_live__", this, true);
 
-      this ._dimensions .addInterest ("set_dimensions__", this);
+      this ._dimensions          .addInterest ("set_dimensions__",       this);
       this .textureTransformNode .addInterest ("set_textureTransform__", this);
 
       this .set_live__ (false);
       this .set_dimensions__ ();
       this .set_textureTransform__ ();
+      this .set_active__ ();
    },
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return bbox .set (this ._dimensions .getValue (), (external_X_ITE_X3D_Vector3_default()).Zero);
+         return bbox .set (this ._dimensions .getValue (), (external_X_ITE_X3D_Vector3_default()).ZERO);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -2016,25 +1495,37 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
    {
       uniformNames .push ("x3d_TextureNormalMatrix");
    },
-   getNumPlanes ()
+   getNumPlanes (quality)
    {
-      switch (this .getBrowser () .getBrowserOptions () .getTextureQuality ())
+      switch (quality)
       {
          case (external_X_ITE_X3D_TextureQuality_default()).LOW:
-         {
             return 200;
-         }
          case (external_X_ITE_X3D_TextureQuality_default()).MEDIUM:
-         {
             return 400;
-         }
          case (external_X_ITE_X3D_TextureQuality_default()).HIGH:
-         {
             return 600;
-         }
+      }
+   },
+   getPoints (quality)
+   {
+      const
+         numPlanes = this .getNumPlanes (quality),
+         size      = this ._dimensions .getValue () .norm (),
+         size1_2   = size / 2,
+         points    = [ ];
+
+      for (let i = 0; i < numPlanes; ++ i)
+      {
+         const z = i / (numPlanes - 1) - 0.5;
+
+         points .push ( size1_2,  size1_2, size * z,
+                       -size1_2,  size1_2, size * z,
+                       -size1_2, -size1_2, size * z,
+                        size1_2, -size1_2, size * z);
       }
 
-      return 200;
+      return points;
    },
    set_live__ (rebuild)
    {
@@ -2044,45 +1535,79 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
 
       if (this .getLive () .getValue () || alwaysUpdate)
       {
-         browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._TextureQuality    .addInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._QualityWhenMoving .addInterest ("set_dimensions__", this);
 
          if (rebuild)
             this .set_dimensions__ ();
       }
       else
       {
-         browser .getBrowserOptions () ._TextureQuality .removeInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._TextureQuality    .removeInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._QualityWhenMoving .removeInterest ("set_dimensions__", this);
       }
    },
    set_dimensions__ ()
    {
       const
-         NUM_PLANES = this .getNumPlanes (),
-         size       = this ._dimensions .getValue () .magnitude (),
-         size1_2    = size / 2,
-         points     = [ ];
+         browser = this .getBrowser (),
+         quality = browser .getBrowserOptions () .getTextureQuality (),
+         moving  = browser .getBrowserOptions () .getQualityWhenMoving () ?? quality;
 
-      this .coordinateNode ._point .length = 0;
+      this .proximitySensorNode ._size   = new (external_X_ITE_X3D_Vector3_default()) (200 * this ._dimensions .length ());
+      this .textureTransformNode ._scale = this ._dimensions .inverse ();
 
-      for (let i = 0; i < NUM_PLANES; ++ i)
+      const hi = this .getPoints (quality);
+
+      this .hiCoordinateNode ._point        = hi;
+      this .hiTextureCoordinateNode ._point = hi;
+
+      if (moving === quality)
       {
-         const z = i / (NUM_PLANES - 1) - 0.5;
+         this .lowShapeNode ._geometry = this .hiGeometryNode;
+      }
+      else
+      {
+         const low = this .getPoints (moving);
 
-         points .push ( size1_2,  size1_2, size * z,
-                       -size1_2,  size1_2, size * z,
-                       -size1_2, -size1_2, size * z,
-                        size1_2, -size1_2, size * z);
+         this .lowCoordinateNode ._point        = low;
+         this .lowTextureCoordinateNode ._point = low;
+         this .lowShapeNode ._geometry          = this .lowGeometryNode;
       }
 
-      this .coordinateNode ._point        = points;
-      this .textureCoordinateNode ._point = points;
-      this .textureTransformNode ._scale  = new (external_X_ITE_X3D_Fields_default()).SFVec3f (1 / this ._dimensions .x,
-                                                                 1 / this ._dimensions .y,
-                                                                 1 / this ._dimensions .z);
+      this .set_active__ ();
    },
    set_textureTransform__ ()
    {
       this .textureNormalMatrixArray .set (new (external_X_ITE_X3D_Matrix4_default()) (... this .textureTransformNode .getMatrix ()) .submatrix .inverse ());
+   },
+   set_active__ ()
+   {
+      const
+         browser = this .getBrowser (),
+         quality = browser .getBrowserOptions () .getTextureQuality (),
+         moving  = browser .getBrowserOptions () .getQualityWhenMoving () ?? quality,
+         update  = this .proximitySensorNode ._isActive .getValue () && quality !== moving;
+
+      if (update)
+         browser .sensorEvents () .addInterest ("update", this);
+      else
+         browser .sensorEvents () .removeInterest ("update", this);
+
+      this .lowShapeNode ._visible = !update;
+      this .hiShapeNode  ._visible = update;
+   },
+   update ()
+   {
+      const
+         browser = this .getBrowser (),
+         moving  = browser .getCurrentSpeed () > 0 || browser .getViewer () .isActive ();
+
+      if (this .lowShapeNode ._visible .getValue () !== moving)
+         this .lowShapeNode ._visible = moving;
+
+      if (this .hiShapeNode ._visible .getValue () !== !moving)
+         this .hiShapeNode ._visible = !moving;
    },
    traverse (type, renderObject)
    {
@@ -2112,53 +1637,6 @@ var external_X_ITE_X3D_ComposedShader_default = /*#__PURE__*/__webpack_require__
 const external_X_ITE_X3D_ShaderPart_namespaceObject = __X_ITE_X3D__ .ShaderPart;
 var external_X_ITE_X3D_ShaderPart_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ShaderPart_namespaceObject);
 ;// ./src/x_ite/Components/VolumeRendering/IsoSurfaceVolumeData.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2183,11 +1661,6 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
    initialize ()
    {
       VolumeRendering_X3DVolumeDataNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._gradients        .addInterest ("set_gradients__",   this);
       this ._renderStyle      .addInterest ("set_renderStyle__", this);
@@ -2471,53 +1944,6 @@ const IsoSurfaceVolumeData_default_ = IsoSurfaceVolumeData;
 
 /* harmony default export */ const VolumeRendering_IsoSurfaceVolumeData = (external_X_ITE_X3D_Namespace_default().add ("IsoSurfaceVolumeData", IsoSurfaceVolumeData_default_));
 ;// ./src/x_ite/Components/VolumeRendering/ProjectionVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2688,53 +2114,6 @@ const ProjectionVolumeStyle_default_ = ProjectionVolumeStyle;
 
 /* harmony default export */ const VolumeRendering_ProjectionVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("ProjectionVolumeStyle", ProjectionVolumeStyle_default_));
 ;// ./src/x_ite/Components/VolumeRendering/SegmentedVolumeData.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2759,11 +2138,6 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
    initialize ()
    {
       VolumeRendering_X3DVolumeDataNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
       this ._renderStyle        .addInterest ("set_renderStyle__",        this);
@@ -2956,53 +2330,6 @@ const SegmentedVolumeData_default_ = SegmentedVolumeData;
 
 /* harmony default export */ const VolumeRendering_SegmentedVolumeData = (external_X_ITE_X3D_Namespace_default().add ("SegmentedVolumeData", SegmentedVolumeData_default_));
 ;// ./src/x_ite/Components/VolumeRendering/ShadedVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3023,11 +2350,6 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._material       .addInterest ("set_material__",       this);
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
@@ -3212,53 +2534,6 @@ const ShadedVolumeStyle_default_ = ShadedVolumeStyle;
 
 /* harmony default export */ const VolumeRendering_ShadedVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("ShadedVolumeStyle", ShadedVolumeStyle_default_));
 ;// ./src/x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3279,11 +2554,6 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
@@ -3377,53 +2647,6 @@ const SilhouetteEnhancementVolumeStyle_default_ = SilhouetteEnhancementVolumeSty
 
 /* harmony default export */ const VolumeRendering_SilhouetteEnhancementVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("SilhouetteEnhancementVolumeStyle", SilhouetteEnhancementVolumeStyle_default_));
 ;// ./src/x_ite/Components/VolumeRendering/ToneMappedVolumeStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3444,11 +2667,6 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, Volume
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
@@ -3549,53 +2767,6 @@ const ToneMappedVolumeStyle_default_ = ToneMappedVolumeStyle;
 
 /* harmony default export */ const VolumeRendering_ToneMappedVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("ToneMappedVolumeStyle", ToneMappedVolumeStyle_default_));
 ;// ./src/x_ite/Components/VolumeRendering/VolumeData.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3618,11 +2789,6 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
    initialize ()
    {
       VolumeRendering_X3DVolumeDataNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._renderStyle .addInterest ("set_renderStyle__", this);
       this ._voxels      .addInterest ("set_voxels__",      this);
@@ -3749,53 +2915,6 @@ const VolumeData_default_ = VolumeData;
 
 /* harmony default export */ const VolumeRendering_VolumeData = (external_X_ITE_X3D_Namespace_default().add ("VolumeData", VolumeData_default_));
 ;// ./src/assets/components/VolumeRenderingComponent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 

@@ -15,7 +15,7 @@ tags: [Arc2D, Geometry2D]
 
 Arc2D is a line-based geometry node that defines a linear circular arc with center (0,0) in X-Y plane, with angles measured starting at positive x-axis and sweeping towards positive y-axis.
 
-The Arc2D node belongs to the **Geometry2D** component and requires at least support level **2,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The Arc2D node belongs to the [Geometry2D](/x_ite/components/overview/#geometry2d) component and requires at least support level **2,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -101,7 +101,7 @@ Circle *radius*, of which the arc is a portion.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/screenshot.avif" alt="Arc2D"/>
 </x3d-canvas>
 

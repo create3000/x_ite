@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 
 #if !defined (X3D_NORMALS) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
 // Generate flat normals for 2D and 3D geometry.
@@ -43,7 +43,8 @@ getNormalInfo (const in float normalScale)
       vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
 
       #if defined (X3D_NORMAL_TEXTURE_FLIP_Y)
-         UV .t = 1.0 - UV .t;
+         // Flip Y if needed. Must be done after.
+         UV .y = 1.0 - UV .y;
       #endif
    #else
       vec3 UV = vertex;
@@ -80,7 +81,7 @@ getNormalInfo (const in float normalScale)
 
    #if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
    // For a back-facing surface, the tangential basis vectors are negated.
-   if (gl_FrontFacing == false)
+   if (frontFacing == false)
    {
       t  = -t;
       b  = -b;
@@ -94,22 +95,17 @@ getNormalInfo (const in float normalScale)
    info .ng = ng;
 
    #if defined (X3D_NORMAL_TEXTURE)
-      #if __VERSION__ == 100
-         #if defined (X3D_NORMAL_TEXTURE_2D)
-            vec3 ntex = texture2D (x3d_NormalTexture .texture2D, UV .st) .rgb;
-         #elif defined (X3D_NORMAL_TEXTURE_CUBE)
-            vec3 ntex = textureCube (x3d_NormalTexture .textureCube, UV) .rgb;
-         #endif
-      #else
-         #if defined (X3D_NORMAL_TEXTURE_2D)
-            vec3 ntex = texture (x3d_NormalTexture .texture2D, UV .st) .rgb;
-         #elif defined (X3D_NORMAL_TEXTURE_3D)
-            vec3 ntex = texture (x3d_NormalTexture .texture3D, UV) .rgb;
-         #elif defined (X3D_NORMAL_TEXTURE_CUBE)
-            vec3 ntex = texture (x3d_NormalTexture .textureCube, UV) .rgb;
-         #endif
+      #if defined (X3D_NORMAL_TEXTURE_2D)
+         vec3 ntex = texture (x3d_NormalTexture .texture2D, UV .st) .rgb;
+      #elif defined (X3D_NORMAL_TEXTURE_3D)
+         vec3 ntex = texture (x3d_NormalTexture .texture3D, UV) .rgb;
+      #elif defined (X3D_NORMAL_TEXTURE_CUBE)
+         vec3 ntex = texture (x3d_NormalTexture .textureCube, UV) .rgb;
       #endif
 
+      // Convert from [0, 1] to [-1, 1] range.
+      // Scale by normalScale.
+      // The normal texture is expected to be in tangent space.
       ntex  = ntex * 2.0 - vec3 (1.0);
       ntex *= vec3 (vec2 (normalScale), 1.0);
       ntex  = normalize (ntex);

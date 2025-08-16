@@ -15,7 +15,7 @@ tags: [IndexedTriangleSet, Rendering]
 
 IndexedTriangleSet is a geometry node containing a Coordinate or CoordinateDouble node, and can also contain Color or ColorRGBA, Normal and TextureCoordinate nodes.
 
-The IndexedTriangleSet node belongs to the **Rendering** component and requires at least support level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The IndexedTriangleSet node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -186,7 +186,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/screenshot.avif" alt="IndexedTriangleSet"/>
 </x3d-canvas>
 

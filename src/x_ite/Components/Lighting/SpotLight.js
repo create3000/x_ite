@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -123,16 +76,19 @@ Object .assign (SpotLightContainer .prototype,
          lightNode            = this .lightNode,
          cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .Identity);
+         invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .IDENTITY);
 
       invLightSpaceMatrix .translate (lightNode .getLocation ());
-      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
+      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
       invLightSpaceMatrix .inverse ();
 
       const
-         groupBBox        = this .groupNode .getSubBBox (this .bbox, true),                 // Group bbox.
-         lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                     // Group bbox from the perspective of the light.
-         lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax), // Result not used, but arguments.
+         groupBBox = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
+         lightBBox = groupBBox .multRight (invLightSpaceMatrix);     // Group bbox from the perspective of the light.
+
+      lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax); // Result not used, but arguments.
+
+      const
          shadowMapSize    = lightNode .getShadowMapSize (),
          farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
          viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
@@ -170,7 +126,7 @@ Object .assign (SpotLightContainer .prototype,
          return;
 
       this .shadowMatrix
-         .assign (renderObject .getView () ?.inverse ?? Matrix4 .Identity)
+         .assign (renderObject .getView () ?.inverse ?? Matrix4 .IDENTITY)
          .multRight (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invLightSpaceProjectionMatrix);
 
@@ -183,24 +139,12 @@ Object .assign (SpotLightContainer .prototype,
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTexture2DUnit ())
-            : this .browser .getTexture2DUnit ();
+            ? this .textureUnit ??= this .browser .popTextureUnit ()
+            : this .browser .getTextureUnit ();
 
-         if (textureUnit !== undefined)
-         {
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-
-            if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-            else
-               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-            gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
-         }
-         else
-         {
-            console .warn ("Not enough combined texture units for shadow map available.");
-         }
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
       }
 
       if (shaderObject .hasLight (i, this))
@@ -212,12 +156,12 @@ Object .assign (SpotLightContainer .prototype,
          attenuation                        = lightNode .getAttenuation ();
 
       gl .uniform1i        (shaderObject .x3d_LightType [i],             3);
-      gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
+      gl .uniform3f        (shaderObject .x3d_LightColor [i],            ... color);
       gl .uniform1f        (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
       gl .uniform1f        (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-      gl .uniform3f        (shaderObject .x3d_LightAttenuation [i],      Math .max (0, attenuation .x), Math .max (0, attenuation .y), Math .max (0, attenuation .z));
-      gl .uniform3f        (shaderObject .x3d_LightLocation [i],         location .x, location .y, location .z);
-      gl .uniform3f        (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
+      gl .uniform3fv       (shaderObject .x3d_LightAttenuation [i],      attenuation);
+      gl .uniform3f        (shaderObject .x3d_LightLocation [i],         ... location);
+      gl .uniform3f        (shaderObject .x3d_LightDirection [i],        ... direction);
       gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
       gl .uniform1f        (shaderObject .x3d_LightBeamWidth [i],        lightNode .getBeamWidth ());
       gl .uniform1f        (shaderObject .x3d_LightCutOffAngle [i],      lightNode .getCutOffAngle ());
@@ -227,7 +171,7 @@ Object .assign (SpotLightContainer .prototype,
       {
          const shadowColor = lightNode .getShadowColor ();
 
-         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         ... shadowColor);
          gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
          gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
          gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
@@ -240,13 +184,25 @@ Object .assign (SpotLightContainer .prototype,
    },
    dispose ()
    {
-      this .browser .pushShadowBuffer (this .shadowBuffer);
-      this .browser .pushTexture2DUnit (this .textureUnit);
+      const { shadowBuffer } = this;
+
+      if (shadowBuffer)
+      {
+         const { browser, global } = this;
+
+         browser .pushShadowBuffer (shadowBuffer);
+
+         this .shadowBuffer = null;
+
+         if (global)
+         {
+            browser .pushTextureUnit (this .textureUnit);
+
+            this .textureUnit = undefined;
+         }
+      }
 
       this .modelViewMatrix .clear ();
-
-      this .shadowBuffer = null;
-      this .textureUnit  = undefined;
 
       // Return container
 
@@ -279,13 +235,33 @@ function SpotLight (executionContext)
       this ._beamWidth   = 1.5708;
       this ._cutOffAngle = 0.785398;
    }
+
+   // Private properties
+
+   this .attenuation = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (SpotLight .prototype, X3DLightNode .prototype),
 {
+   initialize ()
+   {
+      X3DLightNode .prototype .initialize .call (this);
+
+      this ._attenuation .addInterest ("set_attenuation__", this);
+
+      this .set_attenuation__ ();
+   },
+   set_attenuation__ ()
+   {
+      const attenuation = this ._attenuation .getValue ();
+
+      this .attenuation [0] = Math .max (0, attenuation .x);
+      this .attenuation [1] = Math .max (0, attenuation .y);
+      this .attenuation [2] = Math .max (0, attenuation .z);
+   },
    getAttenuation ()
    {
-      return this ._attenuation .getValue ();
+      return this .attenuation;
    },
    getLocation ()
    {

@@ -15,7 +15,7 @@ tags: [Coordinate, Rendering]
 
 Coordinate builds geometry by defining a set of 3D coordinate (triplet) point values. Coordinate is used by IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle* and IndexedTriangle* nodes. Coordinate is also used by HAnimHumanoid, HAnimSegment, and various Nurbs nodes.
 
-The Coordinate node belongs to the **Rendering** component and requires at least support level **1,** its default container field is *coord.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Coordinate node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *coord.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -50,7 +50,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/Coordinate/Coordinate.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/Coordinate/Coordinate.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/Coordinate/screenshot.avif" alt="Coordinate"/>
 </x3d-canvas>
 

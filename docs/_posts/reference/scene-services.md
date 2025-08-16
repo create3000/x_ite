@@ -5,9 +5,19 @@ nav: reference
 categories: [Reference]
 tags: [Scene, Services, Authoring, Interface]
 ---
+
+## Hierarchy
+
+```
++ X3DExecutionContext
+  + X3DScene
+```
+
 ## X3DExecutionContext
 
 This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
+
+A [Script](/x_ite/components/scripting/script/) node inside a proto instance only has access to the current X3DExecutionContext object and this via `Browser.currentScene`, which returns a reference to the execution context inside the proto instance.
 
 ### Instance Creation Method(s)
 

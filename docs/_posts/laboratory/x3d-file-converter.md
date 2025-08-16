@@ -46,7 +46,7 @@ x_ite: true
 
 ## Upload and Convert
 
-Convert **X3D, VRML (.wrl), glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X3D format of your choice.
+Convert **X3D, VRML 2.0 (.wrl), glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X3D format of your choice.
 
 <div id="drop-zone">
   <p id="open-files" class="center">

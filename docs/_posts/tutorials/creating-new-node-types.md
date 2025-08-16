@@ -69,6 +69,7 @@ PROTO BouncingBall [
     <Transform>
       <!-- children ... -->
     </Transform>
+    <ROUTE ... />
   </ProtoBody>
 </ProtoDeclare>
 ```
@@ -175,7 +176,7 @@ BouncingBall {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/proto/proto.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/proto/proto.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/proto/screenshot.avif" alt="BouncingBall"/>
 </x3d-canvas>
 
@@ -346,7 +347,7 @@ EXTERNPROTO BouncingBall [
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/externproto/externproto.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/externproto/externproto.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/externproto/screenshot.avif" alt="BouncingBall"/>
 </x3d-canvas>
 

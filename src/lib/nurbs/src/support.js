@@ -6,32 +6,31 @@ import inferType        from "./utils/infer-type.js";
 import isArrayLike      from "./utils/is-array-like.js";
 import sizeGetter       from "./utils/size-getter.js";
 
-var supportCache = {};
+const supportCache = {};
 
 export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
-   var cachedSupport = supportCache[cacheKey];
+   const cachedSupport = supportCache[cacheKey];
    if (cachedSupport) {
       return cachedSupport.bind(nurbs);
    }
 
-   var degree = nurbs.degree;
-   var knots = nurbs.knots;
-   var splineDimension = nurbs.splineDimension;
-   var boundary = nurbs.boundary;
+   const degree = nurbs.degree;
+   const knots = nurbs.knots;
+   const splineDimension = nurbs.splineDimension;
+   const boundary = nurbs.boundary;
 
-   var i, n, d;
-   var code = [];
-   var functionName = "support" + cacheKey;
+   const code = [];
+   const functionName = "support" + cacheKey;
 
-   var knotAccessor = accessors.knot;
+   const knotAccessor = accessors.knot;
 
-   var tVar = variable("t");
-   var domainVar = debug ? "domain" : "d";
-   var sizeVar = variable(debug ? "size" : "s");
-   var knotIndex = variable(debug ? "knotIndex" : "i");
+   const tVar = variable("t");
+   const domainVar = debug ? "domain" : "d";
+   const sizeVar = variable(debug ? "size" : "s");
+   const knotIndex = variable(debug ? "knotIndex" : "i");
 
-   var allDimensionUniform = true;
-   for (d = 0; d < splineDimension; d++) {
+   let allDimensionUniform = true;
+   for (let d = 0; d < splineDimension; ++ d) {
       if (isArrayLike(knots) && isArrayLike(knots[d])) {
          allDimensionUniform = false;
       }
@@ -42,19 +41,19 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
       code.push("  " + (str || ""));
    }
 
-   var parameterArgs = [];
-   for (i = 0; i < splineDimension; i++) {
+   const parameterArgs = [];
+   for (let i = 0; i < splineDimension; ++ i) {
       parameterArgs.push(tVar([i]));
    }
 
    code.push("function " + functionName + " (out, " + parameterArgs.join(", ") + ") {");
 
-   var c = 0;
+   let c = 0;
    function pushSupport (args, period) {
       if (period === undefined) {
-         line("out[" + (c++) + "] = " + args.join(" + ") + ";");
+         line("out[" + (c ++) + "] = " + args.join(" + ") + ";");
       } else {
-         line("out[" + (c++) + "] = (" + args.join(" + ") + " + " + period + ") % " + period + ";");
+         line("out[" + (c ++) + "] = (" + args.join(" + ") + " + " + period + ") % " + period + ";");
       }
    }
 
@@ -63,7 +62,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
 
    if (checkBounds) {
       line("var " + domainVar + " = this.domain;");
-      line("for (var i = 0; i < this.splineDimension; i++) {");
+      line("for (var i = 0; i < this.splineDimension; ++ i) {");
       line("  a = arguments[i + 1];");
       line("  if (a < " + domainVar + "[i][0] || a > " + domainVar + "[i][1] || a === undefined || isNaN(a)) {");
       line("    throw new Error(\"Invalid Spline parameter in dimension \"+i+\". Valid domain is [\"+" + domainVar + "[i][0]+\", \"+" + domainVar + "[i][1]+\"]. but got t\"+i+\" = \"+arguments[i + 1]+\".\");");
@@ -71,7 +70,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
       line("}");
    }
 
-   for (d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       line("var " + sizeVar(d) + " = " + sizeGetter(nurbs.points, "this.points", d) + ";");
    }
 
@@ -79,8 +78,8 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
       code.push(accessorPreamble(nurbs, "k", "this.knots", knots));
    }
 
-   var hasKnots = [];
-   for (d = 0; d < splineDimension; d++) {
+   const hasKnots = [];
+   for (let d = 0; d < splineDimension; ++ d) {
       switch (inferType(knots)) {
          case inferType.NDARRAY:
             hasKnots[d] = true;
@@ -91,7 +90,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
       }
    }
 
-   for (d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       if (hasKnots[d]) {
          line("var " + knotIndex(d) + " = 0;");
          line("h = " + sizeVar(d) + ";");
@@ -111,18 +110,20 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
       }
    }
 
-   for (d = 0, n = []; d < splineDimension; d++) {
+   const n = [];
+
+   for (let d = 0; d < splineDimension; ++ d) {
       n[d] = degree[d] + 1;
    }
 
    ndloop(n, function (dst) {
-      var readIdx = [];
-      var period = [];
-      for (var d = 0; d < splineDimension; d++) {
+      const readIdx = [];
+      const period = [];
+      for (let d = 0; d < splineDimension; ++ d) {
          readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
          if (boundary[d] === "closed" && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
       }
-      for (d = 0; d < splineDimension; d++) {
+      for (let d = 0; d < splineDimension; ++ d) {
          pushSupport(readIdx[d], period[d]);
       }
    });
@@ -134,7 +135,7 @@ export default function (cacheKey, nurbs, accessors, debug, checkBounds) {
 
    if (debug) console.log(code.join("\n"));
 
-   var evaluator = new Function([code.join("\n"), "; return ", functionName].join(""))();
+   const evaluator = new Function([code.join("\n"), "; return ", functionName].join(""))();
    supportCache[cacheKey] = evaluator;
    return evaluator.bind(nurbs);
-};
+}

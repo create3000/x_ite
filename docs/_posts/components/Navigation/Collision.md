@@ -15,7 +15,7 @@ tags: [Collision, Navigation]
 
 Collision detects camera-to-object contact using current view and NavigationInfo avatarSize. Collision is a Grouping node that reports collision detection for its children.
 
-The Collision node belongs to the **Navigation** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Collision node belongs to the [Navigation](/x_ite/components/overview/#navigation) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -188,7 +188,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Collision/Collision.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Collision/Collision.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Navigation/Collision/screenshot.avif" alt="Collision"/>
 </x3d-canvas>
 

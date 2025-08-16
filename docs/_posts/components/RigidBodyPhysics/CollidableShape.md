@@ -15,7 +15,7 @@ tags: [CollidableShape, RigidBodyPhysics]
 
 CollidableShape connects the collision detection system, the rigid body model, and the renderable scene graph. Contains a single Shape node (`containerField='shape')` for animating collidable geometry.
 
-The CollidableShape node belongs to the **RigidBodyPhysics** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The CollidableShape node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -133,7 +133,7 @@ The *shape* field provides a geometry proxy for specifying which geometry best r
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/CollidableShape.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/CollidableShape.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/screenshot.avif" alt="CollidableShape"/>
 </x3d-canvas>
 

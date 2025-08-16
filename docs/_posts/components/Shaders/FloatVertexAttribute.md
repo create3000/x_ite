@@ -15,7 +15,7 @@ tags: [FloatVertexAttribute, Shaders]
 
 FloatVertexAttribute defines a set of per-vertex single-precision floating-point attributes.
 
-The FloatVertexAttribute node belongs to the **Shaders** component and requires at least support level **1,** its default container field is *attrib.* It is available from X3D version 3.0 or higher.
+The FloatVertexAttribute node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *attrib.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -79,7 +79,7 @@ Required *name* for this particular VertexAttribute instance.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/FloatVertexAttribute.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/FloatVertexAttribute.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/screenshot.avif" alt="FloatVertexAttribute"/>
 </x3d-canvas>
 

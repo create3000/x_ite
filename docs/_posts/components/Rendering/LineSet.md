@@ -15,7 +15,7 @@ tags: [LineSet, Rendering]
 
 LineSet is a geometry node that can contain a Coordinate or CoordinateDouble node and optionally a Color or ColorRGBA node.
 
-The LineSet node belongs to the **Rendering** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The LineSet node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -114,7 +114,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/LineSet/screenshot.avif" alt="LineSet"/>
 </x3d-canvas>
 

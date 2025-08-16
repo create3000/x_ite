@@ -156,7 +156,7 @@ Transform {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/dinette/dinette.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/dinette/dinette.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/dinette/screenshot.avif" alt="Dinette"/>
 </x3d-canvas>
 

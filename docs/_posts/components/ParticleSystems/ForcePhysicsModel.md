@@ -15,7 +15,7 @@ tags: [ForcePhysicsModel, ParticleSystems]
 
 ForcePhysicsModel applies a constant force value to the particles.
 
-The ForcePhysicsModel node belongs to the **ParticleSystems** component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
+The ForcePhysicsModel node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -68,7 +68,7 @@ Enables/disables node operation.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/screenshot.avif" alt="ForcePhysicsModel"/>
 </x3d-canvas>
 

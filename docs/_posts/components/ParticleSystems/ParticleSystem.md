@@ -15,7 +15,7 @@ tags: [ParticleSystem, ParticleSystems]
 
 ParticleSystem specifies a complete particle system. It can contain Appearance for particle appearance, a geometry node if geometryType='GEOMETRY', a color field with Color or ColorRGBA node for changing base color over each particle's lifetime, a texcoord TextureCoordinate node to control texture coordinates of provided texture(s) in the Appearance node over time, a single emitter X3DParticleEmitterNode, and an array of physics X3DParticlePhysicsModelNode nodes.
 
-The ParticleSystem node belongs to the **ParticleSystems** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The ParticleSystem node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -297,7 +297,7 @@ Single contained *geometry* node provides *geometry* used for each particle when
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/screenshot.avif" alt="ParticleSystem"/>
 </x3d-canvas>
 

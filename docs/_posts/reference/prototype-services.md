@@ -33,19 +33,19 @@ Always has the value of false. This property is read only.
 
 Creates a new default instance of the prototype.
 
-#### **toVRMLString** (options: Options): string
+#### **toVRMLString** (options?: Options): string
 
 Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this prototype.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toXMLString** (options: Options): string
+#### **toXMLString** (options?: Options): string
 
 Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this prototype.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toJSONString** (options: Options): string
+#### **toJSONString** (options?: Options): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this prototype.
 
@@ -91,19 +91,19 @@ Creates a new default instance of the extern prototype.
 
 Triggers the loading of the extern prototype. It returns a Promise that is resolved when the extern prototype is completely loaded and all instances are updated.
 
-#### **toVRMLString** (options: Options): string
+#### **toVRMLString** (options?: Options): string
 
 Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this extern prototype.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toXMLString** (options: Options): string
+#### **toXMLString** (options?: Options): string
 
 Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this extern prototype.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toJSONString** (options: Options): string
+#### **toJSONString** (options?: Options): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this extern prototype.
 

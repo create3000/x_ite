@@ -15,7 +15,7 @@ tags: [RigidBody, RigidBodyPhysics]
 
 RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. Contains a Sphere, Box, or Cone (`containerField='massDensityModel')` and multiple CollidableOffset or CollidableShape nodes (`containerField='geometry')` for animating collidable geometry.
 
-The RigidBody node belongs to the **RigidBodyPhysics** component and requires at least support level **2,** its default container field is *bodies.* It is available from X3D version 3.2 or higher.
+The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **2,** its default container field is *bodies.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -276,7 +276,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/RigidBody.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/RigidBody.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/screenshot.avif" alt="RigidBody"/>
 </x3d-canvas>
 

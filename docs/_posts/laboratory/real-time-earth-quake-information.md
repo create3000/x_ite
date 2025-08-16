@@ -74,7 +74,7 @@ This page uses data from the <a href="https://earthquake.usgs.gov">USGS Earthqua
 
 <div class="viewer">
   <div class="viewer-row">
-     <div class="viewer-column-70"><x3d-canvas src="/x_ite/assets/laboratory/earthquakes/earthquakes.x3d" splashScreen="false"></x3d-canvas></div>
+     <div class="viewer-column-70"><x3d-canvas src="/x_ite/assets/laboratory/earthquakes/earthquakes.x3d" splashScreen="false" update="auto"></x3d-canvas></div>
      <div class="viewer-column-30">
        <div class="quakes">
          <p>

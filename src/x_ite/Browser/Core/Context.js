@@ -1,154 +1,174 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-import MOBILE      from "../../MOBILE.js";
-import DEVELOPMENT from "../../DEVELOPMENT.js";
-
 const Context =
 {
    excludes: new Set ([
       "WEBGL_debug_renderer_info",
       "WEBGL_polygon_mode",
    ]),
-   create (canvas, version, preserveDrawingBuffer)
+   create (canvas, preserveDrawingBuffer)
    {
-      const options = { preserveDrawingBuffer };
-
-      let gl = null;
-
-      if (version >= 2 && !gl)
-      {
-         gl = canvas .getContext ("webgl2", { ... options, antialias: false });
-
-         if (gl)
-            gl .getVersion = () => 2;
-      }
-
-      if (version >= 1 && !gl)
-      {
-         gl = canvas .getContext ("webgl",              options) ||
-              canvas .getContext ("experimental-webgl", options);
-
-         if (gl)
-         {
-            gl .getVersion = () => 1;
-
-            {
-               const ext = gl .getExtension ("OES_vertex_array_object");
-
-               gl .bindVertexArray   = ext .bindVertexArrayOES   .bind (ext);
-               gl .createVertexArray = ext .createVertexArrayOES .bind (ext);
-               gl .deleteVertexArray = ext .deleteVertexArrayOES .bind (ext);
-               gl .isVertexArray     = ext .isVertexArrayOES     .bind (ext);
-            }
-
-            {
-               const ext = gl .getExtension ("ANGLE_instanced_arrays");
-
-               gl .VERTEX_ATTRIB_ARRAY_DIVISOR = ext .VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE;
-
-               gl .vertexAttribDivisor   = ext .vertexAttribDivisorANGLE   .bind (ext);
-               gl .drawArraysInstanced   = ext .drawArraysInstancedANGLE   .bind (ext);
-               gl .drawElementsInstanced = ext .drawElementsInstancedANGLE .bind (ext);
-            }
-
-            {
-               const ext = gl .getExtension ("WEBGL_color_buffer_float");
-
-               gl .RGBA32F = ext .RGBA32F_EXT;
-            }
-
-            {
-               const ext = gl .getExtension ("WEBGL_draw_buffers");
-
-               gl .MAX_COLOR_ATTACHMENTS = ext .MAX_COLOR_ATTACHMENTS_WEBGL;
-               gl .drawBuffers           = ext .drawBuffersWEBGL .bind (ext);
-
-               for (let i = 0, length = gl .getParameter(gl .MAX_COLOR_ATTACHMENTS); i < length; ++ i)
-               {
-                  const COLOR_ATTACHMENTi = ext .COLOR_ATTACHMENT0_WEBGL + i;
-
-                  if (gl [`COLOR_ATTACHMENT${i}`] === undefined)
-                     gl [`COLOR_ATTACHMENT${i}`] = COLOR_ATTACHMENTi;
-               }
-            }
-         }
-      }
+      const gl = canvas .getContext ("webgl2", { antialias: false, preserveDrawingBuffer });
 
       if (!gl)
          throw new Error ("Couldn't create WebGL context.");
+
+      gl .getVersion = () => 2;
 
       // Load extensions.
 
       for (const extension of gl .getSupportedExtensions () .filter (extension => !this .excludes .has (extension)))
          gl .getExtension (extension);
 
-      // Feature detection:
+      // // Feature detection:
 
-      gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
-      gl .HAS_FEATURE_FRAG_DEPTH    = gl .getVersion () >= 2 || !! gl .getExtension ("EXT_frag_depth");
+      // // console .log (check32BitTextures (gl));
 
-      if (MOBILE)
-      {
-         // At least on iOS and Samsung Galaxy, float 32 textures are not supported.
-         // We use half float textures instead.
-
-         const ext = gl .getExtension ("EXT_color_buffer_half_float");
-
-         // Use defineProperty to overwrite property.
-         Object .defineProperty (gl, "RGBA32F",
-         {
-            value: gl .getVersion () === 1 ? ext .RGBA16F_EXT : gl .RGBA16F,
-            enumerable: true,
-         });
-      }
+      // if (!check32BitTextures (gl))
+      // {
+      //    // Use defineProperty to overwrite property.
+      //    Object .defineProperty (gl, "RGBA32F",
+      //    {
+      //       value: gl .RGBA16F,
+      //       configurable: true,
+      //       enumerable: true,
+      //    });
+      // }
 
       return gl;
    },
 }
+
+// function check32BitTextures (gl)
+// {
+//    // Create framebuffer.
+//    const colorTexture = gl .createTexture ();
+//    const framebuffer  = gl .createFramebuffer ();
+
+//    gl .bindTexture (gl .TEXTURE_2D, colorTexture);
+
+//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+//    gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (4));
+
+//    gl .bindFramebuffer (gl.FRAMEBUFFER, framebuffer);
+//    gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, colorTexture, 0);
+
+//    if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
+//       return false;
+
+//    // Vertex shader (pass through)
+//    const vsSource = `#version 300 es
+// precision highp float;
+// in vec2 x3d_Vertex;
+// void
+// main ()
+// {
+//    gl_Position = vec4 (x3d_Vertex, 0.0, 1.0);
+// }
+//   `;
+
+//   // Fragment shader
+//   const fsSource = `#version 300 es
+// precision highp float;
+// precision highp sampler2D;
+// uniform sampler2D x3d_Texture;
+// out vec4 x3d_FragColor;
+// void
+// main ()
+// {
+//    vec4 pixel = texture (x3d_Texture, vec2 (0.5, 0.5));
+
+//    float r = pixel .r == 0.0        ? 1.0 : 0.0;
+//    float g = pixel .g == 1.0        ? 1.0 : 0.0;
+//    float b = pixel .b == 16777216.0 ? 1.0 : 0.0;
+//    float a = pixel .a == 16777216.0 ? 1.0 : 0.0;
+
+//    x3d_FragColor = vec4 (r, g, b, a);
+// }
+//   `;
+
+//    // Create program.
+//    const program = createProgram (gl, vsSource, fsSource);
+//    gl .useProgram (program);
+
+//    // Quad covering the whole clip space.
+//    const quadVertices = new Float32Array ([
+//       -1, -1,
+//        1, -1,
+//       -1,  1,
+//       -1,  1,
+//        1, -1,
+//        1,  1,
+//    ]);
+
+//    // Create buffer for vertices.
+//    const buffer = gl .createBuffer ();
+//    gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+//    gl .bufferData (gl .ARRAY_BUFFER, quadVertices, gl .STATIC_DRAW);
+
+//    // Bind vertex attrib.
+//    const vertexLocation = gl .getAttribLocation (program, "x3d_Vertex");
+//    gl .enableVertexAttribArray (vertexLocation);
+//    gl .vertexAttribPointer (vertexLocation, 2, gl .FLOAT, false, 0, 0);
+
+//    // Create texture.
+//    const pixelData = new Float32Array ([0, 1, 2**24, 2**24+1]);
+//    const texture   = gl .createTexture ();
+//    const sampler   = gl .getUniformLocation (program, "x3d_Texture");
+
+//    gl .activeTexture (gl .TEXTURE0);
+//    gl .bindTexture (gl .TEXTURE_2D, texture);
+
+//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+//    gl .uniform1i (sampler, 0);
+//    gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 1, 1, 0, gl .RGBA, gl .FLOAT, pixelData);
+
+//    gl .clearColor (0, 0, 0, 0);
+//    gl .clear (gl .COLOR_BUFFER_BIT);
+//    gl .drawArrays (gl .TRIANGLES, 0, 6);
+
+//    const readData = new Uint8Array (4);
+//    gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .UNSIGNED_BYTE, readData);
+
+//    // console .log ("Original data:",  ... pixelData);
+//    // console .log ("Read-back data:", ... readData);
+//    // $(".x_ite-console") .append (document .createTextNode (readData + "\n"))
+
+//    // Cleanup
+//    gl .deleteFramebuffer (framebuffer);
+//    gl .deleteTexture (colorTexture);
+//    gl .deleteTexture (texture);
+//    gl .deleteBuffer (buffer);
+//    gl .deleteProgram (program);
+
+//    return readData .every (p => p === 255);
+// }
+
+// // Shader compile helper
+// function createShader (gl, type, source)
+// {
+//    const shader = gl.createShader (type);
+//    gl .shaderSource (shader, source);
+//    gl .compileShader(shader);
+//    return shader;
+// }
+
+// // Program link helper
+// function createProgram (gl, vsSource, fsSource)
+// {
+//    const vs = createShader (gl, gl.VERTEX_SHADER, vsSource);
+//    const fs = createShader (gl, gl.FRAGMENT_SHADER, fsSource);
+//    const program = gl .createProgram ();
+//    gl .attachShader (program, vs);
+//    gl .attachShader (program, fs);
+//    gl .linkProgram (program);
+//    return program;
+// }
 
 export default Context;

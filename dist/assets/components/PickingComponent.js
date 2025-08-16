@@ -1,5 +1,5 @@
-/* X_ITE v11.5.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.6")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -64,53 +64,6 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Browser/Picking/MatchCriterion.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 let i = 0;
 
 const MatchCriterion =
@@ -125,53 +78,6 @@ const __default__ = MatchCriterion;
 
 /* harmony default export */ const Picking_MatchCriterion = (external_X_ITE_X3D_Namespace_default().add ("MatchCriterion", __default__));
 ;// ./src/x_ite/Browser/Picking/IntersectionType.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 let IntersectionType_i = 0;
 
 const IntersectionType =
@@ -185,53 +91,6 @@ const IntersectionType_default_ = IntersectionType;
 
 /* harmony default export */ const Picking_IntersectionType = (external_X_ITE_X3D_Namespace_default().add ("IntersectionType", IntersectionType_default_));
 ;// ./src/x_ite/Browser/Picking/SortOrder.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 let SortOrder_i = 0;
 
 const SortOrder =
@@ -256,53 +115,6 @@ var external_X_ITE_X3D_QuickSort_default = /*#__PURE__*/__webpack_require__.n(ex
 const external_X_ITE_X3D_ObjectCache_namespaceObject = __X_ITE_X3D__ .ObjectCache;
 var external_X_ITE_X3D_ObjectCache_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ObjectCache_namespaceObject);
 ;// ./src/x_ite/Components/Picking/X3DPickSensorNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -446,78 +258,60 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
 
       switch (this .sortOrder)
       {
-         case Picking_SortOrder .ANY:
-         {
-            pickedTargets .length    = 1;
-            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-            pickedGeometries .length = 1;
-            break;
-         }
          case Picking_SortOrder .CLOSEST:
          {
             this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-            pickedTargets .length    = 1;
-            pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-            pickedGeometries .length = 1;
-            break;
+            // Proceed with next case:
          }
-         case Picking_SortOrder .ALL:
+         case Picking_SortOrder .ANY:
          {
-            const length = pickedTargets .length;
+            pickedGeometries [0] = null;
 
-            for (let i = 0; i < length; ++ i)
-               pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
+            const numPickedTargets = pickedTargets .length;
 
-            pickedGeometries .length = length;
+            for (let i = 0; i < numPickedTargets; ++ i)
+            {
+               if (pickedGeometries [0] = this .getPickedGeometry (pickedTargets [i]))
+                  break;
+            }
+
+            pickedGeometries .length = 1;
             break;
          }
          case Picking_SortOrder .ALL_SORTED:
          {
-            const length = pickedTargets .length;
+            this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-            this .pickedTargetsSorter .sort (0, length);
+            // Proceed with next case:
+         }
+         case Picking_SortOrder .ALL:
+         {
+            const numPickedTargets = pickedTargets .length;
 
-            for (let i = 0; i < length; ++ i)
+            for (let i = 0; i < numPickedTargets; ++ i)
                pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
-            pickedGeometries .length = length;
+            pickedGeometries .length = numPickedTargets;
             break;
          }
       }
+
+      pickedGeometries .assign (pickedGeometries .filter (node => node));
 
       return pickedGeometries;
    },
    getPickedGeometry (target)
    {
-      const
-         executionContext = this .getExecutionContext (),
-         geometryNode     = target .geometryNode;
+      const geometryNode = target .geometryNode;
 
-      if (geometryNode .getExecutionContext () === executionContext)
-         return geometryNode;
+      if (geometryNode .isPrivate ())
+         return null;
 
-      const instance = geometryNode .getExecutionContext ();
+      if (geometryNode .getExecutionContext () .isPrivate ())
+         return null;
 
-      if (instance .getType () .includes ((external_X_ITE_X3D_X3DConstants_default()).X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
-         return instance;
-
-      const pickingHierarchy = target .pickingHierarchy;
-
-      for (let i = pickingHierarchy .length - 1; i >= 0; -- i)
-      {
-         const node = pickingHierarchy [i];
-
-         if (node .getExecutionContext () === executionContext)
-            return node;
-
-         const instance = node .getExecutionContext ();
-
-         if (instance .getType () .includes ((external_X_ITE_X3D_X3DConstants_default()).X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
-            return instance;
-      }
-
-      return null;
+      return geometryNode;
    },
    getPickedTargets ()
    {
@@ -629,36 +423,33 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
          pickTargetNodes = this .pickTargetNodes,
          haveTarget      = pickingHierarchy .some (node => pickTargetNodes .has (node));
 
-      if (haveTarget)
+      if (!haveTarget)
+         return;
+
+      const targets = this .targets;
+
+      let target;
+
+      if (targets .size < targets .length)
       {
-         const targets = this .targets;
-
-         if (targets .size < targets .length)
-         {
-            var target = targets [targets .size];
-         }
-         else
-         {
-            var target = { modelMatrix: new (external_X_ITE_X3D_Matrix4_default()) (), pickingHierarchy: [ ], pickedPoint: [ ], intersections: [ ] };
-
-            targets .push (target);
-         }
-
-         ++ targets .size;
-
-         target .intersected           = false;
-         target .geometryNode          = geometryNode;
-         target .pickedPoint .length   = 0;
-         target .intersections .length = 0;
-         target .modelMatrix .assign (modelMatrix);
-
-         const destPickingHierarchy = target .pickingHierarchy;
-
-         for (let i = 0, length = pickingHierarchy .length; i < length; ++ i)
-            destPickingHierarchy [i] = pickingHierarchy [i];
-
-         destPickingHierarchy .length = length;
+         target = targets [targets .size];
       }
+      else
+      {
+         targets .push (target = {
+            modelMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
+            pickedPoint: [ ],
+            intersections: [ ],
+         });
+      }
+
+      ++ targets .size;
+
+      target .intersected           = false;
+      target .geometryNode          = geometryNode;
+      target .pickedPoint .length   = 0;
+      target .intersections .length = 0;
+      target .modelMatrix .assign (modelMatrix);
    },
    process ()
    {
@@ -686,53 +477,6 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
 const external_X_ITE_X3D_Line3_namespaceObject = __X_ITE_X3D__ .Line3;
 var external_X_ITE_X3D_Line3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Line3_namespaceObject);
 ;// ./src/x_ite/Components/Picking/LinePickSensor.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -849,8 +593,6 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .assign (pickedGeometries .filter (node => node));
-
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
@@ -896,7 +638,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
                                  b .assign (intersection .point) .subtract (point2);
 
                                  const
-                                    c = a .add (b) .magnitude (),
+                                    c = a .add (b) .norm (),
                                     s = point1 .distance (point2);
 
                                  if (c <= s)
@@ -1004,53 +746,6 @@ const LinePickSensor_default_ = LinePickSensor;
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
 ;// ./src/x_ite/Components/Picking/X3DPickableObject.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1096,53 +791,6 @@ const X3DPickableObject_default_ = X3DPickableObject;
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// ./src/x_ite/Components/Picking/PickableGroup.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1181,91 +829,99 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (external_X_IT
    },
    traverse (type, renderObject)
    {
-      if (type === (external_X_ITE_X3D_TraverseType_default()).PICKING)
-      {
-         if (this ._pickable .getValue ())
-         {
-            if (this .getObjectType () .has ("NONE"))
-               return;
-
-            const
-               browser       = this .getBrowser (),
-               pickableStack = browser .getPickable ();
-
-            if (this .getObjectType () .has ("ALL"))
-            {
-               pickableStack .push (true);
-               external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-               pickableStack .pop ();
-            }
-            else
-            {
-               // Filter pick sensors.
-
-               const
-                  pickSensorNodes = this .pickSensorNodes,
-                  pickSensorStack = browser .getPickSensors ();
-
-               for (const pickSensorNode of pickSensorStack .at (-1))
-               {
-                  if (!pickSensorNode .getObjectType () .has ("ALL"))
-                  {
-                     let intersection = 0;
-
-                     for (const objectType of this .getObjectType ())
-                     {
-                        if (pickSensorNode .getObjectType () .has (objectType))
-                        {
-                           ++ intersection;
-                           break;
-                        }
-                     }
-
-                     switch (pickSensorNode .getMatchCriterion ())
-                     {
-                        case Picking_MatchCriterion .MATCH_ANY:
-                        {
-                           if (intersection === 0)
-                              continue;
-
-                           break;
-                        }
-                        case Picking_MatchCriterion .MATCH_EVERY:
-                        {
-                           if (intersection !== pickSensor .getObjectType () .size)
-                              continue;
-
-                           break;
-                        }
-                        case Picking_MatchCriterion .MATCH_ONLY_ONE:
-                        {
-                           if (intersection !== 1)
-                              continue;
-
-                           break;
-                        }
-                     }
-                  }
-
-                  pickSensorNodes .add (pickSensorNode);
-               }
-
-               pickableStack   .push (true);
-               pickSensorStack .push (pickSensorNodes);
-
-               external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-
-               pickSensorStack .pop ();
-               pickableStack   .pop ();
-
-               pickSensorNodes .clear ();
-            }
-         }
-      }
-      else
+      if (type !== (external_X_ITE_X3D_TraverseType_default()).PICKING)
       {
          external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+         return;
       }
+
+      if (!this ._pickable .getValue ())
+      {
+         if (this .getTransformSensors () .size)
+         {
+            const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+            for (const transformSensorNode of this .getTransformSensors ())
+               transformSensorNode .collect (modelMatrix);
+         }
+
+         return;
+      }
+
+      if (this .getObjectType () .has ("NONE"))
+         return;
+
+      const
+         browser       = this .getBrowser (),
+         pickableStack = browser .getPickable ();
+
+      if (this .getObjectType () .has ("ALL"))
+      {
+         pickableStack .push (true);
+         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+         pickableStack .pop ();
+         return;
+      }
+
+      // Filter pick sensors.
+
+      const
+         pickSensorNodes = this .pickSensorNodes,
+         pickSensorStack = browser .getPickSensors ();
+
+      for (const pickSensorNode of pickSensorStack .at (-1))
+      {
+         if (!pickSensorNode .getObjectType () .has ("ALL"))
+         {
+            let intersection = 0;
+
+            for (const objectType of this .getObjectType ())
+            {
+               if (pickSensorNode .getObjectType () .has (objectType))
+               {
+                  ++ intersection;
+                  break;
+               }
+            }
+
+            switch (pickSensorNode .getMatchCriterion ())
+            {
+               case Picking_MatchCriterion .MATCH_ANY:
+               {
+                  if (intersection === 0)
+                     continue;
+
+                  break;
+               }
+               case Picking_MatchCriterion .MATCH_EVERY:
+               {
+                  if (intersection !== pickSensor .getObjectType () .size)
+                     continue;
+
+                  break;
+               }
+               case Picking_MatchCriterion .MATCH_ONLY_ONE:
+               {
+                  if (intersection !== 1)
+                     continue;
+
+                  break;
+               }
+            }
+         }
+
+         pickSensorNodes .add (pickSensorNode);
+      }
+
+      pickableStack   .push (true);
+      pickSensorStack .push (pickSensorNodes);
+
+      external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+
+      pickSensorStack .pop ();
+      pickableStack   .pop ();
+
+      pickSensorNodes .clear ();
    },
    dispose ()
    {
@@ -1310,53 +966,6 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
 const external_X_ITE_X3D_AmmoClass_namespaceObject = __X_ITE_X3D__ .AmmoClass;
 var external_X_ITE_X3D_AmmoClass_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_AmmoClass_namespaceObject);
 ;// ./src/x_ite/Browser/Picking/VolumePicker.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1407,7 +1016,7 @@ Object .assign (VolumePicker .prototype,
       const
          translation = new (external_X_ITE_X3D_Vector3_default()) (),
          rotation    = new (external_X_ITE_X3D_Rotation4_default()) (),
-         scale       = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1),
+         scale       = new (external_X_ITE_X3D_Vector3_default()) (1),
          s           = new (external_X_ITE_X3D_AmmoClass_default()).btVector3 (0, 0, 0);
 
       return function (compoundShape, matrix, childShape)
@@ -1491,53 +1100,6 @@ const VolumePicker_default_ = VolumePicker;
 
 /* harmony default export */ const Picking_VolumePicker = (external_X_ITE_X3D_Namespace_default().add ("VolumePicker", VolumePicker_default_));
 ;// ./src/x_ite/Components/Picking/PointPickSensor.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1643,7 +1205,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
          localScaling  = new (external_X_ITE_X3D_AmmoClass_default()).btVector3 (),
          translation   = new (external_X_ITE_X3D_Vector3_default()) (),
          rotation      = new (external_X_ITE_X3D_Rotation4_default()) (),
-         scale         = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1),
+         scale         = new (external_X_ITE_X3D_Vector3_default()) (1),
          pickedPoint   = new (external_X_ITE_X3D_Fields_default()).MFVec3f ();
 
       return function ()
@@ -1802,53 +1364,6 @@ const PointPickSensor_default_ = PointPickSensor;
 
 /* harmony default export */ const Picking_PointPickSensor = (external_X_ITE_X3D_Namespace_default().add ("PointPickSensor", PointPickSensor_default_));
 ;// ./src/x_ite/Components/Picking/PrimitivePickSensor.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2052,53 +1567,6 @@ const PrimitivePickSensor_default_ = PrimitivePickSensor;
 
 /* harmony default export */ const Picking_PrimitivePickSensor = (external_X_ITE_X3D_Namespace_default().add ("PrimitivePickSensor", PrimitivePickSensor_default_));
 ;// ./src/x_ite/Components/Picking/VolumePickSensor.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2277,53 +1745,6 @@ const VolumePickSensor_default_ = VolumePickSensor;
 
 /* harmony default export */ const Picking_VolumePickSensor = (external_X_ITE_X3D_Namespace_default().add ("VolumePickSensor", VolumePickSensor_default_));
 ;// ./src/assets/components/PickingComponent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 

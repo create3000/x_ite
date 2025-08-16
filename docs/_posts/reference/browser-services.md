@@ -291,9 +291,9 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>AutoUpdate</td>
-         <td>Whether the update control of the browser should be done automatically or not. <small class="blue">non-standard</small></td>
+         <td>Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if x3d-canvas is not visible.<small class="blue">non-standard</small></td>
          <td>Boolean</td>
-         <td>true</td>
+         <td>false</td>
       </tr>
       <tr>
          <td>Cache</td>
@@ -400,7 +400,7 @@ Returns a browser option with the corresponding *name*.
       <tr>
          <td>XRSessionMode</td>
          <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a>. <small class="blue">non-standard</small></td>
-         <td>NONE, IMMERSIVE_AR, IMMERSIVE_VR</td>
+         <td>NONE, IMMERSIVE_AR, IMMERSIVE_VR, INLINE</td>
          <td>IMMERSIVE_VR</td>
       </tr>
    </tbody>

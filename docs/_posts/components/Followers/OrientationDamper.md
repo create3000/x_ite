@@ -15,7 +15,7 @@ tags: [OrientationDamper, Followers]
 
 OrientationDamper generates a series of 4-tuple axis-angle SFRotation values that progressively change from initial value to destination value.
 
-The OrientationDamper node belongs to the **Followers** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The OrientationDamper node belongs to the [Followers](/x_ite/components/overview/#followers) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

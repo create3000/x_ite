@@ -15,7 +15,7 @@ tags: [SliderJoint, RigidBodyPhysics]
 
 SliderJoint constrains all movement between body1 and body2 along a single axis. Contains two RigidBody nodes (containerField values body1, body2).
 
-The SliderJoint node belongs to the **RigidBodyPhysics** component and requires at least support level **2,** its default container field is *joints.* It is available from X3D version 3.2 or higher.
+The SliderJoint node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **2,** its default container field is *joints.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -139,7 +139,7 @@ The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigi
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/SliderJoint/SliderJoint.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/SliderJoint/SliderJoint.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/SliderJoint/screenshot.avif" alt="SliderJoint"/>
 </x3d-canvas>
 

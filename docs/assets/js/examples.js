@@ -1,4 +1,4 @@
-$("table.examples a") .on ("click", function ()
+$(".examples a") .on ("click", function ()
 {
    Examples .shared .load ($(this));
    return false;
@@ -32,6 +32,7 @@ class Examples
 
       this .#canvas = $("<x3d-canvas></x3d-canvas>")
          .attr ("contentScale", "auto")
+         .attr ("update", "auto")
          .appendTo (this .#element);
 
       this .#browser = this .#canvas .prop ("browser");

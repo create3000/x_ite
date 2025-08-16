@@ -15,7 +15,7 @@ tags: [Viewpoint, Navigation]
 
 Viewpoint provides a specific location and direction where the user may view the scene. Viewpoints are the primary way for a user to navigate within a scene, and for an author to show critical aspects of a model. Unless modified by the orientation field, the default direction for a Viewpoint to look is along the -Z axis.
 
-The Viewpoint node belongs to the **Navigation** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Viewpoint node belongs to the [Navigation](/x_ite/components/overview/#navigation) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -241,7 +241,7 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Navigation/Viewpoint/screenshot.avif" alt="Viewpoint"/>
 </x3d-canvas>
 

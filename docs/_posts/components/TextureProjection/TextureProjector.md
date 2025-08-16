@@ -15,7 +15,7 @@ tags: [TextureProjection, TextureProjector]
 
 TextureProjector is similar to a light that projects a texture into the scene, illuminating geometry that intersects the perspective projection volume.
 
-The TextureProjector node belongs to the **TextureProjection** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The TextureProjector node belongs to the [TextureProjection](/x_ite/components/overview/#textureprojection) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -196,7 +196,7 @@ Size of the shadow map in pixels, must be power of two.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/screenshot.avif" alt="TextureProjector"/>
 </x3d-canvas>
 

@@ -15,7 +15,7 @@ tags: [Inline, Networking]
 
 Inline can load another X3D or VRML model into the current scene via url. Inline is an X3DBoundedObject node that has bounding-box dimensions.
 
-The Inline node belongs to the **Networking** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Inline node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -101,6 +101,7 @@ Address of X3D world to load Inline with current scene, retrieved either from lo
 
 - [GlTF support requires X3D version='4.0' and `profile='Full'` or else `<component name='Networking' level='4'/>` `<component name='Shape' level='4'/>` `<component name='Lighting' level='4'/>`](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/networking.html#t-supportLevels)
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
+- Direct or indirect recursion by Inline and/or ExternProtoDeclare *url* reloading is a security error.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 {: #fields-autoRefresh }
@@ -178,7 +179,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | X3D XML          | .x3d, .x3dz    | model/x3d+xml   |
 | X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |
 | X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
-| VRML             | .wrl, .wrz     | model/vrml      |
+| VRML 2.0         | .wrl, .wrz     | model/vrml      |
 | glTF             | .gltf, .glb    | model/gltf+json |
 | Wavefront OBJ    | .obj           | model/obj       |
 | STL              | .stl           | model/stl       |
@@ -201,7 +202,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Networking/Inline/screenshot.avif" alt="Inline"/>
 </x3d-canvas>
 

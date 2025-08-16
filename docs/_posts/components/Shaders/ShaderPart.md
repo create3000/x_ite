@@ -15,7 +15,7 @@ tags: [ShaderPart, Shaders]
 
 ShaderPart defines the source for a portion of source code used by a ComposedShader node. The source is not required to be a complete shader for all of the vertex/fragment processing.
 
-The ShaderPart node belongs to the **Shaders** component and requires at least support level **1,** its default container field is *parts.* It is available from X3D version 3.0 or higher.
+The ShaderPart node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *parts.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -139,7 +139,7 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shaders/ShaderPart/screenshot.avif" alt="ShaderPart"/>
 </x3d-canvas>
 

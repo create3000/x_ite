@@ -132,7 +132,7 @@ Shape {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.avif" alt="Cylinder"/>
 </x3d-canvas>
 
@@ -143,7 +143,7 @@ Shape {
 ## Building multiple shapes
 
 - Shapes are built centered in the world
-- A X3D file can contain multiple shapes
+- An X3D file can contain multiple shapes
 - Shapes overlap when built at the same location
 
 ## A sample file with multiple shapes
@@ -202,7 +202,7 @@ Shape {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/screenshot.avif" alt="Multiple Shapes"/>
 </x3d-canvas>
 

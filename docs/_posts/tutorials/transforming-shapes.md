@@ -15,7 +15,7 @@ tags: [Transforming, Shapes]
 
 ## Using coordinate systems
 
-- A X3D file builds components for a world
+- An X3D file builds components for a world
 - A file's world components are built in the file's world coordinate system
 - By default, all shapes are built at the origin of the world coordinate system
 
@@ -267,7 +267,7 @@ Transform {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder2/cylinder2.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder2/cylinder2.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/cylinder2/screenshot.avif" alt="Cylinder"/>
 </x3d-canvas>
 

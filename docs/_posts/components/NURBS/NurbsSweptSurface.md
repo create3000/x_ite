@@ -15,7 +15,7 @@ tags: [NurbsSweptSurface, NURBS]
 
 NurbsSweptSurface uses a trajectoryCurve path to describe a generalized surface that is swept by a crossSectionCurve.
 
-The NurbsSweptSurface node belongs to the **NURBS** component and requires at least support level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The NurbsSweptSurface node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -93,7 +93,7 @@ Describes the center-line path using a [NurbsCurve](/x_ite/components/nurbs/nurb
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/NurbsSweptSurface.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/NurbsSweptSurface.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/screenshot.avif" alt="NurbsSweptSurface"/>
 </x3d-canvas>
 

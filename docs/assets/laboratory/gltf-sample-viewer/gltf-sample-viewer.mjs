@@ -1,78 +1,13 @@
+// https://github.khronos.org/glTF-Sample-Viewer-Release/
+// https://github.khronos.org/3DC-Sample-Viewer/
+
 // EnvironmentLight
 
-const ibl_files = [
-   "ABeautifulGame",
-   "AlphaBlendModeTest",
-   "AnimatedCube",
-   "AnimationPointerUVs",
-   "Anisotropy",
-   "AntiqueCamera",
-   "AttenuationTest",
-   "BarramundiFish",
-   "Bee",
-   "BlackDragon",
-   "Bonsai",
-   "BoomBox",
-   "Box With Spaces",
-   "BrainStem",
-   "CarbonFibre",
-   "CarConcept",
-   "Cesium",
-   "ChairDamaskPurplegold",
-   "Chronograph",
-   "Clearcoat",
-   "ClearCoat",
-   "CommercialRefrigerator",
-   "Compare",
-   "Corset",
-   "Cube",
-   "Dispersion",
-   "DragonAttenuation",
-   "EmissiveStrengthTest",
-   "Engine",
-   "EnvironmentTest",
-   "Glam",
-   "GlassBrokenWindow",
-   "GlassHurricaneCandleHolder",
-   "GlassVaseFlowers",
-   "GunBot",
-   "Helmet",
-   "IORTestGrid",
-   "Iridescence",
-   "Iridescent",
-   "Lantern",
-   "MandarinOrange",
-   "MaterialsVariantsShoe",
-   "MeshPrimitiveModes",
-   "MetalRoughSpheres",
-   "Morph",
-   "MosquitoInAmber",
-   "NegativeScaleTest",
-   "NeilArmstrong",
-   "NormalTangentMirrorTest",
-   "NormalTangentTest",
-   "OrientationTest",
-   "PotOfCoals",
-   "PrimitiveModeNormalsTest",
-   "ReciprocatingSaw",
-   "RecursiveSkeletons",
-   "Sheen",
-   "SimpleInstancing",
-   "SpecGlossVsMetalRough",
-   "Specular",
-   "Sponza",
-   "StainedGlassLamp",
-   "SunglassesKhronos",
-   "Suzanne",
-   "Telephone",
-   "TextureEncodingTest",
-   "TextureTransformMultiTest",
-   "ToyCar",
-   "Transmission",
-   "Walking Alien",
-   "WaterBottle",
-   "WebP",
-   "YetiWarrior",
+const no_ibl = [
+   "DirectionalLight",
+   "LightsPunctualLamp",
+   "PlaysetLightTest",
+   "PointLightIntensityTest",
 ];
 
 // KHR_lights_punctual
@@ -82,6 +17,8 @@ const no_headlight = [
    "GlamVelvetSofa",
    "IridescenceSuzanne",
    "LightsPunctualLamp",
+   "PlaysetLightTest",
+   "PointLightIntensityTest",
 ];
 
 // SAMPLES_BEGIN
@@ -92,6 +29,7 @@ const models = [
    "https://create3000.github.io/media/glTF/Bonsai 1/Bonsai 1.gltf",
    "https://create3000.github.io/media/glTF/Bus Stop 1/Bus Stop 1.gltf",
    "https://create3000.github.io/media/glTF/FurInstancing/FurInstancing.glb",
+   "https://create3000.github.io/media/glTF/Futuristic Bike/Futuristic Bike.gltf",
    "https://create3000.github.io/media/glTF/GunBot/GunBot.glb",
    "https://create3000.github.io/media/glTF/NeilArmstrong/NeilArmstrong.glb",
    "https://create3000.github.io/media/glTF/Telephone/Telephone.gltf",
@@ -101,6 +39,14 @@ const models = [
 ];
 
 const glTF = [
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalCubes/glTF/AnalyticalCubes.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalGrayscale/glTF/AnalyticalGrayscale.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalSpheres/glTF/AnalyticalSpheres.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/GreenChair/glTF/GreenChair.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/Mixer/glTF/Mixer.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/Shoe/glTF/Shoe.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/TennisRacquet/glTF/TennisRacquet.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/WickerChair/glTF/WickerChair.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ABeautifulGame/glTF/ABeautifulGame.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AlphaBlendModeTest/glTF/AlphaBlendModeTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnimatedColorsCube/glTF/AnimatedColorsCube.gltf",
@@ -203,6 +149,7 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RecursiveSkeletons/glTF/RecursiveSkeletons.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedFigure/glTF/RiggedFigure.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedSimple/glTF/RiggedSimple.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ScatteringSkull/glTF/ScatteringSkull.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SciFiHelmet/glTF/SciFiHelmet.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenChair/glTF/SheenChair.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenCloth/glTF/SheenCloth.gltf",
@@ -349,6 +296,14 @@ const glTF = [
 ];
 
 const glb = [
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalCubes/glTF-Binary/AnalyticalCubes.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalGrayscale/glTF-Binary/AnalyticalGrayscale.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalSpheres/glTF-Binary/AnalyticalSpheres.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/GreenChair/glTF-Binary/GreenChair.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/Mixer/glTF-Binary/Mixer.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/Shoe/glTF-Binary/Shoe.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/TennisRacquet/glTF-Binary/TennisRacquet.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/WickerChair/glTF-Binary/WickerChair.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AlphaBlendModeTest/glTF-Binary/AlphaBlendModeTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnimatedColorsCube/glTF-Binary/AnimatedColorsCube.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnimatedMorphCube/glTF-Binary/AnimatedMorphCube.glb",
@@ -437,6 +392,7 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RecursiveSkeletons/glTF-Binary/RecursiveSkeletons.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedFigure/glTF-Binary/RiggedFigure.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedSimple/glTF-Binary/RiggedSimple.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ScatteringSkull/glTF-Binary/ScatteringSkull.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenChair/glTF-Binary/SheenChair.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenTestGrid/glTF-Binary/SheenTestGrid.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenWoodLeatherSofa/glTF-Binary/SheenWoodLeatherSofa.glb",
@@ -665,12 +621,12 @@ const ibl = [
 
 const webp = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF-WEBP/CarConcept.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-WebP/ChronographWatch-WebP.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-WEBP/ChronographWatch.gltf",
 ];
 
 const ktx = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnisotropyBarnLamp/glTF-KTX-BasisU/AnisotropyBarnLamp.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-KTX/ChronographWatch-KTX.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-KTX-BasisU/ChronographWatch.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
@@ -691,6 +647,11 @@ $.try = function (callback)
 
 class SampleViewer
 {
+   static run (browser)
+   {
+      this .viewer = new SampleViewer (browser);
+   }
+
    constructor (browser)
    {
       browser .setBrowserOption ("ColorSpace", "LINEAR");
@@ -866,7 +827,7 @@ class SampleViewer
       await this .browser .loadURL (new X3D .MFString (filename));
 
       this .viewAll ();
-      this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
+      this .setEnvironmentLight (!no_ibl .some (name => filename .includes (name)));
       this .setHeadlight (!no_headlight .some (name => filename .includes (name)));
       this .setToneMapping (this .localStorage .toneMapping);
       this .setBackground (this .localStorage .background);
@@ -905,11 +866,7 @@ class SampleViewer
 
       const
          url         = new URL (`images/${image}`, import .meta .url),
-         diffuseURL  = new X3D .MFString (`${url}-diffuse.avif`,  `${url}-diffuse.jpg`),
-         specularURL = new X3D .MFString (`${url}-specular.avif`, `${url}-specular.jpg`);
-
-      if (!environmentLight .diffuseTexture .url .equals (diffuseURL))
-         environmentLight .diffuseTexture .url = diffuseURL;
+         specularURL = new X3D .MFString (`${url}.avif`, `${url}.jpg`);
 
       if (!environmentLight .specularTexture .url .equals (specularURL))
          environmentLight .specularTexture .url = specularURL;
@@ -919,32 +876,22 @@ class SampleViewer
 
    async getEnvironmentLight ()
    {
-      if (this .environmentLight)
-         return this .environmentLight;
+      return this .environmentLight ??= await (async () =>
+      {
+         this .scene .addComponent (this .browser .getComponent ("CubeMapTexturing"));
 
-      this .scene .addComponent (this .browser .getComponent ("CubeMapTexturing"));
+         await this .browser .loadComponents (this .scene);
 
-      await this .browser .loadComponents (this .scene);
+         const
+            environmentLight = this .scene .createNode ("EnvironmentLight"),
+            specularTexture  = this .scene .createNode ("ImageCubeMapTexture");
 
-      const
-         environmentLight  = this .scene .createNode ("EnvironmentLight"),
-         diffuseTexture    = this .scene .createNode ("ImageCubeMapTexture"),
-         specularTexture   = this .scene .createNode ("ImageCubeMapTexture"),
-         textureProperties = this .scene .createNode ("TextureProperties");
+         environmentLight .intensity       = 1;
+         environmentLight .color           = new X3D .SFColor (1, 1, 1);
+         environmentLight .specularTexture = specularTexture;
 
-      textureProperties .generateMipMaps     = true;
-      textureProperties .minificationFilter  = "NICEST";
-      textureProperties .magnificationFilter = "NICEST";
-
-      diffuseTexture  .textureProperties = textureProperties;
-      specularTexture .textureProperties = textureProperties;
-
-      environmentLight .intensity       = 1;
-      environmentLight .color           = new X3D .SFColor (1, 1, 1);
-      environmentLight .diffuseTexture  = diffuseTexture;
-      environmentLight .specularTexture = specularTexture;
-
-      return this .environmentLight = environmentLight;
+         return environmentLight;
+      })();
    }
 
    async setHeadlight (on)
@@ -970,12 +917,7 @@ class SampleViewer
 
    async getNavigationInfo ()
    {
-      if (this .navigationInfo)
-         return this .navigationInfo;
-
-      const navigationInfo = this .scene .createNode ("NavigationInfo");
-
-      return this .navigationInfo = navigationInfo;
+      return this .navigationInfo ??= this .scene .createNode ("NavigationInfo");
    }
 
    setExposure (value)
@@ -1025,17 +967,17 @@ class SampleViewer
 
    async getBackground ()
    {
-      if (this .background)
-         return this .background;
+      return this .background ??= (() =>
+      {
+         const background = this .scene .createNode ("Background");
 
-      const background = this .scene .createNode ("Background");
+         background .skyAngle    = [0.8, 1.3, 1.4, 1.5708];
+         background .skyColor    = [0.21, 0.31, 0.59, 0.33, 0.45, 0.7, 0.57, 0.66, 0.85, 0.6, 0.73, 0.89, 0.7, 0.83, 0.98] .map (v => Math .pow (v, 2.2));
+         background .groundAngle = [0.659972, 1.2, 1.39912, 1.5708];
+         background .groundColor = [0.105712, 0.156051, 0.297, 0.187629, 0.255857, 0.398, 0.33604, 0.405546, 0.542, 0.3612, 0.469145, 0.602, 0.39471, 0.522059, 0.669] .map (v => Math .pow (v, 2.2));
 
-      background .skyAngle    = [0.8, 1.3, 1.4, 1.5708];
-      background .skyColor    = [0.21, 0.31, 0.59, 0.33, 0.45, 0.7, 0.57, 0.66, 0.85, 0.6, 0.73, 0.89, 0.7, 0.83, 0.98] .map (v => Math .pow (v, 2.2));
-      background .groundAngle = [0.659972, 1.2, 1.39912, 1.5708];
-      background .groundColor = [0.105712, 0.156051, 0.297, 0.187629, 0.255857, 0.398, 0.33604, 0.405546, 0.542, 0.3612, 0.469145, 0.602, 0.39471, 0.522059, 0.669] .map (v => Math .pow (v, 2.2));
-
-      return this .background = background;
+         return background;
+      })();
    }
 
    addScenes ()
@@ -1202,4 +1144,4 @@ class SampleViewer
    }
 }
 
-const viewer = new SampleViewer (X3D .getBrowser ());
+SampleViewer .run (X3D .getBrowser ());

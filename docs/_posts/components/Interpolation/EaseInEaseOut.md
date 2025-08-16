@@ -15,7 +15,7 @@ tags: [EaseInEaseOut, Interpolation]
 
 EaseInEaseOut enables gradual animation transitions by modifying TimeSensor fraction outputs. Output values are modified fractions. Authors can ROUTE value_changed output events to an interpolator, a sequencer, or another SFFloat attribute.
 
-The EaseInEaseOut node belongs to the **Interpolation** component and requires at least support level **4,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The EaseInEaseOut node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **4,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

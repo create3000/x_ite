@@ -15,7 +15,7 @@ tags: [Transform, Grouping]
 
 Transform is a Grouping node that can contain most nodes. Transform translates, orients and scales child geometry within the local world coordinate system.
 
-The Transform node belongs to the **Grouping** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Transform node belongs to the [Grouping](/x_ite/components/overview/#grouping) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -184,7 +184,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/Transform/Transform.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/Transform/Transform.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Grouping/Transform/screenshot.avif" alt="Transform"/>
 </x3d-canvas>
 

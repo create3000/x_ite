@@ -38,7 +38,7 @@ x3d-canvas {
   <tbody>
     <tr>
       <td style="width: 50%;">
-        <x3d-canvas class="l-system" splashScreen="false" src="/x_ite/assets/laboratory/l-system/l-system.x3d"></x3d-canvas>
+        <x3d-canvas class="l-system" splashScreen="false" update="auto" src="/x_ite/assets/laboratory/l-system/l-system.x3d"></x3d-canvas>
         <p>
           <a class="download l-system" href="#">Download X3D File</a>
           |

@@ -1,4 +1,4 @@
-export default /* glsl */ `#version 300 es
+export default () => /* glsl */ `#version 300 es
 
 precision highp float;
 
@@ -69,13 +69,16 @@ unProjectPoint (const in vec3 win, const in mat4 invModelViewProjection, const i
 void
 main ()
 {
+   vec4 inVertex0 = x3d_Vertex0;
+   vec4 inVertex1 = x3d_Vertex1;
+
    #if defined (X3D_INSTANCING)
-      vec3 projected0 = projectPoint (x3d_InstanceMatrix * x3d_Vertex0, modelViewProjectionMatrix, viewport);
-      vec3 projected1 = projectPoint (x3d_InstanceMatrix * x3d_Vertex1, modelViewProjectionMatrix, viewport);
-   #else
-      vec3 projected0 = projectPoint (x3d_Vertex0, modelViewProjectionMatrix, viewport);
-      vec3 projected1 = projectPoint (x3d_Vertex1, modelViewProjectionMatrix, viewport);
+      inVertex0 = x3d_InstanceMatrix * inVertex0;
+      inVertex1 = x3d_InstanceMatrix * inVertex1;
    #endif
+
+   vec3 projected0 = projectPoint (inVertex0, modelViewProjectionMatrix, viewport);
+   vec3 projected1 = projectPoint (inVertex1, modelViewProjectionMatrix, viewport);
 
    // Test if point is behind zNear.
    float neg0 = projected0 .z > 1.0 ? -1.0 : 1.0;
@@ -93,10 +96,10 @@ main ()
    // |   \ |
    // 1 --- 2
 
+   mat4 unProjectMatrix = invModelViewProjectionMatrix;
+
    #if defined (X3D_INSTANCING)
-      mat4 unProjectMatrix = inverse (x3d_InstanceMatrix) * invModelViewProjectionMatrix;
-   #else
-      mat4 unProjectMatrix = invModelViewProjectionMatrix;
+      unProjectMatrix = inverse (x3d_InstanceMatrix) * unProjectMatrix;
    #endif
 
    if (gl_InstanceID % 2 == 0)

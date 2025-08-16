@@ -10,11 +10,54 @@
     <meta name='created' content='Sat, 28 Jan 2023 13:31:50 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.63, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.8.8, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Tue, 08 Apr 2025 10:15:31 GMT'/>
+    <meta name='modified' content='Sat, 17 May 2025 20:35:40 GMT'/>
   </head>
   <Scene>
+    <ProtoDeclare name='ColorScheme'>
+      <ProtoInterface>
+        <field accessType='outputOnly' type='SFBool' name='light'/>
+        <field accessType='outputOnly' type='SFBool' name='dark'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Script DEF='ColorSchemeScript'>
+          <field accessType='outputOnly' type='SFBool' name='light'/>
+          <field accessType='outputOnly' type='SFBool' name='dark'/>
+          <IS>
+            <connect nodeField='light' protoField='light'/>
+            <connect nodeField='dark' protoField='dark'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   const colorScheme = window .matchMedia ("(prefers-color-scheme: light)");
+
+   colorScheme .addEventListener ("change", event => changeColorScheme (event));
+
+   changeColorScheme (colorScheme);
+}
+
+function changeColorScheme (event)
+{
+   light = event .matches;
+
+   if (typeof $ !== "undefined")
+   {
+      if ($("html") .attr ("data-mode") === "light")
+         light = true;
+
+      if ($("html") .attr ("data-mode") === "dark")
+         light = false;
+   }
+
+   dark = !light;
+}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
     <WorldInfo
         title='teaser'>
       <MetadataSet containerField='metadata'
@@ -51,7 +94,7 @@
                 loop='true'/>
           </UnlitMaterial>
         </Appearance>
-        <Rectangle2D DEF='_1'/>
+        <Rectangle2D DEF='_7'/>
       </Shape>
     </Transform>
     <Transform DEF='Rectangle2D'
@@ -63,7 +106,7 @@
               emissiveColor='0 0 0'
               transparency='0.5567618'/>
         </Appearance>
-        <Rectangle2D USE='_1'/>
+        <Rectangle2D USE='_7'/>
       </Shape>
     </Transform>
     <Transform DEF='Text_1'
@@ -85,7 +128,7 @@
             <UnlitMaterial/>
           </Appearance>
           <Text DEF='_5'
-              string='"X_ITE v11.5.0"'
+              string='"X_ITE v11.5.8"'
               solid='true'>
             <FontStyle
                 family='"Neuropol.otf", "SANS"'
@@ -109,6 +152,7 @@ function initialize ()
 ]]>
       </Script>
     </Transform>
+    <ProtoInstance name='ColorScheme'/>
     <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
     <ROUTE fromNode='_6' fromField='touchTime' toNode='_2' toField='set_startTime'/>
     <ROUTE fromNode='_2' fromField='fraction_changed' toNode='_3' toField='set_fraction'/>

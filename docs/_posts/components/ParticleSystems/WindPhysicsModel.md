@@ -15,7 +15,7 @@ tags: [WindPhysicsModel, ParticleSystems]
 
 WindPhysicsModel applies a wind effect to the particles. The wind includes a random variation factor to model gustiness.
 
-The WindPhysicsModel node belongs to the **ParticleSystems** component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
+The WindPhysicsModel node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -81,7 +81,7 @@ Initial linear *speed* (default is m/s) imparted to all particles along their di
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/screenshot.avif" alt="WindPhysicsModel"/>
 </x3d-canvas>
 

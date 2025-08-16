@@ -15,7 +15,7 @@ tags: [Cylinder, Geometry3D]
 
 Cylinder is a geometry node.
 
-The Cylinder node belongs to the **Geometry3D** component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Cylinder node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -113,7 +113,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/Cylinder/Cylinder.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/Cylinder/Cylinder.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry3D/Cylinder/screenshot.avif" alt="Cylinder"/>
 </x3d-canvas>
 

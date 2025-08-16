@@ -15,7 +15,7 @@ tags: [LineProperties, Shape]
 
 LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry nodes inside the same Shape.
 
-The LineProperties node belongs to the **Shape** component and requires at least support level **2,** its default container field is *lineProperties.* It is available from X3D version 3.0 or higher.
+The LineProperties node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **2,** its default container field is *lineProperties.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -76,7 +76,7 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shape/LineProperties/screenshot.avif" alt="LineProperties"/>
 </x3d-canvas>
 

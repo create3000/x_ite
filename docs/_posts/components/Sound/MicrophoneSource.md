@@ -15,7 +15,7 @@ tags: [MicrophoneSource, Sound]
 
 MicrophoneSource captures input from a physical microphone in the real world.
 
-The MicrophoneSource node belongs to the **Sound** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The MicrophoneSource node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -170,7 +170,7 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/screenshot.avif" alt="MicrophoneSource"/>
 </x3d-canvas>
 

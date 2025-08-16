@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                       from "../../Fields.js";
 import X3DFieldDefinition           from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray         from "../../Base/FieldDefinitionArray.js";
@@ -69,6 +22,10 @@ function CADFace (executionContext)
    this .setCollisionObject (true);
    this .setShadowObject (true);
    this .setVisibleObject (true);
+
+   // Private properties
+
+   this .visibleObjects = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureChildNode .prototype),
@@ -91,6 +48,13 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   getShapes (shapes, modelMatrix)
+   {
+      for (const visibleObject of this .visibleObjects)
+         visibleObject .getShapes (shapes, modelMatrix);
+
+      return shapes;
    },
    requestRebuild ()
    {
@@ -132,8 +96,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleObject   = null;
-      this .bboxObject      = null;
+
+      this .visibleObjects .length = 0;
 
       // Add node.
 
@@ -180,7 +144,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                         this .shadowObject = childNode;
 
                      if (childNode .isVisibleObject ())
-                        this .visibleObject = childNode;
+                        this .visibleObjects .push (childNode);
                   }
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -189,7 +153,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                      childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                      if (childNode .isBBoxVisible ())
-                        this .bboxObject = childNode;
+                        this .visibleObjects .push (childNode .getBBoxNode ());
                   }
 
                   break;
@@ -236,7 +200,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleObject || this .bboxObject);
+      this .setVisibleObject (this .visibleObjects .length);
    },
    traverse (type, renderObject)
    {
@@ -254,15 +218,18 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
          case TraverseType .PICKING:
          {
-            // X3DNBodyCollidableNode cannot be pickTarget of a X3DPickSensorNode,
-            // so we do not need to a this node to pickingHierarchy.
+            // CADFace can't be pickTarget of a X3DPickSensorNode or TransformSensor,
+            // so we do not need to add this node to the pickingHierarchy.
 
-            const browser = this .getBrowser ();
-
-            if (browser .getPickable () .at (-1))
-               this .visibleObject ?.traverse (type, renderObject);
+            if (this .getBrowser () .getPickable () .at (-1))
+            {
+               for (const visibleObject of this .visibleObjects)
+                  visibleObject .traverse (type, renderObject);
+            }
             else
+            {
                this .pickableObject ?.traverse (type, renderObject);
+            }
 
             return;
          }
@@ -278,8 +245,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleObject ?.traverse    (type, renderObject);
-            this .bboxObject    ?.displayBBox (type, renderObject);
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
             return;
          }
       }

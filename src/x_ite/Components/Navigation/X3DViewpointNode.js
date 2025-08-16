@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                  from "../../Fields.js";
 import X3DNode                 from "../Core/X3DNode.js";
 import X3DBindableNode         from "../Core/X3DBindableNode.js";
@@ -311,7 +264,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       // Local y-axis,
       // see https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo.
-      return Vector3 .yAxis;
+      return Vector3 .Y_AXIS;
    },
    getSpeedFactor ()
    {
@@ -444,11 +397,11 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    resetUserOffsets ()
    {
-      this ._positionOffset         = Vector3   .Zero;
-      this ._orientationOffset      = Rotation4 .Identity;
-      this ._scaleOffset            = Vector3   .One;
-      this ._scaleOrientationOffset = Rotation4 .Identity;
-      this ._centerOfRotationOffset = Vector3   .Zero;
+      this ._positionOffset         = Vector3   .ZERO;
+      this ._orientationOffset      = Rotation4 .IDENTITY;
+      this ._scaleOffset            = Vector3   .ONE;
+      this ._scaleOrientationOffset = Rotation4 .IDENTITY;
+      this ._centerOfRotationOffset = Vector3   .ZERO;
       this ._fieldOfViewScale       = 1;
 
       this .set_nearDistance__ ();
@@ -513,7 +466,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
-      if (bbox .size .equals (Vector3 .Zero))
+      if (bbox .size .equals (Vector3 .ZERO))
          return;
 
       bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
@@ -550,7 +503,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
       this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
-      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, Vector3 .One);
+      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, Vector3 .ONE);
       this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
       const relative = this .getRelativeTransformation (this);
@@ -598,7 +551,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
 
-      if (bbox .size .equals (Vector3 .Zero))
+      if (bbox .size .equals (Vector3 .ZERO))
       {
          this .set_nearDistance__ ();
          this .set_farDistance__ ();

@@ -553,6 +553,13 @@ The SFNode object corresponds to an X3D SFNode field.
 
 Each node may be assigned values to its **initializeOnly,** **inputOnly** and **inputOutput** fields and obtain the last output values of its **initializeOnly,** **outputOnly** and **inputOutput** fields using the `sfNodeObjectName.fieldName` syntax. The *directOutput* field of a corresponding [Script](/x_ite/components/scripting/script/) node must then be set to `TRUE`.
 
+When you assign to a field of type `SFBool`, `SFDouble`, `SFFloat`, `SFInt32`, `SFString` or `SFTime` use plain JavaScript types like boolean, number or string, otherwise use the provided X3D field types:
+
+```js
+material .diffuseColor = new SFColor (1, 1, 1);
+material .transparency = 0.5;
+```
+
 ### Methods
 
 #### **addFieldCallback** (*key: any, name: string, callback: (value: any) => void*): void
@@ -576,15 +583,6 @@ Returns the corresponding [X3DFieldDefinition](/x_ite/reference/field-services-a
 
 Returns a list of fields defined for the SFNode object.
 
-<!--
-#### **getField** (*name: string*): X3DField
-
-Returns the corresponding X3DField object associated with *name*.
-
->**Attention:** Only use this function for `node .getField ("name") .addFieldCallback (key, callback)`. To access properties use *sfNodeObjectName.fieldName* syntax.
-{: .prompt-danger }
--->
-
 #### **getNodeName** (): string
 
 Returns the node name.
@@ -603,19 +601,19 @@ Returns the node type name.
 
 Removes a field callback function associated with *key* and *name* from the field.
 
-#### **toVRMLString** (options: Options): string
+#### **toVRMLString** (options?: Options): string
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toXMLString** (options: Options): string
+#### **toXMLString** (options?: Options): string
 
 Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toJSONString** (options: Options): string
+#### **toJSONString** (options?: Options): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 

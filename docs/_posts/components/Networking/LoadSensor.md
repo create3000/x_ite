@@ -15,7 +15,7 @@ tags: [LoadSensor, Networking]
 
 LoadSensor generates events as watchList child nodes are either loaded or fail to load. Changing watchlist child nodes restarts the LoadSensor.
 
-The LoadSensor node belongs to the **Networking** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The LoadSensor node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -146,7 +146,7 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Networking/LoadSensor/screenshot.avif" alt="LoadSensor"/>
 </x3d-canvas>
 

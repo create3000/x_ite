@@ -15,7 +15,7 @@ tags: [StringSensor, KeyDeviceSensor]
 
 StringSensor generates events as the user presses keys on the keyboard. Browser support includes the notion of "keyboard focus".
 
-The StringSensor node belongs to the **KeyDeviceSensor** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The StringSensor node belongs to the [KeyDeviceSensor](/x_ite/components/overview/#keydevicesensor) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -111,7 +111,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/screenshot.avif" alt="StringSensor"/>
 </x3d-canvas>
 

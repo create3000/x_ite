@@ -15,7 +15,7 @@ tags: [TextureBackground, EnvironmentalEffects]
 
 TextureBackground simulates ground and sky, using vertical arrays of wraparound color values, TextureBackground can also provide backdrop texture images on all six sides.
 
-The TextureBackground node belongs to the **EnvironmentalEffects** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The TextureBackground node belongs to the [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -225,7 +225,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/screenshot.avif" alt="TextureBackground"/>
 </x3d-canvas>
 

@@ -15,7 +15,7 @@ tags: [ProximitySensor, EnvironmentalSensor]
 
 ProximitySensor generates events when the viewer enters, exits and moves within a region of space (defined by a box).
 
-The ProximitySensor node belongs to the **EnvironmentalSensor** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The ProximitySensor node belongs to the [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -145,7 +145,7 @@ Sends changed centerOfRotation values, likely caused by user interaction.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/ProximitySensor.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/ProximitySensor.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/screenshot.avif" alt="ProximitySensor"/>
 </x3d-canvas>
 

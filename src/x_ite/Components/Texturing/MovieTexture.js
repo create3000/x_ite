@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -53,8 +6,8 @@ import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DSoundSourceNode   from "../Sound/X3DSoundSourceNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import GifMedia             from "../../Browser/Texturing/GifMedia.js";
+import PNGMedia             from "../../Browser/Texturing/PNGMedia.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Algorithm            from "../../../standard/Math/Algorithm.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function MovieTexture (executionContext)
@@ -144,11 +97,22 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          const
             img = $("<img></img>") .appendTo ($("<div></div>")),
-            gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type: type }) });
+            gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
 
          gif .load_url (this .URL, () => this .setGif (gif));
 
          // this .setTimeout ({ type: "timeout" });
+      }
+      else if (this .URL .pathname .endsWith (".png"))
+      {
+         const parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default;
+
+         fetch (this .URL, { cache: this .getCache () ? "default" : "reload" })
+            .then (response => response .arrayBuffer ())
+            .then (arrayBuffer => parseAPNG (arrayBuffer))
+            .then (apng => this .setAPNG (apng))
+            .catch (error => this .setError ({ type: error .message}));
+
       }
       else
       {
@@ -188,7 +152,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          }
 
          const
-            gl     = this .getBrowser () .getContext (),
             video  = this .video [0],
             width  = video .videoWidth,
             height = video .videoHeight;
@@ -197,10 +160,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
          this .clearTimeout ();
 
-         if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
-            throw new Error ("The movie texture is a non power-of-two texture.");
-
          this ._duration_changed = video .duration;
+         video .currentFrame     = video;
 
          this .setMediaElement (video);
          this .setTextureData (width, height, true, false, video);
@@ -224,6 +185,26 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
          this .setMediaElement (gif);
          this .setTextureData (gif .get_canvas () .width, gif .get_canvas () .height, true, false, gif .get_frames () [0] .data);
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+
+         this .set_speed__ ();
+      }
+      catch (error)
+      {
+         // Catch security error from cross origin requests.
+         this .setError ({ type: error .message });
+      }
+   },
+   async setAPNG (apng)
+   {
+      try
+      {
+         await PNGMedia (apng, this);
+
+         this ._duration_changed = apng .duration;
+
+         this .setMediaElement (apng);
+         this .setTextureData (apng .width, apng .height, true, false, apng .currentFrame);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -268,7 +249,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       const media = this .getMediaElement ();
 
       if (media)
-         this .updateTextureData (media .currentFrame ?.data ?? media);
+         this .updateTextureData (media .currentFrame);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
    dispose ()
@@ -293,8 +274,8 @@ Object .defineProperties (MovieTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "gain",                 new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",                new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pitch",                new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",                new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "loop",                 new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "startTime",            new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "resumeTime",           new Fields .SFTime (0)),

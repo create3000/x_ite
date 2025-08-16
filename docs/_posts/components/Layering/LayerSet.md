@@ -15,7 +15,7 @@ tags: [LayerSet, Layering]
 
 LayerSet defines a list of layers and a rendering order. The rendering order is specified by the order field.
 
-The LayerSet node belongs to the **Layering** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The LayerSet node belongs to the [Layering](/x_ite/components/overview/#layering) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -89,7 +89,7 @@ The *layers* list defines a list of [Layer](/x_ite/components/layering/layer/) n
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Layering/LayerSet/screenshot.avif" alt="LayerSet"/>
 </x3d-canvas>
 

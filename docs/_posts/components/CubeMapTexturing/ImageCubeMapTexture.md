@@ -15,7 +15,7 @@ tags: [ImageCubeMapTexture, CubeMapTexturing]
 
 ImageCubeMapTexture is a texture node that defines a cubic environment map source as a single file format that contains multiple images, one for each side.
 
-The ImageCubeMapTexture node belongs to the **CubeMapTexturing** component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
+The ImageCubeMapTexture node belongs to the [CubeMapTexturing](/x_ite/components/overview/#cubemaptexturing) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -123,15 +123,15 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 Any image file format supported by the web browser, but at least:
 
-| Encoding | File Extension  | MIME Type  | Comment                   |
-|----------|-----------------|------------|---------------------------|
-| PNG      | .png            | image/png  | lossless                  |
-| AVIF     | .avif           | image/avif | lossless/lossy            |
-| WebP     | .webp           | image/webp | lossless/lossy            |
-| JPEG     | .jpeg, .jpg     | image/jpeg | lossy                     |
-| GIF      | .gif            | image/gif  | lossy                     |
-| SVG      | .svg            | image/svg  |                           |
-| KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_CUBE_MAP, WebGL 2 |
+| Encoding | File Extension  | MIME Type  | Comment          |
+|----------|-----------------|------------|------------------|
+| PNG      | .png            | image/png  | lossless         |
+| AVIF     | .avif           | image/avif | lossless/lossy   |
+| WebP     | .webp           | image/webp | lossless/lossy   |
+| JPEG     | .jpeg, .jpg     | image/jpeg | lossy            |
+| GIF      | .gif            | image/gif  | lossy            |
+| SVG      | .svg            | image/svg  | vector graphics  |
+| KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_CUBE_MAP |
 
 Images from PNG to SVG format can be in panorama format or skybox format.
 

@@ -15,7 +15,7 @@ tags: [TriangleSet2D, Geometry2D]
 
 TriangleSet2D is a geometry node that defines a set of filled 2D triangles in X-Y plane.
 
-The TriangleSet2D node belongs to the **Geometry2D** component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The TriangleSet2D node belongs to the [Geometry2D](/x_ite/components/overview/#geometry2d) component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -80,7 +80,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/TriangleSet2D/TriangleSet2D.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/TriangleSet2D/TriangleSet2D.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry2D/TriangleSet2D/screenshot.avif" alt="TriangleSet2D"/>
 </x3d-canvas>
 

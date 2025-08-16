@@ -15,7 +15,7 @@ tags: [ImageTexture3D, Texturing3D]
 
 ImageTexture3D defines a 3D image-based texture map by specifying a single image file that contains complete 3D data.
 
-The ImageTexture3D node belongs to the **Texturing3D** component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
+The ImageTexture3D node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -140,11 +140,11 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 ## Supported File Formats
 
-| Encoding | File Extension  | MIME Type   | Comment             |
-|----------|-----------------|-------------|---------------------|
-| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D, WebGL 2 |
-| DICOM    | .dcm            | image/dicom |                     |
-| NRRD     | .nrrd, .nrrd.gz | image/nrrd  |                     |
+| Encoding | File Extension  | MIME Type   | Comment    |
+|----------|-----------------|-------------|------------|
+| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D |
+| DICOM    | .dcm            | image/dicom |            |
+| NRRD     | .nrrd, .nrrd.gz | image/nrrd  |            |
 
 ## Advice
 
@@ -167,7 +167,7 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing3D/ImageTexture3D/ImageTexture3D.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing3D/ImageTexture3D/ImageTexture3D.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Texturing3D/ImageTexture3D/screenshot.avif" alt="ImageTexture3D"/>
 </x3d-canvas>
 

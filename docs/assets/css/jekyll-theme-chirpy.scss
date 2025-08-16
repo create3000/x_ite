@@ -322,6 +322,10 @@ span[data-label-text="VRML" i] {
   white-space: initial;
 }
 
+.badge-link {
+  cursor: pointer;
+}
+
 .badge-link img {
   display: inline;
 }
@@ -533,6 +537,20 @@ select.select option {
   font-size: 0.85rem;
 }
 
+/* Laboratory */
+
+table.slim-table tbody tr {
+  padding: 0px;
+}
+
+table.slim-table tbody tr td {
+  padding: 1px;
+}
+
+table.slim-table tbody tr td:has(img) {
+  line-height: 0;
+}
+
 /*
  * Website specify rules start here
  */
@@ -560,39 +578,20 @@ select.select option {
 
 /* table examples */
 
-.table-wrapper > table.examples tbody tr {
-  border: none;
-  background-color: var(--tb-odd-bg);
-}
-
-.table-wrapper > table.examples tbody tr td {
-  border: 3px solid var(--tb-odd-bg);
-  padding: 0;
-  line-height: 1rem;
-}
-
-.table-wrapper > table.examples a.img-link {
-  display: block;
-}
-
-.table-wrapper > table.examples a.img-link:hover {
-  outline: 1px solid #d2603a;
-}
-
-.table-wrapper > table.examples a.popup {
-  margin: 0;
-}
-
-@media all and (max-width: 849px) {
-  .table-wrapper > table.examples tbody tr td {
-    border-width: 2px;
-  }
+.examples {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  gap: 2px;
 }
 
 @media all and (max-width: 576px) {
-  .table-wrapper > table.examples tbody tr td {
-    border-width: 1px;
+  .examples {
+    gap: 1px;
   }
+}
+
+.examples a:hover {
+  outline: 1px solid #d2603a;
 }
 
 /* example overlay */

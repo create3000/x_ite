@@ -15,7 +15,7 @@ tags: [PointPickSensor, Picking]
 
 PointPickSensor tests one or more pickingGeometry points in space as lying inside the provided pickTarget geometry. For each pickingGeometry PointSet coordinate point that lies inside the pickTarget geometry, a pickedPoint coordinate is returned along with a corresponding pickedGeometry node inside which the point lies.
 
-The PointPickSensor node belongs to the **Picking** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The PointPickSensor node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -162,7 +162,7 @@ Output event containing the node or nodes that have been found to intersect with
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Picking/PointPickSensor/PointPickSensor.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Picking/PointPickSensor/PointPickSensor.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Picking/PointPickSensor/screenshot.avif" alt="PointPickSensor"/>
 </x3d-canvas>
 

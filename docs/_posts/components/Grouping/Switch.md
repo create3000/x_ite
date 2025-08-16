@@ -15,7 +15,7 @@ tags: [Switch, Grouping]
 
 Switch is a Grouping node that only renders one (or zero) child at a time. Switch can contain most nodes. (Contained nodes are now called 'children' rather than 'choice', for consistent naming among all GroupingNodeType nodes.) All child choices continue to receive and send events regardless of whichChoice is active.
 
-The Switch node belongs to the **Grouping** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Switch node belongs to the [Grouping](/x_ite/components/overview/#grouping) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -140,7 +140,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/Switch/Switch.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/Switch/Switch.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Grouping/Switch/screenshot.avif" alt="Switch"/>
 </x3d-canvas>
 

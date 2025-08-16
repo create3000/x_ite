@@ -15,7 +15,7 @@ tags: [VolumeData, VolumeRendering]
 
 VolumeData displays a simple non-segmented voxel dataset with a single RenderStyle node.
 
-The VolumeData node belongs to the **VolumeRendering** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.3 or higher.
+The VolumeData node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -118,7 +118,7 @@ Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturi
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/VolumeData/VolumeData.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/VolumeData/VolumeData.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/VolumeRendering/VolumeData/screenshot.avif" alt="VolumeData"/>
 </x3d-canvas>
 

@@ -15,7 +15,7 @@ tags: [PointEmitter, ParticleSystems]
 
 PointEmitter generates particles from a specific point in space using the specified direction and speed.
 
-The PointEmitter node belongs to the **ParticleSystems** component and requires at least support level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
+The PointEmitter node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -100,7 +100,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/PointEmitter.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/PointEmitter.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/screenshot.avif" alt="PointEmitter"/>
 </x3d-canvas>
 

@@ -15,7 +15,7 @@ tags: [TouchSensor, PointingDeviceSensor]
 
 TouchSensor tracks location and state of the pointing device, detecting when a user points at or selects (activates) geometry.
 
-The TouchSensor node belongs to the **PointingDeviceSensor** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The TouchSensor node belongs to the [PointingDeviceSensor](/x_ite/components/overview/#pointingdevicesensor) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -136,7 +136,7 @@ Time event generated when sensor is touched by pointing device, and then deselec
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/TouchSensor.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/TouchSensor.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/screenshot.avif" alt="TouchSensor"/>
 </x3d-canvas>
 

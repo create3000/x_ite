@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DConstants        from "../../Base/X3DConstants.js";
 import Fields              from "../../Fields.js";
 import Context             from "./Context.js";
@@ -59,11 +12,10 @@ import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
+import Legacy              from "../Legacy.js";
 import _                   from "../../../locale/gettext.js";
 
 import "./Fonts.js";
-
-const WEBGL_VERSION = 2;
 
 const
    _instanceId          = Symbol (),
@@ -101,10 +53,15 @@ function X3DCoreContext (element)
 
    const
       browser      = $("<div></div>", { class: "x_ite-private-browser", part: "browser", tabindex: 0 }),
-      surface      = $("<div></div>", { class: "x_ite-private-surface", part: "surface" }) .appendTo (browser),
-      splashScreen = $("<div></div>", { class: "x_ite-private-splash-screen x_ite-private-hidden" }) .appendTo (browser),
-      spinner      = $("<div></div>", { class: "x_ite-private-spinner" }) .appendTo (splashScreen),
-      progress     = $("<div></div>", { class: "x_ite-private-progress" }) .appendTo (splashScreen);
+      surface      = $("<div></div>", { class: "x_ite-private-surface", part: "surface" }),
+      splashScreen = $("<div></div>", { class: "x_ite-private-splash-screen x_ite-private-hidden" }),
+      spinner      = $("<div></div>", { class: "x_ite-private-spinner" }),
+      progress     = $("<div></div>", { class: "x_ite-private-progress" });
+
+   surface      .appendTo (browser);
+   splashScreen .appendTo (browser);
+   spinner      .appendTo (splashScreen);
+   progress     .appendTo (splashScreen);
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
@@ -139,10 +96,10 @@ function X3DCoreContext (element)
    this [_instanceId]   = ++ instanceId;
    this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
    this [_element]      = element;
-   this [_attributes]   = new Set ();
+   this [_attributes]   = new Map ();
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>", { part: "canvas", class: "x_ite-private-canvas" }) .prependTo (surface);
-   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true");
+   this [_context]      = Context .create (this [_canvas] [0], element .attr ("preserveDrawingBuffer") === "true");
    this [_splashScreen] = splashScreen;
 
    this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
@@ -157,6 +114,8 @@ Object .assign (X3DCoreContext .prototype,
 {
    initialize ()
    {
+      const element = this .getElement ();
+
       // Setup browser nodes.
 
       this [_renderingProperties] .setup ();
@@ -168,19 +127,34 @@ Object .assign (X3DCoreContext .prototype,
 
       // Define properties of X3DCanvasElement.
 
-      Object .defineProperties (this .getElement () .get (0),
+      Object .defineProperties (element [0],
       {
          browser:
          {
             value: this,
-            configurable: true,
             enumerable: true,
          },
+         ... Legacy .properties (this, Object .fromEntries ([
+            "src",
+            "url",
+         ]
+         .map (name => [name,
+         {
+            get: () =>
+            {
+               return this [_attributes] .get (name .toLowerCase ());
+            },
+            set: (value) =>
+            {
+               element .attr (name, value);
+            },
+            enumerable: true,
+         }]))),
       });
 
       // Configure browser event handlers.
 
-      this .getElement ()
+      element
          .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
          .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
    },
@@ -281,8 +255,6 @@ Object .assign (X3DCoreContext .prototype,
    },
    attributeChangedCallback (name, oldValue, newValue)
    {
-      this [_attributes] .add (name .toLowerCase ());
-
       switch (name .toLowerCase ())
       {
          case "antialiased":
@@ -370,7 +342,7 @@ Object .assign (X3DCoreContext .prototype,
                this .getCanvas () .show ();
 
                this .getSplashScreen ()
-                  .removeClass ("x_ite-private-fade-out-2000")
+                  .removeClass ("x_ite-private-fade-out-splash-screen")
                   .addClass ("x_ite-private-hidden");
             }
 
@@ -403,8 +375,6 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "update":
          {
-            newValue = this .parseBooleanAttribute (newValue) ?? "auto";
-
             if (newValue === "auto")
             {
                this .setBrowserOption ("AutoUpdate", true);
@@ -413,7 +383,7 @@ Object .assign (X3DCoreContext .prototype,
             {
                this .setBrowserOption ("AutoUpdate", false);
 
-               if (newValue)
+               if (this .parseBooleanAttribute (newValue) ?? true)
                   this .beginUpdate ();
                else
                   this .endUpdate ();
@@ -425,7 +395,7 @@ Object .assign (X3DCoreContext .prototype,
          {
             if (newValue)
             {
-               this .loadURL (this .parseUrlAttribute (newValue))
+               this .loadURL (newValue = this .parseUrlAttribute (newValue))
                   .catch (error => console .error (error));
             }
 
@@ -437,6 +407,8 @@ Object .assign (X3DCoreContext .prototype,
             break;
          }
       }
+
+      this [_attributes] .set (name .toLowerCase (), newValue);
    },
    parseBooleanAttribute (value)
    {
@@ -452,11 +424,14 @@ Object .assign (X3DCoreContext .prototype,
       {
          const url = new Fields .MFString ();
 
-         url .fromString (`[${urlCharacters}]`, this .getExecutionContext ());
+         if (!/^\[.*?\]$/s .test (urlCharacters))
+            urlCharacters = `[${urlCharacters}]`;
+
+         url .fromString (urlCharacters, this .getExecutionContext ());
 
          return url;
       }
-      catch
+      catch (error)
       {
          throw new Error ("Couldn't parse url attribute.");
       }
@@ -805,8 +780,6 @@ Object .assign (X3DCoreContext .prototype,
    dispose ()
    {
       this .getElement () .off (".X3DCoreContext .ContextMenu");
-
-      delete this .getElement () [0] .browser;
 
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ?.();
       this [_shadow] .find ("*") .remove ();

@@ -15,7 +15,7 @@ tags: [Fog, EnvironmentalEffects]
 
 Fog simulates atmospheric effects by blending distant objects with fog color.
 
-The Fog node belongs to the **EnvironmentalEffects** component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Fog node belongs to the [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -136,7 +136,7 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ## Example
 
-<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/Fog.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/Fog.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/screenshot.avif" alt="Fog"/>
 </x3d-canvas>
 

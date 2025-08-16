@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Triangle3 from "./Triangle3.js";
 import Matrix4   from "../Numbers/Matrix4.js";
 import Vector3   from "../Numbers/Vector3.js";
@@ -145,9 +98,9 @@ Object .assign (Box3 .prototype,
       {
          const
             m = this .matrix,
-            x = m .xAxis,
-            y = m .yAxis,
-            z = m .zAxis;
+            x = m .X_AXIS,
+            y = m .Y_AXIS,
+            z = m .Z_AXIS;
 
          r1 .assign (y) .add (z);
 
@@ -196,9 +149,9 @@ Object .assign (Box3 .prototype,
 
          const m = this .matrix;
 
-         x .assign (m .xAxis);
-         y .assign (m .yAxis);
-         z .assign (m .zAxis);
+         x .assign (m .X_AXIS);
+         y .assign (m .Y_AXIS);
+         z .assign (m .Z_AXIS);
 
          r1 .assign (y) .add (z);
 
@@ -233,9 +186,9 @@ Object .assign (Box3 .prototype,
    {
       const m = this .matrix;
 
-      axes [0] .assign (m .xAxis);
-      axes [1] .assign (m .yAxis);
-      axes [2] .assign (m .zAxis);
+      axes [0] .assign (m .X_AXIS);
+      axes [1] .assign (m .Y_AXIS);
+      axes [2] .assign (m .Z_AXIS);
 
       return axes;
    },
@@ -246,102 +199,102 @@ Object .assign (Box3 .prototype,
          y = new Vector3 (),
          z = new Vector3 ();
 
-      const axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
+      const axes = [ Vector3 .X_AXIS, Vector3 .Y_AXIS, Vector3 .Z_AXIS ];
 
       return function (normals)
       {
          const m = this .matrix;
 
-         x .assign (m .xAxis);
-         y .assign (m .yAxis);
-         z .assign (m .zAxis);
+         x .assign (m .X_AXIS);
+         y .assign (m .Y_AXIS);
+         z .assign (m .Z_AXIS);
 
-         if (x .norm () === 0)
+         if (x .squaredNorm () === 0)
          {
             x .assign (y) .cross (z);
 
-            if (x .norm () === 0)
+            if (x .squaredNorm () === 0)
             {
                for (const axis of axes)
                {
                   x .assign (axis) .cross (y);
 
-                  if (x .norm () !== 0)
+                  if (x .squaredNorm () !== 0)
                      break;
                }
 
-               if (x .norm () === 0)
+               if (x .squaredNorm () === 0)
                {
                   for (const axis of axes)
                   {
                      x .assign (axis) .cross (z);
 
-                     if (x .norm () !== 0)
+                     if (x .squaredNorm () !== 0)
                         break;
                   }
 
-                  if (x .norm () === 0)
-                     x .assign (Vector3 .xAxis);
+                  if (x .squaredNorm () === 0)
+                     x .assign (Vector3 .X_AXIS);
                }
             }
          }
 
-         if (y .norm () === 0)
+         if (y .squaredNorm () === 0)
          {
             y .assign (z) .cross (x);
 
-            if (y .norm () === 0)
+            if (y .squaredNorm () === 0)
             {
                for (const axis of axes)
                {
                   y .assign (axis) .cross (z);
 
-                  if (y .norm () !== 0)
+                  if (y .squaredNorm () !== 0)
                      break;
                }
 
-               if (y .norm () === 0)
+               if (y .squaredNorm () === 0)
                {
                   for (const axis of axes)
                   {
                      y .assign (axis) .cross (x);
 
-                     if (y .norm () !== 0)
+                     if (y .squaredNorm () !== 0)
                         break;
                   }
 
-                  if (y .norm () === 0)
-                     y .assign (Vector3 .yAxis);
+                  if (y .squaredNorm () === 0)
+                     y .assign (Vector3 .Y_AXIS);
                }
             }
          }
 
-         if (z .norm () === 0)
+         if (z .squaredNorm () === 0)
          {
             z .assign (x) .cross (y);
 
-            if (z .norm () === 0)
+            if (z .squaredNorm () === 0)
             {
                for (const axis of axes)
                {
                   z .assign (axis) .cross (x);
 
-                  if (z .norm () !== 0)
+                  if (z .squaredNorm () !== 0)
                      break;
                }
 
-               if (z .norm () === 0)
+               if (z .squaredNorm () === 0)
                {
                   for (const axis of axes)
                   {
                      z .assign (axis) .cross (y);
 
-                     if (z .norm () !== 0)
+                     if (z .squaredNorm () !== 0)
                         break;
                   }
 
-                  if (z .norm () === 0)
-                     z .assign (Vector3 .zAxis);
+                  if (z .squaredNorm () === 0)
+                     z .assign (Vector3 .Z_AXIS);
                }
             }
          }
@@ -536,8 +489,8 @@ Object .assign (Box3,
    Points (points)
    {
       const
-         min = new Vector3 (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
-         max = new Vector3 (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+         min = new Vector3 (Number .POSITIVE_INFINITY),
+         max = new Vector3 (Number .NEGATIVE_INFINITY);
 
       for (const point of points)
       {

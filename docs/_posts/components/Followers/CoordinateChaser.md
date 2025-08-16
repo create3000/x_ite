@@ -15,7 +15,7 @@ tags: [CoordinateChaser, Followers]
 
 CoordinateChaser generates a series of coordinate arrays that progressively change from initial value to destination value.
 
-The CoordinateChaser node belongs to the **Followers** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.3 or higher.
+The CoordinateChaser node belongs to the [Followers](/x_ite/components/overview/#followers) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -113,7 +113,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Followers/CoordinateChaser/CoordinateChaser.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Followers/CoordinateChaser/CoordinateChaser.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Followers/CoordinateChaser/screenshot.avif" alt="CoordinateChaser"/>
 </x3d-canvas>
 

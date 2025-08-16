@@ -6,7 +6,7 @@ import TextureCoordinateGeneratorModeType from "../../x_ite/Browser/Texturing/Te
 import { maxClipPlanes }                  from "../../x_ite/Browser/Rendering/RenderingConfiguration.js";
 import { maxTextures }                    from "../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
-export default /* glsl */ `
+export default () => /* glsl */ `
 
 ///
 /// Defines
@@ -140,7 +140,10 @@ struct x3d_EnvironmentLightSourceParameters {
    mediump sampler2D   GGXLUTTexture;
 
    #if defined (X3D_SHEEN_MATERIAL_EXT)
-      mediump sampler2D CharlieLUTTexture;
+      mediump samplerCube sheenTexture;
+      bool                sheenTextureLinear;
+      mediump int         sheenTextureLevels;
+      mediump sampler2D   CharlieLUTTexture;
    #endif
 };
 #endif

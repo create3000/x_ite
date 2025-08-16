@@ -15,7 +15,7 @@ tags: [NurbsSet, NURBS]
 
 NurbsSet collects a set of NurbsSurface nodes into a common group and treats NurbsSurface set as a unit during tessellation, thereby enforcing tessellation continuity along borders.
 
-The NurbsSet node belongs to the **NURBS** component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The NurbsSet node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

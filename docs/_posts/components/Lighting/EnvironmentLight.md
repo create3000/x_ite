@@ -104,17 +104,21 @@ Input/Output field *rotation*.
 ### MFFloat [in, out] **diffuseCoefficients** [ ]
 {: #fields-diffuseCoefficients }
 
-Input/Output field *diffuseCoefficients*.
+Input/Output field *diffuseCoefficients*. Coefficients used during generation of diffuse texture from specular texture.
 
 ### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 {: #fields-diffuseTexture }
 
-Input/Output field *diffuseTexture*.
+Input/Output field *diffuseTexture*. If `NULL` the texture is generated from specular texture.
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 {: #fields-specularTexture }
 
 Input/Output field *specularTexture*.
+
+#### Hint
+
+- [glTF Sample Environments](https://github.com/KhronosGroup/glTF-Sample-Environments)
 
 ### SFBool [in, out] **shadows** FALSE
 {: #fields-shadows }
@@ -144,3 +148,4 @@ Size of the shadow map in pixels, must be power of two.
 ## See Also
 
 - [X3D Specification of EnvironmentLight Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#EnvironmentLight)
+- [glTF Sample Environments](https://github.com/KhronosGroup/glTF-Sample-Environments)

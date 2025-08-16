@@ -8,25 +8,13 @@ export default
       "x3d_ShininessTexture",
       "x3d_BaseTexture",
       "x3d_MetallicRoughnessTexture",
-      "x3d_SpecularGlossinessTexture",
       "x3d_OcclusionTexture",
       "x3d_NormalTexture",
-
-      "x3d_AnisotropyTextureEXT",
-      "x3d_ClearcoatNormalTextureEXT",
-      "x3d_ClearcoatRoughnessTextureEXT",
-      "x3d_ClearcoatTextureEXT",
-      "x3d_DiffuseTransmissionColorTextureEXT",
-      "x3d_DiffuseTransmissionTextureEXT",
-      "x3d_IridescenceTextureEXT",
-      "x3d_IridescenceThicknessTextureEXT",
-      "x3d_SheenColorTextureEXT",
-      "x3d_SheenRoughnessTextureEXT",
-      "x3d_SpecularColorTextureEXT",
-      "x3d_SpecularTextureEXT",
-      "x3d_ThicknessTextureEXT",
-      "x3d_TransmissionTextureEXT",
    ],
+   add (name)
+   {
+      this .names .push (name);
+   },
    texture (name, components = "rgba", colorSpace = "")
    {
       const ext = !!name .match (/EXT$/);
@@ -53,23 +41,16 @@ export default
          vec3 texCoord = getTexCoord (${name}${EXT} .textureTransformMapping, ${name}${EXT} .textureCoordinateMapping);
 
          #if defined (${define}${_EXT}_FLIP_Y)
-            texCoord .t = 1.0 - texCoord .t;
+            // Flip Y if needed. Must be done after.
+            texCoord .y = 1.0 - texCoord .y;
          #endif
 
-         #if __VERSION__ == 100
-            #if defined (${define}${_EXT}_2D)
-               vec4 textureColor = texture2D (${name}${EXT} .texture2D, texCoord .st);
-            #elif defined (${define}${_EXT}_CUBE)
-               vec4 textureColor = textureCube (${name}${EXT} .textureCube, texCoord);
-            #endif
-         #else
-            #if defined (${define}${_EXT}_2D)
-               vec4 textureColor = texture (${name}${EXT} .texture2D, texCoord .st);
-            #elif defined (${define}${_EXT}_3D)
-               vec4 textureColor = texture (${name}${EXT} .texture3D, texCoord);
-            #elif defined (${define}${_EXT}_CUBE)
-               vec4 textureColor = texture (${name}${EXT} .textureCube, texCoord);
-            #endif
+         #if defined (${define}${_EXT}_2D)
+            vec4 textureColor = texture (${name}${EXT} .texture2D, texCoord .st);
+         #elif defined (${define}${_EXT}_3D)
+            vec4 textureColor = texture (${name}${EXT} .texture3D, texCoord);
+         #elif defined (${define}${_EXT}_CUBE)
+            vec4 textureColor = texture (${name}${EXT} .textureCube, texCoord);
          #endif
 
          ${type} textureColorComponents = textureColor .${components};
@@ -118,7 +99,7 @@ export default
             #if defined (${define}_2D)
             mediump sampler2D   texture2D;
             #endif
-            #if defined (${define}_3D) && __VERSION__ != 100
+            #if defined (${define}_3D)
             mediump sampler3D   texture3D;
             #endif
             #if defined (${define}_CUBE)

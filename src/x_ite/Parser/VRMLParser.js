@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DParser                 from "./X3DParser.js";
 import Expressions               from "./Expressions.js";
 import Fields                    from "../Fields.js";
@@ -207,7 +160,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    isValid ()
    {
-      if (!(typeof this .input === "string"))
+      if (typeof this .input !== "string")
+         return false;
+
+      if (this .input .match (/^#VRML V1.0/))
          return false;
 
       return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
@@ -398,7 +354,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       if (Grammar .Header .parse (this))
       {
+         this .lines (this .result [0]);
+
          this .getScene () .setSpecificationVersion (this .result [2]);
+
+         console .log (this .result [2]);
 
          if (this .getScene () .getSpecificationVersion () <= 3.2)
             this .Grammar .Comment = Grammar .Comment3_2;
@@ -430,7 +390,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       let component;
 
       while (component = this .componentStatement ())
+      {
+         if (this .getScene () .hasComponent (component))
+            continue;
+
          this .getScene () .updateComponent (component);
+      }
    },
    componentStatement ()
    {
@@ -571,16 +536,18 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
             const node = this .getScene () .getLocalNode (localNodeNameId);
 
+            let exportedNodeNameId;
+
             if (Grammar .AS .parse (this))
             {
                if (this .exportedNodeNameId ())
-                  var exportedNodeNameId = this .result [0];
+                  exportedNodeNameId = this .result [0];
                else
                   throw new Error ("No name given after AS.");
             }
             else
             {
-               var exportedNodeNameId = localNodeNameId;
+               exportedNodeNameId = localNodeNameId;
             }
 
             try
@@ -623,17 +590,19 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                   this .comments ();
 
+                  let nodeNameId;
+
                   if (Grammar .AS .parse (this))
                   {
                      if (this .nodeNameId ())
-                        var nodeNameId = this .result [0];
+                        nodeNameId = this .result [0];
 
                      else
                         throw new Error ("No name given after AS.");
                   }
                   else
                   {
-                     var nodeNameId = exportedNodeNameId;
+                     nodeNameId = exportedNodeNameId;
                   }
 
                   // Rename existing imported node.
@@ -770,6 +739,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                         {
                            const existingProto = this .getExecutionContext () .getProtoDeclaration (nodeTypeId);
 
+                           console .warn (`A proto named '${nodeTypeId}' is already defined and will be overridden.`);
+
                            this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (nodeTypeId), existingProto);
                         }
                         catch
@@ -865,6 +836,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .inputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -890,6 +862,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .outputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -917,6 +890,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   field .setAccessType (X3DConstants .initializeOnly);
                   field .setName (fieldId);
+
                   return field;
                }
 
@@ -958,6 +932,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   field .setAccessType (X3DConstants .inputOutput);
                   field .setName (fieldId);
+
                   return field;
                }
 
@@ -1006,6 +981,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                      try
                      {
                         const existingExternProto = this .getExecutionContext () .getExternProtoDeclaration (nodeTypeId);
+
+                        console .warn (`A extern proto named '${nodeTypeId}' is already defined and will be overridden.`);
 
                         this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (nodeTypeId), existingExternProto);
                      }
@@ -1059,6 +1036,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .inputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1084,6 +1062,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .outputOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1109,6 +1088,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .initializeOnly);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1134,6 +1114,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                field .setAccessType (X3DConstants .inputOutput);
                field .setName (fieldId);
+
                return field;
             }
 
@@ -1332,9 +1313,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                         {
                            const isId = this .result [0];
 
+                           let reference;
+
                            try
                            {
-                              var reference = this .getOuterNode () .getField (isId);
+                              reference = this .getOuterNode () .getField (isId);
                            }
                            catch
                            {
@@ -1424,9 +1407,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          const fieldId = this .result [0];
 
+         let field;
+
          try
          {
-            var field = baseNode .getPredefinedField (fieldId);
+            field = baseNode .getPredefinedField (fieldId);
          }
          catch
          {
@@ -1457,9 +1442,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   const isId = this .result [0];
 
+                  let reference;
+
                   try
                   {
-                     var reference = this .getOuterNode () .getField (isId);
+                     reference = this .getOuterNode () .getField (isId);
                   }
                   catch
                   {
@@ -1482,7 +1469,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   throw new Error (`Field '${field .getName ()}' and '${reference .getName ()}' in PROTO ${this .getOuterNode () .getName ()} have different types.`);
                }
 
-               throw new Error("No name give after IS statement.");
+               throw new Error ("No name give after IS statement.");
             }
 
             throw new Error ("IS statement outside PROTO definition.");
@@ -1496,7 +1483,14 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error (`Couldn't read value for field '${fieldId}'.`);
          }
 
-         throw new Error (`Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
+         // Parse value of a inputOnly or outputOnly, and output a warning.
+
+         if (!this .unknownValue ())
+            throw new Error (`Couldn't read value for field '${fieldId}'.`);
+
+         console .warn (`Parser error at line ${this .lineNumber}: Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
+
+         return true;
       }
 
       return false;
@@ -2632,7 +2626,7 @@ Object .assign (VRMLParser .prototype,
    [X3DConstants .MFVec4f]:     VRMLParser .prototype .mfvec4Value,
 });
 
-X3DField .prototype .fromString = function (string, scene)
+X3DField .prototype .fromVRMLString = function (string, scene)
 {
    const parser = new VRMLParser (scene);
 

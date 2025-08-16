@@ -15,7 +15,7 @@ tags: [EdgeEnhancementVolumeStyle, VolumeRendering]
 
 EdgeEnhancementVolumeStyle specifies edge enhancement for the volume rendering style.
 
-The EdgeEnhancementVolumeStyle node belongs to the **VolumeRendering** component and requires at least support level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The EdgeEnhancementVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -82,7 +82,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/screenshot.avif" alt="EdgeEnhancementVolumeStyle"/>
 </x3d-canvas>
 

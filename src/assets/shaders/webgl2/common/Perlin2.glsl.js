@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 //https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
 
 float rand (const in vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }

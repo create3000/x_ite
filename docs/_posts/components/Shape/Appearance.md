@@ -15,7 +15,7 @@ tags: [Appearance, Shape]
 
 Appearance specifies the visual properties of geometry by containing the Material, ImageTexture/MovieTexture/PixelTexture, FillProperties, LineProperties, programmable shader nodes (ComposedShader, PackagedShader, ProgramShader) and TextureTransform nodes.
 
-The Appearance node belongs to the **Shape** component and requires at least support level **1,** its default container field is *appearance.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Appearance node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *appearance.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -166,7 +166,7 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shape/Appearance/screenshot.avif" alt="Appearance"/>
 </x3d-canvas>
 

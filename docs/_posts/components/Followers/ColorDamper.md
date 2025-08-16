@@ -15,7 +15,7 @@ tags: [ColorDamper, Followers]
 
 ColorDamper generates a series of RGB color values that progressively change from initial value to destination value.
 
-The ColorDamper node belongs to the **Followers** component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The ColorDamper node belongs to the [Followers](/x_ite/components/overview/#followers) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -122,7 +122,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Followers/ColorDamper/ColorDamper.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Followers/ColorDamper/ColorDamper.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Followers/ColorDamper/screenshot.avif" alt="ColorDamper"/>
 </x3d-canvas>
 

@@ -15,7 +15,7 @@ tags: [ImageTexture, Texturing]
 
 ImageTexture maps a 2D-image file onto a geometric shape. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The ImageTexture node belongs to the **Texturing** component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The ImageTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -142,15 +142,15 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 Any image file format supported by the web browser, but at least:
 
-| Encoding | File Extension  | MIME Type  | Comment             |
-|----------|-----------------|------------|---------------------|
-| PNG      | .png            | image/png  | lossless            |
-| AVIF     | .avif           | image/avif | lossless/lossy      |
-| WebP     | .webp           | image/webp | lossless/lossy |
-| JPEG     | .jpeg, .jpg     | image/jpeg | lossy               |
-| GIF      | .gif            | image/gif  | lossy               |
-| SVG      | .svg            | image/svg  |                     |
-| KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_2D, WebGL 2 |
+| Encoding | File Extension  | MIME Type  | Comment         |
+|----------|-----------------|------------|-----------------|
+| PNG      | .png            | image/png  | lossless        |
+| AVIF     | .avif           | image/avif | lossless/lossy  |
+| WebP     | .webp           | image/webp | lossless/lossy  |
+| JPEG     | .jpeg, .jpg     | image/jpeg | lossy           |
+| GIF      | .gif            | image/gif  | lossy           |
+| SVG      | .svg            | image/svg  | vector graphics |
+| KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_2D      |
 
 ## Advice
 
@@ -174,7 +174,7 @@ Any image file format supported by the web browser, but at least:
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/ImageTexture/ImageTexture.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/ImageTexture/ImageTexture.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Texturing/ImageTexture/screenshot.avif" alt="ImageTexture"/>
 </x3d-canvas>
 

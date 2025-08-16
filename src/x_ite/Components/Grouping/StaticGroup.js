@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                     from "../../Fields.js";
 import X3DFieldDefinition         from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
@@ -74,7 +27,6 @@ import Vector4                    from "../../../standard/Math/Numbers/Vector4.j
 import Rotation4                  from "../../../standard/Math/Numbers/Rotation4.js";
 import Box3                       from "../../../standard/Math/Geometry/Box3.js";
 import Matrix4                    from "../../../standard/Math/Numbers/Matrix4.js";
-import ViewVolume                 from "../../../standard/Math/Geometry/ViewVolume.js";
 import DEVELOPMENT                from "../../DEVELOPMENT.js";
 
 const CLONE_COUNT = 2; // Minimum number of shapes that must be cloned to become an InstancedShape.
@@ -101,49 +53,54 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._bboxSize   .addFieldInterest (this .groupNode ._bboxSize);
-      this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
-      this ._children   .addFieldInterest (this .groupNode ._children);
+      this ._children .addFieldInterest (this .groupNode ._children);
 
-      this .groupNode ._bboxSize   = this ._bboxSize;
-      this .groupNode ._bboxCenter = this ._bboxCenter;
-      this .groupNode ._children   = this ._children;
+      this .groupNode ._children = this ._children;
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
       // Connect after setup for correct order of events.
-      this .groupNode ._rebuild  .addInterest ("set_rebuild__",  this);
       this .groupNode ._children .addInterest ("set_children__", this);
 
-      this .connectChildNode (this .groupNode, [TraverseType .CAMERA]);
-
-      this .set_rebuild__ ();
       this .set_children__ ();
    },
    getBBox (bbox, shadows)
    {
-      return bbox .assign (shadows ? this .shadowBBox : this .bbox);
+      if (this .isDefaultBBoxSize ())
+      {
+         if (this .optimizedGroup)
+            return bbox .assign (shadows ? this .shadowBBox : this .bbox);
+
+         return this .groupNode .getBBox (bbox, shadows);
+      }
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_rebuild__ ()
+   getShapes (shapes, modelMatrix)
    {
-      this .groupNode .getBBox (this .bbox);
-      this .groupNode .getBBox (this .shadowBBox, true);
+      return this .groupNode .getShapes (shapes, modelMatrix);
    },
    set_children__ ()
    {
-      this .visibleNodes = null;
+      if (this .optimizedGroup)
+         this .disconnectChildNode (this .optimizedGroup);
+
+      this .connectChildNode (this .groupNode, [TraverseType .CAMERA]);
+
+      this .optimizedGroup = null;
    },
    traverse (type, renderObject)
    {
-      if (!this .visibleNodes)
-         this .createStaticShapes (renderObject);
+      if (!this .optimizedGroup)
+         this .createStaticShapes ();
 
-      for (const visibleNode of this .visibleNodes)
-         visibleNode .traverse (type, renderObject);
+      this .optimizedGroup .traverse (type, renderObject);
    },
-   createStaticShapes (renderObject)
+   async createStaticShapes ()
    {
-      this .visibleNodes = [this .groupNode];
+      // Temporarily assign Group node.
+
+      this .optimizedGroup = this .groupNode;
 
       // Check if scene is currently loading something.
 
@@ -165,73 +122,43 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       {
          // Create static shapes.
 
-         this .optimizeGroups (this .createGroups (renderObject));
+         this .optimizedGroup = await this .optimizeGroups (this .createGroups ());
+
+         this .disconnectChildNode (this .groupNode);
+         this .connectChildNode (this .optimizedGroup, [TraverseType .CAMERA]);
+
+         this .optimizedGroup .getBBox (this .bbox);
+         this .optimizedGroup .getBBox (this .shadowBBox, true);
       }
    },
    createGroups: (() =>
    {
-      const
-         Statics    = ["Opaque", "Transparent"],
-         viewVolume = new ViewVolume (),
-         style      = { style: "CLEAN" };
+      const style = { style: "CLEAN", names: false };
 
-      viewVolume .intersectsSphere = () => true;
-
-      return function (renderObject)
+      return function ()
       {
          // Traverse Group node to get render contexts.
 
-         const
-            browser          = this .getBrowser (),
-            viewVolumes      = renderObject .getViewVolumes (),
-            viewport         = renderObject .getViewport (),
-            projectionMatrix = renderObject .getProjectionMatrix (),
-            modelViewMatrix  = renderObject .getModelViewMatrix (),
-            firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ()),
-            renderContexts   = [ ];
+         const browser = this .getBrowser ();
 
          if (browser .getBrowserOption ("Debug"))
             console .info (`Rebuilding StaticGroup "${this .getName () || "unnamed"}".`);
 
-         viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-
-         modelViewMatrix .push ();
-         modelViewMatrix .identity ();
-
-         this .groupNode .traverse (TraverseType .DISPLAY, renderObject);
-
-         modelViewMatrix .pop ();
-         viewVolumes     .pop ();
-
-         for (const [i, Static] of Statics .entries ())
-         {
-            const
-               firstShape = firstShapes [i],
-               lastShape  = renderObject [`getNum${Static}Shapes`] (),
-               shapes     = renderObject [`get${Static}Shapes`] () .splice (firstShape, lastShape - firstShape);
-
-            renderObject [`setNum${Static}Shapes`] (firstShape);
-
-            if (Static .includes ("Transmission"))
-               continue;
-
-            for (const renderContext of shapes)
-               renderContexts .push (renderContext);
-         }
+         const shapes = this .groupNode .getShapes ([ ], Matrix4 .IDENTITY);
 
          // Determine groups that can be combined.
          // Sort out ParticleSystem nodes.
          // Sort out TextureCoordinateGenerator nodes.
 
          const
-            clonesIndex  = new Map (renderContexts .map (({shapeNode}) => [shapeNode, [ ]])),
+            clonesIndex  = new Map (shapes .map (({shapeNode}) => [shapeNode, [ ]])),
             groupsIndex  = { },
             singlesIndex = { };
 
-         for (const renderContext of renderContexts)
+         for (const context of shapes)
          {
             const
-               shapeNode      = renderContext .shapeNode,
+               shapeNode      = context .shapeNode,
                appearanceNode = shapeNode .getAppearance (),
                geometryNode   = shapeNode .getGeometry ();
 
@@ -257,9 +184,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             // Sort out ParticleSystem and InstancedShape nodes.
             if (shapeNode .getShapeKey () > 0 || this .hasTextureCoordinateGenerator (geometryNode))
             {
-               const group = singlesIndex [renderContext .modelViewMatrix] ??= [ ];
+               const group = singlesIndex [context .modelMatrix] ??= [ ];
 
-               group .push (renderContext);
+               group .push (context);
                continue;
             }
 
@@ -279,8 +206,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                clones = clonesIndex .get (shapeNode),
                group  = groupsIndex [key] ??= [ ];
 
-            clones .push (renderContext);
-            group  .push (renderContext);
+            clones .push (context);
+            group  .push (context);
          }
 
          // Sort out shapes that are not cloned.
@@ -302,7 +229,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          if (browser .getBrowserOption ("Debug"))
          {
-            console .info (`StaticGroup will create ${clonesGroups .length + combineGroups .length + singlesGroups .length} static nodes from the previous ${renderContexts .length} nodes.`);
+            console .info (`StaticGroup will create ${clonesGroups .length + combineGroups .length + singlesGroups .length} static nodes from the previous ${shapes .length} nodes.`);
          }
 
          return { clonesGroups, combineGroups, singlesGroups };
@@ -339,19 +266,27 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       combineGroups .forEach (group => this .combineShapes (group, visibleNodes));
       singlesGroups .forEach (group => this .normalizeSingleShapes (group, visibleNodes));
 
-      this .visibleNodes = visibleNodes;
+      // Create group of all optimized shapes.
+
+      const optimizedGroup = new Group (this .getExecutionContext ());
+
+      optimizedGroup ._children = visibleNodes;
+
+      optimizedGroup .setPrivate (true);
+      optimizedGroup .setup ();
 
       if (DEVELOPMENT)
          console .timeEnd ("StaticGroup");
+
+      return optimizedGroup;
    },
    combineClones: (() =>
    {
       const
-         modelMatrix = new Matrix4 (),
-         t           = new Vector3 (),
-         r           = new Rotation4 (),
-         s           = new Vector3 (),
-         so          = new Rotation4 ();
+         t  = new Vector3 (),
+         r  = new Rotation4 (),
+         s  = new Vector3 (),
+         so = new Rotation4 ();
 
       return function (group, visibleNodes)
       {
@@ -362,9 +297,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             instancedShape   = new InstancedShape (executionContext),
             shapeNode0       = group [0] .shapeNode;
 
-         for (const { modelViewMatrix } of group)
+         for (const { modelMatrix } of group)
          {
-            modelMatrix .assign (modelViewMatrix) .get (t, r, s, so);
+            modelMatrix .get (t, r, s, so);
 
             instancedShape ._translations      .push (t);
             instancedShape ._rotations         .push (r);
@@ -395,11 +330,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          newGeometryNode = null,
          numPoints       = 0;
 
-      for (const { modelViewMatrix, shapeNode } of group)
+      for (const { modelMatrix, shapeNode } of group)
       {
-         const
-            modelMatrix        = new Matrix4 (... modelViewMatrix),
-            normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode);
+         const normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode);
 
          if (!newGeometryNode)
          {
@@ -478,7 +411,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             const color = newGeometryNode ._color .color;
 
             if (color .length < numPoints)
-               color .resize (numPoints, Color4 .White);
+               color .resize (numPoints, Color4 .WHITE);
 
             color .assign (color .concat (normalizedColor ._color));
          }
@@ -661,17 +594,19 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const colorArray = geometryNode .getColors () .getValue ();
 
+         let newColor;
+
          if (colorArray .length)
          {
             if (shapeNode .isTransparent ())
             {
-               var newColor = new ColorRGBA (executionContext);
+               newColor = new ColorRGBA (executionContext);
 
                newColor ._color = colorArray;
             }
             else
             {
-               var newColor = new Color (executionContext);
+               newColor = new Color (executionContext);
 
                newColor ._color = colorArray .filter ((c, i) => i % 4 < 3);
             }
@@ -846,7 +781,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          const
             executionContext = this .getExecutionContext (),
             newTransformNode = new Transform (executionContext),
-            modelMatrix      = new Matrix4 (... group [0] .modelViewMatrix);
+            modelMatrix      = group [0] .modelMatrix;
 
          modelMatrix .get (t, r, s, so);
 

@@ -15,7 +15,7 @@ tags: [NavigationInfo, Navigation]
 
 NavigationInfo describes the user's viewing model, user navigation-interaction modalities, and also dimensional characteristics of the user's (typically invisible) avatar.
 
-The NavigationInfo node belongs to the **Navigation** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The NavigationInfo node belongs to the [Navigation](/x_ite/components/overview/#navigation) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -203,7 +203,7 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/NavigationInfo/NavigationInfo.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/NavigationInfo/NavigationInfo.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Navigation/NavigationInfo/screenshot.avif" alt="NavigationInfo"/>
 </x3d-canvas>
 

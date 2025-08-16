@@ -15,7 +15,7 @@ tags: [AudioClip, Sound]
 
 AudioClip provides audio data used by parent Sound nodes.
 
-The AudioClip node belongs to the **Sound** component and requires at least support level **1,** its default container field is *source.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The AudioClip node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **1,** its default container field is *source.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -267,7 +267,7 @@ Any audio file format supported by the web browser, but at least:
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Sound/AudioClip/AudioClip.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Sound/AudioClip/AudioClip.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Sound/AudioClip/screenshot.avif" alt="AudioClip"/>
 </x3d-canvas>
 

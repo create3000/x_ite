@@ -15,7 +15,7 @@ tags: [TwoSidedMaterial, Shape]
 
 TwoSidedMaterial specifies surface rendering properties for associated geometry nodes, for outer (front) and inner (back) sides of polygons. Material attributes are used by the X3D lighting equations during rendering.
 
-The TwoSidedMaterial node belongs to the **Shape** component and requires at least support level **4,** its default container field is *material.* It is available from X3D version 3.2 or higher.
+The TwoSidedMaterial node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **4,** its default container field is *material.* It is available from X3D version 3.2 or higher.
 
 >**Deprecated:** This node is **deprecated** as of X3D version 4.0. Future versions of the standard may remove this node.
 {: .prompt-danger }
@@ -205,7 +205,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/screenshot.avif" alt="TwoSidedMaterial"/>
 </x3d-canvas>
 

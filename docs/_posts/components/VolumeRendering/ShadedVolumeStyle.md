@@ -15,7 +15,7 @@ tags: [ShadedVolumeStyle, VolumeRendering]
 
 ShadedVolumeStyle applies Blinn-Phong illumination model to volume rendering.
 
-The ShadedVolumeStyle node belongs to the **VolumeRendering** component and requires at least support level **3,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The ShadedVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **3,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -94,7 +94,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/ShadedVolumeStyle.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/ShadedVolumeStyle.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/screenshot.avif" alt="ShadedVolumeStyle"/>
 </x3d-canvas>
 

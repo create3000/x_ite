@@ -1,6 +1,6 @@
 import MaterialTextures from "../../MaterialTextures.js";
 
-export default /* glsl */ `
+export default () => /* glsl */ `
 
 #pragma X3D include "Fragment.glsl"
 
@@ -42,11 +42,5 @@ getMaterialColor ()
    #endif
 
    return finalColor;
-}
-
-void
-main ()
-{
-   fragment_main ();
 }
 `;

@@ -15,7 +15,7 @@ tags: [MultiTexture, Texturing]
 
 MultiTexture applies several individual textures to a single geometry node, enabling a variety of visual effects that include light mapping and environment mapping. MultiTexture can contain zero or more ImageTexture, MovieTexture, PixelTexture, ComposedCubeMapTexture, GeneratedCubeMapTexture, ImageCubeMapTexture, ComposedTexture3D, ImageTexture3D, and PixelTexture3D nodes. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The MultiTexture node belongs to the **Texturing** component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
+The MultiTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -141,7 +141,7 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Texturing/MultiTexture/screenshot.avif" alt="MultiTexture"/>
 </x3d-canvas>
 

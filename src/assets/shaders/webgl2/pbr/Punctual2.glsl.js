@@ -1,9 +1,9 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 
 // Originally from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/punctual.glsl
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 float
 applyIorToRoughness (const in float roughness, const in float ior)
 {
@@ -17,34 +17,57 @@ applyIorToRoughness (const in float roughness, const in float ior)
 
 #pragma X3D include "../common/Lighting.glsl"
 
+// https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#range-property
 float
-getAttenuationPBR (const in vec3 attenuation, const in float distanceToLight, const in float radius)
+getRangeAttenuation (const in float radius, const in float distanceToLight)
 {
-   float d = dot (attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
-
    if (radius <= 0.0)
-      return 1.0 / d;
+   {
+      // negative range means unlimited
+      return 1.0 / pow (distanceToLight, 2.0);
+   }
 
-   return max (min (1.0 - pow (distanceToLight / radius, 4.0), 1.0), 0.0) / d;
+   return max (min (1.0 - pow (distanceToLight / radius, 4.0), 1.0), 0.0) / pow (distanceToLight, 2.0);
+}
+
+// https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#inner-and-outer-cone-angles
+float
+getSpotAttenuation (const in vec3 pointToLight, const in vec3 spotDirection, const in float outerConeCos, const in float innerConeCos)
+{
+   float actualCos = dot (normalize (spotDirection), normalize (-pointToLight));
+
+   if (actualCos > outerConeCos)
+   {
+      if (actualCos < innerConeCos)
+      {
+         float angularAttenuation = (actualCos - outerConeCos) / (innerConeCos - outerConeCos);
+
+         return angularAttenuation * angularAttenuation;
+      }
+
+      return 1.0;
+   }
+
+   return 0.0;
 }
 
 vec3
 getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 pointToLight, const in float distanceToLight)
 {
-   float attenuationFactor = 1.0;
-   float spotFactor        = 1.0;
+   float intensity = light .intensity;
 
    if (light .type != x3d_DirectionalLight)
    {
-      attenuationFactor = getAttenuationPBR (light .attenuation, distanceToLight, light .radius);
+      intensity *= getAttenuation (light .attenuation, distanceToLight);
+      intensity *= getRangeAttenuation (light .radius, distanceToLight);
    }
 
    if (light .type == x3d_SpotLight)
    {
-      spotFactor = getSpotFactor (pointToLight, light .direction, light .cutOffAngle, light .beamWidth);
+      intensity *= getSpotAttenuation (pointToLight, light .direction, cos (light .cutOffAngle), cos (light .beamWidth));
    }
 
-   return attenuationFactor * spotFactor * light .intensity * light .color;
+   return intensity * light .color;
 }
 
 #if defined (X3D_SHEEN_MATERIAL_EXT)
@@ -69,7 +92,7 @@ getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, co
 
 #endif
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 vec3
 getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const in vec3 pointToLight, const in float alphaRoughness, const in vec3 baseColor, const in float ior)
 {

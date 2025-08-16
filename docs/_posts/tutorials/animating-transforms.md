@@ -157,7 +157,7 @@ ROUTE Monolith1Timer.fraction_changed TO Monolith1Facade.set_transparency
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/touch2/touch2.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/touch2/touch2.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/touch2/screenshot.avif" alt="Monolith1Timer"/>
 </x3d-canvas>
 
@@ -280,7 +280,7 @@ ROUTE Position1.value_changed TO Particle1.set_translation
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/interpolator1/interpolator1.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/interpolator1/interpolator1.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/interpolator1/screenshot.avif" alt="Monolith1Timer"/>
 </x3d-canvas>
 

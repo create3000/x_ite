@@ -15,7 +15,7 @@ tags: [PixelTexture, Texturing]
 
 PixelTexture creates a 2D-image texture map using a numeric array of pixel values. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The PixelTexture node belongs to the **Texturing** component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The PixelTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -109,7 +109,7 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/PixelTexture/PixelTexture.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/PixelTexture/PixelTexture.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Texturing/PixelTexture/screenshot.avif" alt="PixelTexture"/>
 </x3d-canvas>
 

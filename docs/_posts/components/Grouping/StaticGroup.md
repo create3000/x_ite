@@ -15,7 +15,7 @@ tags: [StaticGroup, Grouping]
 
 StaticGroup is a Grouping node that can contain most nodes. StaticGroup children are guaranteed to not change, send events, receive events, or include re-USE-able content. This allows browser optimizations of contained-node content.
 
-The StaticGroup node belongs to the **Grouping** component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The StaticGroup node belongs to the [Grouping](/x_ite/components/overview/#grouping) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -117,7 +117,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/StaticGroup/StaticGroup.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/StaticGroup/StaticGroup.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Grouping/StaticGroup/screenshot.avif" alt="StaticGroup"/>
 </x3d-canvas>
 

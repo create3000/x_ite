@@ -15,7 +15,7 @@ tags: [ElevationGrid, Geometry3D]
 
 ElevationGrid is a geometry node defining a rectangular height field, with default values for a 1m by 1m square at height 0. Vertices corresponding to ElevationGrid height values define quadrilaterals, which are placed above or below a flat surface.
 
-The ElevationGrid node belongs to the **Geometry3D** component and requires at least support level **3,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The ElevationGrid node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **3,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -245,7 +245,7 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/screenshot.avif" alt="ElevationGrid"/>
 </x3d-canvas>
 

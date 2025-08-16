@@ -15,7 +15,7 @@ tags: [ClipPlane, Rendering]
 
 ClipPlane specifies a single plane equation used to clip (i.e. cull or hide) displayed geometry. The plane field specifies a four-component plane equation that describes both inside and outside half space.
 
-The ClipPlane node belongs to the **Rendering** component and requires at least support level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The ClipPlane node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -61,7 +61,7 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 #### Warning
 
-- (a, b, c) value of (0, 0, 0) is forbidden since the zero vector has ambiguous direction and is thus degenerate, not defining a *plane*.
+- (a, b, c, d) value of (0, 0, 0, d) is forbidden since the zero vector has ambiguous direction and is thus degenerate, not defining a *plane*.
 
 ## Advice
 
@@ -75,7 +75,7 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/ClipPlane/screenshot.avif" alt="ClipPlane"/>
 </x3d-canvas>
 

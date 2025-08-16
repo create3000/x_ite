@@ -15,7 +15,7 @@ tags: [Disk2D, Geometry2D]
 
 Disk2D is a geometry node that defines a filled (or partially filled) planar circle with center (0,0).
 
-The Disk2D node belongs to the **Geometry2D** component and requires at least support level **2,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The Disk2D node belongs to the [Geometry2D](/x_ite/components/overview/#geometry2d) component and requires at least support level **2,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -98,7 +98,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Disk2D/Disk2D.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Disk2D/Disk2D.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry2D/Disk2D/screenshot.avif" alt="Disk2D"/>
 </x3d-canvas>
 

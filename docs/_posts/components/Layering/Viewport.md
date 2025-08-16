@@ -15,7 +15,7 @@ tags: [Viewport, Layering]
 
 Viewport is a Grouping node that can contain most nodes. Viewport specifies a set of rectangular clip boundaries against which the children nodes are clipped as they are rendered.
 
-The Viewport node belongs to the **Layering** component and requires at least support level **1,** its default container field is *viewport.* It is available from X3D version 3.2 or higher.
+The Viewport node belongs to the [Layering](/x_ite/components/overview/#layering) component and requires at least support level **1,** its default container field is *viewport.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -129,7 +129,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layering/Viewport/Viewport.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layering/Viewport/Viewport.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Layering/Viewport/screenshot.avif" alt="Viewport"/>
 </x3d-canvas>
 

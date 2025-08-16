@@ -15,7 +15,7 @@ tags: [Script, Scripting]
 
 Script contains author-programmed event behaviors for a scene. Define the script input-output event interface by including \<field/\> elements. Scripting code is embedded in a child CDATA node or (deprecated) in the url field. Optionally supported programming languages are ECMAScript (JavaScript) and Java (via url to a myNode.class file).
 
-The Script node belongs to the **Scripting** component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Script node belongs to the [Scripting](/x_ite/components/overview/#scripting) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

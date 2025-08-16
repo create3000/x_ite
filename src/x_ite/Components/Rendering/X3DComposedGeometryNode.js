@@ -1,53 +1,5 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DNode         from "../Core/X3DNode.js";
 import X3DGeometryNode from "./X3DGeometryNode.js";
-import X3DCast         from "../../Base/X3DCast.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 
@@ -81,113 +33,9 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_texCoord__ ();
-      this .set_normal__ ();
       this .set_tangent__ ();
+      this .set_normal__ ();
       this .set_coord__ ();
-   },
-   getFogCoord ()
-   {
-      return this .fogCoordNode;
-   },
-   getColor ()
-   {
-      return this .colorNode;
-   },
-   getTexCoord ()
-   {
-      return this .texCoordNode;
-   },
-   getNormal ()
-   {
-      return this .normalNode;
-   },
-   getTangent ()
-   {
-      return this .tangentNode;
-   },
-   getCoord ()
-   {
-      return this .coordNode;
-   },
-   set_attrib__ ()
-   {
-      const attribNodes = this .getAttrib ();
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .removeInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
-      }
-
-      attribNodes .length = 0;
-
-      for (const node of this ._attrib)
-      {
-         const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
-
-         if (attribNode)
-            attribNodes .push (attribNode);
-      }
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .addInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
-      }
-
-      this .updateVertexArrays ();
-   },
-   set_fogCoord__ ()
-   {
-      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
-
-      this .fogCoordNode ?.addInterest ("requestRebuild", this);
-   },
-   set_color__ ()
-   {
-      this .colorNode ?.removeInterest ("requestRebuild", this);
-
-      this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
-
-      this .colorNode ?.addInterest ("requestRebuild", this);
-
-      this .setTransparent (this .colorNode ?.isTransparent ());
-   },
-   set_texCoord__ ()
-   {
-      this .texCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
-
-      this .texCoordNode ?.addInterest ("requestRebuild", this);
-
-      this .setTextureCoordinate (this .texCoordNode);
-   },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
-   set_tangent__ ()
-   {
-      this .tangentNode ?.removeInterest ("requestRebuild", this);
-
-      this .tangentNode = X3DCast (X3DConstants .Tangent, this ._tangent);
-
-      this .tangentNode ?.addInterest ("requestRebuild", this);
-   },
-   set_coord__ ()
-   {
-      this .coordNode ?.removeInterest ("requestRebuild", this);
-
-      this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
-
-      this .coordNode ?.addInterest ("requestRebuild", this);
    },
    checkVertexCount (numVertices, multiplier)
    {
@@ -235,14 +83,14 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          fogCoordNode       = this .getFogCoord (),
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
-         normalNode         = this .getNormal (),
          tangentNode        = this .getTangent (),
+         normalNode         = this .getNormal (),
          coordNode          = this .getCoord (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
-         normalArray        = this .getNormals (),
          tangentArray       = this .getTangents (),
+         normalArray        = this .getNormals (),
          vertexArray        = this .getVertices (),
          polygons           = this .createPolygons (polygonsSize, this .polygons),
          triangles          = this .createTriangles (trianglesSize, this .triangles);
@@ -270,8 +118,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
          texCoordNode ?.addPoint (index, multiTexCoordArray);
 
-         normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
          tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
+         normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
 
          coordNode .addPoint (index, vertexArray);
       }
@@ -338,26 +186,28 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       for (let index = 0; index < polygonsSize; index += verticesPerPolygon)
       {
+         let normal;
+
          switch (verticesPerPolygon)
          {
             case 3:
             {
-               var normal = coord .getNormal (polygons [index],
-                                              polygons [index + 1],
-                                              polygons [index + 2]);
+               normal = coord .getNormal (polygons [index],
+                                          polygons [index + 1],
+                                          polygons [index + 2]);
                break;
             }
             case 4:
             {
-               var normal = coord .getQuadNormal (polygons [index],
-                                                  polygons [index + 1],
-                                                  polygons [index + 2],
-                                                  polygons [index + 3]);
+               normal = coord .getQuadNormal (polygons [index],
+                                              polygons [index + 1],
+                                              polygons [index + 2],
+                                              polygons [index + 3]);
                break;
             }
             default:
             {
-               var normal = this .getPolygonNormal (index, verticesPerPolygon, polygons, coord);
+               normal = this .getPolygonNormal (index, verticesPerPolygon, polygons, coord);
                break;
             }
          }

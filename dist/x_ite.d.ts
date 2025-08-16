@@ -402,7 +402,7 @@ declare namespace X3D
       TextCompression:              "CHAR_SPACING" | "SCALING",
       Timings:                      boolean,
       ToneMapping:                  ToneMappingTypes,
-      XRSessionMode:                "NONE" | "IMMERSIVE_VR" | "IMMERSIVE_AR",
+      XRSessionMode:                "NONE" | "IMMERSIVE_VR" | "IMMERSIVE_AR" | "INLINE",
    };
 
    type ColorSpaceTypes   = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
@@ -2027,7 +2027,7 @@ declare namespace X3D
        */
       getFieldDefinitions (): FieldDefinitionArray;
       /**
-       * @deprecated Returns the corresponding X3DField object associated with *name*.
+       * @deprecated Returns the corresponding X3DField object associated with *name*. Use sfnode.{fieldName} syntax.
        */
       getField (name: string): X3DField;
       /**

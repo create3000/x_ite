@@ -15,7 +15,7 @@ tags: [PointSet, Rendering]
 
 PointSet is a node that contains a set of colored 3D points, represented by contained Color or ColorRGBA and Coordinate or CoordinateDouble nodes.
 
-The PointSet node belongs to the **Rendering** component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The PointSet node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -104,7 +104,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/PointSet/PointSet.x3d" contentScale="auto">
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/PointSet/PointSet.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/PointSet/screenshot.avif" alt="PointSet"/>
 </x3d-canvas>
 
