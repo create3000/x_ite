@@ -141,7 +141,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
 {: #fields-pitch }

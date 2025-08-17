@@ -66,7 +66,7 @@ Whether rendering calculates and applies *shadows* to visual output (using globa
 ### SFString [ ] **phaseFunction** "Henyey-Greenstein" <small>["Henyey-Greenstein"|"NONE"|...]</small>
 {: #fields-phaseFunction }
 
-Define scattering model for implementations using global illumination (NONE or Henyey-Greenstein phase function).#10;
+Define scattering model for implementations using global illumination (NONE or Henyey-Greenstein phase function).
 
 #### Warning
 

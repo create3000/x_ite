@@ -81,13 +81,14 @@ Enables/disables node operation.
 
 The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
-#### Hint
+#### Hints
 
 - Negative *gain* factors negate the input signal.
+- [BiquadFilter type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 {: #fields-tailTime }
@@ -108,27 +109,38 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 *type* selects which BiquadFilter algorithm is used.
 
-#### Hint
+#### Hints
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-biquadfiltertype)
+- [BiquadFilter *type* field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
+- [Active filter overview](https://en.wikipedia.org/wiki/Active_filter)
+- [LOWPASS](https://en.wikipedia.org/wiki/Low-pass_filter)
+- [HIGHPASS](https://en.wikipedia.org/wiki/High-pass_filter)
+- [BANDPASS](https://en.wikipedia.org/wiki/Band-pass_filter)
+- [HIGHSHELF, LOWSHELF](https://ccrma.stanford.edu/~jos/fp/Low_High_Shelf_Filters.html)
+- [NOTCH](https://en.wikipedia.org/wiki/Band-stop_filter)
+- [ALLPASS](https://en.wikipedia.org/wiki/All-pass_filter#Digital_Implementation)
 
 ### SFFloat [in, out] **frequency** 350 <small>[0,∞)</small>
 {: #fields-frequency }
 
 *frequency* at which the BiquadFilterNode operates, in Hz.
 
-#### Hint
+#### Hints
 
 - [Wikipedia Hertz](https://en.wikipedia.org/wiki/Hertz)
+- [BiquadFilter type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
 
 ### SFFloat [in, out] **qualityFactor** 1 <small>[0,∞)</small>
 {: #fields-qualityFactor }
 
 *qualityFactor* is Quality Factor (Q) of the respective filter algorithm.
 
-#### Hint
+#### Hints
 
 - [Wikipedia Q factor](https://en.wikipedia.org/wiki/Q_factor)
+- [BiquadFilter type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
+- [Mozilla Developers Network (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode/Q)
 
 ### SFInt32 [in, out] **channelCount**
 {: #fields-channelCount }
@@ -244,9 +256,11 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ## Advice
 
-### Hint
+### Hints
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#biquadfilternode)
+- [BiquadFilter type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#BiquadFilterNode)
+- [Active filter overview](https://en.wikipedia.org/wiki/Active_filter)
 
 ### Warning
 

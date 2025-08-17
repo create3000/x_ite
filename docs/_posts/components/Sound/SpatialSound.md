@@ -113,7 +113,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFFloat [in, out] **coneOuterGain** 0 <small>(-∞,∞)</small>
 {: #fields-coneOuterGain }
@@ -216,7 +216,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 - If the audio source is stereo or multi-channel, channel separation is retained during playback.
 - [X3D Sound component Figure 16.2 Sound Node Geometry](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-Soundnodegeometry)
-- [W3C Web Audio API, PannerNode Interface](https://www.w3.org/TR/webaudio/#pannernode)
+- [W3C Web Audio API, PannerNode Interface](https://www.w3.org/TR/webaudio#PannerNode)
 - [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio)
 - [Wikipedia 3D sound localization](https://en.wikipedia.org/wiki/3D_sound_localization)
 
