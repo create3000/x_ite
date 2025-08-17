@@ -98,17 +98,16 @@ function VRMLParser (scene)
 
 Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .prototype),
 {
-   accessTypes:
-   {
-      field:          X3DConstants .initializeOnly,
-      eventIn:        X3DConstants .inputOnly,
-      eventOut:       X3DConstants .outputOnly,
-      exposedField:   X3DConstants .inputOutput,
-      initializeOnly: X3DConstants .initializeOnly,
-      inputOnly:      X3DConstants .inputOnly,
-      outputOnly:     X3DConstants .outputOnly,
-      inputOutput:    X3DConstants .inputOutput,
-   },
+   accessTypes: new Map ([
+      ["field",          X3DConstants .initializeOnly],
+      ["eventIn",        X3DConstants .inputOnly],
+      ["eventOut",       X3DConstants .outputOnly],
+      ["exposedField",   X3DConstants .inputOutput],
+      ["initializeOnly", X3DConstants .initializeOnly],
+      ["inputOnly",      X3DConstants .inputOnly],
+      ["outputOnly",     X3DConstants .outputOnly],
+      ["inputOutput",    X3DConstants .inputOutput],
+   ]),
    SFImage: new Fields .SFImage (),
    SFNode: new Fields .SFNode (),
    MFString: new Fields .MFString (),
@@ -1289,7 +1288,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (this .Id ())
       {
-         const accessType = this .accessTypes [this .result [0]];
+         const accessType = this .accessTypes .get (this .result [0]);
 
          if (accessType)
          {
