@@ -15,6 +15,7 @@ const
    _predefinedFields  = Symbol (),
    _userDefinedFields = Symbol (),
    _childObjects      = Symbol (),
+   _changedTypes      = Symbol (),
    _initialized       = Symbol (),
    _live              = Symbol (),
    _set_live__        = Symbol .for ("X_ITE.X3DBaseNode.set_live__");
@@ -314,7 +315,13 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          configurable: true,
       });
 
-      return original;
+      this [_changedTypes] ??= new Map ();
+
+      this [_changedTypes] .set (field, original);
+   },
+   convertFieldType (fields)
+   {
+      return fields .map (field => this [_changedTypes] ?.get (field) ?? field);
    },
    removePredefinedField (name)
    {

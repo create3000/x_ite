@@ -159,7 +159,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getMinimumX ()
    {
-      return this ._fieldOfView .length > 0 ? this ._fieldOfView [0] : -1;
+      if (this .getExecutionContext () .getSpecificationVersion () <= 4.0)
+         return this ._fieldOfView .length > 0 ? this ._fieldOfView [0] : -1;
+      else
+         return this ._fieldOfView [0];
    },
    getUserMinimumX ()
    {
@@ -167,7 +170,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getMinimumY ()
    {
-      return this ._fieldOfView .length > 1 ? this ._fieldOfView [1] : -1;
+      if (this .getExecutionContext () .getSpecificationVersion () <= 4.0)
+         return this ._fieldOfView .length > 1 ? this ._fieldOfView [1] : -1;
+      else
+         return this ._fieldOfView [1];
    },
    getUserMinimumY ()
    {
@@ -175,7 +181,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getMaximumX ()
    {
-      return this ._fieldOfView .length > 2 ? this ._fieldOfView [2] : 1;
+      if (this .getExecutionContext () .getSpecificationVersion () <= 4.0)
+         return this ._fieldOfView .length > 2 ? this ._fieldOfView [2] : 1;
+      else
+         return this ._fieldOfView [2];
    },
    getUserMaximumX ()
    {
@@ -183,7 +192,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getMaximumY ()
    {
-      return this ._fieldOfView .length > 3 ? this ._fieldOfView [3] : 1;
+      if (this .getExecutionContext () .getSpecificationVersion () <= 4.0)
+         return this ._fieldOfView .length > 3 ? this ._fieldOfView [3] : 1;
+      else
+         return this ._fieldOfView [3];
    },
    getUserMaximumY ()
    {
@@ -295,22 +307,16 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
       this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
    },
-   toVRMLStream (generator)
+   convertFieldType (fields)
    {
-      const executionContext = this .getExecutionContext ();
+      // Don't check for specification version!
+      
+      const converted = X3DViewpointNode .prototype .convertFieldType .call (this, fields);
 
-      if (executionContext .getSpecificationVersion () <= 4.0)
-      {
-         const oldField = this .changeFieldType ("fieldOfView", new Fields .SFVec4f (... this ._fieldOfView));
+      converted .find (field => field .getName () === "fieldOfView")
+         ?.assign (new Fields .SFVec4f (... this ._fieldOfView));
 
-         X3DViewpointNode .prototype .toVRMLStream .call (this, generator);
-
-         this .changeFieldType ("fieldOfView", oldField);
-      }
-      else
-      {
-         X3DViewpointNode .prototype .toVRMLStream .call (this, generator);
-      }
+      return converted;
    },
 });
 
