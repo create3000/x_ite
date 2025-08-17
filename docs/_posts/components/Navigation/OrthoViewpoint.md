@@ -111,7 +111,7 @@ Rotation (axis, angle in radians) of [Viewpoint](/x_ite/components/navigation/vi
 
 *centerOfRotation* specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
 
-### MFFloat [in, out] **fieldOfView** [ -1, -1, 1, 1 ] <small>(-∞,∞)</small>
+### SFVec4f [in, out] **fieldOfView** -1 -1 1 1 <small>(-∞,∞)</small>
 {: #fields-fieldOfView }
 
 Minimum and maximum extents of view in units of local coordinate system. Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.

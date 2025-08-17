@@ -296,6 +296,26 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (field .isInitializable ())
          HTMLSupport .addFieldName (alias);
    },
+   changeFieldType (name, field)
+   {
+      const original = this [_predefinedFields] .get (name);
+
+      field .setTainted (!this [_initialized]);
+      field .addParent (this);
+      field .setName (name);
+      field .setAccessType (original .getAccessType ());
+
+      this [_predefinedFields] .update (name, name, field);
+
+      Object .defineProperty (this, `_${name}`,
+      {
+         get () { return field; },
+         set (value) { field .setValue (value); },
+         configurable: true,
+      });
+
+      return original;
+   },
    removePredefinedField (name)
    {
       const field = this [_predefinedFields] .get (name);

@@ -15,7 +15,12 @@ function OrthoViewpoint (executionContext)
 
    this .addType (X3DConstants .OrthoViewpoint);
 
-   this .addChildObjects (X3DConstants .inputOutput, "fieldOfViewOffset", new Fields .MFFloat (0, 0, 0, 0));
+   this .addChildObjects (X3DConstants .inputOutput, "fieldOfViewOffset", new Fields .SFVec4f (0, 0, 0, 0));
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this .changeFieldType ("fieldOfView", new Fields .MFFloat (... this ._fieldOfView));
 
    // Units
 
@@ -290,6 +295,23 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
       this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
    },
+   toVRMLStream (generator)
+   {
+      const executionContext = this .getExecutionContext ();
+
+      if (executionContext .getSpecificationVersion () <= 4.0)
+      {
+         const oldField = this .changeFieldType ("fieldOfView", new Fields .SFVec4f (... this ._fieldOfView));
+
+         X3DViewpointNode .prototype .toVRMLStream .call (this, generator);
+
+         this .changeFieldType ("fieldOfView", oldField);
+      }
+      else
+      {
+         X3DViewpointNode .prototype .toVRMLStream .call (this, generator);
+      }
+   },
 });
 
 Object .defineProperties (OrthoViewpoint,
@@ -304,7 +326,7 @@ Object .defineProperties (OrthoViewpoint,
          new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .MFFloat (-1, -1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .SFVec4f (-1, -1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance",      new Fields .SFFloat (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",       new Fields .SFFloat (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "viewAll",           new Fields .SFBool ()),
