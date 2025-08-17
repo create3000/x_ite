@@ -358,8 +358,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .getScene () .setSpecificationVersion (this .result [2]);
 
-         console .log (this .result [2]);
-
          if (this .getScene () .getSpecificationVersion () <= 3.2)
             this .Grammar .Comment = Grammar .Comment3_2;
 
