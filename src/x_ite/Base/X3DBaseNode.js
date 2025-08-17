@@ -297,15 +297,19 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (field .isInitializable ())
          HTMLSupport .addFieldName (alias);
    },
-   changeFieldType (name, field)
+   changeField (accessType, name, value)
    {
-      const original = this [_predefinedFields] .get (name);
+      const
+         original = this [_predefinedFields] .get (name),
+         field    = value .copy ();
 
       field .setTainted (!this [_initialized]);
       field .addParent (this);
       field .setName (name);
-      field .setAccessType (original .getAccessType ());
+      field .setAccessType (accessType);
 
+      this [_fieldDefinitions] = this [_fieldDefinitions] .copy ();
+      this [_fieldDefinitions] .update (name, name, new X3DFieldDefinition (accessType, name, value));
       this [_predefinedFields] .update (name, name, field);
 
       Object .defineProperty (this, `_${name}`,

@@ -20,7 +20,7 @@ function OrthoViewpoint (executionContext)
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 4.0)
-      this .changeFieldType ("fieldOfView", new Fields .MFFloat (... this ._fieldOfView));
+      this .changeField (this ._fieldOfView .getAccessType (), "fieldOfView", new Fields .MFFloat (... this ._fieldOfView));
 
    // Units
 
