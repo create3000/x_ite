@@ -78,7 +78,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFString [in, out] **mediaDeviceID**
 {: #fields-mediaDeviceID }
@@ -147,7 +147,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#mediastreamaudiodestinationnode)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#MediaStreamAudioDestinationNode)
 
 ### Warning
 

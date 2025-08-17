@@ -1,5 +1,5 @@
-/* X_ITE v12.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
+/* X_ITE v12.0.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -290,7 +290,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this ._scale            .addFieldInterest (this .transformNode ._scale);
       this ._scaleOrientation .addFieldInterest (this .transformNode ._scaleOrientation);
       this ._center           .addFieldInterest (this .transformNode ._center);
-      this ._bboxDisplay      .addFieldInterest (this .transformNode ._bboxDisplay);
       this ._bboxSize         .addFieldInterest (this .transformNode ._bboxSize);
       this ._bboxCenter       .addFieldInterest (this .transformNode ._bboxCenter);
 
@@ -299,7 +298,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this .transformNode ._scale            = this ._scale;
       this .transformNode ._scaleOrientation = this ._scaleOrientation;
       this .transformNode ._center           = this ._center;
-      this .transformNode ._bboxDisplay      = this ._bboxDisplay;
       this .transformNode ._bboxSize         = this ._bboxSize;
       this .transformNode ._bboxCenter       = this ._bboxCenter;
       this .transformNode ._children         = [ this .skeletonNode, this .viewpointsNode, this .skinNode ];
@@ -327,10 +325,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       for (const texture of [this .jointsTexture, this .displacementsTexture, this .displacementWeightsTexture, this .jointMatricesTexture])
       {
          gl .bindTexture (gl .TEXTURE_2D, texture);
+
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       }
 
       // Events
@@ -1402,10 +1401,11 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
       for (const texture of [this .displacementsTexture, this .displacementWeightsTexture, this .jointMatricesTexture])
       {
          gl .bindTexture (gl .TEXTURE_2D, texture);
+         
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       }
 
       // Events

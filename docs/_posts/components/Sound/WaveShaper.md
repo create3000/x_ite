@@ -85,7 +85,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 {: #fields-tailTime }
@@ -222,7 +222,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#waveshapernode)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#WaveShaperNode)
 
 ## See Also
 
