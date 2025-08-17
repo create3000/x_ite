@@ -119,33 +119,33 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    Vector2: new Vector2 (),
    Vector3: new Vector3 (),
    Vector4: new Vector4 (),
-   CONSTANTS: {
-      NAN: Number .NaN,
-      INFINITY: Number .POSITIVE_INFINITY,
-      INF: Number .POSITIVE_INFINITY,
-      PI:    Math .PI,
-      PI2:   Math .PI * 2,
-      PI1_4: Math .PI * 1/4,
-      PI2_4: Math .PI * 2/4,
-      PI3_4: Math .PI * 3/4,
-      PI4_4: Math .PI * 4/4,
-      PI5_4: Math .PI * 5/4,
-      PI6_4: Math .PI * 6/4,
-      PI7_4: Math .PI * 7/4,
-      PI8_4: Math .PI * 8/4,
-      PI1_2: Math .PI * 1/2,
-      PI2_2: Math .PI * 2/2,
-      PI3_2: Math .PI * 3/2,
-      PI4_2: Math .PI * 4/2,
-      PI1_3: Math .PI * 1/3,
-      PI2_3: Math .PI * 2/3,
-      PI3_3: Math .PI * 3/3,
-      PI4_3: Math .PI * 4/3,
-      PI5_3: Math .PI * 5/3,
-      PI6_3: Math .PI * 6/3,
-      SQRT1_2: Math .SQRT1_2,
-      SQRT2:   Math .SQRT2,
-   },
+   CONSTANTS: new Map ([
+      ["NAN",      Number .NaN],
+      ["INFINITY", Number .POSITIVE_INFINITY],
+      ["INF",      Number .POSITIVE_INFINITY],
+      ["PI",    Math .PI],
+      ["PI2",   Math .PI * 2],
+      ["PI1_4", Math .PI * 1/4],
+      ["PI2_4", Math .PI * 2/4],
+      ["PI3_4", Math .PI * 3/4],
+      ["PI4_4", Math .PI * 4/4],
+      ["PI5_4", Math .PI * 5/4],
+      ["PI6_4", Math .PI * 6/4],
+      ["PI7_4", Math .PI * 7/4],
+      ["PI8_4", Math .PI * 8/4],
+      ["PI1_2", Math .PI * 1/2],
+      ["PI2_2", Math .PI * 2/2],
+      ["PI3_2", Math .PI * 3/2],
+      ["PI4_2", Math .PI * 4/2],
+      ["PI1_3", Math .PI * 1/3],
+      ["PI2_3", Math .PI * 2/3],
+      ["PI3_3", Math .PI * 3/3],
+      ["PI4_3", Math .PI * 4/3],
+      ["PI5_3", Math .PI * 5/3],
+      ["PI6_3", Math .PI * 6/3],
+      ["SQRT1_2", Math .SQRT1_2],
+      ["SQRT2",   Math .SQRT2],
+   ]),
    unknownLevel: 0,
    getEncoding ()
    {
@@ -1556,7 +1556,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .CONSTANTS .parse (this))
       {
-         this .value = this .CONSTANTS [this .result [2] .toUpperCase ()];
+         this .value = this .CONSTANTS .get (this .result [2] .toUpperCase ());
 
          if (this .result [1] === "-")
             this .value = -this .value;
