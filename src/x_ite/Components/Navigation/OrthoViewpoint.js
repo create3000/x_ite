@@ -309,7 +309,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    convertFields (fields)
    {
-      // Don't check for specification version!
+      // Don't check for specification version, it will not work with Sunrize.
 
       fields .find (field => field .getName () === "fieldOfView")
          ?.assign (new Fields .SFVec4f (... this ._fieldOfView));
