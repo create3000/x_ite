@@ -13,7 +13,7 @@ tags: [Analyser, Sound]
 
 ## Overview
 
-Analyser provides real-time frequency and time-domain analysis information, without any change to the input.
+Analyser provides real-time frequency and time-domain analysis information, without any signal-processing change to the audio stream which is passed unprocessed from input to output.
 
 The Analyser node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
@@ -133,24 +133,16 @@ Output field *floatTimeDomainData*.
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 {: #fields-gain }
 
-The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
-
-#### Hint
-
-- Negative *gain* factors negate the input signal.
+The *gain* value only affects analysis, not output signal. The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 {: #fields-tailTime }
 
-*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
-
-#### Hint
-
-- *tailTime* always has a value of zero for Analyser.
+]
 
 ### SFInt32 [in, out] **channelCount**
 {: #fields-channelCount }
@@ -268,7 +260,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#analysernode)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#AnalyserNode)
 
 ## See Also
 

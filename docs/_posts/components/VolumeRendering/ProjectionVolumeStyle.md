@@ -56,7 +56,7 @@ If *type*=MAX then Maximum Intensity Projection (MIP) or Least MIP (LMIP) algori
 
 #### Hint
 
-- *type*=AVERAGE matches a simple approximation of an X-ray.#10;
+- *type*=AVERAGE matches a simple approximation of an X-ray.
 
 #### Warning
 

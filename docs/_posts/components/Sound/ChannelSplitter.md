@@ -76,7 +76,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFInt32 [in, out] **channelCount**
 {: #fields-channelCount }
@@ -131,7 +131,7 @@ The *outputs* field is a set of output nodes receiving the split channels, and m
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#channelsplitternode)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#ChannelSplitterNode)
 
 ## See Also
 
