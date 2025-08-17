@@ -307,16 +307,14 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
       this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
    },
-   convertFieldType (fields)
+   convertFields (fields)
    {
       // Don't check for specification version!
-      
-      const converted = X3DViewpointNode .prototype .convertFieldType .call (this, fields);
 
-      converted .find (field => field .getName () === "fieldOfView")
+      fields .find (field => field .getName () === "fieldOfView")
          ?.assign (new Fields .SFVec4f (... this ._fieldOfView));
 
-      return converted;
+      return fields;
    },
 });
 

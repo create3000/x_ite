@@ -651,7 +651,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       generator .string += "{";
 
       const
-         fields            = this .convertFieldType (this .getChangedFields ()),
+         fields            = this .getConvertedFields (this .getChangedFields ()),
          userDefinedFields = this .getUserDefinedFields ();
 
       if (this .canUserDefinedFields ())
@@ -935,7 +935,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       }
 
       const
-         fields            = this .convertFieldType (this .getChangedFields ()),
+         fields            = this .getConvertedFields (this .getChangedFields ()),
          userDefinedFields = this .getUserDefinedFields ();
 
       const
@@ -1286,7 +1286,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       // Fields
 
       const
-         fields            = this .convertFieldType (this .getChangedFields ()),
+         fields            = this .getConvertedFields (this .getChangedFields ()),
          userDefinedFields = this .getUserDefinedFields ();
 
       const references = [ ];

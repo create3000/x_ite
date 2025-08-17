@@ -319,10 +319,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
       this [_changedTypes] .set (field, original);
    },
-   convertFieldType (fields)
-   {
-      return fields .map (field => this [_changedTypes] ?.get (field) ?? field);
-   },
    removePredefinedField (name)
    {
       const field = this [_predefinedFields] .get (name);
@@ -435,6 +431,14 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       }
 
       return changedFields;
+   },
+   getConvertedFields (fields)
+   {
+      return this .convertFields (fields .map (field => this [_changedTypes] ?.get (field) ?? field));
+   },
+   convertFields (fields)
+   {
+      return fields;
    },
    isDefaultValue (field)
    {
