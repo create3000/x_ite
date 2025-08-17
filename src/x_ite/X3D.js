@@ -31,6 +31,7 @@ import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
 
+import "./SUPPORTED_VERSIONS.js";
 import "./Features.js";
 import "./X3DCanvasElement.js";
 import "../standard/Math/Algorithms/QuickSort.js";
