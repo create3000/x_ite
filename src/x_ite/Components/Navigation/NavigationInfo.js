@@ -171,6 +171,8 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
                   lookAt = true;
                   continue;
                case "PLANE":
+               case "PLANE_create3000.github.io":
+               case "PLANE_create3000.de":
                   planeViewer = true;
                   continue;
                case "NONE":

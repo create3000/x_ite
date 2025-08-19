@@ -161,8 +161,6 @@ Object .assign (X3DNavigationContext .prototype,
             this [_viewerNode] = new FlyViewer (this .getPrivateScene (), navigationInfo);
             break;
          case "PLANE":
-         case "PLANE_create3000.github.io":
-         case "PLANE_create3000.de":
             this [_viewerNode] = new PlaneViewer (this .getPrivateScene (), navigationInfo);
             break;
          case "NONE":
