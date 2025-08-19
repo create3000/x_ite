@@ -2115,15 +2115,15 @@ declare namespace X3D
        * *axis* is a SFVec3d/f object whose value is the axis of rotation.
        * *angle* is the scalar angle of the rotation (in radians).
        */
-      constructor (axis: SFVec3, angle: number);
+      constructor (axis: SFVec3d | SFVec3f, angle: number);
       /**
        * *fromVector* and *toVector* are SFVec3d/f valued objects. These vectors are normalized and the rotation value that would rotate from the *fromVector* to the *toVector* is stored in the object.
        */
-      constructor (fromVector: SFVec3, toVector: SFVec3);
+      constructor (fromVector: SFVec3d | SFVec3f, toVector: SFVec3);
       /**
        * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
        */
-      constructor (matrix: SFMatrix3);
+      constructor (matrix: SFMatrix3d | SFMatrix3f);
 
       /**
        * Returns the first value of the axis vector.
@@ -2162,13 +2162,13 @@ declare namespace X3D
        */
       multiply (rotation: SFRotation): SFRotation;
       /**
-       * Returns a SFVec3f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
+       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
        */
       multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
        * Set the axis of rotation to the vector passed in *vec*.
        */
-      setAxis (axis: SFVec3): void;
+      setAxis (axis: SFVec3d | SFVec3f): void;
       /**
        * Set the value of this rotation to the rotation matrix passed in *matrix*.
        */
