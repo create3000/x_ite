@@ -917,7 +917,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      return layerNode ?.getDistance (direction .getValue ()) ?? 0;
+      return {
+         distance: layerNode ?.getDistance (direction .getValue ()) ?? 0,
+      };
    },
    beginUpdate ()
    {
