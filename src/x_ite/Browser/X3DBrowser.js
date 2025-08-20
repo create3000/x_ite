@@ -815,7 +815,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (arguments .length === 1 && typeof layerNode === "number")
          transitionTime = layerNode;
 
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+      layerNode      = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+      transitionTime = +transitionTime;
 
       layerNode ?.viewAll (transitionTime, 1, this .getBrowserOption ("StraightenHorizon"));
    },
@@ -867,11 +868,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       if (arguments .length === 1)
       {
-         name      = String (layerNode);
+         name      = layerNode;
          layerNode = this .getActiveLayer ();
       }
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+      name      = String (name);
 
       const viewpointNode = layerNode ?.getViewpoints () .get ()
          .find (viewpointNode => viewpointNode .getName () === name);

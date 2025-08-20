@@ -1,5 +1,6 @@
 import X3DConstants     from "../../Base/X3DConstants.js";
 import Fields           from "../../Fields.js";
+import X3DCast          from "../../Base/X3DCast.js";
 import ExamineViewer    from "./ExamineViewer.js";
 import WalkViewer       from "./WalkViewer.js";
 import FlyViewer        from "./FlyViewer.js";
@@ -175,6 +176,18 @@ Object .assign (X3DNavigationContext .prototype,
       }
 
       this [_viewerNode] .setup ();
+   },
+   checkDistance (layerNode, direction)
+   {
+      if (arguments .length === 1)
+      {
+         direction = layerNode;
+         layerNode = this .getActiveLayer ();
+      }
+
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+
+      return layerNode ?.getDistance (direction .getValue ()) ?? 0;
    },
    dispose ()
    {
