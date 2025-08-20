@@ -223,37 +223,37 @@ declare namespace X3D
        */
       removeBrowserCallback (key: any, event?: number): void;
       /**
-       * Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layerNode* is omitted, the active layer is used.
+       * Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layer* is omitted, the active layer is used.
        */
-      viewAll (layer?: SFNode, transitionTime?: number): void;
+      viewAll (layer?: X3DLayerNodeProxy, transitionTime?: number): void;
       /**
-       * Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
        */
-      nextViewpoint (layer?: SFNode): void;
+      nextViewpoint (layer?: X3DLayerNodeProxy): void;
       /**
-       * Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
        */
-      previousViewpoint (layer?: SFNode): void;
+      previousViewpoint (layer?: X3DLayerNodeProxy): void;
       /**
-       * Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
        */
-      firstViewpoint (layer?: SFNode): void;
+      firstViewpoint (layer?: X3DLayerNodeProxy): void;
       /**
-       * Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
        */
-      lastViewpoint (layer?: SFNode): void;
+      lastViewpoint (layer?: X3DLayerNodeProxy): void;
       /**
-       * Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layer*. If *layer* is omitted, the active layer is used.
        */
-      changeViewpoint (layer: SFNode, name: string): void;
+      changeViewpoint (layer: X3DLayerNodeProxy, name: string): void;
       changeViewpoint (name: string): void;
       /**
-       * Returns the distance to the closest collidable object when looked in *direction* measured from the active viewpoint position. The maximum returned value is `avatarHeight * 2` (where *avatarHeight* is the second value of NavigationInfo *avatarSize*). Compare with *collisionRadius* (first value of NavigationInfo *avatarSize*) to detect if a collision with an object occurs. If *layerNode* is omitted, the active layer is used.
+       * Returns the distance to the closest collidable object when looked in *direction* measured from the active viewpoint position. The maximum detection radius is `avatarHeight * 2` (where *avatarHeight* is the second value of NavigationInfo *avatarSize*). Compare with *collisionRadius* (first value of NavigationInfo *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
        *
-       * The return value is an object with currently a single property *distance*.
+       * The return value is an object with two properties *node* and *distance*.
        */
-      getClosestObject (layer: SFNode, direction: SFVec3d | SFVec3f): NearestObject;
-      getClosestObject (direction: SFVec3d | SFVec3f): NearestObject;
+      getClosestObject (layer: X3DLayerNodeProxy, direction: SFVec3d | SFVec3f): ClosestObject;
+      getClosestObject (direction: SFVec3d | SFVec3f): ClosestObject;
       /**
        * Start processing events.
        */
@@ -418,7 +418,8 @@ declare namespace X3D
       XRSession:              boolean,
    }
 
-   type NearestObject = {
+   type ClosestObject = {
+      node: X3DShapeNodeProxy | null,
       distance: number,
       // normal: SFVec3f,
    };

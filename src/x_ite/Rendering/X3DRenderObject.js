@@ -408,7 +408,7 @@ Object .assign (X3DRenderObject .prototype,
 
       // Constrain translation when the viewer collides with an obstacle.
 
-      const distance = this .getDistance (translation) - this .getNavigationInfo () .getCollisionRadius ();
+      const distance = this .getClosestObject (translation) .distance - this .getNavigationInfo () .getCollisionRadius ();
 
       if (distance > 0)
       {
@@ -435,7 +435,7 @@ Object .assign (X3DRenderObject .prototype,
 
       return translation .assign (Vector3 .ZERO);
    },
-   getDistance: (() =>
+   getClosestObject: (() =>
    {
       const
          projectionMatrix            = new Matrix4 (),
@@ -498,14 +498,16 @@ Object .assign (X3DRenderObject .prototype,
          this .getProjectionMatrix () .pop ();
 
          this .collisionTime .stop ();
-         return -depth;
+
+         return depth;
       };
    })(),
    getDepth: (() =>
    {
       const
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
-         depthBufferViewVolume = new ViewVolume ();
+         depthBufferViewVolume = new ViewVolume (),
+         result                = { id: -1, distance: 0 };
 
       depthBufferViewVolume .set (Matrix4 .IDENTITY, depthBufferViewport);
 
@@ -518,9 +520,13 @@ Object .assign (X3DRenderObject .prototype,
 
          this .depth (this .collisionShapes, this .numCollisionShapes);
 
-         const depth = this .depthBuffer .readDepth (projectionMatrix, depthBufferViewport);
+         const depth = this .depthBuffer .readDepth (projectionMatrix, depthBufferViewport, result);
 
          this .viewVolumes .pop ();
+
+         depth .node = depth .id < 0
+            ? null
+            : this .collisionShapes [depth .id] .shapeNode;
 
          return depth;
       };
@@ -980,7 +986,7 @@ Object .assign (X3DRenderObject .prototype,
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
-         let distance = -this .getDepth (projectionMatrix);
+         let distance = this .getDepth (projectionMatrix) .distance;
 
          this .getProjectionMatrix () .pop ();
 
@@ -1059,7 +1065,7 @@ Object .assign (X3DRenderObject .prototype,
          gl .viewport (... viewport);
          gl .scissor (... viewport);
 
-         gl .clearColor (1, 0, 0, 0); // '1' for Infinity, '0 0 0' for the normal (TODO).
+         gl .clearColor (1, -1, 0, 0); // '1' for infinity, id, '0 0 0' for normal (TODO).
          gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
          // Render all objects
@@ -1083,6 +1089,7 @@ Object .assign (X3DRenderObject .prototype,
             shaderNode .enable (gl);
             shaderNode .setClipPlanes (gl, clipPlanes);
 
+            gl .uniform1i (shaderNode .x3d_Id, s);
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 

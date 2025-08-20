@@ -19,6 +19,7 @@ import XMLParser            from "../Parser/XMLParser.js";
 import JSONParser           from "../Parser/JSONParser.js";
 import X3DCast              from "../Base/X3DCast.js";
 import X3DConstants         from "../Base/X3DConstants.js";
+import SFNodeCache          from "../Fields/SFNodeCache.js";
 import Features             from "../Features.js";
 import Algorithm            from "../../standard/Math/Algorithm.js";
 import MikkTSpace           from "./Rendering/MikkTSpace.js";
@@ -894,9 +895,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      return {
-         distance: layerNode ?.getDistance (direction .getValue ()) ?? 0,
-      };
+      const closestObject = layerNode ?.getClosestObject (direction .getValue ())
+
+      return closestObject ?.node ? {
+         node: SFNodeCache .get (closestObject .node),
+         distance: closestObject .distance,
+      }
+      : { node: null, distance: Infinity };
    },
    beginUpdate ()
    {

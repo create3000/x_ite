@@ -541,35 +541,35 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 
 Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callbacks associated with key will be removed.
 
-#### **viewAll** (*[layer?: SFNode,] transitionTime?: number = 1*): void <small><span class="blue">non-standard</span></small>
+#### **viewAll** (*[layer?: X3DLayerNode,] transitionTime?: number = 1*): void <small><span class="blue">non-standard</span></small>
 
-Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layerNode* is omitted, the active layer is used.
+Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layer* is omitted, the active layer is used.
 
-#### **nextViewpoint** (*layerNode?: SFNode*): void
+#### **nextViewpoint** (*layer?: X3DLayerNode*): void
 
-Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
 
-#### **previousViewpoint** (*layerNode?: SFNode*): void
+#### **previousViewpoint** (*layer?: X3DLayerNode*): void
 
-Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
 
-#### **firstViewpoint** (*layerNode?: SFNode*): void
+#### **firstViewpoint** (*layer?: X3DLayerNode*): void
 
-Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
 
-#### **lastViewpoint** (*layerNode?: SFNode*): void
+#### **lastViewpoint** (*layer?: X3DLayerNode*): void
 
-Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
 
-#### **changeViewpoint** (*[layerNode: SFNode,] name: string*): void
+#### **changeViewpoint** (*[layer: X3DLayerNode,] name: string*): void
 
-Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layer*. If *layer* is omitted, the active layer is used.
 
-#### **getClosestObject** (*[layerNode: SFNode,] direction: SFVec3d | SFVec3f*): { distance: number } <small><span class="blue">non-standard</span></small>
+#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): { node: X3DShapeNode | null, distance: number } <small><span class="blue">non-standard</span></small>
 
-Returns the distance to the closest collidable object when looked in *direction* measured from the active viewpoint position. The maximum returned value is `avatarHeight * 2` (where *avatarHeight* is the second value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*). Compare with *collisionRadius* (first value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*) to detect if a collision with an object occurs. If *layerNode* is omitted, the active layer is used.
+Returns the distance to the closest collidable object when looked in *direction* measured from the active viewpoint position. The maximum detection radius is `avatarHeight * 2` (where *avatarHeight* is the second value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*). Compare with *collisionRadius* (first value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
 
-The return value is an object with currently a single property *distance*.
+The return value is an object with two properties *node* and *distance*.
 
 #### **beginUpdate** (): void
 
