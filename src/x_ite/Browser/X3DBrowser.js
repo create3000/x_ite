@@ -884,16 +884,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this .currentScene .deleteRoute (sourceNode, sourceField, destinationNode, destinationField);
    },
-   getCollisionDistance (layerNode, direction)
+   getClosestObject (layerNode, direction)
    {
       if (arguments .length === 1)
       {
          direction = layerNode;
          layerNode = this .getActiveLayer ();
       }
-
-      // if (!(direction instanceof Fields .SFVec3f || direction instanceof Fields .SFVec3d))
-      //    throw new Error ("Browser.checkDistance: direction must be of type SFVec3d or SFVec3f.");
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 

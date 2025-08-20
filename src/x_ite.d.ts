@@ -252,8 +252,8 @@ declare namespace X3D
        *
        * The return value is an object with currently a single property *distance*.
        */
-      getCollisionDistance (layer: SFNode, direction: SFVec3d | SFVec3f): CollisionDistanceObject;
-      getCollisionDistance (direction: SFVec3d | SFVec3f): CollisionDistanceObject;
+      getClosestObject (layer: SFNode, direction: SFVec3d | SFVec3f): NearestObject;
+      getClosestObject (direction: SFVec3d | SFVec3f): NearestObject;
       /**
        * Start processing events.
        */
@@ -418,7 +418,7 @@ declare namespace X3D
       XRSession:              boolean,
    }
 
-   type CollisionDistanceObject = {
+   type NearestObject = {
       distance: number,
       // normal: SFVec3f,
    };
