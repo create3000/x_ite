@@ -264,7 +264,7 @@ declare namespace X3D
       changeViewpoint (layer: SFNode, name: string): void;
       changeViewpoint (name: string): void;
       /**
-       * Returns the distance to the closest object when looked in *direction* measured from the active viewpoint position. The maximum returned value is avatarHeight * 2 (second value of `NavigationInfo.avatarSize`). Compare with collisionRadius (first value of `NavigationInfo.avatarSize`) to detect if a collision with an object occurs. If *layerNode* is omitted, the active layer is used.
+       * Returns the distance to the closest object when looked in *direction* measured from the active viewpoint position. The maximum returned value is `avatarHeight * 2` (second value of `NavigationInfo.avatarSize`). Compare with `collisionRadius` (first value of `NavigationInfo.avatarSize`) to detect if a collision with an object occurs. If *layerNode* is omitted, the active layer is used.
        */
       checkDistance (layer: SFNode, direction: SFVec3d | SFVec3f): number;
       checkDistance (direction: SFVec3d | SFVec3f): number;
