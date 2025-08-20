@@ -904,7 +904,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this .currentScene .deleteRoute (sourceNode, sourceField, destinationNode, destinationField);
    },
-   checkDistance (layerNode, direction)
+   getCollisionDistance (layerNode, direction)
    {
       if (arguments .length === 1)
       {
