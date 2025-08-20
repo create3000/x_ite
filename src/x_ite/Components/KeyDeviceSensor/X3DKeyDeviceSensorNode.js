@@ -45,6 +45,19 @@ Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, X3DSe
    enable ()
    {
       this .getBrowser () .addKeyDeviceSensorNode (this);
+
+      // Only one key device sensor may be active at a time.
+
+      for (const keyDeviceSensorNode of this .getBrowser () .getKeyDeviceSensorNodes ())
+      {
+         if (keyDeviceSensorNode === this)
+            continue;
+
+         if (!keyDeviceSensorNode ._enabled .getValue ())
+            continue;
+
+         keyDeviceSensorNode ._enabled = false;
+      }
    },
    disable ()
    {
