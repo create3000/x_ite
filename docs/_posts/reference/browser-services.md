@@ -557,7 +557,7 @@ Changes the bound viewpoint node to the previous viewpoint in the list of user v
 
 Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-#### **lastViewpoint**(*layerNode?: SFNode*): void
+#### **lastViewpoint** (*layerNode?: SFNode*): void
 
 Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
@@ -567,7 +567,7 @@ Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint mu
 
 #### **checkDistance** (*[layerNode: SFNode,] direction: SFVec3d | SFVec3f*): number
 
-Returns the distance to the closest object when looked in *direction* measured from the active viewpoint position. The maximum returned value is avatarHeight * 2 (second value of `NavigationInfo.avatarSize`). Compare with collisionRadius (first value of `NavigationInfo.avatarSize`) to detect if a collision with an object occurs. If *layerNode* is omitted, the active layer is used.
+Returns the distance to the closest object when looked in *direction* measured from the active viewpoint position. The maximum returned value is `avatarHeight * 2` (second value of `NavigationInfo.avatarSize`). Compare with `collisionRadius` (first value of `NavigationInfo.avatarSize`) to detect if a collision with an object occurs. If *layerNode* is omitted, the active layer is used.
 
 #### **beginUpdate** (): void
 
