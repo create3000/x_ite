@@ -177,18 +177,6 @@ Object .assign (X3DNavigationContext .prototype,
 
       this [_viewerNode] .setup ();
    },
-   checkDistance (layerNode, direction)
-   {
-      if (arguments .length === 1)
-      {
-         direction = layerNode;
-         layerNode = this .getActiveLayer ();
-      }
-
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
-
-      return layerNode ?.getDistance (direction .getValue ()) ?? 0;
-   },
    dispose ()
    {
       this [_viewerNode] ?.dispose ();
