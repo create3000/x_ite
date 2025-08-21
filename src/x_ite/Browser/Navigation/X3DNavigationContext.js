@@ -1,6 +1,5 @@
 import X3DConstants     from "../../Base/X3DConstants.js";
 import Fields           from "../../Fields.js";
-import X3DCast          from "../../Base/X3DCast.js";
 import ExamineViewer    from "./ExamineViewer.js";
 import WalkViewer       from "./WalkViewer.js";
 import FlyViewer        from "./FlyViewer.js";

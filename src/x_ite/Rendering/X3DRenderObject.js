@@ -2,7 +2,6 @@ import TextureBuffer from "./TextureBuffer.js";
 import TraverseType  from "./TraverseType.js";
 import MergeSort     from "../../standard/Math/Algorithms/MergeSort.js";
 import Camera        from "../../standard/Math/Geometry/Camera.js";
-import Box3          from "../../standard/Math/Geometry/Box3.js";
 import Line3         from "../../standard/Math/Geometry/Line3.js";
 import ViewVolume    from "../../standard/Math/Geometry/ViewVolume.js";
 import Vector3       from "../../standard/Math/Numbers/Vector3.js";
