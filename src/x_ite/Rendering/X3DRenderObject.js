@@ -875,9 +875,9 @@ Object .assign (X3DRenderObject .prototype,
          Vector3 .X_AXIS,
          Vector3 .Y_AXIS,
          Vector3 .Z_AXIS,
-         Vector3 .X_AXIS .copy () .negate (),
-         Vector3 .Y_AXIS .copy () .negate (),
-         Vector3 .Z_AXIS .copy () .negate (),
+         Vector3 .NEGATIVE_X_AXIS,
+         Vector3 .NEGATIVE_Y_AXIS,
+         Vector3 .NEGATIVE_Z_AXIS,
       ];
 
       const closestShapes = new Set ();
