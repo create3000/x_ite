@@ -4,8 +4,8 @@ import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import X3DCast      from "../../Base/X3DCast.js";
 import MikkTSpace   from "../../Browser/Rendering/MikkTSpace.js";
-import Vector2      from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4      from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../../standard/Math/Geometry/Box3.js";
 import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
@@ -493,8 +493,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
                         continue;
                   }
 
-                  const texCoord = new Vector2 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
-                                                u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9]);
+                  const texCoord = new Vector4 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
+                                                u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9],
+                                                u * texCoords [i4 + 2] + v * texCoords [i4 + 6] + t * texCoords [i4 + 10],
+                                                u * texCoords [i4 + 3] + v * texCoords [i4 + 7] + t * texCoords [i4 + 11]);
 
                   const i3 = i * 3;
 

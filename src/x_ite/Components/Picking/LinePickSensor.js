@@ -206,7 +206,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                      {
                         const t = intersection .texCoord;
 
-                        texCoord .set (t .x, t .y, t .z);
+                        texCoord .set (t .x, t .y, t .z) .divide (t .w);
 
                         pickedTextureCoordinate .push (texCoord);
                         pickedNormal            .push (intersection .normal);
