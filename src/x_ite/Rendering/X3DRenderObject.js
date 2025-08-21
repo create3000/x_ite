@@ -891,32 +891,35 @@ Object .assign (X3DRenderObject .prototype,
             collisionRadius    = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2,
             numCollisionShapes = this .numCollisionShapes;
 
-         closestShapes .clear ();
-
-         for (const axis of axes)
+         if (numCollisionShapes)
          {
-            const closestObject = this .getClosestObject (axis);
+            closestShapes .clear ();
 
-            if (closestObject .id < 0)
-               continue;
-
-            if (closestObject .distance > collisionRadius)
-               continue;
-
-            closestShapes .add (closestObject .id);
-         }
-
-         if (closestShapes .size)
-         {
-            for (let i = 0; i < numCollisionShapes; ++ i)
+            for (const axis of axes)
             {
-               if (!closestShapes .has (i))
+               const closestObject = this .getClosestObject (axis);
+
+               if (closestObject .id < 0)
                   continue;
 
-               const { collisions } = this .collisionShapes [i];
+               if (closestObject .distance > collisionRadius)
+                  continue;
 
-               for (const collision of collisions)
-                  activeCollisions .push (collision);
+               closestShapes .add (closestObject .id);
+            }
+
+            if (closestShapes .size)
+            {
+               for (let i = 0; i < numCollisionShapes; ++ i)
+               {
+                  if (!closestShapes .has (i))
+                     continue;
+
+                  const { collisions } = this .collisionShapes [i];
+
+                  for (const collision of collisions)
+                     activeCollisions .push (collision);
+               }
             }
          }
 
