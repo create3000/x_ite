@@ -248,7 +248,7 @@ declare namespace X3D
       changeViewpoint (layer: X3DLayerNodeProxy, name: string): void;
       changeViewpoint (name: string): void;
       /**
-       * Returns the closest collidable object when looked in *direction* measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of NavigationInfo *avatarSize*). Compare *distance* with *collisionRadius* (first value of NavigationInfo *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
+       * Returns the closest collidable object when looked in *direction*, measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of NavigationInfo *avatarSize*). Compare *distance* with *collisionRadius* (first value of NavigationInfo *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
        *
        * The return value is an object with two properties *node* and *distance*.
        */
