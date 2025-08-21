@@ -20,6 +20,7 @@ There is now a test file that should show both the same image on the front and b
 ### Notable Changes
 
 * Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
+* Collision detection is now entirely done by GPU.
 * Bug fixes in several nodes with bounding box calculations.
 * Fixes bug with light *attenuation* handling in PBR shader.
 * Fixes a bug with some smart-phones that HAnim and ParticleSystem nodes are not working.
