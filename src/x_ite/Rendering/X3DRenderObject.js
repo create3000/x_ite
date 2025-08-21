@@ -906,17 +906,20 @@ Object .assign (X3DRenderObject .prototype,
             closestShapes .add (closestObject .id);
          }
 
-         for (let i = 0; i < numCollisionShapes; ++ i)
+         if (closestShapes .size)
          {
-            if (!closestShapes .has (i))
-               continue;
+            for (let i = 0; i < numCollisionShapes; ++ i)
+            {
+               if (!closestShapes .has (i))
+                  continue;
 
-            const
-               collisionContext = this .collisionShapes [i],
-               collisions       = collisionContext .collisions;
+               const
+                  collisionContext = this .collisionShapes [i],
+                  collisions       = collisionContext .collisions;
 
-            for (const collision of collisions)
-               activeCollisions .push (collision);
+               for (const collision of collisions)
+                  activeCollisions .push (collision);
+            }
          }
 
          // Set isActive to FALSE for affected nodes.
