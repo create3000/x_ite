@@ -493,7 +493,7 @@ Object .assign (X3DRenderObject .prototype,
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
-         const depth = this .getCollisionObject (projectionMatrix);
+         const depth = this .getCollisionShape (projectionMatrix);
 
          this .getProjectionMatrix () .pop ();
 
@@ -502,7 +502,7 @@ Object .assign (X3DRenderObject .prototype,
          return depth;
       };
    })(),
-   getCollisionObject: (() =>
+   getCollisionShape: (() =>
    {
       const
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
@@ -513,7 +513,8 @@ Object .assign (X3DRenderObject .prototype,
 
       return function (projectionMatrix)
       {
-         ///  Returns the depth value to the closest object.  The maximum determinable value is avatarHeight * 2.
+         // Returns the depth value to the closest object.
+         // The maximum determinable value is avatarHeight * 2.
 
          this .depthBuffer .bind ();
          this .viewVolumes .push (depthBufferViewVolume);
@@ -885,6 +886,8 @@ Object .assign (X3DRenderObject .prototype,
             collisionRadius2   = 2.2 * this .getNavigationInfo () .getCollisionRadius (), // Make the radius a little bit larger.
             numCollisionShapes = this .numCollisionShapes;
 
+
+
          collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
 
          for (let i = 0; i < numCollisionShapes; ++ i)
@@ -986,7 +989,7 @@ Object .assign (X3DRenderObject .prototype,
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
-         let distance = this .getCollisionObject (projectionMatrix) .distance;
+         let distance = this .getCollisionShape (projectionMatrix) .distance;
 
          this .getProjectionMatrix () .pop ();
 
