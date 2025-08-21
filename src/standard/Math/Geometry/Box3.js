@@ -414,66 +414,66 @@ Object .assign (Box3 .prototype,
          return true;
       };
    })(),
-   intersectsTriangle: (() =>
-   {
-      const
-         points1        = Array .from ({ length: 8 }, () => new Vector3 ()),
-         axes1          = Array .from ({ length: 3 }, () => new Vector3 ()),
-         axes9          = Array .from ({ length: 9 }, () => new Vector3 ()),
-         normals        = Array .from ({ length: 3 }, () => new Vector3 ()),
-         triangle       = [ ],
-         triangleNormal = [ new Vector3 () ],
-         triangleEdges  = Array .from ({ length: 3 }, () => new Vector3 ());
+   // intersectsTriangle: (() =>
+   // {
+   //    const
+   //       points1        = Array .from ({ length: 8 }, () => new Vector3 ()),
+   //       axes1          = Array .from ({ length: 3 }, () => new Vector3 ()),
+   //       axes9          = Array .from ({ length: 9 }, () => new Vector3 ()),
+   //       normals        = Array .from ({ length: 3 }, () => new Vector3 ()),
+   //       triangle       = [ ],
+   //       triangleNormal = [ new Vector3 () ],
+   //       triangleEdges  = Array .from ({ length: 3 }, () => new Vector3 ());
 
-      return function (a, b, c)
-      {
-         // Test special cases.
+   //    return function (a, b, c)
+   //    {
+   //       // Test special cases.
 
-         if (this .isEmpty ())
-            return false;
+   //       if (this .isEmpty ())
+   //          return false;
 
-         // Get points.
+   //       // Get points.
 
-         this .getPoints (points1);
+   //       this .getPoints (points1);
 
-         triangle [0] = a;
-         triangle [1] = b;
-         triangle [2] = c;
+   //       triangle [0] = a;
+   //       triangle [1] = b;
+   //       triangle [2] = c;
 
-         // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
+   //       // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 
-         if (SAT .isSeparated (this .getNormals (normals), points1, triangle))
-            return false;
+   //       if (SAT .isSeparated (this .getNormals (normals), points1, triangle))
+   //          return false;
 
-         // Test the normal of the triangle.
+   //       // Test the normal of the triangle.
 
-         Triangle3 .normal (a, b, c, triangleNormal [0]);
+   //       Triangle3 .normal (a, b, c, triangleNormal [0]);
 
-         if (SAT .isSeparated (triangleNormal, points1, triangle))
-            return false;
+   //       if (SAT .isSeparated (triangleNormal, points1, triangle))
+   //          return false;
 
-         // Test the nine other planes spanned by the edges of each parallelepiped.
+   //       // Test the nine other planes spanned by the edges of each parallelepiped.
 
-         this .getAxes (axes1);
+   //       this .getAxes (axes1);
 
-         triangleEdges [0] .assign (a) .subtract (b);
-         triangleEdges [1] .assign (b) .subtract (c);
-         triangleEdges [2] .assign (c) .subtract (a);
+   //       triangleEdges [0] .assign (a) .subtract (b);
+   //       triangleEdges [1] .assign (b) .subtract (c);
+   //       triangleEdges [2] .assign (c) .subtract (a);
 
-         for (let i1 = 0; i1 < 3; ++ i1)
-         {
-            for (let i2 = 0; i2 < 3; ++ i2)
-               axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
-         }
+   //       for (let i1 = 0; i1 < 3; ++ i1)
+   //       {
+   //          for (let i2 = 0; i2 < 3; ++ i2)
+   //             axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
+   //       }
 
-         if (SAT .isSeparated (axes9, points1, triangle))
-            return false;
+   //       if (SAT .isSeparated (axes9, points1, triangle))
+   //          return false;
 
-         // Box and triangle intersect.
+   //       // Box and triangle intersect.
 
-         return true;
-      };
-   })(),
+   //       return true;
+   //    };
+   // })(),
    toString ()
    {
       return `${this .size}, ${this .center}`;
