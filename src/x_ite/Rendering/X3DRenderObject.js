@@ -493,7 +493,7 @@ Object .assign (X3DRenderObject .prototype,
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
-         const depth = this .getDepth (projectionMatrix);
+         const depth = this .getCollisionObject (projectionMatrix);
 
          this .getProjectionMatrix () .pop ();
 
@@ -502,7 +502,7 @@ Object .assign (X3DRenderObject .prototype,
          return depth;
       };
    })(),
-   getDepth: (() =>
+   getCollisionObject: (() =>
    {
       const
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
@@ -986,7 +986,7 @@ Object .assign (X3DRenderObject .prototype,
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
-         let distance = this .getDepth (projectionMatrix) .distance;
+         let distance = this .getCollisionObject (projectionMatrix) .distance;
 
          this .getProjectionMatrix () .pop ();
 
