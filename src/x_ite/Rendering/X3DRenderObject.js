@@ -887,11 +887,10 @@ Object .assign (X3DRenderObject .prototype,
          // Collision nodes are handled here.
 
          const
-            activeCollisions   = [ ], // current active Collision nodes
-            collisionRadius    = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2,
-            numCollisionShapes = this .numCollisionShapes;
+            activeCollisions = [ ], // current active Collision nodes
+            collisionRadius  = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2;
 
-         if (numCollisionShapes)
+         if (this .numCollisionShapes)
          {
             closestShapes .clear ();
 
@@ -908,18 +907,12 @@ Object .assign (X3DRenderObject .prototype,
                closestShapes .add (closestObject .id);
             }
 
-            if (closestShapes .size)
+            for (const i of closestShapes)
             {
-               for (let i = 0; i < numCollisionShapes; ++ i)
-               {
-                  if (!closestShapes .has (i))
-                     continue;
+               const { collisions } = this .collisionShapes [i];
 
-                  const { collisions } = this .collisionShapes [i];
-
-                  for (const collision of collisions)
-                     activeCollisions .push (collision);
-               }
+               for (const collision of collisions)
+                  activeCollisions .push (collision);
             }
          }
 
