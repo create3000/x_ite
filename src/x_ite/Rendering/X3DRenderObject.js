@@ -913,9 +913,7 @@ Object .assign (X3DRenderObject .prototype,
                if (!closestShapes .has (i))
                   continue;
 
-               const
-                  collisionContext = this .collisionShapes [i],
-                  collisions       = collisionContext .collisions;
+               const { collisions } = this .collisionShapes [i];
 
                for (const collision of collisions)
                   activeCollisions .push (collision);
