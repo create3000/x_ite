@@ -134,12 +134,13 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                      {
                         const
                            geometryNode = target .geometryNode,
-                           vertices     = this .pickingGeometryNode .getVertices ();
+                           vertices     = this .pickingGeometryNode .getVertices (),
+                           numVertices  = vertices .length;
 
                         targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
                         matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
 
-                        for (let v = 0, vLength = vertices .length; v < vLength; v += 8)
+                        for (let v = 0; v < numVertices; v += 8)
                         {
                            matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
                            matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
@@ -149,11 +150,9 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
 
                            if (geometryNode .intersectsLine (line, target .modelMatrix, clipPlanes, intersections))
                            {
-                              for (let i = 0, iLength = intersections .length; i < iLength; ++ i)
+                              for (const intersection of intersections)
                               {
                                  // Test if intersection.point is between point1 and point2.
-
-                                 const intersection = intersections [i];
 
                                  a .assign (intersection .point) .subtract (point1);
                                  b .assign (intersection .point) .subtract (point2);
