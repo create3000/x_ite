@@ -609,55 +609,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          return false;
       };
    })(),
-   intersectsBox: (() =>
-   {
-      const
-         v0        = new Vector3 (),
-         v1        = new Vector3 (),
-         v2        = new Vector3 (),
-         invMatrix = new Matrix4 (),
-         clipPoint = new Vector3 ();
-
-      return function (box, clipPlanes, modelViewMatrix)
-      {
-         if (box .intersectsBox (this .bbox))
-         {
-            box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
-
-            this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
-
-            const vertices = this .vertices .getValue ();
-
-            for (let i = 0, length = this .vertexCount; i < length; i += 3)
-            {
-               const i4 = i * 4;
-
-               v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-               v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-               v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-               if (box .intersectsTriangle (v0, v1, v2))
-               {
-                  if (clipPlanes .length)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
-                        continue;
-
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
-                        continue;
-
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
-                        continue;
-                  }
-
-                  return true;
-               }
-            }
-         }
-
-         return false;
-      };
-   })(),
    set_live__ ()
    {
       // Is overloaded by primitives with option nodes.

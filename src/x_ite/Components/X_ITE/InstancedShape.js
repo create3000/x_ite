@@ -150,8 +150,6 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       this .set_bbox__ ();
       this .set_objects__ ();
    },
-   intersectsBox (box, clipPlanes, modelViewMatrix)
-   { },
    displaySimple (gl, renderContext, shaderNode)
    {
       this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);

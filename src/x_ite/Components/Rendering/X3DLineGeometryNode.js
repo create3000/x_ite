@@ -38,10 +38,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
    {
       return false;
    },
-   intersectsBox ()
-   {
-      return false;
-   },
    updateVertexArrays ()
    {
       X3DGeometryNode .prototype .updateVertexArrays .call (this);
