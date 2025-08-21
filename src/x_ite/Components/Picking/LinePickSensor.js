@@ -68,7 +68,6 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
          line                    = new Line3 (),
          a                       = new Vector3 (),
          b                       = new Vector3 (),
-         clipPlanes              = [ ],
          intersections           = [ ],
          texCoord                = new Vector3 (),
          pickedTextureCoordinate = new Fields .MFVec3f (),
@@ -148,7 +147,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
 
                            intersections .length = 0;
 
-                           if (geometryNode .intersectsLine (line, target .modelMatrix, clipPlanes, intersections))
+                           if (geometryNode .intersectsLine (line, target .modelMatrix, intersections))
                            {
                               for (const intersection of intersections)
                               {

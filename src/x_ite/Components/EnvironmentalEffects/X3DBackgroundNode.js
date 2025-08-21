@@ -393,7 +393,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
             for (const localObject of localObjects)
             {
-               if (localObject .isClipped)
+               if (localObject .isClipPlane)
                   clipPlanes [c ++] = localObject;
             }
 

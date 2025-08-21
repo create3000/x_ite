@@ -440,10 +440,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       // Apply screen nodes transformation in place here.
    },
-   isClipped (point, clipPlanes)
-   {
-      return clipPlanes .some (clipPlane => clipPlane .isClipped (point));
-   },
    intersectsLine: (() =>
    {
       const
@@ -451,10 +447,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          uvt             = { u: 0, v: 0, t: 0 },
          v0              = new Vector3 (),
          v1              = new Vector3 (),
-         v2              = new Vector3 (),
-         clipPoint       = new Vector3 ();
+         v2              = new Vector3 ();
 
-      return function (hitRay, matrix, clipPlanes, intersections)
+      return function (hitRay, matrix, intersections)
       {
          if (this .intersectsBBox (hitRay))
          {
@@ -475,37 +470,31 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
                v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
                v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
-               if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
-               {
-                  // Get barycentric coordinates.
+               if (!hitRay .intersectsTriangle (v0, v1, v2, uvt))
+                  continue;
 
-                  const { u, v, t } = uvt;
+               // Get barycentric coordinates.
 
-                  // Determine vectors for X3DPointingDeviceSensors.
+               const { u, v, t } = uvt;
 
-                  const point = new Vector3 (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
-                                             u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
-                                             u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
+               // Determine vectors for X3DPointingDeviceSensors.
 
-                  if (clipPlanes .length)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
-                  }
+               const point = new Vector3 (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
+                                          u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
+                                          u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
 
-                  const texCoord = new Vector4 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
-                                                u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9],
-                                                u * texCoords [i4 + 2] + v * texCoords [i4 + 6] + t * texCoords [i4 + 10],
-                                                u * texCoords [i4 + 3] + v * texCoords [i4 + 7] + t * texCoords [i4 + 11]);
+               const texCoord = new Vector4 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
+                                             u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9],
+                                             u * texCoords [i4 + 2] + v * texCoords [i4 + 6] + t * texCoords [i4 + 10],
+                                             u * texCoords [i4 + 3] + v * texCoords [i4 + 7] + t * texCoords [i4 + 11]);
 
-                  const i3 = i * 3;
+               const i3 = i * 3;
 
-                  const normal = new Vector3 (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
-                                              u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
-                                              u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
+               const normal = new Vector3 (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
+                                           u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                           u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
 
-                  intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
-               }
+               intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
             }
          }
 
