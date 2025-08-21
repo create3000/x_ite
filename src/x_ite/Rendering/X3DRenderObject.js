@@ -871,11 +871,16 @@ Object .assign (X3DRenderObject .prototype,
    })(),
    collide: (() =>
    {
-      const
-         invModelViewMatrix = new Matrix4 (),
-         modelViewMatrix    = new Matrix4 (),
-         collisionBox       = new Box3 (Vector3 .ZERO, Vector3 .ZERO),
-         collisionSize      = new Vector3 ();
+      const axes = [
+         Vector3 .X_AXIS,
+         Vector3 .Y_AXIS,
+         Vector3 .Z_AXIS,
+         Vector3 .X_AXIS .copy () .negate (),
+         Vector3 .Y_AXIS .copy () .negate (),
+         Vector3 .Z_AXIS .copy () .negate (),
+      ];
+
+      const closestShapes = new Set ();
 
       return function ()
       {
@@ -883,30 +888,35 @@ Object .assign (X3DRenderObject .prototype,
 
          const
             activeCollisions   = [ ], // current active Collision nodes
-            collisionRadius2   = 2.2 * this .getNavigationInfo () .getCollisionRadius (), // Make the radius a little bit larger.
+            collisionRadius    = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2,
             numCollisionShapes = this .numCollisionShapes;
 
+         closestShapes .clear ();
 
+         for (const axis of axes)
+         {
+            const closestObject = this .getClosestObject (axis);
 
-         collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
+            if (closestObject .id < 0)
+               continue;
+
+            if (closestObject .distance > collisionRadius)
+               continue;
+
+            closestShapes .add (closestObject .id);
+         }
 
          for (let i = 0; i < numCollisionShapes; ++ i)
          {
+            if (!closestShapes .has (i))
+               continue;
+
             const
                collisionContext = this .collisionShapes [i],
                collisions       = collisionContext .collisions;
 
-            if (collisions .length)
-            {
-               collisionBox .set (collisionSize, Vector3 .ZERO);
-               collisionBox .multRight (invModelViewMatrix .assign (collisionContext .modelViewMatrix) .inverse ());
-
-               if (collisionContext .shapeNode .intersectsBox (collisionBox, collisionContext .clipPlanes, modelViewMatrix .assign (collisionContext .modelViewMatrix)))
-               {
-                  for (const collision of collisions)
-                     activeCollisions .push (collision);
-               }
-            }
+            for (const collision of collisions)
+               activeCollisions .push (collision);
          }
 
          // Set isActive to FALSE for affected nodes.
