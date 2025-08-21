@@ -477,7 +477,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
                const { u, v, t } = uvt;
 
-               // Determine vectors for X3DPointingDeviceSensors.
+               // Determine vectors for LinePickSensor.
 
                const point = new Vector3 (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
                                           u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
