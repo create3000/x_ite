@@ -139,6 +139,17 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .string += "name='";
       generator .string += generator .XMLEncode (this .getName ());
       generator .string += "'";
+
+      const appInfo = this .getAppInfo ();
+
+      if (appInfo)
+      {
+         generator .string += generator .Space ();
+         generator .string += "appinfo='";
+         generator .string += generator .XMLEncode (appInfo);
+         generator .string += "'";
+      }
+
       generator .string += ">";
       generator .string += generator .TidyBreak ();
 

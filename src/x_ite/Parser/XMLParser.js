@@ -396,7 +396,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
       if (this .id (name))
       {
-         const url = xmlElement .getAttribute ("url");
+         const
+            url     = xmlElement .getAttribute ("url"),
+            appinfo = xmlElement .getAttribute ("appinfo");
 
          this .parser .setInput (url ?? "");
          this .parser .sfstringValues (this .url);
@@ -411,6 +413,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          this .popParent ();
          this .addProtoFieldNames (externproto);
 
+         externproto .setAppInfo (appinfo ?? "");
          externproto .setup ();
 
          try
@@ -431,7 +434,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    protoDeclareElement (xmlElement)
    {
-      const name = xmlElement .getAttribute ("name");
+      const
+         name    = xmlElement .getAttribute ("name"),
+         appinfo = xmlElement .getAttribute ("appinfo");
 
       if (this .id (name))
       {
@@ -478,6 +483,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             break;
          }
 
+         proto .setAppInfo (appinfo ?? "");
          proto .setup ();
 
          try

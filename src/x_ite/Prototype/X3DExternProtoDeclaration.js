@@ -220,11 +220,22 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
 
+      const appInfo = this .getAppInfo ();
+
+      if (appInfo)
+      {
+         generator .string += generator .Space ();
+         generator .string += "appinfo='";
+         generator .string += generator .XMLEncode (appInfo);
+         generator .string += "'";
+      }
+
+      generator .string += ">";
+
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length)
       {
-         generator .string += ">";
          generator .string += generator .TidyBreak ();
 
          generator .IncIndent ();
@@ -256,7 +267,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       }
       else
       {
-         generator .string += generator .closingTags ? "></ExternProtoDeclare>" : "/>";
+         generator .string += generator .closingTags ? "</ExternProtoDeclare>" : "/>";
       }
    },
    toJSONStream (generator)

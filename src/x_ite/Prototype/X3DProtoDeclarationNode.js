@@ -4,7 +4,7 @@ import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
 import SFNodeCache          from "../Fields/SFNodeCache.js";
 import X3DConstants         from "../Base/X3DConstants.js";
 
-const _appinfo = Symbol ();
+const _appInfo = Symbol ();
 
 function X3DProtoDeclarationNode (executionContext)
 {
@@ -16,7 +16,7 @@ function X3DProtoDeclarationNode (executionContext)
 
    // Private properties
 
-   this [_appinfo] = "";
+   this [_appInfo] = "";
 }
 
 Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DBaseNode .prototype),
@@ -25,13 +25,13 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DB
    {
       return true;
    },
-   getAppinfo ()
+   getAppInfo ()
    {
-      return this [_appinfo];
+      return this [_appInfo];
    },
-   setAppinfo (value)
+   setAppInfo (value)
    {
-      this [_appinfo] = String (value);
+      this [_appInfo] = String (value);
    },
    createInstance (executionContext, setup = true /* non-public argument */)
    {
@@ -75,6 +75,11 @@ Object .defineProperties (X3DProtoDeclarationNode .prototype,
    fields:
    {
       get: X3DProtoDeclarationNode .prototype .getFieldDefinitions,
+      enumerable: true,
+   },
+   appInfo:
+   {
+      get: X3DProtoDeclarationNode .prototype .getAppInfo,
       enumerable: true,
    },
 });
