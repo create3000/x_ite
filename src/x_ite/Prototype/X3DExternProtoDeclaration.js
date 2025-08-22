@@ -207,32 +207,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    toXMLStream (generator)
    {
-      function appInfo (object)
-      {
-         const appInfo = object .getAppInfo ();
-
-         if (!appInfo)
-            return;
-
-         generator .string += generator .Space ();
-         generator .string += "appinfo='";
-         generator .string += generator .XMLEncode (appInfo);
-         generator .string += "'";
-      }
-
-      function documentation (object)
-      {
-         const documentation = object .getDocumentation ();
-
-         if (!documentation)
-            return;
-
-         generator .string += generator .Space ();
-         generator .string += "documentation='";
-         generator .string += generator .XMLEncode (documentation);
-         generator .string += "'";
-      }
-
       generator .string += generator .Indent ();
       generator .string += "<ExternProtoDeclare";
       generator .string += generator .Space ();
@@ -246,8 +220,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
 
-      appInfo (this);
-      documentation (this);
+      generator .XMLAppInfo (this);
+      generator .XMLDocumentation (this);
 
       const userDefinedFields = this .getUserDefinedFields ();
 
@@ -275,8 +249,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += generator .XMLEncode (field .getName ());
             generator .string += "'";
 
-            appInfo (field);
-            documentation (field);
+            generator .XMLAppInfo (field);
+            generator .XMLDocumentation (field);
 
             generator .string += generator .closingTags ? "></field>" : "/>";
             generator .string += generator .TidyBreak ();
