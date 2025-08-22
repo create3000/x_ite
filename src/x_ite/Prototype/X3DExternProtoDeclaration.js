@@ -207,6 +207,32 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    toXMLStream (generator)
    {
+      function appInfo (object)
+      {
+         const appInfo = object .getAppInfo ();
+
+         if (!appInfo)
+            return;
+
+         generator .string += generator .Space ();
+         generator .string += "appinfo='";
+         generator .string += generator .XMLEncode (appInfo);
+         generator .string += "'";
+      }
+
+      function documentation (object)
+      {
+         const documentation = object .getDocumentation ();
+
+         if (!documentation)
+            return;
+
+         generator .string += generator .Space ();
+         generator .string += "documentation='";
+         generator .string += generator .XMLEncode (documentation);
+         generator .string += "'";
+      }
+
       generator .string += generator .Indent ();
       generator .string += "<ExternProtoDeclare";
       generator .string += generator .Space ();
@@ -220,32 +246,14 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
 
-      const appInfo = this .getAppInfo ();
-
-      if (appInfo)
-      {
-         generator .string += generator .Space ();
-         generator .string += "appinfo='";
-         generator .string += generator .XMLEncode (appInfo);
-         generator .string += "'";
-      }
-
-      const documentation = this .getDocumentation ();
-
-      if (documentation)
-      {
-         generator .string += generator .Space ();
-         generator .string += "documentation='";
-         generator .string += generator .XMLEncode (documentation);
-         generator .string += "'";
-      }
-
-      generator .string += ">";
+      appInfo (this);
+      documentation (this);
 
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length)
       {
+         generator .string += ">";
          generator .string += generator .TidyBreak ();
 
          generator .IncIndent ();
@@ -267,25 +275,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += generator .XMLEncode (field .getName ());
             generator .string += "'";
 
-            const appInfo = field .getAppInfo ();
-
-            if (appInfo)
-            {
-               generator .string += generator .Space ();
-               generator .string += "appinfo='";
-               generator .string += generator .XMLEncode (appInfo);
-               generator .string += "'";
-            }
-
-            const documentation = field .getDocumentation ();
-
-            if (documentation)
-            {
-               generator .string += generator .Space ();
-               generator .string += "documentation='";
-               generator .string += generator .XMLEncode (documentation);
-               generator .string += "'";
-            }
+            appInfo (field);
+            documentation (field);
 
             generator .string += generator .closingTags ? "></field>" : "/>";
             generator .string += generator .TidyBreak ();
@@ -298,7 +289,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       }
       else
       {
-         generator .string += generator .closingTags ? "</ExternProtoDeclare>" : "/>";
+         generator .string += generator .closingTags ? "></ExternProtoDeclare>" : "/>";
       }
    },
    toJSONStream (generator)

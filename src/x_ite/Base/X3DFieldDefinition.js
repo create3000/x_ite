@@ -8,6 +8,8 @@ function X3DFieldDefinition (accessType, name, value)
       dataType: { value: value .getType (), enumerable: true },
       name: { value: name, enumerable: true },
       value: { value: value },
+      appInfo: { get: () => value .getAppInfo (), enumerable: true },
+      documentation: { get: () => value .getDocumentation (), enumerable: true },
    });
 }
 
