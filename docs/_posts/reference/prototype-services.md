@@ -27,6 +27,14 @@ A reference to FieldDefinitionArray of all the fields defined for this prototype
 
 Always has the value of false. This property is read only.
 
+#### **appInfo**: string
+
+Short description of the prototype. This property is read only.
+
+#### **documentation**: string
+
+A string containing the documentation of this prototype. This property is read only.
+
 ### Methods
 
 #### **newInstance** (): SFNode
@@ -80,6 +88,14 @@ Always has the value of true. This property is read only.
 #### **loadState**: number
 
 The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite/reference/constants-services/#load-state-constants) object. This property is read only.
+
+#### **appInfo**: string
+
+Short description of the extern prototype. This property is read only.
+
+#### **documentation**: string
+
+A string containing the documentation of this extern prototype. This property is read only.
 
 ### Methods
 
