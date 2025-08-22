@@ -2872,7 +2872,7 @@ declare namespace X3D
       specular: number;
    }
 
-   /** Analyser provides real-time frequency and time-domain analysis information, without any change to the input. */
+   /** Analyser provides real-time frequency and time-domain analysis information, without any signal-processing change to the audio stream which is passed unprocessed from input to output. */
    interface AnalyserProxy extends X3DSoundProcessingNodeProxy
    {
       /**
@@ -2930,7 +2930,7 @@ declare namespace X3D
        */
       frequencyBinCount: number;
       /**
-       * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
+       * The gain value only affects analysis, not output signal.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -3340,7 +3340,7 @@ declare namespace X3D
        */
       readonly isPaused: boolean;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -3453,7 +3453,7 @@ declare namespace X3D
        */
       maxChannelCount: number;
       /**
-       * mediaDeviceID field provides ID parameter functionality.
+       * mediaDeviceID field provides a unique identifier for the active device that corresponds to deviceId functionality defined in W3C Web Audio API.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -4217,7 +4217,7 @@ declare namespace X3D
        */
       readonly length: number;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -6348,7 +6348,7 @@ declare namespace X3D
        */
       children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>;
       /**
-       * delayTime is duration of delay (in seconds) to apply.
+       * delayTime is duration of delay applied (in seconds).
        *
        * This field is of access type 'inputOutput' and type SFTime.
        */
@@ -6685,7 +6685,7 @@ declare namespace X3D
        */
       kind: number;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -8750,7 +8750,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -9976,7 +9976,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -10023,7 +10023,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -10082,7 +10082,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -10824,7 +10824,7 @@ declare namespace X3D
        */
       global: boolean;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -12327,7 +12327,7 @@ declare namespace X3D
        */
       readonly isPaused: boolean;
       /**
-       * mediaDeviceID field provides ID parameter functionality.
+       * mediaDeviceID field provides a unique identifier for the active device that corresponds to deviceId functionality defined in W3C Web Audio API.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -12589,7 +12589,7 @@ declare namespace X3D
        */
       readonly isPaused: boolean;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -13943,7 +13943,7 @@ declare namespace X3D
        */
       language: "Cg" | "GLSL" | "HLSL";
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16309,7 +16309,7 @@ declare namespace X3D
        */
       field: MFNode <SFNode>;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16474,7 +16474,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16533,7 +16533,7 @@ declare namespace X3D
        */
       field: MFNode <SFNode>;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -17181,7 +17181,7 @@ declare namespace X3D
        */
       coneInnerAngle: number;
       /**
-       * coneOuterAngle is centered along direction and defines an outer conical volume, within which the sound gain decreases linearly from full gain to coneOuterGain.
+       * coneOuterAngle is centered along direction and defines an outer conical volume, within which the sound gain decreases from full gain to coneOuterGain.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -17205,7 +17205,7 @@ declare namespace X3D
        */
       direction: SFVec3f;
       /**
-       * distanceModel determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
+       * distanceModel determines which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -17914,7 +17914,7 @@ declare namespace X3D
        */
       readonly isActive: boolean;
       /**
-       * mediaDeviceID field provides ID parameter functionality.
+       * mediaDeviceID field provides a unique identifier for the active device that corresponds to deviceId functionality defined in W3C Web Audio API.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -17928,9 +17928,9 @@ declare namespace X3D
       /**
        * Stream identification TBD Hint: W3C Media Capture and Streams https://www.
        *
-       * This field is of access type 'inputOutput' and type SFString.
+       * This field is of access type 'inputOutput' and type MFString.
        */
-      streamIdentifier: string;
+      streamIdentifier: MFString;
    }
 
    /** StreamAudioSource operates as an audio source whose media is received from a MediaStream obtained using the WebRTC or Media Capture and Streams APIs. */
@@ -18017,9 +18017,9 @@ declare namespace X3D
       /**
        * Stream identification TBD Hint: W3C Media Capture and Streams https://www.
        *
-       * This field is of access type 'inputOutput' and type SFString.
+       * This field is of access type 'inputOutput' and type MFString.
        */
-      streamIdentifier: string;
+      streamIdentifier: MFString;
    }
 
    /** StringSensor generates events as the user presses keys on the keyboard. */
@@ -20664,6 +20664,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFNode.
        */
       children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>;
+      /**
+       * The curve field is an array of floating-point numbers describing the distortion to apply.
+       *
+       * This field is of access type 'inputOutput' and type MFFloat.
+       */
+      curve: MFFloat;
       /**
        * Author-provided prose that describes intended purpose of the url asset.
        *
