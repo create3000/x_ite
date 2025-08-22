@@ -137,26 +137,26 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       {
          const appInfo = object .getAppInfo ();
 
-         if (appInfo)
-         {
-            generator .string += generator .Space ();
-            generator .string += "appinfo='";
-            generator .string += generator .XMLEncode (appInfo);
-            generator .string += "'";
-         }
+         if (!appInfo)
+            return;
+
+         generator .string += generator .Space ();
+         generator .string += "appinfo='";
+         generator .string += generator .XMLEncode (appInfo);
+         generator .string += "'";
       }
 
       function documentation (object)
       {
          const documentation = object .getDocumentation ();
 
-         if (documentation)
-         {
-            generator .string += generator .Space ();
-            generator .string += "documentation='";
-            generator .string += generator .XMLEncode (documentation);
-            generator .string += "'";
-         }
+         if (!documentation)
+            return;
+
+         generator .string += generator .Space ();
+         generator .string += "documentation='";
+         generator .string += generator .XMLEncode (documentation);
+         generator .string += "'";
       }
 
       generator .string += generator .Indent ();
