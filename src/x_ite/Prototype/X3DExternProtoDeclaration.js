@@ -393,16 +393,6 @@ for (const key of Object .keys (X3DExternProtoDeclaration .prototype))
 
 Object .defineProperties (X3DExternProtoDeclaration .prototype,
 {
-   name:
-   {
-      get: X3DExternProtoDeclaration .prototype .getName,
-      enumerable: true,
-   },
-   fields:
-   {
-      get: X3DExternProtoDeclaration .prototype .getFieldDefinitions,
-      enumerable: true,
-   },
    isExternProto:
    {
       value: true,

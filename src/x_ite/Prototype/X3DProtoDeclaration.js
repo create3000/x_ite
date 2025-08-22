@@ -500,16 +500,6 @@ for (const key of Object .keys (X3DProtoDeclaration .prototype))
 
 Object .defineProperties (X3DProtoDeclaration .prototype,
 {
-   name:
-   {
-      get: X3DProtoDeclaration .prototype .getName,
-      enumerable: true,
-   },
-   fields:
-   {
-      get: X3DProtoDeclaration .prototype .getFieldDefinitions,
-      enumerable: true,
-   },
    isExternProto:
    {
       value: false,
