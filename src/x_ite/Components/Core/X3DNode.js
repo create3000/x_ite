@@ -847,6 +847,32 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
    toXMLStream (generator)
    {
+      function appInfo (object)
+      {
+         const appInfo = object .getAppInfo ();
+
+         if (!appInfo)
+            return;
+
+         generator .string += generator .Space ();
+         generator .string += "appinfo='";
+         generator .string += generator .XMLEncode (appInfo);
+         generator .string += "'";
+      }
+
+      function documentation (object)
+      {
+         const documentation = object .getDocumentation ();
+
+         if (!documentation)
+            return;
+
+         generator .string += generator .Space ();
+         generator .string += "documentation='";
+         generator .string += generator .XMLEncode (documentation);
+         generator .string += "'";
+      }
+
       const sharedNode = generator .IsSharedNode (this);
 
       generator .EnterScope ();
@@ -1071,6 +1097,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                   if (!field .isInitializable () || field .isDefaultValue ())
                   {
+                     appInfo (field);
+                     documentation (field);
+
                      generator .string += generator .closingTags ? "></field>" : "/>";
                      generator .string += generator .TidyBreak ();
                   }
@@ -1083,6 +1112,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                         case X3DConstants .SFNode:
                         case X3DConstants .MFNode:
                         {
+                           appInfo (field);
+                           documentation (field);
+
                            generator .PushContainerField (null);
 
                            generator .string += ">";
@@ -1111,6 +1143,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                            field .toXMLStream (generator);
 
                            generator .string += "'";
+
+                           appInfo (field);
+                           documentation (field);
+
                            generator .string += generator .closingTags ? "></field>" : "/>";
                            generator .string += generator .TidyBreak ();
                            break;
@@ -1122,6 +1158,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                {
                   if (generator .ExecutionContext ())
                      references .push (field);
+
+                  appInfo (field);
+                  documentation (field);
 
                   generator .string += generator .closingTags ? "></field>" : "/>";
                   generator .string += generator .TidyBreak ();
