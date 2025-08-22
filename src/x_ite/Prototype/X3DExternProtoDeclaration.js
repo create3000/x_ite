@@ -230,6 +230,16 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          generator .string += "'";
       }
 
+      const documentation = this .getDocumentation ();
+
+      if (documentation)
+      {
+         generator .string += generator .Space ();
+         generator .string += "documentation='";
+         generator .string += generator .XMLEncode (documentation);
+         generator .string += "'";
+      }
+
       generator .string += ">";
 
       const userDefinedFields = this .getUserDefinedFields ();
@@ -256,6 +266,27 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += "name='";
             generator .string += generator .XMLEncode (field .getName ());
             generator .string += "'";
+
+            const appInfo = field .getAppInfo ();
+
+            if (appInfo)
+            {
+               generator .string += generator .Space ();
+               generator .string += "appinfo='";
+               generator .string += generator .XMLEncode (appInfo);
+               generator .string += "'";
+            }
+
+            const documentation = field .getDocumentation ();
+
+            if (documentation)
+            {
+               generator .string += generator .Space ();
+               generator .string += "documentation='";
+               generator .string += generator .XMLEncode (documentation);
+               generator .string += "'";
+            }
+
             generator .string += generator .closingTags ? "></field>" : "/>";
             generator .string += generator .TidyBreak ();
          }

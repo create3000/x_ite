@@ -133,6 +133,32 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    },
    toXMLStream (generator)
    {
+      function appInfo (object)
+      {
+         const appInfo = object .getAppInfo ();
+
+         if (appInfo)
+         {
+            generator .string += generator .Space ();
+            generator .string += "appinfo='";
+            generator .string += generator .XMLEncode (appInfo);
+            generator .string += "'";
+         }
+      }
+
+      function documentation (object)
+      {
+         const documentation = object .getDocumentation ();
+
+         if (documentation)
+         {
+            generator .string += generator .Space ();
+            generator .string += "documentation='";
+            generator .string += generator .XMLEncode (documentation);
+            generator .string += "'";
+         }
+      }
+
       generator .string += generator .Indent ();
       generator .string += "<ProtoDeclare";
       generator .string += generator .Space ();
@@ -140,15 +166,8 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .string += generator .XMLEncode (this .getName ());
       generator .string += "'";
 
-      const appInfo = this .getAppInfo ();
-
-      if (appInfo)
-      {
-         generator .string += generator .Space ();
-         generator .string += "appinfo='";
-         generator .string += generator .XMLEncode (appInfo);
-         generator .string += "'";
-      }
+      appInfo (this);
+      documentation (this);
 
       generator .string += ">";
       generator .string += generator .TidyBreak ();
@@ -188,6 +207,9 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
             if (field .isDefaultValue () || !field .isInitializable ())
             {
+               appInfo (field);
+               documentation (field);
+
                generator .string += generator .closingTags ? "></field>" : "/>";
                generator .string += generator .TidyBreak ();
             }
@@ -198,6 +220,9 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                   case X3DConstants .SFNode:
                   case X3DConstants .MFNode:
                   {
+                     appInfo (field);
+                     documentation (field);
+
                      generator .PushContainerField (field);
 
                      generator .string += ">";
@@ -226,6 +251,10 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                      field .toXMLStream (generator);
 
                      generator .string += "'";
+
+                     appInfo (field);
+                     documentation (field);
+
                      generator .string += generator .closingTags ? "></field>" : "/>";
                      generator .string += generator .TidyBreak ();
                      break;

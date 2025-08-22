@@ -397,8 +397,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       if (this .id (name))
       {
          const
-            url     = xmlElement .getAttribute ("url"),
-            appinfo = xmlElement .getAttribute ("appinfo");
+            url           = xmlElement .getAttribute ("url"),
+            appInfo       = xmlElement .getAttribute ("appinfo"),
+            documentation = xmlElement .getAttribute ("documentation");
 
          this .parser .setInput (url ?? "");
          this .parser .sfstringValues (this .url);
@@ -413,7 +414,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          this .popParent ();
          this .addProtoFieldNames (externproto);
 
-         externproto .setAppInfo (appinfo ?? "");
+         externproto .setAppInfo (appInfo ?? "");
+         externproto .setDocumentation (documentation ?? "");
          externproto .setup ();
 
          try
@@ -435,8 +437,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    protoDeclareElement (xmlElement)
    {
       const
-         name    = xmlElement .getAttribute ("name"),
-         appinfo = xmlElement .getAttribute ("appinfo");
+         name          = xmlElement .getAttribute ("name"),
+         appInfo       = xmlElement .getAttribute ("appinfo"),
+         documentation = xmlElement .getAttribute ("documentation");
 
       if (this .id (name))
       {
@@ -483,7 +486,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             break;
          }
 
-         proto .setAppInfo (appinfo ?? "");
+         proto .setAppInfo (appInfo ?? "");
+         proto .setDocumentation (documentation ?? "");
          proto .setup ();
 
          try
@@ -539,12 +543,18 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          if (!Field)
             return;
 
-         const name = xmlElement .getAttribute ("name");
+         const
+            name          = xmlElement .getAttribute ("name"),
+            appInfo       = xmlElement .getAttribute ("appinfo"),
+            documentation = xmlElement .getAttribute ("documentation");
 
          if (!this .id (name))
             return;
 
          const field = new Field ();
+
+         field .setAppInfo (appInfo ?? "");
+         field .setDocumentation (documentation ?? "");
 
          if (accessType & X3DConstants .initializeOnly)
          {
