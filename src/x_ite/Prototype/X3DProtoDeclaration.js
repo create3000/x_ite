@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                   {
                      generator .XMLAppInfo (field);
                      generator .XMLDocumentation (field);
-                     generator .PushContainerField (field);
+                     generator .PushContainerField (null);
 
                      generator .string += ">";
                      generator .string += generator .TidyBreak ();

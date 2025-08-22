@@ -1088,7 +1088,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                         {
                            generator .XMLAppInfo (field);
                            generator .XMLDocumentation (field);
-                           generator .PushContainerField (field);
+                           generator .PushContainerField (null);
 
                            generator .string += ">";
                            generator .string += generator .TidyBreak ();

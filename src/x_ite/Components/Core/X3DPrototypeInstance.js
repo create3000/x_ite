@@ -494,7 +494,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      }
                      else
                      {
-                        generator .PushContainerField (field);
+                        generator .PushContainerField (null);
 
                         generator .string += ">";
                         generator .string += generator .TidyBreak ();
@@ -518,7 +518,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   }
                   case X3DConstants .SFNode:
                   {
-                     generator .PushContainerField (field);
+                     generator .PushContainerField (null);
 
                      generator .string += generator .Indent ();
                      generator .string += "<fieldValue";
