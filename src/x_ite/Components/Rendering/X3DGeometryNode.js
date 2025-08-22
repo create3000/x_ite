@@ -501,61 +501,21 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          return intersections .length;
       };
    })(),
-   getPlanesWithOffset: (() =>
-   {
-      const
-         min    = new Vector3 (),
-         max    = new Vector3 (),
-         planes = Array .from ({ length: 5 }, () => new Plane3 ());
-
-      return function (minX, minY, minZ, maxX, maxY, maxZ)
-      {
-         min .set (minX, minY, minZ);
-         max .set (maxX, maxY, maxZ);
-
-         for (let i = 0; i < 5; ++ i)
-            planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
-         return planes;
-      };
-   })(),
    intersectsBBox: (() =>
    {
       const intersection = new Vector3 ();
 
-      return function (hitRay, offsets)
+      return function (hitRay)
       {
-         const { min, max } = this;
+         const { min, max, planes } = this;
 
-         let
-            minX,
-            maxX,
-            minY,
-            maxY,
-            minZ,
-            maxZ,
-            planes;
-
-         if (offsets)
-         {
-            minX   = min .x - offsets .x;
-            maxX   = max .x + offsets .x;
-            minY   = min .y - offsets .y;
-            maxY   = max .y + offsets .y;
-            minZ   = min .z - offsets .z;
-            maxZ   = max .z + offsets .z;
-            planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
-         }
-         else
-         {
-            minX   = min .x;
-            maxX   = max .x;
-            minY   = min .y;
-            maxY   = max .y;
-            minZ   = min .z;
-            maxZ   = max .z;
-            planes = this .planes;
-         }
+         const
+            minX = min .x,
+            maxX = max .x,
+            minY = min .y,
+            maxY = max .y,
+            minZ = min .z,
+            maxZ = max .z;
 
          // front
          if (planes [0] .intersectsLine (hitRay, intersection))
