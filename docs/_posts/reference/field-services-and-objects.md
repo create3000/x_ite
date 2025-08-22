@@ -29,7 +29,7 @@ A string of the field name (e.g., "children"). This property is read only.
 
 #### **appInfo**: string
 
-Short description of the field. This property is read only.
+Short description or purpose of the field. This property is read only.
 
 #### **documentation**: string
 

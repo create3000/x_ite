@@ -910,7 +910,7 @@ declare namespace X3D
        */
       readonly isExternProto: false;
       /**
-       * Short description of the prototype. This property is read only.
+       * Short description or purpose of the prototype. This property is read only.
        */
       readonly appInfo: string;
       /**
@@ -969,7 +969,7 @@ declare namespace X3D
        */
       readonly isExternProto: true;
       /**
-       * Short description of the extern prototype. This property is read only.
+       * Short description or purpose of the extern prototype. This property is read only.
        */
       readonly appInfo: string;
       /**
@@ -1520,7 +1520,7 @@ declare namespace X3D
        */
       readonly value: X3DField;
       /**
-       * Short description of the field. This property is read only.
+       * Short description or purpose of the field. This property is read only.
        */
       readonly appInfo: string;
       /**

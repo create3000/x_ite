@@ -29,7 +29,7 @@ Always has the value of false. This property is read only.
 
 #### **appInfo**: string
 
-Short description of the prototype. This property is read only.
+Short description or purpose of the prototype. This property is read only.
 
 #### **documentation**: string
 
@@ -91,7 +91,7 @@ The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite
 
 #### **appInfo**: string
 
-Short description of the extern prototype. This property is read only.
+Short description or purpose of the extern prototype. This property is read only.
 
 #### **documentation**: string
 
