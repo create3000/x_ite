@@ -37,7 +37,7 @@ Object .assign (Object .setPrototypeOf (X3DFieldDefinition .prototype, X3DObject
    getDocumentation ()
    {
       return this [_value] .getDocumentation ();
-   }
+   },
 });
 
 for (const key of Object .keys (X3DFieldDefinition .prototype))
