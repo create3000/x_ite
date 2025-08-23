@@ -1535,6 +1535,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   references .push (field);
             }
 
+            generator .JSONAppInfo (field);
+            generator .JSONDocumentation (field);
+
             generator .string += generator .TidyBreak ();
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();

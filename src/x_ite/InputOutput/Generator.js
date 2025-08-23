@@ -525,6 +525,40 @@ Object .assign (Generator .prototype,
 
       this .string += this .TidyBreak ();
    },
+   JSONAppInfo (object)
+   {
+      const appInfo = object .getAppInfo ();
+
+      if (!appInfo)
+         return;
+
+      this .string += ',';
+      this .string += this .Indent ();
+      this .string += '"';
+      this .string += "@appinfo";
+      this .string += '"';
+      this .string += ':';
+      this .string += '"';
+      this .string += this .JSONEncode (appInfo);
+      this .string += '"';
+   },
+   JSONDocumentation (object)
+   {
+      const documentation = object .getDocumentation ();
+
+      if (!documentation)
+         return;
+
+      this .string += ',';
+      this .string += this .Indent ();
+      this .string += '"';
+      this .string += "@documentation";
+      this .string += '"';
+      this .string += ':';
+      this .string += '"';
+      this .string += this .JSONEncode (documentation);
+      this .string += '"';
+   },
 });
 
 for (const key of Object .keys (Generator .prototype))

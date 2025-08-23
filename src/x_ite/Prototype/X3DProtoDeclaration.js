@@ -297,6 +297,10 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .string += '"';
       generator .string += generator .JSONEncode (this .getName ());
       generator .string += '"';
+
+      generator .JSONAppInfo (this);
+      generator .JSONDocumentation (this);
+
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -435,6 +439,9 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                   }
                }
             }
+
+            generator .JSONAppInfo (field);
+            generator .JSONDocumentation (field);
 
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
