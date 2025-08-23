@@ -12,7 +12,33 @@ function X3DFieldDefinition (accessType, name, value)
    this [_value]      = value;
 }
 
-Object .setPrototypeOf (X3DFieldDefinition .prototype, X3DObject .prototype);
+Object .assign (Object .setPrototypeOf (X3DFieldDefinition .prototype, X3DObject .prototype),
+{
+   getAccessType ()
+   {
+      return this [_accessType];
+   },
+   getDataType ()
+   {
+      return this [_value] .getType ();
+   },
+   getName ()
+   {
+      return this [_name];
+   },
+   getValue ()
+   {
+      return this [_value];
+   },
+   getAppInfo ()
+   {
+      return this [_value] .getAppInfo ();
+   },
+   getDocumentation ()
+   {
+      return this [_value] .getDocumentation ();
+   }
+});
 
 for (const key of Object .keys (X3DFieldDefinition .prototype))
    Object .defineProperty (X3DFieldDefinition .prototype, key, { enumerable: false });
@@ -21,31 +47,31 @@ Object .defineProperties (X3DFieldDefinition .prototype,
 {
    accessType:
    {
-      get () { return this [_accessType]; },
+      get: X3DFieldDefinition .prototype .getAccessType,
       enumerable: true,
    },
    dataType:
    {
-      get () { return this [_value] .getType (); },
+      get: X3DFieldDefinition .prototype .getDataType,
       enumerable: true,
    },
    name:
    {
-      get () { return this [_name]; },
+      get: X3DFieldDefinition .prototype .getName,
       enumerable: true,
    },
    value:
    {
-      get () { return this [_value]; },
+      get () { return this .getValue () .valueOf (); },
    },
    appInfo:
    {
-      get () { return this [_value] .getAppInfo (); },
+      get: X3DFieldDefinition .prototype .getAppInfo,
       enumerable: true,
    },
    documentation:
    {
-      get () { return this [_value] .getDocumentation (); },
+      get: X3DFieldDefinition .prototype .getDocumentation,
       enumerable: true,
    },
 });
