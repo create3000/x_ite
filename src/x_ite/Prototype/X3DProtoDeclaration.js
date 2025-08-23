@@ -35,10 +35,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    {
       return this [_body];
    },
-   canUserDefinedFields ()
-   {
-      return true;
-   },
    getCloneCount ()
    {
       return X3DProtoDeclarationNode .prototype .collectCloneCount .call (this);

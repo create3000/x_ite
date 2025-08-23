@@ -33,10 +33,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       X3DProtoDeclarationNode .prototype .initialize .call (this);
       X3DUrlObject            .prototype .initialize .call (this);
    },
-   canUserDefinedFields ()
-   {
-      return true;
-   },
    getAppInfo ()
    {
       return this .getProtoDeclaration () ?.getAppInfo ()
