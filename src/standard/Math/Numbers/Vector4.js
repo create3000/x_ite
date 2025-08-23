@@ -258,11 +258,18 @@ Object .defineProperties (Vector4 .prototype,
 Object .assign (Vector4,
 {
    ZERO: Object .freeze (new Vector4 ()),
+   // Positive values
    ONE: Object .freeze (new Vector4 (1)),
    X_AXIS: Object .freeze (new Vector4 (1, 0, 0, 0)),
    Y_AXIS: Object .freeze (new Vector4 (0, 1, 0, 0)),
    Z_AXIS: Object .freeze (new Vector4 (0, 0, 1, 0)),
    W_AXIS: Object .freeze (new Vector4 (0, 0, 0, 1)),
+   // Negative values
+   NEGATIVE_ONE: Object .freeze (new Vector4 (-1)),
+   NEGATIVE_X_AXIS: Object .freeze (new Vector4 (-1, 0, 0, 0)),
+   NEGATIVE_Y_AXIS: Object .freeze (new Vector4 (0, -1, 0, 0)),
+   NEGATIVE_Z_AXIS: Object .freeze (new Vector4 (0, 0, -1, 0)),
+   NEGATIVE_W_AXIS: Object .freeze (new Vector4 (0, 0, 0, -1)),
 });
 
 export default Vector4;

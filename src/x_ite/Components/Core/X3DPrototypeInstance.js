@@ -32,6 +32,14 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       return this [_protoNode] .getName ();
    },
+   getAppInfo ()
+   {
+      return this [_protoNode] .getAppInfo ();
+   },
+   getDocumentation ()
+   {
+      return this [_protoNode] .getDocumentation ();
+   },
    initialize ()
    {
       X3DNode .prototype .initialize .call (this);
@@ -494,7 +502,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      }
                      else
                      {
-                        generator .PushContainerField (field);
+                        generator .PushContainerField (null);
 
                         generator .string += ">";
                         generator .string += generator .TidyBreak ();

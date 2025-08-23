@@ -17,15 +17,27 @@ None.
 
 #### **accessType**: number
 
-Value from the [X3DConstants](/x_ite/reference/constants-services/#access-type-constants) object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
+Value from the [X3DConstants](/x_ite/reference/constants-services/#access-type-constants) object describing the accessType (e.g., `X3DConstants.inputOnly`). This property is read only.
 
 #### **dataType**: number
 
-Value from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read only.
+Value from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object describing the field's data type (e.g., `X3DConstants.SFBool`). This property is read only.
 
 #### **name**: string
 
-A string of the field name (e.g., "children"). This property is read only.
+A string of the field name (e.g., `"children"`). This property is read only.
+
+#### **value**: boolean | number | string | null | X3DField
+
+The default value for this field. This property is read only.
+
+#### **appInfo**: string
+
+Short description or purpose of the field. This property is read only.
+
+#### **documentation**: string
+
+A string containing the documentation of this field. This property is read only.
 
 ### Methods
 
@@ -33,7 +45,7 @@ None.
 
 ## FieldDefinitionArray
 
-FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *fieldDefinitionArrayName*[*index*], where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array).
+FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `fieldDefinitionArrayName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method(s)
 
@@ -1198,7 +1210,7 @@ The creation method can be passed 0 or more integer-valued expressions to initia
 
 ### Properties
 
-Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfInt32ObjectName*[*index]*, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0`.
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfInt32ObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0`.
 
 #### **length**: number
 
@@ -1272,19 +1284,19 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-#### **toVRMLString** (\[options\]): string
+#### **toVRMLString** (\[options\]): string <small><span class="blue">non-standard</span></small>
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an MFNode field, will produce these nodes.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toXMLString** (\[options\]): string
+#### **toXMLString** (\[options\]): string <small><span class="blue">non-standard</span></small>
 
 Returns the X3D XML-encoded string that, if parsed as the value of an MFNode field, will produce these nodes.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
 
-#### **toJSONString** (\[options\]): string
+#### **toJSONString** (\[options\]): string <small><span class="blue">non-standard</span></small>
 
 Returns the X3D JSON-encoded string that, if parsed as the value of an MFNode field, will produce these nodes.
 

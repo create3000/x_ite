@@ -824,8 +824,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
       };
    })(),
-   intersectsBox (box, clipPlanes)
-   { },
    displaySimple (gl, renderContext, shaderNode)
    {
       // Display geometry.

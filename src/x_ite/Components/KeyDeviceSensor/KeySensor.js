@@ -41,7 +41,7 @@ Object .assign (Object .setPrototypeOf (KeySensor .prototype, X3DKeyDeviceSensor
    {
       event .preventDefault ();
 
-      if (! this ._isActive .getValue ())
+      if (!this ._isActive .getValue ())
          this ._isActive = true;
 
       switch (event .which)
@@ -287,6 +287,9 @@ Object .assign (Object .setPrototypeOf (KeySensor .prototype, X3DKeyDeviceSensor
 
       if (this ._altKey .getValue ())
          this ._altKey = false;
+
+      if (this ._isActive .getValue ())
+         this ._isActive = false;
    },
 });
 

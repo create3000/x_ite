@@ -10,11 +10,11 @@ const
 
 // Box normals for bbox / line intersection.
 const boxNormals = [
-   new Vector3 (0,  0,  1), // front
-   new Vector3 (0,  0, -1), // back
-   new Vector3 (0,  1,  0), // top
-   new Vector3 (0, -1,  0), // bottom
-   new Vector3 (1,  0,  0)  // right
+   Vector3 .Z_AXIS,          // front
+   Vector3 .NEGATIVE_Z_AXIS, // back
+   Vector3 .Y_AXIS,          // top
+   Vector3 .NEGATIVE_Y_AXIS, // bottom
+   Vector3 .X_AXIS,          // right
    // left: We do not have to test for left.
 ];
 

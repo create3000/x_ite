@@ -272,9 +272,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return [... this [_predefinedFields], ... this [_userDefinedFields]];
    },
-   addPredefinedField ({ accessType, name, value })
+   addPredefinedField (fieldDefinition)
    {
-      const field = value .copy ();
+      const
+         accessType = fieldDefinition .getAccessType (),
+         name       = fieldDefinition .getName (),
+         field      = fieldDefinition .getValue () .copy ();
 
       field .setTainted (!this [_initialized]);
       field .addParent (this);
@@ -454,7 +457,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          ? this [_fieldDefinitions] .get (name)
          : this .constructor .fieldDefinitions ?.get (name);
 
-      return fieldDefinition ?.value .equals (field) ?? field .getModificationTime () < 0;
+      return fieldDefinition ?.getValue () .equals (field) ?? field .getModificationTime () < 0;
    },
    getExtendedEventHandling ()
    {

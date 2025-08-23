@@ -83,7 +83,11 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFString [in, out] **mediaDeviceID**
 {: #fields-mediaDeviceID }
 
-*mediaDeviceID* field provides ID parameter functionality. (TODO experimental)
+*mediaDeviceID* field provides a unique identifier for the active device that corresponds to deviceId functionality defined in W3C Web Audio API.
+
+#### Hint
+
+- Https://www.w3.org/TR/mediacapture-streams/#mediadevices
 
 ### MFString [in, out] **streamIdentifier** [ ]
 {: #fields-streamIdentifier }

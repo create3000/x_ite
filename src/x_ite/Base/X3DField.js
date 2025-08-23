@@ -14,6 +14,8 @@ const
    _inputRoutes         = Symbol (),
    _outputRoutes        = Symbol (),
    _routeCallbacks      = Symbol (),
+   _appInfo             = Symbol (),
+   _documentation       = Symbol (),
    _uniformLocation     = Symbol .for ("X_ITE.X3DField.uniformLocation");
 
 const EMPTY = [ ];
@@ -38,6 +40,8 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    [_outputRoutes]: null,
    [_routeCallbacks]: null,
    [_uniformLocation]: null,
+   [_appInfo]: "",
+   [_documentation]: "",
    create ()
    {
       return new (this .constructor) ();
@@ -312,6 +316,22 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
       for (const callback of this [_fieldCallbacks] ?.values () ?? EMPTY)
          callback (this .valueOf ());
+   },
+   getAppInfo ()
+   {
+      return this [_appInfo];
+   },
+   setAppInfo (value)
+   {
+      this [_appInfo] = String (value);
+   },
+   setDocumentation (value)
+   {
+      this [_documentation] = String (value);
+   },
+   getDocumentation ()
+   {
+      return this [_documentation];
    },
    fromString (string, scene)
    {

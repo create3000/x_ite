@@ -19,6 +19,7 @@ import XMLParser            from "../Parser/XMLParser.js";
 import JSONParser           from "../Parser/JSONParser.js";
 import X3DCast              from "../Base/X3DCast.js";
 import X3DConstants         from "../Base/X3DConstants.js";
+import SFNodeCache          from "../Fields/SFNodeCache.js";
 import Features             from "../Features.js";
 import Algorithm            from "../../standard/Math/Algorithm.js";
 import MikkTSpace           from "./Rendering/MikkTSpace.js";
@@ -786,36 +787,17 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this .getBrowserOptions () .getField (name) .getValue ();
    },
-   /*
-   addBrowserOptionCallback (key, name, callback)
-   {
-      return this .getBrowserOptions () .getField (name) .addFieldCallback (key, callback);
-   },
-   removeBrowserOptionCallback (key, name)
-   {
-      return this .getBrowserOptions () .getField (name) .removeFieldCallback (key);
-   },
-   */
    getRenderingProperty (name)
    {
       return this .getRenderingProperties () .getField (name) .getValue ();
    },
-   /*
-   addRenderingPropertyCallback (key, name, callback)
-   {
-      return this .getRenderingProperties () .getField (name) .addFieldCallback (key, callback);
-   },
-   removeRenderingPropertyCallback (key, name)
-   {
-      return this .getRenderingProperties () .getField (name) .removeFieldCallback (key);
-   },
-   */
    viewAll (layerNode, transitionTime = 1)
    {
       if (arguments .length === 1 && typeof layerNode === "number")
          transitionTime = layerNode;
 
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+      layerNode      = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+      transitionTime = +transitionTime;
 
       layerNode ?.viewAll (transitionTime, 1, this .getBrowserOption ("StraightenHorizon"));
    },
@@ -867,11 +849,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       if (arguments .length === 1)
       {
-         name      = String (layerNode);
+         name      = layerNode;
          layerNode = this .getActiveLayer ();
       }
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+      name      = String (name);
 
       const viewpointNode = layerNode ?.getViewpoints () .get ()
          .find (viewpointNode => viewpointNode .getName () === name);
@@ -901,6 +884,24 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    deleteRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
       this .currentScene .deleteRoute (sourceNode, sourceField, destinationNode, destinationField);
+   },
+   getClosestObject (layerNode, direction)
+   {
+      if (arguments .length === 1)
+      {
+         direction = layerNode;
+         layerNode = this .getActiveLayer ();
+      }
+
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+
+      const closestObject = layerNode ?.getClosestObject (direction .getValue ())
+
+      return closestObject ?.node ? {
+         node: SFNodeCache .get (closestObject .node),
+         distance: closestObject .distance,
+      }
+      : { node: null, distance: Infinity };
    },
    beginUpdate ()
    {

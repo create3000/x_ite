@@ -9,19 +9,22 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v12.0 Series
 
-*Leipzig, 9th August 2025:* This new series 12.0 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped for the back face, and when a [ImageTexture](/x_ite/components/texturing/imagetexture/) or [MovieTexture](/x_ite/components/texturing/movietexture/) must be flipped, and when the glTF parser generates [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) nodes. It will affect files with texture transform nodes and X3D files generated from glTF.
+*Leipzig, 9th August 2025:* This new series 12.0 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped for the back face.
 
 There is now a test file that should show both the same image on the front and back face: [texture mapping on a Rectangle2D with TextureTransform](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Geometry2D/FlipTexture.x3d).
 
 ### Breaking Change
 
-* Fixes texture flipping about x-Axis for Geometry2D for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) and [TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/) in glTF converted files.
+* Fixes texture flipping about x-Axis for Geometry2D for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/).
 
 ### Notable Changes
 
 * Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
+* Collision detection is now entirely done by GPU.
+* XML and JSON attributes *appinfo* and *documentation* for `ProtoDeclare`, `ExternProtoDeclare` and `field` are no longer ignored.
 * Bug fixes in several nodes with bounding box calculations.
 * Fixes bug with light *attenuation* handling in PBR shader.
+* Fixes a bug with some smart-phones that HAnim and ParticleSystem nodes are not working.
 
 ## X_ITE v11.6 Series
 

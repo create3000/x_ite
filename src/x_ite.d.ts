@@ -200,25 +200,9 @@ declare namespace X3D
        */
       setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
       /**
-       * Adds a browser option callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the browser option to which the callback should be connected. The callback is called when the property has been changed.
-       */
-      addBrowserOptionCallback <T extends keyof BrowserOption> (key: any, name: T, callback: (value: BrowserOption [T]) => void): void;
-      /**
-       * Removes a browser option callback function associated with *key* and *name* from the browser option.
-       */
-      removeBrowserOptionCallback <T extends keyof BrowserOption> (key: any, name: T): void;
-      /**
        * Returns a rendering property with the corresponding *name*.
        */
       getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
-      /**
-       * Adds a rendering property callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the rendering property to which the callback should be connected. The callback is called when the property has been changed.
-       */
-      addRenderingPropertyCallback <T extends keyof RenderingProperty> (key: any, name: T, callback: (value: RenderingProperty [T]) => void): void;
-      /**
-       * Removes a rendering property callback function associated with *key* and *name* from the rendering property.
-       */
-      removeRenderingPropertyCallback <T extends keyof RenderingProperty> (key: any, name: T): void;
       /**
        * Returns context menu object.
        */
@@ -239,30 +223,37 @@ declare namespace X3D
        */
       removeBrowserCallback (key: any, event?: number): void;
       /**
-       * Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layerNode* is omitted, the active layer is used.
+       * Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layer* is omitted, the active layer is used.
        */
-      viewAll (layer?: SFNode, transitionTime?: number): void;
+      viewAll (layer?: X3DLayerNodeProxy, transitionTime?: number): void;
       /**
-       * Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
        */
-      nextViewpoint (layer?: SFNode): void;
+      nextViewpoint (layer?: X3DLayerNodeProxy): void;
       /**
-       * Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
        */
-      previousViewpoint (layer?: SFNode): void;
+      previousViewpoint (layer?: X3DLayerNodeProxy): void;
       /**
-       * Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
        */
-      firstViewpoint (layer?: SFNode): void;
+      firstViewpoint (layer?: X3DLayerNodeProxy): void;
       /**
-       * Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
        */
-      lastViewpoint (layer?: SFNode): void;
+      lastViewpoint (layer?: X3DLayerNodeProxy): void;
       /**
-       * Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
+       * Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layer*. If *layer* is omitted, the active layer is used.
        */
-      changeViewpoint (layer: SFNode, name: string): void;
+      changeViewpoint (layer: X3DLayerNodeProxy, name: string): void;
       changeViewpoint (name: string): void;
+      /**
+       * Returns the closest collidable object when looked in *direction*, measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of NavigationInfo *avatarSize*). Compare *distance* with *collisionRadius* (first value of NavigationInfo *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
+       *
+       * The return value is an object with two properties *node* and *distance*.
+       */
+      getClosestObject (layer: X3DLayerNodeProxy, direction: SFVec3d | SFVec3f): ClosestObject;
+      getClosestObject (direction: SFVec3d | SFVec3f): ClosestObject;
       /**
        * Start processing events.
        */
@@ -426,6 +417,12 @@ declare namespace X3D
       PixelsPerPoint:         number,
       XRSession:              boolean,
    }
+
+   type ClosestObject = {
+      node: X3DShapeNodeProxy | null,
+      distance: number,
+      // normal: SFVec3f,
+   };
 
    class ContextMenu
    {
@@ -920,6 +917,14 @@ declare namespace X3D
        * Always has the value of false. This property is read only.
        */
       readonly isExternProto: false;
+      /**
+       * Short description or purpose of the prototype. This property is read only.
+       */
+      readonly appInfo: string;
+      /**
+       * A string containing the documentation of this prototype. This property is read only.
+       */
+      readonly documentation: string;
 
       /**
        * Creates a new default instance of the prototype.
@@ -971,6 +976,14 @@ declare namespace X3D
        * Always has the value of true. This property is read only.
        */
       readonly isExternProto: true;
+      /**
+       * Short description or purpose of the extern prototype. This property is read only.
+       */
+      readonly appInfo: string;
+      /**
+       * A string containing the documentation of this extern prototype. This property is read only.
+       */
+      readonly documentation: string;
       /**
        * The value is one of the *_STATE* properties defined in the X3DConstants object. This property is read only.
        */
@@ -1511,9 +1524,17 @@ declare namespace X3D
        */
       readonly name: string;
       /**
-       * A X3DField object holding the default value.
+       * The default value for this field. This property is read only.
        */
-      readonly value: X3DField;
+      readonly value: boolean | number | string | null | X3DField;
+      /**
+       * Short description or purpose of the field. This property is read only.
+       */
+      readonly appInfo: string;
+      /**
+       * A string containing the documentation of this field. This property is read only.
+       */
+      readonly documentation: string;
    }
 
    /**
@@ -2123,15 +2144,15 @@ declare namespace X3D
        * *axis* is a SFVec3d/f object whose value is the axis of rotation.
        * *angle* is the scalar angle of the rotation (in radians).
        */
-      constructor (axis: SFVec3, angle: number);
+      constructor (axis: SFVec3d | SFVec3f, angle: number);
       /**
        * *fromVector* and *toVector* are SFVec3d/f valued objects. These vectors are normalized and the rotation value that would rotate from the *fromVector* to the *toVector* is stored in the object.
        */
-      constructor (fromVector: SFVec3, toVector: SFVec3);
+      constructor (fromVector: SFVec3d | SFVec3f, toVector: SFVec3);
       /**
        * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
        */
-      constructor (matrix: SFMatrix3);
+      constructor (matrix: SFMatrix3d | SFMatrix3f);
 
       /**
        * Returns the first value of the axis vector.
@@ -2170,13 +2191,13 @@ declare namespace X3D
        */
       multiply (rotation: SFRotation): SFRotation;
       /**
-       * Returns a SFVec3f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
+       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
        */
       multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
        * Set the axis of rotation to the vector passed in *vec*.
        */
-      setAxis (axis: SFVec3): void;
+      setAxis (axis: SFVec3d | SFVec3f): void;
       /**
        * Set the value of this rotation to the rotation matrix passed in *matrix*.
        */
@@ -2859,7 +2880,7 @@ declare namespace X3D
       specular: number;
    }
 
-   /** Analyser provides real-time frequency and time-domain analysis information, without any change to the input. */
+   /** Analyser provides real-time frequency and time-domain analysis information, without any signal-processing change to the audio stream which is passed unprocessed from input to output. */
    interface AnalyserProxy extends X3DSoundProcessingNodeProxy
    {
       /**
@@ -2917,7 +2938,7 @@ declare namespace X3D
        */
       frequencyBinCount: number;
       /**
-       * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
+       * The gain value only affects analysis, not output signal.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -3327,7 +3348,7 @@ declare namespace X3D
        */
       readonly isPaused: boolean;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -3440,7 +3461,7 @@ declare namespace X3D
        */
       maxChannelCount: number;
       /**
-       * mediaDeviceID field provides ID parameter functionality.
+       * mediaDeviceID field provides a unique identifier for the active device that corresponds to deviceId functionality defined in W3C Web Audio API.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -4204,7 +4225,7 @@ declare namespace X3D
        */
       readonly length: number;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -6335,7 +6356,7 @@ declare namespace X3D
        */
       children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>;
       /**
-       * delayTime is duration of delay (in seconds) to apply.
+       * delayTime is duration of delay applied (in seconds).
        *
        * This field is of access type 'inputOutput' and type SFTime.
        */
@@ -6672,7 +6693,7 @@ declare namespace X3D
        */
       kind: number;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -8737,7 +8758,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -9963,7 +9984,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -10010,7 +10031,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -10069,7 +10090,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -10811,7 +10832,7 @@ declare namespace X3D
        */
       global: boolean;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -12314,7 +12335,7 @@ declare namespace X3D
        */
       readonly isPaused: boolean;
       /**
-       * mediaDeviceID field provides ID parameter functionality.
+       * mediaDeviceID field provides a unique identifier for the active device that corresponds to deviceId functionality defined in W3C Web Audio API.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -12576,7 +12597,7 @@ declare namespace X3D
        */
       readonly isPaused: boolean;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -13930,7 +13951,7 @@ declare namespace X3D
        */
       language: "Cg" | "GLSL" | "HLSL";
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16296,7 +16317,7 @@ declare namespace X3D
        */
       field: MFNode <SFNode>;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16461,7 +16482,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16520,7 +16541,7 @@ declare namespace X3D
        */
       field: MFNode <SFNode>;
       /**
-       * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -17168,7 +17189,7 @@ declare namespace X3D
        */
       coneInnerAngle: number;
       /**
-       * coneOuterAngle is centered along direction and defines an outer conical volume, within which the sound gain decreases linearly from full gain to coneOuterGain.
+       * coneOuterAngle is centered along direction and defines an outer conical volume, within which the sound gain decreases from full gain to coneOuterGain.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -17192,7 +17213,7 @@ declare namespace X3D
        */
       direction: SFVec3f;
       /**
-       * distanceModel determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
+       * distanceModel determines which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -17901,7 +17922,7 @@ declare namespace X3D
        */
       readonly isActive: boolean;
       /**
-       * mediaDeviceID field provides ID parameter functionality.
+       * mediaDeviceID field provides a unique identifier for the active device that corresponds to deviceId functionality defined in W3C Web Audio API.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -17915,9 +17936,9 @@ declare namespace X3D
       /**
        * Stream identification TBD Hint: W3C Media Capture and Streams https://www.
        *
-       * This field is of access type 'inputOutput' and type SFString.
+       * This field is of access type 'inputOutput' and type MFString.
        */
-      streamIdentifier: string;
+      streamIdentifier: MFString;
    }
 
    /** StreamAudioSource operates as an audio source whose media is received from a MediaStream obtained using the WebRTC or Media Capture and Streams APIs. */
@@ -18004,9 +18025,9 @@ declare namespace X3D
       /**
        * Stream identification TBD Hint: W3C Media Capture and Streams https://www.
        *
-       * This field is of access type 'inputOutput' and type SFString.
+       * This field is of access type 'inputOutput' and type MFString.
        */
-      streamIdentifier: string;
+      streamIdentifier: MFString;
    }
 
    /** StringSensor generates events as the user presses keys on the keyboard. */
@@ -20651,6 +20672,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFNode.
        */
       children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>;
+      /**
+       * The curve field is an array of floating-point numbers describing the distortion to apply.
+       *
+       * This field is of access type 'inputOutput' and type MFFloat.
+       */
+      curve: MFFloat;
       /**
        * Author-provided prose that describes intended purpose of the url asset.
        *

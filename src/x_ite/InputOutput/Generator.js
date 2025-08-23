@@ -461,6 +461,30 @@ Object .assign (Generator .prototype,
          return string .replace (regex, char => map [char]);
       };
    })(),
+   XMLAppInfo (object)
+   {
+      const appInfo = object .getAppInfo ();
+
+      if (!appInfo)
+         return;
+
+      this .string += this .Space ();
+      this .string += "appinfo='";
+      this .string += this .XMLEncode (appInfo);
+      this .string += "'";
+   },
+   XMLDocumentation (object)
+   {
+      const documentation = object .getDocumentation ();
+
+      if (!documentation)
+         return;
+
+      this .string += this .Space ();
+      this .string += "documentation='";
+      this .string += this .XMLEncode (documentation);
+      this .string += "'";
+   },
    JSONEncode: (() =>
    {
       const map = {
@@ -500,6 +524,40 @@ Object .assign (Generator .prototype,
          this .string = this .string .slice (0, -1);
 
       this .string += this .TidyBreak ();
+   },
+   JSONAppInfo (object)
+   {
+      const appInfo = object .getAppInfo ();
+
+      if (!appInfo)
+         return;
+
+      this .string += ',';
+      this .string += this .Indent ();
+      this .string += '"';
+      this .string += "@appinfo";
+      this .string += '"';
+      this .string += ':';
+      this .string += '"';
+      this .string += this .JSONEncode (appInfo);
+      this .string += '"';
+   },
+   JSONDocumentation (object)
+   {
+      const documentation = object .getDocumentation ();
+
+      if (!documentation)
+         return;
+
+      this .string += ',';
+      this .string += this .Indent ();
+      this .string += '"';
+      this .string += "@documentation";
+      this .string += '"';
+      this .string += ':';
+      this .string += '"';
+      this .string += this .JSONEncode (documentation);
+      this .string += '"';
    },
 });
 

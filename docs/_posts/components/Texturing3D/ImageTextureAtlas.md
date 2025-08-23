@@ -74,7 +74,7 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFBool [in, out] **load** TRUE
 {: #fields-load }
 
-*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded asset.
 
 #### Hints
 

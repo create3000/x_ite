@@ -63,7 +63,7 @@ Object .assign (Object .setPrototypeOf (StringSensor .prototype, X3DKeyDeviceSen
             {
                if (event .key .length === 1)
                {
-                  if (! this ._isActive .getValue ())
+                  if (!this ._isActive .getValue ())
                   {
                      this ._isActive    = true;
                      this ._enteredText = "";
