@@ -34,13 +34,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
    getAppInfo ()
    {
-      return this [_protoNode] .getProtoDeclaration () ?.getAppInfo ()
-         || this [_protoNode] .getAppInfo ();
+      return this [_protoNode] .getAppInfo ();
    },
    getDocumentation ()
    {
-      return this [_protoNode] .getProtoDeclaration () ?.getDocumentation ()
-         || this [_protoNode] .getDocumentation ();
+      return this [_protoNode] .getDocumentation ();
    },
    initialize ()
    {
