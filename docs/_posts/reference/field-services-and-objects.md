@@ -45,7 +45,7 @@ None.
 
 ## FieldDefinitionArray
 
-FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *fieldDefinitionArrayName*[*index*], where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array).
+FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `fieldDefinitionArrayName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method(s)
 
@@ -1210,7 +1210,7 @@ The creation method can be passed 0 or more integer-valued expressions to initia
 
 ### Properties
 
-Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfInt32ObjectName*[*index]*, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0`.
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfInt32ObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0`.
 
 #### **length**: number
 
