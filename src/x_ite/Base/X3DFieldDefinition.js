@@ -63,6 +63,7 @@ Object .defineProperties (X3DFieldDefinition .prototype,
    value:
    {
       get () { return this .getValue () .valueOf (); },
+      enumerable: true,
    },
    appInfo:
    {

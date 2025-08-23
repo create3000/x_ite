@@ -1516,9 +1516,9 @@ declare namespace X3D
        */
       readonly name: string;
       /**
-       * A X3DField object holding the default value.
+       * The default value for this field. This property is read only.
        */
-      readonly value: X3DField;
+      readonly value: boolean | number | string | null | X3DField;
       /**
        * Short description or purpose of the field. This property is read only.
        */
