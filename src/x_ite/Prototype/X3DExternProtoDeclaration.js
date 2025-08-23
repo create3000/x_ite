@@ -35,13 +35,27 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    getAppInfo ()
    {
-      return this .getProtoDeclaration () ?.getAppInfo ()
+      return this [_proto] ?.getAppInfo ()
          || X3DProtoDeclarationNode .prototype .getAppInfo .call (this);
+   },
+   setAppInfo (value)
+   {
+      if (this [_proto])
+         this [_proto] .setAppInfo (value);
+      else
+         X3DProtoDeclarationNode .prototype .setAppInfo .call (this, value);
    },
    getDocumentation ()
    {
-      return this .getProtoDeclaration () ?.getDocumentation ()
+      return this [_proto] ?.getDocumentation ()
          || X3DProtoDeclarationNode .prototype .getDocumentation .call (this);
+   },
+   setDocumentation (value)
+   {
+      if (this [_proto])
+         this [_proto] .setDocumentation (value);
+      else
+         X3DProtoDeclarationNode .prototype .setDocumentation .call (this, value);
    },
    getProtoDeclaration ()
    {
