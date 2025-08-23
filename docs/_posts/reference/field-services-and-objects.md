@@ -27,7 +27,7 @@ Value from [X3DConstants](/x_ite/reference/constants-services/#field-type-consta
 
 A string of the field name (e.g., "children"). This property is read only.
 
-### **value**: boolean | number | string | null | X3DField
+#### **value**: boolean | number | string | null | X3DField
 
 The default value for this field. This property is read only.
 
