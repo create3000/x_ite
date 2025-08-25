@@ -26,7 +26,7 @@ A [Script](/x_ite/components/scripting/script/) node selects a program script to
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
 <![CDATA[ecmascript:
 ...
@@ -39,7 +39,7 @@ A [Script](/x_ite/components/scripting/script/) node selects a program script to
     url='"bouncer.js"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -59,7 +59,7 @@ A Script node also declares the program script interface:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='3'/>
   <field accessType='inputOnly' type='SFFloat' name='set_fraction'/>
@@ -68,7 +68,7 @@ A Script node also declares the program script interface:
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -83,7 +83,7 @@ DEF Bouncer Script {
 
 ### XML Encoding
 
-```xml
+```x3d
 <TimeSensor DEF='Clock' ... />
 
 <Transform DEF='Ball' ... />
@@ -102,7 +102,7 @@ DEF Bouncer Script {
 <ROUTE fromNode='Bouncer' fromField='value_changed' toNode='Ball' toField='set_translation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Clock TimeSensor { ... }

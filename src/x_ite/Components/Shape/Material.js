@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                  from "../../Fields.js";
 import X3DFieldDefinition      from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray    from "../../Base/FieldDefinitionArray.js";
+import X3DNode                 from "../Core/X3DNode.js";
 import X3DOneSidedMaterialNode from "./X3DOneSidedMaterialNode.js";
 import Shading                 from "../../Browser/Core/Shading.js";
 import X3DCast                 from "../../Base/X3DCast.js";
@@ -103,7 +57,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    getMaterialKey ()
    {
-      return "2";
+      return 2;
    },
    getTextureIndices: (() =>
    {
@@ -126,7 +80,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    })(),
    getBaseTexture ()
    {
-      return this .diffuseTexture;
+      return this .diffuseTextureNode;
    },
    set_ambientIntensity__ ()
    {
@@ -146,16 +100,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_diffuseColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
-
-      const
-         diffuseColorArray = this .diffuseColorArray,
-         diffuseColor      = this ._diffuseColor .getValue ();
-
-      diffuseColorArray [0] = diffuseColor .r;
-      diffuseColorArray [1] = diffuseColor .g;
-      diffuseColorArray [2] = diffuseColor .b;
+      this .diffuseColorArray .set (this ._diffuseColor .getValue ());
    },
    set_diffuseTexture__ ()
    {
@@ -179,16 +124,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_specularColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .specularColorArray .set (this ._specularColor .getValue ());
-
-      const
-         specularColorArray = this .specularColorArray,
-         specularColor      = this ._specularColor .getValue ();
-
-      specularColorArray [0] = specularColor .r;
-      specularColorArray [1] = specularColor .g;
-      specularColorArray [2] = specularColor .b;
+      this .specularColorArray .set (this ._specularColor .getValue ());
    },
    set_specularTexture__ ()
    {
@@ -222,20 +158,16 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
-   set_transparent__ ()
-   {
-      this .setTransparent (this .getTransparency () || this .diffuseTextureNode ?.isTransparent ());
-   },
    createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
          options = this .getShaderOptions (geometryContext, renderContext);
 
+      let shaderNode;
+
       if (geometryContext .hasNormals)
       {
-         options .push ("X3D_MATERIAL");
-
          if (+this .getTextureBits ())
          {
             this .ambientTextureNode   ?.getShaderOptions (options, "AMBIENT");
@@ -247,19 +179,20 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
          switch (this .getMaterialKey ())
          {
-            case "1":
+            case 1:
             {
-               if (!renderContext ?.shadows)
-               {
-                  var shaderNode = browser .createShader ("Gouraud", "Gouraud", "Gouraud", options);
-                  break;
-               }
+               options .push ("X3D_GOURAUD_MATERIAL");
 
-               // Proceed with next case:
-            }
-            case "2":
-               var shaderNode = browser .createShader ("Phong", "Default", "Phong", options);
+               shaderNode = browser .createShader ("Gouraud", "Default", "Material", options);
                break;
+            }
+            case 2:
+            {
+               options .push ("X3D_PHONG_MATERIAL");
+
+               shaderNode = browser .createShader ("Phong", "Default", "Material", options);
+               break;
+            }
          }
       }
       else
@@ -268,9 +201,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
          options .push ("X3D_UNLIT_MATERIAL");
 
-         var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
-
-         browser .getShaders () .set (key, shaderNode);
+         shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
       }
 
       browser .getShaders () .set (key, shaderNode);
@@ -322,15 +253,17 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          textureCoordinateMapping);
 
       if (this .occlusionTextureNode)
+      {
          gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-      this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_OcclusionTexture,
-         this ._occlusionTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
+         this .occlusionTextureNode .setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_OcclusionTexture,
+            this ._occlusionTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
+      }
    },
 });
 
@@ -339,34 +272,15 @@ function getMaterialKey ()
    switch (this .getBrowser () .getBrowserOptions () .getShading ())
    {
       default:
-         return "1";
+         return 1;
       case Shading .PHONG:
-         return "2";
+         return 2;
    }
 }
 
 Object .defineProperties (Material,
 {
-   typeName:
-   {
-      value: "Material",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("Material", "Shape", 1, "material", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

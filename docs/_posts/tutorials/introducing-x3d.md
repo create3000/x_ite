@@ -9,6 +9,7 @@ tags: [Introducing]
 
 X3D is:
 
+- X3D is an open, extensible 3D graphics standard standardized by the [Web3D® Consortium](https://www.web3d.org), designed for real-time interactive 3D content across platforms and the web
 - A simple text language for describing 3-D shapes and interactive environments
 - X3D text files use a .x3d, x3dj, x3dv, or .x3db extension
   - .x3d (XML) - save to parse
@@ -16,25 +17,30 @@ X3D is:
   - .x3dj (JSON) - good for scripting
   - .x3db (Binary) - good for large models
 
->**Note:** All examples are in X3D XML and X3D Classic Encoded file format (.x3d and .x3dv).
+>**Note:** All examples are in X3D XML and X3D VRML Classic Encoded file format (.x3d and .x3dv).
 {: .prompt-info }
 
 ## What do I need to use X3D?
 
 You can view X3D files using an X3D browser:
 
-- A X3D standalone application
-- A X3D JavaScript plug-in like to an HTML browser
+- An X3D standalone application
+- An X3D JavaScript library like X_ITE to display X3D and VRML in a Web browser
 
 You can view X3D files from your local hard disk, or from the Internet.
 
+## Can an X3D Browser be used as VRML Viewer?
+
+- Yes an X3D browser can be uses as VRML viewer
+- Since X3D is the successor of VRML, an X3D browser is also a VRML viewer
+
 ## How can X3D be used on a Web page?
 
-- Fill Web page
-- Embed into Web page
-- Fill Web page frame
-- Embed into Web page frame
-- Embed multiple times
+- Include the X_ITE Script: Add the `<script>` tag linking to X_ITE in your HTML `<head>` or before the `</body>`
+- Add the `<x3d-canvas>` Element: This custom element acts as the rendering surface for your 3D scene
+- Write Your X3D Scene: Create an X3D file and add a `src` attribute to the `<x3d-canvas>` element, or inside the `<x3d-canvas>`, use `<X3D>` and `<Scene>` tags to define your shapes, appearances, lights, and views
+- Style the Canvas: Use CSS or inline style attributes to set width, height, or layout of your 3D canvas
+- Test in a Browser: Open the HTML file in any modern browser; no plugin needed — X_ITE runs purely in JavaScript and WebGL
 
 ## What do I need to develop in X3D?
 

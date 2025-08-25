@@ -4,7 +4,8 @@ const
    path     = require ("path"),
    fs       = require ("fs"),
    os       = require ("os"),
-   { exec } = require ("child_process");
+   { exec } = require ("child_process"),
+   { sh }   = require ("shell-tools");
 
 for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename => filename .match (/\.js$/)))
 {
@@ -16,7 +17,8 @@ for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename =
 const
    TerserPlugin           = require ("terser-webpack-plugin"),
    WebpackShellPluginNext = require ("webpack-shell-plugin-next"),
-   StringReplacePlugin    = require ("string-replace-webpack-plugin");
+   StringReplacePlugin    = require ("string-replace-webpack-plugin"),
+   WrapperPlugin          = require ("wrapper-webpack-plugin");
 
 module .exports = async () =>
 {
@@ -24,27 +26,27 @@ module .exports = async () =>
    {
       const
          graph = await madge (filename),
-         deps  = new Set ()
+         deps  = new Set ();
 
       for (const files of Object .values (graph .obj ()))
       {
          for (const file of files)
-            deps .add (path .resolve (path .dirname (filename), file))
+            deps .add (path .resolve (path .dirname (filename), file));
       }
 
-      return deps
+      return deps;
    }
 
    const
       x_ite_deps = await deps (path .resolve (__dirname, "src/x_ite.js")),
-      targets    = [ ]
+      targets    = [ ];
 
-   x_ite_deps .add (path .resolve (__dirname, "src/x_ite/Namespace.js"))
+   x_ite_deps .add (path .resolve (__dirname, "src/x_ite/Namespace.js"));
 
    const namespace =
    {
       test: /\.js$/,
-      exclude: /Namespace\.js$|X3D\.js/,
+      exclude: /(?:Namespace\.js|X3D\.js|x_ite\.js)$/,
       use: [
          {
             loader: StringReplacePlugin .replace ({
@@ -56,20 +58,18 @@ module .exports = async () =>
                         const
                            ns   = path .resolve (__dirname, "src/x_ite/Namespace.js"),
                            rel  = path .relative (path .dirname (this .resourcePath), ns),
-                           key  = path .relative (path .resolve (__dirname, "src"), this .resourcePath) .replace (/\.js$/, ""),
-                           base = path .basename (key)
+                           base = path .basename (this .resourcePath, ".js");
 
                         return `const __default__ = ${m};
 import Namespace from "./${rel}";
-Namespace .add ("${base}", "${key}", __default__);
-export default __default__;`;
+export default Namespace .add ("${base}", __default__);`;
                      },
                   },
                ],
             }),
          },
       ],
-   }
+   };
 
    const compress_glsl = {
       test: /\.js$/,
@@ -92,17 +92,20 @@ export default __default__;`;
                            {
                               return `${s1}__EXPRESSION_${e .push (s) - 1}__${s3}`;
                            })
-                           .replace (/\/\*.*?\*\//sg, "")
-                           .replace (/\/\/.*?\n/sg, "\n")
-                           .replace (/(#.*?)\n/sg, "$1__PREPROCESSOR__")
-                           .replace (/\s+/sg, " ")
-                           .replace (/\s*([(){}\[\],;=<>!+\-*\/&|?:\.])\s*/sg, "$1")
-                           .replace (/(#.*?)__PREPROCESSOR__\s*/sg, "$1\n")
-                           .replace (/(.)#/sg, "$1\n#")
-                           .replace (/^\s+/mg, "")
-                           .replace (/$/, "\n")
-                           .replace (/(\})\s+$/s, "$1")
-                           .replace (/\n+/sg, "\n")
+                           .replace (/\/\*.*?\*\//sg, "") // Remove comments
+                           .replace (/\/\/.*?\n/sg, "\n") // Remove comments
+                           .replace (/(#.*?)\n/sg, "$1__PREPROCESSOR__") // Replace preprocessor lines
+                           .replace (/\b(\d+\.)0\b/sg, "$1") // Remove trailing zeroes in numbers
+                           .replace (/\b0(\.\d+)\b/sg, "$1") // Remove leading zeroes in numbers
+                           .replace (/vec(\d)\s*\((\d+)\.\)/sg, "vec$1($2)") // Remove trailing dot in vecN
+                           .replace (/\s+/sg, " ") // Remove multiple spaces
+                           .replace (/\s*([(){}\[\],;=<>!+\-*\/&|?:\.])\s*/sg, "$1") // Remove spaces around operators
+                           .replace (/(#.*?)__PREPROCESSOR__\s*/sg, "$1\n") // Restore preprocessor lines
+                           .replace (/(.)#/sg, "$1\n#") // Restore preprocessor lines
+                           .replace (/^\s+/mg, "") // Remove leading spaces
+                           .replace (/$/, "\n") // Remove trailing spaces
+                           .replace (/(\})\s+$/s, "$1") // Remove trailing spaces after closing braces
+                           .replace (/\n+/sg, "\n") // Remove multiple newlines
                            .replace (/__EXPRESSION_(\d+)__/sg, (_, i) =>
                            {
                               return `${e [i]
@@ -110,14 +113,29 @@ export default __default__;`;
                                  .replace (/\n+/sg, "\n")}`
                            }) + "`";
 
-                        return s .replace (/[\n\s]{2,}/sg, "\n");
+                        return s .replace (/[\n\s]{2,}/sg, "\n"); // Remove multiple newlines and spaces
                      },
                   },
                ],
             }),
          },
       ],
-   }
+   };
+
+   const integrities = sh (`find src -type f -name "*.css"`) .trim () .split (/[\r\n]+/) .map (src =>
+   {
+      const dist = src .replace ("src", "dist");
+
+      sh (`npx --yes css-minify < '${src}' > '${dist}'`);
+      sh (`perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' '${dist}'`);
+
+      const
+         name      = path .parse (src) .name .toLowerCase (),
+         integrity = "sha384-" + sh (`shasum -b -a 384 '${dist}' | awk '{ print $1 }' | xxd -r -p | base64`) .trim (),
+         action    = `perl -p0i -e 's|integrity-${name}-css|${integrity}|sg' dist/x_ite{,.min}.js`
+
+      return action;
+   });
 
    targets .push ({
       entry: {
@@ -155,22 +173,21 @@ export default __default__;`;
          ],
       },
       plugins: [
+         new StringReplacePlugin (),
          new webpack .ProvidePlugin ({
             $: "jquery",
             jQuery: "jquery",
-            jquery_fullscreen: "jquery-fullscreen-plugin/jquery.fullscreen.js",
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
-            SuperGif: path .resolve (__dirname, "src/lib/libgif/libgif.js"),
+            SuperGif: "@create3000/libgif/libgif.js",
+            APNG: "apng-js",
          }),
          new WebpackShellPluginNext ({
             logging: false,
             onBuildStart: {
                scripts: [
                   `echo 'Bundling x_ite ...'`,
-                  `perl -p0e 's|\\/\\*.*?\\*\\/||sg' src/x_ite.css | npx sass --stdin --style compressed > dist/x_ite.css`,
-                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
                   `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/BROWSER_VERSION.js`,
                   `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEVELOPMENT.js`,
                ],
@@ -181,13 +198,18 @@ export default __default__;`;
                scripts: [
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.js`,
-                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite{,.min}.js`,
+                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.js`,
+                  // Subresource Integrity Hash Values
+                  ... integrities,
+                  // asm
+                  `perl -p0i -e 's|"use\\s+asm"\\s*;?||sg' dist/x_ite{,.min}.js`,
                   // Source Maps
                   `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite{,.min}.js`,
                   // Debug
                   `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEVELOPMENT.js`,
                   // Licenses
                   `cp LICENSE.md dist/LICENSE.md`,
+                  `echo '\nADDITIONAL LICENSES\n-------------------\n' >> dist/LICENSE.md`,
                   `echo '\`\`\`' >> dist/LICENSE.md`,
                   `cat dist/x_ite.min.js.LICENSE.txt >> dist/LICENSE.md`,
                   `rm dist/x_ite.min.js.LICENSE.txt`,
@@ -207,6 +229,9 @@ export default __default__;`;
             path: false,
             fs: false,
          },
+         alias: {
+           "jquery": "jquery/dist/jquery.slim.js",
+         },
       },
       stats: "errors-warnings",
       performance: {
@@ -214,7 +239,7 @@ export default __default__;`;
          maxEntrypointSize: 10_000_000,
          maxAssetSize: 10_000_000,
       },
-   })
+   });
 
    targets .push ({
       entry: {
@@ -244,10 +269,10 @@ export default __default__;`;
                      loader: StringReplacePlugin .replace ({
                         replacements: [
                            {
-                              pattern: /\/\/ var/sg,
+                              pattern: /\/\/ src/sg,
                               replacement: function (match, m, offset, string)
                               {
-                                 return "var"
+                                 return "src";
                               },
                            },
                         ],
@@ -265,7 +290,7 @@ export default __default__;`;
                               pattern: /MODULE = false/sg,
                               replacement: function (match, m, offset, string)
                               {
-                                 return "MODULE = true"
+                                 return "MODULE = true";
                               },
                            },
                         ],
@@ -283,6 +308,7 @@ export default __default__;`;
                parallel: true,
                extractComments: true,
                terserOptions: {
+                  module: true,
                   compress: true,
                   mangle: true,
                   format: {
@@ -293,14 +319,15 @@ export default __default__;`;
          ],
       },
       plugins: [
+         new StringReplacePlugin (),
          new webpack .ProvidePlugin ({
             $: "jquery",
             jQuery: "jquery",
-            jquery_fullscreen: "jquery-fullscreen-plugin/jquery.fullscreen.js",
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
-            SuperGif: path .resolve (__dirname, "src/lib/libgif/libgif.js"),
+            SuperGif: "@create3000/libgif/libgif.js",
+            APNG: "apng-js",
          }),
          new WebpackShellPluginNext ({
             logging: false,
@@ -317,7 +344,11 @@ export default __default__;`;
                scripts: [
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.mjs`,
-                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite{,.min}.mjs`,
+                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.mjs`,
+                  // Subresource Integrity Hash Values
+                  ... integrities,
+                  // asm
+                  `perl -p0i -e 's|"use\\s+asm"\\s*;?||sg' dist/x_ite{,.min}.mjs`,
                   // Source Maps
                   `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite{,.min}.mjs`,
                   // Debug
@@ -339,6 +370,9 @@ export default __default__;`;
             path: false,
             fs: false,
          },
+         alias: {
+           "jquery": "jquery/dist/jquery.slim.js",
+         },
       },
       stats: "errors-warnings",
       performance: {
@@ -346,37 +380,37 @@ export default __default__;`;
          maxEntrypointSize: 10_000_000,
          maxAssetSize: 10_000_000,
       },
-   })
+   });
 
    const dependencies = {
       "Layout": ["Text"],
       "Picking": ["RigidBodyPhysics"],
       "VolumeRendering": ["CADGeometry", "Texturing3D"],
-   }
+   };
 
    function resolveDeps (name)
    {
-      let deps = [ ]
+      let deps = [ ];
 
       for (const d of dependencies [name] || [ ])
-         deps = [... deps, ... resolveDeps (d), d]
+         deps = [... deps, ... resolveDeps (d), d];
 
-      return deps
+      return deps;
    }
 
    for (const filename of fs .readdirSync ("./src/assets/components/"))
    {
       const
-         name           = path .parse (filename) .name,
-         component_deps = [x_ite_deps]
+         name           = path .parse (filename) .name .replace (/Component$/, ""),
+         component_deps = [x_ite_deps];
 
-      for (const dependency of resolveDeps (name))
-         component_deps .push (await deps (path .resolve (__dirname, `src/assets/components/${dependency}.js`)))
+      component_deps .push (... await Promise .all (resolveDeps (name)
+         .map (dependency => deps (path .resolve (__dirname, `src/assets/components/${dependency}Component.js`)))));
 
       targets .push ({
          entry: {
-            [name]: "./src/assets/components/" + filename,
-            [name + ".min"]: "./src/assets/components/" + filename,
+            [`${name}Component`]: "./src/assets/components/" + filename,
+            [`${name}Component.min`]: "./src/assets/components/" + filename,
          },
          output: {
             path: path .resolve (__dirname, "dist/assets/components"),
@@ -394,6 +428,7 @@ export default __default__;`;
                   parallel: true,
                   extractComments: false,
                   terserOptions: {
+                     module: true,
                      compress: true,
                      mangle: true,
                      format: {
@@ -405,19 +440,20 @@ export default __default__;`;
          },
          plugins: [
             new StringReplacePlugin (),
+            new WrapperPlugin ({
+               test: /\.js$/,
+               header: `const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];\n`,
+            }),
             new webpack .ProvidePlugin ({
                $: path .resolve (__dirname, "src/lib/jquery.js"),
                jQuery: path .resolve (__dirname, "src/lib/jquery.js"),
                // Per component
                ... {
-                  Text: {
-                     opentype: "opentype.js/dist/opentype.js",
-                  },
                   Texturing3D: {
                      CharLS: "CharLS.js/dist/charLS-DynamicMemory-browser.js",
                      dicomParser: "dicom-parser/dist/dicomParser.js",
                      OpenJPEG: "OpenJPEG.js/dist/openJPEG-DynamicMemory-browser.js",
-                     JpegImage: "jpeg-js/lib/decoder.js",
+                     jpegDecode: "jpeg-js/lib/decoder.js",
                   },
                }
                [name] || { },
@@ -434,15 +470,17 @@ export default __default__;`;
                onBuildEnd: {
                   scripts: [
                      // Version
-                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}{,.min}.js`,
-                     `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}{,.min}.js`,
+                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}Component{,.min}.js`,
+                     `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/assets/components/${name}Component{,.min}.js`,
+                     // asm
+                     `perl -p0i -e 's|"use\\s+asm"\\s*;?||sg' dist/assets/components/${name}Component{,.min}.js`,
                      // Source Maps
-                     `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}{,.min}.js`,
+                     `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}Component{,.min}.js`,
                      // Per component
                      ... {
                         Texturing3D: [
-                           `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}{,.min}.js`,
-                           `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}{,.min}.js`,
+                           `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}Component{,.min}.js`,
+                           `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}Component{,.min}.js`,
                         ],
                      }
                      [name] || [ ],
@@ -455,19 +493,19 @@ export default __default__;`;
          externals: [
             function ({ context, request }, callback)
             {
-               const filename = path .resolve (context, request)
+               const filename = path .resolve (context, request);
 
                for (const deps of component_deps)
                {
                   if (!deps .has (filename))
-                     continue
+                     continue;
 
-                  const module = path .relative (path .resolve (__dirname, "src"), filename) .replace (/\.js$/, "")
+                  const module = path .basename (filename, ".js");
 
-                  return callback (null, `var window [Symbol .for ("X_ITE.X3D")] .require ("${module}")`)
+                  return callback (null, `var __X_ITE_X3D__ .${module}`);
                }
 
-               return callback ()
+               return callback ();
             },
          ],
          resolve: {
@@ -483,7 +521,7 @@ export default __default__;`;
             maxEntrypointSize: 10_000_000,
             maxAssetSize: 10_000_000,
          },
-      })
+      });
    }
 
    console .log (`Using ${os .cpus () .length} CPUs to package X_ITE.`);

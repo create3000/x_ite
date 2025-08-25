@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DDragSensorNode    from "./X3DDragSensorNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
@@ -108,7 +62,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
             center   = new Vector3 ();
 
          this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
-         this .sphere = new Sphere3 (hitPoint .magnitude (), center);
+         this .sphere = new Sphere3 (hitPoint .norm (), center);
          this .behind = this .zPlane .getDistanceToPoint (hitPoint) < 0;
 
          this .fromVector  .assign (hitPoint);
@@ -127,7 +81,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
    set_motion__ (hit)
    {
       const
-         hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay     = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          trackPoint = new Vector3 ();
 
       if (this .getTrackPoint (hitRay, trackPoint, this .behind))
@@ -157,7 +111,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
             dirFromCenter = trackPoint .copy () .subtract (this .sphere .center) .normalize (),
             normal        = triNormal .copy () .cross (dirFromCenter) .normalize ();
 
-         const point1 = trackPoint .copy () .subtract (normal .multiply (tangentPoint .copy () .subtract (trackPoint) .magnitude ()));
+         const point1 = trackPoint .copy () .subtract (normal .multiply (tangentPoint .copy () .subtract (trackPoint) .norm ()));
 
          hitRay .set (point1, this .sphere .center .copy () .subtract (point1) .normalize ());
 
@@ -179,26 +133,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
 
 Object .defineProperties (SphereSensor,
 {
-   typeName:
-   {
-      value: "SphereSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("SphereSensor", "PointingDeviceSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

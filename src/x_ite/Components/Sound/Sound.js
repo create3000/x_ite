@@ -1,57 +1,10 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DSoundNode         from "./X3DSoundNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
@@ -67,11 +20,17 @@ function Sound (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
 
+   this .setVisibleObject (true);
+
+   // Units
+
    this ._location .setUnit ("length");
    this ._minBack  .setUnit ("length");
    this ._minFront .setUnit ("length");
    this ._maxBack  .setUnit ("length");
    this ._maxFront .setUnit ("length");
+
+   // Private properties
 
    this .childNodes       = [ ];
    this .currentTraversed = true;
@@ -220,6 +179,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       for (const childNode of this .childNodes)
          childNode .getAudioSource () .connect (this .gainNode);
+
+      this .setVisibleObject (this .childNodes .length);
    },
    update ()
    {
@@ -233,12 +194,6 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       return function (type, renderObject)
       {
-         if (type !== TraverseType .DISPLAY)
-            return;
-
-         if (!this .childNodes .length)
-            return;
-
          this .setTraversed (true);
 
          const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
@@ -264,7 +219,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
             else
             {
                const
-                  d1 = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
+                  d1 = max .intersection .norm (), // Viewer is here at (0, 0, 0)
                   d2 = max .intersection .distance (min .intersection),
                   d  = Math .min (d1 / d2, 1);
 
@@ -284,10 +239,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          sphereMatrix    = new Matrix4 (),
          invSphereMatrix = new Matrix4 (),
          rotation        = new Rotation4 (),
-         scale           = new Vector3 (1, 1, 1),
-         sphere          = new Sphere3 (1, Vector3 .Zero),
+         scale           = new Vector3 (1),
+         sphere          = new Sphere3 (1, Vector3 .ZERO),
          normal          = new Vector3 (),
-         line            = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+         line            = new Line3 (),
          enterPoint      = new Vector3 (),
          exitPoint       = new Vector3 ();
 
@@ -316,7 +271,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          location .set (0, 0, e);
          scale    .set (b, b, a);
-         rotation .setFromToVec (Vector3 .zAxis, this ._direction .getValue ());
+         rotation .setFromToVec (Vector3 .Z_AXIS, this ._direction .getValue ());
 
          sphereMatrix
             .assign (modelViewMatrix)
@@ -335,10 +290,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          sphere .intersectsLine (line, enterPoint, exitPoint);
 
          value .intersection .assign (sphereMatrix .multVecMatrix (enterPoint));
-         value .distance = viewer .magnitude ();
+         value .distance = viewer .norm ();
       };
    })(),
-   getPan: (function ()
+   getPan: (() =>
    {
       const
          rotation  = new Rotation4 (),
@@ -358,14 +313,14 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          location  .assign (this ._location  .getValue ());
          direction .assign (this ._direction .getValue ());
-         rotation .setFromToVec (Vector3 .zAxis, direction) .straighten ();
-         rotation .multVecRot (xAxis .assign (Vector3 .xAxis));
+         rotation .setFromToVec (Vector3 .Z_AXIS, direction) .straighten ();
+         rotation .multVecRot (xAxis .assign (Vector3 .X_AXIS));
 
          modelViewMatrix .multVecMatrix (location) .normalize ();
          modelViewMatrix .multDirMatrix (xAxis)    .normalize ();
 
-         result .pan      = 1 - Math .acos (Algorithm .clamp (location .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
-         result .rotation =     Math .acos (Algorithm .clamp (xAxis    .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
+         result .pan      = 1 - Math .acos (Algorithm .clamp (location .dot (Vector3 .X_AXIS), -1, 1)) / Math .PI;
+         result .rotation =     Math .acos (Algorithm .clamp (xAxis    .dot (Vector3 .X_AXIS), -1, 1)) / Math .PI;
 
          return result;
       };
@@ -374,26 +329,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
 Object .defineProperties (Sound,
 {
-   typeName:
-   {
-      value: "Sound",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("Sound", "Sound", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

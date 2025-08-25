@@ -1,54 +1,10 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
+import X3DNode          from "../Core/X3DNode.js";
 import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
 import X3DCast          from "../../Base/X3DCast.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
+import TraverseType     from "../../Rendering/TraverseType.js";
+import GeometryType     from "../../Browser/Shape/GeometryType.js";
 import AlphaMode        from "../../Browser/Shape/AlphaMode.js";
 import Box3             from "../../../standard/Math/Geometry/Box3.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
@@ -59,6 +15,16 @@ function X3DShapeNode (executionContext)
    X3DBoundedObject .call (this, executionContext);
 
    this .addType (X3DConstants .X3DShapeNode);
+
+   // Set default values which are almost right in most cases.
+
+   this .setBoundedObject (true);
+   this .setPointingObject (true);
+   this .setCollisionObject (true);
+   this .setShadowObject (true);
+   this .setVisibleObject (true);
+
+   // Private properties
 
    this .bbox       = new Box3 ();
    this .bboxSize   = new Vector3 ();
@@ -73,20 +39,30 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._bboxSize   .addInterest ("set_bbox__",       this);
-      this ._bboxCenter .addInterest ("set_bbox__",       this);
-      this ._appearance .addInterest ("set_appearance__", this);
-      this ._geometry   .addInterest ("set_geometry__",   this);
+      this ._transformSensors .addInterest ("set_pickableObject__", this);
 
-      this ._appearance .addInterest ("set_transparent__", this);
-      this ._geometry   .addInterest ("set_transparent__", this);
+      this ._pointerEvents .addInterest ("set_pointingObject__", this);
+      this ._castShadow    .addInterest ("set_shadowObject__",   this);
+      this ._bboxSize      .addInterest ("set_boundedObject__",  this);
+      this ._bboxSize      .addInterest ("set_bbox__",           this);
+      this ._bboxCenter    .addInterest ("set_bbox__",           this);
+      this ._appearance    .addInterest ("set_appearance__",     this);
+      this ._geometry      .addInterest ("set_geometry__",       this);
 
       this .set_appearance__ ();
       this .set_geometry__ ();
    },
+   getGeometryType ()
+   {
+      return GeometryType .GEOMETRY;
+   },
    getNumInstances ()
    {
       return 1;
+   },
+   isEnabled ()
+   {
+      return this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== GeometryType .GEOMETRY);
    },
    getBBox (bbox, shadows)
    {
@@ -146,6 +122,30 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .getGeometry ();
    },
+   getShapes (shapes, modelMatrix)
+   {
+      if (this .isVisibleObject ())
+         shapes .push ({ modelMatrix, shapeNode: this });
+
+      return shapes;
+   },
+   set_bbox__ ()
+   {
+      if (this .isDefaultBBoxSize ())
+      {
+         if (this .getGeometry ())
+            this .bbox .assign (this .getGeometry () .getBBox ());
+         else
+            this .bbox .set ();
+      }
+      else
+      {
+         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
+
+      this .bboxSize   .assign (this .bbox .size);
+      this .bboxCenter .assign (this .bbox .center);
+   },
    set_appearance__ ()
    {
       if (this .appearanceNode)
@@ -155,18 +155,12 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .appearanceNode ._transmission .removeInterest ("set_transmission__", this);
       }
 
-      this .appearanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance);
+      this .appearanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance)
+         ?? this .getBrowser () .getDefaultAppearance ();
 
-      if (this .appearanceNode)
-      {
-         this .appearanceNode ._alphaMode    .addInterest ("set_transparent__", this);
-         this .appearanceNode ._transparent  .addInterest ("set_transparent__",  this);
-         this .appearanceNode ._transmission .addInterest ("set_transmission__", this);
-      }
-      else
-      {
-         this .appearanceNode = this .getBrowser () .getDefaultAppearance ();
-      }
+      this .appearanceNode ._alphaMode    .addInterest ("set_transparent__",  this);
+      this .appearanceNode ._transparent  .addInterest ("set_transparent__",  this);
+      this .appearanceNode ._transmission .addInterest ("set_transmission__", this);
 
       this .set_transparent__ ();
       this .set_transmission__ ();
@@ -187,8 +181,9 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
       }
 
-      this .set_transparent__ ();
       this .set_bbox__ ();
+      this .set_transparent__ ();
+      this .set_objects__ ();
    },
    set_transparent__ ()
    {
@@ -211,22 +206,98 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       this .transmission = this .appearanceNode .isTransmission ();
    },
-   set_bbox__ ()
+   set_objects__ ()
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      this .set_boundedObject__ ();
+      this .set_pointingObject__ ();
+      this .set_pickableObject__ ();
+      this .set_collisionObject__ ();
+      this .set_shadowObject__ ();
+      this .set_visibleObject__ ();
+   },
+   set_boundedObject__ ()
+   {
+      this .setBoundedObject (this .isEnabled () || !this .isDefaultBBoxSize ());
+   },
+   set_pointingObject__ ()
+   {
+      this .setPointingObject (this .isEnabled () && this ._pointerEvents .getValue ());
+   },
+   set_pickableObject__ ()
+   {
+      this .setPickableObject (this .getTransformSensors () .size);
+   },
+   set_collisionObject__ ()
+   {
+      this .setCollisionObject (this .isEnabled ());
+   },
+   set_shadowObject__ ()
+   {
+      this .setShadowObject (this .isEnabled () && this ._castShadow .getValue ());
+   },
+   set_visibleObject__ ()
+   {
+      this .setVisibleObject (this .isEnabled ());
+   },
+   traverse (type, renderObject)
+   {
+      switch (type)
       {
-         if (this .getGeometry ())
-            this .bbox .assign (this .getGeometry () .getBBox ());
-         else
-            this .bbox .set ();
-      }
-      else
-      {
-         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+         case TraverseType .POINTER:
+         {
+            renderObject .addPointingShape (this);
+            break;
+         }
+         case TraverseType .PICKING:
+         {
+            this .picking (renderObject);
+            break;
+         }
+         case TraverseType .COLLISION:
+         {
+            renderObject .addCollisionShape (this);
+            break;
+         }
+         case TraverseType .SHADOW:
+         {
+            renderObject .addShadowShape (this);
+            break;
+         }
+         case TraverseType .DISPLAY:
+         {
+            // X3DAppearanceNode traverse is needed for GeneratedCubeMapTexture.
+
+            if (renderObject .addDisplayShape (this))
+               this .appearanceNode .traverse (type, renderObject);
+
+            break;
+         }
       }
 
-      this .bboxSize   .assign (this .bbox .size);
-      this .bboxCenter .assign (this .bbox .center);
+      // Needed for ScreenText and Tools.
+      this .geometryNode ?.traverse (type, renderObject);
+   },
+   picking (renderObject)
+   {
+      const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+      for (const transformSensorNode of this .getTransformSensors ())
+         transformSensorNode .collect (modelMatrix);
+
+      if (!this .geometryNode)
+         return;
+
+      const
+         browser          = this .getBrowser (),
+         pickSensorStack  = browser .getPickSensors (),
+         pickingHierarchy = browser .getPickingHierarchy ();
+
+      pickingHierarchy .push (this);
+
+      for (const pickSensorNode of pickSensorStack .at (-1))
+         pickSensorNode .collect (this .geometryNode, modelMatrix, pickingHierarchy);
+
+      pickingHierarchy .pop ();
    },
    dispose ()
    {
@@ -235,18 +306,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
 });
 
-Object .defineProperties (X3DShapeNode,
-{
-   typeName:
-   {
-      value: "X3DShapeNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DShapeNode, X3DNode .getStaticProperties ("X3DShapeNode", "Shape", 1));
 
 export default X3DShapeNode;

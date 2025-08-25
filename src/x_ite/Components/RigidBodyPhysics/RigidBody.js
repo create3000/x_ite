@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -66,8 +19,10 @@ function RigidBody (executionContext)
    this .addType (X3DConstants .RigidBody);
 
    this .addChildObjects (X3DConstants .inputOutput, "collection",    new Fields .SFNode (),
-                          X3DConstants .inputOutput, "transform",     new Fields .SFTime (),
-                          X3DConstants .inputOutput, "otherGeometry", new Fields .MFNode ());
+                          X3DConstants .outputOnly,  "transform",     new Fields .SFTime (),
+                          X3DConstants .outputOnly,  "otherGeometry", new Fields .MFNode ());
+
+   // Units
 
    this ._position            .setUnit ("length");
    this ._linearVelocity      .setUnit ("speed");
@@ -77,6 +32,8 @@ function RigidBody (executionContext)
    this ._torques             .setUnit ("force");
    this ._disableLinearSpeed  .setUnit ("speed");
    this ._disableAngularSpeed .setUnit ("angularRate");
+
+   // Private properties
 
    this .compoundShape      = new Ammo .btCompoundShape ();
    this .motionState        = new Ammo .btDefaultMotionState ();
@@ -125,7 +82,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    getBBox (bbox, shadows)
    {
-      return bbox .set ();
+      if (this .isDefaultBBoxSize ())
+         return bbox .set ();
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    setCollection (value)
    {
@@ -145,17 +105,17 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_position__ ()
    {
-      for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-         this .geometryNodes [i] ._translation = this ._position;
+      for (const geometryNode of this .geometryNodes)
+         geometryNode ._translation = this ._position;
    },
    set_orientation__ ()
    {
-      for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-         this .geometryNodes [i] ._rotation = this ._orientation;
+      for (const geometryNode of this .geometryNodes)
+         geometryNode ._rotation = this ._orientation;
    },
    set_transform__: (() =>
    {
-      var
+      const
          o  = new Ammo .btVector3 (0, 0, 0),
          t  = new Ammo .btTransform (),
          im = new Matrix4 (),
@@ -164,7 +124,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         var m = this .matrix;
+         const m = this .matrix;
 
          m .set (this ._position .getValue (), this ._orientation .getValue ());
 
@@ -193,9 +153,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          it .setOrigin (io);
 
-         var compoundShape = this .compoundShape;
+         const compoundShape = this .compoundShape;
 
-         for (var i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
+         for (let i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
             compoundShape .updateChildTransform (i, it, false);
 
          this .compoundShape .recalculateLocalAabb ();
@@ -206,7 +166,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_linearVelocity__: (() =>
    {
-      var lv = new Ammo .btVector3 (0, 0, 0);
+      const lv = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -221,7 +181,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    }) (),
    set_angularVelocity__: (() =>
    {
-      var av = new Ammo .btVector3 (0, 0, 0);
+      const av = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -236,7 +196,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_finiteRotationAxis__: (() =>
    {
-      var angularFactor = new Ammo .btVector3 (1, 1, 1);
+      const angularFactor = new Ammo .btVector3 (1, 1, 1);
 
       return function ()
       {
@@ -259,7 +219,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_centerOfMass__: (() =>
    {
-      var
+      const
          rotation     = new Ammo .btQuaternion (0, 0, 0, 1),
          origin       = new Ammo .btVector3 (0, 0, 0),
          centerOfMass = new Ammo .btTransform (rotation, origin);
@@ -274,11 +234,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_massProps__: (() =>
    {
-      var localInertia = new Ammo .btVector3 (0, 0, 0);
+      const localInertia = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
-         var inertia = this ._inertia;
+         const inertia = this ._inertia;
 
          localInertia .setValue (inertia [0] + inertia [1] + inertia [2],
                                  inertia [3] + inertia [4] + inertia [5],
@@ -291,17 +251,17 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_forces__ ()
    {
-      this .force .set (0, 0, 0);
+      this .force .set (0);
 
-      for (var i = 0, length = this ._forces .length; i < length; ++ i)
-         this .force .add (this ._forces [i] .getValue ());
+      for (const force of this ._forces)
+         this .force .add (force .getValue ());
    },
    set_torques__ ()
    {
-      this .torque .set (0, 0, 0);
+      this .torque .set (0);
 
-      for (var i = 0, length = this ._torques .length; i < length; ++ i)
-         this .torque .add (this ._torques [i] .getValue ());
+      for (const torque of this ._torques)
+         this .torque .add (torque .getValue ());
    },
    set_disable__ ()
    {
@@ -316,14 +276,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_geometry__ ()
    {
-      var geometryNodes = this .geometryNodes;
+      const geometryNodes = this .geometryNodes;
 
-      for (var i = 0, length = geometryNodes .length; i < length; ++ i)
+      for (const geometryNode of geometryNodes)
       {
-         var geometryNode = geometryNodes [i];
-
          geometryNode .removeInterest ("addEvent", this ._transform);
-         geometryNode ._compoundShape_changed .removeInterest ("set_compoundShape__", this);
+         geometryNode ._compoundShape .removeInterest ("set_compoundShape__", this);
 
          geometryNode .setBody (null);
 
@@ -334,16 +292,16 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this ._orientation .removeFieldInterest (geometryNode ._rotation);
       }
 
-      for (var i = 0, length = this .otherGeometryNodes .length; i < length; ++ i)
-         this .otherGeometryNodes [i] ._body .removeInterest ("set_body__", this);
+      for (const otherGeometryNode of this .otherGeometryNodes)
+         otherGeometryNode ._body .removeInterest ("set_body__", this);
 
       geometryNodes .length = 0;
 
-      for (var i = 0, length = this ._geometry .length; i < length; ++ i)
+      for (const node of this ._geometry)
       {
-         var geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._geometry [i]);
+         const geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, node);
 
-         if (! geometryNode)
+         if (!geometryNode)
             continue;
 
          if (geometryNode .getBody ())
@@ -358,12 +316,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          geometryNodes .push (geometryNode);
       }
 
-      for (var i = 0, length = geometryNodes .length; i < length; ++ i)
+      for (const geometryNode of geometryNodes)
       {
-         var geometryNode = geometryNodes [i];
-
          geometryNode .addInterest ("addEvent", this ._transform);
-         geometryNode ._compoundShape_changed .addInterest ("set_compoundShape__", this);
+         geometryNode ._compoundShape .addInterest ("set_compoundShape__", this);
 
          geometryNode ._translation .addFieldInterest (this ._position);
          geometryNode ._rotation    .addFieldInterest (this ._orientation);
@@ -380,17 +336,17 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_compoundShape__: (() =>
    {
-      var transform = new Ammo .btTransform ();
+      const transform = new Ammo .btTransform ();
 
       return function ()
       {
-         var compoundShape = this .compoundShape;
+         const compoundShape = this .compoundShape;
 
-         for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
+         for (let i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
             compoundShape .removeChildShapeByIndex (i);
 
-         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-            compoundShape .addChildShape (transform, this .geometryNodes [i] .getCompoundShape ());
+         for (const geometryNode of this .geometryNodes)
+            compoundShape .addChildShape (transform, geometryNode .getCompoundShape ());
 
          this .set_position__ ();
          this .set_orientation__ ();
@@ -406,7 +362,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    applyForces: (() =>
    {
-      var
+      const
          g = new Ammo .btVector3 (0, 0, 0),
          f = new Ammo .btVector3 (0, 0, 0),
          t = new Ammo .btVector3 (0, 0, 0),
@@ -432,7 +388,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    update: (() =>
    {
-      var
+      const
          transform       = new Ammo .btTransform (),
          position        = new Vector3 (),
          quaternion      = new Quaternion (),
@@ -444,7 +400,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       {
          this .motionState .getWorldTransform (transform);
 
-         var
+         const
             btOrigin          = transform .getOrigin (),
             btQuaternion      = transform .getRotation (),
             btLinearVeloctity = this .rigidBody .getLinearVelocity (),
@@ -472,26 +428,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
 Object .defineProperties (RigidBody,
 {
-   typeName:
-   {
-      value: "RigidBody",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "bodies",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("RigidBody", "RigidBodyPhysics", 2, "bodies", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
@@ -515,7 +452,7 @@ Object .defineProperties (RigidBody,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "torques",              new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "inertia",              new Fields .SFMatrix3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoDisable",          new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableLinearSpeed",   new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableAngularSpeed",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",             new Fields .MFNode ()),

@@ -1,4 +1,7 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
+
+// Originally from:
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/brdf.glsl
 
 const float M_PI = 3.1415926535897932384626433832795;
 

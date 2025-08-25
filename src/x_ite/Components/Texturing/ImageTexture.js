@@ -1,57 +1,10 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Algorithm            from "../../../standard/Math/Algorithm.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 import FileLoader from "../../InputOutput/FileLoader.js";
 
@@ -78,9 +31,10 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       this ._colorSpaceConversion .addInterest ("loadNow", this);
 
-      this .image .on ("load",        this .setImage .bind (this));
-      this .image .on ("abort error", this .setError .bind (this));
-      this .image .prop ("crossOrigin", "Anonymous");
+      this .image
+         .on ("load", this .setImage .bind (this))
+         .on ("abort error", this .setError .bind (this))
+         .attr ("crossorigin", "anonymous");
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -143,13 +97,13 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
                this .URL .searchParams .set ("_", Date .now ());
          }
 
-         this .image .attr ("src", this .URL .href);
+         this .image .attr ("src", this .URL);
       }
    },
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
+         console .warn (`Error loading image '${decodeURI (this .URL)}:'`, event .type);
 
       this .loadNext ();
    },
@@ -161,7 +115,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
+            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
       }
 
       try
@@ -213,61 +167,21 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
+            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
       }
 
       try
       {
          const
-            gl    = this .getBrowser () .getContext (),
-            image = this .image [0];
+            image             = this .image [0],
+            { width, height } = image;
 
-         // https://developer.mozilla.org/en-US/docs/Web/API/createImageBitmap
-         // createImageBitmap
+         // Upload image to GPU.
 
-         if (gl .getVersion () === 1)
-         {
-            const
-               canvas = document .createElement ("canvas"),
-               cx     = canvas .getContext ("2d", { willReadFrequently: true });
-
-            let { width, height } = image;
-
-            if (!(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
-            {
-               // Scale image to next power of two if needed.
-               width  = Algorithm .nextPowerOfTwo (width),
-               height = Algorithm .nextPowerOfTwo (height);
-            }
-
-            canvas .width  = width;
-            canvas .height = height;
-
-            cx .clearRect (0, 0, width, height);
-            cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
-
-            // Determine image alpha.
-
-            const
-               data        = cx .getImageData (0, 0, width, height) .data,
-               transparent = this .isImageTransparent (data);
-
-            // Upload image to GPU.
-
-            this .setTextureData (width, height, false, transparent, data);
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
-         }
-         else
-         {
-            const { width, height } = image;
-
-            // Upload image to GPU.
-
-            this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
-            this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
-            this .addNodeEvent ();
-         }
+         this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
+         this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {
@@ -284,26 +198,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
 Object .defineProperties (ImageTexture,
 {
-   typeName:
-   {
-      value: "ImageTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("ImageTexture", "Texturing", 1, "texture", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
@@ -311,7 +206,7 @@ Object .defineProperties (ImageTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "colorSpaceConversion", new Fields .SFBool (true)), // experimental
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),

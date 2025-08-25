@@ -1,58 +1,11 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
-import GeometryTypes        from "../../Browser/ParticleSystems/GeometryTypes.js";
+import GeometryType         from "../../Browser/Shape/GeometryType.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
@@ -146,11 +99,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      // Check version.
-
-      if (browser .getContext () .getVersion () < 2)
-         return;
-
       // Connect fields.
 
       this .getLive () .addInterest ("set_live__", this);
@@ -178,16 +126,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       {
          vertexArrayObject: new VertexArray (gl),
          thickLinesVertexArrayObject: new VertexArray (gl),
-         lineTrianglesBuffer: gl .createBuffer (),
-         numLines: 0,
       });
 
       this .outputParticles = Object .assign (gl .createBuffer (),
       {
          vertexArrayObject: new VertexArray (gl),
          thickLinesVertexArrayObject: new VertexArray (gl),
-         lineTrianglesBuffer: gl .createBuffer (),
-         numLines: 0,
       });
 
       // Create forces stuff.
@@ -237,7 +181,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       switch (this .geometryType)
       {
-         case GeometryTypes .GEOMETRY:
+         case GeometryType .GEOMETRY:
             return this .getGeometry ();
          default:
             return this .geometryContext;
@@ -257,7 +201,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_bbox__ ()
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      if (this .isDefaultBBoxSize ())
       {
          if (this .boundedPhysicsModelNodes .length)
          {
@@ -290,22 +234,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       if (alphaMode === AlphaMode .AUTO)
       {
-         switch (this .geometryType)
-         {
-            case GeometryTypes .POINT:
-            {
-               this .setTransparent (true);
-               break;
-            }
-            default:
-            {
-               this .setTransparent (this .getAppearance () .isTransparent () ||
-                                     this .colorRampNode ?.isTransparent () ||
-                                     (this .geometryType === GeometryTypes .GEOMETRY &&
-                                      this .geometryNode ?.isTransparent ()));
-               break;
-            }
-         }
+         this .setTransparent (this .getAppearance () .isTransparent () ||
+                               this .colorRampNode ?.isTransparent () ||
+                               (this .geometryType === GeometryType .GEOMETRY &&
+                                this .geometryNode ?.isTransparent ()));
 
          this .setAlphaMode (this .isTransparent () ? AlphaMode .BLEND : AlphaMode .OPAQUE);
       }
@@ -387,13 +319,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       // Get geometryType.
 
-      this .geometryType = $.enum (GeometryTypes, this ._geometryType .getValue (), GeometryTypes .QUAD);
+      this .geometryType = GeometryType .get (this ._geometryType .getValue ()) ?? GeometryType .QUAD;
 
       // Create buffers.
 
       switch (this .geometryType)
       {
-         case GeometryTypes .POINT:
+         case GeometryType .POINT:
          {
             this .geometryContext .geometryType = 0;
             this .geometryContext .hasNormals   = false;
@@ -409,7 +341,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             break;
          }
-         case GeometryTypes .LINE:
+         case GeometryType .LINE:
          {
             this .geometryContext .geometryType = 1;
             this .geometryContext .hasNormals   = false;
@@ -417,9 +349,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .texCoordCount = 0;
             break;
          }
-         case GeometryTypes .TRIANGLE:
-         case GeometryTypes .QUAD:
-         case GeometryTypes .SPRITE:
+         case GeometryType .TRIANGLE:
+         case GeometryType .QUAD:
+         case GeometryType .SPRITE:
          {
             this .geometryContext .geometryType = 2;
             this .geometryContext .hasNormals   = true;
@@ -437,7 +369,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             break;
          }
-         case GeometryTypes .GEOMETRY:
+         case GeometryType .GEOMETRY:
          {
             this .texCoordCount = 0;
             break;
@@ -447,7 +379,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
 
-      this .set_transparent__ ();
+      this .set_objects__ ();
    },
    set_maxParticles__ ()
    {
@@ -463,6 +395,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       this .resizeBuffers (lastNumParticles);
       this .updateVertexArrays ();
+
+      this .set_objects__ ();
    },
    set_particleLifetime__ ()
    {
@@ -772,6 +706,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .createParticles = this ._createParticles .getValue ();
 
             deltaTime = Number .POSITIVE_INFINITY;
+
+            this .set_objects__ ();
          }
          else
          {
@@ -792,6 +728,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                this .creationTime = now;
 
             this .numParticles = Math .min (this .maxParticles, this .numParticles + newParticles);
+
+            this .set_objects__ ();
          }
       }
 
@@ -886,72 +824,26 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
       };
    })(),
-   intersectsBox (box, clipPlanes)
-   { },
-   traverse (type, renderObject)
-   {
-      if (!this .numParticles)
-         return;
-
-      switch (type)
-      {
-         case TraverseType .POINTER:
-         {
-            if (this ._pointerEvents .getValue ())
-               renderObject .addPointingShape (this);
-
-            break;
-         }
-         case TraverseType .PICKING:
-         case TraverseType .COLLISION:
-         {
-            break;
-         }
-         case TraverseType .SHADOW:
-         {
-            if (this ._castShadow .getValue ())
-               renderObject .addShadowShape (this);
-
-            break;
-         }
-         case TraverseType .DISPLAY:
-         {
-            if (renderObject .addDisplayShape (this))
-            {
-               // Currently used for GeneratedCubeMapTexture.
-               this .getAppearance () .traverse (type, renderObject);
-            }
-
-            break;
-         }
-      }
-
-      if (this .geometryType === GeometryTypes .GEOMETRY)
-      {
-         // Currently used for ScreenText and Tools.
-         this .getGeometry () ?.traverse (type, renderObject);
-      }
-   },
    displaySimple (gl, renderContext, shaderNode)
    {
       // Display geometry.
 
       switch (this .geometryType)
       {
-         case GeometryTypes .LINE:
+         case GeometryType .LINE:
          {
             this .lineGeometryNode .displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
-         case GeometryTypes .GEOMETRY:
+         case GeometryType .GEOMETRY:
          {
-            this .getGeometry () ?.displaySimpleInstanced (gl, shaderNode, this);
+            this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
-         case GeometryTypes .SPRITE:
+         case GeometryType .SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
-            // [fall trough]
+            // Proceed with next case:
          }
          default:
          {
@@ -977,30 +869,30 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       switch (this .geometryType)
       {
-         case GeometryTypes .LINE:
+         case GeometryType .LINE:
          {
             this .lineGeometryNode .displayInstanced (gl, renderContext, this);
             break;
          }
-         case GeometryTypes .GEOMETRY:
+         case GeometryType .GEOMETRY:
          {
-            this .getGeometry () ?.displayInstanced (gl, renderContext, this);
+            this .getGeometry () .displayInstanced (gl, renderContext, this);
             break;
          }
-         case GeometryTypes .SPRITE:
+         case GeometryType .SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
-            // [fall trough]
+            // Proceed with next case:
          }
-         case GeometryTypes .QUAD:
-         case GeometryTypes .TRIANGLE:
+         case GeometryType .QUAD:
+         case GeometryType .TRIANGLE:
          {
             const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
 
-            // [fall trough]
+            // Proceed with next case:
          }
          default:
          {
@@ -1017,11 +909,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             // Setup shader.
 
             shaderNode .enable (gl);
-            shaderNode .setUniforms (gl, this .geometryContext, renderContext);
+            shaderNode .setUniforms (gl, renderContext, this .geometryContext);
 
             if (this .numTexCoords)
             {
-               const textureUnit = browser .getTexture2DUnit ();
+               const textureUnit = browser .getTextureUnit ();
 
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
                gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
@@ -1079,8 +971,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       return function (modelViewMatrix)
       {
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .zAxis));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis));
+         invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .Z_AXIS));
+         invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .Y_AXIS));
 
          const x = viewerYAxis .cross (billboardToScreen);
          y .assign (billboardToScreen) .cross (x);
@@ -1103,26 +995,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
 Object .defineProperties (ParticleSystem,
 {
-   typeName:
-   {
-      value: "ParticleSystem",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("ParticleSystem", "ParticleSystems", 2, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

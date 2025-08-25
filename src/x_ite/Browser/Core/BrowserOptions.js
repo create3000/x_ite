@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -57,6 +10,7 @@ import TextCompression      from "./TextCompression.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 // https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#BrowserProperties
+// String values are considered to be case insensitive.
 
 function BrowserOptions (executionContext)
 {
@@ -97,16 +51,20 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this ._Exposure                     .addInterest ("set_Exposure__",                     this);
       this ._LogarithmicDepthBuffer       .addInterest ("set_LogarithmicDepthBuffer__",       this);
       this ._Multisampling                .addInterest ("set_Multisampling__",                this);
+      this ._Mute                         .addInterest ("set_Mute__",                         this);
       this ._OrderIndependentTransparency .addInterest ("set_OrderIndependentTransparency__", this);
       this ._Timings                      .addInterest ("set_Timings__",                      this);
+      this ._XRSessionMode                .addInterest ("set_XRSessionMode__",                this);
 
       this .set_Antialiased__                  (this ._Antialiased);
       this .set_Shading__                      (this ._Shading);
+      this .set_AutoUpdate__                   (this ._AutoUpdate);
       this .set_ContentScale__                 (this ._ContentScale);
       this .set_Exposure__                     (this ._Exposure);
       this .set_LogarithmicDepthBuffer__       (this ._LogarithmicDepthBuffer);
       this .set_Multisampling__                (this ._Multisampling);
       this .set_OrderIndependentTransparency__ (this ._OrderIndependentTransparency);
+      this .set_XRSessionMode__                (this ._XRSessionMode);
 
       this .reset ();
    },
@@ -128,10 +86,12 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "SplashScreen",
          "TextCompression",
          "ToneMapping",
+         "XRSessionMode",
       ]);
 
       const mappings = new Map ([
-         ["AutoUpdate", "Update"],
+         ["AutoUpdate",    "update"],
+         ["XRSessionMode", "xrSessionMode"],
       ]);
 
       const restorable = new Set ([
@@ -148,12 +108,16 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
             browser      = this .getBrowser (),
             localStorage = this .localStorage;
 
-         for (const { name, value } of this .getFieldDefinitions ())
+         for (const fieldDefinition of this .getFieldDefinitions ())
          {
+            const
+               name  = fieldDefinition .getName (),
+               value = fieldDefinition .getValue ();
+
             if (attributes .has (name))
             {
                const
-                  attribute = $.toLowerCaseFirst (mappings .get (name) ?? name),
+                  attribute = mappings .get (name) ?? $.toLowerCaseFirst (name),
                   value     = browser .getElement () .attr (attribute);
 
                if (value !== undefined)
@@ -188,17 +152,23 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       return this .primitiveQuality;
    },
-   getShading ()
+   getQualityWhenMoving ()
    {
-      return this .shading;
+      const qualityWhenMoving = this ._QualityWhenMoving .getValue () .toUpperCase ();
+
+      return PrimitiveQuality .get (qualityWhenMoving);
    },
    getTextureQuality ()
    {
       return this .textureQuality;
    },
+   getShading ()
+   {
+      return this .shading;
+   },
    getTextCompression ()
    {
-      switch (this ._TextCompression .getValue ())
+      switch (this ._TextCompression .getValue () .toUpperCase ())
       {
          default: // CHAR_SPACING
             return TextCompression .CHAR_SPACING;
@@ -221,13 +191,10 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          primitiveQuality = value .getValue () .toUpperCase ();
 
       this .localStorage .PrimitiveQuality = primitiveQuality;
-      this .primitiveQuality               = $.enum (PrimitiveQuality, primitiveQuality, PrimitiveQuality .MEDIUM);
+      this .primitiveQuality               = PrimitiveQuality .get (primitiveQuality) ?? PrimitiveQuality .MEDIUM;
 
-      if (typeof browser .setPrimitiveQuality2D === "function")
-         browser .setPrimitiveQuality2D (this .primitiveQuality);
-
-      if (typeof browser .setPrimitiveQuality3D === "function")
-         browser .setPrimitiveQuality3D (this .primitiveQuality);
+      browser .setPrimitiveQuality2D ?.(this .primitiveQuality);
+      browser .setPrimitiveQuality3D ?.(this .primitiveQuality);
    },
    set_TextureQuality__ (value)
    {
@@ -236,20 +203,13 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          textureQuality = value .getValue () .toUpperCase ();
 
       this .localStorage .TextureQuality = textureQuality;
-      this .textureQuality               = $.enum (TextureQuality, textureQuality, TextureQuality .MEDIUM);
+      this .textureQuality               = TextureQuality .get (textureQuality) ?? TextureQuality .MEDIUM;
 
-      if (typeof browser .setTextureQuality === "function")
-         browser .setTextureQuality (this .textureQuality);
+      browser .setTextureQuality ?.(this .textureQuality);
    },
    set_Shading__: (() =>
    {
-      const strings = {
-         [Shading .POINT]:     "POINT",
-         [Shading .WIREFRAME]: "WIREFRAME",
-         [Shading .FLAT]:      "FLAT",
-         [Shading .GOURAUD]:   "GOURAUD",
-         [Shading .PHONG]:     "PHONG",
-      };
+      const strings = new Map (Object .entries (Shading) .map (entry => entry .reverse ()));
 
       return function (value)
       {
@@ -257,9 +217,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
             browser = this .getBrowser (),
             shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
 
-         this .shading = $.enum (Shading, shading, Shading .GOURAUD);
+         this .shading = Shading .get (shading) ?? Shading .GOURAUD;
 
-         browser .getRenderingProperties () ._Shading = strings [this .shading];
+         browser .getRenderingProperties () ._Shading = strings .get (this .shading);
          browser .setShading (this .shading);
       };
    })(),
@@ -272,36 +232,48 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_AutoUpdate__ (autoUpdate)
    {
-      const events = ["resize", "scroll", "load"]
+      const
+         browser = this .getBrowser (),
+         element = browser .getElement () [0];
+
+      const documentEvents = ["visibilitychange"]
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
          .join (" ");
 
-      if (autoUpdate .getValue ())
+      $(document) .off (documentEvents);
+
+      this .intersectionObserver ?.disconnect ();
+
+      if (!autoUpdate .getValue ())
+         return;
+
+      $(document) .on (documentEvents, () => this .checkUpdate ());
+
+      this .intersectionObserver ??= new IntersectionObserver (entries =>
       {
-         const
-            browser = this .getBrowser (),
-            element = browser .getElement ();
+         this .isIntersecting = entries .some (entry => entry .isIntersecting);
 
-         const checkUpdate = () =>
-         {
-            if (element .isInViewport ())
-            {
-               if (!browser .isLive ())
-                  browser .beginUpdate ();
-            }
-            else
-            {
-               if (browser .isLive ())
-                  browser .endUpdate ();
-            }
-         };
+         this .checkUpdate ();
+      });
 
-         $(window) .on (events, checkUpdate);
-         checkUpdate ();
+      this .intersectionObserver .observe (element);
+   },
+   checkUpdate ()
+   {
+      if (!this ._AutoUpdate .getValue ())
+         return;
+
+      const browser = this .getBrowser ();
+
+      if ((!document .hidden && this .isIntersecting) || browser .getPose ())
+      {
+         if (!browser .isLive ())
+            browser .beginUpdate ();
       }
       else
       {
-         $(window) .off (events);
+         if (browser .isLive ())
+            browser .endUpdate ();
       }
    },
    set_ContentScale__ (contentScale)
@@ -351,11 +323,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_LogarithmicDepthBuffer__ (logarithmicDepthBuffer)
    {
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
+      const browser = this .getBrowser ();
 
-      browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && gl .HAS_FEATURE_FRAG_DEPTH;
+      browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer .getValue ();
    },
    set_Multisampling__ (multisampling)
    {
@@ -368,6 +338,17 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       browser .reshape ();
    },
+   set_Mute__ (mute)
+   {
+      const
+         browser      = this .getBrowser (),
+         audioContext = browser .getAudioContext ();
+
+      if (mute .getValue ())
+         browser .stopAudioElement (audioContext, "suspend");
+      else
+         browser .startAudioElement (audioContext, "resume");
+   },
    set_OrderIndependentTransparency__ ()
    {
       this .getBrowser () .reshape ();
@@ -375,6 +356,10 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    set_Timings__ (timings)
    {
       this .localStorage .Timings = timings .getValue ();
+   },
+   set_XRSessionMode__ ()
+   {
+      this .getBrowser () .xrUpdateButton ();
    },
 });
 
@@ -407,19 +392,21 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "ContentScale",                 new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ContextMenu",                  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Debug",                        new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "Exposure",                     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Exposure",                     new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                      new Fields .SFDouble (9.80665)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "LoadUrlObjects",               new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer",       new Fields .SFBool ()),
          // A string, which is set to the *reference* field of metadata nodes, when they are created.
          new X3DFieldDefinition (X3DConstants .inputOutput, "MetadataReference",            new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",                new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Mute",                         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",                new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "OrderIndependentTransparency", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",            new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "TextCompression",              new Fields .SFString ("CHAR_SPACING")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ToneMapping",                  new Fields .SFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "XRSessionMode",                new Fields .SFString ("IMMERSIVE_VR")),
       ]),
       enumerable: true,
    },

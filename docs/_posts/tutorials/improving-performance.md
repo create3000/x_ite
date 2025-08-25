@@ -41,7 +41,7 @@ If the same object is used more than once in the scene, it's most efficient to g
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform DEF='Tree1'>
   <Inline DEF='Tree'
       url='"tree.x3d"'/>
@@ -52,7 +52,7 @@ If the same object is used more than once in the scene, it's most efficient to g
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Tree1 Transform {
@@ -74,9 +74,10 @@ Prototyping objects that are used frequently with a few modifications is another
 
 ### XML Encoding
 
-```xml
+```x3d
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
     <ProtoDeclare name='BooleanSwitch'>
       <ProtoInterface>
@@ -138,7 +139,7 @@ function set_whichChoice (value)
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -174,7 +175,7 @@ function initialize ()
 
 function set_whichChoice (value)
 {
-  group .whichChoice = value
+  group .whichChoice = value;
 }
 "
     directOutput TRUE
@@ -201,6 +202,16 @@ DEF Button BooleanSwitch {
 ROUTE Touch.isOver TO Button.set_whichChoice
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/boolean-switch/boolean-switch.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/boolean-switch/screenshot.avif" alt="BooleanSwitch"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/boolean-switch/boolean-switch.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/boolean-switch/boolean-switch.x3dv)
+{: .example-links }
+
 ## Use the Text node
 
 Be sure to use the [Text](/x_ite/components/text/text/) node for text. Some translators convert text to polygons, resulting in very large numbers of polygons for a simple string of text. Using the Text node reduces polygon count and allows the browser to optimize for rendering performance, using cached versions of glyphs.
@@ -217,8 +228,10 @@ Rely on automatic normal generation when possible instead of supplying your own 
 
 ## Compress Files
 
-Use JPEG or PNG format for textures. GIF is also acceptable in some cases. JPEG is a lossy form of compression (that is, when the file is compressed originally, some of the information is lost), but it can achieve a compression in the range of 100 to one. Utilities for JPEG compression allow you to control the tradeoff between compression and image quality. This form of image compression is generally very effective and results in little noticeable degradation of the image.
+Use AVIF, JPEG or PNG format for textures. GIF is also acceptable in some cases.
 
-Use MPG4 format for movies and animated textures.
+AVIF (AV1 Image File Format) is a modern image format that uses the AV1 codec for superior compression efficiency while maintaining high visual quality. It supports advanced features like HDR, transparency, and lossless compression, making it ideal for web and multimedia applications. AVIF is designed to compete with formats like JPEG, PNG, and WebP by offering smaller file sizes without significant quality loss.
 
-Finally, use with GZip compressed formats (.x3dz, .x3dvz) before you publish them. It's faster to uncompress a file that to transmit a large file over the network. All browsers automatically decompress files. Using GZip can result in up to 10 times reduction in file size. When you compress a file with GZip, white spaces are automatically compacted.
+Use MPEG-4 format for movies and animated textures.
+
+Finally, use with GZip compressed formats (.x3dz, .x3dvz) before you publish them. It's faster to uncompress a file than to transmit a large file over the network. All browsers automatically decompress files. Using GZip can result in up to 10 times reduction in file size. When you compress a file with GZip, white spaces are automatically compacted.

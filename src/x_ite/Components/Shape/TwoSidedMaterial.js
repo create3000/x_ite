@@ -1,60 +1,14 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DMaterialNode      from "./X3DMaterialNode.js";
 import Material             from "./Material.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 /**
- * THIS NODE IS DEPRECIATED.
+ * THIS NODE IS DEPRECIATED SINCE X3D VERSION 4.0.
  */
 
 function TwoSidedMaterial (executionContext)
@@ -120,42 +74,15 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    },
    set_diffuseColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
-
-      const
-         diffuseColorArray = this .diffuseColorArray,
-         diffuseColor      = this ._diffuseColor .getValue ();
-
-      diffuseColorArray [0] = diffuseColor .r;
-      diffuseColorArray [1] = diffuseColor .g;
-      diffuseColorArray [2] = diffuseColor .b;
+      this .diffuseColorArray .set (this ._diffuseColor .getValue ());
    },
    set_specularColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .specularColorArray .set (this ._specularColor .getValue ());
-
-      const
-         specularColorArray = this .specularColorArray,
-         specularColor      = this ._specularColor .getValue ();
-
-      specularColorArray [0] = specularColor .r;
-      specularColorArray [1] = specularColor .g;
-      specularColorArray [2] = specularColor .b;
+      this .specularColorArray .set (this ._specularColor .getValue ());
    },
    set_emissiveColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .emissiveColorArray .set (this ._emissiveColor .getValue ());
-
-      const
-         emissiveColorArray = this .emissiveColorArray,
-         emissiveColor      = this ._emissiveColor .getValue ();
-
-      emissiveColorArray [0] = emissiveColor .r;
-      emissiveColorArray [1] = emissiveColor .g;
-      emissiveColorArray [2] = emissiveColor .b;
+      this .emissiveColorArray .set (this ._emissiveColor .getValue ());
    },
    set_shininess__ ()
    {
@@ -174,42 +101,15 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    },
    set_backDiffuseColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .backDiffuseColorArray .set (this ._backDiffuseColor .getValue ());
-
-      const
-         backDiffuseColorArray = this .backDiffuseColorArray,
-         backDiffuseColor      = this ._backDiffuseColor .getValue ();
-
-      backDiffuseColorArray [0] = backDiffuseColor .r;
-      backDiffuseColorArray [1] = backDiffuseColor .g;
-      backDiffuseColorArray [2] = backDiffuseColor .b;
+      this .backDiffuseColorArray .set (this ._backDiffuseColor .getValue ());
    },
    set_backSpecularColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .backSpecularColorArray .set (this ._backSpecularColor .getValue ());
-
-      const
-         backSpecularColorArray = this .backSpecularColorArray,
-         backSpecularColor      = this ._backSpecularColor .getValue ();
-
-      backSpecularColorArray [0] = backSpecularColor .r;
-      backSpecularColorArray [1] = backSpecularColor .g;
-      backSpecularColorArray [2] = backSpecularColor .b;
+      this .backSpecularColorArray .set (this ._backSpecularColor .getValue ());
    },
    set_backEmissiveColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .backEmissiveColorArray .set (this ._backEmissiveColor .getValue ());
-
-      const
-         backEmissiveColorArray = this .backEmissiveColorArray,
-         backEmissiveColor      = this ._backEmissiveColor .getValue ();
-
-      backEmissiveColorArray [0] = backEmissiveColor .r;
-      backEmissiveColorArray [1] = backEmissiveColor .g;
-      backEmissiveColorArray [2] = backEmissiveColor .b;
+      this .backEmissiveColorArray .set (this ._backEmissiveColor .getValue ());
    },
    set_backShininess__ ()
    {
@@ -251,26 +151,7 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
 
 Object .defineProperties (TwoSidedMaterial,
 {
-   typeName:
-   {
-      value: "TwoSidedMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "4.0" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("TwoSidedMaterial", "Shape", 4, "material", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -39,7 +39,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ex
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <Extrusion
@@ -51,7 +51,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ex
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -66,6 +66,16 @@ Shape {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/extrusion1/extrusion1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/extrusion1/screenshot.avif" alt="Extrusion"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/extrusion1/extrusion1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/extrusion1/extrusion1.x3dv)
+{: .example-links }
+
 An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates extruded geometry:
 
 - *solid* - shape is solid
@@ -74,7 +84,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ex
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <Extrusion
@@ -85,7 +95,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ex
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -119,7 +129,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ge
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <Extrusion
@@ -129,7 +139,7 @@ An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates ge
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {

@@ -7,8 +7,8 @@ export default function (data, dataVariableName, dimension) {
    } else if (isNdarrayLike(data)) {
       return dataVariableName + ".shape[" + dimension + "]";
    } else {
-      var str = dataVariableName;
-      for (var i = 0; i < dimension; i++) {
+      let str = dataVariableName;
+      for (let i = 0; i < dimension; ++ i) {
          str += "[0]";
       }
       return str + ".length";

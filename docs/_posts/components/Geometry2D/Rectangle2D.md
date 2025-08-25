@@ -15,7 +15,7 @@ tags: [Rectangle2D, Geometry2D]
 
 Rectangle2D is a geometry node that defines a 2D rectangle in X-Y plane.
 
-The Rectangle2D node belongs to the **Geometry2D** component and requires at least level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The Rectangle2D node belongs to the [Geometry2D](/x_ite/components/overview/#geometry2d) component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -27,15 +27,24 @@ The Rectangle2D node belongs to the **Geometry2D** component and requires at lea
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFVec2f | [ ] | [size](#fields-size) | 2 2  |
+| SFBool | [ ] | [solid](#fields-solid) | FALSE |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFVec2f [ ] **size** 2 2 <small>(0,∞)</small>
+{: #fields-size }
 
 2D dimensions of Rectangle2D.
 
@@ -48,6 +57,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFBool [ ] **solid** FALSE
+{: #fields-solid }
 
 Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
@@ -70,7 +80,9 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/Rectangle2D/Rectangle2D.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Rectangle2D/Rectangle2D.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Geometry2D/Rectangle2D/screenshot.avif" alt="Rectangle2D"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/Rectangle2D/Rectangle2D.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry2D/Rectangle2D/Rectangle2D.x3d)

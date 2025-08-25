@@ -46,7 +46,7 @@ A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) no
 
 ### XML Encoding
 
-```xml
+```x3d
 <VisibilitySensor DEF='Sensor'
     center='0.0 0.0 0.0'
     size='14.0 14.0 14.0'/>
@@ -54,7 +54,7 @@ A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) no
 <ROUTE fromNode='Sensor' fromField='enterTime' toNode='Clock' toField='set_startTime'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Sensor VisibilitySensor {
@@ -64,6 +64,16 @@ DEF Sensor VisibilitySensor {
 
 ROUTE Sensor.enterTime TO Clock.set_startTime
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/VisibilitySensor.x3d" update="auto">
+  <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/screenshot.avif" alt="VisibilitySensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/VisibilitySensor.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/VisibilitySensor.x3dv)
+{: .example-links }
 
 ## Syntax: ProximitySensor
 
@@ -75,7 +85,7 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProximitySensor DEF='Sensor'
     center='0.0 0.0 0.0'
     size='14.0 14.0 14.0'/>
@@ -83,7 +93,7 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 <ROUTE fromNode='Sensor' fromField='enterTime' toNode='Clock' toField='set_startTime'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Sensor ProximitySensor {
@@ -94,19 +104,29 @@ DEF Sensor ProximitySensor {
 ROUTE Sensor.enterTime TO Clock.set_startTime
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/ProximitySensor.x3d" update="auto">
+  <img src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/screenshot.avif" alt="ProximitySensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/ProximitySensor.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/ProximitySensor.x3dv)
+{: .example-links }
+
 A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node senses the viewer while in a region:
 
 - *position* and *orientation* - sends position and orientation while viewer is in the region
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProximitySensor DEF='Sensor' ... />
 
 <ROUTE fromNode='Sensor' fromField='position_changed' toNode='PetRobotFollower' toField='set_translation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Sensor ProximitySensor { ... }
@@ -148,7 +168,7 @@ A [Collision](/x_ite/components/navigation/collision/) grouping node senses if t
 
 ### XML Encoding
 
-```xml
+```x3d
 <Collision DEF='Collide'
     enabled='true'>
   <Shape containerField='proxy'>
@@ -160,7 +180,7 @@ A [Collision](/x_ite/components/navigation/collision/) grouping node senses if t
 <ROUTE fromNode='Collide' fromField='collideTime' toNode='OuchSound' toField='set_startTime'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Collide Collision {
@@ -173,6 +193,16 @@ DEF Collide Collision {
 
 ROUTE Collide.collideTime TO OuchSound.set_startTime
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/Navigation/Collision/Collision.x3d" update="auto">
+  <img src="https://create3000.github.io/media/examples/Navigation/Collision/screenshot.avif" alt="Collision"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Navigation/Collision/Collision.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Navigation/Collision/Collision.x3dv)
+{: .example-links }
 
 ## Optimizing collision detection
 

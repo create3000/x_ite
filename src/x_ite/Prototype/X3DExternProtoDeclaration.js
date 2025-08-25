@@ -1,61 +1,14 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                  from "../Fields.js";
 import X3DFieldDefinition      from "../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray    from "../Base/FieldDefinitionArray.js";
 import X3DUrlObject            from "../Components/Networking/X3DUrlObject.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
-import FileLoader              from "../InputOutput/FileLoader.js";
 
 const
    _proto = Symbol (),
-   _scene = Symbol ();
+   _scene = Symbol (),
+   _cache = Symbol ();
 
 function X3DExternProtoDeclaration (executionContext, url)
 {
@@ -66,8 +19,10 @@ function X3DExternProtoDeclaration (executionContext, url)
 
    this .addChildObjects (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
                           X3DConstants .inputOutput, "url",                  url .copy (), // Must be of type MFString.
-                          X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (),
+                          X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
                           X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
+
+   this .getBrowser () [_cache] ??= new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),
@@ -78,15 +33,33 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       X3DProtoDeclarationNode .prototype .initialize .call (this);
       X3DUrlObject            .prototype .initialize .call (this);
    },
-   set_live__ ()
+   getAppInfo ()
    {
-      X3DUrlObject .prototype .set_live__ .call (this);
-
-      this [_scene] ?.setLive (this .getLive () .getValue ());
+      return this [_proto] ?.getAppInfo ()
+         || X3DProtoDeclarationNode .prototype .getAppInfo .call (this);
    },
-   canUserDefinedFields ()
+   setAppInfo (value)
    {
-      return true;
+      if (this [_proto])
+         this [_proto] .setAppInfo (value);
+      else
+         X3DProtoDeclarationNode .prototype .setAppInfo .call (this, value);
+   },
+   getDocumentation ()
+   {
+      return this [_proto] ?.getDocumentation ()
+         || X3DProtoDeclarationNode .prototype .getDocumentation .call (this);
+   },
+   setDocumentation (value)
+   {
+      if (this [_proto])
+         this [_proto] .setDocumentation (value);
+      else
+         X3DProtoDeclarationNode .prototype .setDocumentation .call (this, value);
+   },
+   getProtoDeclaration ()
+   {
+      return this [_proto];
    },
    setProtoDeclaration (proto)
    {
@@ -100,47 +73,56 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       this .updateInstances ();
    },
-   getProtoDeclaration ()
+   async loadData ()
    {
-      return this [_proto];
-   },
-   loadData ()
-   {
-      // 7.73 — ExternProtoDeclaration function
+      const browser = this .getBrowser ();
 
-      this .getScene () .addInitLoadCount (this);
+      if (!this ._url .length)
+      {
+         this .setError (new Error ("No URL given."));
+         return;
+      }
 
-      new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
-   },
-   setInternalSceneAsync (value)
-   {
-      if (value)
-         this .setInternalScene (value);
+      const { default: FileLoader } = await import ("../InputOutput/FileLoader.js");
 
-      else
-         this .setError (new Error ("File could not be loaded."));
+      for (const url of this ._url)
+      {
+         try
+         {
+            const
+               fileURL  = new URL (url, this .getExecutionContext () .getBaseURL ()),
+               cacheURL = new URL (fileURL),
+               cache    = browser .getBrowserOption ("Cache");
 
-      this .getScene () .removeInitLoadCount (this);
-   },
-   setInternalScene (value)
-   {
-      if (this [_scene] !== this .getBrowser () .getPrivateScene ())
-         this [_scene] ?.dispose ();
+            cacheURL .hash = "";
 
-      this [_scene] = value;
+            const cachePromise = cache
+               ? browser [_cache] .get (cacheURL .href)
+               : null;
 
-      const
-         protoName = decodeURIComponent (new URL (this [_scene] .getWorldURL ()) .hash .substring (1)),
-         proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
+            const promise = cachePromise ?? new Promise (resolve =>
+            {
+               new FileLoader (this) .createX3DFromURL ([cacheURL], null, resolve);
+            });
 
-      if (!proto)
-         throw new Error ("PROTO not found");
+            if (!cachePromise && !cacheURL .search)
+               browser [_cache] .set (cacheURL .href, promise);
 
-      this [_scene] .setExecutionContext (this .getExecutionContext ());
-      this [_scene] .setLive (this .getLive () .getValue ());
+            const scene = await promise;
 
-      this .setLoadState (X3DConstants .COMPLETE_STATE);
-      this .setProtoDeclaration (proto);
+            if (!scene)
+               continue;
+
+            this .setInternalScene (scene, fileURL, cache);
+            return;
+         }
+         catch (error)
+         {
+            console .warn (error .message);
+         }
+      }
+
+      this .setError (new Error ("File could not be loaded."));
    },
    getInternalScene ()
    {
@@ -148,11 +130,34 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       return this [_scene];
    },
+   setInternalScene (scene, fileURL, cache)
+   {
+      const browser = this .getBrowser ();
+
+      if (this [_scene] !== browser .getDefaultScene () && !this [_cache])
+         this [_scene] ?.dispose ();
+
+      this [_scene] = scene;
+      this [_cache] = cache;
+
+      const
+         protoName = decodeURIComponent (fileURL .hash .substring (1)),
+         proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
+
+      if (!proto)
+         throw new Error ("PROTO not found");
+
+      this [_scene] .setExecutionContext (this [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
+      this [_scene] .setLive (true);
+
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
+      this .setProtoDeclaration (proto);
+   },
    setError (error)
    {
       console .error (`Error loading extern prototype '${this .getName ()}':`, error);
 
-      this [_scene] = this .getBrowser () .getPrivateScene ();
+      this [_scene] = this .getBrowser () .getDefaultScene ();
 
       this .setLoadState (X3DConstants .FAILED_STATE);
       this .setProtoDeclaration (null);
@@ -235,6 +240,9 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
 
+      generator .XMLAppInfo (this);
+      generator .XMLDocumentation (this);
+
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length)
@@ -260,6 +268,10 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += "name='";
             generator .string += generator .XMLEncode (field .getName ());
             generator .string += "'";
+
+            generator .XMLAppInfo (field);
+            generator .XMLDocumentation (field);
+
             generator .string += generator .closingTags ? "></field>" : "/>";
             generator .string += generator .TidyBreak ();
          }
@@ -297,6 +309,10 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       generator .string += '"';
       generator .string += generator .JSONEncode (this .getName ());
       generator .string += '"';
+
+      generator .JSONAppInfo (this);
+      generator .JSONDocumentation (this);
+
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -359,6 +375,9 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += '"';
             generator .string += generator .TidyBreak ();
 
+            generator .JSONAppInfo (field);
+            generator .JSONDocumentation (field);
+
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
             generator .string += '}';
@@ -408,16 +427,6 @@ for (const key of Object .keys (X3DExternProtoDeclaration .prototype))
 
 Object .defineProperties (X3DExternProtoDeclaration .prototype,
 {
-   name:
-   {
-      get: X3DExternProtoDeclaration .prototype .getName,
-      enumerable: true,
-   },
-   fields:
-   {
-      get: X3DExternProtoDeclaration .prototype .getFieldDefinitions,
-      enumerable: true,
-   },
    isExternProto:
    {
       value: true,

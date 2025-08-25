@@ -19,7 +19,7 @@ The base MIME type for X3D files is: model/x3d. Each file format has its own mod
 | JSON         | .x3dj, .x3djz  | model/x3d+json   |
 | Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml   |
 | Binary       | .x3db, .x3dbz  | model/x3d+binary |
-| VRML         | .wrl, .wrz     | model/vrml       |
+| VRML 2.0     | .wrl, .wrz     | model/vrml       |
 
 The standard mechanism for indicating gzipped files is for the web server to set a special header field called »Content-Encoding«. This field indicates if the content has been encoding beyond that present in the media. This is the field that is used to indicate that the file has been compressed with gzip. When the web browser detects this field, it is responsible for gunzipping the file prior to passing it to the X3D browser.
 
@@ -27,7 +27,7 @@ If the file is gzipped, then the content-encoding value is »gzip« with the app
 
 The simplest way to set your server to correctly display X3D files is to add the following to your document root's .htaccess file:
 
-```xml
+```apache
 <IfModule mod_mime.c>
   # Add X3D mime types.
   AddType model/x3d+xml .x3d
@@ -50,12 +50,21 @@ The simplest way to set your server to correctly display X3D files is to add the
 
 Because X3D files are pure text you can compress them on the fly. This can reduce the file size up to a factor of ten:
 
-```xml
+```apache
 <IfModule mod_deflate.c>
   # Compress X3D on the fly.
   AddOutputFilterByType DEFLATE model/x3d+xml
   AddOutputFilterByType DEFLATE model/x3d+json
   AddOutputFilterByType DEFLATE model/x3d+vrml
   AddOutputFilterByType DEFLATE model/vrml
+</IfModule>
+
+<IfModule mod_brotli.c>
+  # Specifies the Brotli compression quality, which is '5' by default.
+  BrotliCompressionQuality 5
+  AddOutputFilterByType BROTLI_COMPRESS model/x3d+xml
+  AddOutputFilterByType BROTLI_COMPRESS model/x3d+json
+  AddOutputFilterByType BROTLI_COMPRESS model/x3d+vrml
+  AddOutputFilterByType BROTLI_COMPRESS model/vrml
 </IfModule>
 ```

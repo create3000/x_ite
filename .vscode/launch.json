@@ -10,6 +10,14 @@
          "name": "Launch Chrome against localhost",
          "url": "http://localhost/src/x_ite.html",
          "webRoot": "${workspaceFolder}"
-      }
+      },
+		{
+			"name": "Run Extension",
+			"type": "extensionHost",
+			"request": "launch",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}"
+			]
+		}
    ]
 }

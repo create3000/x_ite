@@ -15,7 +15,7 @@ tags: [ImageTexture, Texturing]
 
 ImageTexture maps a 2D-image file onto a geometric shape. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The ImageTexture node belongs to the **Texturing** component and requires at least level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The ImageTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,19 +28,36 @@ The ImageTexture node belongs to the **Texturing** component and requires at lea
           + ImageTexture (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [load](#fields-load) | TRUE |
+| MFString | [in, out] | [url](#fields-url) | [ ] |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFBool | [ ] | [colorSpaceConversion](#fields-colorSpaceConversion) | TRUE |
+| SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
+| SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -49,8 +66,9 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **load** TRUE
+{: #fields-load }
 
-*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded asset.
 
 #### Hints
 
@@ -58,6 +76,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
+{: #fields-url }
 
 Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
 
@@ -73,6 +92,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
+{: #fields-autoRefresh }
 
 *autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
@@ -86,6 +106,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
+{: #fields-autoRefreshTimeLimit }
 
 *autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
@@ -97,19 +118,23 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-### SFBool [ ] **colorSpaceConversion**
+### SFBool [ ] **colorSpaceConversion** TRUE
+{: #fields-colorSpaceConversion }
 
 Field *colorSpaceConversion*.
 
 ### SFBool [ ] **repeatS** TRUE
+{: #fields-repeatS }
 
 Whether to repeat texture along S axis horizontally from left to right.
 
 ### SFBool [ ] **repeatT** TRUE
+{: #fields-repeatT }
 
 Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
+{: #fields-textureProperties }
 
 Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
@@ -117,14 +142,15 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 Any image file format supported by the web browser, but at least:
 
-| Encoding | File Extension  | MIME Type  | Comment             |
-|----------|-----------------|------------|---------------------|
-| PNG      | .png            | image/png  |                     |
-| JPEG     | .jpeg, .jpg     | image/jpeg |                     |
-| GIF      | .gif            | image/gif  |                     |
-| WebP     | .webp           | image/webp |                     |
-| SVG      | .svg            | image/svg  |                     |
-| KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_2D, WebGL 2 |
+| Encoding | File Extension  | MIME Type  | Comment         |
+|----------|-----------------|------------|-----------------|
+| PNG      | .png            | image/png  | lossless        |
+| AVIF     | .avif           | image/avif | lossless/lossy  |
+| WebP     | .webp           | image/webp | lossless/lossy  |
+| JPEG     | .jpeg, .jpg     | image/jpeg | lossy           |
+| GIF      | .gif            | image/gif  | lossy           |
+| SVG      | .svg            | image/svg  | vector graphics |
+| KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_2D      |
 
 ## Advice
 
@@ -138,7 +164,7 @@ Any image file format supported by the web browser, but at least:
 - If a texture is opaque, omitting values in the alpha channel can help avoid rendering artifacts related to transparency and reduce file size by 25%.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
-- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/lighting.html#Lightingmodel
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/lighting.html#Lightingmodel)
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### Warnings
@@ -148,7 +174,9 @@ Any image file format supported by the web browser, but at least:
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Texturing/ImageTexture/ImageTexture.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/ImageTexture/ImageTexture.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Texturing/ImageTexture/screenshot.avif" alt="ImageTexture"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Texturing/ImageTexture/ImageTexture.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Texturing/ImageTexture/ImageTexture.x3d)

@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                       from "../../Fields.js";
 import X3DFieldDefinition           from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray         from "../../Base/FieldDefinitionArray.js";
+import X3DNode                      from "../Core/X3DNode.js";
 import X3DProductStructureChildNode from "./X3DProductStructureChildNode.js";
 import X3DBoundedObject             from "../Grouping/X3DBoundedObject.js";
 import X3DConstants                 from "../../Base/X3DConstants.js";
@@ -61,9 +15,17 @@ function CADFace (executionContext)
 
    this .addType (X3DConstants .CADFace);
 
-   this .childNode     = null;
-   this .visibleNode   = null;
-   this .boundedObject = null;
+   this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFTime ());
+
+   this .setBoundedObject (true);
+   this .setPointingObject (true);
+   this .setCollisionObject (true);
+   this .setShadowObject (true);
+   this .setVisibleObject (true);
+
+   // Private properties
+
+   this .visibleObjects = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureChildNode .prototype),
@@ -74,31 +36,70 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       X3DProductStructureChildNode .prototype .initialize .call (this);
       X3DBoundedObject             .prototype .initialize .call (this);
 
-      this ._shape .addInterest ("set_shape__", this);
+      this ._rebuild  .addInterest ("set_children__",       this);
+      this ._bboxSize .addInterest ("set_boundedObjects__", this);
+      this ._shape    .addInterest ("requestRebuild",       this);
 
-      this .set_shape__ ();
+      this .set_children__ ();
    },
    getBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
+      if (this .isDefaultBBoxSize ())
+         return this .boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_shape__ ()
+   getShapes (shapes, modelMatrix)
    {
+      for (const visibleObject of this .visibleObjects)
+         visibleObject .getShapes (shapes, modelMatrix);
+
+      return shapes;
+   },
+   requestRebuild ()
+   {
+      this ._rebuild .addEvent ();
+   },
+   set_children__ ()
+   {
+      this .setChild (X3DCast (X3DConstants .X3DChildNode, this ._shape));
+   },
+   setChild (childNode)
+   {
+      // Remove node.
+
       if (this .childNode)
       {
-         this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
-         this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
+         const childNode = this .childNode;
 
-         this .childNode ._display     .removeInterest ("set_display__",     this);
-         this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
+         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
+         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
+         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
+         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
+         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
+         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+
+         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+         {
+            childNode ._display     .removeInterest ("requestRebuild", this);
+            childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
+         }
       }
 
-      this .childNode = null;
+      // Clear node.
 
-      const childNode = X3DCast (X3DConstants .X3DChildNode, this ._shape);
+      this .childNode       = null;
+      this .boundedObject   = null;
+      this .pointingObject  = null;
+      this .cameraObject    = null;
+      this .pickableObject  = null;
+      this .collisionObject = null;
+      this .shadowObject    = null;
+
+      this .visibleObjects .length = 0;
+
+      // Add node.
 
       if (childNode)
       {
@@ -112,13 +113,49 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                case X3DConstants .Transform:
                case X3DConstants .X3DShapeNode:
                {
-                  childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
-                  childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
-
-                  childNode ._display     .addInterest ("set_display__",     this);
-                  childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+                  childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
+                  childNode ._isPointingObject  .addInterest ("requestRebuild", this);
+                  childNode ._isCameraObject    .addInterest ("requestRebuild", this);
+                  childNode ._isPickableObject  .addInterest ("requestRebuild", this);
+                  childNode ._isCollisionObject .addInterest ("requestRebuild", this);
+                  childNode ._isShadowObject    .addInterest ("requestRebuild", this);
+                  childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
 
                   this .childNode = childNode;
+
+                  if (childNode .isVisible ())
+                  {
+                     if (childNode .isBoundedObject ())
+                        this .boundedObject = childNode;
+
+                     if (childNode .isPointingObject ())
+                        this .pointingObject = childNode;
+
+                     if (childNode .isCameraObject ())
+                        this .cameraObject = childNode;
+
+                     if (childNode .isPickableObject ())
+                        this .pickableObject = childNode;
+
+                     if (childNode .isCollisionObject ())
+                        this .collisionObject = childNode;
+
+                     if (childNode .isShadowObject ())
+                        this .shadowObject = childNode;
+
+                     if (childNode .isVisibleObject ())
+                        this .visibleObjects .push (childNode);
+                  }
+
+                  if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+                  {
+                     childNode ._display     .addInterest ("requestRebuild", this);
+                     childNode ._bboxDisplay .addInterest ("requestRebuild", this);
+
+                     if (childNode .isBBoxVisible ())
+                        this .visibleObjects .push (childNode .getBBoxNode ());
+                  }
+
                   break;
                }
                default:
@@ -129,77 +166,88 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          }
       }
 
-      if (this .childNode)
-      {
-         delete this .traverse;
-      }
-      else
-      {
-         this .traverse = Function .prototype;
-      }
-
-      this .set_display__ ();
-      this .set_bboxDisplay__ ();
+      this .set_pointingObjects__ ();
+      this .set_cameraObjects__ ();
+      this .set_pickableObjects__ ();
+      this .set_collisionObjects__ ();
+      this .set_shadowObjects__ ();
+      this .set_visibleObjects__ ();
+      this .set_boundedObjects__ ();
    },
-   set_cameraObject__ ()
+   set_boundedObjects__ ()
    {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
+      this .setBoundedObject (this .boundedObject || !this .isDefaultBBoxSize ());
    },
-   set_transformSensors__ ()
+   set_pointingObjects__ ()
    {
-      this .setPickableObject (this .visibleNode ?.isPickableObject ());
+      this .setPointingObject (this .pointingObject);
    },
-   set_display__ ()
+   set_cameraObjects__ ()
    {
-      if (this .childNode)
-         this .visibleNode = this .childNode ._display .getValue () ? this .childNode : null;
-      else
-         this .visibleNode = null;
-
-      this .set_cameraObject__ ();
-      this .set_transformSensors__ ();
+      this .setCameraObject (this .cameraObject);
    },
-   set_bboxDisplay__ ()
+   set_pickableObjects__ ()
    {
-      if (this .childNode)
-         this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
-      else
-         this .boundedObject = null;
+      this .setPickableObject (this .getTransformSensors () .size || this .pickableObject);
+   },
+   set_collisionObjects__ ()
+   {
+      this .setCollisionObject (this .collisionObject);
+   },
+   set_shadowObjects__ ()
+   {
+      this .setShadowObject (this .shadowObject);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleObjects .length);
    },
    traverse (type, renderObject)
    {
       switch (type)
       {
          case TraverseType .POINTER:
-         case TraverseType .CAMERA:
-         case TraverseType .SHADOW:
          {
-            this .visibleNode ?.traverse (type, renderObject);
+            this .pointingObject ?.traverse (type, renderObject);
+            return;
+         }
+         case TraverseType .CAMERA:
+         {
+            this .cameraObject ?.traverse (type, renderObject);
             return;
          }
          case TraverseType .PICKING:
          {
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy ();
+            // CADFace can't be pickTarget of a X3DPickSensorNode or TransformSensor,
+            // so we do not need to add this node to the pickingHierarchy.
 
-            pickingHierarchy .push (this);
+            if (this .getBrowser () .getPickable () .at (-1))
+            {
+               for (const visibleObject of this .visibleObjects)
+                  visibleObject .traverse (type, renderObject);
+            }
+            else
+            {
+               this .pickableObject ?.traverse (type, renderObject);
+            }
 
-            this .visibleNode ?.traverse (type, renderObject);
-
-            pickingHierarchy .pop ();
             return;
          }
          case TraverseType .COLLISION:
          {
-            this .visibleNode ?.traverse (type, renderObject);
+            this .collisionObject ?.traverse (type, renderObject);
+            return;
+         }
+         case TraverseType .SHADOW:
+         {
+            this .shadowObject ?.traverse (type, renderObject);
             return;
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleNode ?.traverse (type, renderObject);
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
 
-            this .boundedObject ?.displayBBox (type, renderObject);
             return;
          }
       }
@@ -213,26 +261,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
 Object .defineProperties (CADFace,
 {
-   typeName:
-   {
-      value: "CADFace",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("CADFace", "CADGeometry", 2, "children", "3.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

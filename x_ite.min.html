@@ -3,133 +3,169 @@
 <head>
    <meta charset="utf-8"/>
    <meta name="viewport" content="width=1080"/>
+   <title>x_ite</title>
 
-   <script src="dist/x_ite.min.js"></script>
    <script src="https://code.jquery.com/jquery-latest.js"></script>
 
-   <script src="src/bookmarks.js"></script>
    <script src="src/examples.js"></script>
    <script src="src/tests.js"></script>
    <script src="src/tests/menu.js"></script>
 
-   <script>
-X3D (() =>
-{
-   const
-      Browser      = X3D .getBrowser (),
-      localStorage = Browser .getLocalStorage ();
+   <script type="module">
+import X3D       from "./dist/x_ite.min.mjs";
+import Bookmarks from "./src/Bookmarks.js";
 
-   Browser .getContextMenu () .setUserMenu (() =>
-   {
-      return {
-         "transforms": {
-            "name": "CSS Transforms",
-            "items": {
-               "default": {
-                  "name": "Default",
-                  "callback": () => $("#transforms") .css ("transform", "matrix(1, 0, 0, 1, 0, 0)"),
-               },
-               "75 %": {
-                  "name": "75 %",
-                  "callback": () => $("#transforms") .css ("transform", "matrix(0.75, 0, 0, 0.75, 0, 0)"),
-               },
-               "50 %": {
-                  "name": "50 %",
-                  "callback": () => $("#transforms") .css ("transform", "matrix(0.5, 0, 0, 0.5, 0, 0)"),
-               },
+window .X3D = X3D; // Make X3D global for debugging.
+
+const
+   Browser      = X3D .getBrowser (),
+   localStorage = Browser .getLocalStorage ();
+
+Browser .contextMenu .userMenu = () =>
+{
+   return {
+      transforms: {
+         name: "CSS Transforms",
+         items: {
+            "default": {
+               name: "Default",
+               type: "radio",
+               selected: $("#transforms") .css ("transform") === "none",
+               callback: () => $("#transforms") .css ("transform", "none"),
+            },
+            "75 %": {
+               name: "75 %",
+               type: "radio",
+               selected: $("#transforms") .css ("transform") .includes ("0.75"),
+               callback: () => $("#transforms") .css ("transform", "matrix(0.75, 0, 0, 0.75, 0, 0)"),
+            },
+            "50 %": {
+               name: "50 %",
+               type: "radio",
+               selected: $("#transforms") .css ("transform") .includes ("0.5"),
+               callback: () => $("#transforms") .css ("transform", "matrix(0.5, 0, 0, 0.5, 0, 0)"),
             },
          },
-         ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
-      };
-   });
+      },
+      ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
+   };
+};
 
-   localStorage .setDefaultValues ({
-      "Bookmarks.history": ["https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
-   });
+localStorage .setDefaultValues ({
+   "Bookmarks.history": ["https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
+});
 
-   let index = localStorage ["Bookmarks.history"] .length - 1;
+let index = localStorage ["Bookmarks.history"] .length - 1;
 
-   async function loadURL (url)
+async function loadURL (url)
+{
+   if (url .endsWith (".html"))
+      return;
+
+   const history = localStorage ["Bookmarks.history"];
+
+   localStorage ["Bookmarks.url"] = url;
+
+   if (url !== history .at (-1) && !url .match (/^(?:data|blob):/))
    {
-      const history = localStorage ["Bookmarks.history"];
-
-      localStorage ["Bookmarks.url"] = url;
-
-      if (url !== history .at (-1) && !url .match (/^(?:data|blob):/))
-      {
-         history .push (url);
-         history .splice (0, history .length - 100);
-         localStorage ["Bookmarks.history"] = history;
-         index = history .length - 1;
-      }
-
-      if (location .href .includes (".min.html") && url .startsWith ("src/tests/"))
-         url = "src/" + url;
-
-      $("#file") .removeClass ("loaded");
-
-      bookmarks .loadURL (url);
+      history .push (url);
+      history .splice (0, history .length - 100);
+      localStorage ["Bookmarks.history"] = history;
+      index = history .length - 1;
    }
 
-   function toVRMLString ()
-   {
-      console .log (Browser .toVRMLString ());
-   }
+   if (location .href .includes (".min.html") && url .startsWith ("src/tests/"))
+      url = "src/" + url;
 
-   function toXMLString ()
-   {
-      console .log (Browser .toXMLString ());
-   }
+   $("#file") .removeClass ("loaded");
 
-   function toJSONString ()
-   {
-      console .log (Browser .toJSONString ());
-   }
+   bookmarks .loadURL (url);
+}
 
-   const bookmarks = new Bookmarks (Browser, $("#examples-box"));
+function toVRMLString ()
+{
+   console .log (Browser .toVRMLString ());
+}
 
-   bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
+function toXMLString ()
+{
+   console .log (Browser .toXMLString ());
+}
+
+function toJSONString ()
+{
+   console .log (Browser .toJSONString ());
+}
+
+const bookmarks = new Bookmarks (Browser, $("#examples-box"));
+
+bookmarks .setup (X_ITE_EXAMPLES, X_ITE_TESTS);
+
+// Restore last loaded test.
+
+const a = $(`a[href="${localStorage ["Bookmarks.url"]}"]`);
+
+if (a .length)
+   a .trigger ("click");
+else
    loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
-   $("#version") .text (Browser .name + " v" + Browser .version);
-   $("#location-entry") .val (localStorage ["Bookmarks.history"] [index])
-   $("#location-go") .on ("click", () => loadURL ($("#location-entry") .val ()));
-   $("#print-vrml") .on ("click", toVRMLString);
-   $("#print-xml") .on ("click", toXMLString);
-   $("#print-json") .on ("click", toJSONString);
-   $("#browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
+//
 
-   $("#location-entry") .keydown (event =>
-   {
-      switch (event .key)
-      {
-         case "Enter":
-            return loadURL ($("#location-entry") .val ())
-         case "ArrowUp":
-            if (index > 0)
-               $("#location-entry") .val (localStorage ["Bookmarks.history"] [--index])
-            return
-         case "ArrowDown":
-            if (index < localStorage ["Bookmarks.history"] .length - 1)
-               $("#location-entry") .val (localStorage ["Bookmarks.history"] [++index])
-            return
-      }
-   });
+$("#version") .text (`${Browser .name} v${Browser .version}`);
+$("#location-entry") .val (localStorage ["Bookmarks.history"] [index])
+$("#location-go") .on ("click", () => loadURL ($("#location-entry") .val ()));
+$("#print-vrml") .on ("click", toVRMLString);
+$("#print-xml") .on ("click", toXMLString);
+$("#print-json") .on ("click", toJSONString);
+$("#browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
 
-   $("#blob") .on ("click", () =>
+$("#location-entry") .keydown (event =>
+{
+   switch (event .key)
    {
-      fetch('https://db-api.unstable.life/get?url=cgg.mff.cuni.cz/~jaroslav/projects/celts/world/kelti.wrl')
-      .then(r => r .blob ())
-      .then(r =>
-      {
-         // Browser .baseURL = "https://cgg.mff.cuni.cz/~jaroslav/projects/celts/world/";
-         Browser .loadURL (new X3D .MFString (URL .createObjectURL (r)));
-      });
+      case "Enter":
+         return loadURL ($("#location-entry") .val ())
+      case "ArrowUp":
+         if (index > 0)
+            $("#location-entry") .val (localStorage ["Bookmarks.history"] [--index])
+         return
+      case "ArrowDown":
+         if (index < localStorage ["Bookmarks.history"] .length - 1)
+            $("#location-entry") .val (localStorage ["Bookmarks.history"] [++index])
+         return
+   }
+});
+
+$("#blob") .on ("click", () =>
+{
+   fetch('https://db-api.unstable.life/get?url=cgg.mff.cuni.cz/~jaroslav/projects/celts/world/kelti.wrl')
+   .then(r => r .blob ())
+   .then(r =>
+   {
+      // Browser .baseURL = "https://cgg.mff.cuni.cz/~jaroslav/projects/celts/world/";
+      Browser .loadURL (new X3D .MFString (URL .createObjectURL (r)));
    });
+});
+
+$("#reset-history") .on ("click", () =>
+{
+   localStorage ["Bookmarks.url"] = undefined;
 });
       </script>
       <style>
 @import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");
+
+html {
+   --background-color: #3d4145;
+   --text-color: white;
+   --shadow-color: black;
+   --black: black;
+   --yellow: #ffe32d;
+   --gray: rgb(106, 106, 106);
+   --teal: rgb(0, 92, 128);
+   --min-color: #e06c75;
+}
 
 html, body {
    margin: 0px;
@@ -140,8 +176,8 @@ html, body {
 
 body {
    padding-bottom: 100px;
-   background: black;
-   color: white;
+   background: var(--black);
+   color: var(--text-color);
    font-family: PT Sans, sans-serif;
    line-height: 1.3;
 }
@@ -153,8 +189,8 @@ a {
 }
 
 p a {
-   color: white;
-   text-shadow: 0px 0px 3px black;
+   color: var(--text-color);
+   text-shadow: 0px 0px 3px var(--shadow-color);
 }
 
 header > div,
@@ -166,7 +202,7 @@ main > div {
 }
 
 main {
-   background: #3d4145;
+   background: var(--background-color);
 }
 
 main.color-management {
@@ -184,22 +220,25 @@ main.color-management #browser {
 }
 
 #file {
+   display: flex;;
    margin: 10px 40px 10px 20px;
+   word-break: break-all;
 }
 
 #file.loaded {
-   color: #ffe32d;
+   color: var(--yellow);
 }
 
 #file a {
    margin-left: 10px;
    padding-left: 10px;
-   border-left: 1px solid white;
+   border-left: 1px solid var(--text-color);
    color: inherit;
+   word-break: normal;
 }
 
 #file.loaded a {
-   border-color: #ffe32d;
+   border-color: var(--yellow);
 }
 
 #toolbar {
@@ -217,7 +256,7 @@ main.color-management #browser {
 }
 
 #toolbar span.selected {
-   color: #ffe32d;
+   color: var(--yellow);
 }
 
 #toolbar span.separator {
@@ -244,7 +283,42 @@ main.color-management #browser {
 }
 
 #browser:focus {
-   box-shadow: 0px 2px 6px 3px black;
+   box-shadow: 0px 2px 6px 3px var(--shadow-color);
+}
+
+#browser.xr-button-tr::part(xr-button) {
+  top: 10px;
+  right: 10px;
+  bottom: unset;
+  left: unset;
+}
+
+#browser.xr-button-cr::part(xr-button) {
+  top: 50%;
+  right: 10px;
+  bottom: unset;
+  left: unset;
+}
+
+#browser.xr-button-br::part(xr-button) {
+  top: unset;
+  right: 10px;
+  bottom: 10px;
+  left: unset;
+}
+
+#browser.xr-button-bl::part(xr-button) {
+  top: unset;
+  right: unset;
+  bottom: 10px;
+  left: 10px;
+}
+
+#browser.xr-button-tl::part(xr-button) {
+  top: 10px;
+  right: unset;
+  bottom: unset;
+  left: 10px;
 }
 
 .fallback {
@@ -261,7 +335,7 @@ main.color-management #browser {
    padding: 4px;
    width: 880px;
    background: #313131;
-   color: white;
+   color: var(--text-color);
    font-family: PT Sans, sans-serif;
    font-size: 10pt;
 }
@@ -276,7 +350,7 @@ main.color-management #browser {
    padding: 4px;
    width: 115px;
    background: #313131;
-   color: white;
+   color: var(--text-color);
    font-family: PT Sans, sans-serif;
    font-size: 10pt;
 }
@@ -289,46 +363,38 @@ main.color-management #browser {
    background: #515151;
 }
 
-#buttons {
-   margin: 10px 0px;
-   float: left;
+.button-bar {
+   display: flex;
+   justify-content: space-between;
 }
 
-#links {
+.buttons {
+   display: flex;
    margin: 10px 0px;
-   text-align: right;
 }
 
-#buttons a,
-#links a {
+.buttons a {
    padding: 0px 5px;
+}
+
+.buttons a:not(:first-child) {
    border-left: 1px solid white;
 }
 
-#buttons a:first-child,
-#links a:first-child {
-   border-left: none;
-}
-
-#buttons a:last-child,
-#links a:last-child {
-   border-right: 0px;
-}
-
-.min-links,
-.min-links a:last-child {
-   color: #e06c75;
-   border-color: #e06c75;
+.buttons:has(a[href$="x_ite.html"]),
+.buttons:has(a[href$="x_ite.html"]) a:last-child {
+   color: var(--min-color);
+   border-color: var(--min-color);
 }
 
 .clearfix,
 #location-bar:after,
 #links:after {
-      content: ".";
-      clear: both;
-      display: block;
-      visibility: hidden;
-      height: 0px;
+   content: ".";
+   clear: both;
+   display: block;
+   visibility: hidden;
+   height: 0px;
 }
 
 #examples-box {
@@ -354,7 +420,7 @@ main.color-management #browser {
    width: 62px;
    height: 62px;
    margin: 0px 5px 5px 0px;
-   background-color: gray;
+   background-color: var(--gray);
    font-size: 8pt;
    white-space: normal;
    word-wrap: break-word;
@@ -372,12 +438,12 @@ main.color-management #browser {
 
 .example-box::after {
    border-width: 8px;
-   border-right-color: #3d4145;
-   border-top-color: #3d4145;
+   border-right-color: var(--background-color);
+   border-top-color: var(--background-color);
 }
 
 .display-component {
-   background-color: teal;
+   background-color: var(--teal);
 }
 
 .example-box a.display-example {
@@ -396,6 +462,7 @@ main.color-management #browser {
    font-family: monospace;
    white-space: pre;
 }
+
    </style>
 </head>
 <body>
@@ -411,15 +478,18 @@ main.color-management #browser {
          <div>
             <form action="javascript:alert('form submitted')">
                <div id="transforms" style="transform-origin: 50% 50%;">
-                  <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" oninitialized="$('#file') .addClass ('loaded')" x-baseURL="src/tests/" x-src="lines.x3d" update="auto">
-                     <p class="fallback">
-                        Sorry,<br/>
-                        it wasn't me!<br/>
-                        <br/>
-                        Your browser may not support all features required by X_ITE! You can use Firefox, Chrome,
-                        or Microsoft Edge, because this is currently the choice of the choice. We will continuously
-                        keep you informed on technical developments and as soon as X_ITE is running in other browser too.
-                     </p>
+                  <x3d-canvas
+                        id="browser"
+                        class="tr"
+                        cache="true"
+                        contentScale="auto"
+                        contextMenu="true"
+                        debug="true"
+                        oninitialized="$('#file') .addClass ('loaded')"
+                        preserveDrawingBuffer="false"
+                        splashScreen="true"
+                        xrSessionMode="IMMERSIVE_VR">
+                     <p class="fallback">Stay tuned.</p>
                   </x3d-canvas>
                 </div>
             </form>
@@ -427,11 +497,20 @@ main.color-management #browser {
                <input id="location-entry" value="https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
                <button id="location-go" type="button">Load URL</button>
             </div>
-            <div id="buttons">
-               <a id="print-xml" href="#">XML</a><a id="print-vrml" href="#">VRML</a><a id="print-json" href="#">JSON</a><a href="dist/example.html">example page</a><a href="src/tests/html/">html</a><a id="blob" href="#">blob</a>
-            </div>
-            <div id="links" class="min-links">
-               <a href="src/x_ite.html">src/x_ite.html</a><a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
+            <div class="button-bar">
+               <div class="buttons">
+                  <a id="print-xml" href="#">XML</a>
+                  <a id="print-vrml" href="#">VRML</a>
+                  <a id="print-json" href="#">JSON</a>
+                  <a href="/x_ite/dist/example.html">Example Page</a>
+                  <a href="/x_ite-dom/">DOM</a>
+                  <a id="blob" href="#">Blob</a>
+                  <a id="reset-history" href="#">Reset History</a>
+               </div>
+               <div class="buttons">
+                  <a href="src/x_ite.html">src/x_ite.html</a>
+                  <a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
+               </div>
             </div>
             <div id="examples-box"></div>
          </div>

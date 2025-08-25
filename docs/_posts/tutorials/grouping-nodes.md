@@ -13,7 +13,7 @@ X3D has several grouping nodes, including:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Group><!-- ... --></Group>
 <Switch><!-- ... --></Switch>
 <Transform><!-- ... --></Transform>
@@ -23,7 +23,7 @@ X3D has several grouping nodes, including:
 <!-- and more -->
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Group       { ... }
@@ -43,13 +43,13 @@ The [Group](/x_ite/components/grouping/group/) node creates a basic grouping.
 
 ### XML Encoding
 
-```xml
+```x3d
 <Group>
   <!-- children ... -->
 </Group>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Group {
@@ -68,14 +68,14 @@ The [Switch](/x_ite/components/grouping/switch/) group node creates a switched g
 
 ### XML Encoding
 
-```xml
+```x3d
 <Switch
     whichChoice='0'>
   <!-- children ... -->
 </Switch>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Switch {
@@ -92,7 +92,7 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='0.0 0.0 0.0'
     rotation='0.0 1.0 0.0 0.0'
@@ -101,7 +101,7 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -121,14 +121,14 @@ The [Billboard](/x_ite/components/navigation/billboard/) group node creates a gr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Billboard
     axisOfRotation='0.0 1.0 0.0'>
   <!-- children ... -->
 </Billboard>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Billboard {
@@ -136,6 +136,16 @@ Billboard {
   children [ ... ]
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/billboard1/billboard1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/billboard1/screenshot.avif" alt="Billboard"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/billboard1/billboard1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/billboard1/billboard1.x3dv)
+{: .example-links }
 
 ## Billboard rotation axes
 
@@ -155,7 +165,7 @@ Billboard {
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- Y-axis -->
 <Billboard
     axisOfRotation='0.0 1.0 0.0'>
@@ -166,7 +176,7 @@ Billboard {
 </Billboard>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Billboard {
@@ -191,7 +201,7 @@ An [Anchor](/x_ite/components/networking/anchor/) node creates a group that acts
 
 ### XML Encoding
 
-```xml
+```x3d
 <Anchor
     url='"stairwy.wrl"'
     description='Twisty Stairs'>
@@ -199,7 +209,7 @@ An [Anchor](/x_ite/components/networking/anchor/) node creates a group that acts
 </Anchor>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Anchor {
@@ -218,12 +228,12 @@ An [Inline](/x_ite/components/networking/inline/) node creates a special group f
 
 ### XML Encoding
 
-```xml
+```x3d
 <Inline
   url='"table.wrl"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Inline {

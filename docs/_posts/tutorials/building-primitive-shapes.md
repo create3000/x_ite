@@ -14,7 +14,7 @@ Shapes are the building blocks of an X3D world. Primitive Shapes are standard bu
 - [Cylinder](/x_ite/components/geometry3d/cylinder/)
 - [Sphere](/x_ite/components/geometry3d/sphere/)
 - [Text](/x_ite/components/text/text/)
-- and more from the [CADGeometry](/x_ite/components/#cadgeometry)**,** [Geometry2D](/x_ite/components/#geometry2d)**,** and [Rendering](/x_ite/components/#rendering) component
+- and more from the [CADGeometry](/x_ite/components/overview/#cadgeometry)**,** [Geometry2D](/x_ite/components/overview/#geometry2d)**,** and [Rendering](/x_ite/components/overview/#rendering) component
 
 ## Syntax: Shape
 
@@ -24,14 +24,14 @@ Shapes are the building blocks of an X3D world. Primitive Shapes are standard bu
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <!-- appearance ... -->
   <!-- geometry ... -->
 <Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -47,7 +47,7 @@ Shape {
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material/>
@@ -56,7 +56,7 @@ Shape {
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -73,7 +73,7 @@ Shape {
 
 ### XML Encoding
 
-```xml
+```x3d
 <Box ... />
 <Cone ... />
 <Cylinder ... />
@@ -81,7 +81,7 @@ Shape {
 <Text ... />
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Box { ... }
@@ -98,9 +98,10 @@ Text { ... }
 
 ### XML Encoding
 
-```xml
+```x3d
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
     <Shape>
       <Appearance>
@@ -113,7 +114,7 @@ Text { ... }
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -132,7 +133,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.png" alt="Cylinder"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.avif" alt="Cylinder"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip)
@@ -142,16 +143,17 @@ Shape {
 ## Building multiple shapes
 
 - Shapes are built centered in the world
-- A X3D file can contain multiple shapes
+- An X3D file can contain multiple shapes
 - Shapes overlap when built at the same location
 
 ## A sample file with multiple shapes
 
 ### XML Encoding
 
-```xml
+```x3d
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
     <Shape>
       <Appearance>
@@ -172,7 +174,7 @@ Shape {
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -201,7 +203,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/screenshot.png" alt="Multiple Shapes"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/screenshot.avif" alt="Multiple Shapes"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.zip)

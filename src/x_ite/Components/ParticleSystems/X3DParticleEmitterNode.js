@@ -1,58 +1,11 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-import Fields        from "../../Fields.js";
-import X3DNode       from "../Core/X3DNode.js";
-import GeometryTypes from "../../Browser/ParticleSystems/GeometryTypes.js";
-import X3DConstants  from "../../Base/X3DConstants.js";
-import Line3Source   from "../../Browser/ParticleSystems/Line3.glsl.js";
-import Plane3Source  from "../../Browser/ParticleSystems/Plane3.glsl.js";
-import Box3Source    from "../../Browser/ParticleSystems/Box3.glsl.js";
-import BVHSource     from "../../Browser/ParticleSystems/BVH.glsl.js";
+import Fields       from "../../Fields.js";
+import X3DNode      from "../Core/X3DNode.js";
+import GeometryType from "../../Browser/Shape/GeometryType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Line3Source  from "../../Browser/ParticleSystems/Line3.glsl.js";
+import Plane3Source from "../../Browser/ParticleSystems/Plane3.glsl.js";
+import Box3Source   from "../../Browser/ParticleSystems/Box3.glsl.js";
+import BVHSource    from "../../Browser/ParticleSystems/BVH.glsl.js";
 
 function X3DParticleEmitterNode (executionContext)
 {
@@ -62,9 +15,13 @@ function X3DParticleEmitterNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime ());
 
+   // Units
+
    this ._speed       .setUnit ("speed");
    this ._mass        .setUnit ("mass");
    this ._surfaceArea .setUnit ("area");
+
+   // Private properties
 
    this .defines   = [ ];
    this .samplers  = [ ];
@@ -81,9 +38,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       X3DNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       // Create program.
 
@@ -244,7 +198,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Transform particles.
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null); // Prevent texture feedback loop error, see NYC in Firefox.
+      gl .bindFramebuffer (gl .FRAMEBUFFER, browser .getDefaultFramebuffer ()); // Prevent texture feedback loop error, see NYC in Firefox.
       gl .bindBuffer (gl .ARRAY_BUFFER, null);
       gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
       gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);
@@ -378,7 +332,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Constants
 
-      ${Object .entries (GeometryTypes) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
+      ${Object .entries (GeometryType) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
 
       const int   ARRAY_SIZE = 32;
       const float M_PI       = 3.14159265359;
@@ -943,7 +897,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       if (!gl .getProgramParameter (program, gl .LINK_STATUS))
       {
-         console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
+         console .error (`Couldn't initialize particle shader: ${gl .getProgramInfoLog (program)}`);
          // console .error (vertexShaderSource);
       }
 
@@ -991,7 +945,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       {
          const location = gl .getUniformLocation (program, name);
 
-         gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTexture2DUnit ());
+         gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTextureUnit ());
       }
 
       browser .resetTextureUnits ();
@@ -1024,29 +978,17 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       return texture;
    },
-   getTexture2DUnit (browser, object, property)
+   getTextureUnit (browser, object, property)
    {
       const textureUnit = object [property];
 
       if (textureUnit === undefined)
-         return object [property] = browser .getTexture2DUnit ();
+         return object [property] = browser .getTextureUnit ();
 
       return textureUnit;
    },
 });
 
-Object .defineProperties (X3DParticleEmitterNode,
-{
-   typeName:
-   {
-      value: "X3DParticleEmitterNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DParticleEmitterNode, X3DNode .getStaticProperties ("X3DParticleEmitterNode", "ParticleSystems", 1));
 
 export default X3DParticleEmitterNode;

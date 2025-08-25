@@ -1,54 +1,8 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields       from "../../Fields.js";
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import X3DField     from "../../Base/X3DField.js";
+import SFNodeCache  from "../../Fields/SFNodeCache.js";
 
 const _metaDataCallbacks = Symbol ();
 
@@ -112,6 +66,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          const copy = this .create (executionContext);
 
+         // Support editing of protos.
          if (this .getNeedsName ())
             this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
 
@@ -125,6 +80,25 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             try
             {
                const destinationField = copy .getPredefinedField (sourceField .getName ());
+
+               let initializableReferences = false;
+
+               for (const originalReference of sourceField .getReferences ())
+                  initializableReferences ||= originalReference .isInitializable ();
+
+               if (sourceField .isInitializable () && !initializableReferences)
+               {
+                  switch (sourceField .getType ())
+                  {
+                     case X3DConstants .SFNode:
+                     case X3DConstants .MFNode:
+                        destinationField .assign (sourceField .copy (instance));
+                        break;
+                     default:
+                        destinationField .assign (sourceField);
+                        break;
+                  }
+               }
 
                if (sourceField .getReferences () .size)
                {
@@ -142,22 +116,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                      }
                   }
                }
-               else
-               {
-                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-                  {
-                     switch (sourceField .getType ())
-                     {
-                        case X3DConstants .SFNode:
-                        case X3DConstants .MFNode:
-                           destinationField .assign (sourceField .copy (instance));
-                           break;
-                        default:
-                           destinationField .assign (sourceField);
-                           break;
-                     }
-                  }
-               }
 
                destinationField .setModificationTime (sourceField .getModificationTime ());
             }
@@ -171,7 +129,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const sourceField of this .getUserDefinedFields ())
          {
-            const destinationField = sourceField .copy (instance);
+            let initializableReferences = false;
+
+            for (const originalReference of sourceField .getReferences ())
+               initializableReferences ||= originalReference .isInitializable ();
+
+            const destinationField = initializableReferences
+               ? sourceField .create ()
+               : sourceField .copy (instance);
 
             copy .addUserDefinedField (sourceField .getAccessType (),
                                        sourceField .getName (),
@@ -223,7 +188,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             return true;
       }
 
-      if (executionContext .isScene ())
+      if (executionContext .isScene)
       {
          for (const exportedNode of executionContext .getExportedNodes ())
          {
@@ -270,7 +235,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       return null;
    },
-   traverse () { },
+   traverse ()
+   { },
    hasMetaData (path)
    {
       const names = path .split ("/");
@@ -395,7 +361,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                for (let i = 0; i < length;)
                {
-                  const f = field [field .length];
+                  const
+                     l = field .length ++,
+                     f = field [l];
 
                   for (const key in f)
                      f [key] = value [i ++];
@@ -414,16 +382,17 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                for (let i = 0; i < length;)
                {
                   const
-                     f = field [field .length],
+                     l = field .length ++,
+                     f = field [l],
                      a = f .array;
 
                   f .width  = value [i ++];
                   f .height = value [i ++];
                   f .comp   = value [i ++];
 
-                  const l = a .length;
+                  const p = a .length;
 
-                  for (let k = 0; k < l; ++ k)
+                  for (let k = 0; k < p; ++ k)
                      a [k] = value [i ++];
                }
 
@@ -649,29 +618,32 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (!generator .string .match (/^$|[ \t\r\n,\[\]\{\}]$/))
          generator .string += generator .Space ();
 
-      const name = generator .Name (this);
-
-      if (name .length)
+      if (generator .outputNames)
       {
-         if (generator .ExistsNode (this))
+         const name = generator .Name (this);
+
+         if (name .length)
          {
-            generator .string += "USE";
+            if (generator .ExistsNode (this))
+            {
+               generator .string += "USE";
+               generator .string += generator .Space ();
+               generator .string += name;
+
+               generator .LeaveScope ();
+               return;
+            }
+         }
+
+         if (name .length)
+         {
+            generator .AddNode (this);
+
+            generator .string += "DEF";
             generator .string += generator .Space ();
             generator .string += name;
-
-            generator .LeaveScope ();
-            return;
+            generator .string += generator .Space ();
          }
-      }
-
-      if (name .length)
-      {
-         generator .AddNode (this);
-
-         generator .string += "DEF";
-         generator .string += generator .Space ();
-         generator .string += name;
-         generator .string += generator .Space ();
       }
 
       generator .string += this .getTypeName ();
@@ -776,11 +748,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          let
             index                  = 0,
-            initializableReference = false;
+            initializableReferences = false;
 
          for (const reference of field .getReferences ())
          {
-            initializableReference = initializableReference || reference .isInitializable ();
+            initializableReferences ||= reference .isInitializable ();
 
             // Output user defined reference field
 
@@ -801,7 +773,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                generator .string += generator .Break ();
          }
 
-         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
+         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReferences && !field .isDefaultValue ())
          {
             generator .string += generator .Break ();
             generator .string += generator .Indent ();
@@ -839,11 +811,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          let
             index                  = 0,
-            initializableReference = false;
+            initializableReferences = false;
 
          for (const reference of field .getReferences ())
          {
-            initializableReference = initializableReference || reference .isInitializable ();
+            initializableReferences ||= reference .isInitializable ();
 
             // Output build in reference field
 
@@ -860,7 +832,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                generator .string += generator .Break ();
          }
 
-         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
+         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReferences && !this .isDefaultValue (field))
          {
             // Output build in field
 
@@ -1099,6 +1071,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                   if (!field .isInitializable () || field .isDefaultValue ())
                   {
+                     generator .XMLAppInfo (field);
+                     generator .XMLDocumentation (field);
+
                      generator .string += generator .closingTags ? "></field>" : "/>";
                      generator .string += generator .TidyBreak ();
                   }
@@ -1111,6 +1086,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                         case X3DConstants .SFNode:
                         case X3DConstants .MFNode:
                         {
+                           generator .XMLAppInfo (field);
+                           generator .XMLDocumentation (field);
                            generator .PushContainerField (null);
 
                            generator .string += ">";
@@ -1139,6 +1116,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                            field .toXMLStream (generator);
 
                            generator .string += "'";
+
+                           generator .XMLAppInfo (field);
+                           generator .XMLDocumentation (field);
+
                            generator .string += generator .closingTags ? "></field>" : "/>";
                            generator .string += generator .TidyBreak ();
                            break;
@@ -1150,6 +1131,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                {
                   if (generator .ExecutionContext ())
                      references .push (field);
+
+                  generator .XMLAppInfo (field);
+                  generator .XMLDocumentation (field);
 
                   generator .string += generator .closingTags ? "></field>" : "/>";
                   generator .string += generator .TidyBreak ();
@@ -1273,6 +1257,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             return;
          }
       }
+
 
       // Type name
 
@@ -1550,6 +1535,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   references .push (field);
             }
 
+            generator .JSONAppInfo (field);
+            generator .JSONDocumentation (field);
+
             generator .string += generator .TidyBreak ();
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
@@ -1710,7 +1698,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (this .getName ())
          executionContext .removeNamedNode (this .getName ())
 
-      if (executionContext .isScene ())
+      if (executionContext .isScene)
       {
          // Remove imported node if any.
 
@@ -1765,6 +1753,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          firstParent .setValue (null);
       }
 
+      SFNodeCache .delete (this);
+
       // Call super.dispose, where fields get disposed.
 
       X3DBaseNode .prototype .dispose .call (this);
@@ -1776,16 +1766,42 @@ for (const key of Object .keys (X3DNode .prototype))
 
 Object .defineProperties (X3DNode,
 {
-   typeName:
+   getStaticProperties:
    {
-      value: "X3DNode",
-      enumerable: true,
+      value (typeName, componentName, componentLevel, containerField, fromVersion, toVersion = "Infinity")
+      {
+         return {
+            typeName:
+            {
+               value: typeName,
+               enumerable: true,
+            },
+            componentInfo:
+            {
+               value: Object .freeze ({ name: componentName, level: componentLevel }),
+               enumerable: true,
+            },
+            ... containerField ?
+            {
+               containerField:
+               {
+                  value: containerField,
+                  enumerable: true,
+               },
+            } : { },
+            ... fromVersion && toVersion ?
+            {
+               specificationRange:
+               {
+                  value: Object .freeze ({ from: fromVersion, to: toVersion }),
+                  enumerable: true,
+               },
+            } : { },
+         };
+      },
    },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+})
+
+Object .defineProperties (X3DNode, X3DNode .getStaticProperties ("X3DNode", "Core", 1));
 
 export default X3DNode;

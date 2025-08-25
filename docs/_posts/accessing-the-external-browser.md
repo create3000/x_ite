@@ -19,9 +19,9 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ### Declarative Syntax
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
-<x3d-canvas>
-  <X3D profile='Interchange' version='4.0'>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
+<x3d-canvas update="auto" contentScale="auto">
+  <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
     </head>
@@ -54,40 +54,47 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 
 ### Pure JavaScript
 
-The same scene can also be created using pure JavaScript:
+The same scene can also be created using pure JavaScript.
+
+Outside of a [Script](/x_ite/components/scripting/script/) node context, you can access **all** objects through the X3D object, which can then be used as a namespace, eg. `new X3D .MFString ("foo")`. It is also possible to get a X3DBrowser reference with `X3D .getBrowser ()`, if there is already an \<x3d-canvas\> element on the page.
 
 ```html
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
 const
-   browser = X3D .getBrowser (),
-   scene   = browser .currentScene;
+  canvas  = document .createElement ("x3d-canvas"), // Or get an already inserted <x3d-canvas> element.
+  browser = canvas .browser,                        // Get X3DBrowser reference.
+  scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
-scene .setProfile (browser .getProfile ("Interchange"));
-scene .addComponent (browser .getComponent ("Interpolation", 1));
+// Append <x3d-canvas> element to body:
 
-await browser .loadComponents (scene);
+document .body .appendChild (canvas);
 
-// Viewpoint
+// Change Browser Options (this could also be done by setting the attributes of the canvas):
+
+browser .setBrowserOption ("AutoUpdate",   true); // Disable animations if <x3d-canvas> is not visible.
+browser .setBrowserOption ("ContentScale", -1);   // Increase resolution for HiDPI displays.
+
+// Create Viewpoint:
 
 const viewpointNode = scene .createNode ("Viewpoint");
 
-viewpointNode .set_bind    = true;
-viewpointNode .description = "Initial View";
+viewpointNode .set_bind    = true;           // Bind the viewpoint.
+viewpointNode .description = "Initial View"; // Appears now in the context menu.
 viewpointNode .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
 viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
 
 scene .rootNodes .push (viewpointNode);
 
-// Box
+// Create Box:
 
 const
-   transformNode  = scene .createNode ("Transform"),
-   shapeNode      = scene .createNode ("Shape"),
-   appearanceNode = scene .createNode ("Appearance"),
-   materialNode   = scene .createNode ("Material"),
-   boxNode        = scene .createNode ("Box");
+  transformNode  = scene .createNode ("Transform"),
+  shapeNode      = scene .createNode ("Shape"),
+  appearanceNode = scene .createNode ("Appearance"),
+  materialNode   = scene .createNode ("Material"),
+  boxNode        = scene .createNode ("Box");
 
 appearanceNode .material = materialNode;
 
@@ -101,11 +108,11 @@ scene .rootNodes .push (transformNode);
 // Give the node a name if you like.
 scene .addNamedNode ("Box", transformNode);
 
-// Animation
+// Create animation:
 
 const
-   timeSensorNode   = scene .createNode ("TimeSensor"),
-   interpolatorNode = scene .createNode ("OrientationInterpolator");
+  timeSensorNode   = scene .createNode ("TimeSensor"),
+  interpolatorNode = scene .createNode ("OrientationInterpolator");
 
 timeSensorNode .cycleInterval = 10;
 timeSensorNode .loop          = true;
@@ -113,26 +120,28 @@ timeSensorNode .loop          = true;
 for (let i = 0; i < 5; ++ i)
 {
   interpolatorNode .key [i]      = i / 4;
-  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI * i / 2);
+  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
 }
 
 scene .rootNodes .push (timeSensorNode, interpolatorNode);
 
-// Routes
+// Add routes:
 
 scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
 scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
+
+// Show scene.
+
+await browser .replaceWorld (scene);
 </script>
-<!-- x3d-canvas element comes here: -->
-<x3d-canvas></x3d-canvas>
 ```
 
 ### Example
 
 And here you can see the result:
 
-<x3d-canvas update="auto">
-  <X3D profile='Interchange' version='4.0'>
+<x3d-canvas update="auto" contentScale="auto">
+  <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
     </head>
@@ -162,125 +171,49 @@ And here you can see the result:
   </X3D>
 </x3d-canvas>
 
-## X3D Object
+### Connecting to Output Fields
 
-### Functions
-
-#### X3D **noConflict** ()
-
-In X_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
-
-If for some reason two versions of X_ITE are loaded (which is not recommended), calling `X3D .noConflict ()` from the second version will return the globally scoped `X3D` object to those of the first version.
-
-```html
-<script src="other_lib.js"></script>
-<script src="x_ite.js"></script>
-<script>
-const X_ITE_X3D = X3D .noConflict ();
-// Code that uses other library's X3D can follow here.
-</script>
-```
-
-The following services can be used to establish a session and obtain the X3DBrowser object.
-
-#### X3DBrowser **getBrowser** (*[selector : String]*)
-
-The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
+Sometimes it is needed to react on output events generated by a node. With X3D it is possible to connect a callback function to an output field to handle these events.
 
 ```js
-// Obtain X3DBrowser object of first x3d-canvas element.
-const Browser = X3D .getBrowser ();
-```
-
-#### X3DBrowser **getBrowser** (*element : Object*)
-
-Given a DOM element that represents a x3d-canvas element, the getBrowser function returns the appropriate X3DBrowser object.
-
-```js
-// Query all x3d-canvas elements within the HTML page.
-const canvases = document .querySelectorAll ("x3d-canvas");
-
-for (const canvas of canvases)
+// Add a field callback to be notified when touchTime is fired. "on" is an
+// arbitrary string to identify the callback, especially if you want to
+// remove the callback later.
+touchSensorNode .addFieldCallback ("on", "touchTime", value =>
 {
-  // Obtain X3DBrowser object of element i.
-  const Browser = X3D .getBrowser (canvas);
-  ...
-}
+  // X3D time values are in seconds!
+  console .log (`touchTime: ${value}`);
+
+  // Pause or resume the animation.
+  if (timeSensorNode .isPaused)
+    timeSensorNode .resumeTime = value;
+  else
+    timeSensorNode .pauseTime = value;
+});
 ```
 
-#### Object **createBrowser** ()
+### Get Access to a Specific Node Quickly
 
-Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
+If you have given a (DEF) name to a node, you can access this node later using `getNamedNode` of an X3DExecutionContext, where each X3DScene is derived from an X3DExecutionContext.
 
 ```js
-function addBrowser (parent)
-{
-   // Create a new x3d-canvas element.
-   const canvas = X3D .createBrowser ();
+// Get Transform node named "Box".
+const transformNode = scene .getNamedNode ("Box");
 
-   canvas .setAttribute ("src", "/my/world.x3d");
-
-   parent .appendChild (canvas);
-}
+transformNode .translation = new X3D .SFVec3f (1, 2, 3);
 ```
 
-### Objects
-
-The X3D object has several properties, you can use any of the properties below.
-
-#### **X3DConstants**
-
-The X3DConstants object defines values that can be useful for scripting. See also [Constants Services](/x_ite/reference/constants-services/).
-
-```js
-function foo (node)
-{
-  // Get node type array.
-
-  const types = node .getNodeType () .reverse ();
-
-  // Iterate over node type array in reverse order with
-  // concrete node types as first and abstract node
-  // types as last index.
-
-  for (const type of types)
-  {
-    switch (type)
-    {
-      case X3D .X3DConstants .Transform:
-        // node is of type Transform.
-        ...
-        break;
-      case X3D .X3DConstants .X3DLightNode:
-        //  node is at least of type X3DLightNode.
-        ...
-        break;
-    }
-  }
-}
-```
-
-#### **X3DFields**
-
-All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as constructor. See also [Field Services and Objects](/x_ite/reference/field-services-and-objects/).
-
->**Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
-{: .prompt-info }
-
-```js
-// Create a new translation vector and
-// determine the length of this vector.
-
-const
-  translation = new X3D .SFVec3f (4, 2, 0),
-  length      = translation .length ();
-```
-
-## Function Reference
+### Documentation
 
 A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found in [ECMAScript Object and Function Definitions](/x_ite/reference/ecmascript-object-and-function-definitions/).
 
-## Example
+## Second Example
+
+This example is a demonstration of how to control an X3D scene externally using JavaScript and HTML elements. It embeds an X3D scene ("adrenaline.x3d") within an \<x3d-canvas\> element and provides interactive controls like buttons and dropdown menus.
+
+The JavaScript code imports the X_ITE library to access and manipulate the X3D browser and its scene graph. Users can interact with these controls to change the viewpoint, modify the appearance of objects (styles), alter the background color, and control an animation within the 3D scene.
+
+Essentially, it showcases the X_ITE library's capabilities for integrating and controlling 3D content within a standard web page.
 
 <iframe src="https://create3000.github.io/media/x_ite/external-browser/adrenaline.html"></iframe>
 
@@ -289,38 +222,48 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 ### The JavaScript
 
 ```html
-<script>
+<script defer src="https://code.jquery.com/jquery-latest.js"></script>
+<script type="module">
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
+
+// Get X3DBrowser instance from x3d-canvas with class "browser".
+const Browser = X3D .getBrowser (".browser");
+
+// Fires when scene is loaded.
+Browser .addBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT, init);
+
 function init ()
 {
   const
-    Browser = X3D .getBrowser (".browser"),               // Get the browser instance.
-    scene   = Browser .currentScene,                      // Get the scene.
-    timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
+    scene = Browser .currentScene,                      // Get the scene.
+    timer = scene .getNamedNode ("SpinAnimationTimer"); // Get box TimeSensor node.
 
-  // Add field callback to get informed when cycleTime is fired. "time" is an arbitrary
-  // string to identify the callback, for instance if you later want to remove the callback.
-  timer .getField ("cycleTime") .addFieldCallback ("time", value =>
+  $("#center")            .on ("click",  center);
+  $("#change-style")      .on ("change", changeStyle);
+  $("#change-background") .on ("change", changeBackground);
+  $("#spin")              .on ("click",  spin);
+
+  // Connect to cycleTime events.
+  timer .addFieldCallback ("check", "cycleTime", value =>
   {
-    console .log ("cycleTime: " + value);
+    console .log (`cycleTime: ${value}`);
   });
 
   changeStyle ();
   changeBackground ();
-}
+};
 
 function center ()
 {
-  const Browser = X3D .getBrowser (".browser"); // Get the browser instance.
-
+  // Rebind viewpoint and remove user offsets.
   Browser .changeViewpoint ("Viewpoint");
 }
 
 function changeStyle ()
 {
   const
-    Browser    = X3D .getBrowser (".browser"),            // Get the browser instance.
-    scene      = Browser .currentScene,                   // Get the scene.
-    switchNode = scene .getNamedNode ("Adrenaline");      // Get Switch node.
+    scene      = Browser .currentScene,              // Get the scene.
+    switchNode = scene .getNamedNode ("Adrenaline"); // Get Switch node.
 
   // Change styles.
 
@@ -330,9 +273,8 @@ function changeStyle ()
 function changeBackground ()
 {
   const
-    Browser        = X3D .getBrowser (".browser"),            // Get the browser instance.
-    scene          = Browser .currentScene,                   // Get the scene.
-    backgroundNode = scene .getNamedNode ("Background");      // Get Background node.
+    scene          = Browser .currentScene,              // Get the scene.
+    backgroundNode = scene .getNamedNode ("Background"); // Get Background node.
 
   switch (parseInt ($("#change-background") .val ()))
   {
@@ -341,16 +283,15 @@ function changeBackground ()
       break;
     case 1:
       backgroundNode .skyColor [0] = new X3D .SFColor (0, 0, 0);
-     break;
+      break;
   }
 }
 
 function spin ()
 {
   const
-    Browser = X3D .getBrowser (".browser"),               // Get the browser instance.
-    scene   = Browser .currentScene,                      // Get the scene.
-    timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get TimeSensor node.
+    scene = Browser .currentScene,                      // Get the scene.
+    timer = scene .getNamedNode ("SpinAnimationTimer"); // Get TimeSensor node.
 
   if (timer .isPaused)
     timer .resumeTime = Date .now () / 1000;
@@ -363,26 +304,30 @@ function spin ()
 ### The HTML
 
 ```html
-<x3d-canvas src="external-browser.x3d" onload="init ()"></x3d-canvas>
+<x3d-canvas src="external-browser.x3d"></x3d-canvas>
 
 <div class="buttons">
-  <button id="center" class="button" onclick="center ()">Center</button>
-  <select id="change-style" class="button" onchange="changeStyle ()">
+  <button id="center" class="button">Center</button>
+  <select id="change-style" class="button">
     <option value="0">Balls</option>
     <option value="1">Sticks And Balls</option>
     <option value="2">Sticks</option>
     <option value="3">Line</option>
   </select>
-  <select id="change-background" class="button" onchange="changeBackground ()">
+  <select id="change-background" class="button">
     <option value="0">White Background</option>
     <option value="1">Black Background</option>
   </select>
-  <button id="spin" class="button" onclick="spin ()">Spin</button>
+  <button id="spin" class="button">Spin</button>
 </div>
 ```
 
 The init function is called when the scene is loaded and installs a field callback that is called when the models are clicked. The various callback functions first obtains the different nodes and then alter a field of the nodes.
 
-### The HTML and X3D
+### Download
 
-The scene defines different named nodes with the »DEF« attribute, which can be accessed later. Download [adrenaline.html](https://create3000.github.io/media/x_ite/external-browser/adrenaline.html){: download="adrenaline.html" } and [adrenaline.x3d](https://create3000.github.io/media/x_ite/external-browser/adrenaline.x3d){: download="adrenaline.x3d" }.
+The scene defines different named nodes with the »DEF« attribute, which can be accessed later. Download <a download href="https://create3000.github.io/media/x_ite/external-browser/adrenaline.html">adrenaline.html</a> and <a download href="https://create3000.github.io/media/x_ite/external-browser/adrenaline.x3d">adrenaline.x3d</a>.
+
+## See Also
+
+* Another good example of using an external script is [Area Chart](/x_ite/laboratory/area-chart/). Here an entire scene is generated from data using only JavaScript.

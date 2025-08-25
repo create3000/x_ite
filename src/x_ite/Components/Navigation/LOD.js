@@ -1,55 +1,8 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
-import X3DCast              from "../../Base/X3DCast.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
@@ -60,6 +13,8 @@ function LOD (executionContext)
    X3DGroupingNode .call (this, executionContext);
 
    this .addType (X3DConstants .LOD);
+
+   this .setVisibleObject (true);
 
    // Units
 
@@ -73,121 +28,55 @@ function LOD (executionContext)
 
    // Private properties
 
-   this .frameRate        = 60;
-   this .keepCurrentLevel = false;
-   this .childNode        = null;
-   this .visibleNode      = null;
-   this .boundedObject    = null;
+   this .frameRate = 60;
 }
 
 Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototype),
 {
-   initialize ()
+   addChildren ()
+   { },
+   removeChildren ()
+   { },
+   set_addChildren__ ()
    {
-      X3DGroupingNode .prototype .initialize .call (this);
+      X3DGroupingNode .prototype .set_addChildren__ .call (this);
 
-      this ._children .addInterest ("set_child__", this);
+      this .set_children__ ();
    },
-   getSubBBox (bbox, shadows)
+   set_removeChildren__ ()
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-      {
-         const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
+      X3DGroupingNode .prototype .set_removeChildren__ .call (this);
 
-         return boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
-      }
-
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      this .set_children__ ();
    },
-   clear () { },
-   add () { },
-   remove () { },
-   set_child__ ()
+   set_children__ ()
    {
-      this .set_level__ (Math .min (this ._level_changed .getValue (), this ._children .length - 1));
-   },
-   set_level__ (level)
-   {
-      if (this .childNode)
-      {
-         this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
-         this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
-      }
+      this .clearChildren ();
 
-      if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-      {
-         this .childNode ._display     .removeInterest ("set_display__",     this);
-         this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
-      }
+      // Add single child.
+
+      const level = Math .min (this ._level_changed .getValue (), this ._children .length - 1);
 
       if (level >= 0 && level < this ._children .length)
-      {
-         this .childNode = X3DCast (X3DConstants .X3DChildNode, this ._children [level]);
+         this .addChild (this ._children [level]);
 
-         if (this .childNode)
-         {
-            this .childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
-            this .childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
-
-            if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-            {
-               this .childNode ._display     .addInterest ("set_display__",     this);
-               this .childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
-            }
-
-            //delete this .traverse;
-         }
-      }
-      else
-      {
-         this .childNode = null;
-
-         //this .traverse = Function .prototype; // Don't do that.
-      }
-
-      this .set_display__ ();
-      this .set_bboxDisplay__ ();
+      this .set_objects__ ();
    },
-   set_cameraObject__ ()
-   {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
-   },
-   set_transformSensors__ ()
-   {
-      this .setPickableObject (this .getTransformSensors () .size || this .visibleNode ?.isPickableObject ());
-   },
-   set_display__ ()
-   {
-      if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-         this .visibleNode = this .childNode ._display .getValue () ? this .childNode : null;
-      else
-         this .visibleNode = this .childNode;
-
-      this .set_cameraObject__ ();
-      this .set_transformSensors__ ();
-   },
-   set_bboxDisplay__ ()
-   {
-      if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-      {
-         this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
-      }
-      else
-      {
-         this .boundedObject = null;
-      }
-   },
+   set_visibleObjects__ ()
+   { },
    getLevel: (() =>
    {
       const
-         FRAMES         = 180, // Number of frames after wich a level change takes in affect.
+         FRAMES         = 180, // Number of frames after which a level change takes in affect.
          FRAME_RATE_MIN = 20,  // Lowest level of detail.
          FRAME_RATE_MAX = 55;  // Highest level of detail.
 
-      return function (browser, modelViewMatrix)
+      return function (modelViewMatrix)
       {
          if (this ._range .length === 0)
          {
+            const browser = this .getBrowser ();
+
             this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 
             const size = this ._children .length;
@@ -209,115 +98,50 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
             }
          }
 
-         const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .magnitude ();
+         const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .norm ();
 
          return Algorithm .upperBound (this ._range, 0, this ._range .length, distance);
       };
    })(),
-   traverse: (() =>
+   changeLevel: (() =>
    {
       const modelViewMatrix = new Matrix4 ();
 
-      return function (type, renderObject)
+      return function (renderObject)
       {
-         switch (type)
+         const currentLevel = this ._level_changed .getValue ();
+
+         let level = this .getLevel (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+
+         if (this ._forceTransitions .getValue ())
          {
-            case TraverseType .POINTER:
-            case TraverseType .CAMERA:
-            case TraverseType .SHADOW:
-            {
-               this .visibleNode ?.traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .PICKING:
-            {
-               if (this .getTransformSensors () .size)
-               {
-                  const modelMatrix = renderObject .getModelViewMatrix () .get ();
+            if (level > currentLevel)
+               level = currentLevel + 1;
 
-                  for (const transformSensorNode of this .getTransformSensors ())
-                     transformSensorNode .collect (modelMatrix);
-               }
-
-               const visibleNode = this .visibleNode;
-
-               if (visibleNode)
-               {
-                  const
-                     browser          = this .getBrowser (),
-                     pickingHierarchy = browser .getPickingHierarchy ();
-
-                  pickingHierarchy .push (this);
-
-                  visibleNode .traverse (type, renderObject);
-
-                  pickingHierarchy .pop ();
-               }
-
-               return;
-            }
-            case TraverseType .COLLISION:
-            {
-               this .visibleNode ?.traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .DISPLAY:
-            {
-               if (! this .keepCurrentLevel)
-               {
-                  let
-                     level        = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-                     currentLevel = this ._level_changed .getValue ();
-
-                  if (this ._forceTransitions .getValue ())
-                  {
-                     if (level > currentLevel)
-                        level = currentLevel + 1;
-
-                     else if (level < currentLevel)
-                        level = currentLevel - 1;
-                  }
-
-                  if (level !== currentLevel)
-                  {
-                     this ._level_changed = level;
-
-                     this .set_level__ (Math .min (level, this ._children .length - 1));
-                  }
-               }
-
-               this .visibleNode ?.traverse (type, renderObject);
-
-               this .boundedObject ?.displayBBox (type, renderObject);
-               return;
-            }
+            else if (level < currentLevel)
+               level = currentLevel - 1;
          }
+
+         if (level === currentLevel)
+            return;
+
+         this ._level_changed = level;
+
+         this .set_children__ ();
       };
    })(),
+   traverse (type, renderObject)
+   {
+      if (type === TraverseType .DISPLAY)
+         this .changeLevel (renderObject);
+
+      X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+   },
 });
 
 Object .defineProperties (LOD,
 {
-   typeName:
-   {
-      value: "LOD",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("LOD", "Navigation", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

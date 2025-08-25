@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DPickSensorNode    from "./X3DPickSensorNode.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
@@ -64,9 +18,10 @@ function PointPickSensor (executionContext)
 
    this .addType (X3DConstants .PointPickSensor);
 
-   this .pickingGeometryNode = null;
-   this .picker              = new VolumePicker ();
-   this .compoundShapes      = [ ];
+   // Private properties
+
+   this .picker         = new VolumePicker ();
+   this .compoundShapes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSensorNode .prototype),
@@ -98,58 +53,43 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
 
       return function ()
       {
-         const compoundShapes = this .compoundShapes;
+         const
+            compoundShapes = this .compoundShapes,
+            coord          = this .pickingGeometryNode ?.getCoord (),
+            length         = coord ?.getSize () ?? 0;
 
-         if (this .pickingGeometryNode)
+         for (let i = 0; i < length; ++ i)
          {
-            const coord = this .pickingGeometryNode .getCoord ();
-
-            if (coord)
+            if (i < compoundShapes .length)
             {
-               const length = coord .getSize ();
+               const
+                  compoundShape = compoundShapes [i],
+                  point         = coord .get1Point (i, compoundShape .point);
 
-               for (let i = 0; i < length; ++ i)
-               {
-                  if (i < compoundShapes .length)
-                  {
-                     const
-                        compoundShape = compoundShapes [i],
-                        point         = coord .get1Point (i, compoundShape .point);
+               o .setValue (point .x, point .y, point .z);
+               t .setOrigin (o);
 
-                     o .setValue (point .x, point .y, point .z);
-                     t .setOrigin (o);
-
-                     compoundShape .setLocalScaling (defaultScale);
-                     compoundShape .updateChildTransform (0, t);
-                  }
-                  else
-                  {
-                     const
-                        compoundShape = new Ammo .btCompoundShape (),
-                        sphereShape   = new Ammo .btSphereShape (0),
-                        point         = coord .get1Point (i, new Vector3 ());
-
-                     compoundShape .point = point;
-
-                     o .setValue (point .x, point .y, point .z);
-                     t .setOrigin (o);
-
-                     compoundShape .addChildShape (t, sphereShape);
-                     compoundShapes .push (compoundShape);
-                  }
-               }
-
-               compoundShapes .length = length;
+               compoundShape .setLocalScaling (defaultScale);
+               compoundShape .updateChildTransform (0, t);
             }
             else
             {
-               compoundShapes .length = 0;
+               const
+                  compoundShape = new Ammo .btCompoundShape (),
+                  sphereShape   = new Ammo .btSphereShape (0),
+                  point         = coord .get1Point (i, new Vector3 ());
+
+               compoundShape .point = point;
+
+               o .setValue (point .x, point .y, point .z);
+               t .setOrigin (o);
+
+               compoundShape .addChildShape (t, sphereShape);
+               compoundShapes .push (compoundShape);
             }
          }
-         else
-         {
-            compoundShapes .length = 0;
-         }
+
+         compoundShapes .length = length;
       };
    })(),
    process: (() =>
@@ -163,7 +103,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
          localScaling  = new Ammo .btVector3 (),
          translation   = new Vector3 (),
          rotation      = new Rotation4 (),
-         scale         = new Vector3 (1, 1, 1),
+         scale         = new Vector3 (1),
          pickedPoint   = new Fields .MFVec3f ();
 
       return function ()
@@ -180,16 +120,12 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                {
                   // Intersect bboxes.
 
-                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (const modelMatrix of modelMatrices)
                   {
-                     const modelMatrix = modelMatrices [m];
-
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (const target of targets)
                      {
-                        const target = targets [t];
-
                         targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
                         if (pickingBBox .intersectsBox (targetBBox))
@@ -227,10 +163,8 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                      picker         = this .picker,
                      compoundShapes = this .compoundShapes;
 
-                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (const modelMatrix of modelMatrices)
                   {
-                     const modelMatrix = modelMatrices [m];
-
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
                      modelMatrix .get (translation, rotation, scale);
@@ -238,17 +172,13 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                      picker .getTransform (translation, rotation, transform);
                      localScaling .setValue (scale .x, scale .y, scale .z);
 
-                     for (let c = 0, cLength = compoundShapes .length; c < cLength; ++ c)
+                     for (const compoundShape of compoundShapes)
                      {
-                        const compoundShape = compoundShapes [c];
-
                         picker .setChildShape1Components (transform, localScaling, compoundShape);
 
-                        for (let t = 0, tLength = targets .size; t < tLength; ++ t)
+                        for (const target of targets)
                         {
-                           const
-                              target      = targets [t],
-                              targetShape = this .getPickShape (target .geometryNode);
+                           const targetShape = this .getPickShape (target .geometryNode);
 
                            targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
@@ -285,12 +215,10 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
 
                   pickedPoint .length = 0;
 
-                  for (let t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
+                  for (const pickedTarget of pickedTargets)
                   {
-                     const pp = pickedTargets [t] .pickedPoint;
-
-                     for (let p = 0, pLength = pp .length; p < pLength; ++ p)
-                        pickedPoint .push (pp [p]);
+                     for (const pp of pickedTarget .pickedPoint)
+                        pickedPoint .push (pp);
                   }
 
                   if (!this ._pickedPoint .equals (pickedPoint))
@@ -308,26 +236,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
 
 Object .defineProperties (PointPickSensor,
 {
-   typeName:
-   {
-      value: "PointPickSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("PointPickSensor", "Picking", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
@@ -338,10 +247,10 @@ Object .defineProperties (PointPickSensor,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",   new Fields .SFString ("MATCH_ANY")),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedPoint",      new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",       new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedPoint",      new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",   new Fields .MFNode ()),
       ]),
       enumerable: true,

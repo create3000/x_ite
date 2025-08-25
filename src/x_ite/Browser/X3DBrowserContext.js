@@ -1,51 +1,4 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-import SFTime                         from "../Fields/SFTime.js";
+import Fields                         from "../Fields.js";
 import X3DConstants                   from "../Base/X3DConstants.js";
 import X3DBaseNode                    from "../Base/X3DBaseNode.js";
 import X3DCoreContext                 from "./Core/X3DCoreContext.js";
@@ -74,59 +27,61 @@ import StopWatch                      from "../../standard/Time/StopWatch.js";
 import DEVELOPMENT                    from "../DEVELOPMENT.js";
 
 const
-   _world           = Symbol (),
-   _tainted         = Symbol (),
-   _limitFrameRate  = Symbol (),
-   _traverse        = Symbol (),
-   _renderCallback  = Symbol (),
-   _animFrame       = Symbol (),
-   _previousTime    = Symbol (),
-   _systemTime      = Symbol (),
-   _browserTime     = Symbol (),
-   _cameraTime      = Symbol (),
-   _collisionTime   = Symbol (),
-   _displayTime     = Symbol (),
-   _processEvents   = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
+   _world          = Symbol (),
+   _tainted        = Symbol (),
+   _limitFrameRate = Symbol (),
+   _traverse       = Symbol (),
+   _renderCallback = Symbol (),
+   _animFrame      = Symbol (),
+   _previousTime   = Symbol (),
+   _systemTime     = Symbol (),
+   _browserTime    = Symbol (),
+   _cameraTime     = Symbol (),
+   _collisionTime  = Symbol (),
+   _displayTime    = Symbol (),
+   _processEvents  = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 const
    browsers        = new Set (),
-   browserContexts = [ ];
+   browserContexts = [
+      X3DRoutingContext,
+      X3DScriptingContext,
+      X3DCoreContext,
+      X3DNetworkingContext,
+      X3DTexturingContext,
+      X3DShadersContext,
+      X3DRenderingContext,
+      X3DShapeContext,
+      X3DGroupingContext,
+      X3DGeometry3DContext,
+      X3DPointingDeviceSensorContext,
+      X3DNavigationContext,
+      X3DLayeringContext,
+      X3DEnvironmentalEffectsContext,
+      X3DLightingContext,
+      X3DPickingContext,
+      X3DSoundContext,
+      X3DTimeContext,
+   ];
 
 function X3DBrowserContext (element)
 {
-   X3DBaseNode                    .call (this, this);
-   X3DRoutingContext              .call (this);
-   X3DScriptingContext            .call (this);
-   X3DCoreContext                 .call (this, element);
-   X3DNetworkingContext           .call (this);
-   X3DTexturingContext            .call (this);
-   X3DShadersContext              .call (this);
-   X3DRenderingContext            .call (this);
-   X3DShapeContext                .call (this);
-   X3DGroupingContext             .call (this);
-   X3DGeometry3DContext           .call (this);
-   X3DPointingDeviceSensorContext .call (this);
-   X3DNavigationContext           .call (this);
-   X3DLayeringContext             .call (this);
-   X3DEnvironmentalEffectsContext .call (this);
-   X3DLightingContext             .call (this);
-   X3DPickingContext              .call (this);
-   X3DSoundContext                .call (this);
-   X3DTimeContext                 .call (this);
-
    browsers .add (this);
 
-   for (const browserContext of browserContexts)
-      browserContext .call (this);
+   X3DBaseNode .call (this, this);
 
-   this .addChildObjects (X3DConstants .outputOnly, "initialized",    new SFTime (),
-                          X3DConstants .outputOnly, "shutdown",       new SFTime (),
-                          X3DConstants .outputOnly, "prepareEvents",  new SFTime (),
-                          X3DConstants .outputOnly, "timeEvents",     new SFTime (),
-                          X3DConstants .outputOnly, "sensorEvents",   new SFTime (),
-                          X3DConstants .outputOnly, "displayEvents",  new SFTime (),
-                          X3DConstants .outputOnly, "finishedEvents", new SFTime (),
-                          X3DConstants .outputOnly, "endEvents",      new SFTime ());
+   for (const browserContext of browserContexts)
+      browserContext .call (this, element);
+
+   this .addChildObjects (X3DConstants .outputOnly, "initialized",    new Fields .SFTime (),
+                          X3DConstants .outputOnly, "shutdown",       new Fields .SFTime (),
+                          X3DConstants .outputOnly, "prepareEvents",  new Fields .SFTime (),
+                          X3DConstants .outputOnly, "timeEvents",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "cameraEvents",   new Fields .SFTime (),
+                          X3DConstants .outputOnly, "sensorEvents",   new Fields .SFTime (),
+                          X3DConstants .outputOnly, "displayEvents",  new Fields .SFTime (),
+                          X3DConstants .outputOnly, "finishedEvents", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "endEvents",      new Fields .SFTime ());
 
    this [_tainted]        = false;
    this [_previousTime]   = 0;
@@ -139,46 +94,11 @@ function X3DBrowserContext (element)
 };
 
 Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNode .prototype),
-   X3DCoreContext .prototype,
-   X3DEnvironmentalEffectsContext .prototype,
-   X3DGeometry3DContext .prototype,
-   X3DGroupingContext .prototype,
-   X3DLayeringContext .prototype,
-   X3DLightingContext .prototype,
-   X3DNavigationContext .prototype,
-   X3DNetworkingContext .prototype,
-   X3DPickingContext .prototype,
-   X3DPointingDeviceSensorContext .prototype,
-   X3DRenderingContext .prototype,
-   X3DRoutingContext .prototype,
-   X3DScriptingContext .prototype,
-   X3DShadersContext .prototype,
-   X3DShapeContext .prototype,
-   X3DSoundContext .prototype,
-   X3DTexturingContext .prototype,
-   X3DTimeContext .prototype,
+   ... browserContexts .map (browserContext => browserContext .prototype),
 {
    initialize ()
    {
-      X3DBaseNode                    .prototype .initialize ?.call (this);
-      X3DRoutingContext              .prototype .initialize ?.call (this);
-      X3DScriptingContext            .prototype .initialize ?.call (this);
-      X3DCoreContext                 .prototype .initialize ?.call (this);
-      X3DNetworkingContext           .prototype .initialize ?.call (this);
-      X3DTexturingContext            .prototype .initialize ?.call (this);
-      X3DShadersContext              .prototype .initialize ?.call (this);
-      X3DRenderingContext            .prototype .initialize ?.call (this);
-      X3DShapeContext                .prototype .initialize ?.call (this);
-      X3DGroupingContext             .prototype .initialize ?.call (this);
-      X3DGeometry3DContext           .prototype .initialize ?.call (this);
-      X3DPointingDeviceSensorContext .prototype .initialize ?.call (this);
-      X3DNavigationContext           .prototype .initialize ?.call (this);
-      X3DLayeringContext             .prototype .initialize ?.call (this);
-      X3DEnvironmentalEffectsContext .prototype .initialize ?.call (this);
-      X3DLightingContext             .prototype .initialize ?.call (this);
-      X3DPickingContext              .prototype .initialize ?.call (this);
-      X3DSoundContext                .prototype .initialize ?.call (this);
-      X3DTimeContext                 .prototype .initialize ?.call (this);
+      X3DBaseNode .prototype .initialize .call (this);
 
       for (const browserContext of browserContexts)
          browserContext .prototype .initialize ?.call (this);
@@ -198,6 +118,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    timeEvents ()
    {
       return this ._timeEvents;
+   },
+   cameraEvents ()
+   {
+      return this ._cameraEvents;
    },
    sensorEvents ()
    {
@@ -229,8 +153,21 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    },
    setExecutionContext (executionContext)
    {
+      this .getDefaultScene () .setExecutionContext (executionContext);
+
       this [_world] = new X3DWorld (executionContext);
       this [_world] .setup ();
+      this [_world] .bindBindables ();
+   },
+   setSession (session)
+   {
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
+
+      X3DRenderingContext .prototype .setSession .call (this, session);
+
+      this [_tainted] = false;
+
+      this .addBrowserEvent ();
    },
    addBrowserEvent ()
    {
@@ -238,7 +175,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
          return;
 
       this [_tainted]   = true;
-      this [_animFrame] = requestAnimationFrame (this [_renderCallback]);
+      this [_animFrame] = this .getSession () .requestAnimationFrame (this [_renderCallback]);
    },
    nextFrame ()
    {
@@ -266,12 +203,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       }
       else
       {
-         requestAnimationFrame (this [_renderCallback]);
+         this .getSession () .requestAnimationFrame (this [_renderCallback]);
 
          return true;
       }
    },
-   [_traverse] (now)
+   [_traverse] (now, frame)
    {
       // Limit frame rate.
 
@@ -286,6 +223,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       // Time
 
       this .advanceTime ();
+      this .xrFrame (frame);
 
       // Events
 
@@ -300,6 +238,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_cameraTime] .start ();
       this [_world] .traverse (TraverseType .CAMERA);
       this [_cameraTime] .stop ();
+
+      this .addTaintedField (this ._cameraEvents);
+      this [_processEvents] ();
 
       // Collision
 
@@ -321,13 +262,17 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .addTaintedField (this ._displayEvents);
       this [_processEvents] ();
 
-      this .getFrameBuffer () .clear ();
+      for (const frameBuffer of this .getFramebuffers ())
+         frameBuffer .clear ();
+
       this [_world] .traverse (TraverseType .DISPLAY);
 
       this .addTaintedField (this ._finishedEvents);
       this [_processEvents] ();
 
-      this .getFrameBuffer () .blit ();
+      for (const frameBuffer of this .getFramebuffers ())
+         frameBuffer .blit ();
+
       this [_displayTime] .stop ();
 
       this .addTaintedField (this ._endEvents);
@@ -362,34 +307,14 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       browsers .delete (this);
 
-      for (const browserContext of browserContexts)
-         browserContext .prototype .dispose ?.call (this);
-
-      X3DTimeContext                 .prototype .dispose ?.call (this);
-      X3DSoundContext                .prototype .dispose ?.call (this);
-      X3DPickingContext              .prototype .dispose ?.call (this);
-      X3DLightingContext             .prototype .dispose ?.call (this);
-      X3DEnvironmentalEffectsContext .prototype .dispose ?.call (this);
-      X3DLayeringContext             .prototype .dispose ?.call (this);
-      X3DNavigationContext           .prototype .dispose ?.call (this);
-      X3DPointingDeviceSensorContext .prototype .dispose ?.call (this);
-      X3DGeometry3DContext           .prototype .dispose ?.call (this);
-      X3DGroupingContext             .prototype .dispose ?.call (this);
-      X3DShapeContext                .prototype .dispose ?.call (this);
-      X3DRenderingContext            .prototype .dispose ?.call (this);
-      X3DShadersContext              .prototype .dispose ?.call (this);
-      X3DTexturingContext            .prototype .dispose ?.call (this);
-      X3DNetworkingContext           .prototype .dispose ?.call (this);
-      X3DCoreContext                 .prototype .dispose ?.call (this);
-      X3DScriptingContext            .prototype .dispose ?.call (this);
-      X3DRoutingContext              .prototype .dispose ?.call (this);
-      X3DBaseNode                    .prototype .dispose ?.call (this);
-
       this [_tainted] = true;
 
-      cancelAnimationFrame (this [_animFrame]);
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
 
-      this .getContext () .getExtension ("WEBGL_lose_context") ?.loseContext ();
+      for (const browserContext of browserContexts .slice () .reverse ())
+         browserContext .prototype .dispose ?.call (this);
+
+      X3DBaseNode .prototype .dispose .call (this);
    },
 });
 

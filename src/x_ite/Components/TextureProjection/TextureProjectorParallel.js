@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                  from "../../Fields.js";
 import X3DFieldDefinition      from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray    from "../../Base/FieldDefinitionArray.js";
+import X3DNode                 from "../Core/X3DNode.js";
 import X3DTextureProjectorNode from "./X3DTextureProjectorNode.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 import Camera                  from "../../../standard/Math/Geometry/Camera.js";
@@ -83,20 +37,18 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .lightNode = lightNode;
       this .global    = lightNode .getGlobal ();
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
-      this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
+      this .modelViewMatrix .push (modelViewMatrix);
+      this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
-   { },
-   setGlobalVariables (renderObject)
    {
       const
          lightNode             = this .lightNode,
-         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
+         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .IDENTITY);
 
-      this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setFromToVec (Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -136,13 +88,23 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       if (!this .global)
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-      this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
-
-      this .matrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
-      this .matrixArray .set (this .matrix);
+      this .invTextureSpaceProjectionMatrix
+         .assign (invTextureSpaceMatrix)
+         .multRight (this .projectionMatrix)
+         .multRight (lightNode .getBiasMatrix ())
+         .multRight (this .textureMatrix);
 
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
+   },
+   setGlobalVariables (renderObject)
+   {
+      this .matrix
+         .assign (renderObject .getView () ?.inverse ?? Matrix4 .IDENTITY)
+         .multRight (renderObject .getCameraSpaceMatrixArray ())
+         .multRight (this .invTextureSpaceProjectionMatrix);
+
+      this .matrixArray .set (this .matrix);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {
@@ -152,8 +114,8 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTexture2DUnit ())
-            : this .browser .getTexture2DUnit ();
+            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
+            : this .browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
@@ -174,7 +136,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
    },
    dispose ()
    {
-      this .browser .pushTexture2DUnit (this .textureUnit);
+      this .browser .pushTextureUnit (this .textureUnit);
 
       this .modelViewMatrix .clear ();
 
@@ -189,6 +151,8 @@ function TextureProjectorParallel (executionContext)
    X3DTextureProjectorNode .call (this, executionContext);
 
    this .addType (X3DConstants .TextureProjectorParallel);
+
+   // Units
 
    this ._fieldOfView .setUnit ("length");
 }
@@ -205,12 +169,10 @@ Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3D
    },
    set_fieldOfView___ ()
    {
-      const length = this ._fieldOfView .length;
-
-      this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
-      this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
-      this .maximumX = (length > 2 ? this ._fieldOfView [2] :  1);
-      this .maximumY = (length > 3 ? this ._fieldOfView [3] :  1);
+      this .minimumX = this ._fieldOfView [0];
+      this .minimumY = this ._fieldOfView [1];
+      this .maximumX = this ._fieldOfView [2];
+      this .maximumY = this ._fieldOfView [3];
 
       this .sizeX = this .maximumX - this .minimumX;
       this .sizeY = this .maximumY - this .minimumY;
@@ -247,26 +209,7 @@ Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3D
 
 Object .defineProperties (TextureProjectorParallel,
 {
-   typeName:
-   {
-      value: "TextureProjectorParallel",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "TextureProjection", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("TextureProjectorParallel", "TextureProjection", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
@@ -281,7 +224,7 @@ Object .defineProperties (TextureProjectorParallel,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "upVector",         new Fields .SFVec3f (0, 0, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",      new Fields .MFFloat (-1, -1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",      new Fields .SFVec4f (-1, -1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "nearDistance",     new Fields .SFFloat (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "farDistance",      new Fields .SFFloat (-1)),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "aspectRatio",      new Fields .SFFloat ()),

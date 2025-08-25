@@ -32,7 +32,7 @@ An [AudioClip](/x_ite/components/sound/audioclip/) node creates a digital sound 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound>
   <AudioClip
       url='"myfile.mp3"'
@@ -43,7 +43,7 @@ An [AudioClip](/x_ite/components/sound/audioclip/) node creates a digital sound 
 </Sound>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {
@@ -67,7 +67,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node creates a movie
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound>
   <MovieTexture containerField='source'
       url='"movie.mp4"'
@@ -78,7 +78,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node creates a movie
 </Sound>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {
@@ -113,7 +113,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound
     location='0.0 0.0 0.0'
     direction='0.0 0.0 1.0'>
@@ -121,7 +121,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 </Sound>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {
@@ -139,7 +139,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound
     ...
     intensity='1.0'
@@ -148,7 +148,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 </Sound>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {
@@ -189,7 +189,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Group>
   <Shape>
     <Appearance>
@@ -210,7 +210,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 <ROUTE fromNode='C4' fromField='touchTime' toNode='PitchC4' toField='set_startTime'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Group {
@@ -242,7 +242,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/sound/sound.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/sound/screenshot.png" alt="Sound"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/sound/screenshot.avif" alt="Sound"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/sound/sound.zip)
@@ -267,7 +267,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 
 ### XML Encoding
 
-```xml
+```x3d
 <Sound
     minBack='5'
     minFront='5'>
@@ -283,7 +283,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Sound {

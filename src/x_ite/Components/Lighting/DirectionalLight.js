@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DLightNode         from "./X3DLightNode.js";
 import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
@@ -93,7 +47,7 @@ Object .assign (DirectionalLightContainer .prototype,
       this .groupNode = groupNode;
       this .global    = lightNode .getGlobal ();
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+      this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
 
@@ -114,9 +68,9 @@ Object .assign (DirectionalLightContainer .prototype,
          lightNode            = this .lightNode,
          cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .Identity);
+         invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .IDENTITY);
 
-      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
+      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
       invLightSpaceMatrix .inverse ();
 
       const
@@ -129,8 +83,8 @@ Object .assign (DirectionalLightContainer .prototype,
       this .shadowBuffer .bind ();
 
       renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-      renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
-      renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
+      renderObject .getProjectionMatrix () .push (projectionMatrix);
+      renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
       renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
@@ -150,7 +104,11 @@ Object .assign (DirectionalLightContainer .prototype,
       if (!this .shadowBuffer)
          return;
 
-      this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
+      this .shadowMatrix
+         .assign (renderObject .getView () ?.inverse ?? Matrix4 .IDENTITY)
+         .multRight (renderObject .getCameraSpaceMatrixArray ())
+         .multRight (this .invLightSpaceProjectionMatrix);
+
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
    setShaderUniforms (gl, shaderObject)
@@ -160,24 +118,12 @@ Object .assign (DirectionalLightContainer .prototype,
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTexture2DUnit ())
-            : this .browser .getTexture2DUnit ();
+            ? this .textureUnit ??= this .browser .popTextureUnit ()
+            : this .browser .getTextureUnit ();
 
-         if (textureUnit !== undefined)
-         {
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-
-            if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-            else
-               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-            gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
-         }
-         else
-         {
-            console .warn ("Not enough combined texture units for shadow map available.");
-         }
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
       }
 
       if (shaderObject .hasLight (i, this))
@@ -188,17 +134,17 @@ Object .assign (DirectionalLightContainer .prototype,
          color                   = lightNode .getColor ();
 
       gl .uniform1i (shaderObject .x3d_LightType [i],             1);
-      gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
+      gl .uniform3f (shaderObject .x3d_LightColor [i],            ... color);
       gl .uniform1f (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
       gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-      gl .uniform3f (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
+      gl .uniform3f (shaderObject .x3d_LightDirection [i],        ... direction);
       gl .uniform1f (shaderObject .x3d_LightRadius [i],           -1);
 
       if (this .shadowBuffer)
       {
          const shadowColor = lightNode .getShadowColor ();
 
-         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         ... shadowColor);
          gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
          gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
          gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
@@ -211,13 +157,25 @@ Object .assign (DirectionalLightContainer .prototype,
    },
    dispose ()
    {
-      this .browser .pushShadowBuffer (this .shadowBuffer);
-      this .browser .pushTexture2DUnit (this .textureUnit);
+      const { shadowBuffer } = this;
+
+      if (shadowBuffer)
+      {
+         const { browser, global } = this;
+
+         browser .pushShadowBuffer (shadowBuffer);
+
+         this .shadowBuffer = null;
+
+         if (global)
+         {
+            browser .pushTextureUnit (this .textureUnit);
+
+            this .textureUnit = undefined;
+         }
+      }
 
       this .modelViewMatrix .clear ();
-
-      this .shadowBuffer = null;
-      this .textureUnit  = undefined;
 
       // Return container
 
@@ -233,7 +191,7 @@ function DirectionalLight (executionContext)
 
    // Legacy
 
-   if (executionContext .getSpecificationVersion () == 2.0)
+   if (executionContext .getSpecificationVersion () <= 3.0)
       this ._global = true;
 }
 
@@ -247,26 +205,7 @@ Object .assign (Object .setPrototypeOf (DirectionalLight .prototype, X3DLightNod
 
 Object .defineProperties (DirectionalLight,
 {
-   typeName:
-   {
-      value: "DirectionalLight",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("DirectionalLight", "Lighting", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

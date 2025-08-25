@@ -16,12 +16,12 @@ A [Color](/x_ite/components/rendering/color/) node contains a list of RGB values
 
 ### XML Encoding
 
-```xml
+```x3d
 <Color
     color='1.0 0.0 0.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Color {
@@ -47,7 +47,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <PointSet>
@@ -57,7 +57,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -79,7 +79,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedLineSet
@@ -92,7 +92,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -124,7 +124,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedFaceSet
@@ -137,7 +137,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -151,6 +151,16 @@ Shape {
   }
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/colors1/colors1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/colors1/screenshot.avif" alt="Color"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/colors1/colors1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/colors1/colors1.x3dv)
+{: .example-links }
 
 ## Controlling color binding for face sets
 
@@ -169,7 +179,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <ElevationGrid
@@ -181,7 +191,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {

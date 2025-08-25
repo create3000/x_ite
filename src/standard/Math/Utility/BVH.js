@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Vector3   from "../Numbers/Vector3.js";
 import Plane3    from "../Geometry/Plane3.js";
 import QuickSort from "../Algorithms/QuickSort.js";
@@ -57,11 +10,11 @@ const
 
 // Box normals for bbox / line intersection.
 const boxNormals = [
-   new Vector3 (0,  0,  1), // front
-   new Vector3 (0,  0, -1), // back
-   new Vector3 (0,  1,  0), // top
-   new Vector3 (0, -1,  0), // bottom
-   new Vector3 (1,  0,  0)  // right
+   Vector3 .Z_AXIS,          // front
+   Vector3 .NEGATIVE_Z_AXIS, // back
+   Vector3 .Y_AXIS,          // top
+   Vector3 .NEGATIVE_Y_AXIS, // bottom
+   Vector3 .X_AXIS,          // right
    // left: We do not have to test for left.
 ];
 
@@ -105,10 +58,7 @@ Object .assign (Triangle .prototype,
       {
          // Get barycentric coordinates.
 
-         const
-            u = uvt .u,
-            v = uvt .v,
-            t = 1 - u - v;
+         const { u, v, t } = uvt;
 
          // Determine vectors for X3DPointingDeviceSensors.
 
@@ -117,18 +67,18 @@ Object .assign (Triangle .prototype,
          if (i >= intersections .length)
             intersections .push (new Vector3 ());
 
-         intersections [i] .set (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-                                 t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-                                 t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+         intersections [i] .set (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
+                                 u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
+                                 u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
 
          if (intersectionNormals)
          {
             if (i >= intersectionNormals .length)
                intersectionNormals .push (new Vector3 ());
 
-            intersectionNormals [i] .set (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-                                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-                                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+            intersectionNormals [i] .set (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
+                                          u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                          u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
          }
       }
    },
@@ -179,6 +129,8 @@ function Node (tree, triangles, first, size)
 
    // Sort and split array
 
+   let leftSize;
+
    if (size > 2)
    {
       // Sort array
@@ -188,10 +140,12 @@ function Node (tree, triangles, first, size)
 
       // Split array
 
-      var leftSize = size >>> 1;
+      leftSize = size >>> 1;
    }
    else
-      var leftSize = 1;
+   {
+      leftSize = 1;
+   }
 
    // Split array
 

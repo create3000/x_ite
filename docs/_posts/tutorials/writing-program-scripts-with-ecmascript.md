@@ -22,7 +22,7 @@ For a JavaScript program script, typically give the script in the Script node's 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='3'/>
   <field accessType='inputOnly' type='SFFloat' name='set_fraction'/>
@@ -34,7 +34,7 @@ For a JavaScript program script, typically give the script in the Script node's 
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -141,7 +141,7 @@ Nodes needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform DEF='Ball'>
   <!-- children ... -->
 </Transform>
@@ -151,7 +151,7 @@ Nodes needed:
 <Script DEF='Bouncer ... />
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Ball Transform {
@@ -173,14 +173,14 @@ Script fields needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='3'/>
   <!-- ... -->
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -197,7 +197,7 @@ Inputs and outputs needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <!-- ... -->
   <field accessType='inputOnly' type='SFFloat' name='set_fraction'/>
@@ -207,7 +207,7 @@ Inputs and outputs needed:
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -230,7 +230,7 @@ Event processing actions needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <!-- ... -->
 <![CDATA[ecmascript:
@@ -242,7 +242,7 @@ function set_fraction (fraction, time)
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -267,7 +267,7 @@ Use a ball position equation roughly based upon Physics:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Bouncer'>
   <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='3'/>
   <field accessType='inputOnly' type='SFFloat' name='set_fraction'/>
@@ -289,7 +289,7 @@ function set_fraction (fraction, time)
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Bouncer Script {
@@ -321,12 +321,12 @@ Routes needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Bouncer' toField='set_fraction'/>
 <ROUTE fromNode='Bouncer' fromField='value_changed' toNode='Ball' toField='set_translation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 ROUTE Clock.fraction_changed TO Bouncer.set_fraction
@@ -335,9 +335,10 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
 
 ### XML Encoding
 
-```xml
+```x3d
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
     <Transform DEF='Ball'>
       <Shape>
@@ -387,7 +388,7 @@ function set_fraction (fraction, time)
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -449,7 +450,7 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/bouncer/screenshot.png" alt="Bouncer"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/bouncer/screenshot.avif" alt="Bouncer"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.zip)
@@ -475,7 +476,7 @@ A toggle script turns on at 1st touch, off at 2nd:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='Toggle'>
   <field accessType='inputOutput' type='SFBool' name='on' value='true'/>
   <field accessType='inputOnly' type='SFBool' name='set_active'/>
@@ -497,7 +498,7 @@ function set_active (value, time)
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Toggle Script {
@@ -528,7 +529,7 @@ Use the toggle switch to make a lamp turn on and off
 
 ### XML Encoding
 
-```xml
+```x3d
 <TouchSensor DEF='LightSwitch'/>
 <SpotLight DEF='LampLight' ... />
 
@@ -538,7 +539,7 @@ Use the toggle switch to make a lamp turn on and off
 <ROUTE fromNode='Toggle' fromField='on_changed' toNode='LampLight' toField='set_on'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF LightSwitch TouchSensor { }
@@ -558,7 +559,7 @@ A color selector script sends an on color on a **TRUE** input, and an off color 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Script DEF='ColorSelector'>
   <field accessType='initializeOnly' type='SFColor' name='onColor' value='1 1 1'/>
   <field accessType='initializeOnly' type='SFColor' name='offColor'/>
@@ -574,7 +575,7 @@ function set_selection (value, time)
 </Script>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF ColorSelector Script {
@@ -597,7 +598,7 @@ function set_selection (value, time)
 
 ### XML Encoding
 
-```xml
+```x3d
 <TouchSensor DEF='LightSwitch'/>
 <SpotLight DEF='LampLight' ... />
 
@@ -613,7 +614,7 @@ function set_selection (value, time)
 <ROUTE fromNode='ColorSelector' fromField='color_changed' toNode='BulbMaterial' toField='set_emissiveColor'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF LightSwitch TouchSensor { }

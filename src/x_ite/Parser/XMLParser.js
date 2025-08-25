@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DField                  from "../Base/X3DField.js";
 import X3DBaseNode               from "../Base/X3DBaseNode.js";
 import X3DNode                   from "../Components/Core/X3DNode.js";
@@ -76,6 +29,8 @@ function XMLParser (scene)
    this .url               = new Fields .MFString ();
    this .protoNames        = new Map ();
    this .protoFields       = new WeakMap ();
+
+   this .parser .setUnits (!!scene);
 }
 
 Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototype),
@@ -324,6 +279,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          const component = this .getBrowser () .getComponent (componentNameIdCharacters, parseInt (componentSupportLevel));
 
+         if (this .getScene () .hasComponent (component))
+            return;
+
          this .getScene () .updateComponent (component);
       }
       catch (error)
@@ -438,7 +396,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
       if (this .id (name))
       {
-         const url = xmlElement .getAttribute ("url");
+         const
+            url           = xmlElement .getAttribute ("url"),
+            appInfo       = xmlElement .getAttribute ("appinfo"),
+            documentation = xmlElement .getAttribute ("documentation");
 
          this .parser .setInput (url ?? "");
          this .parser .sfstringValues (this .url);
@@ -453,11 +414,15 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          this .popParent ();
          this .addProtoFieldNames (externproto);
 
+         externproto .setAppInfo (appInfo ?? "");
+         externproto .setDocumentation (documentation ?? "");
          externproto .setup ();
 
          try
          {
             const existingExternProto = this .getExecutionContext () .getExternProtoDeclaration (name);
+
+            console .warn (`A extern proto named '${name}' is already defined and will be overridden.`);
 
             this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (name), existingExternProto);
          }
@@ -471,7 +436,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    protoDeclareElement (xmlElement)
    {
-      const name = xmlElement .getAttribute ("name");
+      const
+         name          = xmlElement .getAttribute ("name"),
+         appInfo       = xmlElement .getAttribute ("appinfo"),
+         documentation = xmlElement .getAttribute ("documentation");
 
       if (this .id (name))
       {
@@ -518,11 +486,15 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             break;
          }
 
+         proto .setAppInfo (appInfo ?? "");
+         proto .setDocumentation (documentation ?? "");
          proto .setup ();
 
          try
          {
             const existingProto = this .getExecutionContext () .getProtoDeclaration (name);
+
+            console .warn (`A proto named '${name}' is already defined and will be overridden.`);
 
             this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (name), existingProto);
          }
@@ -571,12 +543,18 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          if (!Field)
             return;
 
-         const name = xmlElement .getAttribute ("name");
+         const
+            name          = xmlElement .getAttribute ("name"),
+            appInfo       = xmlElement .getAttribute ("appinfo"),
+            documentation = xmlElement .getAttribute ("documentation");
 
          if (!this .id (name))
             return;
 
          const field = new Field ();
+
+         field .setAppInfo (appInfo ?? "");
+         field .setDocumentation (documentation ?? "");
 
          if (accessType & X3DConstants .initializeOnly)
          {
@@ -787,8 +765,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    scriptElement (element)
    {
       const
-         domParser      = new DOMParser (),
-         scriptDocument = domParser .parseFromString (element .outerHTML, "application/xml"),
+         scriptDocument = $.parseXML (element .outerHTML, "application/xml"),
          childNodes     = scriptDocument .children [0] .childNodes;
 
       element .textContent = "// Content moved into childNodes.";
@@ -918,7 +895,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             const node = this .getExecutionContext () .getNamedNode (name);
 
-            if (xmlElement .nodeName === "ProtoInstance")
+            if (this .nodeNameToCamelCase (xmlElement .nodeName) === "ProtoInstance")
             {
                if (!node .getNodeType () .includes (X3DConstants .X3DPrototypeInstance))
                {
@@ -929,7 +906,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${xmlElement .getAttribute ("name")} != ${node .getNodeTypeName ()}.`);
                }
             }
-            else if (xmlElement .nodeName !== node .getNodeTypeName ())
+            else if (this .nodeNameToCamelCase (xmlElement .nodeName) !== node .getNodeTypeName ())
             {
                console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${xmlElement .nodeName} != ${node .getNodeTypeName ()}.`);
             }
@@ -985,14 +962,16 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    fieldValue (field, value)
    {
       if (value === null)
-         return;
+         return false;
 
       this .parser .pushExecutionContext (this .getExecutionContext ());
-
       this .parser .setInput (value);
-      this [field .getType ()] .call (this .parser, field, field .getUnit ());
+
+      const ok = this [field .getType ()] .call (this .parser, field, field .getUnit ());
 
       this .parser .popExecutionContext ();
+
+      return ok;
    },
    id (string)
    {
@@ -1116,9 +1095,17 @@ Object .assign (XMLParser .prototype,
    [X3DConstants .SFMatrix3d]:  VRMLParser .prototype .sfmatrix3Value,
    [X3DConstants .SFMatrix4f]:  VRMLParser .prototype .sfmatrix4Value,
    [X3DConstants .SFMatrix4d]:  VRMLParser .prototype .sfmatrix4Value,
-   [X3DConstants .SFNode] (field) { field .setValue (null); },
+   [X3DConstants .SFNode] (field)
+   {
+      field .setValue (null);
+      return true;
+   },
    [X3DConstants .SFRotation]:  VRMLParser .prototype .sfrotationValue,
-   [X3DConstants .SFString] (field) { field .setValue (Fields .SFString .unescape (this .input)); },
+   [X3DConstants .SFString] (field)
+   {
+      field .setValue (Fields .SFString .unescape (this .input));
+      return true;
+   },
    [X3DConstants .SFTime]:      VRMLParser .prototype .sfdoubleValue,
    [X3DConstants .SFVec2d]:     VRMLParser .prototype .sfvec2Value,
    [X3DConstants .SFVec2f]:     VRMLParser .prototype .sfvec2Value,
@@ -1127,27 +1114,33 @@ Object .assign (XMLParser .prototype,
    [X3DConstants .SFVec4d]:     VRMLParser .prototype .sfvec4Value,
    [X3DConstants .SFVec4f]:     VRMLParser .prototype .sfvec4Value,
 
+   [X3DConstants .VrmlMatrix]:  VRMLParser .prototype .sfmatrix4Value,
+
    [X3DConstants .MFBool]:      VRMLParser .prototype .sfboolValues,
    [X3DConstants .MFColor]:     VRMLParser .prototype .sfcolorValues,
-   [X3DConstants .MFColorRGBA]: VRMLParser .prototype .sfcolorrgbaValues,
+   [X3DConstants .MFColorRGBA]: VRMLParser .prototype .sfcolorValues,
    [X3DConstants .MFDouble]:    VRMLParser .prototype .sfdoubleValues,
    [X3DConstants .MFFloat]:     VRMLParser .prototype .sfdoubleValues,
    [X3DConstants .MFImage]:     VRMLParser .prototype .sfimageValues,
    [X3DConstants .MFInt32]:     VRMLParser .prototype .sfint32Values,
-   [X3DConstants .MFMatrix3d]:  VRMLParser .prototype .sfmatrix3Values,
-   [X3DConstants .MFMatrix3f]:  VRMLParser .prototype .sfmatrix3Values,
-   [X3DConstants .MFMatrix4d]:  VRMLParser .prototype .sfmatrix4Values,
-   [X3DConstants .MFMatrix4f]:  VRMLParser .prototype .sfmatrix4Values,
-   [X3DConstants .MFNode] (field) { field .length = 0; },
+   [X3DConstants .MFMatrix3d]:  VRMLParser .prototype .sfmatrixValues,
+   [X3DConstants .MFMatrix3f]:  VRMLParser .prototype .sfmatrixValues,
+   [X3DConstants .MFMatrix4d]:  VRMLParser .prototype .sfmatrixValues,
+   [X3DConstants .MFMatrix4f]:  VRMLParser .prototype .sfmatrixValues,
+   [X3DConstants .MFNode] (field)
+   {
+      field .length = 0;
+      return true;
+   },
    [X3DConstants .MFRotation]:  VRMLParser .prototype .sfrotationValues,
    [X3DConstants .MFString]:    VRMLParser .prototype .sfstringValues,
    [X3DConstants .MFTime]:      VRMLParser .prototype .sfdoubleValues,
-   [X3DConstants .MFVec2d]:     VRMLParser .prototype .sfvec2Values,
-   [X3DConstants .MFVec2f]:     VRMLParser .prototype .sfvec2Values,
-   [X3DConstants .MFVec3d]:     VRMLParser .prototype .sfvec3Values,
-   [X3DConstants .MFVec3f]:     VRMLParser .prototype .sfvec3Values,
-   [X3DConstants .MFVec4d]:     VRMLParser .prototype .sfvec4Values,
-   [X3DConstants .MFVec4f]:     VRMLParser .prototype .sfvec4Values,
+   [X3DConstants .MFVec2d]:     VRMLParser .prototype .sfvecValues,
+   [X3DConstants .MFVec2f]:     VRMLParser .prototype .sfvecValues,
+   [X3DConstants .MFVec3d]:     VRMLParser .prototype .sfvecValues,
+   [X3DConstants .MFVec3f]:     VRMLParser .prototype .sfvecValues,
+   [X3DConstants .MFVec4d]:     VRMLParser .prototype .sfvecValues,
+   [X3DConstants .MFVec4f]:     VRMLParser .prototype .sfvecValues,
 });
 
 // HTML Support
@@ -1213,6 +1206,16 @@ const HTMLParser =
 
       return HTMLSupport .getFieldName (name);
    },
+};
+
+X3DField .prototype .fromXMLString = function (string, scene)
+{
+   const parser = new XMLParser (scene);
+
+   if (parser .fieldValue (this, string))
+      return;
+
+   throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 };
 
 export default XMLParser;

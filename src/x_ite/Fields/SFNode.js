@@ -1,53 +1,5 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DField     from "../Base/X3DField.js";
 import X3DConstants from "../Base/X3DConstants.js";
-import Generator    from "../InputOutput/Generator.js";
 import SFNodeCache  from "./SFNodeCache.js";
 
 const
@@ -126,8 +78,8 @@ const handler =
 
       if (value)
       {
-         for (const fieldDefinition of value .getFieldDefinitions ())
-            ownKeys .push (fieldDefinition .name);
+         for (const { name } of value .getFieldDefinitions ())
+            ownKeys .push (name);
       }
 
       return ownKeys;
@@ -162,7 +114,7 @@ function SFNode (value)
    this [_target] = this;
    this [_proxy]  = proxy;
 
-   if (value)
+   if (value ?.getType () .includes (X3DConstants .X3DNode))
    {
       value .addParent (proxy);
 
@@ -222,7 +174,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       // No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
-      if (value)
+      if (value ?.getType () .includes (X3DConstants .X3DNode))
       {
          value .addParent (target [_proxy]);
 
@@ -297,6 +249,9 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       throw new Error ("SFNode.getFieldDefinitions: node is null.");
    },
+   /**
+   * @deprecated Returns the corresponding X3DField object associated with *name*. Use sfnode.{fieldName} syntax.
+   */
    getField (name)
    {
       const
@@ -308,40 +263,48 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       throw new Error ("SFNode is disposed.")
    },
-   addFieldCallback (name, key, object)
+   addFieldCallback (... args)
    {
       const target = this [_target];
 
-      switch (arguments .length)
+      switch (args .length)
       {
          case 2:
          {
-            return X3DField .prototype .addFieldCallback .apply (target, arguments);
+            const [key, callback] = args;
+
+            return X3DField .prototype .addFieldCallback .call (target, key, callback);
          }
-         case 3: // Depreciated
+         case 3:
          {
-            const value = target .getValue ();
+            const
+               [key, name, callback] = args,
+               value                 = target .getValue ();
 
             if (value)
-               return value .getField (name) .addFieldCallback (key, object);
+               return value .getField (name) .addFieldCallback (key, callback);
 
             throw new Error ("SFNode.addFieldCallback: node is null.");
          }
       }
    },
-   removeFieldCallback (name, key)
+   removeFieldCallback (... args)
    {
       const target = this [_target];
 
-      switch (arguments .length)
+      switch (args .length)
       {
          case 1:
          {
-            return X3DField .prototype .removeFieldCallback .apply (target, arguments);
+            const key = [args];
+
+            return X3DField .prototype .removeFieldCallback .call (target, key);
          }
-         case 2: // Depreciated
+         case 2:
          {
-            const value = target .getValue ();
+            const
+               [key, name] = args,
+               value       = target .getValue ();
 
             if (value)
                return value .getField (name) .removeFieldCallback (key);

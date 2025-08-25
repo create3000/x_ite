@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                     from "../../Fields.js";
 import X3DFieldDefinition         from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
+import X3DNode                    from "../Core/X3DNode.js";
 import X3DEnvironmentalSensorNode from "./X3DEnvironmentalSensorNode.js";
 import TraverseType               from "../../Rendering/TraverseType.js";
 import X3DConstants               from "../../Base/X3DConstants.js";
@@ -62,11 +16,14 @@ function ProximitySensor (executionContext)
    this .addType (X3DConstants .ProximitySensor);
 
    this .setCameraObject (true);
+   this .setZeroTest (true);
+
+   // Units
 
    this ._centerOfRotation_changed .setUnit ("length");
    this ._position_changed         .setUnit ("length");
 
-   this .setZeroTest (true);
+   // Private properties
 
    this .min           = new Vector3 ();
    this .max           = new Vector3 ();
@@ -81,23 +38,15 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-      this ._enabled .addInterest ("set_enabled__", this);
-      this ._size    .addInterest ("set_extents__", this);
-      this ._center  .addInterest ("set_extents__", this);
+      this ._size   .addInterest ("set_extents__", this);
+      this ._center .addInterest ("set_extents__", this);
 
+      this ._enabled   .addFieldInterest (this ._isVisibleObject);
       this ._traversed .addFieldInterest (this ._isCameraObject);
 
-      this .set_enabled__ ();
-      this .set_extents__ ();
-   },
-   set_enabled__ ()
-   {
-      this .setCameraObject (this ._enabled .getValue ());
+      this .setVisibleObject (this ._enabled .getValue ());
 
-      if (this ._enabled .getValue ())
-         delete this .traverse;
-      else
-         this .traverse = Function .prototype;
+      this .set_extents__ ();
    },
    set_extents__ ()
    {
@@ -129,6 +78,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
             if (this .layerNode)
             {
                const
+                  browser        = this .getBrowser (),
                   viewpointNode  = this .layerNode .getViewpoint (),
                   invModelMatrix = this .modelMatrix .inverse ()
 
@@ -138,9 +88,17 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                   .multRight (invModelMatrix)
                   .get (centerOfRotation);
 
-               invModelMatrix
-                  .multLeft (viewpointNode .getCameraSpaceMatrix ())
-                  .get (position, orientation);
+               invModelMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
+
+               if (this .layerNode === browser .getActiveLayer ())
+               {
+                  const pose = browser .getPose ();
+
+                  if (pose)
+                     invModelMatrix .multLeft (pose .cameraSpaceMatrix);
+               }
+
+               invModelMatrix .get (position, orientation);
 
                if (this ._isActive .getValue ())
                {
@@ -156,7 +114,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                else
                {
                   this ._isActive                 = true;
-                  this ._enterTime                = this .getBrowser () .getCurrentTime ();
+                  this ._enterTime                = browser .getCurrentTime ();
                   this ._position_changed         = position;
                   this ._orientation_changed      = orientation;
                   this ._centerOfRotation_changed = centerOfRotation;
@@ -182,7 +140,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    {
       const
          invModelViewMatrix = new Matrix4 (),
-         infinity           = new Vector3 (-1, -1, -1);
+         infinity           = new Vector3 (-1);
 
       return function (type, renderObject)
       {
@@ -217,43 +175,24 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
          }
       };
    })(),
-   containsPoint (point)
+   containsPoint ({ x: px, y: py, z: pz })
    {
       const
          min = this .min,
          max = this .max;
 
-      return min .x <= point .x &&
-             max .x >= point .x &&
-             min .y <= point .y &&
-             max .y >= point .y &&
-             min .z <= point .z &&
-             max .z >= point .z;
+      return min .x <= px &&
+             max .x >= px &&
+             min .y <= py &&
+             max .y >= py &&
+             min .z <= pz &&
+             max .z >= pz;
    },
 });
 
 Object .defineProperties (ProximitySensor,
 {
-   typeName:
-   {
-      value: "ProximitySensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("ProximitySensor", "EnvironmentalSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

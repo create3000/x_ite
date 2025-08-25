@@ -43,7 +43,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
 
 ### XML Encoding
 
-```xml
+```x3d
 <Background
     skyColor='0.1 0.1 0.0, ...'
     skyAngle='1.309, 1.571, ...'
@@ -51,7 +51,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
     groundAngle='1.309, 1.571, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Background {
@@ -80,7 +80,7 @@ Background {
 
 ### XML Encoding
 
-```xml
+```x3d
 <Background DEF='Summer'
     skyAngle='0.8,
               1.3,
@@ -102,7 +102,7 @@ Background {
                  0.39471 0.522059 0.669'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Summer Background {
@@ -138,7 +138,7 @@ DEF Summer Background {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/background1/background1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/background1/screenshot.png" alt="Background 1"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/background1/screenshot.avif" alt="Background 1"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background1/background1.zip)
@@ -153,7 +153,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
 
 ### XML Encoding
 
-```xml
+```x3d
 <Background
     ...
     frontUrl='"cloud1s.png"'
@@ -164,7 +164,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
     bottomUrl='"ground.png"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Background {
@@ -192,7 +192,7 @@ Background {
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- no top or bottom images -->
 <Background DEF='Summer'
     frontUrl='"clouds1.png"'
@@ -219,7 +219,7 @@ Background {
                  0.39471 0.522059 0.669'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Summer Background {
@@ -260,7 +260,7 @@ DEF Summer Background {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/background2/background2.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/background2/screenshot.png" alt="Background 1"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/background2/screenshot.avif" alt="Background 1"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background2/background2.zip)

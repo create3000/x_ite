@@ -1,56 +1,9 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DDragSensorNode    from "./X3DDragSensorNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
@@ -62,15 +15,17 @@ import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js"
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 const
-   screenLine     = new Line2 (Vector2 .Zero, Vector2 .Zero),
+   screenLine     = new Line2 (),
    trackPoint1    = new Vector2 (),
-   trackPointLine = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   trackPointLine = new Line3 ();
 
 function PlaneSensor (executionContext)
 {
    X3DDragSensorNode .call (this, executionContext);
 
    this .addType (X3DConstants .PlaneSensor);
+
+   // Units
 
    this ._offset              .setUnit ("length");
    this ._minPosition         .setUnit ("length");
@@ -140,7 +95,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
    activate (hit)
    {
       const
-         hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay   = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
 
       const axisRotation = this ._axisRotation .getValue ();
@@ -174,7 +129,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
             this .trackStart (this .startPoint);
          }
 
-         // new Plane3 (new Vector3 (), this .plane .normal) .intersectsLine (hitRay, trackPoint);
+         // new Plane3 (Vector3 .ZERO, this .plane .normal) .intersectsLine (hitRay, trackPoint);
       }
       else
       {
@@ -211,7 +166,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
          if (this .planeSensor)
          {
             const
-               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+               hitRay   = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
                endPoint = new Vector3 ();
 
             if (this .plane .intersectsLine (hitRay, endPoint))
@@ -229,7 +184,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
             {
                try
                {
-                  this .getLineTrackPoint (hit .pointer, new Line3 (Vector3 .Zero, this .line .direction), trackPoint);
+                  this .getLineTrackPoint (hit .pointer, new Line3 (Vector3 .ZERO, this .line .direction), trackPoint);
                }
                catch
                {
@@ -278,26 +233,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
 
 Object .defineProperties (PlaneSensor,
 {
-   typeName:
-   {
-      value: "PlaneSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("PlaneSensor", "PointingDeviceSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

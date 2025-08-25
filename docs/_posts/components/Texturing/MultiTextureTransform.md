@@ -15,7 +15,7 @@ tags: [MultiTextureTransform, Texturing]
 
 MultiTextureTransform contains multiple TextureTransform nodes, each provided for use by corresponding ImageTexture MovieTexture or PixelTexture nodes within a sibling MultiTexture node.
 
-The MultiTextureTransform node belongs to the **Texturing** component and requires at least level **2,** its default container field is *textureTransform.* It is available from X3D version 3.0 or higher.
+The MultiTextureTransform node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *textureTransform.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,15 +28,23 @@ The MultiTextureTransform node belongs to the **Texturing** component and requir
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| MFNode | [in, out] | [textureTransform](#fields-textureTransform) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFNode [in, out] **textureTransform** [ ] <small>[X3DTextureTransformNode]</small>
+{: #fields-textureTransform }
 
 Zero or more contained [TextureTransform](/x_ite/components/texturing/texturetransform/) nodes, for each of the different texture channels, that define 2D transformation applied to texture coordinates.
 
@@ -56,8 +64,8 @@ Zero or more contained [TextureTransform](/x_ite/components/texturing/texturetra
 - Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding MultiTextureTransform.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - Multitexturing is accomplished using [MultiTexture](/x_ite/components/texturing/multitexture/), [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and MultiTextureTransform nodes.
-- [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#f-Lightmapexample
-- [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-SingleAndMultitextureAttrs
+- [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-Lightmapexample)
+- [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#t-SingleAndMultitextureAttrs)
 
 ### Warnings
 

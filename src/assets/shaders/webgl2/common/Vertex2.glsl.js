@@ -1,10 +1,14 @@
 import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
-export default /* glsl */ `
+export default () => /* glsl */ `
 // Uniforms
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
+
+#if defined (X3D_XR_SESSION)
+   uniform mat4 x3d_EyeMatrix;
+#endif
 
 // Attributes
 
@@ -20,7 +24,7 @@ uniform mat4 x3d_ModelViewMatrix;
    in vec4 x3d_Color;
 #endif
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
@@ -44,7 +48,7 @@ in vec4 x3d_Vertex;
    out vec4 color;
 #endif
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
@@ -98,7 +102,7 @@ out vec3 vertex;
 #pragma X3D include "PointSize.glsl"
 
 void
-vertex_main ()
+main ()
 {
    #if defined (X3D_NORMALS)
       vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, x3d_Tangent .xyz));
@@ -112,6 +116,10 @@ vertex_main ()
    #endif
 
    vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
+
+   #if defined (X3D_XR_SESSION)
+      position = x3d_EyeMatrix * position;
+   #endif
 
    vertex = position .xyz;
 
@@ -135,7 +143,7 @@ vertex_main ()
       color = x3d_Color;
    #endif
 
-   #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   #if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
          ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 

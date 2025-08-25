@@ -1,114 +1,83 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-function MatrixStack (Type)
+class MatrixStack extends Array
 {
-   return Object .assign ([ new Type () ],
+   #top = 0;
+
+   constructor (Type)
    {
-      top: 0,
-      set (matrix)
-      {
-         this [this .top] .assign (matrix);
-      },
-      get ()
-      {
-         return this [this .top];
-      },
-      push ()
-      {
-         const top = ++ this .top;
+      super ();
 
-         if (top < this .length)
-            this [top] .assign (this [top - 1]);
-         else
-            this [top] = this [top - 1] .copy ();
-      },
-      pushMatrix (matrix)
-      {
-         const top = ++ this .top;
+      this .push (new Type ());
+   }
 
-         if (top < this .length)
-            this [top] .assign (matrix);
-         else
-            this [top] = matrix .copy ();
-      },
-      pop ()
-      {
-         -- this .top;
-      },
-      clear ()
-      {
-         this .top = 0;
-      },
-      size ()
-      {
-         return this .top + 1;
-      },
-      identity ()
-      {
-         this [this .top] .identity ();
-      },
-      multLeft (matrix)
-      {
-         this [this .top] .multLeft (matrix);
-      },
-      translate (vector)
-      {
-         this [this .top] .translate (vector);
-      },
-      rotate (rotation)
-      {
-         this [this .top] .rotate (rotation);
-      },
-      scale (vector)
-      {
-         this [this .top] .scale (vector);
-      },
-   });
+   set (matrix)
+   {
+      this [this .#top] .assign (matrix);
+   }
+
+   get ()
+   {
+      return this [this .#top];
+   }
+
+   push (matrix = this [this .#top])
+   {
+      const top = ++ this .#top;
+
+      if (top < this .length)
+         this [top] .assign (matrix);
+      else
+         this [top] = matrix .copy ();
+   }
+
+   pop ()
+   {
+      -- this .#top;
+   }
+
+   clear ()
+   {
+      this .#top = 0;
+   }
+
+   size ()
+   {
+      return this .#top + 1;
+   }
+
+   identity ()
+   {
+      this [this .#top] .identity ();
+   }
+
+   inverse ()
+   {
+      this [this .#top] .inverse ();
+   }
+
+   multRight (matrix)
+   {
+      this [this .#top] .multRight (matrix);
+   }
+
+   multLeft (matrix)
+   {
+      this [this .#top] .multLeft (matrix);
+   }
+
+   translate (vector)
+   {
+      this [this .#top] .translate (vector);
+   }
+
+   rotate (rotation)
+   {
+      this [this .#top] .rotate (rotation);
+   }
+
+   scale (vector)
+   {
+      this [this .#top] .scale (vector);
+   }
 }
 
 export default MatrixStack;

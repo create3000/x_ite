@@ -15,17 +15,29 @@ None.
 
 ### Properties
 
-#### **accessType**
+#### **accessType**: number
 
-Value from the [X3DConstants](/x_ite/reference/constants-services/#access-type-constants) object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
+Value from the [X3DConstants](/x_ite/reference/constants-services/#access-type-constants) object describing the accessType (e.g., `X3DConstants.inputOnly`). This property is read only.
 
-#### **dataType**
+#### **dataType**: number
 
-Value from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read only.
+Value from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object describing the field's data type (e.g., `X3DConstants.SFBool`). This property is read only.
 
-#### **name**
+#### **name**: string
 
-A string of the field name (e.g., "children"). This property is read only.
+A string of the field name (e.g., `"children"`). This property is read only.
+
+#### **value**: boolean | number | string | null | X3DField
+
+The default value for this field. This property is read only.
+
+#### **appInfo**: string
+
+Short description or purpose of the field. This property is read only.
+
+#### **documentation**: string
+
+A string containing the documentation of this field. This property is read only.
 
 ### Methods
 
@@ -33,7 +45,7 @@ None.
 
 ## FieldDefinitionArray
 
-FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *fieldDefinitionArrayName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array).
+FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `fieldDefinitionArrayName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method(s)
 
@@ -41,7 +53,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 
@@ -106,35 +118,41 @@ None
 
 ### Methods
 
-#### Number **getType** ()
+#### **getType** (): number
 
 Returns one of the **Field Type Constants** from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object.
 
-#### String **getTypeName** ()
+#### **getTypeName** (): string
 
 Returns the field type name.
 
-#### X3DField **copy** ()
+#### **copy** (): X3DField
 
 Returns a copy of this X3DField.
 
-#### Boolean **equals** (*field*)
+#### **equals** (*field: X3DField*): boolean
 
 Returns true if the passed SF* or MF* *field* of the same type is equals to this object, otherwise false.
 
-#### void **addFieldCallback** (*key, callback*)
+<!--
+#### **addFieldCallback** (*key: any, callback: (value: any) => void*): void
 
-Adds a field callback function, if external browser interface is used. *Key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
+Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. The callback is called when the field has been changed.
 
 The callback has a signature of `function (value)`, where value is the current value of the field.
 
-#### void **removeFieldCallback** (*key*)
+#### **removeFieldCallback** (*key: any*): void
 
 Removes a field callback function associated with *key*.
+-->
+
+#### **dispose** (): void
+
+Disposes this X3DField. The object can then no longer be used.
 
 ## SFColor Object
 
-The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
+The SFColor object corresponds to an X3D SFColor field.
 
 ### Instance Creation Method(s)
 
@@ -142,7 +160,7 @@ The SFColor object corresponds to an X3D SFColor field. All properties are acces
 
 A new color initialized with zero values is created and returned.
 
-#### *sfColorObjectName* = new **SFColor** (*r, g, b*)
+#### *sfColorObjectName* = new **SFColor** (*r: number, g: number, b: number*)
 
 *r, g,* and *b* are scalar values with the red, green, and blue values of the color in the range 0–1.
 
@@ -156,45 +174,50 @@ const copy = new SFColor (... color); // Copy using spread syntax.
 
 ### Properties
 
-#### **r**
+Each component of the color can be accessed using the `r`, `g` and `b` properties or using the standard C-style dereferencing operator (e.g. `sfColorObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<3).
+
+#### **r**: number
+{: .writable }
 
 Red component of the color.
 
-#### **g**
+#### **g**: number
+{: .writable }
 
 Green component of the color.
 
-#### **b**
+#### **b**: number
+{: .writable }
 
 Blue component of the color.
 
 ### Methods
 
-#### Array **getHSV** ()
+#### **getHSV** (): Array
 
 Return an array with the components of the color's HSV value.
 
-#### void **setHSV** (*h, s, v*)
+#### **setHSV** (*h: number, s: number, v: number*): void
 
 Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
 
 The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
 
-#### SFColor **linearToSRGB** ()
+#### **linearToSRGB** (): SFColor
 
 Returns a SFColor object whose value is converted to sRGB color space.
 
-#### SFColor **sRGBToLinear** ()
+#### **sRGBToLinear** (): SFColor
 
 Returns a SFColor object whose value is converted to linear color space.
 
-#### SFColor **lerp** (*destination, t*)
+#### **lerp** (*destination: SFColor, t: number*): SFColor
 
 Linearly interpolates in HSV space between source color and destination color by an amount of t.
 
 ## SFColorRGBA Object
 
-The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
+The SFColorRGBA object corresponds to an X3D SFColorRGBA field.
 
 ### Instance Creation Method(s)
 
@@ -202,7 +225,7 @@ The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties a
 
 A new color initialized with zero values is created and returned.
 
-#### *sfColorRGBAObjectName* = new **SFColorRGBA** (*r, g, b, a*)
+#### *sfColorRGBAObjectName* = new **SFColorRGBA** (*r: number, g: number, b: number, a: number*)
 
 *r, g, b* and *a* are scalar values with the red, green and blue values of the color in the range 0–1.
 
@@ -216,43 +239,49 @@ const copy = new SFColorRGBA (... color); // Copy using spread syntax.
 
 ### Properties
 
-#### **r**
+Each component of the color can be accessed using the `r`, `g`, `b` and `a` properties or using the standard C-style dereferencing operator (e.g. `sfColorRGBAObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
+
+#### **r**: number
+{: .writable }
 
 Red component of the color.
 
-#### **g**
+#### **g**: number
+{: .writable }
 
 Green component of the color.
 
-#### **b**
+#### **b**: number
+{: .writable }
 
 Blue component of the color.
 
-#### **a**
+#### **a**: number
+{: .writable }
 
 Alpha component of the color.
 
 ### Methods
 
-#### Array **getHSVA** ()
+#### **getHSVA** (): Array
 
 Return an array with the components of the color's HSVA value.
 
-#### void **setHSVA** (*h, s, v, a*)
+#### **setHSVA** (*h: number, s: number, v: number, a: number*): void
 
 Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
 
 The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
 
-#### SFColorRGBA **linearToSRGB** ()
+#### **linearToSRGB** (): SFColorRGBA
 
 Returns a SFColorRGBA object whose value is converted to sRGB color space.
 
-#### SFColorRGBA **sRGBToLinear** ()
+#### **sRGBToLinear** (): SFColorRGBA
 
 Returns a SFColorRGBA object whose value is converted to linear color space.
 
-#### SFColorRGBA **lerp** (*destination, t*)
+#### **lerp** (*destination: SFColorRGBA, t: number*): SFColorRGBA
 
 Linearly interpolates in HSVA space between source color and destination color by an amount of t.
 
@@ -266,12 +295,12 @@ The SFImage object corresponds to an X3D SFImage field.
 
 A new image initialized with zero values is created and returned.
 
-#### *sfImageObjectName* = new **SFImage** (*width, height, components[, MFInt32 array]*)
+#### *sfImageObjectName* = new **SFImage** (*width: number, height: number, components: number, array?: MFInt32*)
 
 *width* is the width in pixels of the image.
 *height* is the height in pixels of the image.
 *components* are the number of components of the image (0-4).
-*array* is a MFInt32 array with pixel data.
+*array* is a optional MFInt32 array with pixel data.
 
 ### Iterator
 
@@ -283,19 +312,23 @@ const copy = new SFImage (... image); // Copy using spread syntax.
 
 ### Properties
 
-#### **width**
+#### **width**: number
+{: .writable }
 
 Width of the image in pixels.
 
-#### **height**
+#### **height**: number
+{: .writable }
 
 Height of the image in pixels.
 
-#### **comp**
+#### **comp**: number
+{: .writable }
 
 Number of components.
 
-#### **array**
+#### **array**: MFInt32
+{: .writable }
 
 A MFInt32 array corresponding to the pixels of the image.
 
@@ -305,7 +338,7 @@ None
 
 ## SFMatrix3d/SFMatrix3f Object
 
-The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
+The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices.
 
 ### Instance Creation Method(s)
 
@@ -313,11 +346,11 @@ The SFMatrix3d/f object provides many useful methods for performing manipulation
 
 A new matrix initialized with the identity matrix is created and returned.
 
-#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*r1, r2, r3*)
+#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*r1: SFVec3d/f, r2: SFVec3d/f, r3: SFVec3d/f*)
 
 A new matrix initialized with the vectors in *r1* through *r3* of type SFVec3d/f is created and returned.
 
-#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*f11, f12, f13, f21, f22, f23, f31, f32, f33*)
+#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*f11: number, f12: number, f13: number, f21: number, f22: number, f23: number, f31: number, f32: number, f33: number*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
 
@@ -331,17 +364,17 @@ const copy = new SFMatrix3d (... matrix); // Copy using spread syntax.
 
 ### Properties
 
-None
+Individual elements of the object can be referenced using the standard C-style dereferencing operator (e.g. `sfMatrix3d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<9).
 
 ### Methods
 
-#### void **setTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*)
+#### **setTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*): void
 
 Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is a SFVec2d/f object, *scaleOrientation* is a Number and *center* is a SFVec2d/f object.
 
 Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
-#### void **getTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*)
+#### **getTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*): void
 
 Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is a SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
 
@@ -349,53 +382,73 @@ Any of the rightmost parameters can be omitted, or any parameter can be `null`. 
 
 A center of any value can be specified around which the rotation and scaling will take place.
 
-#### Number **determinant** ()
+#### **determinant** (): number
 
 Returns the determinant of this object's matrix.
 
-#### SFMatrix3d/f **inverse** ()
+#### **inverse** (): SFMatrix3d/f
 
 Returns a SFMatrix whose value is the inverse of this object.
 
-#### SFMatrix3d/f **transpose** ()
+#### **transpose** (): SFMatrix3d/f
 
 Returns a SFMatrix3d/f whose value is the transpose of this object.
 
-#### SFMatrix3d/f **multLeft** (*SFMatrix3d/f matrix*)
+#### **multLeft** (*matrix: SFMatrix3d/f*): SFMatrix3d/f
 
 Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
 
-#### SFMatrix3d/f **multRight** (*SFMatrix3d/f matrix*)
+#### **multRight** (*matrix: SFMatrix3d/f*): SFMatrix3d/f
 
 Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
 
-#### SFVec2d/f **multVecMatrix** (*SFVec2d/f vec*)
+#### **multVecMatrix** (*vec: SFVec2d/f*): SFVec2d/f
 
 Returns a SFVec2d/f whose value is the object multiplied by the passed row vector.
 
-#### SFVec3d/f **multVecMatrix** (*SFVec3d/f vec*)
+#### **multVecMatrix** (*vec: SFVec3d/f*): SFVec3d/f
 
 Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
 
-#### SFVec2d/f **multMatrixVec** (*SFVec2d/f vec*)
+#### **multMatrixVec** (*vec: SFVec2d/f*): SFVec2d/f
 
 Returns a SFVec2d/f whose value is the object multiplied by the passed column vector.
 
-#### SFVec3d/f **multMatrixVec** (*SFVec3d/f vec*)
+#### **multMatrixVec** (*vec: SFVec3d/f*): SFVec3d/f
 
 Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
 
-#### SFVec2d/f **multDirMatrix** (*SFVec2d/f vec*)
+#### **multDirMatrix** (*vec: SFVec2d/f*): SFVec2d/f
 
 Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
 
-#### SFVec2d/f **multMatrixDir** (*SFVec2d/f vec*)
+#### **multMatrixDir** (*vec: SFVec2d/f*): SFVec2d/f
 
 Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
 
+#### **translate** (*translation: SFVec2d/f*): SFMatrix3d/f
+
+Returns a SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
+
+#### **rotate** (*rotation: number*): SFMatrix3d/f
+
+Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* (in radians) on the left.
+
+#### **scale** (*scale: SFVec2d/f*): SFMatrix3d/f
+
+Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
+
+#### **skewX** (*angle: number*): SFMatrix3d/f
+
+Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
+
+#### **skewY** (*angle: number*): SFMatrix3d/f
+
+Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
+
 ## SFMatrix4d/SFMatrix4f Object
 
-The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
+The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices.
 
 ### Instance Creation Method(s)
 
@@ -403,11 +456,11 @@ The SFMatrix4d/f object provides many useful methods for performing manipulation
 
 A new matrix initialized with the identity matrix is created and returned.
 
-#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*r1, r2, r3, r4*)
+#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*r1: SFVec4d/f, r2: SFVec4d/f, r3: SFVec4d/f, r4: SFVec4d/f*)
 
 A new matrix initialized with the vectors in *r1* through *r4* of type SFVec4d/f is created and returned.
 
-#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44*)
+#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*f11: number, f12: number, f13: number, f14: number, f21: number, f22: number, f23: number, f24: number, f31: number, f32: number, f33: number, f34: number, f41: number, f42: number, f43: number, f44: number*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
 
@@ -421,17 +474,17 @@ const copy = new SFMatrix4d (... matrix); // Copy using spread syntax.
 
 ### Properties
 
-None
+Individual elements of the object can be referenced using the standard C-style dereferencing operator (e.g. `sfMatrix4d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<16).
 
 ### Methods
 
-#### void **setTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*)
+#### **setTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*): void
 
 Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is a SFRotation object, *scaleFactor* is a SFVec3d/f object, *scaleOrientation* is a SFRotation object and *center* is a SFVec3d/f object.
 
 Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
-#### void **getTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*)
+#### **getTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*): void
 
 Decomposes the SFMatrix4d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects. The types of the parameters are the same as in **setTransform**.
 
@@ -439,49 +492,61 @@ Any of the rightmost parameters can be omitted. In other words, the method can t
 
 A center of any value can be specified around which the rotation and scaling will take place.
 
-#### Number **determinant** ()
+#### **determinant** (): number
 
 Returns the determinant of this object's matrix.
 
-#### SFMatrix4d/f **inverse** ()
+#### **inverse** (): SFMatrix4d/f
 
 Returns a SFMatrix whose value is the inverse of this object.
 
-#### SFMatrix4d/f **transpose** ()
+#### **transpose** (): SFMatrix4d/f
 
 Returns a SFMatrix4d/f whose value is the transpose of this object.
 
-#### SFMatrix4d/f **multLeft** (*SFMatrix4d/f matrix*)
+#### **multLeft** (*matrix: SFMatrix4d/f*): SFMatrix4d/f
 
 Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
 
-#### SFMatrix4d/f **multRight** (*SFMatrix4d/f matrix*)
+#### **multRight** (*matrix: SFMatrix4d/f*): SFMatrix4d/f
 
 Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
 
-#### SFVec3d/f **multVecMatrix** (*SFVec3d/f vec*)
+#### **multVecMatrix** (*vec: SFVec3d/f*): SFVec3d/f
 
 Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
 
-#### SFVec4d/f **multVecMatrix** (*SFVec4d/f vec*)
+#### **multVecMatrix** (*SFVec4d/f vec*): SFVec4d/f
 
 Returns a SFVec4d/f whose value is the object multiplied by the passed row vector.
 
-#### SFVec3d/f **multMatrixVec** (*SFVec3d/f vec*)
+#### **multMatrixVec** (*vec: SFVec3d/f*): SFVec3d/f
 
 Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
 
-#### SFVec4d/f **multMatrixVec** (*SFVec4d/f vec*)
+#### **multMatrixVec** (*SFVec4d/f vec*): SFVec4d/f
 
 Returns a SFVec4d/f whose value is the object multiplied by the passed column vector.
 
-#### SFVec3d/f **multDirMatrix** (*SFVec3d/f vec*)
+#### **multDirMatrix** (*vec: SFVec3d/f*): SFVec3d/f
 
 Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
 
-#### SFVec3d/f **multMatrixDir** (*SFVec3d/f vec*)
+#### **multMatrixDir** (*vec: SFVec3d/f*): SFVec3d/f
 
 Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
+
+#### **translate** (*translation: SFVec3d/f*):  SFMatrix4d/f
+
+Returns a SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
+
+#### **rotate** (*rotation: SFRotation*):  SFMatrix4d/f
+
+Returns a SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
+
+#### **scale** (*scale: SFVec3d/f*):  SFMatrix4d/f
+
+Returns a SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
 
 ## SFNode Object
 
@@ -489,61 +554,82 @@ The SFNode object corresponds to an X3D SFNode field.
 
 ### Instance Creation Method(s)
 
-#### *sfNodeObjectName* = new **SFNode** (*vrmlSyntax*)
+#### *sfNodeObjectName* = new **SFNode** (*vrmlSyntax: string*)
 
 *vrmlSyntax* is a UTF-8 string containing the definition of an X3D node.
 
-This constructor is only available inside Script nodes. If the specification version is greater than 2.0, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](/x_ite/reference/scene-services/#sfnode-createnode-string-typename) or [X3DExecutionContext.createProto](/x_ite/reference/scene-services/#sfnode-createproto-string-protoname) instead.
+>**Attention:** This constructor is only available inside [Script](/x_ite/components/scripting/script/) nodes. If the specification version is greater than **2.0**, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](/x_ite/reference/scene-services/#createnode-typename-string-sfnode) or [X3DExecutionContext.createProto](/x_ite/reference/scene-services/#createproto-protoname-string-sfnode) instead.
+{: .prompt-danger }
 
 ### Properties
 
-Each node may assign values to its inputOnly fields and obtain the last output values of its outputOnly fields using the *sfNodeObjectName.fieldName* syntax. The *directOutput* field of the corresponding Script node must then be set to TRUE.
+Each node may be assigned values to its **initializeOnly,** **inputOnly** and **inputOutput** fields and obtain the last output values of its **initializeOnly,** **outputOnly** and **inputOutput** fields using the `sfNodeObjectName.fieldName` syntax. The *directOutput* field of a corresponding [Script](/x_ite/components/scripting/script/) node must then be set to `TRUE`.
+
+When you assign to a field of type `SFBool`, `SFDouble`, `SFFloat`, `SFInt32`, `SFString` or `SFTime` use plain JavaScript types like boolean, number or string, otherwise use the provided X3D field types:
+
+```js
+material .diffuseColor = new SFColor (1, 1, 1);
+material .transparency = 0.5;
+```
 
 ### Methods
 
-#### X3DFieldDefinition **getFieldDefinition** (*name*)
+#### **addFieldCallback** (*key: any, name: string, callback: (value: any) => void*): void
 
-Returns the corresponding X3DFieldDefinition object associated with *name*.
+Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the field to which the callback should be connected. The callback is called when the field has been changed.
 
-#### FieldDefinitionArray **getFieldDefinitions** ()
+The callback has a signature of `function (value)`, where value is the current value of the field.
+
+```js
+visibilitySensor .addFieldCallback ("log", "enterTime", time =>
+{
+  console .log (`You have entered the world at ${time}.`);
+});
+```
+
+#### **getFieldDefinition** (*name: string*): X3DFieldDefinition
+
+Returns the corresponding [X3DFieldDefinition](/x_ite/reference/field-services-and-objects/#x3dfielddefinition) object associated with *name*.
+
+#### **getFieldDefinitions** (): FieldDefinitionArray
 
 Returns a list of fields defined for the SFNode object.
 
-#### X3DField **getField** (*name*)
-
-Returns the corresponding X3DField object associated with *name*.
-
-#### String **getNodeName** ()
+#### **getNodeName** (): string
 
 Returns the node name.
 
-#### Array\<Number\> **getNodeType** ()
+#### **getNodeType** (): number []
 
-Returns, in the array, a list of constant values that indicate node types as provided in the X3DConstants object.
+Returns, in the array, a list of constant values that indicate node types as provided in the [X3DConstants](/x_ite/reference/constants-services/#x3dconstants) object.
 
 See [Concrete Node Types](/x_ite/reference/constants-services/#concrete-node-types) and [Abstract Node Types](/x_ite/reference/constants-services/#abstract-node-types).
 
-#### String **getNodeTypeName** ()
+#### **getNodeTypeName** (): string
 
 Returns the node type name.
 
-#### String **toVRMLString** (\[options\])
+#### **removeFieldCallback** (key: any, name: string): void
 
-Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, produce this node.
+Removes a field callback function associated with *key* and *name* from the field.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+#### **toVRMLString** (options?: Options): string
 
-#### String **toXMLString** (\[options\])
+Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
-Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, produce this node.
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+#### **toXMLString** (options?: Options): string
 
-#### String **toJSONString** (\[options\])
+Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
-Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+#### **toJSONString** (options?: Options): string
+
+Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, will produce this node.
+
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 ## SFRotation Object
 
@@ -555,21 +641,21 @@ The SFRotation object corresponds to an X3D SFRotation field.
 
 A new rotation initialized with the identity rotation is created and returned.
 
-#### *sfRotationObjectName* = new **SFRotation** (*x, y, z, angle*)
+#### *sfRotationObjectName* = new **SFRotation** (*x: number, y: number, z: number, angle: number*)
 
 *x*, *y*, and *z* are the axis of the rotation.
 *angle* is the angle of the rotation (in radians). All values are scalar.
 
-#### *sfRotationObjectName* = new **SFRotation** (*axis, angle*)
+#### *sfRotationObjectName* = new **SFRotation** (*axis: SFVec3d/f, angle: number*)
 
 *axis* is a SFVec3d/f object whose value is the axis of rotation.
 *angle* is the scalar angle of the rotation (in radians).
 
-#### *sfRotationObjectName* = new **SFRotation** (*fromVector, toVector*)
+#### *sfRotationObjectName* = new **SFRotation** (*fromVector: SFVec3d/f, toVector: SFVec3d/f*)
 
 *fromVector* and *toVector* are SFVec3d/f valued objects. These vectors are normalized and the rotation value that would rotate from the *fromVector* to the *toVector* is stored in the object.
 
-#### *sfRotationObjectName* = new **SFRotation** (*matrix*)
+#### *sfRotationObjectName* = new **SFRotation** (*matrix: SFMatrix3d/f*)
 
 *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
 
@@ -583,71 +669,77 @@ const copy = new SFRotation (... rotation); // Copy using spread syntax.
 
 ### Properties
 
-#### **x**
+Each component of the rotation can be accessed using the `x`, `y`, `z` and `angle` properties or using the standard C-style dereferencing operator (e.g. `sfRotationObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
+
+#### **x**: number
+{: .writable }
 
 Returns the first value of the axis vector.
 
-#### **y**
+#### **y**: number
+{: .writable }
 
 Returns the second value of the axis vector.
 
-#### **z**
+#### **z**: number
+{: .writable }
 
 Returns the third value of the axis vector
 
-#### **angle**
+#### **angle**: number
+{: .writable }
 
 A number corresponding to the angle of the rotation (in radians).
 
 ### Methods
 
-#### Number **getAxis** ()
+#### **getAxis** (): number
 
 Returns the axis of rotation as an SFVec3f object.
 
-#### SFMatrix3f **getMatrix** ()
+#### **getMatrix** (): SFMatrix3f
 
 Returns the rotation matrix as an SFMatrix3f object.
 
-#### Array **getQuaternion** ()
+#### **getQuaternion** (): number []
 
 Returns the underlying quaternion as Array with the four values [x, y, z, w].
 
-#### SFRotation **inverse** ()
+#### **inverse** (): SFRotation
 
 Returns a SFRotation object whose value is the inverse of this object's rotation.
 
-#### SFRotation **multiply** *(rotation*)
+#### **multiply** *(rotation: SFRotation*): SFRotation
 
 Returns an SFRotation whose value is the object multiplied by the passed SFRotation.
 
-#### SFVec3f **multVec** (*vec*)
+#### **multVec** (*vec: SFVec3d/f*): SFVec3d/f
 
 Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation.
 
-#### void **setAxis** (*vec*)
+#### **setAxis** (*vec: SFVec3d/f*): void
 
 Set the axis of rotation to the vector passed in *vec*.
 
-#### void **setMatrix** (*matrix*)
+#### **setMatrix** (*matrix: SFMatrix3d/f*): void
 
 Set the value of this rotation to the rotation matrix passed in *matrix*.
 
-#### void **setQuaternion** (*x, y, z, w*)
+#### **setQuaternion** (*x: number, y: number, z: number, w: number*): void
 
 Set the value of this rotation to the quaternion passed in *x, y, z, w*.
 
-#### SFRotation **slerp** (*destRotation, t*)
+#### **slerp** (*destRotation: SFRotation, t: number*): SFRotation
 
 Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
 
-#### SFRotation **straighten** (*upVector = new SFVec3f (0, 1, 0)*)
+#### **straighten** (*upVector?: SFVec3d/f = new SFVec3f (0, 1, 0)*): SFRotation
 
 Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector. The default  value for *upVector* is the y-axis.
 
 ## SFVec2d/SFVec2f Object
 
-The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2d/fObjectName[0]* or *sfVec2d/fObjectName[1]).*
+The SFVec2d/f object corresponds to an X3D SFVec2d/f field.
 
 ### Instance Creation Method(s)
 
@@ -655,7 +747,7 @@ The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of th
 
 A new vector initialized with zero values is created and returned.
 
-#### *sfVec2d/fObjectName* = new **SFVec2d/f** (*x, y*)
+#### *sfVec2d/fObjectName* = new **SFVec2d/f** (*x: number, y: number*)
 
 Constructs a SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
 
@@ -669,83 +761,91 @@ const copy = new SFVec2d (... vector); // Copy using spread syntax.
 
 ### Properties
 
-#### **x**
+Each component of the vector can be accessed using the `x` and `y` properties or using the standard C-style dereferencing operator (e.g. `sfVec2d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<2).
+
+#### **x**: number
+{: .writable }
 
 Returns the first value of the vector.
 
-#### **y**
+#### **y**: number
+{: .writable }
 
 Returns the second value of the vector.
 
 ### Methods
 
-#### SFVec2d/f **abs** ()
+#### **abs** (): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the componentwise absolute value of the object.
 
-#### SFVec2d/f **add** (*other*)
+#### **add** (*other: SFVec2d/f*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f added, componentwise, to the object.
 
-#### Number **distance** (*other*)
+#### **clamp** (*low: SFVec2d/f, high: SFVec2d/f*): SFVec2d/f
+
+Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
+
+#### **distance** (*other: SFVec2d/f*): number
 
 Returns the distance of this vector to SFVec2d/f *other*.
 
-#### SFVec2d/f **divide** (*denominator*)
+#### **divide** (*denominator*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the object divided by the passed numeric value.
 
-#### SFVec2d/f **divVec** (*other*)
+#### **divVec** (*other: SFVec2d/f*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the object divided, componentwise, by the passed SFVec2d/f *other*.
 
-#### Number **dot** (*other*)
+#### **dot** (*other: SFVec2d/f*): number
 
 Returns the dot product of this vector and SFVec2d/f *other*.
 
-#### SFVec2d/f **inverse** ()
+#### **inverse** (): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the componentwise inverse of the object.
 
-#### Number **length** ()
+#### **length** (): number
 
 Returns the geometric length of this vector.
 
-#### SFVec2d/f **lerp** (*destination, t*)
+#### **lerp** (*destination:  SFVec2d/f, t: number*): SFVec2d/f
 
 Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
-#### SFVec2d/f **min** (*other*)
+#### **min** (*other: SFVec2d/f*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the componentwise minimum of the passed SFVec2d/f and the object.
 
-#### SFVec2d/f **max** (*other*)
+#### **max** (*other: SFVec2d/f*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the componentwise maximum of the passed SFVec2d/f and the object.
 
-#### SFVec2d/f **multiply** (*factor*)
+#### **multiply** (*factor: SFVec2d/f*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the object multiplied by the passed numeric value.
 
-#### SFVec2d/f **multVec** (*other*)
+#### **multVec** (*other: SFVec2d/f*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f multiplied, componentwise, with the object.
 
-#### SFVec2d/f **negate** ()
+#### **negate** (): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the componentwise negation of the object.
 
-#### SFVec2d/f **normalize** ()
+#### **normalize** (): SFVec2d/f
 
 Returns an SFVec2d/f of object converted to unit length.
 
-#### SFVec2d/f **subtract** (*other*)
+#### **subtract** (*other: SFVec2d/f*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f subtracted, componentwise, from the object.
 
 ## SFVec3d/SFVec3f Object
 
-The SFVec3d/f object corresponds to an X3D SFVec3d/f field. Each component of the vector can be accessed using the x, y, and z properties or using C-style array dereferencing (i.e. *sfVec3d/fObjectName[0], sfVec3d/fObjectName[1]* or *sfVec3d/fObjectName[2]).*
+The SFVec3d/f object corresponds to an X3D SFVec3d/f field.
 
 ### Instance Creation Method(s)
 
@@ -753,7 +853,7 @@ The SFVec3d/f object corresponds to an X3D SFVec3d/f field. Each component of th
 
 A new vector initialized with zero values is created and returned.
 
-#### *sfVec3d/fObjectName* = new **SFVec3d/f** (*x, y, z*)
+#### *sfVec3d/fObjectName* = new **SFVec3d/f** (*x: number, y: number, z: number*)
 
 Constructs a SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
 
@@ -767,91 +867,100 @@ const copy = new SFVec3d (... vector); // Copy using spread syntax.
 
 ### Properties
 
-#### **x**
+Each component of the vector can be accessed using the `x`, `y` and `z` properties or using the standard C-style dereferencing operator (e.g. `sfVec3d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<3).
+
+#### **x**: number
+{: .writable }
 
 Returns the first value of the vector.
 
-#### **y**
+#### **y**: number
+{: .writable }
 
 Returns the second value of the vector.
 
-#### **z**
+#### **z**: number
+{: .writable }
 
 Returns the third value of the vector.
 
 ### Methods
 
-#### SFVec3d/f **abs** ()
+#### **abs** (): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the componentwise absolute value of the object.
 
-#### SFVec3d/f **add** (*other*)
+#### **add** (*other: SFVec3d/f*): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the passed SFVec3d/f added, componentwise, to the object.
 
-#### SFVec3d/f **cross** (*other*)
+#### **clamp** (*low: SFVec3d/f, high: SFVec3d/f*): SFVec3d/f
+
+Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
+
+#### **cross** (*other: SFVec3d/f*): SFVec3d/f
 
 Returns the cross product of the object and the passed SFVec3d/f *other*.
 
-#### Number **distance** (*other*)
+#### **distance** (*other: SFVec3d/f*): number
 
 Returns the distance of this vector to SFVec3d/f *other*.
 
-#### SFVec3d/f **divide** (*denominator*)
+#### **divide** (*denominator*): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the object divided by the passed numeric value.
 
-#### SFVec3d/f **divVec** (*other*)
+#### **divVec** (*other: SFVec3d/f*): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the object divided, componentwise, by the passed SFVec3d/f *other*.
 
-#### Number **dot** (*other*)
+#### **dot** (*other: SFVec3d/f*): number
 
 Returns the dot product of this vector and SFVec3d/f *other*.
 
-#### SFVec3d/f **inverse** ()
+#### **inverse** (): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the componentwise inverse of the object.
 
-#### Number **length** ()
+#### **length** (): number
 
 Returns the geometric length of this vector.
 
-#### SFVec3d/f **lerp** (*destination, t*)
+#### **lerp** (*destination:  SFVec3d/f, t: number*): SFVec3d/f
 
 Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
-#### SFVec3d/f **min** (*other*)
+#### **min** (*other: SFVec3d/f*): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the componentwise minimum of the passed SFVec3d/f and the object.
 
-#### SFVec3d/f **max** (*other*)
+#### **max** (*other: SFVec3d/f*): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the componentwise maximum of the passed SFVec3d/f and the object.
 
-#### SFVec3d/f **multiply** (*factor*)
+#### **multiply** (*factor: SFVec3d/f*): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the object multiplied by the passed numeric value.
 
-#### SFVec3d/f **multVec** (*other*)
+#### **multVec** (*other: SFVec3d/f*): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the passed SFVec3d/f multiplied, componentwise, with the object.
 
-#### SFVec3d/f **negate** ()
+#### **negate** (): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the componentwise negation of the object.
 
-#### SFVec3d/f **normalize** ()
+#### **normalize** (): SFVec3d/f
 
 Returns an SFVec3d/f of object converted to unit length
 
-#### SFVec3d/f **subtract** (*other*)
+#### **subtract** (*other: SFVec3d/f*): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the passed SFVec3d/f subtracted, componentwise, from the object.
 
 ## SFVec4d/SFVec4d/f Object
 
-The SFVec4d/f object corresponds to an X3D SFVec4d/f field. Each component of the vector can be accessed using the x, y, z and w properties or using C-style array dereferencing (i.e. *sfVec4d/fObjectName[0], sfVec4d/fObjectName[1], sfVec4d/fObjectName[2]* or *sfVec4d/fObjectName[3]).*
+The SFVec4d/f object corresponds to an X3D SFVec4d/f field.
 
 ### Instance Creation Method(s)
 
@@ -859,7 +968,7 @@ The SFVec4d/f object corresponds to an X3D SFVec4d/f field. Each component of th
 
 A new vector initialized with zero values is created and returned.
 
-#### *sfVec4d/fObjectName* = new **SFVec4d/f** (*number1, number2, number3, number4*)
+#### *sfVec4d/fObjectName* = new **SFVec4d/f** (*x: number, y: number, z: number, w: number*)
 
 Constructs a SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
 
@@ -873,91 +982,101 @@ const copy = new SFVec4d (... vector); // Copy using spread syntax.
 
 ### Properties
 
-#### **x**
+Each component of the vector can be accessed using the `x`, `y`, `z` and `w` properties or using the standard C-style dereferencing operator (e.g. `sfVec4d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
+
+#### **x**: number
+{: .writable }
 
 Returns the first value of the vector.
 
-#### **y**
+#### **y**: number
+{: .writable }
 
 Returns the second value of the vector.
 
-#### **z**
+#### **z**: number
+{: .writable }
 
 Returns the third value of the vector.
 
-#### **w**
+#### **w**: number
+{: .writable }
 
 Returns the fourth value of the vector.
 
 ### Methods
 
-#### SFVec4d/f **abs** ()
+#### **abs** (): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the componentwise absolute value of the object.
 
-#### SFVec4d/f **add** (*other*)
+#### **add** (*other: SFVec4d/f*): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the passed SFVec4d/f added, componentwise, to the object.
 
-#### Number **distance** (*other*)
+#### **clamp** (*low: SFVec4d/f, high: SFVec4d/f*): SFVec4d/f
+
+Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
+
+#### **distance** (*other: SFVec4d/f*): number
 
 Returns the distance of this vector to SFVec4d/f *other*.
 
-#### SFVec4d/f **divide** (*denominator*)
+#### **divide** (*denominator*): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the object divided by the passed numeric value.
 
-#### SFVec4d/f **divVec** (*other*)
+#### **divVec** (*other: SFVec4d/f*): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the object divided, componentwise, by the passed SFVec4d/f *other*.
 
-#### Number **dot** (*other*)
+#### **dot** (*other: SFVec4d/f*): number
 
 Returns the dot product of this vector and SFVec4d/f *other*.
 
-#### SFVec4d/f **inverse** ()
+#### **inverse** (): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the componentwise inverse of the object.
 
-#### Number **length** ()
+#### **length** (): number
 
 Returns the geometric length of this vector.
 
-#### SFVec4d/f **lerp** (*destination, t*)
+#### **lerp** (*destination:  SFVec4d/f, t: number*): SFVec4d/f
 
 Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
-#### SFVec4d/f **min** (*other*)
+#### **min** (*other: SFVec4d/f*): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the componentwise minimum of the passed SFVec4d/f and the object.
 
-#### SFVec4d/f **max** (*other*)
+#### **max** (*other: SFVec4d/f*): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the componentwise maximum of the passed SFVec4d/f and the object.
 
-#### SFVec4d/f **multiply** (*factor*)
+#### **multiply** (*factor: SFVec4d/f*): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the object multiplied by the passed numeric value.
 
-#### SFVec4d/f **multVec** (*other*)
+#### **multVec** (*other: SFVec4d/f*): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the passed SFVec4d/f multiplied, componentwise, with the object.
 
-#### SFVec4d/f **negate** ()
+#### **negate** (): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the componentwise negation of the object.
 
-#### SFVec4d/f **normalize** ()
+#### **normalize** (): SFVec4d/f
 
 Returns an SFVec4d/f of object converted to unit length.
 
-#### SFVec4d/f **subtract** (*other*)
+#### **subtract** (*other: SFVec4d/f*): SFVec4d/f
 
 Returns an SFVec4d/f whose value is the passed SFVec4d/f subtracted, componentwise, from the object.
 
 ## X3DArrayField
 
-The X3DArrayField object is the base object of all MF* objects. It is used to store a one-dimensional array of the corresponding SF* objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. X3D*ArrayFieldObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
+The X3DArrayField object is the base object of all MF* objects. It is used to store a one-dimensional array of the corresponding SF* objects.
 
 ### Instance Creation Method(s)
 
@@ -973,13 +1092,15 @@ const copy = new MFBool (... array); // Copy using spread syntax.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `X3DArrayFieldObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-#### Boolean **equals** (*array*)
+#### **equals** (*array: X3DArrayField*): boolean
 
 Returns true if the passed MF* *array* of the same type is equals to this object, otherwise false.
 
@@ -989,37 +1110,41 @@ Common Array functions like `at`, `entries`, `every`, `fill`, `filter`, `find`, 
 
 ## MFBool Object
 
-The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfBoolObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `false`.
+The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects.
 
 ### Instance Creation Method(s)
 
-#### *mfBoolObjectName* = new **MFBool** (*[boolean, boolean...]*)
+#### *mfBoolObjectName* = new **MFBool** (*... values: boolean []*)
 
 The creation method can be passed 0 or more numeric-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfBoolObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `false`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFColor/MFColorRGBA Object
 
-The MFColor/MFColorRGBA object corresponds to an X3D MFColor/MFColorRGBA field. It is used to store a one-dimensional array of SFColor/SFColorRGBA objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfColorObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index* length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFColor (0, 0, 0)` or `SFColorRGBA (0, 0, 0, 0)`.
+The MFColor/MFColorRGBA object corresponds to an X3D MFColor/MFColorRGBA field. It is used to store a one-dimensional array of SFColor/SFColorRGBA objects.
 
 ### Instance Creation Method(s)
 
-#### *mfColorObjectName* = new **MFColor/MFColorRGBA** (*[SFColor/SFColorRGBA, SFColor/SFColorRGBA, ...]*)
+#### *mfColorObjectName* = new **MFColor/MFColorRGBA** (*... values: SFColor/SFColorRGBA []*)
 
 The creation method can be passed 0 or more SFColor/SFColorRGBA-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfColorObjectName[index]`, where *index* is an integer-valued expression with 0<=*index* length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFColor (0, 0, 0)` or `SFColorRGBA (0, 0, 0, 0)`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
@@ -1027,260 +1152,284 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFDouble/MFFloat Object
 
-The MFDouble/MFFloat object corresponds to an X3D MFDouble/MFFloat field. It is used to store a one-dimensional array of SFFloat objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfFloatObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0.0`.
+The MFDouble/MFFloat object corresponds to an X3D MFDouble/MFFloat field. It is used to store a one-dimensional array of SFFloat objects.
 
 ### Instance Creation Method(s)
 
-#### *mfFloat/DoubleObjectName* = new **MFDouble/MFFloat** (*[number, number...]*)
+#### *mfFloat/DoubleObjectName* = new **MFDouble/MFFloat** (*... values: number []*)
 
 The creation method can be passed 0 or more numeric-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfFloatObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0.0`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFImage Object
 
-The MFImage object corresponds to an X3D MFImage field. It is used to store a one-dimensional array of SFImage objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfImageObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFImage (0, 0, 0)`.
+The MFImage object corresponds to an X3D MFImage field. It is used to store a one-dimensional array of SFImage objects.
 
 ### Instance Creation Method(s)
 
-#### *mfImageObjectName* = new **MFImage** (*[SFImage, SFImage, ...]*)
+#### *mfImageObjectName* = new **MFImage** (*... values: SFImage []*)
 
 The creation method can be passed 0 or more SFImage-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfImageObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFImage (0, 0, 0)`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFInt32 Object
 
-The MFInt32 object corresponds to an X3D MFInt32 field. It is used to store a one-dimensional array of SFInt32 objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfInt32ObjectName*[*index]*, where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0`.
+The MFInt32 object corresponds to an X3D MFInt32 field. It is used to store a one-dimensional array of SFInt32 objects.
 
 ### Instance Creation Method(s)
 
-#### *mfInt32ObjectName* = new **MFInt32** (*[number, number, ...]*)
+#### *mfInt32ObjectName* = new **MFInt32** (*... values: number []*)
 
 The creation method can be passed 0 or more integer-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfInt32ObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFMatrix3d/MFMatrix3d/f Object
 
-The MFMatrix3d/f object corresponds to an X3D MFMatrix3d/f field. It is used to store a one-dimensional array of SFMatrix3d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix3d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the identity matrix.
+The MFMatrix3d/f object corresponds to an X3D MFMatrix3d/f field. It is used to store a one-dimensional array of SFMatrix3d/f objects.
 
 ### Instance Creation Method(s)
 
-#### *mfMatrix3d/fObjectName* = new **MFMatrix3d/f** (*[SFMatrix3d/f, SFMatrix3d/f, ...]*)
+#### *mfMatrix3d/fObjectName* = new **MFMatrix3d/f** (*... values: SFMatrix3d/f []*)
 
 The creation method can be passed 0 or more SFMatrix3d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfMatrix3d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the identity matrix.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFMatrix4d/MFMatrix4f Object
 
-The MFMatrix4d/f object corresponds to an X3D MFMatrix4d/f field. It is used to store a one-dimensional array of SFMatrix4d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix4d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the identity matrix.
+The MFMatrix4d/f object corresponds to an X3D MFMatrix4d/f field. It is used to store a one-dimensional array of SFMatrix4d/f objects.
 
 ### Instance Creation Method(s)
 
-#### *mfMatrix4d/fObjectName* = new **MFMatrix4d/f** (*[SFMatrix4d/f, SFMatrix4d/f, ...]*)
+#### *mfMatrix4d/fObjectName* = new **MFMatrix4d/f** (*... values: SFMatrix4d/f []*)
 
 The creation method can be passed 0 or more SFMatrix4d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfMatrix4d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the identity matrix.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFNode Object
 
-The MFNode object corresponds to an X3D MFNode field. It is used to store a one-dimensional array of SFNode objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfNodeObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
+The MFNode object corresponds to an X3D MFNode field. It is used to store a one-dimensional array of SFNode objects.
 
 ### Instance Creation Method(s)
 
-#### *mfNodeObjectName* = new **MFNode** (*[SFNode, SFNode, ...]*)
+#### *mfNodeObjectName* = new **MFNode** (*... values: SFNode []*)
 
 The creation method can be passed 0 or more SFNode-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfNodeObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `null`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-#### String **toVRMLString** (\[options\])
+#### **toVRMLString** (\[options\]): string <small><span class="blue">non-standard</span></small>
 
-Returns the X3D VRML-encoded string that, if parsed as the value of an MFNode field, produce this node.
+Returns the X3D VRML-encoded string that, if parsed as the value of an MFNode field, will produce these nodes.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### String **toXMLString** (\[options\])
+#### **toXMLString** (\[options\]): string <small><span class="blue">non-standard</span></small>
 
-Returns the X3D XML-encoded string that, if parsed as the value of an MFNode field, produce this node.
+Returns the X3D XML-encoded string that, if parsed as the value of an MFNode field, will produce these nodes.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### String **toJSONString** (\[options\])
+#### **toJSONString** (\[options\]): string <small><span class="blue">non-standard</span></small>
 
-Returns the X3D JSON-encoded string that, if parsed as the value of an MFNode field, produce this node.
+Returns the X3D JSON-encoded string that, if parsed as the value of an MFNode field, will produce these nodes.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#string-tovrmlstring-options).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 ## MFRotation Object
 
-The MFRotation object corresponds to an X3D MFRotation field. It is used to store a one-dimensional array of SFRotation objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfRotationObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFRotation (0, 0, 1, 0)`.
+The MFRotation object corresponds to an X3D MFRotation field. It is used to store a one-dimensional array of SFRotation objects.
 
 ### Instance Creation Method(s)
 
-#### *mfRotationObjectName* = new **MFRotation** (*[SFRotation, SFRotation, ...]*)
+#### *mfRotationObjectName* = new **MFRotation**  (*... values: SFRotation []*)
 
 The creation method can be passed 0 or more SFRotation-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfRotationObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFRotation (0, 0, 1, 0)`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFString Object
 
-The MFString object corresponds to an X3D MFString field. It is used to store a one-dimensional array of String objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfStringObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the empty string.
+The MFString object corresponds to an X3D MFString field. It is used to store a one-dimensional array of String objects.
 
 ### Instance Creation Method(s)
 
-#### *mfStringObjectName* = new **MFString** (*[string, string, ...]*)
+#### *mfStringObjectName* = new **MFString** (*... values: string []*)
 
 The creation method can be passed 0 or more string-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfStringObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the empty string.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFTime Object
 
-The MFTime object corresponds to an X3D MFTime field. It is used to store a one-dimensional array of SFTime objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfTimeObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `0.0`.
+The MFTime object corresponds to an X3D MFTime field. It is used to store a one-dimensional array of SFTime objects.
 
 ### Instance Creation Method(s)
 
-#### *mfTimeObjectName* = new **MFTime** (*[string, string, ...]*)
+#### *mfTimeObjectName* = new **MFTime** (*... values: number []*)
 
-The creation method can be passed 0 or more string-valued expressions to initialize the elements of the array.
+The creation method can be passed 0 or more number-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfTimeObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `-1.0`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFVec2d/MFVec2f Object
 
-The MFVec2d/f object corresponds to an X3D MFVec2d/f field. It is used to store a one-dimensional array of SFVec2d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec2d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec2d/f (0, 0)`.
+The MFVec2d/f object corresponds to an X3D MFVec2d/f field. It is used to store a one-dimensional array of SFVec2d/f objects.
 
 ### Instance Creation Method(s)
 
-#### *mfVec2d/fObjectName* = new **MFVec2d/f** (*[SFVec2d/f, SFVec2d/f, ...]*)
+#### *mfVec2d/fObjectName* = new **MFVec2d/f** (*... values: SFVec2d/f []*)
 
 The creation method can be passed 0 or more SFVec2d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfVec2d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec2d/f (0, 0)`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFVec3d/MFVec3d/f Object
 
-The MFVec3d/f object corresponds to an X3D MFVec3d/f field. It is used to store a one-dimensional array of SFVec3d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec3d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec3d/f (0, 0, 0)`.
+The MFVec3d/f object corresponds to an X3D MFVec3d/f field. It is used to store a one-dimensional array of SFVec3d/f objects.
 
 ### Instance Creation Method(s)
 
-#### *mfVec3d/fObjectName* = new **MFVec3d/f** (*[SFVec3d/f, SFVec3d/f, ...]*)
+#### *mfVec3d/fObjectName* = new **MFVec3d/f** (*... values: SFVec3d/f []*)
 
 The creation method can be passed 0 or more SFVec3d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfVec3d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec3d/f (0, 0, 0)`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 ## MFVec4d/MFVec4f Object
 
-The MFVec4d/f object corresponds to an X3D MFVec4d/f field. It is used to store a one-dimensional array of SFVec4d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec4d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec4d/f (0, 0, 0, 0)`.
+The MFVec4d/f object corresponds to an X3D MFVec4d/f field. It is used to store a one-dimensional array of SFVec4d/f objects.
 
 ### Instance Creation Method(s)
 
-#### *mfVec4d/fObjectName* = new **MFVec4d/f** (*[SFVec4d/f, SFVec4d/f, ...]*)
+#### *mfVec4d/fObjectName* = new **MFVec4d/f** (*... values: SFVec4d/f []*)
 
 The creation method can be passed 0 or more SFVec4d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
-#### **length**
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfVec4d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFVec4d/f (0, 0, 0, 0)`.
+
+#### **length**: number
 
 An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
 
 ### Methods
 
-None
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).

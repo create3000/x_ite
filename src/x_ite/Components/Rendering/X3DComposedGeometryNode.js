@@ -1,52 +1,5 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
+import X3DNode         from "../Core/X3DNode.js";
 import X3DGeometryNode from "./X3DGeometryNode.js";
-import X3DCast         from "../../Base/X3DCast.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 
@@ -56,12 +9,10 @@ function X3DComposedGeometryNode (executionContext)
 
    this .addType (X3DConstants .X3DComposedGeometryNode);
 
-   this .fogCoordNode = null;
-   this .colorNode    = null;
-   this .texCoordNode = null;
-   this .normalNode   = null;
-   this .tangentNode  = null;
-   this .coordNode    = null;
+   // Private properties
+
+   this .polygons  = [ ];
+   this .triangles = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DGeometryNode .prototype),
@@ -82,113 +33,13 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_texCoord__ ();
-      this .set_normal__ ();
       this .set_tangent__ ();
+      this .set_normal__ ();
       this .set_coord__ ();
    },
-   getFogCoord ()
+   checkVertexCount (numVertices, multiplier)
    {
-      return this .fogCoordNode;
-   },
-   getColor ()
-   {
-      return this .colorNode;
-   },
-   getTexCoord ()
-   {
-      return this .texCoordNode;
-   },
-   getNormal ()
-   {
-      return this .normalNode;
-   },
-   getTangent ()
-   {
-      return this .tangentNode;
-   },
-   getCoord ()
-   {
-      return this .coordNode;
-   },
-   set_attrib__ ()
-   {
-      const attribNodes = this .getAttrib ();
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .removeInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
-      }
-
-      attribNodes .length = 0;
-
-      for (const node of this ._attrib)
-      {
-         const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
-
-         if (attribNode)
-            attribNodes .push (attribNode);
-      }
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .addInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
-      }
-
-      this .updateVertexArrays ();
-   },
-   set_fogCoord__ ()
-   {
-      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
-
-      this .fogCoordNode ?.addInterest ("requestRebuild", this);
-   },
-   set_color__ ()
-   {
-      this .colorNode ?.removeInterest ("requestRebuild", this);
-
-      this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
-
-      this .colorNode ?.addInterest ("requestRebuild", this);
-
-      this .setTransparent (this .colorNode ?.isTransparent ());
-   },
-   set_texCoord__ ()
-   {
-      this .texCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
-
-      this .texCoordNode ?.addInterest ("requestRebuild", this);
-
-      this .setTextureCoordinate (this .texCoordNode);
-   },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
-   set_tangent__ ()
-   {
-      this .tangentNode ?.removeInterest ("requestRebuild", this);
-
-      this .tangentNode = X3DCast (X3DConstants .Tangent, this ._tangent);
-
-      this .tangentNode ?.addInterest ("requestRebuild", this);
-   },
-   set_coord__ ()
-   {
-      this .coordNode ?.removeInterest ("requestRebuild", this);
-
-      this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
-
-      this .coordNode ?.addInterest ("requestRebuild", this);
+      return numVertices - numVertices % multiplier;
    },
    getPolygonIndex (index)
    {
@@ -198,15 +49,29 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    {
       return index;
    },
+   createPolygons (polygonsSize, polygons = [ ])
+   {
+      for (let i = 0; i < polygonsSize; ++ i)
+         polygons .push (this .getPolygonIndex (i));
+
+      return polygons;
+   },
+   createTriangles (trianglesSize, triangles = [ ])
+   {
+      for (let i = 0; i < trianglesSize; ++ i)
+         triangles .push (this .getTriangleIndex (i));
+
+      return triangles;
+   },
    build (verticesPerPolygon, polygonsSize, verticesPerFace, trianglesSize)
    {
-      if (!this .coordNode || this .coordNode .isEmpty ())
+      if (!this .coordNode ?.getSize ())
          return;
 
       // Set size to a multiple of verticesPerPolygon.
 
-      polygonsSize  -= polygonsSize  % verticesPerPolygon;
-      trianglesSize -= trianglesSize % verticesPerFace;
+      polygonsSize  = this .checkVertexCount (polygonsSize,  verticesPerPolygon);
+      trianglesSize = this .checkVertexCount (trianglesSize, verticesPerFace);
 
       const
          colorPerVertex     = this ._colorPerVertex .getValue (),
@@ -218,25 +83,29 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          fogCoordNode       = this .getFogCoord (),
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
-         normalNode         = this .getNormal (),
          tangentNode        = this .getTangent (),
+         normalNode         = this .getNormal (),
          coordNode          = this .getCoord (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
-         normalArray        = this .getNormals (),
          tangentArray       = this .getTangents (),
-         vertexArray        = this .getVertices ();
+         normalArray        = this .getNormals (),
+         vertexArray        = this .getVertices (),
+         polygons           = this .createPolygons (polygonsSize, this .polygons),
+         triangles          = this .createTriangles (trianglesSize, this .triangles);
+
+      // Init TextureCoordinateNode.
 
       texCoordNode ?.init (multiTexCoordArray);
 
-      // Fill GeometryNode
+      // Fill GeometryNode.
 
       for (let i = 0; i < trianglesSize; ++ i)
       {
          const
             face  = Math .floor (i / verticesPerFace),
-            index = this .getPolygonIndex (this .getTriangleIndex (i));
+            index = polygons [triangles [i]];
 
          coordIndicesArray .push (index);
 
@@ -249,36 +118,43 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
          texCoordNode ?.addPoint (index, multiTexCoordArray);
 
-         normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
          tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
+         normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
 
          coordNode .addPoint (index, vertexArray);
       }
 
       // Autogenerate normal if not specified.
 
-      if (!this .getNormal ())
-         this .generateNormals (verticesPerPolygon, polygonsSize, trianglesSize);
+      if (!normalNode)
+         this .generateNormals (verticesPerPolygon, polygonsSize, polygons, trianglesSize, triangles);
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
+
+      // Clear arrays.
+
+      polygons  .length = 0;
+      triangles .length = 0;
    },
-   generateNormals (verticesPerPolygon, polygonsSize, trianglesSize)
+   generateNormals (verticesPerPolygon, polygonsSize, polygons, trianglesSize, triangles)
    {
       const
-         normals     = this .createNormals (verticesPerPolygon, polygonsSize),
+         normals     = this .createNormals (verticesPerPolygon, polygonsSize, polygons),
          normalArray = this .getNormals ();
 
       for (let i = 0; i < trianglesSize; ++ i)
       {
-         const { x, y, z } = normals [this .getTriangleIndex (i)];
+         const { x, y, z } = normals [triangles [i]];
 
          normalArray .push (x, y, z);
       }
    },
-   createNormals (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize, polygons = this .createPolygons (polygonsSize))
    {
-      const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
+      // This function is used by Sunrize.
+
+      const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize, polygons);
 
       if (!this ._normalPerVertex .getValue ())
          return normals;
@@ -287,7 +163,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       for (let i = 0; i < polygonsSize; ++ i)
       {
-         const index = this .getPolygonIndex (i);
+         const index = polygons [i];
 
          let pointIndex = normalIndex .get (index);
 
@@ -299,16 +175,42 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       return this .refineNormals (normalIndex, normals, Math .PI);
    },
-   createFaceNormals (verticesPerPolygon, polygonsSize)
+   createFaceNormals (verticesPerPolygon, polygonsSize, polygons = this .createPolygons (polygonsSize))
    {
+      // This function is used by Sunrize.
+
       const
          cw      = !this ._ccw .getValue (),
          coord   = this .coordNode,
          normals = [ ];
 
-      for (let i = 0; i < polygonsSize; i += verticesPerPolygon)
+      for (let index = 0; index < polygonsSize; index += verticesPerPolygon)
       {
-         const normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
+         let normal;
+
+         switch (verticesPerPolygon)
+         {
+            case 3:
+            {
+               normal = coord .getNormal (polygons [index],
+                                          polygons [index + 1],
+                                          polygons [index + 2]);
+               break;
+            }
+            case 4:
+            {
+               normal = coord .getQuadNormal (polygons [index],
+                                              polygons [index + 1],
+                                              polygons [index + 2],
+                                              polygons [index + 3]);
+               break;
+            }
+            default:
+            {
+               normal = this .getPolygonNormal (index, verticesPerPolygon, polygons, coord);
+               break;
+            }
+         }
 
          if (cw)
             normal .negate ();
@@ -325,14 +227,14 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          current = new Vector3 (),
          next    = new Vector3 ();
 
-      return function (index, verticesPerPolygon, coord)
+      return function (index, verticesPerPolygon, polygons, coord)
       {
          // Determine polygon normal.
          // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
          const normal = new Vector3 ();
 
-         coord .get1Point (this .getPolygonIndex (index), next);
+         coord .get1Point (polygons [index], next);
 
          for (let i = 0; i < verticesPerPolygon; ++ i)
          {
@@ -340,7 +242,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
             current = next;
             next    = tmp;
 
-            coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
+            coord .get1Point (polygons [index + (i + 1) % verticesPerPolygon], next);
 
             normal .x += (current .y - next .y) * (current .z + next .z);
             normal .y += (current .z - next .z) * (current .x + next .x);
@@ -352,18 +254,6 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    })(),
 });
 
-Object .defineProperties (X3DComposedGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DComposedGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DComposedGeometryNode, X3DNode .getStaticProperties ("X3DComposedGeometryNode", "Rendering", 1));
 
 export default X3DComposedGeometryNode;

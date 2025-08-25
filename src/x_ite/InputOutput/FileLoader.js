@@ -1,55 +1,10 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-import X3DObject   from "../Base/X3DObject.js";
-import Fields      from "../Fields.js";
-import GoldenGate  from "../Parser/GoldenGate.js";
-import X3DWorld    from "../Execution/X3DWorld.js";
-import DEVELOPMENT from "../DEVELOPMENT.js";
+import X3DObject    from "../Base/X3DObject.js";
+import Fields       from "../Fields.js";
+import GoldenGate   from "../Parser/GoldenGate.js";
+import X3DWorld     from "../Execution/X3DWorld.js";
+import X3DScene     from "../Execution/X3DScene.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import DEVELOPMENT  from "../DEVELOPMENT.js";
 
 const foreignMimeType = new Set ([
    "text/html",
@@ -107,13 +62,13 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    {
       try
       {
-         const scene = this .browser .createScene ();
+         const scene = new X3DScene (this .browser);
 
          if (!(this .node instanceof X3DWorld))
             scene .setExecutionContext (this .executionContext);
 
-         scene .setLive (false);
-         scene .setWorldURL (new URL (worldURL, this .getBaseURL ()) .href);
+         scene .setWorldURL (new URL (worldURL, this .getBaseURL ()));
+         scene .setup ();
 
          if (resolve)
             resolve = this .setScene .bind (this, scene, resolve, reject);
@@ -132,39 +87,44 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    setScene (scene, resolve, reject)
    {
-      scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, resolve, reject);
-      scene ._initLoadCount .addEvent ();
+      scene ._loadCount .addInterest ("set_loadCount__", this, scene, resolve, reject);
+      scene ._loadCount .addEvent ();
    },
-   set_initLoadCount__ (scene, resolve, reject, field)
+   async set_loadCount__ (scene, resolve, reject, field)
    {
-      // Wait for extern protos to be loaded.
+      // Wait for X3DExternprotoDeclaration and Script nodes to be loaded or failed.
 
-      if (field .getValue ())
+      if (scene .externprotos .some (node => node .checkLoadState () === X3DConstants .IN_PROGRESS_STATE))
          return;
 
-      scene ._initLoadCount .removeInterest ("set_initLoadCount__", this);
+      const scripts = Array .from (scene .getLoadingObjects ())
+         .filter (node => node .getType () .includes (X3DConstants .Script));
+
+      if (scripts .some (node => node .checkLoadState () === X3DConstants .IN_PROGRESS_STATE))
+         return;
+
+      scene ._loadCount .removeInterest ("set_loadCount__", this);
 
       // Wait for instances to be created.
 
-      setTimeout (() =>
+      await this .browser .nextFrame ();
+
+      try
       {
-         try
-         {
-            resolve (scene);
-         }
-         catch (error)
-         {
-            if (reject)
-               reject (error);
-            else
-               throw error;
-         }
-      });
+         resolve (scene);
+      }
+      catch (error)
+      {
+         if (reject)
+            reject (error);
+         else
+            throw error;
+      }
 
       if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .URL .href)}'.`);
+            console .info (`Done loading scene '${decodeURI (this .URL)}'.`);
       }
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
@@ -184,13 +144,13 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    loadDocument (url, callback)
    {
-      this .url      = url .copy ();
+      this .url      = url .slice ();
       this .callback = callback;
 
       if (url .length === 0)
          return this .loadDocumentError (new Error ("No URL given."));
 
-      this .loadDocumentAsync (this .url .shift ())
+      this .loadDocumentAsync (String (this .url .shift ()))
          .catch (this .loadDocumentError .bind (this));
    },
    async loadDocumentAsync (url)
@@ -207,7 +167,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          if (result)
          {
-            this .callback (url .substring (result [0] .length));
+            await this .callback (url .substring (result [0] .length));
             return;
          }
       }
@@ -227,7 +187,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             data = $.try (() => decodeURIComponent (data)) ?? data; // Decode data.
             data = data .replace (/^ï»¿/, "");                      // Remove BOM.
 
-            this .callback (data);
+            await this .callback (data);
             return;
          }
       }
@@ -294,7 +254,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       if (this .url .length)
       {
-         this .loadDocumentAsync (this .url .shift ())
+         this .loadDocumentAsync (String (this .url .shift ()))
             .catch (this .loadDocumentError .bind (this));
       }
       else
@@ -304,10 +264,12 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    printError (error)
    {
+      const typeName = this .node instanceof X3DWorld ? "" : ` of ${this .node .getTypeName()}`;
+
       if (this .URL .protocol === "data:")
-         console .error (`Couldn't load data URL.`, error);
+         console .error (`Couldn't load data URL${typeName}.`, error);
       else
-         console .error (`Couldn't load URL '${decodeURI (this .URL .href)}'.`, error);
+         console .error (`Couldn't load URL '${$.try (() => decodeURI (this .URL)) ?? this .URL}'${typeName}.`, error);
    },
 });
 

@@ -54,7 +54,7 @@ export default new class MikkTSpace
          {
             if (response .headers .get ("Content-Type") !== "application/wasm")
             {
-               console .warn ("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
+               // console .warn ("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
             }
             else
             {
@@ -122,7 +122,7 @@ export default new class MikkTSpace
       return this .#textDecoder .decode (this .#getUint8Memory0 () .subarray (ptr, ptr + len));
    }
 
-   #heap = new Array (32) .fill (undefined) .toSpliced (32, 0, undefined, null, true, false);
+   #heap = Array .from ({ length: 32 }) .concat ([undefined, null, true, false]);
    #heap_next = this .#heap .length;
 
    #addHeapObject (obj)

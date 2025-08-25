@@ -1,51 +1,5 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                  from "../../Fields.js";
+import X3DNode                 from "../Core/X3DNode.js";
 import X3DBindableNode         from "../Core/X3DBindableNode.js";
 import TimeSensor              from "../Time/TimeSensor.js";
 import EaseInEaseOut           from "../Interpolation/EaseInEaseOut.js";
@@ -53,7 +7,6 @@ import PositionInterpolator    from "../Interpolation/PositionInterpolator.js";
 import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
 import ScalarInterpolator      from "../Interpolation/ScalarInterpolator.js";
 import X3DCast                 from "../../Base/X3DCast.js";
-import TraverseType            from "../../Rendering/TraverseType.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
@@ -82,15 +35,17 @@ function X3DViewpointNode (executionContext)
    this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
    this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
 
-   const browser = this .getBrowser ();
+   const
+      browser      = this .getBrowser (),
+      privateScene = browser .getPrivateScene ();
 
-   this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
-   this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
-   this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
-   this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
-   this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
-   this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
-   this .fieldOfViewScaleInterpolator = new ScalarInterpolator      (browser .getPrivateScene ());
+   this .timeSensor                   = new TimeSensor              (privateScene);
+   this .easeInEaseOut                = new EaseInEaseOut           (privateScene);
+   this .positionInterpolator         = new PositionInterpolator    (privateScene);
+   this .orientationInterpolator      = new OrientationInterpolator (privateScene);
+   this .scaleInterpolator            = new PositionInterpolator    (privateScene);
+   this .scaleOrientationInterpolator = new OrientationInterpolator (privateScene);
+   this .fieldOfViewScaleInterpolator = new ScalarInterpolator      (privateScene);
 }
 
 Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindableNode .prototype),
@@ -176,12 +131,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    set_bound__ ()
    {
-      const browser = this .getBrowser ();
-
       if (this ._isBound .getValue ())
-         browser .getNotification () ._string = this ._description;
+         this .getBrowser () .setDescription (this ._description);
       else
-         this .timeSensor ._stopTime = browser .getCurrentTime ();
+         this .timeSensor ._stopTime = Date .now () / 1000;
    },
    set_active__ (navigationInfoNode, active)
    {
@@ -198,11 +151,12 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       navigationInfoNode ._transitionComplete = true;
    },
+   setInterpolators ()
+   { },
    getDescriptions ()
    {
       return this .descriptions;
    },
-   setInterpolators () { },
    getPosition ()
    {
       return this ._position .getValue ();
@@ -229,22 +183,65 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    getUserPosition ()
    {
-      return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
+      return this .userPosition .assign (this .getPosition ())
+         .add (this ._positionOffset .getValue ());
+   },
+   setUserPosition (userPosition)
+   {
+      this ._positionOffset = this .userPosition .assign (userPosition)
+         .subtract (this .getPosition ());
    },
    getUserOrientation ()
    {
-      return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
+      return this .userOrientation .assign (this .getOrientation ())
+         .multRight (this ._orientationOffset .getValue ());
+   },
+   setUserOrientation (userOrientation)
+   {
+      this ._orientationOffset = this .userOrientation .assign (this .getOrientation ()) .inverse ()
+         .multRight (userOrientation);
    },
    getUserCenterOfRotation ()
    {
-      return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
+      return this .userCenterOfRotation .assign (this .getCenterOfRotation ())
+         .add (this ._centerOfRotationOffset .getValue ());
+   },
+   setUserCenterOfRotation (userCenterOfRotation)
+   {
+      this ._centerOfRotationOffset = this .userCenterOfRotation .assign (userCenterOfRotation)
+         .subtract (this .getCenterOfRotation ());
+   },
+   getFieldOfViewScale ()
+   {
+      return this ._fieldOfViewScale .getValue ();
+   },
+   setFieldOfViewScale (value)
+   {
+      this ._fieldOfViewScale = value;
+   },
+   getNearDistance (navigationInfoNode)
+   {
+      return this .nearDistance ?? navigationInfoNode ?.getNearValue ();
+   },
+   setNearDistance (value)
+   {
+      this .nearDistance = value;
+   },
+   getFarDistance (navigationInfoNode)
+   {
+      return this .farDistance
+         ?? (navigationInfoNode ? navigationInfoNode .getFarValue () || this .getMaxFarValue () : undefined);
+   },
+   setFarDistance (value)
+   {
+      this .farDistance = value;
    },
    getProjectionMatrix (renderObject)
    {
-      const navigationInfo = renderObject .getNavigationInfo ();
+      const navigationInfoNode = renderObject .getNavigationInfo ();
 
-      return this .getProjectionMatrixWithLimits (this .nearDistance ?? navigationInfo .getNearValue (),
-                                                  this .farDistance ?? navigationInfo .getFarValue (this),
+      return this .getProjectionMatrixWithLimits (this .getNearDistance (navigationInfoNode),
+                                                  this .getFarDistance (navigationInfoNode),
                                                   renderObject .getLayer () .getViewport () .getRectangle ());
    },
    getCameraSpaceMatrix ()
@@ -266,8 +263,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    getUpVector ()
    {
       // Local y-axis,
-      // see https://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
-      return Vector3 .yAxis;
+      // see https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo.
+      return Vector3 .Y_AXIS;
    },
    getSpeedFactor ()
    {
@@ -283,10 +280,22 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       // VRML behavior support.
       return this .VRMLTransition;
    },
+   checkTransition (description)
+   {
+      if (this .timeSensor ._isActive .getValue () && this .timeSensor ._description .getValue () === description)
+         return true;
+
+      this .timeSensor ._description = description;
+
+      return false;
+   },
    transitionStart (layerNode, fromViewpointNode)
    {
       if (this ._jump .getValue ())
       {
+         if (this .checkTransition ("transitionStart"))
+            return;
+
          const relative = this .getRelativeTransformation (fromViewpointNode);
 
          if (!this ._retainUserOffsets .getValue ())
@@ -346,8 +355,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          navigationInfoNode ._transitionStart = true;
 
          this .timeSensor ._cycleInterval = transitionTime;
-         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._stopTime      = Date .now () / 1000;
+         this .timeSensor ._startTime     = Date .now () / 1000;
 
          this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
 
@@ -365,6 +374,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       }
       else
       {
+         this .transitionStop ();
+
          const navigationInfoNode = layerNode .getNavigationInfo ();
 
          navigationInfoNode ._transitionComplete = true;
@@ -381,16 +392,16 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    transitionStop ()
    {
-      this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._stopTime = Date .now () / 1000;
       this .timeSensor ._isActive .removeInterest ("set_active__", this);
    },
    resetUserOffsets ()
    {
-      this ._positionOffset         = Vector3   .Zero;
-      this ._orientationOffset      = Rotation4 .Identity;
-      this ._scaleOffset            = Vector3   .One;
-      this ._scaleOrientationOffset = Rotation4 .Identity;
-      this ._centerOfRotationOffset = Vector3   .Zero;
+      this ._positionOffset         = Vector3   .ZERO;
+      this ._orientationOffset      = Rotation4 .IDENTITY;
+      this ._scaleOffset            = Vector3   .ONE;
+      this ._scaleOrientationOffset = Rotation4 .IDENTITY;
+      this ._centerOfRotationOffset = Vector3   .ZERO;
       this ._fieldOfViewScale       = 1;
 
       this .set_nearDistance__ ();
@@ -449,26 +460,31 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+      const minDistance = this .getNearDistance (layerNode .getNavigationInfo ()) * 2;
 
       this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
    },
-   lookAtBBox (layerNode, bbox, transitionTime = 1, factor, straighten)
+   lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
+      if (bbox .size .equals (Vector3 .ZERO))
+         return;
+
       bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
 
       this .lookAt (layerNode, bbox .center, this .getLookAtDistance (bbox), transitionTime, factor, straighten);
    },
    lookAt (layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false)
    {
+      this .timeSensor ._description = "lookAt";
+
       const
          offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
       layerNode .getNavigationInfo () ._transitionStart = true;
 
       this .timeSensor ._cycleInterval = transitionTime;
-      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._stopTime      = Date .now () / 1000;
+      this .timeSensor ._startTime     = Date .now () / 1000;
 
       this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
@@ -487,7 +503,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
       this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
-      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, Vector3 .One);
+      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, Vector3 .ONE);
       this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
       const relative = this .getRelativeTransformation (this);
@@ -501,11 +517,14 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    straightenView (layerNode)
    {
+      if (this .checkTransition ("straightenView"))
+         return;
+
       layerNode .getNavigationInfo () ._transitionStart = true;
 
       this .timeSensor ._cycleInterval = 1;
-      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._stopTime      = Date .now () / 1000;
+      this .timeSensor ._startTime     = Date .now () / 1000;
 
       this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
@@ -532,42 +551,56 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
 
-      const
-         direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
-         distance        = this .getLookAtDistance (bbox),
-         userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
-         userOrientation = this .getLookAtRotation (userPosition, bbox .center);
+      if (bbox .size .equals (Vector3 .ZERO))
+      {
+         this .set_nearDistance__ ();
+         this .set_farDistance__ ();
+      }
+      else
+      {
+         const
+            direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
+            distance        = this .getLookAtDistance (bbox),
+            userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
+            userOrientation = this .getLookAtRotation (userPosition, bbox .center);
 
-      this ._positionOffset         = userPosition .subtract (this .getPosition ());
-      this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-      this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
-      this ._fieldOfViewScale       = 1;
-      this .nearDistance            = distance * (0.125 / 10);
-      this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
+         this ._positionOffset         = userPosition .subtract (this .getPosition ());
+         this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
+         this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
+         this ._fieldOfViewScale       = 1;
+         this .nearDistance            = distance * (0.125 / 10);
+         this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
+      }
    },
    traverse (type, renderObject)
    {
-      if (type !== TraverseType .CAMERA)
-         return;
+      // Handle NavigationInfo node.
 
-      if (this .navigationInfoNode)
-         this .navigationInfoNode .traverse (type, renderObject);
+      this .navigationInfoNode ?.traverse (type, renderObject);
+
+      // Check if the viewpoint is displayed.
 
       this .descriptions .length = 0;
 
-      if (this ._description .getValue ())
+      const description = this ._description .getValue ();
+
+      if (description)
       {
-         if (renderObject .getViewpointGroups () .every (viewpointGroupNode => viewpointGroupNode ._displayed .getValue ()))
+         if (renderObject .getViewpointGroups () .every (viewpointGroupNode => viewpointGroupNode .getDisplayed ()))
          {
             for (const viewpointGroupNode of renderObject .getViewpointGroups ())
             {
-               if (viewpointGroupNode ._description .getValue ())
-                  this .descriptions .push (viewpointGroupNode ._description .getValue ());
+               const description = viewpointGroupNode ._description .getValue ();
+
+               if (description)
+                  this .descriptions .push (description);
             }
 
-            this .descriptions .push (this ._description .getValue ());
+            this .descriptions .push (description);
          }
       }
+
+      // Add the viewpoint to the list of available viewpoints.
 
       renderObject .getLayer () .getViewpoints () .push (this);
 
@@ -586,18 +619,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    }
 });
 
-Object .defineProperties (X3DViewpointNode,
-{
-   typeName:
-   {
-      value: "X3DViewpointNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DViewpointNode, X3DNode .getStaticProperties ("X3DViewpointNode", "Navigation", 1));
 
 export default X3DViewpointNode;

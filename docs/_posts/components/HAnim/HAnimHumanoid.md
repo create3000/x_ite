@@ -15,7 +15,7 @@ tags: [HAnimHumanoid, HAnim]
 
 The HAnimHumanoid node is used to: (a) store references to the joints, segments, sites, skeleton, optional skin, and fixed viewpoints, (b) serve as a container for the entire humanoid, (c) provide a convenient way of moving the humanoid through its environment, and (d) store human-readable metadata such as name, version, author, copyright, age, gender and other information. HAnimHumanoid contains a skeleton consisting of HAnimJoint, HAnimSegment and HAnimSite nodes. HAnimHumanoid can also contain an optional skin consisting of an IndexedFaceSet mesh with corresponding skinCoord Coordinate or CoordinateDouble vertices and skinNormal Normal vectors.
 
-The HAnimHumanoid node belongs to the **HAnim** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The HAnimHumanoid node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -25,32 +25,57 @@ The HAnimHumanoid node belongs to the **HAnim** component and requires at least 
     + HAnimHumanoid (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFString | [in, out] | [name](#fields-name) | "" |
+| MFString | [in, out] | [info](#fields-info) | [ ] |
+| SFString | [in, out] | [version](#fields-version) | "2.0" |
+| SFString | [in, out] | [skeletalConfiguration](#fields-skeletalConfiguration) | "BASIC" |
+| SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
+| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
+| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [in, out] | [skeleton](#fields-skeleton) | [ ] |
+| MFVec3f | [in, out] | [jointBindingPositions](#fields-jointBindingPositions) | [ ] |
+| MFRotation | [in, out] | [jointBindingRotations](#fields-jointBindingRotations) | [ ] |
+| MFVec3f | [in, out] | [jointBindingScales](#fields-jointBindingScales) | [ ] |
+| MFNode | [in, out] | [joints](#fields-joints) | [ ] |
+| MFNode | [in, out] | [segments](#fields-segments) | [ ] |
+| MFNode | [in, out] | [sites](#fields-sites) | [ ] |
+| MFNode | [in, out] | [viewpoints](#fields-viewpoints) | [ ] |
+| MFBool | [in, out] | [motionsEnabled](#fields-motionsEnabled) | [ ] |
+| MFNode | [in, out] | [motions](#fields-motions) | [ ] |
+| SFNode | [in, out] | [skinBindingNormals](#fields-skinBindingNormals) | NULL  |
+| SFNode | [in, out] | [skinBindingCoords](#fields-skinBindingCoords) | NULL  |
+| SFNode | [in, out] | [skinNormal](#fields-skinNormal) | NULL  |
+| SFNode | [in, out] | [skinCoord](#fields-skinCoord) | NULL  |
+| MFNode | [in, out] | [skin](#fields-skin) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
-
-### SFString [in, out] **version** "2.0"
-
-HAnimHumanoid *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019.
-
-#### Hint
-
-- Default HAnimHumanoid *version* is 1.0 for X3D *version* 3, and HAnimHumanoid required *version* is 2.0 for X3D *version* 4.
-
-#### Warnings
-
-- No other values are allowed for strict validation.
-- Prior developmental versions of HAnim nodes, such as *version* 1 of standardized ISO 19774 *version* 2006, might not validate correctly due to small changes in the contained-node content model, so conversion of such models is recommended.
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -59,6 +84,7 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [in, out] **name** ""
+{: #fields-name }
 
 Unique *name* attribute must be defined so that each HAnimHumanoid node in a scene can be identified at run time for animation purposes.
 
@@ -74,6 +100,7 @@ Unique *name* attribute must be defined so that each HAnimHumanoid node in a sce
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
 ### MFString [in, out] **info** [ ]
+{: #fields-info }
 
 Contains metadata keyword=value pairs, where approved keyword terms are humanoidVersion authorName authorEmail copyright creationDate usageRestrictions age gender height and weight.
 
@@ -82,7 +109,22 @@ Contains metadata keyword=value pairs, where approved keyword terms are humanoid
 - Height and weight are in base units (typically meters), hanimVersion is for author use and separate from HAnimHumanoid version field.
 - Alternate metadata keywords are also allowed.
 
+### SFString [in, out] **version** "2.0"
+{: #fields-version }
+
+HAnimHumanoid *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019.
+
+#### Hint
+
+- Default HAnimHumanoid *version* is 1.0 for X3D *version* 3, and HAnimHumanoid required *version* is 2.0 for X3D *version* 4.
+
+#### Warnings
+
+- No other values are allowed for strict validation.
+- Prior developmental versions of HAnim nodes, such as *version* 1 of standardized ISO 19774 *version* 2006, might not validate correctly due to small changes in the contained-node content model, so conversion of such models is recommended.
+
 ### SFString [in, out] **skeletalConfiguration** "BASIC"
+{: #fields-skeletalConfiguration }
 
 Models sharing a common skeletal configuration can share animations and binding poses.
 
@@ -91,6 +133,7 @@ Models sharing a common skeletal configuration can share animations and binding 
 - [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids)
 
 ### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
+{: #fields-loa }
 
 Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
 
@@ -100,6 +143,7 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 - [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation)
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-translation }
 
 Position of children relative to local coordinate system.
 
@@ -108,6 +152,7 @@ Position of children relative to local coordinate system.
 - Since default pose faces along +Z axis, -x values are right side and +x values are left side within HAnimHumanoid.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #fields-rotation }
 
 Orientation of children relative to local coordinate system.
 
@@ -116,6 +161,7 @@ Orientation of children relative to local coordinate system.
 - Default pose is typically empty (or an identity *rotation*) to avoid distorted body animations.
 
 ### SFVec3f [in, out] **scale** 1 1 1 <small>(0,∞)</small>
+{: #fields-scale }
 
 Non-uniform x-y-z *scale* of child coordinate system, adjusted by center and scaleOrientation.
 
@@ -124,14 +170,17 @@ Non-uniform x-y-z *scale* of child coordinate system, adjusted by center and sca
 - HAnimHumanoid *scale* values must be positive.
 
 ### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #fields-scaleOrientation }
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-center }
 
 Translation offset from origin of local coordinate system.
 
 ### SFBool [in, out] **visible** TRUE
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -141,6 +190,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -149,6 +199,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -156,20 +207,22 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
 #### Hints
 
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### MFNode [in, out] **skeleton** [ ] <small>[HAnimJoint, HAnimSite]</small>
+{: #fields-skeleton }
 
 List of top-level [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes that create the *skeleton* model. The *skeleton* field contains the humanoid_root Joint object, and thus the entire hierarchy of [HAnimJoint](/x_ite/components/hanim/hanimjoint/)/[HAnimSegment](/x_ite/components/hanim/hanimsegment/) nodes making up the articulated *skeleton* model.
 
@@ -182,57 +235,8 @@ List of top-level [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and [HAnimSi
 
 - Top-level [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes must include `containerField='skeleton'` for proper validation and operation.
 
-### MFNode [in, out] **viewpoints** [ ] <small>[HAnimSite]</small>
-
-List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes that appear in the skeleton model, usually as USE node references. The *viewpoints* field contains zero or more special [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes that are only affected by HAnimHumanoid transformations (and no [HAnimJoint](/x_ite/components/hanim/hanimjoint/) transformations). Each [HAnimSite](/x_ite/components/hanim/hanimsite/) can contain a [Viewpoint](/x_ite/components/navigation/viewpoint/) as virtual camera in the HAnimHumanoid reference frame (such as viewing the face or profile of the human figure).
-
-#### Hints
-
-- The viewpoint field has different functionality than the joints, segments and sites fields.
-- The *viewpoints* field connects internal Site nodes that in turn hold relative [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes, such as `<[HAnimSite](/x_ite/components/hanim/hanimsite/) USE='ObserveFaceSite_view' containerField='viewpoints'/>` which has corresponding counterpart nodes `<[HAnimSite](/x_ite/components/hanim/hanimsite/) DEF='ObserveFaceSite_view' name='ObserveFaceSite_view' containerField='children'>` `<[Viewpoint](/x_ite/components/navigation/viewpoint/) description='look at me!'/>` \</[HAnimSite](/x_ite/components/hanim/hanimsite/)\>.
-
-#### Warnings
-
-- These are actual node declarations, not USE nodes.
-- Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes (in turn containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes) must include `containerField='viewpoints'` for proper validation and operation.
-
-### MFNode [in, out] **sites** [ ] <small>[HAnimSite]</small>
-
-*sites* field contains a list of USE references for all [HAnimSite](/x_ite/components/hanim/hanimsite/) node instances found within the preceding skeleton hierarchy.
-
-#### Hints
-
-- Order is irrelevant since names are contained in the original DEF objects.
-- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
-
-#### Warnings
-
-- The number of contained `<[HAnimSite](/x_ite/components/hanim/hanimsite/) USE='*' containerField='sites, skeleton or viewpoints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimSite](/x_ite/components/hanim/hanimsite/) node instances found within the preceding skeleton hierarchy.
-- Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) USE nodes must include `containerField='sites'` for proper validation and operation.
-
-### MFNode [in, out] **segments** [ ] <small>[HAnimSegment]</small>
-
-The *segments* field contains a list of USE references for all [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node instances found within the preceding skeleton hierarchy.
-
-#### Hints
-
-- Order is irrelevant since names are contained in the original DEF objects.
-- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
-
-#### Warnings
-
-- The number of contained `<[HAnimSegment](/x_ite/components/hanim/hanimsegment/) USE='*' containerField='segments'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node instances found within the preceding skeleton hierarchy.
-- Top-level [HAnimSegment](/x_ite/components/hanim/hanimsegment/) USE nodes must include `containerField='segments'` for proper validation and operation.
-
-### MFBool [in, out] **motionsEnabled** [ ]
-
-Array of boolean values corresponding to [HAnimMotion](/x_ite/components/hanim/hanimmotion/) nodes indicating which can animate the HAnimHumanoid.
-
-### MFNode [in, out] **motions** [ ] <small>[HAnimMotion]</small>
-
-Contains any [HAnimMotion](/x_ite/components/hanim/hanimmotion/) nodes that can animate the HAnimHumanoid.
-
 ### MFVec3f [in, out] **jointBindingPositions** [ ] <small>(-∞,∞)</small>
+{: #fields-jointBindingPositions }
 
 Specifies an array of position values for each [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node in the joints field, in order, corresponding to each binding pose.
 
@@ -245,6 +249,7 @@ Specifies an array of position values for each [HAnimJoint](/x_ite/components/ha
 - Not used when skeletalConfiguration='BASIC'.
 
 ### MFRotation [in, out] **jointBindingRotations** [ ] <small>(-∞,∞) or [-1,1]</small>
+{: #fields-jointBindingRotations }
 
 Specifies an array of rotation values for each [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node in the joints field, in order, corresponding to each binding pose.
 
@@ -257,6 +262,7 @@ Specifies an array of rotation values for each [HAnimJoint](/x_ite/components/ha
 - Not used when skeletalConfiguration='BASIC'.
 
 ### MFVec3f [in, out] **jointBindingScales** [ ] <small>(-∞,∞)</small>
+{: #fields-jointBindingScales }
 
 Specifies an array of scale values for each [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node in the joints field, in order, corresponding to each binding pose.
 
@@ -269,6 +275,7 @@ Specifies an array of scale values for each [HAnimJoint](/x_ite/components/hanim
 - Not used when skeletalConfiguration='BASIC'.
 
 ### MFNode [in, out] **joints** [ ] <small>[HAnimJoint]</small>
+{: #fields-joints }
 
 The *joints* field contains a list of USE references for all [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node instances found within the preceding skeleton hierarchy.
 
@@ -282,7 +289,63 @@ The *joints* field contains a list of USE references for all [HAnimJoint](/x_ite
 - The number of contained `<[HAnimJoint](/x_ite/components/hanim/hanimjoint/) USE='*' containerField='joints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node instances found within the preceding skeleton hierarchy.
 - Top-level [HAnimJoint](/x_ite/components/hanim/hanimjoint/) USE nodes must include `containerField='joints'` for proper validation and operation.
 
+### MFNode [in, out] **segments** [ ] <small>[HAnimSegment]</small>
+{: #fields-segments }
+
+The *segments* field contains a list of USE references for all [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node instances found within the preceding skeleton hierarchy.
+
+#### Hints
+
+- Order is irrelevant since names are contained in the original DEF objects.
+- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
+
+#### Warnings
+
+- The number of contained `<[HAnimSegment](/x_ite/components/hanim/hanimsegment/) USE='*' containerField='segments'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node instances found within the preceding skeleton hierarchy.
+- Top-level [HAnimSegment](/x_ite/components/hanim/hanimsegment/) USE nodes must include `containerField='segments'` for proper validation and operation.
+
+### MFNode [in, out] **sites** [ ] <small>[HAnimSite]</small>
+{: #fields-sites }
+
+*sites* field contains a list of USE references for all [HAnimSite](/x_ite/components/hanim/hanimsite/) node instances found within the preceding skeleton hierarchy.
+
+#### Hints
+
+- Order is irrelevant since names are contained in the original DEF objects.
+- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
+
+#### Warnings
+
+- The number of contained `<[HAnimSite](/x_ite/components/hanim/hanimsite/) USE='*' containerField='sites, skeleton or viewpoints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimSite](/x_ite/components/hanim/hanimsite/) node instances found within the preceding skeleton hierarchy.
+- Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) USE nodes must include `containerField='sites'` for proper validation and operation.
+
+### MFNode [in, out] **viewpoints** [ ] <small>[HAnimSite]</small>
+{: #fields-viewpoints }
+
+List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes that appear in the skeleton model, usually as USE node references. The *viewpoints* field contains zero or more special [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes that are only affected by HAnimHumanoid transformations (and no [HAnimJoint](/x_ite/components/hanim/hanimjoint/) transformations). Each [HAnimSite](/x_ite/components/hanim/hanimsite/) can contain a [Viewpoint](/x_ite/components/navigation/viewpoint/) as virtual camera in the HAnimHumanoid reference frame (such as viewing the face or profile of the human figure).
+
+#### Hints
+
+- The viewpoint field has different functionality than the joints, segments and sites fields.
+- The *viewpoints* field connects internal Site nodes that in turn hold relative [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes, such as `<[HAnimSite](/x_ite/components/hanim/hanimsite/) USE='ObserveFaceSite_view' containerField='viewpoints'/>` which has corresponding counterpart nodes `<[HAnimSite](/x_ite/components/hanim/hanimsite/) DEF='ObserveFaceSite_view' name='ObserveFaceSite_view' containerField='children'>` `<[Viewpoint](/x_ite/components/navigation/viewpoint/) description='look at me!'/>` \</[HAnimSite](/x_ite/components/hanim/hanimsite/)\>.
+
+#### Warnings
+
+- These are actual node declarations, not USE nodes.
+- Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes (in turn containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes) must include `containerField='viewpoints'` for proper validation and operation.
+
+### MFBool [in, out] **motionsEnabled** [ ]
+{: #fields-motionsEnabled }
+
+Array of boolean values corresponding to [HAnimMotion](/x_ite/components/hanim/hanimmotion/) nodes indicating which can animate the HAnimHumanoid.
+
+### MFNode [in, out] **motions** [ ] <small>[HAnimMotion]</small>
+{: #fields-motions }
+
+Contains any [HAnimMotion](/x_ite/components/hanim/hanimmotion/) nodes that can animate the HAnimHumanoid.
+
 ### SFNode [in, out] **skinBindingNormals** NULL <small>[X3DNormalNode]</small>
+{: #fields-skinBindingNormals }
 
 Array of [Normal](/x_ite/components/rendering/normal/) nodes to handle non-default source pose so that both skin and skeleton can be in same binding pose.
 
@@ -295,6 +358,7 @@ Array of [Normal](/x_ite/components/rendering/normal/) nodes to handle non-defau
 - Not used when skeletalConfiguration='BASIC'.
 
 ### SFNode [in, out] **skinBindingCoords** NULL <small>[X3DCoordinateNode]</small>
+{: #fields-skinBindingCoords }
 
 Array of [Coordinate](/x_ite/components/rendering/coordinate/) nodes to handle non-default source pose so that both skin and skeleton can be in same binding pose.
 
@@ -311,6 +375,7 @@ Array of [Coordinate](/x_ite/components/rendering/coordinate/) nodes to handle n
 - Not used when skeletalConfiguration='BASIC'.
 
 ### SFNode [in, out] **skinNormal** NULL <small>[X3DNormalNode]</small>
+{: #fields-skinNormal }
 
 Single [Normal](/x_ite/components/rendering/normal/) node utilized by indexed mesh definitions for skin. The *skinNormal* field contains a single sequence of normal values, used by internal HAnimHumanoid mechanisms to create appropriate surface deformations as well as by the indexed face set definitions within the skin field that perform the actual rendering of surface geometry.
 
@@ -322,6 +387,7 @@ Single [Normal](/x_ite/components/rendering/normal/) node utilized by indexed me
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
 
 ### SFNode [in, out] **skinCoord** NULL <small>[X3DCoordinateNode]</small>
+{: #fields-skinCoord }
 
 [Coordinate](/x_ite/components/rendering/coordinate/) node utilized by indexed mesh definitions for skin. The *skinCoord* field contains a single sequence of points, used by internal HAnimHumanoid mechanisms to create appropriate surface deformations as well as by the indexed face set definitions within the skin field that perform the actual rendering of surface geometry.
 
@@ -337,6 +403,7 @@ Single [Normal](/x_ite/components/rendering/normal/) node utilized by indexed me
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
 
 ### MFNode [in, out] **skin** [ ] <small>[X3DChildNode]</small>
+{: #fields-skin }
 
 List of one or more indexed mesh definitions (such as [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/)) that utilize skinCoord point and skinNormal normal data.
 
@@ -368,7 +435,9 @@ List of one or more indexed mesh definitions (such as [IndexedFaceSet](/x_ite/co
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/HAnim/HAnimHumanoid/HAnimHumanoid.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/HAnim/HAnimHumanoid/HAnimHumanoid.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/HAnim/HAnimHumanoid/screenshot.avif" alt="HAnimHumanoid"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/HAnim/HAnimHumanoid/HAnimHumanoid.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/HAnim/HAnimHumanoid/HAnimHumanoid.x3d)

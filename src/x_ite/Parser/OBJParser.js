@@ -1,55 +1,6 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Expressions  from "./Expressions.js";
-import Vector2      from "../../standard/Math/Numbers/Vector2.js";
-import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
@@ -63,7 +14,7 @@ import DEVELOPMENT  from "../DEVELOPMENT.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r]+/gy,
+   whitespaces: /[\x20\n\t\r,]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
    comment: /#.*?(?=[\n\r]|$)/gy,
    untilEndOfLine: /[^\r\n]+/gy,
@@ -112,13 +63,12 @@ function OBJParser (scene)
 
    // Globals
 
+   this .geometryIndices = new Map ();
    this .smoothingGroup  = 0;
    this .smoothingGroups = new Map ();
    this .groups          = new Map ();
    this .materials       = new Map ();
    this .textures        = new Map ();
-   this .point2          = new Vector2 ();
-   this .point3          = new Vector3 ();
    this .lastIndex       = 0;
 }
 
@@ -140,7 +90,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    isValid ()
    {
-      if (!(typeof this .input === "string"))
+      if (typeof this .input !== "string")
          return false;
 
       return !! this .input .match (/^(?:[\x20\n\t\r]+|#.*?[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
@@ -173,6 +123,10 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       this .normal          = scene .createNode ("Normal");
       this .coord           = scene .createNode ("Coordinate");
 
+      this .texCoords = [ ];
+      this .normals   = [ ];
+      this .vertices  = [ ];
+
       this .object .children .push (this .group);
 
       scene .getRootNodes () .push (this .object);
@@ -180,6 +134,21 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       // Parse scene.
 
       await this .statements ();
+
+      // Assign indices and points.
+
+      for (const [geometry, indices] of this .geometryIndices)
+      {
+         geometry .texCoordIndex = indices .texCoordIndex;
+         geometry .normalIndex   = indices .normalIndex;
+         geometry .coordIndex    = indices .coordIndex;
+      }
+
+      this .texCoord .point  = this .texCoords;
+      this .normal   .vector = this .normals;
+      this .coord    .point  = this .vertices;
+
+      // Finish scene.
 
       this .optimizeSceneGraph (scene .getRootNodes ());
 
@@ -447,27 +416,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    vts ()
    {
-      const point = this .texCoord .point;
+      const texCoords = this .texCoords;
 
       let result = false;
 
-      while (this .vt (point))
+      while (this .vt (texCoords))
          result = true;
 
       return result;
    },
-   vt (point)
+   vt (texCoords)
    {
       this .comments ();
 
       if (Grammar .vt .parse (this))
       {
-         if (this .vec2 ())
-         {
-            point .push (this .point2);
-
+         if (this .vec2 (texCoords))
             return true;
-         }
 
          throw new Error ("Expected a texture coordinate.");
       }
@@ -476,27 +441,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    vns ()
    {
-      const vector = this .normal .vector;
+      const normals = this .normals;
 
       let result = false;
 
-      while (this .vn (vector))
+      while (this .vn (normals))
          result = true;
 
       return result;
    },
-   vn (vector)
+   vn (normals)
    {
       this .comments ();
 
       if (Grammar .vn .parse (this))
       {
-         if (this .vec3 ())
-         {
-            vector .push (this .point3);
-
+         if (this .vec3 (normals))
             return true;
-         }
 
          throw new Error ("Expected a normal vector.");
       }
@@ -505,27 +466,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    vs ()
    {
-      const point = this .coord .point;
+      const vertices = this .vertices;
 
       let result = false;
 
-      while (this .v (point))
+      while (this .v (vertices))
          result = true;
 
       return result;
    },
-   v (point)
+   v (vertices)
    {
       this .comments ();
 
       if (Grammar .v .parse (this))
       {
-         if (this .vec3 ())
-         {
-            point .push (this .point3);
-
+         if (this .vec3 (vertices))
             return true;
-         }
 
          throw new Error ("Expected a vertex coordinate.");
       }
@@ -542,6 +499,12 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          {
             this .shape    = this .smoothingGroups .get (this .group .getNodeName ()) .get (this .smoothingGroup);
             this .geometry = this .shape .geometry;
+
+            const indices = this .geometryIndices .get (this .geometry);
+
+            this .texCoordIndex = indices .texCoordIndex;
+            this .normalIndex   = indices .normalIndex;
+            this .coordIndex    = indices .coordIndex;
          }
          catch
          {
@@ -549,8 +512,18 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
                scene      = this .getExecutionContext (),
                appearance = scene .createNode ("Appearance");
 
-            this .geometry = scene .createNode ("IndexedFaceSet");
-            this .shape    = scene .createNode ("Shape");
+            this .shape         = scene .createNode ("Shape");
+            this .geometry      = scene .createNode ("IndexedFaceSet");
+            this .texCoordIndex = [ ];
+            this .normalIndex   = [ ];
+            this .coordIndex    = [ ];
+
+            this .geometryIndices .set (this .geometry,
+            {
+               texCoordIndex: this .texCoordIndex,
+               normalIndex:   this .normalIndex,
+               coordIndex:    this .coordIndex,
+            });
 
             appearance .material        = this .material;
             appearance .texture         = this .texture;
@@ -569,10 +542,10 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          while (this .f ())
             ;
 
-         if (this .geometry .texCoordIndex .length)
+         if (this .texCoordIndex .length)
             this .geometry .texCoord = this .texCoord;
 
-         if (this .geometry .normalIndex .length)
+         if (this .normalIndex .length)
             this .geometry .normal = this .normal;
 
          this .geometry .coord = this .coord;
@@ -589,15 +562,14 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       if (Grammar .f .parse (this))
       {
          const
-            geometry           = this .geometry,
-            texCoordIndex      = geometry .texCoordIndex,
-            normalIndex        = geometry .normalIndex,
-            coordIndex         = geometry .coordIndex,
+            texCoordIndex      = this .texCoordIndex,
+            normalIndex        = this .normalIndex,
+            coordIndex         = this .coordIndex,
             numTexCoordIndices = texCoordIndex .length,
             numNormalIndices   = normalIndex .length,
-            numTexCoords       = this .texCoord .point .length,
-            numNormals         = this .normal .vector .length,
-            numCoords          = this .coord .point .length;
+            numTexCoords       = this .texCoords .length,
+            numNormals         = this .normals .length,
+            numCoords          = this .vertices .length;
 
          while (this .indices (texCoordIndex, normalIndex, coordIndex, numTexCoords, numNormals, numCoords))
             ;
@@ -688,36 +660,38 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       return false;
    },
-   vec2 ()
+   vec2 (array)
    {
       if (this .double ())
       {
-         this .point2 .x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            this .point2 .y = this .value;
+            const y = this .value;
 
+            array .push (x, y);
             return true;
          }
       }
 
       return false;
    },
-   vec3 ()
+   vec3 (array)
    {
       if (this .double ())
       {
-         this .point3 .x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            this .point3 .y = this .value;
+            const y = this .value;
 
             if (this .double ())
             {
-               this .point3 .z = this .value;
+               const z = this .value;
 
+               array .push (x, y, z)
                return true;
             }
          }
@@ -1057,7 +1031,7 @@ Object .assign (MaterialParser .prototype,
          this .value = this .CONSTANTS .get (this .result [2] .toUpperCase ());
 
          if (this .result [1] === "-")
-            this .value = - this .value;
+            this .value = -this .value;
 
          return true;
       }

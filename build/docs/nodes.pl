@@ -6,6 +6,7 @@ use open qw/:std :utf8/;
 use Cwd;
 use List::MoreUtils qw(first_index);
 use HTML::Entities;
+use JSON::Parse qw(parse_json);
 
 $cwd = getcwd ();
 
@@ -39,7 +40,7 @@ $inOut = {
 
 %links = map { m|([^/]+)$|o; ($1, lc $_) }
    map { s|\.md$||or }
-   map { s|$cwd/docs/_posts/components//||or }
+   map { s|$cwd/docs/_posts/components//?||or }
    split "\n", `find $cwd/docs/_posts/components/ -type f -mindepth 2`;
 
 sub node {
@@ -60,6 +61,7 @@ sub node {
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
    $file   = `cat $md`;
    $file   = reorder_fields ($typeName, $componentName, $file);
+   $file   = fields_list ($typeName, $componentName, $file);
    $file   = update_example ($typeName, $componentName, $file);
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
@@ -121,15 +123,13 @@ sub update_node {
    $source        = shift;
    $node          = $node -> [1];
 
-   $source =~ /Object\s*\.freeze\s*\(\{ name: "(.*?)", level: (\d+) \}\)/;
-   $componentLevel = $2;
+   $source =~ /getStaticProperties\s*\("(.*?)",\s*"(.*?)",\s*(\d+),\s*"(.*?)",\s*"(.*?)"(?:,\s*"(.*?)")?\)/;
+   $componentLevel = $3;
+   $containerField = $4;
+   $from           = $5;
+   $to             = $6 // "Infinity";
 
-   $source =~ /Object\s*\.freeze\s*\(\{ from: "(.*?)", to: "(.*?)" \}\)/;
-   $from = $1;
-   $to   = $2;
-
-   $source =~ /containerField:.*?value:\s*"(.*?)"/s;
-   $containerField = $1;
+   $deprecated = $source =~ /THIS NODE IS DEPRECIATED SINCE X3D VERSION ([\d\.]+)./ ? $1 : "";
 
    1 while $node =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
    1 while $node =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
@@ -209,14 +209,16 @@ sub update_node {
       $string .= "\n";
    }
 
-   $string .= "The $typeName node belongs to the **$componentName** component and requires at least level **$componentLevel,** its default container field is *$containerField.*";
+   $componentSlug = lc $componentName;
+
+   $string .= "The $typeName node belongs to the [$componentName](/x_ite/components/overview/#$componentSlug) component and requires at least support level **$componentLevel,** its default container field is *$containerField.*";
    $string .= " ";
    $string .= "It is available from X3D version $from or higher." if $to eq "Infinity";
    $string .= "It is available from X3D version $from up to $to." if $to ne "Infinity";
    $string =~ s/It is available from X3D version 2.0/It is available since VRML 2.0 and from X3D version 3.0/sgo if $from eq "2.0";
    $string .= "\n";
    $string .= "\n";
-   $string .= ">**Deprecated:** This node is **deprecated** as of X3D version $to. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $to ne "Infinity";
+   $string .= ">**Deprecated:** This node is **deprecated** as of X3D version $deprecated. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $deprecated;
 
    $file =~ s/(## Overview\n).*?\n(?=##\s+)/$1$string/s;
 
@@ -292,6 +294,9 @@ sub spelling {
    $string =~ s/browsesr/browser/sgo;
    $string =~ s/Hanim/HAnim/sgo;
    $string =~ s/abitrary/arbitrary/sgo;
+   $string =~ s/_change_/change/sgo;
+   $string =~ s/traccking/tracking/sgo;
+   $string =~ s/travelling/traveling/sgo;
 
    $string =~ s|(https://en.wikipedia.org/wiki/Kilogram)|Kilogram $1|sgo;
 
@@ -317,7 +322,7 @@ sub reorder_fields {
       }
       else
       {
-         $accesType = $inOut -> {$field -> [0]};
+         $accessType = $inOut -> {$field -> [0]};
 
          $fields -> {$field -> [1]} = "### $field->[2] [$accessType] **$field->[1]**\n\n";
       }
@@ -326,10 +331,54 @@ sub reorder_fields {
    $string = "";
    $string .= $fields -> {$_ -> [1]} foreach @sourceFields;
 
-   $file =~ s/(## Fields\n+)/$1$string/so;
+   $file =~ s/(## Fields\n+.*?\{:.*?\}\n+)/$1$string/so;
 
    return $file;
 }
+
+sub fields_list {
+   $typeName      = shift;
+   $componentName = shift;
+   $file          = shift;
+
+   $source       = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
+   @sourceFields = $source =~ /\bX3DFieldDefinition\s*\(.*/go;
+   @sourceFields = map { /X3DConstants\s*\.(\w+),\s*"(.*?)",.*?([SM]F\w+)/o; $_ = [$1, $2, $3] } @sourceFields;
+
+   $fields = { };
+
+   foreach $field (@sourceFields)
+   {
+      $name = $field -> [1];
+
+      if ($file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/)
+      {
+         $text = "| $1 | $2 | [$name](#fields-$name) | $3 |";
+
+         $fields -> {$name} = $text;
+      }
+   }
+
+   $string = "";
+   $string .= "| Type | Access Type | Name | Default Value |\n";
+   $string .= "| ---- | ----------- | ---- | ------------- |\n";
+   $string .= $fields -> {$_ -> [1]} . "\n" foreach @sourceFields;
+   $string .= "{: .fields }\n";
+   $string .= "\n";
+
+   $file =~ s/(## Fields\n+).*?\{:.*?\}\n+/$1$string/so;
+
+   return $file;
+}
+
+$json   = `cat ../media/docs/examples/config.json`;
+$config = parse_json ($json);
+$tree   = { };
+
+$tree -> {$_ -> {component}} = { } foreach @$config;
+$tree -> {$_ -> {component}} -> {$_ -> {name}} = $_ foreach @$config;
+
+use Data::Dumper;
 
 sub update_example {
    $typeName      = shift;
@@ -338,9 +387,13 @@ sub update_example {
 
    return $file unless -d "../media/docs/examples/$componentName/$typeName";
 
+   $xrButtonPosition  = "xr-button-" . ($tree -> {$componentName} -> {$typeName} -> {"xrButtonPosition"} // "br");
+
    $string = "## Example\n";
    $string .= "\n";
-   $string .= "<x3d-canvas src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\"></x3d-canvas>\n";
+   $string .= "<x3d-canvas class=\"$xrButtonPosition\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" contentScale=\"auto\" update=\"auto\">\n";
+   $string .= "  <img src=\"https://create3000.github.io/media/examples/$componentName/$typeName/screenshot.avif\" alt=\"$typeName\"/>\n";
+   $string .= "</x3d-canvas>\n";
    $string .= "\n";
    $string .= "- [Download ZIP Archive](https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.zip)\n";
    $string .= "- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d)\n";
@@ -502,6 +555,7 @@ sub update_field {
    # print "'$string'";
 
    $file =~ s/(###.*?\*\*$name\*\*.*?\n).*?\n((?:###|##)\s+)/$1$string$2/s if $string;
+   $file =~ s/(###.*?\*\*$name\*\*.*?\n)(?:\{:.*?\}\n)?/$1\{: \#fields-$name \}\n/s;
 
    return $file;
 }

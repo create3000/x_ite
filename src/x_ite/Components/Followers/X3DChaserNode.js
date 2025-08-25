@@ -1,50 +1,4 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
+import X3DNode         from "../Core/X3DNode.js";
 import X3DFollowerNode from "./X3DFollowerNode.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
 
@@ -75,7 +29,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
 
       this .set_duration__ ();
 
-      var
+      const
          buffer             = this .getBuffer (),
          initialValue       = this .getInitialValue (),
          initialDestination = this .getInitialDestination (),
@@ -86,7 +40,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
 
       buffer [0] = this .duplicate (initialDestination);
 
-      for (var i = 1; i < numBuffers; ++ i)
+      for (let i = 1; i < numBuffers; ++ i)
          buffer [i] = this .duplicate (initialValue);
 
       this .destination = this .duplicate (initialDestination);
@@ -122,7 +76,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
       if (t <= 0)
          return 0;
 
-      var duration = this ._duration .getValue ();
+      const duration = this ._duration .getValue ();
 
       if (t >= duration)
          return 1;
@@ -134,11 +88,11 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
       if (! this ._isActive .getValue ())
          this .bufferEndTime = this .getBrowser () .getCurrentTime ();
 
-      var
+      const
          buffer = this .getBuffer (),
          value  = this .getValue ();
 
-      for (var i = 0, length = buffer .length; i < length; ++ i)
+      for (let i = 0, length = buffer .length; i < length; ++ i)
          this .assign (buffer, i, value);
 
       this .setPreviousValue (value);
@@ -161,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
    },
    prepareEvents ()
    {
-      var
+      const
          buffer     = this .getBuffer (),
          numBuffers = buffer .length,
          fraction   = this .updateBuffer ();
@@ -170,7 +124,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
                                           buffer [numBuffers - 1],
                                           this .stepResponse ((numBuffers - 1 + fraction) * this .stepTime));
 
-      for (var i = numBuffers - 2; i >= 0; -- i)
+      for (let i = numBuffers - 2; i >= 0; -- i)
       {
          this .step (buffer [i], buffer [i + 1], this .stepResponse ((i + fraction) * this .stepTime));
       }
@@ -182,14 +136,15 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
    },
    updateBuffer ()
    {
-      var
+      const
          buffer     = this .getBuffer (),
-         numBuffers = buffer .length,
-         fraction   = (this .getBrowser () .getCurrentTime () - this .bufferEndTime) / this .stepTime;
+         numBuffers = buffer .length;
+
+      let fraction = (this .getBrowser () .getCurrentTime () - this .bufferEndTime) / this .stepTime;
 
       if (fraction >= 1)
       {
-         var seconds = Math .floor (fraction);
+         const seconds = Math .floor (fraction);
 
          fraction -= seconds;
 
@@ -197,14 +152,14 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
          {
             this .setPreviousValue (buffer [numBuffers - seconds]);
 
-            for (var i = numBuffers - 1; i >= seconds; -- i)
+            for (let i = numBuffers - 1; i >= seconds; -- i)
             {
                this .assign (buffer, i, buffer [i - seconds])
             }
 
-            for (var i = 0; i < seconds; ++ i)
+            for (let i = 0; i < seconds; ++ i)
             {
-               var alpha = i / seconds;
+               const alpha = i / seconds;
 
                this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
             }
@@ -213,7 +168,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
          {
             this .setPreviousValue (seconds == numBuffers ? buffer [0] : this .destination);
 
-            for (var i = 0; i < numBuffers; ++ i)
+            for (let i = 0; i < numBuffers; ++ i)
                this .assign (buffer, i, this .destination);
          }
 
@@ -224,18 +179,6 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
    },
 });
 
-Object .defineProperties (X3DChaserNode,
-{
-   typeName:
-   {
-      value: "X3DChaserNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DChaserNode, X3DNode .getStaticProperties ("X3DChaserNode", "Followers", 1));
 
 export default X3DChaserNode;

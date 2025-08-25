@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DChildObject      from "../../Base/X3DChildObject.js";
 import X3DNode             from "./X3DNode.js";
 import X3DExecutionContext from "../../Execution/X3DExecutionContext.js";
@@ -79,11 +32,44 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       return this [_protoNode] .getName ();
    },
+   getAppInfo ()
+   {
+      return this [_protoNode] .getAppInfo ();
+   },
+   getDocumentation ()
+   {
+      return this [_protoNode] .getDocumentation ();
+   },
    initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
       this .realize ();
+   },
+   realize ()
+   {
+      const
+         protoNode = this [_protoNode],
+         proto     = protoNode .getProtoDeclaration ();
+
+      if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+         return;
+
+      // Create execution context.
+
+      this [_body] = new X3DExecutionContext (proto .getExecutionContext (), this);
+
+      // Copy proto.
+
+      this .importExternProtos  (proto .getBody () .externprotos);
+      this .importProtos        (proto .getBody () .protos);
+      this .copyRootNodes       (proto .getBody () .rootNodes);
+      this .importImportedNodes (proto .getBody () .importedNodes);
+      this .copyRoutes          (proto .getBody () .routes);
+
+      this [_body] .setup ();
+
+      X3DChildObject .prototype .addEvent .call (this);
    },
    construct ()
    {
@@ -131,7 +117,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   continue;
 
                // Is set during parse, or already changed by an route event.
-               if (field .getModificationTime ())
+               if (field .getModificationTime () >= 0)
                   continue;
 
                // Has IS references.
@@ -158,31 +144,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       protoNode ._updateInstances .removeInterest ("construct", this);
       protoNode ._updateInstances .addInterest ("update", this);
-   },
-   realize ()
-   {
-      const
-         protoNode = this [_protoNode],
-         proto     = protoNode .getProtoDeclaration ();
-
-      if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-         return;
-
-      // Create execution context.
-
-      this [_body] = new X3DExecutionContext (proto .getExecutionContext (), this);
-
-      // Copy proto.
-
-      this .importExternProtos  (proto .getBody () .externprotos);
-      this .importProtos        (proto .getBody () .protos);
-      this .copyRootNodes       (proto .getBody () .rootNodes);
-      this .importImportedNodes (proto .getBody () .importedNodes);
-      this .copyRoutes          (proto .getBody () .routes);
-
-      this [_body] .setup ();
-
-      X3DChildObject .prototype .addEvent .call (this);
    },
    update ()
    {
@@ -225,10 +186,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          // Assign default value.
          if (oldField .isInitializable ())
          {
-            if (oldField .getModificationTime () === 0)
+            if (oldField .getModificationTime () < 0)
             {
                oldField .assign (newField);
-               oldField .setModificationTime (0);
+               oldField .setModificationTime (-1);
             }
          }
 
@@ -342,6 +303,15 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       }
 
       throw new Error ("Root node not available.");
+   },
+   isDefaultValue (field)
+   {
+      const protoNode = this [_protoNode];
+
+      if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+         return field .getModificationTime () < 0;
+
+      return X3DNode .prototype .isDefaultValue .call (this, field);
    },
    importExternProtos (externprotos1)
    {
@@ -532,7 +502,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      }
                      else
                      {
-                        generator .PushContainerField (field);
+                        generator .PushContainerField (null);
 
                         generator .string += ">";
                         generator .string += generator .TidyBreak ();
@@ -556,16 +526,24 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   }
                   case X3DConstants .SFNode:
                   {
-                     if (field .getValue () !== null)
-                     {
-                        generator .PushContainerField (null);
+                     generator .PushContainerField (null);
 
-                        generator .string += generator .Indent ();
-                        generator .string += "<fieldValue";
+                     generator .string += generator .Indent ();
+                     generator .string += "<fieldValue";
+                     generator .string += generator .Space ();
+                     generator .string += "name='";
+                     generator .string += generator .XMLEncode (field .getName ());
+                     generator .string += "'";
+
+                     if (field .getValue () === null)
+                     {
                         generator .string += generator .Space ();
-                        generator .string += "name='";
-                        generator .string += generator .XMLEncode (field .getName ());
-                        generator .string += "'";
+                        generator .string += "value='null'";
+                        generator .string += generator .closingTags ? "></fieldValue>" : "/>";
+                        generator .string += generator .TidyBreak ();
+                     }
+                     else
+                     {
                         generator .string += ">";
                         generator .string += generator .TidyBreak ();
 
@@ -580,12 +558,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                         generator .string += generator .Indent ();
                         generator .string += "</fieldValue>";
                         generator .string += generator .TidyBreak ();
-
-                        generator .PopContainerField ();
-                        break;
                      }
 
-                     // Proceed with next case.
+                     generator .PopContainerField ();
+                     break;
                   }
                   default:
                   {
@@ -1057,28 +1033,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
 });
 
-Object .defineProperties (X3DPrototypeInstance,
-{
-   typeName:
-   {
-      value: "X3DPrototypeInstance",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPrototypeInstance, X3DNode .getStaticProperties ("X3DPrototypeInstance", "Core", 2, "children", "2.0"));
 
 export default X3DPrototypeInstance;

@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DChildObject  from "./X3DChildObject.js";
 import X3DConstants    from "./X3DConstants.js";
 import Events          from "./Events.js";
@@ -61,7 +14,11 @@ const
    _inputRoutes         = Symbol (),
    _outputRoutes        = Symbol (),
    _routeCallbacks      = Symbol (),
+   _appInfo             = Symbol (),
+   _documentation       = Symbol (),
    _uniformLocation     = Symbol .for ("X_ITE.X3DField.uniformLocation");
+
+const EMPTY = [ ];
 
 function X3DField (value)
 {
@@ -72,17 +29,19 @@ function X3DField (value)
 
 Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .prototype),
 {
-   [_value]: null,
+   [_value]: undefined,
    [_accessType]: X3DConstants .initializeOnly,
-   [_unit]: null,
-   [_references]: new IterableWeakSet (),
-   [_referencesCallbacks]: new Map (),
-   [_fieldInterests]: new IterableWeakSet (),
-   [_fieldCallbacks]: new Map (),
-   [_inputRoutes]: new IterableWeakSet (),
-   [_outputRoutes]: new IterableWeakSet (),
-   [_routeCallbacks]: new Map (),
+   [_unit]: undefined,
+   [_references]: null,
+   [_referencesCallbacks]: null,
+   [_fieldInterests]: null,
+   [_fieldCallbacks]: null,
+   [_inputRoutes]: null,
+   [_outputRoutes]: null,
+   [_routeCallbacks]: null,
    [_uniformLocation]: null,
+   [_appInfo]: "",
+   [_documentation]: "",
    create ()
    {
       return new (this .constructor) ();
@@ -158,13 +117,12 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    addReference (reference)
    {
-      if (this [_references] === X3DField .prototype [_references])
-         this [_references] = new IterableWeakSet ();
+      const references = this .getReferences ();
 
-      if (this [_references] .has (reference))
+      if (references .has (reference))
          return;
 
-      this [_references] .add (reference);
+      references .add (reference);
 
       // Create IS relationship
 
@@ -191,7 +149,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeReference (reference)
    {
-      this .getReferences () .delete (reference);
+      this [_references] ?.delete (reference);
 
       // Create IS relationship
 
@@ -216,7 +174,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    getReferences ()
    {
-      return this [_references];
+      return this [_references] ??= new IterableWeakSet ();
    },
    addReferencesCallback (key, object)
    {
@@ -226,33 +184,30 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeReferencesCallback (key)
    {
-      this [_referencesCallbacks] = new Map (this [_referencesCallbacks]);
-
-      this [_referencesCallbacks] .delete (key);
+      this [_referencesCallbacks] ?.delete (key);
    },
    getReferencesCallbacks ()
    {
-      return this [_referencesCallbacks];
+      return this [_referencesCallbacks] ??= new Map ();
    },
    processReferencesCallbacks ()
    {
-      for (const callback of this [_referencesCallbacks] .values ())
+      for (const callback of this [_referencesCallbacks] ?.values () ?? EMPTY)
          callback ();
    },
    addFieldInterest (field)
    {
-      if (this [_fieldInterests] === X3DField .prototype [_fieldInterests])
-         this [_fieldInterests] = new IterableWeakSet ();
+      // There must be no copy, because the event is not executed immediately.
 
-      this [_fieldInterests] .add (field);
+      this .getFieldInterests () .add (field);
    },
    removeFieldInterest (field)
    {
-      this [_fieldInterests] .delete (field);
+      this [_fieldInterests] ?.delete (field);
    },
    getFieldInterests ()
    {
-      return this [_fieldInterests];
+      return this [_fieldInterests] ??= new IterableWeakSet ();
    },
    addFieldCallback (key, object)
    {
@@ -262,51 +217,41 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeFieldCallback (key)
    {
-      this [_fieldCallbacks] = new Map (this [_fieldCallbacks]);
-
-      this [_fieldCallbacks] .delete (key);
+      this [_fieldCallbacks] ?.delete (key);
    },
    getFieldCallbacks ()
    {
-      return this [_fieldCallbacks];
+      return this [_fieldCallbacks] ??= new Map ();
    },
    addInputRoute (route)
    {
-      if (this [_inputRoutes] === X3DField .prototype [_inputRoutes])
-         this [_inputRoutes] = new IterableWeakSet ();
-
-      this [_inputRoutes] .add (route);
-
+      this .getInputRoutes () .add (route);
       this .processRouteCallbacks ();
    },
    removeInputRoute (route)
    {
-      this [_inputRoutes] .delete (route);
+      this [_inputRoutes] ?.delete (route);
 
       this .processRouteCallbacks ();
    },
    getInputRoutes ()
    {
-      return this [_inputRoutes];
+      return this [_inputRoutes] ??= new IterableWeakSet ();
    },
    addOutputRoute (route)
    {
-      if (this [_outputRoutes] === X3DField .prototype [_outputRoutes])
-         this [_outputRoutes] = new IterableWeakSet ();
-
-      this [_outputRoutes] .add (route);
-
+      this .getOutputRoutes () .add (route);
       this .processRouteCallbacks ();
    },
    removeOutputRoute (route)
    {
-      this [_outputRoutes] .delete (route);
+      this [_outputRoutes] ?.delete (route);
 
       this .processRouteCallbacks ();
    },
    getOutputRoutes ()
    {
-      return this [_outputRoutes];
+      return this [_outputRoutes] ??= new IterableWeakSet ();
    },
    addRouteCallback (key, object)
    {
@@ -318,17 +263,15 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    removeRouteCallback (key)
    {
-      this [_routeCallbacks] = new Map (this [_routeCallbacks]);
-
-      this [_routeCallbacks] .delete (key);
+      this [_routeCallbacks] ?.delete (key);
    },
    getRouteCallbacks ()
    {
-      return this [_routeCallbacks];
+      return this [_routeCallbacks] ??= new Map ();
    },
    processRouteCallbacks ()
    {
-      for (const callback of this [_routeCallbacks] .values ())
+      for (const callback of this [_routeCallbacks] ?.values () ?? EMPTY)
          callback ();
    },
    processEvent (event = Events .create (this))
@@ -350,7 +293,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
       let first = true;
 
-      for (const field of this [_fieldInterests])
+      for (const field of this [_fieldInterests] ?? EMPTY)
       {
          if (event .has (field))
             continue;
@@ -371,16 +314,40 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
       // Process field callbacks.
 
-      for (const callback of this [_fieldCallbacks] .values ())
+      for (const callback of this [_fieldCallbacks] ?.values () ?? EMPTY)
          callback (this .valueOf ());
+   },
+   getAppInfo ()
+   {
+      return this [_appInfo];
+   },
+   setAppInfo (value)
+   {
+      this [_appInfo] = String (value);
+   },
+   setDocumentation (value)
+   {
+      this [_documentation] = String (value);
+   },
+   getDocumentation ()
+   {
+      return this [_documentation];
    },
    fromString (string, scene)
    {
+      this .fromVRMLString (string, scene);
+   },
+   fromVRMLString (string, scene)
+   {
       // Function will be overridden in VRMLParser.
+   },
+   fromXMLString (string, scene)
+   {
+      // Function will be overridden in XMLParser.
    },
    dispose ()
    {
-      for (const reference of this [_references])
+      for (const reference of this [_references] ?? EMPTY)
          reference .removeFieldInterest (this);
 
       for (const route of new Set (this [_inputRoutes]))
@@ -389,13 +356,13 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
       for (const route of new Set (this [_outputRoutes]))
          route .dispose ();
 
-      this [_references]          .clear ();
-      this [_referencesCallbacks] .clear ();
-      this [_fieldInterests]      .clear ();
-      this [_fieldCallbacks]      .clear ();
-      this [_inputRoutes]         .clear ();
-      this [_outputRoutes]        .clear ();
-      this [_routeCallbacks]      .clear ();
+      this [_references]          ?.clear ();
+      this [_referencesCallbacks] ?.clear ();
+      this [_fieldInterests]      ?.clear ();
+      this [_fieldCallbacks]      ?.clear ();
+      this [_inputRoutes]         ?.clear ();
+      this [_outputRoutes]        ?.clear ();
+      this [_routeCallbacks]      ?.clear ();
 
       X3DChildObject .prototype .dispose .call (this);
    }

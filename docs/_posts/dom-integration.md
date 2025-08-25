@@ -25,7 +25,6 @@ The example below shows a simple Box node inside the \<x3d-canvas\> element.
 <html>
   <head>
     <meta charset="utf-8"/>
-    <script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
     <style>
 x3d-canvas {
   width: 100%;
@@ -33,17 +32,16 @@ x3d-canvas {
   aspect-ratio: 16 / 7.8;
 }
     </style>
-    <script>
-window .addEventListener ("load", function ()
-{
-  const
-    touchSensor = document .querySelector ("TouchSensor"),
-    hitPoint    = document .querySelector ("#hitPoint");
+    <script type="module">
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
-  touchSensor .addEventListener ("hitPoint_changed", function (event)
-  {
-    hitPoint .textContent = event .detail .value;
-  });
+const
+  touchSensor = document .querySelector ("TouchSensor"),
+  hitPoint    = document .querySelector ("#hitPoint");
+
+touchSensor .addEventListener ("hitPoint_changed", event =>
+{
+  hitPoint .textContent = event .detail .value;
 });
     </script>
   </head>
@@ -69,6 +67,8 @@ window .addEventListener ("load", function ()
                         containerField='diffuseTexture'
                         image='2 2 1 0xff 0x00 0x00 0xff'>
                       <TextureProperties
+                          minificationFilter='FASTEST'
+                          magnificationFilter='FASTEST'
                           boundaryModeS='CLAMP_TO_EDGE'
                           boundaryModeT='CLAMP_TO_EDGE'>
                       </TextureProperties>
@@ -108,14 +108,14 @@ You can add an event listener to any X3D element with the name of the output fie
 
 Events sent from a node are of type CustomEvent and have the following properties:
 
-```js
-CustomEvent: {
-  type: string,        // name of field
-  target: HTMLElement, // X3D element of node
+```ts
+class CustomEvent {
+  type: string;        // name of field
+  target: HTMLElement; // X3D element of node
   detail: {
-    node: SFNode,      // node to which the field belongs to
-    value: any,        // new value of field
-  }
+    node: SFNode;      // node to which the field belongs to
+    value: any;        // new value of field
+  };
 }
 ```
 

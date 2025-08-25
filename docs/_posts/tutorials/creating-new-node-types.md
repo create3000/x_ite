@@ -28,11 +28,11 @@ A PROTO statement declares a new node type (a prototype):
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <field accessType='inputOutput' type='SFTime' name='cycleInterval' value='1'/>
-    <field accessType='inputOutput' type='SFFloat' name='bounceHeight' value='1'/>
+    <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='1'/>
   </ProtoInterface>
   <ProtoBody>
     <!-- ... -->
@@ -40,12 +40,12 @@ A PROTO statement declares a new node type (a prototype):
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
-  inputOutput SFTime  cycleInterval 1.0
-  inputOutput SFFloat bounceHeight  1.0
+  inputOutput    SFTime  cycleInterval 1.0
+  initializeOnly SFFloat bounceHeight  1.0
 ]
 {
   ...
@@ -60,7 +60,7 @@ PROTO BouncingBall [
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <!-- ... -->
@@ -69,11 +69,12 @@ PROTO BouncingBall [
     <Transform>
       <!-- children ... -->
     </Transform>
+    <ROUTE ... />
   </ProtoBody>
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
@@ -99,11 +100,11 @@ Interface items connected by IS need not have the same name as an item in the bo
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <field accessType='inputOutput' type='SFTime' name='cycleInterval' value='1'/>
-    <field accessType='inputOutput' type='SFFloat' name='bounceHeight' value='1'/>
+    <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='1'/>
   </ProtoInterface>
   <ProtoBody>
     <!-- ... -->
@@ -118,12 +119,12 @@ Interface items connected by IS need not have the same name as an item in the bo
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
-  inputOutput SFTime  cycleInterval 1.0
-  inputOutput SFFloat bounceHeight  1.0
+  inputOutput    SFTime  cycleInterval 1.0
+  initializeOnly SFFloat bounceHeight  1.0
 ]
 {
   ...
@@ -152,7 +153,7 @@ The new node type can be used like any other type.
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- Official Syntax -->
 <ProtoInstance name='BouncingBall'>
   <fieldValue name='cycleInterval' value='2'/>
@@ -164,7 +165,7 @@ The new node type can be used like any other type.
     bounceHeight='3'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 BouncingBall {
@@ -172,6 +173,16 @@ BouncingBall {
   bounceHeight  3.0
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/proto/proto.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/proto/screenshot.avif" alt="BouncingBall"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/proto/proto.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/proto/proto.x3dv)
+{: .example-links }
 
 ## Controlling usage rules
 
@@ -193,7 +204,7 @@ The new node type can be used wherever the first node of the prototype body can 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <!-- Official Syntax -->
   <ProtoInstance name='Torus' containerField='geometry'>
@@ -224,11 +235,11 @@ Fields needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <field accessType='inputOutput' type='SFTime' name='cycleInterval' value='1'/>
-    <field accessType='inputOutput' type='SFFloat' name='bounceHeight' value='1'/>
+    <field accessType='initializeOnly' type='SFFloat' name='bounceHeight' value='1'/>
   </ProtoInterface>
   <ProtoBody>
     <!-- ... -->
@@ -236,12 +247,12 @@ Fields needed:
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
-  inputOutput SFTime  cycleInterval 1.0
-  inputOutput SFFloat bounceHeight 1.0
+  inputOutput    SFTime  cycleInterval 1.0
+  initializeOnly SFFloat bounceHeight 1.0
 ]
 {
   ...
@@ -261,7 +272,7 @@ Body needed:
 
 ### XML Encoding
 
-```xml
+```x3d
 <ProtoDeclare name='BouncingBall'>
   <ProtoInterface>
     <!-- ... -->
@@ -277,7 +288,7 @@ Body needed:
 </ProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PROTO BouncingBall [
@@ -314,25 +325,35 @@ Prototypes are typically in a separate external file, referenced by an **EXTERNP
 
 ### XML Encoding
 
-```xml
+```x3d
 <ExternProtoDeclare name='BouncingBall' url='"bounce.x3dv#BouncingBall", "bounce.x3d#BouncingBall"'>
   <field accessType='inputOutput' type='SFTime' name='cycleInterval'/>
-  <field accessType='inputOutput' type='SFFloat' name='bounceHeight'/>
+  <field accessType='initializeOnly' type='SFFloat' name='bounceHeight'/>
 </ExternProtoDeclare>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 EXTERNPROTO BouncingBall [
-  inputOutput SFTime  cycleInterval
-  inputOutput SFFloat bounceHeight
+  inputOutput    SFTime  cycleInterval
+  initializeOnly SFFloat bounceHeight
 ]
 [
   "bounce.x3dv#BouncingBall",
   "bounce.x3d#BouncingBall"
 ]
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/externproto/externproto.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/externproto/screenshot.avif" alt="BouncingBall"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/externproto/externproto.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/externproto/externproto.x3dv)
+{: .example-links }
 
 ## Summary
 

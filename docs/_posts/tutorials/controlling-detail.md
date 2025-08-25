@@ -44,7 +44,7 @@ An [LOD](/x_ite/components/navigation/lod/) grouping node creates a group of sha
 
 ### XML Encoding
 
-```xml
+```x3d
 <LOD
     center='0.0 0.0 0.0'
     range='...'>
@@ -52,7 +52,7 @@ An [LOD](/x_ite/components/navigation/lod/) grouping node creates a group of sha
 </LOD>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 LOD {
@@ -89,7 +89,7 @@ Lower detail levels should use simpler geometry, fewer textures, and no text.
 
 ### XML Encoding
 
-```xml
+```x3d
 <LOD
     center='0.0 0.0 0.0'
     range='7.0, 10.0'>
@@ -102,7 +102,7 @@ Lower detail levels should use simpler geometry, fewer textures, and no text.
 </LOD>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 LOD {
@@ -119,7 +119,7 @@ LOD {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/lod/lod.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/lod/screenshot.png" alt="LOD"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/lod/screenshot.avif" alt="LOD"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/lod/lod.zip)

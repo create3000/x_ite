@@ -15,7 +15,7 @@ tags: [ParticleSystem, ParticleSystems]
 
 ParticleSystem specifies a complete particle system. It can contain Appearance for particle appearance, a geometry node if geometryType='GEOMETRY', a color field with Color or ColorRGBA node for changing base color over each particle's lifetime, a texcoord TextureCoordinate node to control texture coordinates of provided texture(s) in the Appearance node over time, a single emitter X3DParticleEmitterNode, and an array of physics X3DParticlePhysicsModelNode nodes.
 
-The ParticleSystem node belongs to the **ParticleSystems** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The ParticleSystem node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -26,23 +26,54 @@ The ParticleSystem node belongs to the **ParticleSystems** component and require
       + ParticleSystem
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFBool | [in, out] | [createParticles](#fields-createParticles) | TRUE |
+| SFString | [ ] | [geometryType](#fields-geometryType) | "QUAD"  |
+| SFInt32 | [in, out] | [maxParticles](#fields-maxParticles) | 200  |
+| SFFloat | [in, out] | [particleLifetime](#fields-particleLifetime) | 5  |
+| SFFloat | [in, out] | [lifetimeVariation](#fields-lifetimeVariation) | 0.25  |
+| SFVec2f | [in, out] | [particleSize](#fields-particleSize) | 0.02 0.02  |
+| SFNode | [ ] | [emitter](#fields-emitter) | NULL  |
+| MFNode | [ ] | [physics](#fields-physics) | [ ] |
+| MFFloat | [ ] | [colorKey](#fields-colorKey) | [ ] |
+| SFNode | [ ] | [color](#fields-color) | NULL  |
+| MFFloat | [ ] | [texCoordKey](#fields-texCoordKey) | [ ] |
+| SFNode | [ ] | [texCoord](#fields-texCoord) | NULL  |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE  |
+| SFBool | [in, out] | [castShadow](#fields-castShadow) | TRUE |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFNode | [in, out] | [appearance](#fields-appearance) | NULL  |
+| SFNode | [in, out] | [geometry](#fields-geometry) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFBool [in, out] **createParticles** TRUE
+{: #fields-createParticles }
 
 Enables/disables creation of new particles, while any existing particles remain in existence and continue to animate until the end of their lifetimes.
 
@@ -51,6 +82,7 @@ Enables/disables creation of new particles, while any existing particles remain 
 - If no particles are left in scene, system is considered both active and enabled.
 
 ### SFString [ ] **geometryType** "QUAD" <small>["LINE"|"POINT"|"QUAD"|"SPRITE"|"TRIANGLE"|"GEOMETRY"|...]</small>
+{: #fields-geometryType }
 
 Specifies type of geometry used to represent individual particles. Typically, a particle is calculated as point in space at which the geometry is placed. Changing the value of the geometry field or the definition of the geometry node shall be applied during current computation of the next frame to be rendered.
 
@@ -70,14 +102,17 @@ Specifies type of geometry used to represent individual particles. Typically, a 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### SFInt32 [in, out] **maxParticles** 200 <small>[0,∞)</small>
+{: #fields-maxParticles }
 
 Maximum number of particles to be generated at one time (subject to player limitations).
 
 ### SFFloat [in, out] **particleLifetime** 5 <small>[0,∞)</small>
+{: #fields-particleLifetime }
 
 TODO not properly defined in X3D specification. Particle animation lifetime in base time units (default is seconds).
 
 ### SFFloat [in, out] **lifetimeVariation** 0.25 <small>[0,1]</small>
+{: #fields-lifetimeVariation }
 
 TODO not properly defined in X3D specification. Multiplier for the randomness used to control the range of possible output values. The bigger the value, the more random the output and the bigger the range of initial values possible.
 
@@ -86,6 +121,7 @@ TODO not properly defined in X3D specification. Multiplier for the randomness us
 - Variation of zero does not allow any randomness.
 
 ### SFVec2f [in, out] **particleSize** 0.02 0.02 <small>[0,∞)</small>
+{: #fields-particleSize }
 
 *particleSize* describes width and height dimensions for each particle in length base units (default is meters). Changing this value dynamically will only change new particles created after the change.
 
@@ -95,14 +131,17 @@ TODO not properly defined in X3D specification. Multiplier for the randomness us
 - His field only effects particles using LINE, QUAD, SPRITE, and TRIANGLE geometry types.
 
 ### SFNode [ ] **emitter** NULL <small>[X3DParticleEmitterNode]</small>
+{: #fields-emitter }
 
 The *emitter* field specifies the type of *emitter* geometry and properties that the particles are given for their initial positions.
 
 ### MFNode [ ] **physics** [ ] <small>[X3DParticlePhysicsModelNode]</small>
+{: #fields-physics }
 
 After being created, the individual particles are then manipulated according to the *physics* model(s) specified in the *physics* field.
 
 ### MFFloat [ ] **colorKey** [ ] <small>[0,∞)</small>
+{: #fields-colorKey }
 
 Array of time intervals in seconds, corresponding to particle lifetime, that are used to interpolate color array values.
 
@@ -118,6 +157,7 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 - If an [Appearance](/x_ite/components/shape/appearance/) and [Material](/x_ite/components/shape/material/) nodes are provided, those material properties override color field interpolation.
 
 ### SFNode [ ] **color** NULL <small>[X3DColorNode]</small>
+{: #fields-color }
 
 The *color* field contains [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) nodes as a series of *color* values to be used at the given colorKey points in time.
 
@@ -133,6 +173,7 @@ The *color* field contains [Color](/x_ite/components/rendering/color/) or [Color
 - If an [Appearance](/x_ite/components/shape/appearance/) and [Material](/x_ite/components/shape/material/) nodes are provided, those material properties override *color* field interpolation.
 
 ### MFFloat [ ] **texCoordKey** [ ] <small>[0,∞)</small>
+{: #fields-texCoordKey }
 
 Array of time intervals in seconds, corresponding to particle lifetime, that are used to sequence texCoord array values.
 
@@ -143,6 +184,7 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 - Number of *texCoordKey* values must match length of the per-vertex texCoord arrays!
 
 ### SFNode [ ] **texCoord** NULL <small>[TextureCoordinate]</small>
+{: #fields-texCoord }
 
 Texture coordinates of the provided texture(s) in the [Appearance](/x_ite/components/shape/appearance/) node, over time. Particle systems frequently like to change the texture on a particle as it ages, yet there is no good way of accomplishing this through standard interpolators because interpolators have no concept of particle time. This pair of fields hold time-dependent values for the texture coordinates to be applied to the particle. When a particle reaches the next time stamp it moves to the next set of texture coordinates.
 
@@ -156,6 +198,7 @@ Texture coordinates of the provided texture(s) in the [Appearance](/x_ite/compon
 - [Field originally named 'texCoordRamp' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFBool [out] **isActive**
+{: #fields-isActive }
 
 *isActive* true/false events are sent when playback starts/stops.
 
@@ -163,11 +206,13 @@ Texture coordinates of the provided texture(s) in the [Appearance](/x_ite/compon
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non standard</small>
+### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
+{: #fields-pointerEvents }
 
 *pointerEvents* defines whether this Shape becomes target for pointer events.
 
 ### SFBool [in, out] **castShadow** TRUE
+{: #fields-castShadow }
 
 The *castShadow* field defines whether this [Shape](/x_ite/components/shape/shape/) casts shadows as produced by lighting nodes.
 
@@ -177,6 +222,7 @@ The *castShadow* field defines whether this [Shape](/x_ite/components/shape/shap
 - If prior X3D3 content is loaded into an X3D4 model, then legacy [Shape](/x_ite/components/shape/shape/) nodes have shadows set to true.
 
 ### SFBool [in, out] **visible** TRUE
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -186,6 +232,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -194,6 +241,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -201,20 +249,22 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
 #### Hints
 
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFNode [in, out] **appearance** NULL <small>[X3DAppearanceNode]</small>
+{: #fields-appearance }
 
 The *appearance* field holds an [Appearance](/x_ite/components/shape/appearance/) node that is used for the geometry. All effects, such as material colors and/or multi-textures, are applied to each particle.
 
@@ -224,6 +274,7 @@ The *appearance* field holds an [Appearance](/x_ite/components/shape/appearance/
 - If automatic texture coordinate generation is used, results shall be based on the entire volume that the particles consume, not locally applied to each particle.
 
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
+{: #fields-geometry }
 
 Single contained *geometry* node provides *geometry* used for each particle when geometryType=GEOMETRY.
 
@@ -241,12 +292,14 @@ Single contained *geometry* node provides *geometry* used for each particle when
 
 ### Hints
 
-- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/concepts.html#ExecutionModel
+- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#ExecutionModel)
 - [Wikipedia, particle system](https://en.wikipedia.org/wiki/Particle_system)
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/screenshot.avif" alt="ParticleSystem"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d)

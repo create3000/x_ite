@@ -47,14 +47,14 @@ A [PointLight](/x_ite/components/lighting/pointlight/) node illuminates radially
 
 ### XML Encoding
 
-```xml
+```x3d
 <PointLight
     location='0.0 0.0 0.0'
     intensity='1.0'
     color='1.0 1.0 1.0'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 PointLight {
@@ -64,20 +64,30 @@ PointLight {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light1/light1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/light1/screenshot.avif" alt="PointLight"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/light1/light1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/light1/light1.x3dv)
+{: .example-links }
+
 ## Syntax: DirectionalLight
 
 A [DirectionalLight](/x_ite/components/lighting/directionallight/) node illuminates in one direction from infinitely far away:
 
 ### XML Encoding
 
-```xml
+```x3d
 <DirectionalLight
     direction='1.0 0.0 0.0'
     intensity='1.0'
     color='1.0 1.0 1.0'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DirectionalLight {
@@ -87,13 +97,23 @@ DirectionalLight {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light2/light2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/light2/screenshot.avif" alt="DirectionalLight"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/light2/light2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/light2/light2.x3dv)
+{: .example-links }
+
 ## Syntax: SpotLight
 
 A [SpotLight](/x_ite/components/lighting/spotlight/) node illuminates from a point, in one direction, within a cone:
 
 ### XML Encoding
 
-```xml
+```x3d
 <SpotLight
     location='0.0 0.0 0.0'
     direction='1.0 0.0 0.0'
@@ -102,7 +122,7 @@ A [SpotLight](/x_ite/components/lighting/spotlight/) node illuminates from a poi
     cutOffAngle='0.785'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 SpotLight {
@@ -114,19 +134,29 @@ SpotLight {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/light3/light3.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/light3/screenshot.avif" alt="SpotLight"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/light3/light3.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/light3/light3.x3dv)
+{: .example-links }
+
 - The maximum width of a spot light's cone is controlled by the cutOffAngle field
 - An inner cone region with constant brightness is controlled by the beamWidth field
 
 ### XML Encoding
 
-```xml
+```x3d
 <SpotLight
     ...
     cutOffAngle='0.785'
     beamWidth='0.52'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 SpotLight {

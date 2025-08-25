@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
@@ -60,7 +13,7 @@ import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
-// https://github.com/KhronosGroup/glTF-Sample-Models
+// https://github.com/KhronosGroup/glTF-Sample-Assets
 
 const SAMPLES_PER_SECOND = 30; // in 1/s
 
@@ -80,23 +33,23 @@ function GLTF2Parser (scene)
    this .extensions            = new Set ();
    this .envLights             = [ ];
    this .lights                = [ ];
-   this .lightNodes            = [ ];
-   this .usedLights            = 0;
    this .materialVariants      = [ ];
    this .materialVariantNodes  = [ ];
    this .buffers               = [ ];
    this .bufferViews           = [ ];
    this .accessors             = [ ];
    this .samplers              = [ ];
+   this .textureCache          = new Map ();
    this .materials             = [ ];
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
    this .cameras               = [ ];
-   this .viewpointNodes        = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
+   this .humanoidIndex         = new Map ();
    this .joints                = new Set ();
-   this .animationNodes        = [ ];
+   this .pointerAliases        = new Map ();
+   this .animationScripts      = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -189,7 +142,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Parse root objects.
 
-      this .assetObject      (glTF .asset);
+      this .assetObject      (glTF .asset, glTF .extensions);
       this .extensionsArray  (glTF .extensionsRequired, this .extensions);
       this .extensionsArray  (glTF .extensionsUsed, this .extensions);
       this .extensionsObject (glTF .extensions);
@@ -210,23 +163,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .materialsArray  (glTF .materials);
       this .meshesArray     (glTF .meshes);
       this .camerasArray    (glTF .cameras);
-      this .skinsArray      (glTF .skins);
+      this .skinsArray      (glTF .skins, glTF .nodes);
       this .nodesArray      (glTF .nodes);
-      this .scenesArray     (glTF .scenes, glTF .scene);
+      this .scenesArray     (glTF, glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
-      this .viewpointsCenterOfRotation (this .getScene ());
-      this .optimizeSceneGraph (this .getScene () .getRootNodes ());
+      this .viewpointsCenterOfRotation (scene);
+      this .optimizeSceneGraph (scene .getRootNodes ());
 
-      this .exportGroup ("Viewpoints", this .viewpointNodes);
-      this .exportGroup ("Lights",     this .lightNodes);
-      this .exportGroup ("Animations", this .animationNodes);
+      this .exportGroup ("Viewpoints",        this .cameras);
+      this .exportGroup ("EnvironmentLights", this .envLights);
+      this .exportGroup ("Lights",            this .lights);
+      this .exportGroup ("Animations",        glTF .animations);
 
+      this .cleanupAnimationScripts ();
       this .materialVariantsSwitch ();
 
-      return this .getScene ();
+      return scene;
    },
-   assetObject (asset)
+   assetObject (asset, extensions)
    {
       if (!(asset instanceof Object))
          return;
@@ -258,11 +213,24 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
-      worldInfoNode ._info .sort ();
-
       if (!worldInfoNode ._title .getValue ())
-         worldInfoNode ._title = decodeURI (new URL (worldURL) .pathname .split ("/") .at (-1) || worldURL);
+      {
+         const url = new URL (worldURL);
 
+         if (url .protocol === "data:")
+            worldInfoNode ._title = "glTF Model";
+         else
+            worldInfoNode ._title = decodeURIComponent (url .pathname .split ("/") .at (-1) || worldURL);
+      }
+
+      if (asset .extensions ?.KHR_xmp_json_ld instanceof Object)
+      {
+         const packet = asset .extensions .KHR_xmp_json_ld .packet;
+
+         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld, worldInfoNode);
+      }
+
+      worldInfoNode ._info .sort ();
       worldInfoNode .setup ();
 
       scene .getRootNodes () .push (worldInfoNode);
@@ -273,8 +241,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       const
-         browser = this .getBrowser (),
-         scene   = this .getScene ();
+         browser    = this .getBrowser (),
+         scene      = this .getScene (),
+         components = [ ];
 
       for (const extension of extensions)
       {
@@ -284,11 +253,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             case "EXT_lights_image_based":
             {
-               const component = browser .getComponent ("CubeMapTexturing", 3);
-
-               if (!scene .hasComponent (component))
-                  scene .addComponent (component);
-
+               components .push (browser .getComponent ("CubeMapTexturing", 3));
                break;
             }
             // https://github.com/KhronosGroup/glTF/pull/1956
@@ -310,23 +275,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_transmission":
             case "KHR_materials_volume":
             {
-               const component = browser .getComponent ("X_ITE", 1);
-
-               if (!scene .hasComponent (component))
-                  scene .addComponent (component);
-
+               components .push (browser .getComponent ("X_ITE", 1));
                break;
             }
             case "KHR_texture_transform":
             {
-               const component = browser .getComponent ("Texturing3D", 2);
-
-               if (!scene .hasComponent (component))
-                  scene .addComponent (component);
-
+               components .push (browser .getComponent ("Texturing3D", 2));
+               break;
+            }
+            case "KHR_animation_pointer":
+            {
+               components .push (browser .getComponent ("EventUtilities", 1));
+               components .push (browser .getComponent ("Scripting",      1));
                break;
             }
          }
+      }
+
+      for (const component of components)
+      {
+         if (scene .hasComponent (component))
+            continue;
+
+         scene .updateComponent (component);
       }
    },
    extensionsObject (extensions)
@@ -379,7 +350,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          scene      = this .getScene (),
          lightNode  = scene .createNode ("EnvironmentLight", false),
-         name       = `EnvironmentLight${id}`,
+         name       = `EnvironmentLight${id + 1}`,
          quaternion = new Quaternion ();
 
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
@@ -438,7 +409,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       lightNode .setup ();
 
-      this .lightNodes .push (lightNode);
+      light .pointers = [lightNode];
 
       return light .node = lightNode;
    },
@@ -471,9 +442,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene = this .getScene (),
-         name  = this .sanitizeName (light .name) || `Light${id}`;
+         name  = this .sanitizeName (light .name) || `Light${id + 1}`;
 
-      const color = new Color3 (1, 1, 1);
+      const color = new Color3 (1);
 
       if (this .vectorValue (light .color, color))
          lightNode ._color = color;
@@ -486,7 +457,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
       scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
 
-      this .lightNodes .push (lightNode);
+      light .pointers = [lightNode];
 
       return light .node = lightNode;
    },
@@ -519,7 +490,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._radius      = this .numberValue (light .range, 0) || -1;
       lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
       lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
-      lightNode ._attenuation = new Vector3 (0, 0, 1);
+
+      this .addAnimationPointerAlias (lightNode, "range",          "radius");
+      this .addAnimationPointerAlias (lightNode, "outerConeAngle", "cutOffAngle");
+      this .addAnimationPointerAlias (lightNode, "innerConeAngle", "beamWidth");
 
       return lightNode;
    },
@@ -529,8 +503,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene     = this .getScene (),
          lightNode = scene .createNode ("PointLight", false);
 
-      lightNode ._radius      = this .numberValue (light .range, 0) || -1;
-      lightNode ._attenuation = new Vector3 (0, 0, 1);
+      lightNode ._radius = this .numberValue (light .range, 0) || -1;
+
+      this .addAnimationPointerAlias (lightNode, "range", "radius");
 
       return lightNode;
    },
@@ -545,6 +520,43 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       this .materialVariants = variants;
+   },
+   khrXmpJsonLdObject (index, KHR_xmp_json_ld, worldInfoNode)
+   {
+      if (!(KHR_xmp_json_ld instanceof Object))
+         return;
+
+      const packet = KHR_xmp_json_ld .packets [index];
+
+      for (const [key, value] of Object .entries (packet))
+      {
+         const match = key .match (/\w+:(.*)/);
+
+         if (!match)
+            continue;
+
+         if (value instanceof Object)
+         {
+            const array = value ["@set"] ?? value ["@list"];
+
+            if (array instanceof Array)
+            {
+               worldInfoNode ._info .push (`${match [1]}: ${array .map (v => v .toString ()) .join (", ")}`);
+               continue;
+            }
+
+            if (value ["rdf:_1"] ?.["@value"])
+            {
+               worldInfoNode ._info .push (`${match [1]}: ${JSON .stringify (value ["rdf:_1"] ["@value"])}`);
+               continue;
+            }
+         };
+
+         if (typeof value !== "string")
+            continue;
+
+         worldInfoNode ._info .push (`${match [1]}: ${value}`);
+      }
    },
    async buffersArray (buffers)
    {
@@ -831,12 +843,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(images instanceof Array))
          return;
 
-      this .images = await Promise .all (images .map (image => this .imageObject (image)));
+      this .images = await Promise .all (images .map ((image, index) => this .imageObject (image, index)));
    },
-   async imageObject (image)
+   async imageObject (image, index)
    {
       if (!(image instanceof Object))
          return;
+
+      image .index = index;
 
       if (image .uri)
          return image;
@@ -880,13 +894,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(texture instanceof Object))
          return;
 
+      if (texture .textureNode)
+         return texture .textureNode;
+
       const images = this .textureImageObject (texture);
 
       if (!images .length)
          return null;
 
-      if (texture .textureNode)
-         return texture .textureNode;
+      const
+         key    = `${images .map (image => image .index) .join (",")}:${texture .sampler}`,
+         cached = this .textureCache .get (key);
+
+      if (cached)
+         return texture .textureNode = cached;
 
       const
          scene       = this .getScene (),
@@ -905,6 +926,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          textureNode ._textureProperties = sampler .texturePropertiesNode;
 
       textureNode .setup ();
+
+      this .textureCache .set (key, textureNode);
 
       return texture .textureNode = textureNode;
    },
@@ -937,11 +960,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const texCoordIndices = this .getTexCoordIndices ("", material);
 
-      this .texCoordIndex         = Array .from (texCoordIndices) .reduce ((p, c) => Math .max (p, c), -1);
-      this .textureTransformNodes = [ ];
-      this .texCoordMappings      = new Map ();
-      this .texCoordOfNode        = new Map ();
-      material .texCoordMappings  = this .texCoordMappings;
+      this .texCoordIndex           = Array .from (texCoordIndices) .reduce ((p, c) => Math .max (p, c), -1);
+      this .textureTransformNodes   = [ ];
+      this .texCoordMappings        = new Map ();
+      this .texCoordOfNode          = new Map ();
+      this .texCoordExtensionOfNode = new Map ();
+      material .texCoordMappings    = this .texCoordMappings;
 
       const
          scene          = this .getScene (),
@@ -975,6 +999,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const textureTransformNode = scene .createNode ("TextureTransform", false);
 
+               // Flip Y
                textureTransformNode ._mapping        = mapping;
                textureTransformNode ._translation .y = -1;
                textureTransformNode ._scale .y       = -1;
@@ -997,6 +1022,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       appearanceNode ._textureTransform = this .createMultiTextureTransform (appearanceNode ._material .getValue ());
 
       appearanceNode .setup ();
+
+      material .pointers = [appearanceNode, materialNode];
 
       return material .appearanceNode = appearanceNode;
    },
@@ -1056,6 +1083,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode ._metallicRoughnessTexture        = this .textureInfo (pbrMetallicRoughness .metallicRoughnessTexture);
       materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
 
+      pbrMetallicRoughness .pointers = [materialNode];
+
       return materialNode;
    },
    pbrSpecularGlossinessObject (pbrSpecularGlossiness)
@@ -1084,12 +1113,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (this .vectorValue (pbrSpecularGlossiness .specularFactor, specularFactor))
          materialNode ._specularColor = specularFactor;
       else
-         materialNode ._specularColor = Color3 .White;
+         materialNode ._specularColor = Color3 .WHITE;
 
       materialNode ._glossiness = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
       materialNode ._specularGlossinessTexture        = this .textureInfo (pbrSpecularGlossiness .specularGlossinessTexture);
       materialNode ._specularGlossinessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
+
+      pbrSpecularGlossiness .pointers = [materialNode];
 
       return materialNode;
    },
@@ -1133,6 +1164,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    materialExtensions (extensions, materialNode)
    {
       if (!(extensions instanceof Object))
+         return;
+
+      if (!materialNode .getType () .includes (X3DConstants .PhysicalMaterial))
          return;
 
       for (const [key, value] of Object .entries (extensions))
@@ -1189,6 +1223,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_anisotropy .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsClearcoatObject (KHR_materials_clearcoat, materialNode)
@@ -1210,6 +1246,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._clearcoatNormalTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatNormalTexture);
 
       extension .setup ();
+
+      KHR_materials_clearcoat .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -1234,6 +1272,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_diffuse_transmission .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsDispersionObject (KHR_materials_dispersion, materialNode)
@@ -1246,6 +1286,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._dispersion = this .numberValue (KHR_materials_dispersion .dispersion, 0);
 
       extension .setup ();
+
+      KHR_materials_dispersion .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -1260,6 +1302,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_emissive_strength .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsIorStrengthObject (KHR_materials_ior, materialNode)
@@ -1269,6 +1313,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._indexOfRefraction = this .numberValue (KHR_materials_ior .ior, 1.5);
 
       extension .setup ();
+
+      KHR_materials_ior .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -1286,6 +1332,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._iridescenceThicknessTextureMapping = this .textureMapping (KHR_materials_iridescence .iridescenceThicknessTexture);
 
       extension .setup ();
+
+      KHR_materials_iridescence .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -1310,6 +1358,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_sheen .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsSpecularObject (KHR_materials_specular, materialNode)
@@ -1333,6 +1383,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_specular .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsTransmission (KHR_materials_transmission, materialNode)
@@ -1347,6 +1399,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._transmissionTextureMapping = this .textureMapping (KHR_materials_transmission .transmissionTexture);
 
       extension .setup ();
+
+      KHR_materials_transmission .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -1366,6 +1420,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension .setup ();
 
+      KHR_materials_volume .pointers = [extension];
+
       materialNode ._extensions .push (extension);
    },
    khrMaterialsUnlitObject (KHR_materials_unlit, materialNode)
@@ -1384,6 +1440,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       unlitMaterialNode ._transparency           = materialNode ._transparency;
 
       unlitMaterialNode .setup ();
+      this .addAnimationPointerAlias (unlitMaterialNode, "baseColor", "emissiveColor");
 
       materialNode .dispose ();
 
@@ -1403,9 +1460,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          translation = new Vector2 (),
-         scale       = new Vector2 (1, 1),
+         scale       = new Vector2 (1),
          matrix      = new Matrix4 ();
 
+      // Flip Y
       matrix .scale (new Vector3 (1, -1, 1));
       matrix .translate (new Vector3 (0, -1, 0));
 
@@ -1422,7 +1480,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
 
       if (existing)
+      {
+         Object .defineProperty (KHR_texture_transform, "pointers",
+         {
+            get: () =>
+            {
+               return this .texCoordExtensionOfNode .get (existing);
+            },
+            configurable: true,
+         });
+
          return existing ._mapping .getValue ();
+      }
 
       // Create new TextureTransformMatrix3D.
 
@@ -1439,6 +1508,54 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .textureTransformNodes .push (textureTransformNode);
       this .texCoordMappings .set (mapping, texCoord);
       this .texCoordOfNode .set (textureTransformNode, texCoord);
+      this .texCoordExtensionOfNode .set (textureTransformNode, KHR_texture_transform);
+
+      Object .defineProperty (KHR_texture_transform, "pointers",
+      {
+         get: () =>
+         {
+            const scriptNode = scene .createNode ("Script", false);
+
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f ());
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat ());
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (1, 1));
+            scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFMatrix4f ());
+
+            scriptNode ._url = [/* js */ `ecmascript:
+
+const
+   flipY  = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
+   matrix = new SFMatrix3f ();
+
+function eventsProcessed ()
+{
+   matrix .setTransform (translation, -rotation, scale);
+
+   const m = flipY .multLeft (matrix);
+
+   value_changed [0]  = m [0];
+   value_changed [1]  = m [1];
+   value_changed [4]  = m [3];
+   value_changed [5]  = m [4];
+   value_changed [12] = m [6];
+   value_changed [13] = m [7];
+}
+`];
+
+            scriptNode .setup ();
+
+            scene .addNamedNode (scene .getUniqueName ("CombineTextureMatrixScript"), scriptNode);
+            scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
+
+            this .addAnimationPointerAlias (scriptNode, "offset", "translation");
+            this .animationScripts .push (scriptNode);
+
+            Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
+
+            return [scriptNode];
+         },
+         configurable: true,
+      });
 
       return mapping;
    },
@@ -1772,18 +1889,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .cameras = cameras;
    },
-   cameraObject (camera)
+   cameraObject (id, camera)
    {
       if (!(camera instanceof Object))
          return null;
 
-      if (camera .viewpointNode !== undefined)
-         return camera .viewpointNode;
+      if (camera .node !== undefined)
+         return camera .node;
 
       const viewpointNode = this .cameraType (camera);
 
       if (!viewpointNode)
-         return camera .viewpointNode = null;
+         return camera .node = null;
 
       const
          scene = this .getScene (),
@@ -1797,12 +1914,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
-      this .viewpointNodes .push (viewpointNode);
+      viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
+      viewpointNode ._position    = Vector3 .ZERO;
 
-      viewpointNode ._description = this .description (camera .name || `Viewpoint ${this .viewpointNodes .length}`);
-      viewpointNode ._position    = Vector3 .Zero;
-
-      return camera .viewpointNode = viewpointNode;
+      return camera .node = viewpointNode;
    },
    cameraType (camera)
    {
@@ -1845,6 +1960,41 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       viewpointNode .setup ();
 
+      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
+      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
+
+      Object .defineProperty (camera, "pointers",
+      {
+         get: () =>
+         {
+            const scriptNode = scene .createNode ("Script", false);
+
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "xmag",          new Fields .SFFloat (1));
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "ymag",          new Fields .SFFloat (1));
+            scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .MFFloat ());
+
+            scriptNode ._url = [/* js */ `ecmascript:
+
+function eventsProcessed ()
+{
+   value_changed = new MFFloat (-xmag, -ymag, xmag, ymag);
+}
+`];
+
+            scriptNode .setup ();
+
+            scene .addNamedNode (scene .getUniqueName ("CombineFieldOfViewScript"), scriptNode);
+            scene .addRoute (scriptNode, "value_changed", viewpointNode, "set_fieldOfView");
+
+            this .animationScripts .push (scriptNode);
+
+            Object .defineProperty (camera, "pointers", { value: [viewpointNode, scriptNode] });
+
+            return [viewpointNode, scriptNode];
+         },
+         configurable: true,
+      });
+
       return viewpointNode;
    },
    perspectiveCamera (camera)
@@ -1857,7 +2007,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          viewpointNode = scene .createNode ("Viewpoint", false);
 
       if (typeof camera .yfov === "number")
-         viewpointNode ._fieldOfView = camera .yfov
+         viewpointNode ._fieldOfView = camera .yfov;
 
       if (typeof camera .znear === "number")
          viewpointNode ._nearDistance = camera .znear;
@@ -1866,6 +2016,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          viewpointNode ._farDistance = camera .zfar;
 
       viewpointNode .setup ();
+
+      this .addAnimationPointerAlias (viewpointNode, "yfov",  "fieldOfView");
+      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
+      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
+
+      camera .pointers = [viewpointNode];
 
       return viewpointNode;
    },
@@ -1879,8 +2035,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // 1. Replace skeleton nodes with humanoid.
       // 2. Add children.
 
-      this .nodes .forEach (node => this .nodeSkeleton (node));
-      this .nodes .forEach (node => this .nodeChildren (node));
+      this .nodes .forEach ((node, index) => this .nodeSkeleton (node, index));
+      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
    },
    nodeObject (node, index)
    {
@@ -1908,16 +2064,21 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          // Skins can be cloned.
 
          if (!skin .humanoidNode)
+         {
             skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
+
+            skin .joints .map (joint => this .humanoidIndex .set (joint, skin .humanoidNode))
+         }
 
          node .humanoidNode = skin .humanoidNode;
       }
 
       node .childNode = node .humanoidNode ?? node .transformNode;
+      node .pointers  = [node .childNode];
 
       return node;
    },
-   nodeSkeleton (node)
+   nodeSkeleton (node, index)
    {
       const skin = this .skins [node .skin];
 
@@ -1925,16 +2086,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       const
-         skeleton     = this .nodes [skin .skeleton],
+         skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
          humanoidNode = skin .humanoidNode;
 
-      if (!skeleton)
-         return;
-
-      skeleton .humanoidNode = humanoidNode;
-      skeleton .childNode    = humanoidNode;
+      for (const node of skeleton)
+      {
+         node .humanoidNode = humanoidNode;
+         node .childNode    = humanoidNode;
+      }
    },
-   nodeChildren (node)
+   nodeChildren (node, index)
    {
       const
          scene         = this .getScene (),
@@ -1947,7 +2108,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          scene .addNamedNode (scene .getUniqueName (name), transformNode);
 
-         if (transformNode .getTypeName () === "HAnimJoint")
+         if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
             transformNode ._name = node .name;
       }
 
@@ -1956,7 +2117,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1, 1, 1),
+         scale            = new Vector3 (1),
          scaleOrientation = new Rotation4 (),
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
@@ -1991,7 +2152,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Add camera.
 
-      const viewpointNode = this .cameraObject (this .cameras [node .camera]);
+      const viewpointNode = this .cameraObject (node .camera, this .cameras [node .camera]);
 
       if (viewpointNode)
          transformNode ._children .push (viewpointNode);
@@ -2002,7 +2163,36 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Add children.
 
-      transformNode ._children .push (... this .nodeChildrenArray (node .children));
+      let children = this .nodeChildrenArray (node .children);
+
+      if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
+      {
+         // Add a HAnimSegment if there are recursive skeletons.
+
+         children = children .map (childNode =>
+         {
+            if (childNode .getType () .at (-1) === X3DConstants .HAnimHumanoid)
+            {
+               const segmentNode = scene .createNode ("HAnimSegment", false);
+
+               segmentNode ._children .push (childNode);
+
+               segmentNode .setup ();
+
+               const humanoidNode = this .humanoidIndex .get (index);
+
+               humanoidNode ?._segments .push (segmentNode);
+
+               return segmentNode;
+            }
+            else
+            {
+               return childNode;
+            }
+         });
+      }
+
+      transformNode ._children .push (... children);
 
       // Add Shape nodes.
 
@@ -2029,16 +2219,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          humanoidNode ._version               = "2.0";
          humanoidNode ._skeletalConfiguration = "GLTF";
 
-         const skeletonNode = this .nodes [skin .skeleton] ?.transformNode;
-
-         if (skeletonNode)
-            humanoidNode ._skeleton .push (skeletonNode);
+         humanoidNode ._skeleton .push (... skin .skeleton
+            .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
 
          for (const [i, joint] of skin .joints .entries ())
          {
             const
                jointNode         = this .nodes [joint] ?.transformNode,
-               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
+               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
 
             if (!jointNode)
                continue;
@@ -2072,8 +2260,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!lightNode)
          return;
 
-      ++ this .usedLights;
-
       transformNode ._children .push (lightNode);
    },
    nodeChildrenArray (children)
@@ -2084,31 +2270,44 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const nodes = Array .from (new Set (children
          .map (index => this .nodes [index] ?.childNode)
          .filter (node => node)
-         .filter (node => node .getTypeName () !== "HAnimHumanoid" || !node .getCloneCount ())
+         .filter (node => node .getType () .at (-1) !== X3DConstants .HAnimHumanoid || !node .getCloneCount ())
       ));
 
       return nodes;
    },
-   skinsArray (skins)
+   skinsArray (skins, nodes)
    {
       if (!(skins instanceof Array))
          return;
 
+      if (!(nodes instanceof Array))
+         return;
+
       this .skins = skins;
 
-      for (const skin of skins)
-         this .skinObject (skin);
+      for (const [i, skin] of skins .entries ())
+         this .skinObject (i, skin, nodes);
    },
-   skinObject: function (skin)
+   skinObject (index, skin, nodes)
    {
       if (!(skin instanceof Object))
          return;
 
-      const scene = this .getScene ();
+      const
+         scene    = this .getScene (),
+         skeleton = skin .skeleton;
 
-      skin .joints              = this .jointsArray (skin .joints);
-      skin .skeleton            = skin .skeleton ?? this .skeleton (skin .joints);
+      skin .joints              = this .jointsArray (skin .joints, nodes .some (node => node .skin === index));
+      skin .skeleton            = skeleton !== undefined ? [skeleton] : this .skeleton (skin .joints, nodes);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
+
+      if (skeleton !== undefined && !skin .joints .includes (skeleton))
+      {
+         // Ensure skeleton root node becomes a HAnimJoint node.
+
+         this .joints .add (skeleton);
+         skin .joints .push (skeleton);
+      }
 
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
@@ -2122,26 +2321,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       skin .normalNode                 .setup ();
       skin .coordinateNode             .setup ();
    },
-   jointsArray: function (joints)
+   jointsArray (joints, add)
    {
       if (!(joints instanceof Array))
          return [ ];
 
-      joints .forEach (index => this .joints .add (index));
+      // If skin is not references anywhere, don't create HAnimJoint nodes.
+
+      if (add)
+         joints .forEach (index => this .joints .add (index));
 
       return joints;
    },
-   skeleton: function (joints)
+   skeleton (joints, nodes)
    {
       const children = new Set (joints
-         .map (index => this .nodes [index])
+         .map (index => nodes [index])
          .filter (node => node instanceof Object)
          .filter (node => node .children instanceof Array)
          .flatMap (node => node .children));
 
-      return joints .filter (index => !children .has (index)) [0];
+      return joints .filter (index => !children .has (index));
    },
-   inverseBindMatricesAccessors: function (inverseBindMatrices)
+   inverseBindMatricesAccessors (inverseBindMatrices)
    {
       if (!inverseBindMatrices)
          return [ ];
@@ -2156,7 +2358,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return matrices;
    },
-   scenesArray (scenes, sceneNumber = 0)
+   scenesArray (glTF, scenes, sceneNumber = 0)
    {
       if (!(scenes instanceof Array))
          return;
@@ -2175,9 +2377,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             if (sceneNumber === 0)
             {
-               if (this .usedLights)
-                  scene .getRootNodes () .push (this .createNavigationInfo ());
-
                scene .getRootNodes () .push (children [0]);
                return;
             }
@@ -2187,9 +2386,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          default:
          {
             // Root
-
-            if (this .usedLights)
-               scene .getRootNodes () .push (this .createNavigationInfo ());
 
             const switchNode = scene .createNode ("Switch", false);
 
@@ -2202,6 +2398,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             switchNode ._children    = children;
 
             switchNode .setup ();
+
+            this .addAnimationPointerAlias (switchNode, "scene", "whichChoice");
+
+            glTF .pointers = [switchNode];
 
             scene .getRootNodes () .push (switchNode);
             return;
@@ -2252,8 +2452,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       return this .nodeChildrenArray (nodes);
    },
-   exportGroup (name, nodes)
+   exportGroup (name, array)
    {
+      if (!(array instanceof Array))
+         return;
+
+      const nodes = array .map (object => object .node) .filter (node => node);
+
       if (!nodes .length)
          return;
 
@@ -2301,10 +2506,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(animations instanceof Array))
          return;
 
-      for (const animation of animations)
-         this .animationObject (animation);
+      for (const [i, animation] of animations .entries ())
+         this .animationObject (i, animation);
    },
-   animationObject (animation)
+   animationObject (id, animation)
    {
       if (!(animation instanceof Object))
          return null;
@@ -2321,21 +2526,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          groupNode = scene .createNode ("Group", false),
          name      = this .sanitizeName (animation .name);
 
-      this .animationNodes .push (groupNode);
+      scene .addNamedNode (scene .getUniqueName (name || `Animation${id + 1}`), groupNode);
+      scene .addNamedNode (scene .getUniqueName (`Timer${id + 1}`), timeSensorNode);
+      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${id + 1}`), groupNode);
+      scene .addExportedNode (scene .getUniqueExportName (`Timer${id + 1}`), timeSensorNode);
 
-      const animations = this .animationNodes .length;
+      timeSensorNode ._description = this .description (animation .name) || `Animation ${id + 1}`;
 
-      scene .addNamedNode (scene .getUniqueName (name || `Animation${animations}`), groupNode);
-      scene .addNamedNode (scene .getUniqueName (`Timer${animations}`), timeSensorNode);
-      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${animations}`), groupNode);
-      scene .addExportedNode (scene .getUniqueExportName (`Timer${animations}`), timeSensorNode);
-
-      timeSensorNode ._description = this .description (animation .name) || `Animation ${animations}`;
-      groupNode ._visible = false;
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
       groupNode .setup ();
+
+      animation .node = groupNode;
    },
    animationChannelsArray (channels, samplers, timeSensorNode)
    {
@@ -2345,6 +2548,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(samplers instanceof Array))
          return [ ];
 
+      // Determine cycleInterval.
+
       const cycleInterval = samplers
          .map (sampler => this .accessors [sampler .input])
          .filter (input => input ?.array .length)
@@ -2352,8 +2557,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       timeSensorNode ._cycleInterval = cycleInterval;
 
-      return channels
+      // Get interpolators.
+
+      channels = channels
          .flatMap (channel => this .animationChannelObject (channel, samplers, timeSensorNode));
+
+      // Insert Script nodes after last interpolator.
+
+      for (const scriptNode of this .animationScripts)
+      {
+         const index = channels .findLastIndex (node => node .getFields ()
+            .some (field => Array .from (field .getOutputRoutes ())
+            .some (route => route .getDestinationNode () === scriptNode)));
+
+         channels .splice (index + 1, 0, scriptNode);
+      }
+
+      this .animationScripts .length = 0;
+
+      return channels;
    },
    animationChannelObject (channel, samplers, timeSensorNode)
    {
@@ -2393,17 +2615,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return this .createInterpolator (timeSensorNode, node, target, sampler .interpolation, input .array, output, timeSensorNode ._cycleInterval .getValue ());
    },
-   createNavigationInfo ()
+   cleanupAnimationScripts ()
    {
+      // It can happen, that some scripts are not used, so let us remove them.
+
       const
-         scene              = this .getScene (),
-         navigationInfoNode = scene .createNode ("NavigationInfo", false);
+         scene       = this .getScene (),
+         scriptNodes = Array .from (scene .getNamedNodes (), node => node .getValue ())
+            .filter (node => node .getType () .at (-1) === X3DConstants .Script);
 
-      navigationInfoNode ._headlight = false;
+      for (const scriptNode of scriptNodes)
+      {
+         if (scriptNode .getFields () .every (field => !field .getInputRoutes () .size))
+         {
+            scriptNode .dispose ();
+            continue;
+         }
 
-      navigationInfoNode .setup ();
-
-      return navigationInfoNode;
+         if (scriptNode .getFields () .every (field => !field .getOutputRoutes () .size))
+         {
+            scriptNode .dispose ();
+            continue;
+         }
+      }
    },
    createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
@@ -2517,19 +2751,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          case 0:
          {
-            if (this .textureTransformNode)
-               return this .textureTransformNode;
+            return this .textureTransformNode ??= (() =>
+            {
+               const
+                  scene                = this .getScene (),
+                  textureTransformNode = scene .createNode ("TextureTransform", false);
 
-            const
-               scene                = this .getScene (),
-               textureTransformNode = scene .createNode ("TextureTransform", false);
+               // Flip Y
+               textureTransformNode ._translation .y = -1;
+               textureTransformNode ._scale .y       = -1;
 
-            textureTransformNode ._translation .y = -1;
-            textureTransformNode ._scale .y       = -1;
+               textureTransformNode .setup ();
 
-            textureTransformNode .setup ();
-
-            return this .textureTransformNode = textureTransformNode;
+               return textureTransformNode;
+            })();
          }
          case 1:
          {
@@ -2604,7 +2839,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2622,7 +2857,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       switch (mode)
@@ -2710,7 +2945,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2731,7 +2966,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2752,7 +2987,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2774,7 +3009,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2795,7 +3030,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2825,7 +3060,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2846,7 +3081,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2997,8 +3232,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return normal .normalNode = normalNode;
    },
-   createTangent (tangent)
+   createTangent (tangent, normal)
    {
+      // When the base mesh primitive does not specify normals, client implementations
+      // MUST calculate flat normals for each morph target; the provided tangents and
+      // their displacements (if present) MUST be ignored.
+
+      if (normal ?.type !== "VEC3")
+         return null;
+
       if (tangent ?.type !== "VEC4")
          return null;
 
@@ -3049,7 +3291,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return position .coordinateNode = coordinateNode;
    },
-   attributesJointsArray: function (skin, joints, weights)
+   attributesJointsArray (skin, joints, weights)
    {
       if (!(skin instanceof Object))
          return;
@@ -3063,7 +3305,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       for (let i = 0, length = joints .length; i < length; ++ i)
          this .attributesJointsObject (skin, joints [i], weights [i]);
    },
-   attributesJointsObject: function (skin, joints, weights)
+   attributesJointsObject (skin, joints, weights)
    {
       if (joints ?.type !== "VEC4")
          return;
@@ -3090,7 +3332,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                index     = skin .joints [jointsArray [v * 4 + i]],
                jointNode = this .nodes [index] ?.transformNode;
 
-            if (!jointNode)
+            if (jointNode ?.getType () .at (-1) !== X3DConstants .HAnimJoint)
                continue;
 
             jointNode ._skinCoordIndex  .push (v + start);
@@ -3098,7 +3340,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   skinGeometry: function (skin, geometryNode)
+   skinGeometry (skin, geometryNode)
    {
       if (!(skin instanceof Object))
          return;
@@ -3118,9 +3360,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (textureCoordinateNode)
       {
-         switch (textureCoordinateNode .getTypeName ())
+         switch (textureCoordinateNode .getType () .at (-1))
          {
-            case "TextureCoordinate":
+            case X3DConstants .TextureCoordinate:
             {
                const
                   skinTextureCoordinateNode = skin .textureCoordinateNode,
@@ -3131,7 +3373,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                break;
             }
-            case "MultiTextureCoordinate":
+            case X3DConstants .MultiTextureCoordinate:
             {
                const skinMultiTextureCoordinateNode = skin .multiTextureCoordinateNode;
 
@@ -3190,38 +3432,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       switch (target .path)
       {
+         case "pointer":
+         {
+            const [node, field] = this .getAnimationPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
+
+            return this .createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval);
+         }
          case "translation":
-         {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName ("TranslationInterpolator"), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, "set_translation");
-
-            return interpolatorNode;
-         }
          case "rotation":
-         {
-            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .array, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, "set_rotation");
-
-            return interpolatorNode;
-         }
          case "scale":
          {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
+            const field = node .getField (target .path);
 
-            scene .addNamedNode (scene .getUniqueName ("ScaleInterpolator"), interpolatorNode);
-
-            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-            scene .addRoute (interpolatorNode, "value_changed", node, "set_scale");
-
-            return interpolatorNode;
+            return this .createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval);
          }
          case "weights":
          {
@@ -3238,47 +3461,57 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const geometryNode = shapeNode ._geometry .getValue ();
 
-               if (!geometryNode)
+               if (!geometryNode || !geometryNode ._coord .getValue ())
+                  continue;
+
+               if (attributes ["POSITION"] ?.field .length !== geometryNode ._coord .point .length)
                   continue;
 
                const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
 
-               if (coordinateInterpolatorNode)
-               {
-                  interpolatorNodes .push (coordinateInterpolatorNode);
+               if (!coordinateInterpolatorNode)
+                  continue;
 
-                  scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
-                  scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
-               }
+               if (coordinateInterpolatorNode ._key .length < 2)
+                  continue;
+
+               if (coordinateInterpolatorNode ._keyValue .length / coordinateInterpolatorNode ._key .length !== geometryNode ._coord .point .length)
+                  continue;
+
+               interpolatorNodes .push (coordinateInterpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
+               scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
+            }
+
+            for (const { shapeNode, targets, attributes } of primitives)
+            {
+               const geometryNode = shapeNode ._geometry .getValue ();
+
+               if (!geometryNode || !geometryNode ._normal .getValue ())
+                  continue;
+
+               if (attributes ["NORMAL"] ?.field .length !== geometryNode ._normal .vector .length)
+                  continue;
 
                const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
 
-               if (normalInterpolatorNode)
-               {
-                  interpolatorNodes .push (normalInterpolatorNode);
+               if (!normalInterpolatorNode)
+                  continue;
 
-                  scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
-                  scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "set_vector");
-               }
+               if (normalInterpolatorNode ._key .length < 2)
+                  continue;
+
+               if (normalInterpolatorNode ._keyValue .length / normalInterpolatorNode ._key .length !== geometryNode ._normal .vector .length)
+                  continue;
+
+               interpolatorNodes .push (normalInterpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
+               scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "vector");
             }
 
             return interpolatorNodes;
-         }
-         case "pointer":
-         {
-            // const
-            //    pointer = target .extensions ?.KHR_animation_pointer ?.pointer ?? "",
-            //    path    = pointer .split ("/") .filter (p => p)
-            //    name    = path .pop ();
-
-            // let glTF = this .input;
-
-            // for (const property of path)
-            //    glTF = glTF [property]
-
-            // console .log (glTF)
-
-            return [ ];
          }
          default:
          {
@@ -3286,34 +3519,240 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   createPositionInterpolator (interpolation, times, keyValues, cycleInterval)
+   createAnimationPointerInterpolator: (() =>
    {
-      const scene = this .getScene ();
+      const interpolators = new Map ([
+         [X3DConstants .SFBool,  { typeName: "BooleanSequencer" }],
+         [X3DConstants .SFInt32, { typeName: "IntegerSequencer" }],
+         [X3DConstants .SFFloat, { typeName: "ScalarInterpolator",     components: 1 }],
+         [X3DConstants .SFVec2f, { typeName: "PositionInterpolator2D", components: 2 }],
+         [X3DConstants .SFVec3f, { typeName: "PositionInterpolator",   components: 3 }],
+      ]);
+
+      return function (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval)
+      {
+         if (!(node && field))
+            return [ ];
+
+         const scene = this .getScene ();
+
+         switch (field .getType ())
+         {
+            case X3DConstants .SFColor:
+            {
+               const interpolatorNodes = [ ];
+
+               let colors, transparencies;
+
+               switch ((keyValues .array .length / times .length) % 3)
+               {
+                  case 0: // Color3 pointer
+                  {
+                     colors = keyValues .array;
+                     break;
+                  }
+                  default: // Color4 pointer
+                  {
+                     colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
+                     transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
+
+                     transparencies = transparencies .every (value => value >= 1)
+                        ? undefined
+                        : transparencies .map (value => 1 - value);
+
+                     break;
+                  }
+               }
+
+               const interpolatorNode = this .createNamedInterpolator ("ColorInterpolator", 3, interpolation, times, colors, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               interpolatorNodes .push (interpolatorNode);
+
+               // These are currently the only two affected fields, which are SFColor but pointer is Color4.
+               if (field .getName () .match (/^(?:baseColor|emissiveColor)$/) && transparencies)
+               {
+                  const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
+
+                  scene .addNamedNode (scene .getUniqueName ("TransparencyInterpolator"), interpolatorNode);
+
+                  scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+                  scene .addRoute (interpolatorNode, "value_changed", node, "transparency");
+
+                  interpolatorNodes .push (interpolatorNode);
+               }
+
+               return interpolatorNodes;
+            }
+            case X3DConstants .SFColorRGBA:
+            {
+               const interpolatorNodes = [ ];
+
+               let
+                  colors         = keyValues .array .filter ((_, i) => i % 4 < 3),
+                  transparencies = keyValues .array .filter ((_, i) => i % 4 === 3);
+
+               transparencies = transparencies .every (value => value >= 1)
+                  ? undefined
+                  : transparencies .map (value => 1 - value);
+
+               // Script
+
+               const scriptNode = scene .createNode ("Script", false);
+
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "color",         new Fields .SFColor (1, 1, 1));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "alpha" ,        new Fields .SFFloat (1));
+               scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFColorRGBA ());
+
+               scriptNode ._url = [/* js */ `ecmascript:
+
+function eventsProcessed ()
+{
+   value_changed = new SFColorRGBA (... color, alpha);
+}
+   `];
+
+               scriptNode .setup ();
+
+               scene .addNamedNode (scene .getUniqueName ("CombineColorRGBAScript"), scriptNode);
+               scene .addRoute (scriptNode, "value_changed", node, field .getName ());
+
+               // ColorInterpolator
+
+               const interpolatorNode = this .createNamedInterpolator ("ColorInterpolator", 3, interpolation, times, colors, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", scriptNode, "color");
+
+               interpolatorNodes .push (interpolatorNode);
+
+               // AlphaInterpolator
+
+               if (transparencies)
+               {
+                  const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
+
+                  scene .addNamedNode (scene .getUniqueName ("AlphaInterpolator"), interpolatorNode);
+
+                  scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+                  scene .addRoute (interpolatorNode, "value_changed", scriptNode, "alpha");
+
+                  interpolatorNodes .push (interpolatorNode);
+               }
+
+               interpolatorNodes .push (scriptNode);
+
+               return interpolatorNodes;
+            }
+            case X3DConstants .SFRotation:
+            {
+               const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .array, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               return interpolatorNode;
+            }
+            case X3DConstants .SFBool:
+            case X3DConstants .SFInt32:
+            case X3DConstants .SFFloat:
+            case X3DConstants .SFVec2f:
+            case X3DConstants .SFVec3f:
+            {
+               const
+                  { typeName, components} = interpolators .get (field .getType ()),
+                  suffix                  = typeName .replace (/^.*?(Sequencer|Interpolator).*?$/, "$1");
+
+               const interpolatorNode = this .createNamedInterpolator (typeName, components, components ? interpolation : "LINEAR", times, keyValues .array, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName ($.toUpperCaseFirst (field .getName ()) + suffix), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               return interpolatorNode;
+            }
+            default:
+            {
+               return [ ];
+            }
+         }
+      };
+   })(),
+   getAnimationPointer (pointer = "")
+   {
+      const
+         path  = pointer .split ("/") .filter (p => p),
+         field = path .pop () .replace (/(?:Factor$)/, "");
+
+      let glTF = this .input;
+
+      for (const property of path)
+         glTF = glTF ?.[property];
+
+      return glTF ?.pointers
+         ?.map (node => [node, $.try (() => node ?.getField (this .getAnimationPointerAlias (node, field) ?? field))])
+         ?.find (([node, field]) => field)
+         ?? [ ];
+   },
+   addAnimationPointerAlias (node, field, alias)
+   {
+      const key = `${node .getTypeName ()}.${field}`;
+
+      this .pointerAliases .set (key, alias);
+   },
+   getAnimationPointerAlias (node, field)
+   {
+      const key = `${node .getTypeName ()}.${field}`;
+
+      return this .pointerAliases .get (key);
+   },
+   createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
+   {
+      const
+         scene            = this .getScene (),
+         interpolatorNode = scene .createNode (typeName, false);
 
       switch (interpolation)
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
+            const
+               key      = [ ],
+               keyValue = [ ];
 
             // Key
 
-            interpolatorNode ._key .push (times [0] / cycleInterval);
+            key .push (times [0] / cycleInterval);
 
             for (let i = 1, length = times .length; i < length; ++ i)
-               interpolatorNode ._key .push (times [i] / cycleInterval, times [i] / cycleInterval);
+               key .push (times [i] / cycleInterval, times [i] / cycleInterval);
 
             // KeyValue
 
-            interpolatorNode ._keyValue .push (new Vector3 (keyValues [0], keyValues [1], keyValues [2]));
+            const components2 = components * 2;
 
-            for (let i = 0, length = keyValues .length - 3; i < length; i += 3)
+            for (let c = 0; c < components; ++ c)
+               keyValue .push (keyValues [c]);
+
+            for (let i = 0, length = keyValues .length - components; i < length; i += components)
             {
-               interpolatorNode ._keyValue .push (new Vector3 (keyValues [i + 0], keyValues [i + 1], keyValues [i + 2]),
-                                                  new Vector3 (keyValues [i + 3], keyValues [i + 4], keyValues [i + 5]));
+               for (let c = 0; c < components2; ++ c)
+                  keyValue .push (keyValues [i + c]);
             }
 
             // Finish
+
+            interpolatorNode ._key      = key;
+            interpolatorNode ._keyValue = keyValue;
 
             interpolatorNode .setup ();
 
@@ -3322,8 +3761,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
-
             interpolatorNode ._key      = times .map (t => t / cycleInterval);
             interpolatorNode ._keyValue = keyValues;
 
@@ -3334,14 +3771,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          case "CUBICSPLINE":
          {
             const
-               interpolatorNode = scene .createNode ("PositionInterpolator", false),
-               vectors          = [ ];
+               key      = [ ],
+               keyValue = [ ],
+               vectors  = [ ],
+               Vector   = [Vector2, Vector2, Vector3] [components - 1];
 
-            for (let i = 0, length = keyValues .length; i < length; i += 3)
+            for (let i = 0, length = keyValues .length; i < length; i += components)
             {
-               vectors .push (new Vector3 (keyValues [i + 0],
-                                           keyValues [i + 1],
-                                           keyValues [i + 2]));
+               vectors .push (new Vector (... keyValues .subarray (i, i + components)));
             }
 
             const
@@ -3350,9 +3787,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             for (const t of samples)
             {
-               interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (this .cubicSplineVector (t, times, vectors));
+               key      .push (t / cycleInterval);
+               keyValue .push (... this .cubicSplineVector (t, times, vectors));
             }
+
+            // Finish
+
+            interpolatorNode ._key      = key;
+            interpolatorNode ._keyValue = components === 1 ? keyValue .filter ((_, i) => i % 2 < 1) : keyValue;
 
             interpolatorNode .setup ();
 
@@ -3362,14 +3804,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    createOrientationInterpolator (interpolation, times, keyValues, cycleInterval)
    {
-      const scene = this .getScene ();
+      const
+         scene            = this .getScene (),
+         interpolatorNode = scene .createNode ("OrientationInterpolator", false);
 
       switch (interpolation)
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
-
             // Key
 
             interpolatorNode ._key .push (times [0] / cycleInterval);
@@ -3405,8 +3847,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
-
             interpolatorNode ._key = times .map (t => t / cycleInterval);
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
@@ -3423,9 +3863,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case "CUBICSPLINE":
          {
-            const
-               interpolatorNode = scene .createNode ("OrientationInterpolator", false),
-               quaternions      = [ ];
+            const quaternions = [ ];
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
             {
@@ -3455,19 +3893,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key)
    {
-      const
-         scene    = this .getScene (),
-         accessor = accessors [key];
+      const accessor = accessors [key];
 
       if (!accessor)
          return null;
+
+      const
+         scene            = this .getScene (),
+         interpolatorNode = scene .createNode (typeName, false);
 
       switch (interpolation)
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             // Key
 
             interpolatorNode ._key .push (times [0] / cycleInterval);
@@ -3504,8 +3942,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             // Key
 
             interpolatorNode ._key = times .map (t => t / cycleInterval);
@@ -3528,8 +3964,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case "CUBICSPLINE":
          {
-            const interpolatorNode = scene .createNode (typeName, false);
-
             // Key
 
             const
@@ -3556,7 +3990,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   applyMorphTargets: (function ()
+   applyMorphTargets: (() =>
    {
       const value = new Vector3 ();
 

@@ -45,16 +45,8 @@ function readme (version)
 
 function docs (version)
 {
-	const size = Math .floor (parseInt (sh (`brotli -6 dist/x_ite.min.js --stdout | wc -c`) .trim ()) / 1000);
-
-	if (size < 270)
-		var color = "green";
-	else if (size < 290)
-		var color = "cyan";
-	else
-		var color = "blue";
-
-	systemSync (`wget -q -O - https://badgen.net/static/compressed/${size}KB/${color} > docs/assets/img/badges/compressed.svg`);
+	// curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '
+	const size = Math .floor (parseInt (sh (`brotli -q 4 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000);
 
 	let config = sh (`cat 'docs/_config.yml'`);
 
@@ -62,6 +54,30 @@ function docs (version)
 	config = config .replace (/\x_ite_compressed_size:\s*[\d\.]+/sg, `x_ite_compressed_size: ${size}`);
 
 	fs .writeFileSync ("docs/_config.yml", config);
+}
+
+function integrity ()
+{
+	const files = [
+		"x_ite.js",
+		"x_ite.min.js",
+		"x_ite.mjs",
+		"x_ite.min.mjs",
+		"x_ite.css",
+	];
+
+	let config = sh (`cat docs/_config.yml`);
+
+	for (const file of files)
+	{
+		const
+			key    = file .replace (/\./g, "_"),
+			shasum = sh (`shasum -b -a 384 dist/${file} | awk '{ print $1 }' | xxd -r -p | base64`) .trim ();
+
+		config = config .replace (new RegExp (`(${key}_integrity):.*?\n`), `$1: sha384-${shasum}\n`);
+	}
+
+	fs .writeFileSync (`docs/_config.yml`, config);
 }
 
 function commit (version)
@@ -72,6 +88,9 @@ function commit (version)
 
 function tags (version)
 {
+	if (!version .match (/^\d+\.\d+\.\d+$/))
+		return;
+
 	// systemSync (`git tag --delete ${version}`);
 	// systemSync (`git push --delete origin ${version}`);
 
@@ -79,39 +98,57 @@ function tags (version)
 	systemSync (`git push origin --tags`);
 }
 
-function update (release)
+function update (... versions)
 {
 	const
 		cwd  = process .cwd (),
 		dist = `${cwd}/dist`,
-		code = `${cwd}/../code/docs/x_ite/${release}`;
-
-	console .log (`Uploading ${release}`);
-
-	systemSync (`rm -r '${code}'`);
-	systemSync (`cp -r '${dist}' '${code}'`);
-
-	if (release === "latest")
-		systemSync (`cp -r '${dist}' '${code}/dist'`); // legacy
-}
-
-function upload (version)
-{
-	const
-		cwd  = process .cwd (),
 		code = `${cwd}/../code`;
 
-	process .chdir (code);
+	for (const version of versions)
+	{
+		const docs = `${code}/docs/x_ite/${version}`;
 
-	systemSync (`git add -A`);
-	systemSync (`git commit -am 'Published version ${version}'`);
+		console .log (`Copying version ${version}...`);
+
+		process .chdir (cwd);
+
+		systemSync (`rsync -a --delete --exclude=".*" ${dist}/ ${docs}/`);
+		legacy_message (docs);
+
+		if (version === "latest")
+		{
+			systemSync (`cp -r '${dist}' '${docs}'`); // legacy
+			legacy_message (`${docs}/dist`);
+		}
+
+		process .chdir (code);
+
+		systemSync (`git add -A`);
+		systemSync (`git commit -am 'Published version ${version}'`);
+
+		tags (version);
+	}
+
 	systemSync (`git push origin`);
 
-	tags (version);
-
 	process .chdir (cwd);
+}
 
-	systemSync (`npm publish`);
+function legacy_message (folder)
+{
+	const paths = [
+		"x_ite.js",
+		"x_ite.min.js",
+		"x_ite.mjs",
+		"x_ite.min.mjs",
+	]
+	.map (filename => `${folder}/${filename}`);
+
+	for (const path of paths)
+	{
+		systemSync (`echo '\n;console .warn ("Use of https://create3000.github.io/code/ is discouraged. Please use files from jsDelivr, see https://create3000.github.io/x_ite/#jsdelivr-cdn");' >> ${path}`);
+	}
 }
 
 function other ()
@@ -123,8 +160,16 @@ function other ()
 
 	const cwd = process .cwd ();
 
+	systemSync (`npm cache clean --force`);
+	systemSync (`countdown 120s`);
+
 	process .chdir (`${cwd}/../media`);
 	systemSync (`npm run release`);
+
+	process .chdir (`${cwd}/../x_ite-node`);
+	systemSync (`npm run release`);
+	systemSync (`npm cache clean --force`);
+	systemSync (`countdown 120s`);
 
 	process .chdir (`${cwd}/../x3d-tidy`);
 	systemSync (`npm run release`);
@@ -148,24 +193,13 @@ function release ()
 
 	console .log ("Waiting for confirmation ...");
 
-	const
-		version = sh (`npm pkg get version | sed 's/"//g'`) .trim (),
-		result  = systemSync (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
+	const version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
 
-	if (result !== 0)
-		process .exit (1);
-
-	console .log (`Publishing X_ITE X3D v${version} now.`);
-
+	systemSync (`npm run docs-table`);
 	systemSync (`npm run docs-components`);
 	systemSync (`npm run docs-nodes`);
 	systemSync (`npm run docs-reference`);
 	systemSync (`npm run glTF-samples`);
-	systemSync (`git add -A`);
-	systemSync (`git commit -am 'Build version ${version}'`);
-	systemSync (`git push origin`);
-	systemSync (`git checkout main`);
-	systemSync (`git merge development`);
 
 	// docs
 
@@ -173,23 +207,37 @@ function release ()
 	{
 		readme (version);
 		docs (version);
+		integrity ();
 	}
 
-	// tags
+	// confirm
+
+	const result = systemSync (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
+
+	if (result !== 0)
+		process .exit (1);
+
+	console .log (`Publishing X_ITE X3D v${version} now.`);
+
+	// commit and merge development branch into main
+
+	systemSync (`git add -A`);
+	systemSync (`git commit -am 'Build version ${version}'`);
+	systemSync (`git push origin`);
+	systemSync (`git checkout main`);
+	systemSync (`git merge development`);
+
+	// publish
 
 	commit (version);
+	tags (version);
 
 	if (!version .endsWith ("a"))
-		tags (version);
+		systemSync (`npm publish`);
 
 	// code
 
-	update ("alpha");
-
-	if (!version .endsWith ("a"))
-		update ("latest");
-
-	upload (version);
+	update ("alpha", ... version .endsWith ("a") ? [ ] : ["latest"]);
 
 	// switch back to development branch
 
@@ -197,7 +245,7 @@ function release ()
 	systemSync (`git merge main`);
 	systemSync (`git push origin`);
 
-	// purge camo image cache from banners.
+	// Purge camo image cache for SVG banners.
 
 	systemSync (`npm run purge-camo`);
 
@@ -209,13 +257,14 @@ function release ()
 
 function main ()
 {
+	// https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
+	// Set post buffer to 1 GB.
+	systemSync (`git config --global http.postBuffer 1000000000`);
+	systemSync (`git config --global https.postBuffer 1000000000`);
+
 	bump ();
 	systemSync ("npm run dist");
 	zip ();
-
-	// https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
-	// Set post buffer to 250 MiB.
-	systemSync (`git config --global http.postBuffer 262144000`);
 
 	release ();
 }

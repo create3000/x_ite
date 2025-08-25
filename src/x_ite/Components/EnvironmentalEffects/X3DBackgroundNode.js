@@ -1,51 +1,5 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields          from "../../Fields.js";
+import X3DNode         from "../Core/X3DNode.js";
 import X3DBindableNode from "../Core/X3DBindableNode.js";
 import GeometryContext from "../../Browser/Rendering/GeometryContext.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
@@ -59,10 +13,6 @@ import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Algorithm       from "../../../standard/Math/Algorithm.js";
 import BitSet          from "../../../standard/Utility/BitSet.js";
 
-const
-   RADIUS = 1,
-   SIZE   = Math .SQRT2 / 2;
-
 function X3DBackgroundNode (executionContext)
 {
    X3DBindableNode .call (this, executionContext);
@@ -71,19 +21,24 @@ function X3DBackgroundNode (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "hidden", new Fields .SFBool ());
 
+   this .setVisibleObject (true);
+
+   // Units
+
    this ._skyAngle    .setUnit ("angle");
    this ._groundAngle .setUnit ("angle");
 
-   this .projectionMatrixArray = new Float32Array (16);
-   this .modelMatrix           = new Matrix4 ();
-   this .modelViewMatrixArray  = new Float32Array (16);
-   this .clipPlanes            = [ ];
-   this .colors                = [ ];
-   this .sphere                = [ ];
-   this .textureNodes          = new Array (6);
-   this .textureBits           = new BitSet ();
-   this .sphereContext         = new GeometryContext ({ colorMaterial: true });
-   this .texturesContext       = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys});
+   // Private properties
+
+   this .modelMatrix      = new Matrix4 ();
+   this .clipPlanes       = [ ];
+   this .colors           = [ ];
+   this .sphere           = [ ];
+   this .textureNodes     = new Array (6);
+   this .textureBits      = new BitSet ();
+   this .sphereContext    = new GeometryContext ({ colorMaterial: true });
+   this .texturesContext  = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys });
+   this .localObjectsKeys = this .sphereContext .localObjectsKeys;
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
@@ -167,8 +122,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    build ()
    {
-      const s = SIZE;
-
       this .colors .length = 0;
       this .sphere .length = 0;
 
@@ -178,18 +131,18 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
          this .sphere .vertices = 36;
 
-         this .sphere .push ( s,  s, -s, 1, -s,  s, -s, 1, -s, -s, -s, 1, // Back
-                              s,  s, -s, 1, -s, -s, -s, 1,  s, -s, -s, 1,
-                             -s,  s,  s, 1,  s,  s,  s, 1, -s, -s,  s, 1, // Front
-                             -s, -s,  s, 1,  s,  s,  s, 1,  s, -s,  s, 1,
-                             -s,  s, -s, 1, -s,  s,  s, 1, -s, -s,  s, 1, // Left
-                             -s,  s, -s, 1, -s, -s,  s, 1, -s, -s, -s, 1,
-                              s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right
-                              s, -s,  s, 1,  s,  s, -s, 1,  s, -s, -s, 1,
-                              s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top
-                              s,  s,  s, 1, -s,  s, -s, 1,  s,  s, -s, 1,
-                             -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
-                             -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
+         this .sphere .push ( 1,  1, -1, 1, -1,  1, -1, 1, -1, -1, -1, 1, // Back
+                              1,  1, -1, 1, -1, -1, -1, 1,  1, -1, -1, 1,
+                             -1,  1,  1, 1,  1,  1,  1, 1, -1, -1,  1, 1, // Front
+                             -1, -1,  1, 1,  1,  1,  1, 1,  1, -1,  1, 1,
+                             -1,  1, -1, 1, -1,  1,  1, 1, -1, -1,  1, 1, // Left
+                             -1,  1, -1, 1, -1, -1,  1, 1, -1, -1, -1, 1,
+                              1,  1,  1, 1,  1,  1, -1, 1,  1, -1,  1, 1, // Right
+                              1, -1,  1, 1,  1,  1, -1, 1,  1, -1, -1, 1,
+                              1,  1,  1, 1, -1,  1,  1, 1, -1,  1, -1, 1, // Top
+                              1,  1,  1, 1, -1,  1, -1, 1,  1,  1, -1, 1,
+                             -1, -1,  1, 1,  1, -1,  1, 1, -1, -1, -1, 1, // Bottom
+                             -1, -1, -1, 1,  1, -1,  1, 1,  1, -1, -1, 1);
 
          const color = this ._skyColor [0];
 
@@ -213,7 +166,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             if (vAngle .length === 2)
                vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
 
-            this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, false);
+            this .buildSphere (vAngle, this ._skyAngle, this ._skyColor, false);
          }
 
          if (this ._groundColor .length > this ._groundAngle .length)
@@ -226,7 +179,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             if (vAngle .at (-1) > 0)
                vAngle .push (0);
 
-            this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, true);
+            this .buildSphere (vAngle, this ._groundAngle, this ._groundColor, true);
          }
       }
 
@@ -244,7 +197,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          y3 = new Complex (),
          y4 = new Complex ();
 
-      return function (radius, vAngle, angle, color, bottom)
+      return function (vAngle, angle, color, bottom)
       {
          const
             vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
@@ -262,8 +215,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
                theta2 = Math .PI - theta2;
             }
 
-            z1 .setPolar (radius, theta1);
-            z2 .setPolar (radius, theta2);
+            z1 .setPolar (1, theta1);
+            z2 .setPolar (1, theta2);
 
             const
                c1 = this .getColor (vAngle [v],     color, angle),
@@ -328,8 +281,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    transferRectangle: (() =>
    {
-      const s = SIZE;
-
       const texCoords = new Float32Array ([
          1, 1, 0, 1,
          0, 1, 0, 1,
@@ -340,57 +291,57 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       ]);
 
       const frontVertices = new Float32Array ([
-         s,  s, -s, 1,
-        -s,  s, -s, 1,
-        -s, -s, -s, 1,
-         s,  s, -s, 1,
-        -s, -s, -s, 1,
-         s, -s, -s, 1,
+         1,  1, -1, 1,
+        -1,  1, -1, 1,
+        -1, -1, -1, 1,
+         1,  1, -1, 1,
+        -1, -1, -1, 1,
+         1, -1, -1, 1,
       ]);
 
       const backVertices = new Float32Array ([
-         -s,  s,  s, 1,
-          s,  s,  s, 1,
-          s, -s,  s, 1,
-         -s,  s,  s, 1,
-          s, -s,  s, 1,
-         -s, -s,  s, 1,
+         -1,  1,  1, 1,
+          1,  1,  1, 1,
+          1, -1,  1, 1,
+         -1,  1,  1, 1,
+          1, -1,  1, 1,
+         -1, -1,  1, 1,
       ]);
 
       const leftVertices = new Float32Array ([
-         -s,  s, -s, 1,
-         -s,  s,  s, 1,
-         -s, -s,  s, 1,
-         -s,  s, -s, 1,
-         -s, -s,  s, 1,
-         -s, -s, -s, 1,
+         -1,  1, -1, 1,
+         -1,  1,  1, 1,
+         -1, -1,  1, 1,
+         -1,  1, -1, 1,
+         -1, -1,  1, 1,
+         -1, -1, -1, 1,
       ]);
 
       const rightVertices = new Float32Array ([
-         s,  s,  s, 1,
-         s,  s, -s, 1,
-         s, -s, -s, 1,
-         s,  s,  s, 1,
-         s, -s, -s, 1,
-         s, -s,  s, 1,
+         1,  1,  1, 1,
+         1,  1, -1, 1,
+         1, -1, -1, 1,
+         1,  1,  1, 1,
+         1, -1, -1, 1,
+         1, -1,  1, 1,
       ]);
 
       const topVertices = new Float32Array ([
-          s, s,  s, 1,
-         -s, s,  s, 1,
-         -s, s, -s, 1,
-          s, s,  s, 1,
-         -s, s, -s, 1,
-          s, s, -s, 1,
+          1, 1,  1, 1,
+         -1, 1,  1, 1,
+         -1, 1, -1, 1,
+          1, 1,  1, 1,
+         -1, 1, -1, 1,
+          1, 1, -1, 1,
       ]);
 
       const bottomVertices = new Float32Array ([
-          s, -s, -s, 1,
-         -s, -s, -s, 1,
-         -s, -s,  s, 1,
-          s, -s, -s, 1,
-         -s, -s,  s, 1,
-          s, -s,  s, 1,
+          1, -1, -1, 1,
+         -1, -1, -1, 1,
+         -1, -1,  1, 1,
+          1, -1, -1, 1,
+         -1, -1,  1, 1,
+          1, -1,  1, 1,
       ]);
 
       const vertices = [
@@ -436,13 +387,13 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             const
                localObjects     = renderObject .getLocalObjects (),
                clipPlanes       = this .clipPlanes,
-               localObjectsKeys = this .sphereContext .localObjectsKeys;
+               localObjectsKeys = this .localObjectsKeys;
 
             let c = 0;
 
             for (const localObject of localObjects)
             {
-               if (localObject .isClipped)
+               if (localObject .isClipPlane)
                   clipPlanes [c ++] = localObject;
             }
 
@@ -456,14 +407,29 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    display: (() =>
    {
       const
-         modelViewMatrix = new Matrix4 (),
-         rotation        = new Rotation4 (),
-         scale           = new Vector3 ();
+         projectionMatrixArray = new Float32Array (16),
+         projectionMatrix      = new Matrix4 (),
+         projectionScale       = new Matrix4 (1,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1),
+         modelViewMatrixArray  = new Float32Array (16),
+         modelViewMatrix       = new Matrix4 (),
+         rotation              = new Rotation4 (),
+         scale                 = new Vector3 ();
 
-      return function (gl, renderObject, viewport)
+      return function (gl, renderObject)
       {
          if (this ._hidden .getValue ())
             return;
+
+         const browser = this .getBrowser ();
+
+         // Always fill background.
+
+         if (browser .getWireframe ())
+         {
+            const ext = gl .getExtension ("WEBGL_polygon_mode");
+
+            ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .FILL_WEBGL);
+         }
 
          // Setup context.
 
@@ -472,34 +438,49 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
 
-         // Get projection matrix.
+         // Create projection matrix.
+         // The projectionScale will set gl_Position.z to 0,
+         // so it is in the middle of near and far plane.
 
-         this .projectionMatrixArray .set (renderObject .getViewpoint () .getProjectionMatrixWithLimits (0.125, 200_000, viewport));
+         projectionMatrixArray .set (projectionMatrix
+            .assign (renderObject .getProjectionMatrixArray ())
+            .multRight (projectionScale));
 
          // Rotate and scale background.
+
+         const far = renderObject .getViewpoint () .getMaxFarValue ();
 
          modelViewMatrix .assign (this .modelMatrix);
          modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
          modelViewMatrix .get (null, rotation);
          modelViewMatrix .identity ();
          modelViewMatrix .rotate (rotation);
-         modelViewMatrix .scale (scale .set (100_000, 100_000, 100_000));
+         modelViewMatrix .scale (scale .set (far, far, far));
 
-         this .modelViewMatrixArray .set (modelViewMatrix);
+         modelViewMatrixArray .set (modelViewMatrix);
 
          // Draw background sphere and texture cube.
 
-         this .drawSphere (renderObject);
+         this .drawSphere (renderObject, modelViewMatrixArray, projectionMatrixArray);
 
          if (+this .textureBits)
-            this .drawCube (renderObject);
+            this .drawCube (renderObject, modelViewMatrixArray, projectionMatrixArray);
 
          gl .depthMask (true);
          gl .enable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
+
+         // Restore polygon mode.
+
+         if (browser .getWireframe ())
+         {
+            const ext = gl .getExtension ("WEBGL_polygon_mode");
+
+            ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .LINE_WEBGL);
+         }
       };
    })(),
-   drawSphere (renderObject)
+   drawSphere (renderObject, modelViewMatrixArray, projectionMatrixArray)
    {
       const transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
@@ -517,12 +498,13 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       const shaderNode = browser .getDefaultMaterial () .getShader (sphereContext);
 
       shaderNode .enable (gl);
-      shaderNode .setClipPlanes (gl, this .clipPlanes);
+      shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
 
       // Uniforms
 
-      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+      gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
       gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
       gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
@@ -546,13 +528,13 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
 
-      gl .uniform1f (shaderNode .x3d_Exposure, browser .getBrowserOption ("Exposure"));
+      gl .uniform1f (shaderNode .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
    },
    drawCube: (() =>
    {
-      const textureMatrixArray = new Float32Array (Matrix4 .Identity);
+      const textureMatrixArray = new Float32Array (Matrix4 .IDENTITY);
 
-      return function (renderObject)
+      return function (renderObject, modelViewMatrixArray, projectionMatrixArray)
       {
          const
             browser         = this .getBrowser (),
@@ -572,12 +554,13 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             const shaderNode = browser .getDefaultMaterial () .getShader (texturesContext);
 
             shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, this .clipPlanes);
+            shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
 
             // Set uniforms.
 
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 
             gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
@@ -587,7 +570,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
             this .drawRectangle (gl, browser, shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
 
-            gl .uniform1f (shaderNode .x3d_Exposure, browser .getBrowserOption ("Exposure"));
+            gl .uniform1f (shaderNode .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
          }
       };
    })(),
@@ -614,19 +597,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
 });
 
-Object .defineProperties (X3DBackgroundNode,
-{
-   typeName:
-   {
-      value: "X3DBackgroundNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DBackgroundNode, X3DNode .getStaticProperties ("X3DBackgroundNode", "EnvironmentalEffects", 1));
 
 for (let index = 0; index < 6; ++ index)
 {

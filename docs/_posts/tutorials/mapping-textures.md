@@ -58,7 +58,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material ... />
@@ -68,7 +68,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -88,7 +88,7 @@ An [ImageTexture](/x_ite/components/texturing/imagetexture/) node selects a text
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material/>
@@ -99,7 +99,7 @@ An [ImageTexture](/x_ite/components/texturing/imagetexture/) node selects a text
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -113,6 +113,16 @@ Shape {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image1/image1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/image1/screenshot.avif" alt="ImageTexture"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/image1/image1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/image1/image1.x3dv)
+{: .example-links }
+
 ## Syntax: PixelTexture
 
 A [PixelTexture](/x_ite/components/texturing/pixeltexture/) node specifies texture image pixels for texture mapping:
@@ -122,32 +132,43 @@ A [PixelTexture](/x_ite/components/texturing/pixeltexture/) node specifies textu
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material/>
     <PixelTexture
-        image='2 1 3
-          0xFFFF00 0xFF0000'/>
+        image='2 2 3
+          0xff0000 0xff00 0xff 0xffffff'/>
   </Appearance>
   <!-- geometry ... -->
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
   appearance Appearance {
     material Material { }
     texture PixelTexture {
-      image 2 1 3
-        0xFFFF00 0xFF0000
+      image 2 2 3
+        0xff0000 0xff00
+        0xff 0xffffff
     }
   }
   geometry ...
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image2/image2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/image2/screenshot.avif" alt="PixelTexture"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/image2/image2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/image2/image2.x3dv)
+{: .example-links }
 
 ## Syntax: MovieTexture
 
@@ -158,7 +179,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node selects a textu
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material/>
@@ -173,7 +194,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node selects a textu
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -190,6 +211,16 @@ Shape {
   geometry ...
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/image3/image3.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/image3/screenshot.avif" alt="MovieTexture"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/image3/image3.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/image3/image3.x3dv)
+{: .example-links }
 
 ## Using materials with textures
 

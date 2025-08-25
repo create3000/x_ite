@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
 import Color3      from "../../standard/Math/Numbers/Color3.js";
@@ -59,7 +12,7 @@ import Color3      from "../../standard/Math/Numbers/Color3.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r]+/gy,
+   whitespaces: /[\x20\n\t\r,]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
    comment: /;.*?(?=[\n\r]|$)/gy,
    untilEndOfLine: /[^\r\n]+/gy,
@@ -88,11 +41,6 @@ const Grammar = Expressions ({
 function STLAParser (scene)
 {
    X3DParser .call (this, scene);
-
-   // Globals
-
-   this .vector = [ ];
-   this .point  = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .prototype),
@@ -112,7 +60,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
    },
    isValid ()
    {
-      if (!(typeof this .input === "string"))
+      if (typeof this .input !== "string")
          return false;
 
       return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\b(?:solid)\b/);
@@ -141,7 +89,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       this .material   = scene .createNode ("Material");
       this .appearance = scene .createNode ("Appearance");
 
-      this .material .diffuseColor = Color3 .White;
+      this .material .diffuseColor = Color3 .WHITE;
       this .appearance .material   = this .material;
 
       // Parse scene.
@@ -202,8 +150,8 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
          geometry .normalPerVertex = false;
          geometry .normal          = normal;
          geometry .coord           = coordinate;
-         normal .vector            = this .vector;
-         coordinate .point         = this .point;
+         normal .vector            = this .normals;
+         coordinate .point         = this .vertices;
 
          if (name)
          {
@@ -225,21 +173,21 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
    },
    facets ()
    {
-      this .vector .length = 0;
-      this .point  .length = 0;
+      this .normals  = [ ];
+      this .vertices = [ ];
 
-      while (this .facet ())
+      while (this .facet (this .normals, this .vertices))
          ;
    },
-   facet ()
+   facet (normals, vertices)
    {
       this .comments ()
 
       if (Grammar .facet .parse (this))
       {
-         if (this .normal ())
+         if (this .normal (normals))
          {
-            if (this .loop ())
+            if (this .loop (vertices))
             {
                this .comments ();
 
@@ -253,7 +201,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
       return false;
    },
-   normal ()
+   normal (normals)
    {
       this .whitespacesNoLineTerminator ();
 
@@ -261,16 +209,17 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       {
          if (this .double ())
          {
-            this .vector .push (this .value);
+            const x = this .value;
 
             if (this .double ())
             {
-               this .vector .push (this .value);
+               const y = this .value;
 
                if (this .double ())
                {
-                  this .vector .push (this .value);
+                  const z = this .value;
 
+                  normals .push (x, y, z);
                   return true;
                }
 
@@ -285,7 +234,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
       throw new Error ("Expected 'normal' statement.");
    },
-   loop ()
+   loop (vertices)
    {
       this .comments ();
 
@@ -295,11 +244,11 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
          if (Grammar .loop .parse (this))
          {
-            if (this .vertex ())
+            if (this .vertex (vertices))
             {
-               if (this .vertex ())
+               if (this .vertex (vertices))
                {
-                  if (this .vertex ())
+                  if (this .vertex (vertices))
                   {
                      this .comments ();
 
@@ -317,7 +266,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
       throw new Error ("Expected 'outer' statement.");
    },
-   vertex ()
+   vertex (vertices)
    {
       this .comments ();
 
@@ -325,16 +274,17 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       {
          if (this .double ())
          {
-            this .point .push (this .value);
+            const x = this .value;
 
             if (this .double ())
             {
-               this .point .push (this .value);
+               const y = this .value;
 
                if (this .double ())
                {
-                  this .point .push (this .value);
+                  const z = this .value;
 
+                  vertices .push (x, y, z);
                   return true;
                }
 

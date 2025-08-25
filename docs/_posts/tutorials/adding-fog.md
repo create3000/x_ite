@@ -44,14 +44,14 @@ A [Fog](/x_ite/components/environmentaleffects/fog/) node creates colored fog
 
 ### XML Encoding
 
-```xml
+```x3d
 <Fog
     color='1.0 1.0 1.0'
     fogType='LINEAR'
     visibilityRange='10.0'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Fog {
@@ -60,6 +60,16 @@ Fog {
   visibilityRange 10.0
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/fog1/fog1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/fog1/screenshot.avif" alt="Fog"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/fog1/fog1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/fog1/fog1.x3dv)
+{: .example-links }
 
 ## Summary
 

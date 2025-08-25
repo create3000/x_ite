@@ -7,20 +7,17 @@ Object .assign ($,
 
       return new TextDecoder () .decode (input);
    },
-   ungzip (arrayBuffer)
+   sleep (ms)
    {
-      try
-      {
-         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
-      }
-      catch (exception)
-      {
-         return arrayBuffer;
-      }
+      return new Promise (resolve => setTimeout (resolve, ms));
    },
    toLowerCaseFirst (string)
    {
       return string [0] .toLowerCase () + string .slice (1);
+   },
+   toUpperCaseFirst (string)
+   {
+      return string [0] .toUpperCase () + string .slice (1);
    },
    try (callback, logError = false)
    {
@@ -31,12 +28,19 @@ Object .assign ($,
       catch (error)
       {
          if (logError)
-            console .error (error .message);
+            console .error (error);
       }
    },
-   enum (object, property, defaultValue)
+   ungzip (arrayBuffer)
    {
-      return object .hasOwnProperty (property) ? object [property] : defaultValue;
+      try
+      {
+         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
+      }
+      catch (exception)
+      {
+         return arrayBuffer;
+      }
    },
 });
 
@@ -51,21 +55,5 @@ Object .assign ($,
 // class C {
 //   @iffe fn (... args) { return function () { }; }
 // }
-
-Object .assign ($.fn,
-{
-   isInViewport ()
-   {
-      const
-         $this          = $(this),
-         $window        = $(window),
-         elementTop     = $this .offset () .top,
-         elementBottom  = elementTop + $this .outerHeight (),
-         viewportTop    = $window .scrollTop (),
-         viewportBottom = viewportTop + $window .height ();
-
-      return elementBottom > viewportTop && elementTop < viewportBottom;
-   },
-});
 
 export default $;

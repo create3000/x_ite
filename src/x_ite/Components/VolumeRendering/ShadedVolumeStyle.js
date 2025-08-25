@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                             from "../../Fields.js";
 import X3DFieldDefinition                 from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray               from "../../Base/FieldDefinitionArray.js";
+import X3DNode                            from "../Core/X3DNode.js";
 import X3DComposableVolumeRenderStyleNode from "./X3DComposableVolumeRenderStyleNode.js";
 import X3DConstants                       from "../../Base/X3DConstants.js";
 import X3DCast                            from "../../Base/X3DCast.js";
@@ -64,11 +18,6 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
    initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
 
       this ._material       .addInterest ("set_material__",       this);
       this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
@@ -108,6 +57,10 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
    },
+   getDefines (defines)
+   {
+      defines .add ("#define X3D_SHADING");
+   },
    getUniformsText ()
    {
       if (! this ._enabled .getValue ())
@@ -126,20 +79,6 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
       string += "uniform float transparency_" + this .getId () + ";\n";
 
       string += this .getNormalText (this .surfaceNormalsNode);
-
-      string += "\n";
-      string += "float\n";
-      string += "getSpotFactor_" + this .getId () + " (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n";
-      string += "{\n";
-      string += "   float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n";
-      string += "\n";
-      string += "   if (spotAngle >= cutOffAngle)\n";
-      string += "      return 0.0;\n";
-      string += "   else if (spotAngle <= beamWidth)\n";
-      string += "      return 1.0;\n";
-      string += "\n";
-      string += "   return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n";
-      string += "}\n";
 
       string += "\n";
       string += "vec4\n";
@@ -194,7 +133,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
          string += "         vec3  specularTerm   = light .intensity * specularColor_" + this .getId () + " * specularFactor;\n";
          string += "\n";
          string += "         float attenuationFactor     = di ? 1.0 : 1.0 / max (dot (c, vec3 (1.0, dL, dL * dL)), 1.0);\n";
-         string += "         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor_" + this .getId () + " (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
+         string += "         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
          string += "         float attenuationSpotFactor = attenuationFactor * spotFactor;\n";
          string += "         vec3  ambientColor          = light .ambientIntensity * ambientTerm;\n";
          string += "         vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);\n";
@@ -242,26 +181,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
 
 Object .defineProperties (ShadedVolumeStyle,
 {
-   typeName:
-   {
-      value: "ShadedVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("ShadedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

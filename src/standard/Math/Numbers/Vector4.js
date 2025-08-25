@@ -1,51 +1,6 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
+import Algorithm from "../Algorithm.js";
 
-function Vector4 (x = 0, y = 0, z = 0, w = 0)
+function Vector4 (x = 0, y = x, z = y, w = z)
 {
    this .x = x;
    this .y = y;
@@ -71,15 +26,7 @@ Object .assign (Vector4 .prototype,
       copy .w = this .w;
       return copy;
    },
-   assign (vector)
-   {
-      this .x = vector .x;
-      this .y = vector .y;
-      this .z = vector .z;
-      this .w = vector .w;
-      return this;
-   },
-   set (x, y, z, w)
+   assign ({ x, y, z, w })
    {
       this .x = x;
       this .y = y;
@@ -87,19 +34,20 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   equals (vector)
+   set (x = 0, y = x, z = y, w = z)
    {
-      return this .x === vector .x &&
-             this .y === vector .y &&
-             this .z === vector .z &&
-             this .w === vector .w;
+      this .x = x;
+      this .y = y;
+      this .z = z;
+      this .w = w;
+      return this;
    },
-   getReal (vector)
+   equals ({ x, y, z, w })
    {
-      vector .x = this .x / this .w;
-      vector .y = this .y / this .w;
-      vector .z = this .z / this .w;
-      return vector;
+      return this .x === x &&
+             this .y === y &&
+             this .z === z &&
+             this .w === w;
    },
    negate ()
    {
@@ -117,20 +65,20 @@ Object .assign (Vector4 .prototype,
       this .w = 1 / this .w;
       return this;
    },
-   add (vector)
+   add ({ x, y, z, w })
    {
-      this .x += vector .x;
-      this .y += vector .y;
-      this .z += vector .z;
-      this .w += vector .w;
+      this .x += x;
+      this .y += y;
+      this .z += z;
+      this .w += w;
       return this;
    },
-   subtract (vector)
+   subtract ({ x, y, z, w })
    {
-      this .x -= vector .x;
-      this .y -= vector .y;
-      this .z -= vector .z;
-      this .w -= vector .w;
+      this .x -= x;
+      this .y -= y;
+      this .z -= z;
+      this .w -= w;
       return this;
    },
    multiply (value)
@@ -141,12 +89,12 @@ Object .assign (Vector4 .prototype,
       this .w *= value;
       return this;
    },
-   multVec (vector)
+   multVec ({ x, y, z, w })
    {
-      this .x *= vector .x;
-      this .y *= vector .y;
-      this .z *= vector .z;
-      this .w *= vector .w;
+      this .x *= x;
+      this .y *= y;
+      this .z *= z;
+      this .w *= w;
       return this;
    },
    divide (value)
@@ -157,12 +105,12 @@ Object .assign (Vector4 .prototype,
       this .w /= value;
       return this;
    },
-   divVec (vector)
+   divVec ({ x, y, z, w })
    {
-      this .x /= vector .x;
-      this .y /= vector .y;
-      this .z /= vector .z;
-      this .w /= vector .w;
+      this .x /= x;
+      this .y /= y;
+      this .z /= z;
+      this .w /= w;
       return this;
    },
    normalize ()
@@ -179,14 +127,14 @@ Object .assign (Vector4 .prototype,
 
       return this;
    },
-   dot (vector)
+   dot ({ x, y, z, w })
    {
-      return this .x * vector .x +
-             this .y * vector .y +
-             this .z * vector .z +
-             this .w * vector .w;
+      return this .x * x +
+             this .y * y +
+             this .z * z +
+             this .w * w;
    },
-   norm ()
+   squaredNorm ()
    {
       const { x, y, z, w } = this;
 
@@ -195,45 +143,47 @@ Object .assign (Vector4 .prototype,
              z * z +
              w * w;
    },
-   magnitude ()
+   norm ()
    {
       return Math .hypot (this .x, this .y, this .z, this .w);
    },
-   distance (vector)
+   distance ({ x, y, z, w })
    {
-      return Math .hypot (this .x - vector .x,
-                          this .y - vector .y,
-                          this .z - vector .z,
-                          this .w - vector .w);
+      return Math .hypot (this .x - x,
+                          this .y - y,
+                          this .z - z,
+                          this .w - w);
    },
-   lerp (destination, t)
+   lerp ({ x: dX, y: dY, z: dZ, w: dW }, t)
    {
       const { x, y, z, w } = this;
 
-      this .x = x + t * (destination .x - x);
-      this .y = y + t * (destination .y - y);
-      this .z = z + t * (destination .z - z);
-      this .w = w + t * (destination .w - w);
+      this .x = x + t * (dX - x);
+      this .y = y + t * (dY - y);
+      this .z = z + t * (dZ - z);
+      this .w = w + t * (dW - w);
       return this;
    },
    abs ()
    {
-      this .x = Math .abs (this .x);
-      this .y = Math .abs (this .y);
-      this .z = Math .abs (this .z);
-      this .w = Math .abs (this .w);
+      const { x, y, z, w } = this;
+
+      this .x = Math .abs (x);
+      this .y = Math .abs (y);
+      this .z = Math .abs (z);
+      this .w = Math .abs (w);
       return this;
    },
    min (vector)
    {
       let { x, y, z, w } = this;
 
-      for (const vector of arguments)
+      for (const { x: minX, y: minY, z: minZ, w: minW } of arguments)
       {
-         x = Math .min (x, vector .x);
-         y = Math .min (y, vector .y);
-         z = Math .min (z, vector .z);
-         w = Math .min (w, vector .w);
+         x = Math .min (x, minX);
+         y = Math .min (y, minY);
+         z = Math .min (z, minZ);
+         w = Math .min (w, minW);
       }
 
       this .x = x;
@@ -246,18 +196,26 @@ Object .assign (Vector4 .prototype,
    {
       let { x, y, z, w } = this;
 
-      for (const vector of arguments)
+      for (const { x: maxX, y: maxY, z: maxZ, w: maxW } of arguments)
       {
-         x = Math .max (x, vector .x);
-         y = Math .max (y, vector .y);
-         z = Math .max (z, vector .z);
-         w = Math .max (w, vector .w);
+         x = Math .max (x, maxX);
+         y = Math .max (y, maxY);
+         z = Math .max (z, maxZ);
+         w = Math .max (w, maxW);
       }
 
       this .x = x;
       this .y = y;
       this .z = z;
       this .w = w;
+      return this;
+   },
+   clamp  ({ x: minX, y: minY, z: minZ, w: minW }, { x: maxX, y: maxY, z: maxZ, w: maxW })
+   {
+      this .x = Algorithm .clamp (this .x, minX, maxX);
+      this .y = Algorithm .clamp (this .y, minY, maxY);
+      this .z = Algorithm .clamp (this .z, minZ, maxZ);
+      this .w = Algorithm .clamp (this .w, minW, maxW);
       return this;
    },
    toString ()
@@ -299,12 +257,19 @@ Object .defineProperties (Vector4 .prototype,
 
 Object .assign (Vector4,
 {
-   Zero: Object .freeze (new Vector4 ()),
-   One: Object .freeze (new Vector4 (1, 1, 1, 1)),
-   xAxis: Object .freeze (new Vector4 (1, 0, 0, 0)),
-   yAxis: Object .freeze (new Vector4 (0, 1, 0, 0)),
-   zAxis: Object .freeze (new Vector4 (0, 0, 1, 0)),
-   wAxis: Object .freeze (new Vector4 (0, 0, 0, 1)),
+   ZERO: Object .freeze (new Vector4 ()),
+   // Positive values
+   ONE: Object .freeze (new Vector4 (1)),
+   X_AXIS: Object .freeze (new Vector4 (1, 0, 0, 0)),
+   Y_AXIS: Object .freeze (new Vector4 (0, 1, 0, 0)),
+   Z_AXIS: Object .freeze (new Vector4 (0, 0, 1, 0)),
+   W_AXIS: Object .freeze (new Vector4 (0, 0, 0, 1)),
+   // Negative values
+   NEGATIVE_ONE: Object .freeze (new Vector4 (-1)),
+   NEGATIVE_X_AXIS: Object .freeze (new Vector4 (-1, 0, 0, 0)),
+   NEGATIVE_Y_AXIS: Object .freeze (new Vector4 (0, -1, 0, 0)),
+   NEGATIVE_Z_AXIS: Object .freeze (new Vector4 (0, 0, -1, 0)),
+   NEGATIVE_W_AXIS: Object .freeze (new Vector4 (0, 0, 0, -1)),
 });
 
 export default Vector4;

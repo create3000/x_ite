@@ -1,51 +1,5 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields       from "../../Fields.js";
+import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
 const
@@ -77,14 +31,23 @@ Object .assign (X3DUrlObject .prototype,
       this ._autoRefresh          .addInterest ("set_autoRefresh__", this);
       this ._autoRefreshTimeLimit .addInterest ("set_autoRefresh__", this);
    },
+   getAllowEmptyUrl ()
+   {
+      return false;
+   },
    setLoadState (value, notify = true)
    {
       this ._loadState = value;
 
-      if (value === X3DConstants .COMPLETE_STATE)
+      switch (value)
       {
-         this [_autoRefreshCompleteTime] = Date .now ();
-         this .setAutoRefreshTimer (this ._autoRefresh .getValue ());
+         case X3DConstants .COMPLETE_STATE:
+         case X3DConstants .FAILED_STATE:
+         {
+            this [_autoRefreshCompleteTime] = Date .now ();
+            this .setAutoRefreshTimer (Math .max (this ._autoRefresh .getValue (), 0));
+            break;
+         }
       }
 
       if (!notify)
@@ -150,7 +113,7 @@ Object .assign (X3DUrlObject .prototype,
       if (!this ._load .getValue ())
          throw new Error (`${this .getTypeName ()}.load is false.`);
 
-      if (this ._url .length === 0)
+      if (this ._url .length === 0 && !this .getAllowEmptyUrl ())
       {
          this .unloadData ();
          return;
@@ -226,7 +189,7 @@ Object .assign (X3DUrlObject .prototype,
 
       const autoRefreshTimeLimit = this ._autoRefreshTimeLimit .getValue ();
 
-      if (autoRefreshTimeLimit !== 0)
+      if (autoRefreshTimeLimit > 0)
       {
          if ((Date .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
             return;
@@ -268,7 +231,7 @@ Object .assign (X3DUrlObject .prototype,
 
       const
          elapsedTime = (Date .now () - this [_autoRefreshCompleteTime]) / 1000,
-         autoRefresh = this ._autoRefresh .getValue ();
+         autoRefresh = Math .max (this ._autoRefresh .getValue (), 0);
 
       let autoRefreshInterval = autoRefresh - elapsedTime;
 
@@ -280,18 +243,6 @@ Object .assign (X3DUrlObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DUrlObject,
-{
-   typeName:
-   {
-      value: "X3DUrlObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DUrlObject, X3DNode .getStaticProperties ("X3DUrlObject", "Networking", 1));
 
 export default X3DUrlObject;

@@ -1,14 +1,31 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 
-// https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/source/Renderer/shaders/pbr.frag
+// Originally from:
+// https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/pbr.frag
 
 #pragma X3D include "../common/Fragment.glsl"
-#pragma X3D include "../common/Normal.glsl"
 #pragma X3D include "../common/Shadow.glsl"
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+   uniform ivec4 x3d_Viewport;
+#endif
+
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
    uniform mat4 x3d_ProjectionMatrix;
+   uniform mat4 x3d_ViewMatrix;
    uniform mat4 x3d_ModelViewMatrix;
+#endif
+
+#if defined (X3D_XR_SESSION)
+uniform mat4 x3d_EyeMatrix;
+
+mat4
+eye (const in mat4 modelViewMatrix)
+{
+   return x3d_EyeMatrix * modelViewMatrix;
+}
+#else
+   #define eye(x) (x)
 #endif
 
 #if defined (X3D_LIGHTING)
@@ -26,6 +43,10 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 vec4
 getMaterialColor ()
 {
+   #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+      mat4 modelViewMatrix = eye (x3d_ModelViewMatrix);
+   #endif
+
    vec4 baseColor = getBaseColor ();
 
    #if defined (X3D_TEXTURE_PROJECTION)
@@ -36,7 +57,7 @@ getMaterialColor ()
 
    vec3 v = normalize (-vertex);
 
-   #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING) || defined (X3D_ANISOTROPY_MATERIAL_EXT) || defined (X3D_CLEARCOAT_MATERIAL_EXT)
+   #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
       NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale);
 
       vec3  n     = normalInfo .n;
@@ -57,10 +78,6 @@ getMaterialColor ()
 
    #if defined (X3D_IOR_MATERIAL_EXT)
       materialInfo = getIorInfo (materialInfo);
-   #endif
-
-   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
-      materialInfo = getSpecularGlossinessInfo (materialInfo);
    #endif
 
    #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
@@ -106,9 +123,6 @@ getMaterialColor ()
    // convert to material roughness by squaring the perceptual roughness.
    materialInfo .alphaRoughness = materialInfo .perceptualRoughness * materialInfo .perceptualRoughness;
 
-   // Compute reflectance.
-   float reflectance = max3 (materialInfo .f0_dielectric);
-
    // LIGHTING
    vec3 f_specular_dielectric   = vec3 (0.0);
    vec3 f_specular_metal        = vec3 (0.0);
@@ -127,17 +141,20 @@ getMaterialColor ()
    float albedoSheenScaling           = 1.0;
    float diffuseTransmissionThickness = 1.0;
 
-   #if defined (X3D_IRIDESCENCE_MATERIAL_EXT) && (defined (X3D_USE_IBL) || defined (X3D_LIGHTING))
+   #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
+   // Holger: Values are only used if X3D_USE_IBL or X3D_LIGHTING is defined.
+   #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
       vec3 iridescenceFresnel_dielectric = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, materialInfo .f0_dielectric);
       vec3 iridescenceFresnel_metallic   = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, baseColor .rgb);
 
       if (materialInfo .iridescenceThickness == 0.0)
          materialInfo .iridescenceFactor = 0.0;
    #endif
+   #endif
 
    #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
    #if defined (X3D_VOLUME_MATERIAL_EXT)
-      diffuseTransmissionThickness = materialInfo .thickness * (length (vec3 (u_ModelMatrix[0] .xyz)) + length (vec3 (u_ModelMatrix[1] .xyz)) + length (vec3 (u_ModelMatrix[2] .xyz))) / 3.0;
+      diffuseTransmissionThickness = materialInfo .thickness * (length (x3d_ModelViewMatrix [0] .xyz) + length (x3d_ModelViewMatrix [1] .xyz) + length (x3d_ModelViewMatrix [2] .xyz)) / 3.0;
    #endif
    #endif
 
@@ -166,10 +183,8 @@ getMaterialColor ()
             v,
             materialInfo .perceptualRoughness,
             baseColor .rgb,
-            materialInfo .f0_dielectric,
-            materialInfo .f90,
             vertex,
-            x3d_ModelViewMatrix, // x3d_ModelMatrix
+            modelViewMatrix,
             x3d_ProjectionMatrix,
             materialInfo .ior,
             materialInfo .thickness,
@@ -281,25 +296,36 @@ getMaterialColor ()
          float l_albedoSheenScaling  = 1.0;
 
          #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-            vec3 diffuse_btdf = lightIntensity * clamp (dot (-n, l), 0.0, 1.0) * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
+            l_diffuse *= 1.0 - materialInfo .diffuseTransmissionFactor;
 
-            #if defined (X3D_VOLUME_MATERIAL_EXT)
-               diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
-            #endif
+            if (dot (n, l) < 0.0)
+            {
+               float diffuseNdotL = clamp (dot (-n, l), 0.0, 1.0);
+               vec3  diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
-            l_diffuse = mix (l_diffuse, diffuse_btdf, materialInfo .diffuseTransmissionFactor);
+               vec3  l_mirror     = normalize (reflect (l, n)); // Mirror light reflection vector on surface
+               float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
+
+               dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
+
+               #if defined (X3D_VOLUME_MATERIAL_EXT)
+                  diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+               #endif
+
+               l_diffuse += diffuse_btdf * materialInfo .diffuseTransmissionFactor;
+            }
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
          // BTDF (Bidirectional Transmittance Distribution Function)
          #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
             // If the light ray travels through the geometry, use the point it exits the geometry again.
             // That will change the angle to the light source, if the material refracts the light ray.
-            vec3 transmissionRay = getVolumeTransmissionRay (n, v, materialInfo .thickness, materialInfo .ior, x3d_ModelViewMatrix); // x3d_ModelMatrix
+            vec3 transmissionRay = getVolumeTransmissionRay (n, v, materialInfo .thickness, materialInfo .ior, modelViewMatrix);
 
             pointToLight -= transmissionRay;
             l             = normalize (pointToLight);
 
-            vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, materialInfo .f0_dielectric, materialInfo .f90, baseColor .rgb, materialInfo .ior);
+            vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, baseColor .rgb, materialInfo .ior);
 
             #if defined (X3D_VOLUME_MATERIAL_EXT)
                transmittedLight = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);
@@ -350,16 +376,13 @@ getMaterialColor ()
 
    #if defined (X3D_UNLIT_MATERIAL_EXT)
       color = baseColor .rgb;
+   #elif (defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)) && !defined (X3D_NORMALS)
+      // Points or Lines with no NORMAL attribute SHOULD be rendered without lighting and instead use the sum of the base color value and the emissive value.
+      color = f_emissive + baseColor .rgb;
    #else
       color = f_emissive * (1.0 - clearcoatFactor * clearcoatFresnel) + color;
    #endif
 
    return vec4 (color, baseColor .a);
-}
-
-void
-main ()
-{
-   fragment_main ();
 }
 `;

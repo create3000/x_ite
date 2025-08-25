@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Namespace                   from "./Namespace.js"
 import X3DBaseNode                 from "./Base/X3DBaseNode.js";
 import X3DFieldDefinition          from "./Base/X3DFieldDefinition.js";
@@ -77,104 +30,47 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
-import X3DCanvasElement            from "./X3DCanvasElement.js";
-import jQuery                      from "../lib/jquery.js";
-import libtess                     from "../lib/libtess.js";
 
-const
-   callbacks = $.Deferred (),
-   fallbacks = $.Deferred ();
+import "./Features.js";
+import "./X3DCanvasElement.js";
+import "../standard/Math/Algorithms/QuickSort.js";
+import "../lib/jquery.js";
+import "../lib/libtess.js";
 
-let initialized = false;
+let promise; // Declare return value of X3D function.
 
 /**
- *
- * @param {function?} callback
- * @param {function?} fallback
- * @returns {Promise<void>} Promise
- */
-function X3D (callback, fallback)
+*
+* @param {function?} onfulfilled
+* @param {function?} onrejected
+* @returns {Promise<void>} Promise
+*/
+const X3D = Object .assign (function (onfulfilled, onrejected)
 {
-   return new Promise ((resolve, reject) =>
+   promise ??= new Promise ((resolve, reject) =>
    {
-      if (typeof callback === "function")
-         callbacks .done (callback);
-
-      if (typeof fallback === "function")
-         fallbacks .done (fallback);
-
-      callbacks .done (resolve);
-      fallbacks .done (reject);
-
-      if (initialized)
-         return;
-
-      initialized = true;
-
       $(() =>
       {
          try
          {
             Legacy .elements ($("X3DCanvas"), X3DBrowser);
 
-            if ([... $("x3d-canvas")] .every (canvas => canvas .browser))
-               callbacks .resolve ();
+            if (Array .from ($("x3d-canvas")) .every (canvas => canvas .browser))
+               resolve ();
             else
-               fallbacks .resolve (new Error ("Couldn't create browser."));
+               throw new Error ("Couldn't create browser.");
          }
          catch (error)
          {
             Legacy .error ($("X3DCanvas"), error);
-            fallbacks .resolve (error);
+            reject (error);
          }
       });
    });
-}
 
-Object .assign (X3D, Namespace, Namespace .Fields,
-{
-   require (id)
-   {
-      if (!Namespace .has (id))
-         throw new Error (`Unknown module '${id}'.`);
-
-      return Namespace .get (id);
-   },
-   noConflict: (() =>
-   {
-      const
-         _had = window .hasOwnProperty ("X3D"),
-         _X3D = window .X3D;
-
-      return function ()
-      {
-         if (window .X3D === X3D)
-         {
-            if (_had)
-               window .X3D = _X3D;
-            else
-               delete window .X3D;
-         }
-
-         return X3D;
-      };
-   })(),
-   getBrowser (element)
-   {
-      return $(element || "x3d-canvas, X3DCanvas") .prop ("browser");
-   },
-   createBrowser (url, parameter)
-   {
-      const element = document .createElement ("x3d-canvas");
-
-      if (arguments .length)
-         element .browser .loadURL (url, parameter);
-
-      return element;
-   },
-});
-
-Object .assign (X3D,
+   return promise .then (onfulfilled) .catch (onrejected);
+},
+Namespace, Namespace .Fields,
 {
    X3DConstants:                X3DConstants,
    X3DBrowser:                  X3DBrowser,
@@ -209,44 +105,48 @@ Object .assign (X3D,
    X3DField:                    X3DField,
    X3DArrayField:               X3DArrayField,
 
-   SFColor:                     Fields .SFColor,
-   SFColorRGBA:                 Fields .SFColorRGBA,
-   SFImage:                     Fields .SFImage,
-   SFMatrix3d:                  Fields .SFMatrix3d,
-   SFMatrix3f:                  Fields .SFMatrix3f,
-   SFMatrix4d:                  Fields .SFMatrix4d,
-   SFMatrix4f:                  Fields .SFMatrix4f,
-   SFNode:                      Fields .SFNode,
-   SFRotation:                  Fields .SFRotation,
-   SFVec2d:                     Fields .SFVec2d,
-   SFVec2f:                     Fields .SFVec2f,
-   SFVec3d:                     Fields .SFVec3d,
-   SFVec3f:                     Fields .SFVec3f,
-   SFVec4d:                     Fields .SFVec4d,
-   SFVec4f:                     Fields .SFVec4f,
-   VrmlMatrix:                  Fields .VrmlMatrix,
+   ... Fields,
+},
+{
+   /**
+   * @deprecated Use X3D.ModuleName instead.
+   */
+   require (path)
+   {
+      return Namespace [path .match (/([^\/]+)$/) ?.[1]];
+   },
+   noConflict: (() =>
+   {
+      const
+         _had = window .hasOwnProperty ("X3D"),
+         _X3D = window .X3D;
 
-   MFBool:                      Fields .MFBool,
-   MFColor:                     Fields .MFColor,
-   MFColorRGBA:                 Fields .MFColorRGBA,
-   MFDouble:                    Fields .MFDouble,
-   MFFloat:                     Fields .MFFloat,
-   MFImage:                     Fields .MFImage,
-   MFInt32:                     Fields .MFInt32,
-   MFMatrix3d:                  Fields .MFMatrix3d,
-   MFMatrix3f:                  Fields .MFMatrix3f,
-   MFMatrix4d:                  Fields .MFMatrix4d,
-   MFMatrix4f:                  Fields .MFMatrix4f,
-   MFNode:                      Fields .MFNode,
-   MFRotation:                  Fields .MFRotation,
-   MFString:                    Fields .MFString,
-   MFTime:                      Fields .MFTime,
-   MFVec2d:                     Fields .MFVec2d,
-   MFVec2f:                     Fields .MFVec2f,
-   MFVec3d:                     Fields .MFVec3d,
-   MFVec3f:                     Fields .MFVec3f,
-   MFVec4d:                     Fields .MFVec4d,
-   MFVec4f:                     Fields .MFVec4f,
+      return function ()
+      {
+         if (window .X3D === X3D)
+         {
+            if (_had)
+               window .X3D = _X3D;
+            else
+               delete window .X3D;
+         }
+
+         return X3D;
+      };
+   })(),
+   getBrowser (element)
+   {
+      return $(element || "x3d-canvas, X3DCanvas") .filter ("x3d-canvas, X3DCanvas") .prop ("browser");
+   },
+   createBrowser (... args)
+   {
+      const element = document .createElement ("x3d-canvas");
+
+      if (args .length)
+         element .browser .loadURL (... args);
+
+      return element;
+   },
 });
 
 export default X3D;

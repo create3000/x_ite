@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                      from "../Fields.js";
 import X3DBaseNode                 from "../Base/X3DBaseNode.js";
 import X3DBoundedObject            from "../Components/Grouping/X3DBoundedObject.js";
@@ -106,6 +59,10 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
 
 Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseNode .prototype),
 {
+   getLocalScene ()
+   {
+      return this .getExecutionContext () .getLocalScene ();
+   },
    setExecutionContext (executionContext)
    {
       if (this .getExecutionContext ())
@@ -121,10 +78,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          this ._countPrimitives .addReference (executionContext ._countPrimitives);
          this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
       }
-   },
-   isScene ()
-   {
-      return false;
    },
    getOuterNode ()
    {
@@ -197,12 +150,12 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (!ConcreteNode)
             return null;
 
-         const specificationRange = ConcreteNode .specificationRange;
+         // There must be an error if the specification range does not match,
+         // otherwise protos with the same name will be overwritten, e.g. Delay.
 
-         if (this .getSpecificationVersion () < specificationRange .from)
-            return null;
+         const { from, to } = ConcreteNode .specificationRange;
 
-         if (this .getSpecificationVersion () > specificationRange .to)
+         if (this .getSpecificationVersion () < from || this .getSpecificationVersion () > to)
             return null;
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
@@ -217,12 +170,12 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (!ConcreteNode)
             throw new Error (`Unknown node type '${typeName}'.`);
 
-         const specificationRange = ConcreteNode .specificationRange;
+         // There must be an error if the specification range does not match,
+         // otherwise protos with the same name will be overwritten, e.g. Delay.
 
-         if (this .getSpecificationVersion () < specificationRange .from)
-            throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
+         const { from, to } = ConcreteNode .specificationRange;
 
-         if (this .getSpecificationVersion () > specificationRange .to)
+         if (this .getSpecificationVersion () < from || this .getSpecificationVersion () > to)
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
@@ -247,7 +200,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (protoNode)
             return protoNode .createInstance (this, setup);
 
-         if (executionContext .isScene ())
+         if (executionContext .isScene)
             break;
 
          executionContext = executionContext .getExecutionContext ();
@@ -308,7 +261,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       node .setName (name);
 
-      this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
+      this ._namedNodes_changed = Date .now () / 1000;
    },
    removeNamedNode (name)
    {
@@ -323,7 +276,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_namedNodes] .remove (name);
 
-      this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
+      this ._namedNodes_changed = Date .now () / 1000;
    },
    getNamedNode (name)
    {
@@ -380,7 +333,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_importedNodes] .add (importedName, importedNode);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    renameImportedNode (oldImportedName, newImportedName)
    {
@@ -396,7 +349,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_importedNodes] .update (oldImportedName, newImportedName, importedNode);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    removeImportedNode (importedName)
    {
@@ -411,7 +364,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_importedNodes] .remove (importedName);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    getImportedNode (importedName)
    {
@@ -472,7 +425,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       return node;
    },
-   setRootNodes () { },
+   setRootNodes ()
+   { },
    getRootNodes ()
    {
       return this ._rootNodes;
@@ -498,21 +452,25 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (proto .getExecutionContext () !== this)
          throw new Error ("Couldn't add proto declaration: proto does not belong to this execution context.");
 
-      if (this [_protos] .get (name))
+      if (this [_protos] .has (name))
          throw new Error (`Couldn't add proto declaration: proto '${name}' already in use.`);
 
       if (this [_protos] .get (proto .getName ()) === proto)
          throw new Error (`Couldn't add proto declaration: proto '${proto .getName ()}' already added.`);
 
-      name = String (name);
-
       if (name .length === 0)
          throw new Error ("Couldn't add proto declaration: proto name is empty.");
+
+      if (this [_externprotos] .has (name))
+         console .warn (`Added proto '${name}' will override extern proto with same name.`);
+
+      if (this .getBrowser () .getConcreteNodes () .has (name))
+         console .warn (`Added proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
 
       this [_protos] .add (name, proto);
       proto .setName (name);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    updateProtoDeclaration (name, proto)
    {
@@ -524,15 +482,19 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (proto .getExecutionContext () !== this)
          throw new Error ("Couldn't update proto declaration: proto does not belong to this execution context.");
 
-      name = String (name);
-
       if (name .length === 0)
          throw new Error ("Couldn't update proto declaration: proto name is empty.");
+
+      if (this [_externprotos] .has (name))
+         console .warn (`Added proto '${name}' will override extern proto with same name.`);
+
+      if (this .getBrowser () .getConcreteNodes () .has (name))
+         console .warn (`Added proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
 
       this [_protos] .update (proto .getName (), name, proto);
       proto .setName (name);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    removeProtoDeclaration (name)
    {
@@ -540,7 +502,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_protos] .remove (name);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    getProtoDeclarations ()
    {
@@ -571,21 +533,25 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (externproto .getExecutionContext () !== this)
          throw new Error ("Couldn't add extern proto declaration: extern proto does not belong to this execution context.");
 
-      if (this [_externprotos] .get (name))
+      if (this [_externprotos] .has (name))
          throw new Error (`Couldn't add extern proto declaration: extern proto '${name}' already in use.`);
 
       if (this [_externprotos] .get (externproto .getName ()) === externproto)
          throw new Error (`Couldn't add extern proto declaration: extern proto '${externproto .getName ()}' already added.`);
 
-      name = String (name);
-
       if (name .length === 0)
          throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
+
+      if (this [_protos] .has (name))
+         console .warn (`Added extern proto '${name}' will be overridden by proto with same name.`);
+
+      if (this .getBrowser () .getConcreteNodes () .has (name))
+         console .warn (`Added extern proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
 
       this [_externprotos] .add (name, externproto);
       externproto .setName (name);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    updateExternProtoDeclaration (name, externproto)
    {
@@ -597,15 +563,19 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (externproto .getExecutionContext () !== this)
          throw new Error ("Couldn't update extern proto declaration: extern proto does not belong to this execution context.");
 
-      name = String (name);
-
       if (name .length === 0)
          throw new Error ("Couldn't update extern proto declaration: extern proto name is empty.");
+
+      if (this [_protos] .has (name))
+         console .warn (`Added extern proto '${name}' will be overridden by proto with same name.`);
+
+      if (this .getBrowser () .getConcreteNodes () .has (name))
+         console .warn (`Added extern proto '${name}', but will not override built-in node of same type if profile/components include this node.`);
 
       this [_externprotos] .update (externproto .getName (), name, externproto);
       externproto .setName (name);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    removeExternProtoDeclaration (name)
    {
@@ -613,7 +583,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_externprotos] .remove (name);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    getExternProtoDeclarations ()
    {
@@ -865,14 +835,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
             generator .string += generator .Indent ();
 
             if (rootNode)
-            {
                rootNode .toJSONStream (generator);
-            }
             else
-            {
-               generator .string += generator .Indent ();
                generator .string += "null";
-            }
 
             generator .string += ',';
             generator .string += generator .TidyBreak ();
@@ -914,6 +879,11 @@ for (const key of Object .keys (X3DExecutionContext .prototype))
 
 Object .defineProperties (X3DExecutionContext .prototype,
 {
+   isScene:
+   {
+      value: false,
+      enumerable: true,
+   },
    specificationVersion:
    {
       get: X3DExecutionContext .prototype .getSpecificationVersion,

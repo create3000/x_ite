@@ -15,7 +15,7 @@ tags: [OrthoViewpoint, Navigation]
 
 OrthoViewpoint provides an orthographic perspective-free view of a scene from a specific location and direction.
 
-The OrthoViewpoint node belongs to the **Navigation** component and requires at least level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The OrthoViewpoint node belongs to the [Navigation](/x_ite/components/overview/#navigation) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,15 +29,36 @@ The OrthoViewpoint node belongs to the **Navigation** component and requires at 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in] | [set_bind](#fields-set_bind) |  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFVec3f | [in, out] | [position](#fields-position) | 0 0 10  |
+| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0  |
+| MFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | [ -1, -1, 1, 1 ] |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFBool | [in, out] | [viewAll](#fields-viewAll) | FALSE |
+| SFBool | [in, out] | [jump](#fields-jump) | TRUE |
+| SFBool | [in, out] | [retainUserOffsets](#fields-retainUserOffsets) | FALSE |
+| SFBool | [out] | [isBound](#fields-isBound) |  |
+| SFTime | [out] | [bindTime](#fields-bindTime) |  |
+| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in] **set_bind**
+{: #fields-set_bind }
 
 Sending event *set_bind*=true makes this node active. Sending event *set_bind*=false makes this node inactive. Thus setting *set_bind* to true/false will pop/push (enable/disable) this [Viewpoint](/x_ite/components/navigation/viewpoint/).
 
@@ -50,6 +71,7 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFString [in, out] **description** ""
+{: #fields-description }
 
 [Text](/x_ite/components/text/text/) *description* or navigation hint to describe the significance of this model [Viewpoint](/x_ite/components/navigation/viewpoint/).
 
@@ -66,41 +88,47 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 - Without *description*, this OrthoViewpoint is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
 
 ### SFVec3f [in, out] **position** 0 0 10 <small>(-∞,∞)</small>
+{: #fields-position }
 
 *position* (x, y, z in meters) relative to local coordinate system.
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>[-1,1],(-∞,∞)</small>
+{: #fields-orientation }
 
 Rotation (axis, angle in radians) of [Viewpoint](/x_ite/components/navigation/viewpoint/), relative to default -Z axis direction in local coordinate system.
 
 #### Hints
 
-- This is *orientation* _change_ from default direction (0 0 -1).
+- This is *orientation* change from default direction (0 0 -1) along the -X axis.
 - Complex rotations can be accomplished axis-by-axis using parent Transforms.
 
 #### Warning
 
-- For VR/AR/MAR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
 
 ### SFVec3f [in, out] **centerOfRotation** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-centerOfRotation }
 
 *centerOfRotation* specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
 
 ### MFFloat [in, out] **fieldOfView** [ -1, -1, 1, 1 ] <small>(-∞,∞)</small>
+{: #fields-fieldOfView }
 
 Minimum and maximum extents of view in units of local coordinate system. Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
 
 #### Hints
 
-- Validation type SFVec3f is stricter than specification legacy value in order to detect illegal values.
 - Rectangular display width/height = (maxX-minX) / (maxY-minY)
+- [See Mantis 1398](https://mantis.web3d.org/view.php?id=1398)
 
 #### Warnings
 
 - Minimum corner values must remain less than maximum corner values.
-- OrthoViewpoint *fieldOfView* has type MFFloat even though SFVec3f is more correct to prevent modeling errors, deficiency recorded as Mantis 1398
+- If provided, OrthoViewpoint *fieldOfView* has exactly four numeric values, otherwise results are undefined.
+- OrthoViewpoint *fieldOfView* has type MFFloat for backwards compatibility (even though SFVec4f is stricter and more correct to prevent modeling errors)
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
+{: #fields-nearDistance }
 
 *nearDistance* defines minimum clipping plane distance necessary for object display.
 
@@ -115,6 +143,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 - *nearDistance* must be less than farDistance.
 
 ### SFFloat [in, out] **farDistance** -1 <small>-1 or (0,∞)</small>
+{: #fields-farDistance }
 
 *farDistance* defines maximum clipping plane distance allowed for object display.
 
@@ -129,6 +158,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 - NearDistance must be less than *farDistance*.
 
 ### SFBool [in, out] **viewAll** FALSE
+{: #fields-viewAll }
 
 [Viewpoint](/x_ite/components/navigation/viewpoint/) is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
 
@@ -142,6 +172,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 - If needed, near and far clipping planes shall be adjusted to allow viewing the entire scene.
 
 ### SFBool [in, out] **jump** TRUE
+{: #fields-jump }
 
 Transition instantly by jumping, otherwise smoothly adjust offsets in place when changing to this [Viewpoint](/x_ite/components/navigation/viewpoint/).
 
@@ -152,13 +183,15 @@ Transition instantly by jumping, otherwise smoothly adjust offsets in place when
 
 #### Warning
 
-- For VR/AR/MAR users wearing head-mounted displays, animating transitions between viewpoints may induce motion sickness.
+- For VR/AR/MR/XR users wearing head-mounted displays, animating transitions between viewpoints may induce motion sickness.
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
+{: #fields-retainUserOffsets }
 
 Retain (true) or reset to zero (false) any prior user navigation offsets from defined viewpoint position, orientation.
 
 ### SFBool [out] **isBound**
+{: #fields-isBound }
 
 Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
 
@@ -171,6 +204,7 @@ Output event true gets sent when node becomes bound and activated, otherwise out
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **bindTime**
+{: #fields-bindTime }
 
 Event sent reporting timestamp when node becomes active/inactive.
 
@@ -179,6 +213,7 @@ Event sent reporting timestamp when node becomes active/inactive.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFNode [in, out] **navigationInfo** NULL <small>[NavigationInfo]</small>
+{: #fields-navigationInfo }
 
 The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node for this X3DViewpointNode. The specified [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
 
@@ -203,7 +238,9 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/screenshot.avif" alt="OrthoViewpoint"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.x3d)

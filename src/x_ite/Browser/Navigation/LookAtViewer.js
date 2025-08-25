@@ -1,62 +1,11 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
+import X3DViewer         from "./X3DViewer.js";
+import PositionChaser    from "../../Components/Followers/PositionChaser.js";
+import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
+import Vector2           from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import X3DViewer            from "./X3DViewer.js";
-import PositionChaser       from "../../Components/Followers/PositionChaser.js";
-import OrientationChaser    from "../../Components/Followers/OrientationChaser.js";
-import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
-
-typeof jquery_mousewheel; // import plugin
+void (typeof jquery_mousewheel); // import plugin
 
 const macOS = /Mac OS X/i .test (navigator .userAgent)
 
@@ -131,7 +80,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
             // Stop event propagation.
 
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Look around.
 
             this .button = event .button;
 
@@ -141,9 +91,6 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
             $(document) .on ("touchmove.LookAtViewer" + this .getId (), this .touchmove .bind (this));
 
             this .getActiveViewpoint () .transitionStop ();
-
-            // Look around.
-
             this .trackballProjectToSphere (x, y, this .fromVector);
 
             this ._isActive = true;
@@ -167,7 +114,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
             // Stop event propagation.
 
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Look around.
 
             this ._isActive = false;
             break;
@@ -177,8 +125,10 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    dblclick (event)
    {
       // Stop event propagation.
+
       event .preventDefault ();
-      event .stopImmediatePropagation ();
+
+      // Look at.
 
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
@@ -198,10 +148,10 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          case 0:
          {
             // Stop event propagation.
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
 
-            // Look around
+            event .preventDefault ();
+
+            // Look around.
 
             const toVector = this .trackballProjectToSphere (x, y, this .toVector);
 
@@ -227,7 +177,6 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          // Stop event propagation.
 
          event .preventDefault ();
-         event .stopImmediatePropagation ();
 
          // Change viewpoint position.
 
@@ -236,13 +185,13 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          viewpoint .transitionStop ();
 
          this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
-         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
+         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .norm ()));
 
          if (event .deltaY > 0)
-            this .addMove (translation .negate (), Vector3 .Zero);
+            this .addMove (translation .negate (), Vector3 .ZERO);
 
          else if (event .deltaY < 0)
-            this .addMove (translation, Vector3 .Zero);
+            this .addMove (translation, Vector3 .ZERO);
       };
    })(),
    touchstart (event)
@@ -299,7 +248,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       // Start dblclick (button 0).
 
-      if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
+      if (Date .now () - this .tapStart < this .dblTapInterval)
       {
          event .button = 1;
          event .pageX  = this .touch1 .x;
@@ -308,7 +257,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          this .dblclick (event);
       }
 
-      this .tapStart = this .getBrowser () .getCurrentTime ();
+      this .tapStart = Date .now ();
    },
    touchmove: (() =>
    {
@@ -505,13 +454,6 @@ Object .defineProperties (LookAtViewer,
    typeName:
    {
       value: "LookAtViewer",
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
       enumerable: true,
    },
 });

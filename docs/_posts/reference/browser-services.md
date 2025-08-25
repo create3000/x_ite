@@ -9,95 +9,153 @@ tags: [Browser, Services, Authoring, Interface]
 
 This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user. One global instance of the object is available. The name of the instance is Browser.
 
 ### Properties
 
-#### **name**
+#### **name**: string
 
-A browser-implementation specific string describing the browser.
+A browser-implementation specific string describing the browser. This property is read only.
 
-#### **version**
+#### **version**: string
 
-A browser-implementation specific string describing the browser version.
+A browser-implementation specific string describing the browser version. This property is read only.
 
-#### **providerURL**
+#### **providerURL**: string
 
-If provided, the URL to the entity that wrote this browser.
+If provided, the URL to the entity that wrote this browser. This property is read only.
 
-#### **currentSpeed**
+#### **currentSpeed**: number
 
-The current speed of the avatar in m/s.
+The current speed of the avatar in m/s. This property is read only.
 
-#### **currentFrameRate**
+#### **currentFrameRate**: number
 
-The current frame rate in frames per second.
+The current frame rate in frames per second. This property is read only.
 
-#### **description**
+#### **description**: string
+{: .writable }
 
 A user-defined String which can be read and written.
 
-#### **supportedProfiles**
+#### **supportedProfiles**: ProfileInfoArray
 
-Returns the list of all profiles that are supported by this browser.
+Returns the list of all profiles that are supported by this browser. This property is read only.
 
-#### **supportedComponents**
+#### **supportedComponents**: ComponentInfoArray
 
-Returns a list of all components that are supported by this browser.
+Returns a list of all components that are supported by this browser. This property is read only.
 
-#### **concreteNodes**
+#### **concreteNodes**: ConcreteNodesArray
 
-Returns a list of all concrete node classes that are supported by this browser.
+Returns a list of all concrete node classes that are supported by this browser. This property is read only.
 
-#### **abstractNodes**
+#### **abstractNodes**: AbstractNodesArray
 
-Returns a list of all abstract node classes that are supported by this browser.
+Returns a list of all abstract node classes that are supported by this browser. This property is read only.
 
-#### **baseURL**
+#### **baseURL**: string
+{: .writable }
 
-A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
+A String value which can be read and written, containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
 
-#### **currentScene**
+#### **currentScene**: X3DScene | X3DExecutionContext
 
-The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene.
+The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
 
-#### **element**
+#### **activeLayer**: SFNode | null
 
-Returns a reference to the corresponding X3DCanvasElement.
+Returns the active layer, if any. The active layer is the layer on which navigation takes place. This property is read only.
+
+#### **activeNavigationInfo**: SFNode | null
+
+Returns the bound NavigationInfo node in the active layer, if any. This property is read only.
+
+#### **activeViewpoint**: SFNode | null
+
+Returns the bound X3DViewpointNode in the active layer, if any. This property is read only.
+
+#### **contextMenu**: ContextMenu
+
+Returns a reference to the corresponding ContextMenu. This property is read only.
+
+#### **element**: X3DCanvasElement
+
+Returns a reference to the corresponding X3DCanvasElement. This property is read only.
 
 ### Methods
 
-#### Promise\<void\> **replaceWorld** (*X3DScene*)
+#### **getSupportedProfile** (*name: string*): ProfileInfo
+
+The `getSupportedProfile` service returns a ProfileInfo object of the named profile from the `supportedProfiles` array. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
+
+* [List of supported profiles](/x_ite/profiles/overview/)
+
+#### **getSupportedComponent** (*name: string*): ComponentInfo
+
+The `getSupportedComponent` service returns a ComponentInfo object of the named component from the `supportedComponents` array. The parameter is the name of a component from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component. If it does not support the component, an error is thrown.
+
+* [List of supported components](/x_ite/components/overview/)
+
+#### **getProfile** (*name: string*): ProfileInfo
+
+The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
+
+* [List of supported profiles](/x_ite/profiles/overview/)
+
+#### **getComponent** (*name: string, level?: number*): ComponentInfo
+
+The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only return a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
+
+* [List of supported components](/x_ite/components/overview/)
+
+#### **createScene** (*profile: ProfileInfo, ... components: ComponentInfo []*): Promise\<X3DScene\>
+
+The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
+
+```js
+const profile    = browser .getProfile ("Interactive");
+const components = [browser .getComponent ("..."), browser .getComponent ("...")];
+const scene      = await browser .createScene (profile, ... components);
+```
+
+<!--
+#### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non-standard</small>
+
+Loads all components, external and internal, specified by `args`. If the argument is a `string`, the name of a component must be given.
+-->
+
+#### **replaceWorld** (*scene: X3DScene*): Promise\<void\>
 
 Replace the current world with this new scene that has been loaded or constructed from somewhere. A Promise is returned that will be resolved when the scene is completely loaded.
 
-#### Promise\<X3DScene\> **createX3DFromString** (*String x3dSyntax*)
+#### **createX3DFromString** (*x3dSyntax: string*): Promise\<X3DScene\>
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-#### void **createX3DFromURL** (*MFString url, Node node, String event*)
+#### **createX3DFromURL** (*url: MFString, node: SFNode, event: string*): void
 
 Parse the passed URL into an X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
-#### Promise\<X3DScene\> **createX3DFromURL** (*MFString url*)
+#### **createX3DFromURL** (*url: MFString*): Promise\<X3DScene\>
 
 Parse the passed URL into an X3D scene and return a Promise that resolves to an X3DScene object.
 
-#### Promise\<void\> **loadURL** (*MFString url [, MFString parameter]*)
+#### **loadURL** (*url: MFString, parameter?: MFString*): Promise\<void\>
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return. The return value is a Promise object, that is resolved when the new scene is loaded.
 
-#### Promise\<X3DScene\> **importDocument** (*DOMObject|String dom*)
+#### **importDocument** (*dom: HTMLElement | string*): Promise\<X3DScene\>
 
 Imports an X3D XML DOM document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
 
-#### Promise\<X3DScene\> **importJS** (*Object|String json*)
+#### **importJS** (*json: JSONObject | string*): Promise\<X3DScene\>
 
 Imports an X3D JSON document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
 
-#### Boolean **getBrowserProperty** (*String name*)
+#### **getBrowserProperty** (*name: string*): boolean
 
 Returns a browser property with the corresponding *name*.
 
@@ -155,7 +213,7 @@ Returns a browser property with the corresponding *name*.
    </tbody>
 </table>
 
-#### Any **getBrowserOption** (*String name*)
+#### **getBrowserOption** (*name: string*): any
 
 Returns a browser option with the corresponding *name*.
 
@@ -233,108 +291,136 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>AutoUpdate</td>
-         <td>Whether the update control of the browser should be done automatically or not. <small class="blue">non standard</small></td>
+         <td>Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if x3d-canvas is not visible.<small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>Cache</td>
-         <td>Whether or not files should be cached. <small class="blue">non standard</small></td>
+         <td>Whether or not files should be cached. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>ColorSpace</td>
-         <td>The color space in which color calculations take place. <small class="blue">non standard</small></td>
+         <td>The color space in which color calculations take place. <small class="blue">non-standard</small></td>
          <td>SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR</td>
          <td>LINEAR_WHEN_PHYSICAL_MATERIAL</td>
       </tr>
       <tr>
          <td>ContentScale</td>
-         <td>Factor with which the internal canvas size should be scaled. If set to -1, window.devicePixelRatio is used. <small class="blue">non standard</small></td>
+         <td>Factor with which the internal canvas size should be scaled. If set to -1, window.devicePixelRatio is used. <small class="blue">non-standard</small></td>
          <td>Float</td>
          <td>1</td>
       </tr>
       <tr>
          <td>ContextMenu</td>
-         <td>Whether or not the context menu can be displayed. <small class="blue">non standard</small></td>
+         <td>Whether or not the context menu can be displayed. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>Debug</td>
-         <td>Whether or not debug message should be printed into the console. <small class="blue">non standard</small></td>
+         <td>Whether or not debug message should be printed into the console. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>Exposure</td>
-         <td>The exposure of an image describes the amount of light that is captured. This option only works with PhysicalMaterial node and SpecularGlossinessMaterial node. <small class="blue">non standard</small></td>
+         <td>The exposure of an image describes the amount of light that is captured. <small class="blue">non-standard</small></td>
          <td>Float</td>
          <td>1</td>
       </tr>
       <tr>
          <td>Gravity</td>
-         <td>Default is gravity of Earth. <small class="blue">non standard</small></td>
+         <td>Default is gravity of Earth. <small class="blue">non-standard</small></td>
          <td>Float</td>
          <td>9.80665</td>
       </tr>
       <tr>
+         <td>LoadUrlObjects</td>
+         <td>Wether X3DUrlObject should be loaded. <small class="blue">non-standard</small></td>
+         <td>Boolean</td>
+         <td>true</td>
+      </tr>
+      <tr>
          <td>LogarithmicDepthBuffer</td>
-         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. <small class="blue">non standard</small></td>
+         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>Multisampling</td>
-         <td>Number of samples used for multisampling. <small class="blue">non standard</small></td>
+         <td>Number of samples used for multisampling. <small class="blue">non-standard</small></td>
          <td>Integer</td>
          <td>4</td>
       </tr>
       <tr>
+         <td>Mute</td>
+         <td>Whether to mute all audio. <small class="blue">non-standard</small></td>
+         <td>Boolean</td>
+         <td>false</td>
+      </tr>
+      <tr>
          <td>Notifications</td>
-         <td>Whether or not notifications should be displayed. <small class="blue">non standard</small></td>
+         <td>Whether or not notifications should be displayed. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>OrderIndependentTransparency</td>
-         <td>Whether to use order independent transparency rendering technique. <small class="blue">non standard</small></td>
+         <td>Whether to use order independent transparency rendering technique. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>StraightenHorizon</td>
-         <td>Whether the Examine Viewer should straighten the horizon when navigating. <small class="blue">non standard</small></td>
+         <td>Whether the Examine Viewer should straighten the horizon when navigating. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>TextCompression</td>
-         <td>Controls how Text.<em>length</em> and Text.<em>maxExtent</em> are handled. Either by adjusting char spacing or by scaling text letters. <small class="blue">non standard</small></td>
+         <td>Controls how Text.<em>length</em> and Text.<em>maxExtent</em> are handled. Either by adjusting char spacing or by scaling text letters. <small class="blue">non-standard</small></td>
          <td>CHAR_SPACING, SCALING</td>
          <td>CHAR_SPACING</td>
       </tr>
       <tr>
          <td>Timings</td>
-         <td>Whether browser timings should be displayed. <small class="blue">non standard</small></td>
+         <td>Whether browser timings should be displayed. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>ToneMapping</td>
-         <td>Whether tone mapping should be applied. <small class="blue">non standard</small></td>
+         <td>Whether tone mapping should be applied. <small class="blue">non-standard</small></td>
          <td>NONE, ACES_NARKOWICZ, ACES_HILL, ACES_HILL_EXPOSURE_BOOST, KHR_PBR_NEUTRAL</td>
          <td>KHR_PBR_NEUTRAL</td>
+      </tr>
+      <tr>
+         <td>XRSessionMode</td>
+         <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a>. <small class="blue">non-standard</small></td>
+         <td>NONE, IMMERSIVE_AR, IMMERSIVE_VR, INLINE</td>
+         <td>IMMERSIVE_VR</td>
       </tr>
    </tbody>
 </table>
 
-#### void **setBrowserOption** (*String name, Any value*)
+#### **setBrowserOption** (*name: string, value: any*): void
 
 Sets a browser option with the corresponding *name* to the given value.
 
-#### Any **getRenderingProperty** (*String name*)
+<!--
+#### **addBrowserOptionCallback** (*key: any, name: string, callback: (value: unknown) => void*): void
+
+Adds a browser option callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the browser option to which the callback should be connected. The callback is called when the property has been changed.
+
+#### **removeBrowserOptionCallback** (*key: any, name: string*): void
+
+Removes a browser option callback function associated with *key* and *name* from the browser option.
+-->
+
+#### **getRenderingProperty** (*name: string*): any
 
 Returns a rendering property with the corresponding *name*.
 
@@ -387,126 +473,173 @@ Returns a rendering property with the corresponding *name*.
       <tr>
          <td>ContentScale</td>
          <td>Boolean</td>
-         <td>Currently used factor to scale content. <small class="blue">non standard</small></td>
-      </tr>
-      <tr>
-         <td>MaxAnisotropicDegree</td>
-         <td>Float</td>
-         <td>The maximum number of available anisotropy. <small class="blue">non standard</small></td>
-      </tr>
-      <tr>
-         <td>MaxSamples</td>
-         <td>Integer</td>
-         <td>The maximum number of samples supported for doing multisampling. <small class="blue">non standard</small></td>
-      </tr>
-      <tr>
-         <td>Multisampling</td>
-         <td>Integer</td>
-         <td>Number of samples currently used by multisampling. <small class="blue">non standard</small></td>
+         <td>Currently used factor to scale content. <small class="blue">non-standard</small></td>
       </tr>
       <tr>
          <td>LogarithmicDepthBuffer</td>
          <td>Boolean</td>
-         <td>True or false if the logarithmic depth buffer is currently enabled or not. <small class="blue">non standard</small></td>
+         <td>True or false if the logarithmic depth buffer is currently enabled or not. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>MaxAnisotropicDegree</td>
+         <td>Float</td>
+         <td>The maximum number of available anisotropy. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>MaxSamples</td>
+         <td>Integer</td>
+         <td>The maximum number of samples supported for doing multisampling. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>Multisampling</td>
+         <td>Integer</td>
+         <td>Number of samples currently used by multisampling. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>PixelsPerPoint</td>
+         <td>Float</td>
+         <td>Number of pixels per point. <small class="blue">non-standard</small></td>
+      </tr>
+      <tr>
+         <td>XRSession</td>
+         <td>Boolean</td>
+         <td>True if a WebXR session is active, otherwise false. <small class="blue">non-standard</small></td>
       </tr>
    </tbody>
 </table>
 
-#### void **addBrowserCallback** (*Any key [, event], Function callback*)
+<!--
+#### **addRenderingPropertyCallback** (*key: any, name: string, callback: (value: unknown) => void*): void
+
+Adds a rendering property callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. *name* is the name of the rendering property to which the callback should be connected. The callback is called when the property has been changed.
+
+```js
+browser .addRenderingPropertyCallback ("check", "XRSession", value =>
+{
+   console .log (`User ${value ? "entered" : "leaved"} WebXR.`);
+});
+```
+
+#### **removeRenderingPropertyCallback** (*key: any, name: string*): void
+
+Removes a rendering property callback function associated with *key* and *name* from the rendering property.
+-->
+
+#### **addBrowserCallback** (*key: any, [event?: number,] callback: (event: number) => void*): void
 
 Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event is one of the **Browser Event Constants** defined in the [X3DConstants](/x_ite/reference/constants-services/#browser-event-constants) object:
 
-- X3DConstants .CONNECTION_ERROR
-- X3DConstants .BROWSER_EVENT
-- X3DConstants .INITIALIZED_EVENT
-- X3DConstants .SHUTDOWN_EVENT
-- X3DConstants .INITIALIZED_ERROR
+| Event                           | Description                           |
+|---------------------------------|---------------------------------------|
+| X3DConstants .CONNECTION_ERROR  | Fired when scene could not be loaded. |
+| X3DConstants .BROWSER_EVENT     | not used                              |
+| X3DConstants .INITIALIZED_EVENT | Fired after scene is loaded.          |
+| X3DConstants .SHUTDOWN_EVENT    | Fired before scene is unloaded.       |
+| X3DConstants .INITIALIZED_ERROR | not used                              |
 
-#### void **removeBrowserCallback** (*Any key [, event]*)
+#### **removeBrowserCallback** (*key: any, event?: number*): void
 
-Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callback associated whit key are removed.
+Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callbacks associated with key will be removed.
 
-#### void **viewAll** (*[SFNode layerNode], [Number transitionTime = 1]*) <small><span class="blue">non standard</span></small>
+#### **viewAll** (*[layer?: X3DLayerNode,] transitionTime?: number = 1*): void <small><span class="blue">non-standard</span></small>
 
-Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layerNode* is omitted, the active layer is used.
+Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layer* is omitted, the active layer is used.
 
-#### void **nextViewpoint** (*[SFNode layerNode]*)
+#### **nextViewpoint** (*layer?: X3DLayerNode*): void
 
-Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
 
-#### void **previousViewpoint** (*[SFNode layerNode]*)
+#### **previousViewpoint** (*layer?: X3DLayerNode*): void
 
-Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
 
-#### void **firstViewpoint** (*[SFNode layerNode]*)
+#### **firstViewpoint** (*layer?: X3DLayerNode*): void
 
-Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
 
-#### void **lastViewpoint** (*[SFNode layerNode]*)
+#### **lastViewpoint** (*layer?: X3DLayerNode*): void
 
-Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layer*. If *layer* is omitted, the active layer is used.
 
-#### void **changeViewpoint** (*[SFNode layerNode,] name String*)
+#### **changeViewpoint** (*[layer: X3DLayerNode,] name: string*): void
 
-Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layer*. If *layer* is omitted, the active layer is used.
 
-#### void **print** (*Object object, ...*)
+#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): { node: X3DShapeNode | null, distance: number } <small><span class="blue">non-standard</span></small>
+
+Returns the closest collidable object when looked in *direction*, measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*). Compare *distance* with *collisionRadius* (first value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
+
+The return value is an object with two properties *node* and *distance*.
+
+#### **beginUpdate** (): void
+
+Start processing events.
+
+#### **endUpdate** (): void
+
+Stop processing events.
+
+#### **print** (*... args: any []*): void
 
 Prints *objects* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
 
-#### void **println** (*Object object, ...*)
+#### **println** (*... args: any []*): void
 
 Prints *objects* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
+
+#### **dispose** (): void
+
+Disposes this X3DBrowser. The object can then no longer be used.
 
 ### VRML Methods
 
 To be downward compatible with VRML, the following additional functions are available:
 
-#### String **getName** ()
+#### **getName** (): string
 
 A browser-implementation specific string describing the browser.
 
-#### String **getVersion** ()
+#### **getVersion** (): string
 
 A browser-implementation specific string describing the browser version.
 
-#### Number **getCurrentSpeed** ()
+#### **getCurrentSpeed** (): number
 
 The current speed of the avatar in m/s.
 
-#### Number **getCurrentFrameRate** ()
+#### **getCurrentFrameRate** (): number
 
 The current frame rate in frames per second.
 
-#### String **getWorldURL** ()
+#### **getWorldURL** (): string
 
 A string containing the URL of this execution context.
 
-#### void **replaceWorld** (*MFNode nodes*)
+#### **replaceWorld** (*nodes: MFNode*): void
 
 Replace the current world with this new nodes that has been loaded or constructed from somewhere.
 
-#### MFNode **createVrmlFromString** (*String vrmlSyntax*)
+#### **createVrmlFromString** (*vrmlSyntax: string*): MFNode
 
 The string may be any valid VRML content.
 
-#### void **createVrmlFromURL** (*MFString url, SFNode node, String event*)
+#### **createVrmlFromURL** (*url: MFString, node: SFNode, event: string*): void
 
 Parse the passed URL into an VRML scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
-#### void **addRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
+#### **addRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): void
 
 Add a route from the passed *sourceField* to the passed *destinationField*.
 
-#### void **deleteRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
+#### **deleteRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): void
 
 Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
 
-#### void **loadURL** (*MFString url [, MFString parameter]*)
+#### **loadURL** (*url: MFString, parameter?: MFString*): void
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return.
 
-#### void **setDescription** (*String description*)
+#### **setDescription** (*description: string*): void
 
 A user-defined String.
 
@@ -514,21 +647,21 @@ A user-defined String.
 
 The X3DConcreteNode interface defines an interface for concrete node types, it extends the X3DAbstractNode interface. The object consists solely of read-only properties. It does not define any additional functions.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
 ### Static Properties
 
-#### **containerField**
+#### **containerField**: string
 
 The default container field name for this node. This property is read only.
 
-#### **specificationRange**
+#### **specificationRange**: { from: string, to: string }
 
-Returns an array with two strings defining the first version and last version where this node is specified. This property is read only.
+Returns an object with two strings defining the first version and last version where this node is specified. This property is read only.
 
-#### **fieldDefinitions**
+#### **fieldDefinitions**: FieldDefinitionArray
 
 Returns a list of fields defined for the SFNode object.
 
@@ -536,17 +669,17 @@ Returns a list of fields defined for the SFNode object.
 
 The X3DAbstractNode interface defines an interface for concrete node types. The object consists solely of read-only properties. It does not define any additional functions.
 
-### Instance Creation Method\(s\)
+### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
 
 ### Static Properties
 
-#### **typeName**
+#### **typeName**: string
 
 The node type name for this class. This property is read only.
 
-#### **componentInfo**
+#### **componentInfo**: { name: string, level: number }
 
 Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
 
@@ -560,7 +693,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 
@@ -578,7 +711,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-#### **length**
+#### **length**: number
 
 An integer containing the number of elements in the array. This property is read only.
 

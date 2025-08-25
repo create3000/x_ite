@@ -16,14 +16,21 @@ timezone: Europe/Berlin
 
 title: X_ITE X3D Browser # the main title
 
-tagline: Ready for X3Dv4! # it will display as the sub-title
+tagline: Ready for X3Dv4 and WebXR! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.
+  X_ITE X3D Browser and VRML Viewer, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.
 
-x_ite_latest_version: 10.1.0 # x_ite latest version
-x_ite_compressed_size: 265 # size in kb
 x3d_latest_version: 4.0 # x3d latest version
+
+# x_ite settings
+x_ite_latest_version: 12.0.4 # x_ite latest version
+x_ite_compressed_size: 301 # size in kb
+x_ite_js_integrity: sha384-N++p3zcbM0TPrMeN6YUrPrlB/IBMzsJwMhRKdW664W94e3s+brPeAHxp83PMMNht
+x_ite_min_js_integrity: sha384-E6PSyB431Z8ppPFmXrGDL40qL5SBP+sAZ/Lyy+whw1O7JetD2CNDu5KopjC2jq6T
+x_ite_mjs_integrity: sha384-14D0RehAqFUeoPqjiXldkKqbwS5EzLCIC9PtFT0j3RNM79wBlWkPgIbL4ANanlzh
+x_ite_min_mjs_integrity: sha384-0aXwjgpAjctt3g38SUr2yhypkeRoT7Hrt1IP3sOu0Tqy0YSP61MmofVRJC81JYix
+x_ite_css_integrity: sha384-Nt7hq9ZM47/AevUFnJD8EeXH4E10q89/uh15hKA86vKmA6ONDj4hwxSysNC8srox
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
@@ -220,6 +227,7 @@ exclude:
   - LICENSE
   - "*.config.js"
   - package*.json
+  - ssl
 
 jekyll-archives:
   enabled: [categories, tags]

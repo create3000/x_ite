@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DDragSensorNode    from "./X3DDragSensorNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
@@ -63,6 +17,8 @@ function CylinderSensor (executionContext)
    X3DDragSensorNode .call (this, executionContext);
 
    this .addType (X3DConstants .CylinderSensor);
+
+   // Units
 
    this ._diskAngle .setUnit ("angle");
    this ._minAngle  .setUnit ("angle");
@@ -82,7 +38,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
       this .modelViewMatrix    = new Matrix4 ();
       this .invModelViewMatrix = new Matrix4 ();
 
-      this .cylinder    = new Cylinder3 (new Line3 (new Vector3 (), new Vector3 ()), 0);
+      this .cylinder    = new Cylinder3 (new Line3 (), 0);
       this .disk        = false;
       this .yPlane      = null;
       this .zPlane      = null;
@@ -95,7 +51,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    isBehind (hitRay, hitPoint)
    {
       const
-         enter = new Vector3 (0, 0 ,0),
+         enter = new Vector3 (),
          exit  = new Vector3 ();
 
       this .cylinder .intersectsLine (hitRay, enter, exit);
@@ -162,7 +118,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    activate (hit)
    {
       const
-         hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay   = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
 
       const
@@ -170,8 +126,8 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
       const
-         axis   = new Line3 (new Vector3 (), yAxis),
-         radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 ()) .magnitude ();
+         axis   = new Line3 (Vector3 .ZERO, yAxis),
+         radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 ()) .norm ();
 
       this .cylinder = new Cylinder3 (axis, radius);
       this .disk     = Math .abs (cameraBack .dot (yAxis)) > Math .cos (this ._diskAngle .getValue ());
@@ -184,7 +140,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          billboardToViewer = this .invModelViewMatrix .origin,
          sxNormal          = yAxis .copy () .cross (billboardToViewer) .normalize ();
 
-      this .sxPlane  = new Plane3 (new Vector3 (), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
+      this .sxPlane  = new Plane3 (Vector3 .ZERO, sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
       this .szNormal = sxNormal .copy () .cross (yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
 
       const trackPoint = new Vector3 ();
@@ -210,7 +166,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
       this .motionHit = hit .copy ();
 
       const
-         hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitRay     = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          trackPoint = new Vector3 ();
 
       if (this .disk)
@@ -278,26 +234,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
 
 Object .defineProperties (CylinderSensor,
 {
-   typeName:
-   {
-      value: "CylinderSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("CylinderSensor", "PointingDeviceSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

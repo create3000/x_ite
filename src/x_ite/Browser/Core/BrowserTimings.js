@@ -1,55 +1,8 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-import X3DBaseNode   from "../../Base/X3DBaseNode.js";
-import StopWatch     from "../../../standard/Time/StopWatch.js";
-import X3DConstants  from "../../Base/X3DConstants.js";
-import GeometryTypes from "../ParticleSystems/GeometryTypes.js";
-import _             from "../../../locale/gettext.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import StopWatch    from "../../../standard/Time/StopWatch.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import GeometryType from "../Shape/GeometryType.js";
+import _            from "../../../locale/gettext.js";
 
 function BrowserTimings (executionContext)
 {
@@ -71,8 +24,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       this .localStorage .setDefaultValues ({ type: "LESS" });
 
       this .element = $("<div></div>")
-         .hide ()
-         .addClass ("x_ite-private-browser-timings")
+         .addClass (["x_ite-private-browser-timings", "x_ite-private-hidden"])
          .appendTo (this .getBrowser () .getSurface ());
 
       this .table = $("<table></table>")
@@ -175,15 +127,21 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
    {
       if (this .getBrowser () .getBrowserOption ("Timings"))
       {
-         this .element .stop (true, true) .fadeIn ();
-         this .fps .reset ();
+         this .element
+            .removeClass (["x_ite-private-fade-out-300", "x_ite-private-hidden"])
+            .addClass ("x_ite-private-fade-in-300");
+
          this .getBrowser () .addBrowserCallback (this, X3DConstants .INITIALIZED_EVENT, () => this .reset ());
          this .getBrowser () .prepareEvents () .addInterest ("update", this);
          this .reset ();
       }
       else
       {
-         this .element .stop (true, true) .fadeOut ();
+
+         this .element
+            .removeClass ("x_ite-private-fade-in-300")
+            .addClass ("x_ite-private-fade-out-300");
+
          this .getBrowser () .removeBrowserCallback (this, X3DConstants .INITIALIZED_EVENT);
          this .getBrowser () .prepareEvents () .removeInterest ("update", this);
       }
@@ -213,19 +171,16 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       else
          this .button .text (_("More Properties"));
    },
-   reset ()
+   async reset ()
    {
-      this .getBrowser () .addBrowserEvent ();
+      await this .getBrowser () .nextFrame ();
 
-      requestAnimationFrame (() =>
-      {
-         this .fps .reset ();
-         this .build ();
-      });
+      this .fps .reset ();
+      this .build ();
    },
    update ()
    {
-      this .fps .stop ()
+      this .fps .stop ();
 
       if (this .fps .elapsedTime > 1000)
       {
@@ -333,24 +288,24 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          {
             switch (shapeNode .getGeometryType ())
             {
-               case GeometryTypes .POINT:
+               case GeometryType .POINT:
                {
                   this .primitives .points += numInstances;
                   continue;
                }
-               case GeometryTypes .LINE:
+               case GeometryType .LINE:
                {
                   this .primitives .lines += numInstances;
                   continue;
                }
-               case GeometryTypes .TRIANGLE:
-               case GeometryTypes .QUAD:
-               case GeometryTypes .SPRITE:
+               case GeometryType .TRIANGLE:
+               case GeometryType .QUAD:
+               case GeometryType .SPRITE:
                {
                   this .primitives .triangles += numInstances * 2;
                   continue;
                }
-               case GeometryTypes .GEOMETRY:
+               case GeometryType .GEOMETRY:
                {
                   break;
                }

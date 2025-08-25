@@ -44,7 +44,7 @@ A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) node senses
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform>
   <TouchSensor DEF='Touched'/>
   <Shape><!-- ... --></Shape>
@@ -52,7 +52,7 @@ A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) node senses
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -68,7 +68,7 @@ Transform {
 
 ### XML Encoding
 
-```xml
+```x3d
 <TouchSensor DEF='Touch'/>
 
 <TimeSensor DEF='Timer1' ... />
@@ -84,7 +84,7 @@ Transform {
 <ROUTE fromNode='Rot1' fromField='value_changed' toNode='Frame1' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Touch TouchSensor { }
@@ -104,6 +104,16 @@ ROUTE Timer1.fraction_changed TO Rot1.set_fraction
 ROUTE Rot1.value_changed      TO Frame1.set_rotation
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/touch1/screenshot.avif" alt="TouchSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/touch1/touch1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv)
+{: .example-links }
+
 ## Syntax: SphereSensor
 
 A [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/) node senses a cursor drag and generates rotations as if rotating a ball:
@@ -113,7 +123,7 @@ A [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/) node sens
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform>
   <SphereSensor DEF='Rotator'/>
   <Transform DEF='RotateMe'><!-- ... --></Transform>
@@ -121,7 +131,7 @@ A [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/) node sens
 <ROUTE fromNode='Rotator' fromField='rotation_changed' toNode='RotateMe' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -133,6 +143,16 @@ Transform {
 ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/rotator2/rotator2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/rotator2/screenshot.avif" alt="SphereSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/rotator2/rotator2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/rotator2/rotator2.x3dv)
+{: .example-links }
+
 ## Syntax: CylinderSensor
 
 A [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) node senses a cursor drag and generates rotations as if rotating a cylinder:
@@ -142,7 +162,7 @@ A [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform>
   <CylinderSensor DEF='Rotator'/>
   <Transform DEF='RotateMe'><!-- ... --></Transform>
@@ -150,7 +170,7 @@ A [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) node 
 <ROUTE fromNode='Rotator' fromField='rotation_changed' toNode='RotateMe' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -162,6 +182,16 @@ Transform {
 ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/rotator1/rotator1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/rotator1/screenshot.avif" alt="CylinderSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/rotator1/rotator1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/rotator1/rotator1.x3dv)
+{: .example-links }
+
 ## Syntax: PlaneSensor
 
 A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses a cursor drag and generates translations as if sliding on a plane:
@@ -171,7 +201,7 @@ A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform>
   <PlaneSensor DEF='Mover'/>
   <Transform DEF='MoveMe'><!-- ... --></Transform>
@@ -179,7 +209,7 @@ A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses
 <ROUTE fromNode='Mover' fromField='translation_changed' toNode='MoveMe' toField='set_translation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -190,6 +220,16 @@ Transform {
 }
 ROUTE Mover.translation_changed TO MoveMe.set_translation
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/mover1/mover1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/mover1/screenshot.avif" alt="PlaneSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/mover1/mover1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/mover1/mover1.x3dv)
+{: .example-links }
 
 ## Using multiple sensors
 

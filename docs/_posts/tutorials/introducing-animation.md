@@ -91,11 +91,11 @@ A **ROUTE** statement connects two nodes together using
 
 ### XML Encoding
 
-```xml
+```x3d
 <ROUTE fromNode='MySender' fromField='rotation_changed' toNode='MyReceiver' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 ROUTE MySender.rotation_changed TO MyReceiver.set_rotation
@@ -161,7 +161,7 @@ The [Transform](/x_ite/components/grouping/transform/) node has:
 
 ### XML Encoding
 
-```xml
+```x3d
 <TouchSensor DEF='Touch'/>
 
 <TimeSensor DEF='Timer1' ... />
@@ -177,7 +177,7 @@ The [Transform](/x_ite/components/grouping/transform/) node has:
 <ROUTE fromNode='Rot1' fromField='value_changed' toNode='Frame1' toField='set_rotation'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF Touch TouchSensor { }
@@ -196,6 +196,16 @@ ROUTE Touch.touchTime         TO Timer1.set_startTime
 ROUTE Timer1.fraction_changed TO Rot1.set_fraction
 ROUTE Rot1.value_changed      TO Frame1.set_rotation
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/touch1/screenshot.avif" alt="TouchSensor"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/touch1/touch1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv)
+{: .example-links }
 
 ## Using multiple routes
 

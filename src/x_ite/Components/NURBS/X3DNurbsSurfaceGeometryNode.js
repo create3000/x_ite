@@ -1,50 +1,4 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
+import X3DNode                   from "../Core/X3DNode.js";
 import X3DParametricGeometryNode from "./X3DParametricGeometryNode.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
 import X3DCast                   from "../../Base/X3DCast.js";
@@ -99,13 +53,11 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    },
    set_controlPoint__ ()
    {
-      if (this .controlPointNode)
-         this .controlPointNode .removeInterest ("requestRebuild", this);
+      this .controlPointNode ?.removeInterest ("requestRebuild", this);
 
       this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
 
-      if (this .controlPointNode)
-         this .controlPointNode .addInterest ("requestRebuild", this);
+      this .controlPointNode ?.addInterest ("requestRebuild", this);
    },
    setTessellationScale (value)
    {
@@ -113,13 +65,13 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       this .requestRebuild ();
    },
-   getUTessellation (numKnots)
+   getUTessellation ()
    {
-      return Math .floor (NURBS .getTessellation (this ._uTessellation .getValue (), numKnots - this ._uOrder .getValue ()) * this .tessellationScale);
+      return Math .floor (NURBS .getTessellation (this ._uTessellation .getValue (), this ._uDimension .getValue ()) * this .tessellationScale);
    },
-   getVTessellation (numKnots)
+   getVTessellation (numWeights)
    {
-      return Math .floor (NURBS .getTessellation (this ._vTessellation .getValue (), numKnots - this ._vOrder .getValue ()) * this .tessellationScale);
+      return Math .floor (NURBS .getTessellation (this ._vTessellation .getValue (), this ._vDimension .getValue ()) * this .tessellationScale);
    },
    getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
    {
@@ -147,10 +99,12 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    {
       return NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode);
    },
-   getTrimmingContours ()
+   getSurface ()
    {
-      return undefined;
+      return this .surface;
    },
+   trimSurface ()
+   { },
    build ()
    {
       if (this ._uOrder .getValue () < 2)
@@ -168,7 +122,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       if (!this .controlPointNode)
          return;
 
-      if (this .controlPointNode .getSize () !== this ._uDimension .getValue () * this ._vDimension .getValue ())
+      if (this .controlPointNode .getSize () < this ._uDimension .getValue () * this ._vDimension .getValue ())
          return;
 
       // Order and dimension are now positive numbers.
@@ -185,9 +139,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       const
          uKnots = this .getKnots (this .uKnots, uClosed, this ._uOrder .getValue (), this ._uDimension .getValue (), this ._uKnot),
-         vKnots = this .getKnots (this .vKnots, vClosed, this ._vOrder .getValue (), this ._vDimension .getValue (), this ._vKnot),
-         uScale = uKnots .at (-1) - uKnots [0],
-         vScale = vKnots .at (-1) - vKnots [0];
+         vKnots = this .getKnots (this .vKnots, vClosed, this ._vOrder .getValue (), this ._vDimension .getValue (), this ._vKnot);
 
       // Initialize NURBS tessellator
 
@@ -195,7 +147,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          uDegree = this ._uOrder .getValue () - 1,
          vDegree = this ._vOrder .getValue () - 1;
 
-      const surface = this .surface = (this .surface || nurbs) ({
+      this .surface = (this .surface ?? nurbs) ({
          boundary: ["open", "open"],
          degree: [uDegree, vDegree],
          knots: [uKnots, vKnots],
@@ -205,126 +157,149 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       const sampleOptions = this .sampleOptions;
 
-      sampleOptions .resolution [0]   = this .getUTessellation (uKnots .length);
-      sampleOptions .resolution [1]   = this .getVTessellation (vKnots .length);
-      sampleOptions .closed [0]       = uClosed;
-      sampleOptions .closed [1]       = vClosed;
-      sampleOptions .domain           = undefined;
-      sampleOptions .haveWeights      = !! weights;
-      sampleOptions .trimmingContours = this .getTrimmingContours ();
+      sampleOptions .resolution [0] = this .getUTessellation ();
+      sampleOptions .resolution [1] = this .getVTessellation ();
+      sampleOptions .closed [0]     = uClosed;
+      sampleOptions .closed [1]     = vClosed;
+      sampleOptions .haveWeights    = !! weights;
 
       const
-         mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
+         mesh        = nurbs .sample (this .mesh, this .surface, sampleOptions),
          faces       = mesh .faces,
          points      = mesh .points,
          vertexArray = this .getVertices ();
 
-      for (let i = 0, length = faces .length; i < length; ++ i)
+      for (const face of faces)
       {
-         const index = faces [i] * 3;
+         const index = face * 3;
 
          vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
       }
 
-      this .buildNurbsTexCoords (uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), uKnots, vKnots, this ._uDimension .getValue (), this ._vDimension .getValue (), surface .domain);
+      this .buildNurbsTexCoords (uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), uKnots, vKnots, this ._uDimension .getValue (), this ._vDimension .getValue ());
+
       this .generateNormals (faces, points);
+      this .trimSurface (uKnots, vKnots);
       this .setSolid (this ._solid .getValue ());
       this .setCCW (true);
    },
-   buildNurbsTexCoords: (() =>
+   buildNurbsTexCoords (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension)
    {
-      const
-         defaultTexUKnots        = [ ],
-         defaultTexVKnots        = [ ],
-         defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
+      const multiTexCoordArray = this .getMultiTexCoords ();
 
-      function getDefaultTexKnots (result, knots)
+      if (this .texCoordNode)
       {
-         result [0] = result [1] = knots [0];
-         result [2] = result [3] = knots .at (-1);
-         return result;
-      }
+         this .texCoordNode .init (multiTexCoordArray);
 
-      return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
-      {
-         const sampleOptions = this .sampleOptions;
+         const
+            textureCoordinates = this .texCoordNode .getTextureCoordinates ?.(),
+            numMultiTexCoords  = multiTexCoordArray .length;
 
-         if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
+         for (let i = 0; i < numMultiTexCoords; ++ i)
          {
-            var
+            const
+               texCoordArray    = multiTexCoordArray [i],
+               texCoordNode     = textureCoordinates ?.[i] ?? this .texCoordNode,
                texUDegree       = uOrder - 1,
                texVDegree       = vOrder - 1,
                texUKnots        = uKnots,
                texVKnots        = vKnots,
-               texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
-         }
-         else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
-         {
-            var
-               node             = this .nurbsTexCoordNode,
-               texUDegree       = node ._uOrder .getValue () - 1,
-               texVDegree       = node ._vOrder .getValue () - 1,
-               texUKnots        = this .getKnots (this .texUKnots, false, node ._uOrder .getValue (), node ._uDimension .getValue (), node ._uKnot),
-               texVKnots        = this .getKnots (this .texVKnots, false, node ._vOrder .getValue (), node ._vDimension .getValue (), node ._vKnot),
-               texWeights       = this .getUVWeights (this .texWeights, node ._uDimension .getValue (), node ._vDimension .getValue (), node ._weight);
-               texControlPoints = node .getControlPoints (texWeights);
-         }
-         else
-         {
-            var
-               texUDegree       = 1,
-               texVDegree       = 1,
-               texUKnots        = getDefaultTexKnots (defaultTexUKnots, uKnots),
-               texVKnots        = getDefaultTexKnots (defaultTexVKnots, vKnots),
-               texControlPoints = defaultTexControlPoints;
+               texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
 
-            sampleOptions .domain = domain;
+            this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
          }
+      }
+      else if (this .nurbsTexCoordNode ?.isValid ())
+      {
+         const
+            node             = this .nurbsTexCoordNode,
+            texUDegree       = node ._uOrder .getValue () - 1,
+            texVDegree       = node ._vOrder .getValue () - 1,
+            texUKnots        = this .getKnots (this .texUKnots, false, node ._uOrder .getValue (), node ._uDimension .getValue (), node ._uKnot),
+            texVKnots        = this .getKnots (this .texVKnots, false, node ._vOrder .getValue (), node ._vDimension .getValue (), node ._vKnot),
+            texWeights       = this .getUVWeights (this .texWeights, node ._uDimension .getValue (), node ._vDimension .getValue (), node ._weight),
+            texControlPoints = node .getControlPoints (texWeights),
+            texCoordArray    = this .getTexCoords ();
 
-         const texSurface = this .texSurface = (this .texSurface || nurbs) ({
-            boundary: ["open", "open"],
-            degree: [texUDegree, texVDegree],
-            knots: [texUKnots, texVKnots],
-            points: texControlPoints,
-         });
+         multiTexCoordArray .push (texCoordArray);
+         this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
+      }
+      else
+      {
+         const texCoordArray = this .getTexCoords ();
 
-         sampleOptions .closed [0]  = false;
-         sampleOptions .closed [1]  = false;
-         sampleOptions .haveWeights = false;
+         multiTexCoordArray .push (texCoordArray);
+         this .createDefaultNurbsTexCoords (texCoordArray);
+      }
+   },
+   createDefaultNurbsTexCoords: (() =>
+   {
+      const
+         defaultTexKnots         = [0, 0, 5, 5],
+         defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
+
+      return function (texCoordArray)
+      {
+         // Create texture coordinates in the unit square.
 
          const
-            texMesh       = nurbs .sample (this .texMesh, texSurface, sampleOptions),
-            faces         = texMesh .faces,
-            points        = texMesh .points,
-            texCoordArray = this .getTexCoords ();
+            texUDegree       = 1,
+            texVDegree       = 1,
+            texUKnots        = defaultTexKnots,
+            texVKnots        = defaultTexKnots,
+            texControlPoints = defaultTexControlPoints;
 
-         for (let i = 0, length = faces .length; i < length; ++ i)
-         {
-            const index = faces [i] * 4;
-
-            texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
-         }
-
-         this .getMultiTexCoords () .push (this .getTexCoords ());
+         return this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
       };
    })(),
+   createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray)
+   {
+      this .texSurface = (this .texSurface ?? nurbs) ({
+         boundary: ["open", "open"],
+         degree: [texUDegree, texVDegree],
+         knots: [texUKnots, texVKnots],
+         points: texControlPoints,
+      });
+
+      const sampleOptions = this .sampleOptions;
+
+      sampleOptions .closed [0]  = false;
+      sampleOptions .closed [1]  = false;
+      sampleOptions .haveWeights = false;
+
+      const
+         texMesh = nurbs .sample (this .texMesh, this .texSurface, sampleOptions),
+         faces   = texMesh .faces,
+         points  = texMesh .points;
+
+      for (const face of faces)
+      {
+         const i = face * 4;
+
+         texCoordArray .push (points [i], points [i + 1], points [i + 2], points [i + 3]);
+      }
+
+      return texCoordArray;
+   },
    generateNormals (faces, points)
    {
       const
          normals     = this .createNormals (faces, points),
          normalArray = this .getNormals ();
 
-      for (const normal of normals)
-         normalArray .push (normal .x, normal .y, normal .z);
+      for (const { x, y, z } of normals)
+         normalArray .push (x, y, z);
    },
    createNormals (faces, points)
    {
+      // TODO: handle uClosed, vClosed.
+
       const
          normalIndex = new Map (),
          normals     = this .createFaceNormals (faces, points),
-         length      = faces .length;
+         numFaces    = faces .length;
 
-      for (let i = 0; i < length; ++ i)
+      for (let i = 0; i < numFaces; ++ i)
       {
          const index = faces [i];
 
@@ -348,10 +323,10 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       return function (faces, points)
       {
          const
-            normals = this .faceNormals || [ ],
-            length  = faces .length;
+            normals  = this .faceNormals ?? [ ],
+            numFaces = faces .length;
 
-         for (let i = 0; i < length; i += 3)
+         for (let i = 0; i < numFaces; i += 3)
          {
             const
                index1 = faces [i]     * 3,
@@ -362,32 +337,20 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
             v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
 
-            const normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 ());
+            const normal = Triangle3 .normal (v1, v2 ,v3, normals [i] ?? new Vector3 ());
 
             normals [i]     = normal;
             normals [i + 1] = normal;
             normals [i + 2] = normal;
          }
 
-         normals .length = length;
+         normals .length = numFaces;
 
          return normals;
       };
    })(),
 });
 
-Object .defineProperties (X3DNurbsSurfaceGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DNurbsSurfaceGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNurbsSurfaceGeometryNode, X3DNode .getStaticProperties ("X3DNurbsSurfaceGeometryNode", "NURBS", 1));
 
 export default X3DNurbsSurfaceGeometryNode;

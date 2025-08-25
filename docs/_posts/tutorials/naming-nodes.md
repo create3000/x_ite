@@ -17,7 +17,7 @@ The **DEF** syntax gives a name to a node.
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material DEF='RedColor'
@@ -27,7 +27,7 @@ The **DEF** syntax gives a name to a node.
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -53,7 +53,7 @@ The **USE** syntax uses a previously named node
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material USE='RedColor'/>
@@ -62,7 +62,7 @@ The **USE** syntax uses a previously named node
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -96,7 +96,7 @@ Names are also necessary for animation ...
 
 ### XML Encoding
 
-```xml
+```x3d
 <Inline
     url='"table.x3dv"'/>
 <Transform
@@ -121,7 +121,7 @@ Names are also necessary for animation ...
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Inline {
@@ -157,7 +157,7 @@ Transform {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/dinette/dinette.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/dinette/screenshot.png" alt="Dinette"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/dinette/screenshot.avif" alt="Dinette"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/dinette/dinette.zip)

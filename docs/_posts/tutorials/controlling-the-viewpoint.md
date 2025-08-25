@@ -29,7 +29,7 @@ A [Viewpoint](/x_ite/components/navigation/viewpoint/) node specifies a named vi
 
 ### XML Encoding
 
-```xml
+```x3d
 <Viewpoint
     position='0.0 0.0 10.0'
     orientation='0.0 0.0 1.0 0.0'
@@ -37,7 +37,7 @@ A [Viewpoint](/x_ite/components/navigation/viewpoint/) node specifies a named vi
     description='Entry View'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Viewpoint {
@@ -47,6 +47,16 @@ Viewpoint {
   description "Entry View"
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/viewpoint1/viewpoint1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/viewpoint1/screenshot.avif" alt="Viewpoint"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/viewpoint1/viewpoint1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/viewpoint1/viewpoint1.x3dv)
+{: .example-links }
 
 ## Summary
 

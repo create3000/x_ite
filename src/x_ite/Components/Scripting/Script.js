@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DBaseNode                 from "../../Base/X3DBaseNode.js";
 import X3DFieldDefinition          from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray        from "../../Base/FieldDefinitionArray.js";
@@ -75,6 +28,7 @@ import X3DProtoDeclarationNode     from "../../Prototype/X3DProtoDeclarationNode
 import RouteArray                  from "../../Routing/RouteArray.js";
 import X3DRoute                    from "../../Routing/X3DRoute.js";
 import evaluate                    from "../../Browser/Scripting/evaluate.js";
+import X3DNode                     from "../Core/X3DNode.js";
 import X3DScriptNode               from "./X3DScriptNode.js";
 import FileLoader                  from "../../InputOutput/FileLoader.js";
 import X3DConstants                from "../../Base/X3DConstants.js";
@@ -129,7 +83,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    {
       return this ._url;
    },
-   unloadData ()
+   async unloadData ()
    {
       // Call shutdown.
 
@@ -140,7 +94,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       // Disconnect shutdown.
 
-      $(window) .off (`.Script${this .getId ()}`);
+      $(window) .off (`.Script-${this .getId ()}`);
 
       // Disconnect prepareEvents.
 
@@ -158,9 +112,10 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    async loadData ()
    {
       // See: 29.2.2 Script execution
+      // Wait a tick to get user-defined field with name self working.
       await this .unloadData ();
 
-      new FileLoader (this) .loadDocument (this ._url, data =>
+      new FileLoader (this) .loadDocument (this ._url, async data =>
       {
          if (data === null)
          {
@@ -169,7 +124,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          }
          else
          {
-            this .initialize__ ($.decodeText (data));
+            await this .initialize__ ($.decodeText (data));
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
       });
@@ -198,10 +153,12 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       function SFNode (vrmlSyntax)
       {
-         const nodes = browser .createVrmlFromString (vrmlSyntax);
+         const node = new Fields .SFNode ();
 
-         if (nodes .length && nodes [0])
-            return nodes [0];
+         node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
+
+         if (node .getValue ())
+            return node;
 
          throw new Error ("SFNode.new: invalid argument.");
       }
@@ -347,8 +304,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    evaluate (sourceText)
    {
-      if (!this .globalObject)
-         this .globalObject = this .createGlobalObject ();
+      this .globalObject ??= this .createGlobalObject ();
 
       return evaluate (SFNodeCache .get (this), this .globalObject, sourceText);
    },
@@ -366,7 +322,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       const shutdown = this .context .get ("shutdown");
 
       if (typeof shutdown === "function")
-         $(window) .on (`unload.Script${this .getId ()}`, () => this .call__ (shutdown, "shutdown"));
+         $(window) .on (`unload.Script-${this .getId ()}`, () => this .call__ (shutdown, "shutdown"));
 
       // Connect prepareEvents.
 
@@ -465,26 +421,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
 Object .defineProperties (Script,
 {
-   typeName:
-   {
-      value: "Script",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Scripting", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("Script", "Scripting", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
@@ -492,7 +429,7 @@ Object .defineProperties (Script,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "directOutput",         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "mustEvaluate",         new Fields .SFBool ()),

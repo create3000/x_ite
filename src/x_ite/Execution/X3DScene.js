@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields              from "../Fields.js";
 import X3DExecutionContext from "./X3DExecutionContext.js";
 import { getUniqueName }   from "./NamedNodesHandling.js";
@@ -78,8 +31,13 @@ function X3DScene (browser)
 
    this .addChildObjects (X3DConstants .outputOnly, "profile_changed",  new Fields .SFTime (),
                           X3DConstants .outputOnly, "metadata_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "initLoadCount",    new Fields .SFInt32 (),
                           X3DConstants .outputOnly, "loadCount",        new Fields .SFInt32 ())
+
+   this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
+
+   this .setLive (false);
+
+   // Private properties
 
    this [_specificationVersion] = LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
@@ -100,17 +58,13 @@ function X3DScene (browser)
    this [_components]    .addParent (this);
    this [_units]         .addParent (this);
    this [_exportedNodes] .addParent (this);
-
-   this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
-
-   this .setLive (false);
 }
 
 Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext .prototype),
 {
-   isScene ()
+   getLocalScene ()
    {
-      return true;
+      return this;
    },
    setSpecificationVersion (specificationVersion)
    {
@@ -150,7 +104,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       this [_profile] = profile;
 
-      this ._profile_changed = this .getBrowser () .getCurrentTime ();
+      this ._profile_changed = Date .now () / 1000;
    },
    getProfile ()
    {
@@ -158,36 +112,33 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    hasComponent (name, level = 0)
    {
-      if (!this [_profile])
-         return true;
-
       if (name instanceof ComponentInfo)
          var { name, level } = name;
 
-      const component = this [_profile] .components .get (name) ?? this [_components] .get (name);
+      const
+         browser = this .getBrowser (),
+         profile = this [_profile] ?? browser .getProfile ("Full");
 
-      if (component)
-         return level <= component .level;
-
-      return false;
+      return [profile .components .get (name), this [_components] .get (name)]
+         .some (component => component && level <= component .level);
    },
    addComponent (component)
    {
       this [_components] .add (component .name, component);
 
-      this ._components_changed = this .getBrowser () .getCurrentTime ();
+      this ._components_changed = Date .now () / 1000;
    },
    updateComponent (component)
    {
       this [_components] .update (component .name, component .name, component);
 
-      this ._components_changed = this .getBrowser () .getCurrentTime ();
+      this ._components_changed = Date .now () / 1000;
    },
    removeComponent (name)
    {
       this [_components] .remove (name);
 
-      this ._components_changed = this .getBrowser () .getCurrentTime ();
+      this ._components_changed = Date .now () / 1000;
    },
    getComponents ()
    {
@@ -202,7 +153,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_units] .update (category, category, new UnitInfo (category, String (name),  Number (conversionFactor)));
 
-      this ._units_changed = this .getBrowser () .getCurrentTime ();
+      this ._units_changed = Date .now () / 1000;
    },
    getUnit (category)
    {
@@ -283,7 +234,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_metadata] .set (name, values .map (String));
 
-      this ._metadata_changed = this .getBrowser () .getCurrentTime ();
+      this ._metadata_changed = Date .now () / 1000;
    },
    addMetaData (name, value)
    {
@@ -306,7 +257,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_metadata] .delete (name);
 
-      this ._metadata_changed = this .getBrowser () .getCurrentTime ();
+      this ._metadata_changed = Date .now () / 1000;
    },
    getMetaData (name)
    {
@@ -337,7 +288,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this .updateExportedNode (exportedName, node);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    updateExportedNode (exportedName, node)
    {
@@ -357,7 +308,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_exportedNodes] .update (exportedName, exportedName, exportedNode);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    removeExportedNode (exportedName)
    {
@@ -365,7 +316,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_exportedNodes] .remove (exportedName);
 
-      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = Date .now () / 1000;
    },
    getExportedNode (exportedName)
    {
@@ -407,9 +358,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    setRootNodes (value)
    {
-      if (!(value instanceof Fields .MFNode))
-         throw new Error ("Value must be of type MFNode.");
-
       this .getRootNodes () .assign (value);
    },
    toVRMLStream (generator)
@@ -509,7 +457,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          generator .string += generator .Indent ();
          generator .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
          generator .string += LATEST_VERSION;
-         generator .string += "//EN\" \"http://www.web3d.org/specifications/x3d-";
+         generator .string += "//EN\" \"https://www.web3d.org/specifications/x3d-";
          generator .string += LATEST_VERSION;
          generator .string += ".dtd\">";
          generator .string += generator .TidyBreak ();
@@ -528,7 +476,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += generator .Space ();
       generator .string += "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'";
       generator .string += generator .Space ();
-      generator .string += "xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-";
+      generator .string += "xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-";
       generator .string += LATEST_VERSION;
       generator .string += ".xsd'>";
       generator .string += generator .TidyBreak ();
@@ -705,7 +653,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += "http://www.web3d.org/specifications/x3d-";
+      generator .string += "https://www.web3d.org/specifications/x3d-";
       generator .string += LATEST_VERSION;
       generator .string += ".xsd";
       generator .string += '"';
@@ -722,7 +670,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += "http://www.web3d.org/specifications/x3d-";
+      generator .string += "https://www.web3d.org/specifications/x3d-";
       generator .string += LATEST_VERSION;
       generator .string += "-JSONSchema.json";
       generator .string += '"';
@@ -753,11 +701,11 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
          if (this .getMetaDatas () .size)
          {
-            if (headLastProperty)
-            {
-               generator .string += ',';
-               generator .string += generator .TidyBreak ();
-            }
+            // if (headLastProperty)
+            // {
+            //    generator .string += ',';
+            //    generator .string += generator .TidyBreak ();
+            // }
 
 
             // Meta data begin
@@ -986,69 +934,29 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
 },
 {
-   setExecutionContext (executionContext)
-   {
-      if (this .getExecutionContext ())
-      {
-         const scene = this .getScene ();
-
-         for (const object of this [_loadingObjects])
-            scene .removeLoadingObject (object);
-      }
-
-      X3DExecutionContext .prototype .setExecutionContext .call (this, executionContext);
-
-      if (this .getExecutionContext ())
-      {
-         const scene = this .getScene ();
-
-         for (const object of this [_loadingObjects])
-            scene .addLoadingObject (object);
-      }
-   },
-   addInitLoadCount (node)
-   {
-      this ._initLoadCount = this ._initLoadCount .getValue () + 1;
-   },
-   removeInitLoadCount (node)
-   {
-      this ._initLoadCount = this ._initLoadCount .getValue () - 1;
-   },
    getLoadingObjects ()
    {
       return this [_loadingObjects];
    },
    addLoadingObject (node)
    {
-      if (this [_loadingObjects] .has (node))
-         return;
-
       this [_loadingObjects] .add (node);
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      const browser = this .getBrowser ();
+      const parent = this .getScene () ?? this .getBrowser ();
 
-      if (this === browser .getExecutionContext ())
-         browser .addLoadingObject (node);
-
-      this .getScene () ?.addLoadingObject (node);
+      parent .addLoadingObject (node);
    },
    removeLoadingObject (node)
    {
-      if (!this [_loadingObjects] .has (node))
-         return;
-
       this [_loadingObjects] .delete (node);
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      const browser = this .getBrowser ();
+      const parent = this .getScene () ?? this .getBrowser ();
 
-      if (this === browser .getExecutionContext ())
-         browser .removeLoadingObject (node);
-
-      this .getScene () ?.removeLoadingObject (node);
+      parent .removeLoadingObject (node);
    },
 });
 
@@ -1057,6 +965,11 @@ for (const key of Object .keys (X3DScene .prototype))
 
 Object .defineProperties (X3DScene .prototype,
 {
+   isScene:
+   {
+      value: true,
+      enumerable: true,
+   },
    specificationVersion:
    {
       get: X3DScene .prototype .getSpecificationVersion,

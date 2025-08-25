@@ -15,7 +15,7 @@ tags: [SignalPdu, DIS]
 
 SignalPdu is a networked Protocol Data Unit (PDU) information node that communicates the transmission of voice, audio or other data modeled in a simulation.
 
-The SignalPdu node belongs to the **DIS** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The SignalPdu node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -27,19 +27,60 @@ The SignalPdu node belongs to the **DIS** component and requires at least level 
         + SignalPdu (X3DBoundedObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| SFString | [in, out] | [address](#fields-address) | "localhost" |
+| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0  |
+| MFInt32 | [in, out] | [data](#fields-data) | [ ] |
+| SFInt32 | [in, out] | [dataLength](#fields-dataLength) | 0  |
+| SFInt32 | [in, out] | [encodingScheme](#fields-encodingScheme) | 0  |
+| SFInt32 | [in, out] | [entityID](#fields-entityID) | 0  |
+| SFString | [in, out] | [multicastRelayHost](#fields-multicastRelayHost) | "" |
+| SFInt32 | [in, out] | [multicastRelayPort](#fields-multicastRelayPort) |  |
+| SFString | [in, out] | [networkMode](#fields-networkMode) | "standAlone"  |
+| SFInt32 | [in, out] | [port](#fields-port) | 0  |
+| SFInt32 | [in, out] | [radioID](#fields-radioID) | 0  |
+| SFTime | [in, out] | [readInterval](#fields-readInterval) | 0.1  |
+| SFBool | [in, out] | [rtpHeaderExpected](#fields-rtpHeaderExpected) | FALSE |
+| SFInt32 | [in, out] | [sampleRate](#fields-sampleRate) | 0  |
+| SFInt32 | [in, out] | [samples](#fields-samples) | 0  |
+| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0  |
+| SFInt32 | [in, out] | [tdlType](#fields-tdlType) | 0  |
+| SFInt32 | [in, out] | [whichGeometry](#fields-whichGeometry) | 1  |
+| SFTime | [in, out] | [writeInterval](#fields-writeInterval) | 1  |
+| SFBool | [out] | [isNetworkReader](#fields-isNetworkReader) |  |
+| SFBool | [out] | [isNetworkWriter](#fields-isNetworkWriter) |  |
+| SFBool | [out] | [isRtpHeaderHeard](#fields-isRtpHeaderHeard) |  |
+| SFBool | [out] | [isStandAlone](#fields-isStandAlone) |  |
+| SFTime | [out] | [timestamp](#fields-timestamp) |  |
+| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0  |
+| MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the node.
 
@@ -48,6 +89,7 @@ Author-provided prose that describes intended purpose of the node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **visible** TRUE
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -57,6 +99,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -65,6 +108,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -72,24 +116,27 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
 #### Hints
 
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
 
 Enables/disables the sensor node.
 
 ### SFBool [out] **isActive**
+{: #fields-isActive }
 
 Confirm whether there has been a recent network update.
 
@@ -98,38 +145,47 @@ Confirm whether there has been a recent network update.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFString [in, out] **address** "localhost"
+{: #fields-address }
 
 Multicast network *address*, or else 'localhost'. Example: 224.2.181.145.
 
 ### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
+{: #fields-applicationID }
 
 Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
 ### MFInt32 [in, out] **data** [ ] <small>[0,255]</small>
+{: #fields-data }
 
 Holds audio or digital *data* conveyed by the radio transmission. Interpretation of the field depends on values of encodingScheme and tdlType fields.
 
 ### SFInt32 [in, out] **dataLength** 0 <small>[0,65535]</small>
+{: #fields-dataLength }
 
 Number of bits of digital voice audio or digital data being sent in the Signal PDU. If the Encoding Class is database index, then *dataLength* field is set to 96.
 
 ### SFInt32 [in, out] **encodingScheme** 0 <small>[0,65535]</small>
+{: #fields-encodingScheme }
 
 Designates both Encoding Class and Encoding Type. Encoding Class enumerated value (2 most significant bits): 0 = Encoded Voice; 1 = Raw Binary Data; 2 = Application-Specific Data; 3 = Database Index. Encoding Type enumerated value (14 least significant bits): 1 = 8-bit mu-law; 2 = CVSD per MIL-STD-188-113; 3 = ADPCM per CCITT G.721; 4 = 16-bit linear PCM; 5 = 8-bit linear PCM; 6 = Vector Quantization.
 
 ### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
+{: #fields-entityID }
 
 EntityID unique ID for entity within that application.
 
 ### SFString [in, out] **multicastRelayHost** ""
+{: #fields-multicastRelayHost }
 
 Fallback server address if multicast not available locally. For example: track.nps.edu.
 
 ### SFInt32 [in, out] **multicastRelayPort**
+{: #fields-multicastRelayPort }
 
 Fallback server port if multicast not available locally. For example: 8010.
 
 ### SFString [in, out] **networkMode** "standAlone" <small>["standAlone"|"networkReader"|"networkWriter"]</small>
+{: #fields-networkMode }
 
 Whether this entity is ignoring the network, sending DIS packets to the network, or receiving DIS packets from the network. (1) standAlone: ignore network but still respond to events in local scene. (2) networkReader: listen to network and read PDU packets at readInterval, act as remotely linked copy of entity. (3) networkWriter: send PDU packets to network at writeInterval, act as master entity. Default value "standAlone" ensures that DIS network activation within a scene as networkReader or networkWriter is intentional.
 
@@ -139,14 +195,17 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 - Network activity may have associated security issues.
 
 ### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
+{: #fields-port }
 
 Multicast network *port*, for example: 3000.
 
 ### SFInt32 [in, out] **radioID** 0 <small>[0,65535]</small>
+{: #fields-radioID }
 
 Identifies a particular radio within a given entity.
 
 ### SFTime [in, out] **readInterval** 0.1 <small>(0,∞)</small>
+{: #fields-readInterval }
 
 Seconds between read updates, 0 means no reading.
 
@@ -155,10 +214,12 @@ Seconds between read updates, 0 means no reading.
 - *readInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFBool [in, out] **rtpHeaderExpected** FALSE
+{: #fields-rtpHeaderExpected }
 
 Whether RTP headers are prepended to DIS PDUs.
 
 ### SFInt32 [in, out] **sampleRate** 0 <small>[0,65535]</small>
+{: #fields-sampleRate }
 
 *sampleRate* gives either (1) sample rate in samples per second if Encoding Class is encoded audio, or (2) data rate in bits per second for data transmissions. If Encoding Class is database index, *sampleRate* is set to zero.
 
@@ -167,22 +228,27 @@ Whether RTP headers are prepended to DIS PDUs.
 - [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency)
 
 ### SFInt32 [in, out] **samples** 0 <small>[0,65535]</small>
+{: #fields-samples }
 
 Number of *samples* in the PDU if the Encoding Class is encoded voice, otherwise the field is set to zero.
 
 ### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
+{: #fields-siteID }
 
 Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### SFInt32 [in, out] **tdlType** 0 <small>[0,65535]</small>
+{: #fields-tdlType }
 
 Tactical Data Link (TDL) type as an enumerated value when the Encoding Class is voice, raw binary, application-specific, or database index representation of a TDL message.
 
 ### SFInt32 [in, out] **whichGeometry** 1 <small>[-1,∞)</small>
+{: #fields-whichGeometry }
 
 Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
 
 ### SFTime [in, out] **writeInterval** 1 <small>(0,∞)</small>
+{: #fields-writeInterval }
 
 Seconds between write updates, 0 means no writing (sending).
 
@@ -191,6 +257,7 @@ Seconds between write updates, 0 means no writing (sending).
 - *writeInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFBool [out] **isNetworkReader**
+{: #fields-isNetworkReader }
 
 Whether networkMode='remote' (listen to network as copy of remote entity).
 
@@ -199,6 +266,7 @@ Whether networkMode='remote' (listen to network as copy of remote entity).
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isNetworkWriter**
+{: #fields-isNetworkWriter }
 
 Whether networkMode='master' (output to network as master entity at writeInterval).
 
@@ -207,6 +275,7 @@ Whether networkMode='master' (output to network as master entity at writeInterva
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isRtpHeaderHeard**
+{: #fields-isRtpHeaderHeard }
 
 Whether incoming DIS packets have an RTP header prepended.
 
@@ -215,6 +284,7 @@ Whether incoming DIS packets have an RTP header prepended.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isStandAlone**
+{: #fields-isStandAlone }
 
 Whether networkMode='local' (ignore network but still respond to local events).
 
@@ -223,6 +293,7 @@ Whether networkMode='local' (ignore network but still respond to local events).
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **timestamp**
+{: #fields-timestamp }
 
 DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 
@@ -231,6 +302,7 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-geoCoords }
 
 Geographic location (specified in current geoSystem coordinates) for children geometry (specified in relative coordinate system, in meters).
 
@@ -243,13 +315,14 @@ Geographic location (specified in current geoSystem coordinates) for children ge
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
+{: #fields-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 
 #### Hints
 
-- [X3D Architecture 25.2.2 Spatial reference frames](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/geospatial.html#Spatialreferenceframes
-- [X3D Architecture 25.2.4 Specifying geospatial coordinates](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/geospatial.html#Specifyinggeospatialcoords
+- [X3D Architecture 25.2.2 Spatial reference frames](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#Spatialreferenceframes)
+- [X3D Architecture 25.2.4 Specifying geospatial coordinates](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#Specifyinggeospatialcoords)
 - [UTM is Universal Transverse Mercator coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
 
 #### Warning

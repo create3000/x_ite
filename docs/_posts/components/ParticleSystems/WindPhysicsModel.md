@@ -15,7 +15,7 @@ tags: [WindPhysicsModel, ParticleSystems]
 
 WindPhysicsModel applies a wind effect to the particles. The wind includes a random variation factor to model gustiness.
 
-The WindPhysicsModel node belongs to the **ParticleSystems** component and requires at least level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
+The WindPhysicsModel node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -27,27 +27,42 @@ The WindPhysicsModel node belongs to the **ParticleSystems** component and requi
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 1 0 0  |
+| SFFloat | [in, out] | [speed](#fields-speed) | 0.1  |
+| SFFloat | [in, out] | [gustiness](#fields-gustiness) | 0.1  |
+| SFFloat | [in, out] | [turbulence](#fields-turbulence) | 0  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFVec3f [in, out] **direction** 1 0 0 <small>(-∞,∞)</small>
+{: #fields-direction }
 
-*direction* in which wind is travelling in the form of a normalized, unit vector.
+*direction* in which wind is traveling in the form of a normalized, unit vector.
 
 ### SFFloat [in, out] **speed** 0.1 <small>[0,∞)</small>
+{: #fields-speed }
 
 Initial linear *speed* (default is m/s) imparted to all particles along their direction of movement.
 
 ### SFFloat [in, out] **gustiness** 0.1 <small>[0,∞)</small>
+{: #fields-gustiness }
 
 *gustiness* specifies how much wind speed varies from the average speed.
 
@@ -56,6 +71,7 @@ Initial linear *speed* (default is m/s) imparted to all particles along their di
 - Wind speed variation is calculated once per frame and applied equally to all particles.
 
 ### SFFloat [in, out] **turbulence** 0 <small>[0,1]</small>
+{: #fields-turbulence }
 
 *turbulence* field specifies how much the wind acts directly in line with the direction, and how much variation is applied in directions other than the wind direction.
 
@@ -65,7 +81,9 @@ Initial linear *speed* (default is m/s) imparted to all particles along their di
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/screenshot.avif" alt="WindPhysicsModel"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.x3d)

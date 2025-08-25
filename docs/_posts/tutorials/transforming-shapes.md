@@ -15,7 +15,7 @@ tags: [Transforming, Shapes]
 
 ## Using coordinate systems
 
-- A X3D file builds components for a world
+- An X3D file builds components for a world
 - A file's world components are built in the file's world coordinate system
 - By default, all shapes are built at the origin of the world coordinate system
 
@@ -42,7 +42,7 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='...'
     rotation='...'
@@ -51,7 +51,7 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -68,7 +68,7 @@ The *children* field includes a list of one or more nodes
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform ...>
     <Shape><!-- ... --></Shape>
     <Shape><!-- ... --></Shape>
@@ -78,7 +78,7 @@ The *children* field includes a list of one or more nodes
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -99,7 +99,7 @@ Translation positions a coordinate system in X, Y, and Z.
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- X Y Z -->
 <Transform
     translation='2.0 0.0 0.0'>
@@ -107,7 +107,7 @@ Translation positions a coordinate system in X, Y, and Z.
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -126,7 +126,7 @@ Rotation orients a coordinate system about a rotation axis by a rotation angle
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- X Y Z Angle -->
 <Transform
     rotation='0.0 0.0 1.0 0.52'>
@@ -134,7 +134,7 @@ Rotation orients a coordinate system about a rotation axis by a rotation angle
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -175,7 +175,7 @@ Scale grows or shrinks a coordinate system by a scaling factor in X, Y, and Z.
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- X Y Z  -->
 <Transform
   scale='0.5 0.5 0.5'>
@@ -183,7 +183,7 @@ Scale grows or shrinks a coordinate system by a scaling factor in X, Y, and Z.
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -199,7 +199,7 @@ Scale, Rotate, and Translate a coordinate system, one after the other.
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='2.0 0.0 0.0'
     rotation='0.0 0.0 1.0 0.52'
@@ -208,7 +208,7 @@ Scale, Rotate, and Translate a coordinate system, one after the other.
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -228,7 +228,7 @@ Read operations bottom-up:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='-2.0 3.0 0.0'>
   <Shape>
@@ -244,7 +244,7 @@ Read operations bottom-up:
 <!-- ... -->
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -264,6 +264,16 @@ Transform {
 }
 ...
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder2/cylinder2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/cylinder2/screenshot.avif" alt="Cylinder"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder2/cylinder2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/cylinder2/cylinder2.x3dv)
+{: .example-links }
 
 ## Summary
 

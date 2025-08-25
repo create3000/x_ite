@@ -9,7 +9,7 @@ say "Updating glTF examples ...";
 
 $cwd = getcwd ();
 
-$script  = $cwd . "/docs/assets/laboratory/gltf-sample-viewer/gltf-sample-viewer.js";
+$script  = $cwd . "/docs/assets/laboratory/gltf-sample-viewer/gltf-sample-viewer.mjs";
 $viewer  = `cat $script`;
 $random  = $cwd . "/../media/docs/glTF/";
 $samples = "/Volumes/Home/X3D/glTF/";
@@ -23,7 +23,7 @@ sub media {
 
    my $string = "const models = [\n";
 
-   foreach (map { s|$random/||r } @files)
+   foreach (map { s|$random||r } @files)
    {
       chomp;
       $string .= "   \"$media/$_\",\n";
@@ -35,25 +35,33 @@ sub media {
 }
 
 sub glTF {
-   my $folder = shift;
-   my $suffix = shift;
-   my $var    = shift;
+   my $folders = shift;
+   my $suffix  = shift;
+   my $var     = shift;
 
-   say "Getting $folder files ...";
+   @all = ();
 
-   @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
-   @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
-   @files  = (@models, @assets);
+   foreach $folder (@$folders)
+   {
+      say "Getting $folder files ...";
 
-   s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
-   s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
-   s|$samples/|| foreach @files;
+      @models   = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @assets   = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @commerce = `find '$samples/3DC-Certification/models'  -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @files    = (@models, @assets, @commerce);
 
-   @files = grep { m|/$folder/| } @files;
+      s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
+      s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
+      s|/3DC-Certification/|/3DC-Certification/main/|     foreach @files;
+      s|$samples/|| foreach @files;
+
+      @files = grep { m|/$folder/|i } @files;
+      @all   = (@all, @files);
+   }
 
    my $string = "const $var = [\n";
 
-   foreach (@files)
+   foreach (sort @all)
    {
       chomp;
       $string .= "   \"$khronos/$_\",\n";
@@ -64,34 +72,38 @@ sub glTF {
    return $string;
 }
 
-chdir "$samples/glTF-Sample-Models";
-system "git pull origin";
-chdir "$samples/glTF-Sample-Assets";
+# chdir "$samples/glTF-Sample-Models";
+# system "git pull origin";
+# chdir "$samples/glTF-Sample-Assets";
+# system "git pull origin";
+chdir "$samples/3DC-Certification";
 system "git pull origin";
 
 $string = "";
 $string .= "// SAMPLES_BEGIN\n\n";
 $string .= media;
 $string .= "\n";
-$string .= glTF ("glTF", ".gltf", "glTF");
+$string .= glTF (["glTF"], ".gltf", "glTF");
 $string .= "\n";
-$string .= glTF ("glTF-Binary", ".glb", "glb");
+$string .= glTF (["glTF-Binary"], ".glb", "glb");
 $string .= "\n";
-$string .= glTF ("glTF-Quantized", ".gltf", "quantized");
+$string .= glTF (["glTF-Quantized"], ".gltf", "quantized");
 $string .= "\n";
-$string .= glTF ("glTF-Draco", ".gltf", "draco");
+$string .= glTF (["glTF-Draco", "glTF-KTX-BasisU-Draco"], ".gltf", "draco");
 $string .= "\n";
-$string .= glTF ("glTF-Embedded", ".gltf", "embedded");
+$string .= glTF (["glTF-Embedded"], ".gltf", "embedded");
 $string .= "\n";
-$string .= glTF ("glTF-IBL", ".gltf", "ibl");
+$string .= glTF (["glTF-IBL"], ".gltf", "ibl");
 $string .= "\n";
-$string .= glTF ("glTF-KTX-BasisU", ".gltf", "ktx");
+$string .= glTF (["glTF-WebP"], ".gltf", "webp");
 $string .= "\n";
-$string .= glTF ("glTF-JPG-PNG", ".gltf", "jpg");
+$string .= glTF (["glTF-KTX", "glTF-KTX-BasisU"], ".gltf", "ktx");
+$string .= "\n";
+$string .= glTF (["glTF-JPG-PNG", "glTF-JPG"], ".gltf", "jpg");
 $string .= "\n// SAMPLES_END";
 
 $viewer =~ s|// SAMPLES_BEGIN.*?// SAMPLES_END|$string|s;
 
 open SCRIPT, ">", $script;
 print SCRIPT $viewer;
-close PASCRIPTGE;
+close SCRIPT;

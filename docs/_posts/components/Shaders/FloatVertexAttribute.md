@@ -15,7 +15,7 @@ tags: [FloatVertexAttribute, Shaders]
 
 FloatVertexAttribute defines a set of per-vertex single-precision floating-point attributes.
 
-The FloatVertexAttribute node belongs to the **Shaders** component and requires at least level **1,** its default container field is *attrib.* It is available from X3D version 3.0 or higher.
+The FloatVertexAttribute node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *attrib.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,15 +28,25 @@ The FloatVertexAttribute node belongs to the **Shaders** component and requires 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [ ] | [name](#fields-name) | "" |
+| SFInt32 | [ ] | [numComponents](#fields-numComponents) | 4  |
+| MFFloat | [in, out] | [value](#fields-value) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [ ] **name** ""
+{: #fields-name }
 
 Required *name* for this particular VertexAttribute instance.
 
@@ -50,6 +60,7 @@ Required *name* for this particular VertexAttribute instance.
 - *name* is not specified if this instance is a USE node.
 
 ### SFInt32 [ ] **numComponents** 4 <small>[1..4]</small>
+{: #fields-numComponents }
 
 *numComponents* specifies how many consecutive floating-point values should be grouped together per vertex.
 
@@ -58,6 +69,7 @@ Required *name* for this particular VertexAttribute instance.
 - The length of the value field shall be a multiple of *numComponents*.
 
 ### MFFloat [in, out] **value** [ ] <small>(-∞,∞)</small>
+{: #fields-value }
 
 *value* specifies an arbitrary collection of floating-point values that will be passed to the shader as per-vertex information.
 
@@ -67,7 +79,9 @@ Required *name* for this particular VertexAttribute instance.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/FloatVertexAttribute.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/FloatVertexAttribute.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/screenshot.avif" alt="FloatVertexAttribute"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/FloatVertexAttribute.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/FloatVertexAttribute.x3d)

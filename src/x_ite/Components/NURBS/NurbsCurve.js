@@ -1,54 +1,8 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DCast                   from "../../Base/X3DCast.js";
 import Fields                    from "../../Fields.js";
 import X3DFieldDefinition        from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray      from "../../Base/FieldDefinitionArray.js";
+import X3DNode                   from "../Core/X3DNode.js";
 import X3DParametricGeometryNode from "./X3DParametricGeometryNode.js";
 import X3DLineGeometryNode       from "../Rendering/X3DLineGeometryNode.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
@@ -82,21 +36,19 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
    },
    set_controlPoint__ ()
    {
-      if (this .controlPointNode)
-         this .controlPointNode .removeInterest ("requestRebuild", this);
+      this .controlPointNode ?.removeInterest ("requestRebuild", this);
 
       this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
 
-      if (this .controlPointNode)
-         this .controlPointNode .addInterest ("requestRebuild", this);
+      this .controlPointNode ?.addInterest ("requestRebuild", this);
    },
-   getTessellation (numKnots)
+   getTessellation (dimension)
    {
-      return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
+      return NURBS .getTessellation (this ._tessellation .getValue (), dimension);
    },
    getClosed (order, knot, weight, controlPointNode)
    {
-      if (! this ._closed .getValue ())
+      if (!this ._closed .getValue ())
          return false;
 
       return NURBS .getClosed (order, knot, weight, controlPointNode);
@@ -109,12 +61,16 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
    {
       return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
+   getSurface ()
+   {
+      return this .surface;
+   },
    tessellate ()
    {
       if (this ._order .getValue () < 2)
          return [ ];
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return [ ];
 
       if (this .controlPointNode .getSize () < this ._order .getValue ())
@@ -122,16 +78,15 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
 
       const
          vertexArray = this .getVertices (),
+         numVertices = vertexArray .length,
          array       = [ ];
 
-      if (vertexArray .length)
+      if (numVertices)
       {
-         const length = vertexArray .length;
-
-         for (let i = 0; i < length; i += 8)
+         for (let i = 0; i < numVertices; i += 8)
             array .push (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2]);
 
-         array .push (vertexArray [length - 4], vertexArray [length - 3], vertexArray [length - 2]);
+         array .push (vertexArray [numVertices - 4], vertexArray [numVertices - 3], vertexArray [numVertices - 2]);
       }
 
       return array;
@@ -141,7 +96,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
       if (this ._order .getValue () < 2)
          return;
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return;
 
       if (this .controlPointNode .getSize () < this ._order .getValue ())
@@ -156,15 +111,13 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
 
       // Knots
 
-      const
-         knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
-         scale = knots .at (-1) - knots [0];
+      const knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot);
 
       // Initialize NURBS tessellator
 
       const degree = this ._order .getValue () - 1;
 
-      const surface = this .surface = (this .surface || nurbs) ({
+      this .surface = (this .surface ?? nurbs) ({
          boundary: ["open"],
          degree: [degree],
          knots: [knots],
@@ -172,20 +125,20 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
          debug: false,
       });
 
-      this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
+      this .sampleOptions .resolution [0] = this .getTessellation (this .controlPointNode .getSize ());
+      this .sampleOptions .closed         = closed;
       this .sampleOptions .haveWeights    = !! weights;
 
       const
-         mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
+         mesh        = nurbs .sample (this .mesh, this .surface, this .sampleOptions),
          points      = mesh .points,
+         numPoints   = points .length - 3,
          vertexArray = this .getVertices ();
 
-      for (let i2 = 3, length = points .length; i2 < length; i2 += 3)
+      for (let i = 0; i < numPoints; i += 3)
       {
-         const i1 = i2 - 3;
-
-         vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
-         vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
+         vertexArray .push (points [i + 0], points [i + 1], points [i + 2], 1,
+                            points [i + 3], points [i + 4], points [i + 5], 1);
       }
    },
    dispose ()
@@ -196,26 +149,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
 
 Object .defineProperties (NurbsCurve,
 {
-   typeName:
-   {
-      value: "NurbsCurve",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("NurbsCurve", "NURBS", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

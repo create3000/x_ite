@@ -5,6 +5,7 @@ nav: none
 categories: [Tutorials]
 tags: [Tutorials, Overview]
 redirect_from:
+  - /tutorials/
   - /users-guide/tutorials/
 ---
 ## Overview
@@ -21,6 +22,8 @@ Simple, fast and efficient, our X3D tutorials give you all the tips and tricks t
   - First let's go over to the »Hello World« tutorial, which displays a simple earth and the text »Hello World!«.
 - [A Quick Overview: Basic Nodes](/x_ite/tutorials/basic-nodes/)
   - Here are the basic nodes described, which are often used in an X3D world.
+- [How to Navigate in a Scene](/x_ite/tutorials/how-to-navigate-in-a-scene/)
+  - Explains all viewers that can be used.
 
 Shapes, Geometry, and Appearance
 
@@ -65,7 +68,7 @@ Scripts and Prototypes
 
 Some words about optimizing a scene
 
-- [Improve Performance](/x_ite/tutorials/improving-performance/)
+- [Improving Performance](/x_ite/tutorials/improving-performance/)
   - To optimize a scene is an important task when creating an X3D scene. There are several ways to improve performance.
 - [Increasing Rendering Speed](/x_ite/tutorials/increasing-rendering-speed/)
   - Using WebGL and JavaScript needs to look at speed all the time. Learn ways to increase rendering speed.
@@ -74,6 +77,9 @@ Some words about optimizing a scene
 
 - [Script Node Authoring Interface](/x_ite/reference/script-node-authoring-interface/)
 - [ECMAScript Object and Function Definitions](/x_ite/reference/ecmascript-object-and-function-definitions/)
+- [Accessing the External Browser](/x_ite/accessing-the-external-browser/)
+- [DOM Integration](/x_ite//dom-integration/)
+- [How to Use X_ITE With Electron](/x_ite/how-to-use-x-ite-with-electron/)
 - [Custom Shaders](/x_ite/custom-shaders/)
 
 ## There are also Books for Further Reading

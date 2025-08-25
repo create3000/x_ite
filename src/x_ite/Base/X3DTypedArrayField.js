@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DArrayField from "./X3DArrayField.js";
 import Algorithm     from "../../standard/Math/Algorithm.js";
 
@@ -56,7 +9,8 @@ const
    _length = Symbol (),
    _insert = Symbol (),
    _erase  = Symbol (),
-   _grow   = Symbol ();
+   _grow   = Symbol (),
+   _fill   = Symbol ();
 
 const handler =
 {
@@ -77,10 +31,11 @@ const handler =
                components = target .getComponents (),
                valueType  = target .getValueType ();
 
-            let array = target .getValue ();
-
-            if (index >= target [_length])
-               array = target .resize (index + 1);
+            // For historical reasons this behavior is intended (resize), there are
+            // enough X3D/VRML worlds in the Internet who rely on this behavior.
+            const array = index < target [_length]
+               ? target .getValue ()
+               : target .resize (index + 1, target .getSingleValue ());
 
             if (components === 1)
             {
@@ -116,7 +71,7 @@ const handler =
          array = target .getValue ();
 
       if (index >= target [_length])
-         array = target .resize (index + 1);
+         array = target .resize (index + 1, target .getSingleValue ());
 
       if (components === 1)
       {
@@ -226,14 +181,11 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
    copy ()
    {
       const
-         target     = this [_target],
-         array      = target .getValue (),
-         copy       = target .create (),
-         copyArray  = new (target .getArrayType ()) (array);
+         target = this [_target],
+         array  = target .getValue (),
+         copy   = target .create ();
 
-      copy [_length] = target [_length];
-
-      X3DArrayField .prototype .set .call (copy, copyArray);
+      copy .set (array, target [_length]);
 
       return copy;
    },
@@ -252,9 +204,10 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
       const
          a = target .getValue (),
-         b = otherTarget .getValue ();
+         b = otherTarget .getValue (),
+         l = length * target .getComponents ();
 
-      for (let i = 0, l = length * target .getComponents (); i < l; ++ i)
+      for (let i = 0; i < l; ++ i)
       {
          if (a [i] !== b [i])
             return false;
@@ -328,13 +281,13 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          target .addEvent ();
       }
    },
-   unshift (value)
+   unshift (... args)
    {
       const
          target          = this [_target],
          components      = target .getComponents (),
          length          = target [_length],
-         argumentsLength = arguments .length,
+         argumentsLength = args .length,
          array           = target [_grow] ((length + argumentsLength) * components);
 
       array .copyWithin (argumentsLength * components, 0, length * components);
@@ -344,13 +297,13 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          const valueType = target .getValueType ();
 
          for (let a = 0; a < argumentsLength; ++ a)
-            array [a] = valueType (arguments [a]);
+            array [a] = valueType (args [a]);
       }
       else
       {
          for (let i = 0, a = 0; a < argumentsLength; ++ a)
          {
-            const argument = arguments [a];
+            const argument = args [a];
 
             for (let c = 0; c < components; ++ c, ++ i)
             {
@@ -379,9 +332,11 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             valueType  = target .getValueType (),
             newLength  = length - 1;
 
+         let value;
+
          if (components === 1)
          {
-            var value = valueType (array [0]);
+            value = valueType (array [0]);
          }
          else
          {
@@ -390,7 +345,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             for (let c = 0; c < components; ++ c)
                tmp [c] = array [c];
 
-            var value = new valueType (... tmp);
+            value = new valueType (... tmp);
          }
 
          array .copyWithin (0, components, length * components);
@@ -402,13 +357,13 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          return value;
       }
    },
-   push (value)
+   push (... args)
    {
       const
          target          = this [_target],
          components      = target .getComponents (),
          length          = target [_length],
-         argumentsLength = arguments .length,
+         argumentsLength = args .length,
          array           = target [_grow] ((length + argumentsLength) * components);
 
       if (components === 1)
@@ -416,13 +371,13 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          const valueType = target .getValueType ();
 
          for (let a = 0, i = length; a < argumentsLength; ++ a, ++ i)
-            array [i] = valueType (arguments [a]);
+            array [i] = valueType (args [a]);
       }
       else
       {
          for (let i = length * components, a = 0; a < argumentsLength; ++ a)
          {
-            const argument = arguments [a];
+            const argument = args [a];
 
             for (let c = 0; c < components; ++ c,  ++ i)
             {
@@ -451,9 +406,11 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             valueType  = target .getValueType (),
             newLength  = length - 1;
 
+         let value;
+
          if (components === 1)
          {
-            var value = valueType (array [length - 1]); // Don't use at(-1).
+            value = valueType (array [length - 1]); // Don't use at(-1).
          }
          else
          {
@@ -462,7 +419,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             for (let c = 0, a = newLength * components; c < components; ++ c, ++ a)
                tmp [c] = array [a];
 
-            var value = new valueType (... tmp);
+            value = new valueType (... tmp);
          }
 
          array .fill (0, newLength * components, length * components);
@@ -573,6 +530,8 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
       let array = target .getValue ();
 
+      target [_length] = newLength;
+
       if (newLength < length)
       {
          array .fill (0, newLength * components, length * components);
@@ -588,28 +547,11 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          array = target [_grow] (newLength * components);
 
          if (value !== undefined)
-         {
-            if (components === 1)
-            {
-               array .fill (value, length * components, newLength * components);
-            }
-            else
-            {
-               for (let i = length * components, il = newLength * components; i < il; )
-               {
-                  for (let c = 0; c < components; ++ c, ++ i)
-                  {
-                     array [i] = value [c];
-                  }
-               }
-            }
-         }
+            this [_fill] (value, length, newLength);
 
          if (!silently)
             target .addEvent ();
       }
-
-      target [_length] = newLength;
 
       return array;
    },
@@ -647,6 +589,121 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
       X3DArrayField .prototype .set .call (target, newArray);
 
       return newArray;
+   },
+   concat (... args)
+   {
+      const
+         result     = this .copy (),
+         target     = result [_target],
+         components = target .getComponents (),
+         length     = target [_length] + args .reduce ((p, c) => p + c .length, 0),
+         value      = target [_grow] (length * components);
+
+      let offset = target [_length] * components;
+
+      for (const arg of args)
+      {
+         value .set (arg .shrinkToFit (), offset);
+
+         offset += arg .length * components;
+      }
+
+      target [_length] = length;
+
+      return result;
+   },
+   flat ()
+   {
+      const
+         target     = this [_target],
+         array      = target .shrinkToFit (),
+         components = target .getComponents (),
+         valueType  = target .getValueType ();
+
+      if (components === 1)
+         return Array .from (array, value => valueType (value));
+
+      return Array .from (array);
+   },
+   flatMap (... args)
+   {
+      return this .map (...args) .flat ();
+   },
+   [_fill] (value, start = 0, end = this .length)
+   {
+      const
+         target     = this [_target],
+         length     = target [_length],
+         array      = target .getValue (),
+         components = target .getComponents ();
+
+      if (-length <= start && start < 0)
+         start = start + length;
+
+      if (start < -length)
+         start = 0;
+
+      if (start >= length)
+         return;
+
+      if (-length <= end && end < 0)
+         end = end + length;
+
+      if (end < -length)
+         end = 0;
+
+      if (end >= length)
+         end = length;
+
+      if (start >= end)
+         return;
+
+      if (components === 1)
+      {
+         const valueType = target .getValueType ();
+
+         array .fill (valueType (value), start * components, end * components);
+      }
+      else
+      {
+         // More efficient way to copy repeating sequence into TypedArray?
+         // https://stackoverflow.com/questions/46313130/more-efficient-way-to-copy-repeating-sequence-into-typedarray
+
+         const
+            i0 = start * components,
+            il = end * components;
+
+         for (let i = i0, c = 0; c < components; ++ i, ++ c)
+         {
+            array [i] = value [c];
+         }
+
+         let
+            i = i0 + components,
+            c = components;
+
+         while (i < il)
+         {
+            const sl = i + c > il ? il - i : c;
+
+            array .copyWithin (i, i0, i0 + sl);
+
+            i  += c;
+            c <<= 1;
+         }
+      }
+
+      return target [_proxy];
+   },
+   fill (value, start = 0, end = this .length)
+   {
+      const target = this [_target];
+
+      this [_fill] (value, start, end);
+
+      target .addEvent ();
+
+      return target [_proxy];
    },
    reverse ()
    {
@@ -971,7 +1028,12 @@ for (const key of Object .keys (X3DTypedArrayField .prototype))
 Object .defineProperty (X3DTypedArrayField .prototype, "length",
 {
    get () { return this [_length]; },
-   set (value) { this [_target] .resize (value); },
+   set (value)
+   {
+      const target = this [_target];
+
+      target .resize (value, target .getSingleValue ());
+   },
 });
 
 // Getter/Setter functions to reference a value for a given index.
@@ -1000,22 +1062,22 @@ function createValue (target, index, components, valueType)
    return value;
 }
 
-function getValue (index, components, value)
+function getValue (index, components, internalValue)
 {
    const array = this .getValue ();
 
    for (let c = 0; c < components; ++ c, ++ index)
-      value [c] = array [index];
+      internalValue [c] = array [index];
 
-   return value;
+   return internalValue;
 }
 
-function addEvent (index, components, value)
+function addEvent (index, components, internalValue)
 {
    const array = this .getValue ();
 
    for (let c = 0; c < components; ++ c, ++ index)
-      array [index] = value [c];
+      array [index] = internalValue [c];
 
    this .addEvent ();
 }

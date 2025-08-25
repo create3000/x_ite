@@ -26,14 +26,14 @@ Recall that [Shape](/x_ite/components/shape/shape/) nodes describe:
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <!-- appearance ... -->
   <!-- geometry ... -->
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -50,7 +50,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <!-- material ... -->
@@ -59,7 +59,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -80,7 +80,7 @@ A [Material](/x_ite/components/shape/material/) node controls shape material att
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material
@@ -92,7 +92,7 @@ A [Material](/x_ite/components/shape/material/) node controls shape material att
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -140,7 +140,7 @@ A [Material](/x_ite/components/shape/material/) node also controls shape shinine
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material
@@ -154,7 +154,7 @@ A [Material](/x_ite/components/shape/material/) node also controls shape shinine
 <!-- ... -->
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -175,7 +175,7 @@ Shape {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/box1/box1.x3dv" update="auto">
-  <img src="https://create3000.github.io/media/tutorials/scenes/box1/screenshot.png" alt="Box 1"/>
+  <img src="https://create3000.github.io/media/tutorials/scenes/box1/screenshot.avif" alt="Box 1"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/box1/box1.zip)

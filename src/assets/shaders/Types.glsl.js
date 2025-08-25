@@ -1,10 +1,98 @@
-import MaterialTextures from "./MaterialTextures.js";
+import MaterialTextures                   from "./MaterialTextures.js";
+import MultiTextureModeType               from "../../x_ite/Browser/Texturing/ModeType.js";
+import MultiTextureSourceType             from "../../x_ite/Browser/Texturing/SourceType.js";
+import MultiTextureFunctionType           from "../../x_ite/Browser/Texturing/FunctionType.js";
+import TextureCoordinateGeneratorModeType from "../../x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType.js";
+import { maxClipPlanes }                  from "../../x_ite/Browser/Rendering/RenderingConfiguration.js";
+import { maxTextures }                    from "../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
-export default /* glsl */ `
+export default () => /* glsl */ `
+
+///
+/// Defines
+///
+
+#define X_ITE
+
+#define x3d_None 0
+
+#define x3d_Points      0
+#define x3d_Lines       1
+#define x3d_Geometry2D  2
+#define x3d_Geometry3D  3
+
+#define x3d_MaxClipPlanes  ${maxClipPlanes}
+
+#define x3d_LinearFog        1
+#define x3d_ExponentialFog   2
+#define x3d_Exponential2Fog  3
+
+#define x3d_DirectionalLight  1
+#define x3d_PointLight        2
+#define x3d_SpotLight         3
+
+#define x3d_MaxTextures      ${maxTextures}
+#define x3d_TextureType2D    2
+#define x3d_TextureType3D    3
+#define x3d_TextureTypeCube  4
+
+#define x3d_Replace                   ${MultiTextureModeType .REPLACE}
+#define x3d_Modulate                  ${MultiTextureModeType .MODULATE}
+#define x3d_Modulate2X                ${MultiTextureModeType .MODULATE2X}
+#define x3d_Modulate4X                ${MultiTextureModeType .MODULATE4X}
+#define x3d_Add                       ${MultiTextureModeType .ADD}
+#define x3d_AddSigned                 ${MultiTextureModeType .ADDSIGNED}
+#define x3d_AddSigned2X               ${MultiTextureModeType .ADDSIGNED2X}
+#define x3d_AddSmooth                 ${MultiTextureModeType .ADDSMOOTH}
+#define x3d_Subtract                  ${MultiTextureModeType .SUBTRACT}
+#define x3d_BlendDiffuseAlpha         ${MultiTextureModeType .BLENDDIFFUSEALPHA}
+#define x3d_BlendTextureAlpha         ${MultiTextureModeType .BLENDTEXTUREALPHA}
+#define x3d_BlendFactorAlpha          ${MultiTextureModeType .BLENDFACTORALPHA}
+#define x3d_BlendCurrentAlpha         ${MultiTextureModeType .BLENDCURRENTALPHA}
+#define x3d_ModulateAlphaAddColor     ${MultiTextureModeType .MODULATEALPHA_ADDCOLOR}
+#define x3d_ModulateInvAlphaAddColor  ${MultiTextureModeType .MODULATEINVALPHA_ADDCOLOR}
+#define x3d_ModulateInvColorAddAlpha  ${MultiTextureModeType .MODULATEINVCOLOR_ADDALPHA}
+#define x3d_DotProduct3               ${MultiTextureModeType .DOTPRODUCT3}
+#define x3d_SelectArg1                ${MultiTextureModeType .SELECTARG1}
+#define x3d_SelectArg2                ${MultiTextureModeType .SELECTARG2}
+#define x3d_Off                       ${MultiTextureModeType .OFF}
+
+#define x3d_Diffuse  ${MultiTextureSourceType .DIFFUSE}
+#define x3d_Specular ${MultiTextureSourceType .SPECULAR}
+#define x3d_Factor   ${MultiTextureSourceType .FACTOR}
+
+#define x3d_Complement     ${MultiTextureFunctionType .COMPLEMENT}
+#define x3d_AlphaReplicate ${MultiTextureFunctionType .ALPHAREPLICATE}
+
+#define x3d_Sphere                      ${TextureCoordinateGeneratorModeType .SPHERE}
+#define x3d_CameraSpaceNormal           ${TextureCoordinateGeneratorModeType .CAMERASPACENORMAL}
+#define x3d_CameraSpacePosition         ${TextureCoordinateGeneratorModeType .CAMERASPACEPOSITION}
+#define x3d_CameraSpaceReflectionVector ${TextureCoordinateGeneratorModeType .CAMERASPACEREFLECTIONVECTOR}
+#define x3d_SphereLocal                 ${TextureCoordinateGeneratorModeType .SPHERE_LOCAL}
+#define x3d_Coord                       ${TextureCoordinateGeneratorModeType .COORD}
+#define x3d_CoordEye                    ${TextureCoordinateGeneratorModeType .COORD_EYE}
+#define x3d_Noise                       ${TextureCoordinateGeneratorModeType .NOISE}
+#define x3d_NoiseEye                    ${TextureCoordinateGeneratorModeType .NOISE_EYE}
+#define x3d_SphereReflect               ${TextureCoordinateGeneratorModeType .SPHERE_REFLECT}
+#define x3d_SphereReflectLocal          ${TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL}
+
+// Legacy
+#define x3d_GeometryPoints  0
+#define x3d_GeometryLines   1
+#define x3d_NoneClipPlane   vec4 (88.0, 51.0, 68.0, 33.0)
+#define x3d_NoneFog         0
+#define x3d_NoneLight       0
+#define x3d_NoneTexture     0
+
+///
+/// Types
+///
+
 #if defined (X3D_FOG)
 struct x3d_FogParameters {
    mediump int   type;
    mediump vec3  color;
+   mediump float visibilityStart;
    mediump float visibilityRange;
    mediump mat3  matrix;
 };
@@ -45,13 +133,17 @@ struct x3d_EnvironmentLightSourceParameters {
    mediump mat3        rotation;
    mediump samplerCube diffuseTexture;
    bool                diffuseTextureLinear;
+   mediump int         diffuseTextureLevels;
    mediump samplerCube specularTexture;
    bool                specularTextureLinear;
    mediump int         specularTextureLevels;
    mediump sampler2D   GGXLUTTexture;
 
    #if defined (X3D_SHEEN_MATERIAL_EXT)
-      mediump sampler2D CharlieLUTTexture;
+      mediump samplerCube sheenTexture;
+      bool                sheenTextureLinear;
+      mediump int         sheenTextureLevels;
+      mediump sampler2D   CharlieLUTTexture;
    #endif
 };
 #endif
@@ -109,7 +201,7 @@ struct x3d_UnlitMaterialParameters
 
 //uniform x3d_UnlitMaterialParameters x3d_Material;
 
-#if defined (X3D_MATERIAL)
+#if defined (X3D_GOURAUD_MATERIAL) || defined (X3D_PHONG_MATERIAL)
 struct x3d_MaterialParameters
 {
    mediump float ambientIntensity;

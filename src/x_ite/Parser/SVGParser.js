@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Expressions  from "./Expressions.js";
@@ -133,24 +86,23 @@ function SVGParser (scene)
    this .strokeGeometries = new Map ();
    this .lineProperties   = new Map ();
    this .tessy            = this .createTesselator ();
-   this .canvas           = document .createElement ("canvas");
-   this .context          = this .canvas .getContext ("2d");
+   this .context          = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
    this .numSwitchNodes   = 0;
 
    this .styles = [{
       display: "inline",
       fillType: "COLOR",
-      fillColor: Color4 .Black,
+      fillColor: Color4 .BLACK,
       fillURL: "",
       fillOpacity: 1,
       fillRule: "nonzero",
       strokeType: "none",
-      strokeColor: Color4 .Black,
+      strokeColor: Color4 .BLACK,
       strokeURL: "",
       strokeOpacity: 1,
       strokeWidth: 1,
       opacity: 1,
-      stopColor: Color4 .Black,
+      stopColor: Color4 .BLACK,
       stopOpacity: 1,
       vectorEffect: "none",
    }];
@@ -188,8 +140,9 @@ function SVGParser (scene)
          break;
    }
 
-   this .canvas .width  = this .GRADIENT_SIZE;
-   this .canvas .height = this .GRADIENT_SIZE;
+   // Use .canvas to support foreign 2d libs.
+   this .context .canvas .width  = this .GRADIENT_SIZE;
+   this .context .canvas .height = this .GRADIENT_SIZE;
 }
 
 Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototype),
@@ -290,9 +243,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       const navigationInfo = scene .createNode ("NavigationInfo");
 
-      navigationInfo .type = ["PLANE_create3000.github.io", "PLANE", "EXAMINE", "ANY"];
-
-      scene .getRootNodes () .push (navigationInfo);
+      navigationInfo .type = ["PLANE", "PLANE_create3000.github.io", "EXAMINE", "ANY"];
 
       // Get attributes of svg element.
 
@@ -325,6 +276,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          x         =  (viewBox .x + width  / 2) * PIXEL,
          y         = -(viewBox .y + height / 2) * PIXEL;
 
+      viewpoint .navigationInfo   = navigationInfo;
       viewpoint .position         = new Vector3 (x, y, 10);
       viewpoint .centerOfRotation = new Vector3 (x, y, 0);
 
@@ -339,12 +291,9 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       // Create view matrix.
 
-      const
-         scale       = new Vector3 (width * PIXEL / viewBox [2], -height * PIXEL / viewBox [3], 1),
-         translation = new Vector3 (-viewBox .x, viewBox .y, 0) .multVec (scale);
+      const scale = new Vector3 (width * PIXEL / viewBox [2], -height * PIXEL / viewBox [3], 1);
 
-      this .rootTransform .translation = translation;
-      this .rootTransform .scale       = scale;
+      this .rootTransform .scale = scale;
 
       // Parse elements.
 
@@ -412,10 +361,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       // Create Transform node.
 
       const
-         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
-         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
-         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
-         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height");
+         x = this .lengthAttribute (xmlElement .getAttribute ("x"), 0, "width"),
+         y = this .lengthAttribute (xmlElement .getAttribute ("y"), 0, "height");
 
       const transformNode = this .createTransform (xmlElement, new Vector2 (x, y));
 
@@ -926,10 +873,15 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       // Create nodes.
 
-      const coordinateNode = scene .createNode ("Coordinate");
+      const
+         coordinateNode = scene .createNode ("Coordinate"),
+         vertices       = coordinateNode .point;
 
       for (const points of contours)
-         coordinateNode .point .push (... points);
+      {
+         for (const point of points)
+            vertices .push (point);
+      }
 
       if (this .style .fillType !== "none")
       {
@@ -982,7 +934,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
             // Create contour indices.
 
-            const indices = geometryNode .coordIndex;
+            const indices = [ ];
 
             for (const points of contours)
             {
@@ -994,6 +946,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
                indices .push (-1);
             }
+
+            geometryNode .coordIndex = indices;
          }
       }
 
@@ -1083,7 +1037,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          c = new Vector2 (gradient .fx, gradient .fy);
 
       s .translate (c);
-      s .scale (new Vector2 (SPREAD, SPREAD));
+      s .scale (new Vector2 (SPREAD));
       s .translate (c .negate ());
 
       gradient .spreadMatrix = s;
@@ -1174,8 +1128,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       const m = new Matrix3 ();
 
-      m .scale (new Vector2 (this .GRADIENT_SIZE / 2, this .GRADIENT_SIZE / 2));
-      m .translate (Vector2 .One);
+      m .scale (new Vector2 (this .GRADIENT_SIZE / 2));
+      m .translate (Vector2 .ONE);
       m .scale (new Vector2 (1, -1));
 
       if (g .units === "userSpaceOnUse")
@@ -1199,7 +1153,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       cx .restore ();
 
       // Use PNG because image can have alpha channel.
-      return this .canvas .toDataURL ("image/png");
+      return this .context .canvas .toDataURL ("image/png");
    },
    patternUrl (xmlElement)
    {
@@ -1624,6 +1578,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                            y += ay;
                         }
 
+                        let x1, y1;
+
                         switch (previous)
                         {
                            case 'Q':
@@ -1767,6 +1723,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                                  y  += ay;
                               }
 
+                              let x1, y1;
+
                               switch (previous)
                               {
                                  case 'C':
@@ -1774,14 +1732,14 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                                  case 'S':
                                  case 's':
                                  {
-                                    var x1 = ax + (ax - px);
-                                    var y1 = ay + (ay - py);
+                                    x1 = ax + (ax - px);
+                                    y1 = ay + (ay - py);
                                     break;
                                  }
                                  default:
                                  {
-                                    var x1 = ax;
-                                    var y1 = ay;
+                                    x1 = ax;
+                                    y1 = ay;
                                     break;
                                  }
                               }
@@ -1990,16 +1948,18 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                {
                   const tx = this .value;
 
+                  let ty;
+
                   if (this .comma ())
                   {
                      if (this .double ())
                      {
-                        var ty = this .value;
+                        ty = this .value;
                      }
                   }
                   else
                   {
-                     var ty = 0;
+                     ty = 0;
                   }
 
                   this .whitespaces ();
@@ -2070,16 +2030,18 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
                {
                   const sx = this .value;
 
+                  let sy;
+
                   if (this .comma ())
                   {
                      if (this .double ())
                      {
-                        var sy = this .value;
+                        sy = this .value;
                      }
                   }
                   else
                   {
-                     var sy = sx;
+                     sy = sx;
                   }
 
                   this .whitespaces ();
@@ -2397,7 +2359,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          return;
       }
 
-      if (this .colorValue (Color4 .Black))
+      if (this .colorValue (Color4 .BLACK))
       {
          this .style .stopColor = this .value .copy ();
          return;
@@ -2507,7 +2469,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       return `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`;
    },
-   createTransform (xmlElement, t = Vector2 .Zero, s = Vector2 .One)
+   createTransform (xmlElement, t = Vector2 .ZERO, s = Vector2 .ONE)
    {
       // Determine matrix.
 
@@ -2528,7 +2490,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          matrix           = Matrix4 .Matrix3 (m),
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1, 1, 1),
+         scale            = new Vector3 (1),
          scaleOrientation = new Rotation4 ();
 
       matrix .get (translation, rotation, scale, scaleOrientation);
@@ -2695,7 +2657,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          invMatrix    = bbox .matrix .copy () .inverse ();
 
       for (const point of coordinateNode .point)
-         texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .One) .divide (2));
+         texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .ONE) .divide (2));
 
       return texCoordNode;
    },
@@ -2719,11 +2681,13 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       // Callback for when segments intersect and must be split.
 
+      const vertices = coordinateNode .point;
+
       function combineCallback (coords, data, weight)
       {
-         const index = coordinateNode .point .length;
+         const index = vertices .length;
 
-         coordinateNode .point .push (new Vector3 (... coords));
+         vertices .push (new Vector3 (... coords));
 
          return index;
       }

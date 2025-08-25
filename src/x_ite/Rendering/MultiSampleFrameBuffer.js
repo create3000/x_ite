@@ -1,59 +1,11 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-function MultiSampleFrameBuffer (browser, width, height, samples, oit)
+function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
 {
    const gl = browser .getContext ();
 
-   if (gl .getVersion () === 1 || width === 0 || height === 0)
-      return new Fallback (browser, width, height, samples);
-
    this .browser = browser;
    this .context = gl;
+   this .x       = x;
+   this .y       = y;
    this .width   = width;
    this .height  = height;
    this .samples = samples;
@@ -91,21 +43,41 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
 
-   const status1 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
-
    // Always check that our frame buffer is ok.
 
-   if (!status1)
+   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
       throw new Error ("Couldn't create frame buffer.");
+
+   if (x || y)
+   {
+      // Create frame buffer.
+
+      this .auxBuffer = gl .createFramebuffer ();
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .auxBuffer);
+
+      // Create color buffer.
+
+      this .auxColorBuffer = gl .createRenderbuffer ();
+
+      gl .bindRenderbuffer (gl .RENDERBUFFER, this .auxColorBuffer);
+      gl .renderbufferStorage (gl .RENDERBUFFER, gl .RGBA8, width, height);
+      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .auxColorBuffer);
+
+      // Always check that our frame buffer is ok.
+
+      if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
+         throw new Error ("Couldn't create frame buffer.");
+   }
 
    if (!oit)
       return;
 
    // Create oit frame buffer.
 
-   this .oitFrameBuffer = gl .createFramebuffer ();
+   this .oitFramebuffer = gl .createFramebuffer ();
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .oitFrameBuffer);
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .oitFramebuffer);
 
    // Set draw buffers.
 
@@ -147,6 +119,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
       this .accumRevealageTexture = gl .createTexture ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .accumRevealageTexture);
+
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
@@ -166,6 +139,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
       this .alphaTexture = gl .createTexture ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .alphaTexture);
+
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
@@ -181,6 +155,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
       this .accumRevealageTexture = gl .createTexture ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .accumRevealageTexture);
+
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
@@ -194,6 +169,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
       this .alphaTexture = gl .createTexture ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .alphaTexture);
+
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
@@ -207,11 +183,9 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
    }
 
-   const status2 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
-
    // Always check that our frame buffer is ok.
 
-   if (!status2)
+   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
       throw new Error ("Couldn't create frame buffer.");
 
    // Get compose shader and texture units.
@@ -229,8 +203,16 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
    gl .uniform1i (alphaTextureUnit,          1);
 }
 
-Object .assign (MultiSampleFrameBuffer .prototype,
+Object .assign (MultiSampleFramebuffer .prototype,
 {
+   getX ()
+   {
+      return this .x;
+   },
+   getY ()
+   {
+      return this .y;
+   },
    getWidth ()
    {
       return this .width;
@@ -266,9 +248,9 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    bindTransparency ()
    {
-      const { context: gl, oitFrameBuffer } = this;
+      const { context: gl, oitFramebuffer } = this;
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, oitFrameBuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, oitFramebuffer);
 
       gl .clearColor (0, 0, 0, 1);
       gl .clear (gl .COLOR_BUFFER_BIT);
@@ -287,7 +269,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
 
       if (samples)
       {
-         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .oitFrameBuffer);
+         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .oitFramebuffer);
 
          gl .readBuffer (gl .COLOR_ATTACHMENT0);
          gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .accumRevealageTextureBuffer);
@@ -323,18 +305,28 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    blit ()
    {
-      const { context: gl, width, height, samples } = this;
+      const { browser, context: gl, x, y, width, height, samples, frameBuffer, auxBuffer } = this;
 
       // Reset viewport before blit, otherwise only last layer size is used.
-      gl .viewport (0, 0, width, height);
-      gl .scissor  (0, 0, width, height);
+      gl .viewport (0, 0, x + width, y + height);
+      gl .scissor  (0, 0, x + width, y + height);
 
-      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
-      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, frameBuffer);
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, auxBuffer ?? browser .getDefaultFramebuffer ());
 
       gl .blitFramebuffer (0, 0, width, height,
                            0, 0, width, height,
                            gl .COLOR_BUFFER_BIT, samples ? gl .LINEAR : gl .NEAREST);
+
+      if (!auxBuffer)
+         return;
+
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, auxBuffer);
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFramebuffer ());
+
+      gl .blitFramebuffer (0, 0, width, height,
+                           x, y, x + width, y + height,
+                           gl .COLOR_BUFFER_BIT, gl .NEAREST);
    },
    dispose ()
    {
@@ -344,7 +336,10 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .deleteRenderbuffer (this .colorBuffer);
       gl .deleteRenderbuffer (this .depthBuffer);
 
-      gl .deleteFramebuffer (this .oitFrameBuffer);
+      gl .deleteFramebuffer (this .auxFramebuffer);
+      gl .deleteRenderbuffer (this .auxColorBuffer);
+
+      gl .deleteFramebuffer (this .oitFramebuffer);
       gl .deleteFramebuffer (this .accumRevealageTextureBuffer);
       gl .deleteFramebuffer (this .alphaTextureBuffer);
       gl .deleteRenderbuffer (this .accumRevealageBuffer);
@@ -354,42 +349,4 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
 });
 
-function Fallback (browser, width, height, samples)
-{
-   const gl = browser .getContext ();
-
-   this .browser = browser;
-   this .context = gl;
-   this .width   = width;
-   this .height  = height;
-   this .samples = samples;
-}
-
-Object .assign (Fallback .prototype,
-{
-   getWidth () { return this .width; },
-   getHeight () { return this .height; },
-   getSamples () { return this .samples; },
-   getOIT () { return false; },
-   bind ()
-   {
-      const { context: gl } = this;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-   },
-   clear ()
-   {
-      const { context: gl, width, height } = this;
-
-      gl .viewport (0, 0, width, height);
-      gl .scissor  (0, 0, width, height);
-      gl .clearColor (0, 0, 0, 1);
-      gl .clear (gl .COLOR_BUFFER_BIT);
-      gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
-   },
-   blit: Function .prototype,
-   compose: Function .prototype,
-   dispose: Function .prototype,
-});
-
-export default MultiSampleFrameBuffer;
+export default MultiSampleFramebuffer;

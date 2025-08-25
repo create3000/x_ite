@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DLayoutNode        from "./X3DLayoutNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
@@ -75,6 +29,8 @@ function Layout (executionContext)
 
    this .addType (X3DConstants .Layout);
 
+   // Private properties
+
    this .alignX          = CENTER;
    this .alignY          = CENTER;
    this .offsetUnitX     = WORLD;
@@ -99,7 +55,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    pixelSize: new Vector2 (),
    translation: new Vector3 (),
    offset: new Vector3 (),
-   scale: new Vector3 (1, 1, 1),
+   scale: new Vector3 (1),
    currentTranslation: new Vector3 (),
    currentRotation: new Rotation4 (),
    currentScale: new Vector3 (),
@@ -427,18 +383,19 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          browser             = this .getBrowser (),
          contentScale        = browser .getRenderingProperty ("ContentScale"),
          matrix              = this .matrix,
-         viewpoint           = renderObject .getViewpoint (),
-         nearValue           = renderObject .getNavigationInfo () .getNearValue (),       // in meters
-         viewport            = renderObject .getViewVolume () .getScissor (),             // in pixels
-         viewportMeter       = viewpoint .getViewportSize (viewport, nearValue),          // in meters
-         viewportPixel       = this .viewportPixel,                                       // in pixels
-         pixelSize           = this .pixelSize,                                           // size of one pixel in meters
-         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter,      // in meters
+         navigationInfoNode  = renderObject .getNavigationInfo (),
+         viewpointNode       = renderObject .getViewpoint (),
+         nearValue           = viewpointNode .getNearDistance (navigationInfoNode),  // in meters
+         viewport            = renderObject .getViewVolume () .getViewport (),       // in pixels
+         viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue), // in meters
+         viewportPixel       = this .viewportPixel,                                  // in pixels
+         pixelSize           = this .pixelSize,                                      // size of one pixel in meters
+         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter, // in meters
          rectangleSize       = this .rectangleSize,
          rectangleCenter     = this .rectangleCenter;
 
-      viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale);             // in pixel
-      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);                      // size of one pixel in meter
+      viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale); // in pixel
+      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);          // size of one pixel in meter
 
       switch (this .getSizeUnitX ())
       {
@@ -466,7 +423,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       // Calculate translation
 
-      const translation = this .translation .set (0, 0, 0);
+      const translation = this .translation .set (0);
 
       switch (this .getAlignX ())
       {
@@ -502,7 +459,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       // Calculate offset
 
-      const offset = this .offset .set (0, 0, 0);
+      const offset = this .offset .set (0);
 
       switch (this .getOffsetUnitX ())
       {
@@ -527,7 +484,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
       // Calculate scale
 
       const
-         scale              = this .scale .set (1, 1, 1),
+         scale              = this .scale .set (1),
          currentTranslation = this .currentTranslation,
          currentRotation    = this .currentRotation,
          currentScale       = this .currentScale;
@@ -603,26 +560,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
 Object .defineProperties (Layout,
 {
-   typeName:
-   {
-      value: "Layout",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "layout",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("Layout", "Layout", 1, "layout", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

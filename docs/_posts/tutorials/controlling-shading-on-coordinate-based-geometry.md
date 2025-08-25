@@ -46,12 +46,12 @@ A Normal node contains a list of normal vectors that override use of a crease an
 
 ### XML Encoding
 
-```xml
+```x3d
 <Normal
     vector='0.0 1.0 0.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Normal {
@@ -71,7 +71,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --><Appearance>
   <IndexedFaceSet
@@ -84,7 +84,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -98,6 +98,16 @@ Shape {
   }
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/faces2/faces2.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/faces2/screenshot.avif" alt="Normal"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/faces2/faces2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/faces2/faces2.x3dv)
+{: .example-links }
 
 ## Controlling normal binding for face sets
 
@@ -116,7 +126,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --><Appearance>
   <ElevationGrid
@@ -127,7 +137,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -157,13 +167,13 @@ A [NormalInterpolator](/x_ite/components/interpolation/normalinterpolator/) node
 
 ### XML Encoding
 
-```xml
+```x3d
 <NormalInterpolator
     key='0.0, ...'
     keyValue='0.0 1.0 1.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 NormalInterpolator {

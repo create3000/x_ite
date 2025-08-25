@@ -1,75 +1,32 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
+import VERSION              from "../BROWSER_VERSION.js";
+import X3DFieldDefinition   from "../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../Base/FieldDefinitionArray.js";
+import Fields               from "../Fields.js";
+import X3DBrowserContext    from "./X3DBrowserContext.js";
+import DOMIntegration       from "./DOMIntegration.js";
+import Legacy               from "./Legacy.js";
+import ProfileInfo          from "../Configuration/ProfileInfo.js";
+import ComponentInfo        from "../Configuration/ComponentInfo.js";
+import ComponentInfoArray   from "../Configuration/ComponentInfoArray.js";
+import SupportedProfiles    from "../Configuration/SupportedProfiles.js";
+import SupportedComponents  from "../Configuration/SupportedComponents.js";
+import AbstractNodes        from "../Configuration/AbstractNodes.js";
+import ConcreteNodes        from "../Configuration/ConcreteNodes.js";
+import FieldTypes           from "../Configuration/FieldTypes.js";
+import X3DScene             from "../Execution/X3DScene.js";
+import FileLoader           from "../InputOutput/FileLoader.js";
+import XMLParser            from "../Parser/XMLParser.js";
+import JSONParser           from "../Parser/JSONParser.js";
+import X3DCast              from "../Base/X3DCast.js";
+import X3DConstants         from "../Base/X3DConstants.js";
+import SFNodeCache          from "../Fields/SFNodeCache.js";
+import Features             from "../Features.js";
+import Algorithm            from "../../standard/Math/Algorithm.js";
+import MikkTSpace           from "./Rendering/MikkTSpace.js";
+import _                    from "../../locale/gettext.js";
+import DEVELOPMENT          from "../DEVELOPMENT.js";
 
-import VERSION             from "../BROWSER_VERSION.js";
-import Fields              from "../Fields.js";
-import Components          from "../Components.js";
-import X3DBrowserContext   from "./X3DBrowserContext.js";
-import DOMIntegration      from "./DOMIntegration.js";
-import Legacy              from "./Legacy.js";
-import ProfileInfo         from "../Configuration/ProfileInfo.js";
-import ComponentInfo       from "../Configuration/ComponentInfo.js";
-import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
-import SupportedProfiles   from "../Configuration/SupportedProfiles.js";
-import SupportedComponents from "../Configuration/SupportedComponents.js";
-import AbstractNodes       from "../Configuration/AbstractNodes.js";
-import ConcreteNodes       from "../Configuration/ConcreteNodes.js";
-import FieldTypes          from "../Configuration/FieldTypes.js";
-import X3DScene            from "../Execution/X3DScene.js";
-import FileLoader          from "../InputOutput/FileLoader.js";
-import XMLParser           from "../Parser/XMLParser.js";
-import JSONParser          from "../Parser/JSONParser.js";
-import X3DCast             from "../Base/X3DCast.js";
-import X3DConstants        from "../Base/X3DConstants.js";
-import Features            from "../Features.js";
-import Algorithm           from "../../standard/Math/Algorithm.js";
-import MikkTSpace          from "./Rendering/MikkTSpace.js";
-import _                   from "../../locale/gettext.js";
-import DEVELOPMENT         from "../DEVELOPMENT.js";
+import "../Components.js";
 
 const
    _DOMIntegration      = Symbol (),
@@ -119,7 +76,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
-      this .replaceWorld (this .createScene ())
+      const scene = new X3DScene (this);
+
+      scene .setup ();
+
+      this .replaceWorld (scene)
          .catch (DEVELOPMENT ? error => console .error (error) : Function .prototype);
 
       this [_DOMIntegration] = new DOMIntegration (this);
@@ -147,7 +108,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
              `      Name: ${this .getVendor ()} ${this .getRenderer ()}\n` +
              `      WebGL version: ${this .getWebGLVersion ()}\n` +
              `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
+             `      WebXR: ${"xr" in navigator}\n` +
              `   Rendering Properties\n` +
+             `      ContentScale: ${this .getRenderingProperty ("ContentScale")}\n` +
              `      Antialiased: ${this .getRenderingProperty ("Antialiased")}\n` +
              `      Max samples: ${this .getMaxSamples ()}\n` +
              `      Depth size: ${this .getDepthSize ()} bits\n` +
@@ -156,7 +119,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
              `      Max lights per shape: ${this .getMaxLights ()}\n` +
              `      Max textures per shape: ${this .getMaxTextures ()}\n` +
              `      Max texture size: ${this .getMaxTextureSize ()} × ${this .getMaxTextureSize ()} pixels\n` +
-             `      Texture memory: ${this .getTextureMemory ()}\n` +
+             `      Texture memory: ${this .getTextureMemory () || "n/a"}\n` +
              `      Texture units: ${this .getMaxCombinedTextureUnits ()}\n` +
              `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
              `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
@@ -185,9 +148,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    getProfile (name)
    {
-      name = String (name);
-
-      const profile = this [_supportedProfiles] .get (name);
+      const profile = this [_supportedProfiles] .get (String (name));
 
       if (profile)
          return profile;
@@ -321,7 +282,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          return Promise .all ([
             MikkTSpace .initialize (), // Required by Rendering component.
             loadComponents .call (this, component, new Set ()),
-         ]);
+         ])
+         .then (Function .prototype);
       };
    })(),
    addConcreteNode (ConcreteNode)
@@ -332,9 +294,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this [_concreteNodes] .update (ConcreteNode .typeName, ConcreteNode .typeName, ConcreteNode);
    },
-   removeConcreteNode (typeName)
+   removeConcreteNode (ConcreteNode)
    {
-      this [_concreteNodes] .remove (String (typeName));
+      this [_concreteNodes] .remove (ConcreteNode .typeName);
    },
    getConcreteNode (typeName)
    {
@@ -357,9 +319,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this [_abstractNodes] .update (AbstractNode .typeName, AbstractNode .typeName, AbstractNode);
    },
-   removeAbstractNode (typeName)
+   removeAbstractNode (AbstractNode)
    {
-      this [_abstractNodes] .remove (String (typeName));
+      this [_abstractNodes] .remove (AbstractNode .typeName);
    },
    getAbstractNode (typeName)
    {
@@ -387,7 +349,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this [_fieldTypes];
    },
-   createScene (profile, ... components)
+   async createScene (profile, ... components)
    {
       const scene = new X3DScene (this);
 
@@ -410,25 +372,42 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       scene .setup ();
       scene .setLive (true);
 
+      await this .loadComponents (scene);
+
       return scene;
    },
    replaceWorld (scene)
    {
-      return new Promise ((resolve, reject) =>
+      return new Promise (async (resolve, reject) =>
       {
          this [_fileLoader] ?.abort ();
 
          this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
 
+         this .setBrowserLoading (true);
+
          // Remove world.
 
-         if (this .initialized () .getValue ())
+         if (this .getWorld ())
          {
+            // Wait for events to be processed before scene is replaced, to get correct
+            // results from getBBox and viewpoint binding in new scene, especially when
+            // a SCRIPTED scene is created.
+            await this .nextFrame ();
+
+            if (this [_reject] !== reject)
+               return;
+
             this .getExecutionContext () .setLive (false);
             this .shutdown () .processInterests ();
             this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
             this .callBrowserEventHandler ("shutdown");
+
+            // There could be a replaceWorld from a shutdown event handlers,
+            // so we need to check if the reject function is still the same.
+            if (this [_reject] !== reject)
+               return;
          }
 
          // Replace world.
@@ -439,37 +418,40 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
             const rootNodes = scene;
 
-            scene = this .createScene ();
+            scene = new X3DScene (this);
 
             for (const node of rootNodes .filter (node => node))
                scene .getLive () .addInterest ("setLive", node .getValue () .getExecutionContext ());
 
             scene .setRootNodes (rootNodes);
+            scene .setup ();
          }
 
          if (!(scene instanceof X3DScene))
-            scene = this .createScene ();
+         {
+            scene = new X3DScene (this);
+            scene .setup ();
+         }
 
          // Detach scene from parent.
 
          scene .setExecutionContext (null);
-         scene .setLive (this .isLive ());
+         scene .setLive (true);
 
          // Replace.
 
-         this .setDescription ("");
-         this .setBrowserLoading (true);
-         this ._loadCount .addInterest ("checkLoadCount", this, resolve);
-
-         for (const object of scene .getLoadingObjects ())
-            this .addLoadingObject (object);
-
          this .setExecutionContext (scene);
-         this .getWorld () .bindBindables ();
+         this .setDescription ("");
+
+         this ._loadCount .addInterest ("checkLoadCount", this, resolve, reject);
+         this ._loadCount .addEvent ();
       });
    },
-   checkLoadCount (resolve, loadCount)
+   checkLoadCount (resolve, reject, loadCount)
    {
+      if (this [_reject] !== reject)
+         return;
+
       if (loadCount .getValue ())
          return;
 
@@ -618,8 +600,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          fileLoader .createX3DFromURL (url, parameter, scene =>
          {
+            fileLoader .ready = true;
+
             if (this [_fileLoader] !== fileLoader)
             {
+               this .removeLoadingObject (fileLoader);
                reject (new Error ("Loading of X3D file aborted."));
             }
             else
@@ -724,26 +709,16 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          {
             const [key] = args;
 
-            for (const [event, original] of this [_browserCallbacks])
-            {
-               const map = new Map (original);
-
-               this [_browserCallbacks] .set (event, map);
-
+            for (const map of this [_browserCallbacks] .values ())
                map .delete (key);
-            }
 
             break;
          }
          case 2:
          {
-            const
-               [key, event] = args,
-               map          = new Map (this [_browserCallbacks] .get (event));
+            const [key, event] = args;
 
-            this [_browserCallbacks] .set (event, map);
-
-            map .delete (key);
+            this [_browserCallbacks] .get (event) .delete (key);
             break;
          }
       }
@@ -821,7 +796,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (arguments .length === 1 && typeof layerNode === "number")
          transitionTime = layerNode;
 
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+      layerNode      = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+      transitionTime = +transitionTime;
 
       layerNode ?.viewAll (transitionTime, 1, this .getBrowserOption ("StraightenHorizon"));
    },
@@ -873,11 +849,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       if (arguments .length === 1)
       {
-         name      = String (layerNode);
+         name      = layerNode;
          layerNode = this .getActiveLayer ();
       }
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+      name      = String (name);
 
       const viewpointNode = layerNode ?.getViewpoints () .get ()
          .find (viewpointNode => viewpointNode .getName () === name);
@@ -908,21 +885,38 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this .currentScene .deleteRoute (sourceNode, sourceField, destinationNode, destinationField);
    },
+   getClosestObject (layerNode, direction)
+   {
+      if (arguments .length === 1)
+      {
+         direction = layerNode;
+         layerNode = this .getActiveLayer ();
+      }
+
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+
+      const closestObject = layerNode ?.getClosestObject (direction .getValue ())
+
+      return closestObject ?.node ? {
+         node: SFNodeCache .get (closestObject .node),
+         distance: closestObject .distance,
+      }
+      : { node: null, distance: Infinity };
+   },
    beginUpdate ()
    {
       this .setLive (true);
-      this .getExecutionContext () .setLive (true);
-      this .advanceTime ();
+      this .advanceOnlyTime ();
       this .addBrowserEvent ();
    },
    endUpdate ()
    {
+      this .getViewer () .disconnect ();
       this .setLive (false);
-      this .getExecutionContext () .setLive (false);
    },
    print (... args)
    {
-      const string = args .join (" ");
+      const string = args .map (arg => String (arg)) .join (" ");
 
       console .log (string);
 
@@ -931,7 +925,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    println (... args)
    {
-      const string = args .join (" ");
+      const string = args .map (arg => String (arg)) .join (" ");
 
       console .log (string);
 
@@ -949,6 +943,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    toJSONStream (generator)
    {
       this .currentScene .toJSONStream (generator);
+   },
+   dispose ()
+   {
+      this [_DOMIntegration] .dispose ();
+
+      X3DBrowserContext .prototype .dispose .call (this);
    },
 });
 
@@ -999,14 +999,6 @@ Object .defineProperties (X3DBrowser .prototype,
       set: X3DBrowser .prototype .setBaseURL,
       enumerable: true,
    },
-   currentScene:
-   {
-      get ()
-      {
-         return this .getScriptNode () ?.getExecutionContext () ?? this .getExecutionContext ();
-      },
-      enumerable: true,
-   },
    supportedProfiles:
    {
       get: X3DBrowser .prototype .getSupportedProfiles,
@@ -1032,11 +1024,57 @@ Object .defineProperties (X3DBrowser .prototype,
       get: X3DBrowser .prototype .getFieldTypes,
       enumerable: true,
    },
+   currentScene:
+   {
+      get ()
+      {
+         return this .getScriptNode () ?.getExecutionContext () ?? this .getExecutionContext ();
+      },
+      enumerable: true,
+   },
+   activeLayer:
+   {
+      get ()
+      {
+         if (this .getActiveLayer () === this .getWorld () .getLayer0 ())
+            return null;
+
+         return this ._activeLayer .valueOf ();
+      },
+      enumerable: true,
+   },
+   activeNavigationInfo:
+   {
+      get ()
+      {
+         if (this .getActiveNavigationInfo () === this .getActiveLayer () ?.getNavigationInfoStack () .get () [0])
+            return null;
+
+         return this ._activeNavigationInfo .valueOf ();
+      },
+      enumerable: true,
+   },
+   activeViewpoint:
+   {
+      get ()
+      {
+         if (this .getActiveViewpoint () === this .getActiveLayer () ?.getViewpointStack () .get () [0])
+            return null;
+
+         return this ._activeViewpoint .valueOf ();
+      },
+      enumerable: true,
+   },
+   contextMenu:
+   {
+      get: X3DBrowser .prototype .getContextMenu,
+      enumerable: true,
+   },
    element:
    {
       get ()
       {
-         return this .getElement () .get (0);
+         return this .getElement () [0];
       },
       enumerable: true,
    },
@@ -1044,6 +1082,15 @@ Object .defineProperties (X3DBrowser .prototype,
 
 Object .defineProperties (X3DBrowser,
 {
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "activeLayer",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "activeNavigationInfo", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "activeViewpoint",      new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
    typeName:
    {
       value: "X3DBrowser",

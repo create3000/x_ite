@@ -13,8 +13,8 @@ However, you will often want to perform special effects or special cases for you
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d" update="auto">
-  <img src="https://create3000.github.io/media/images/water-quality.png" alt="Shader Example"/>
+<x3d-canvas class="xr-button-cr" update="auto" src="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d">
+  <img src="https://create3000.github.io/media/examples/X3D/WaterQuality/screenshot.avif" alt="Shader Example"/>
 </x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.zip)
@@ -23,11 +23,12 @@ However, you will often want to perform special effects or special cases for you
 
 WebGL uses the GLSL language to write shaders that can be run across all browsers. With X_ITE you create your own shader using [ComposedShader](/x_ite/components/shaders/composedshader/) and [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes and than attach the ComposedShader to the *shader* field of an [Appearance](/x_ite/components/shape/appearance/) node and that is a child's play with [Sunrize](/sunrize/).
 
-### X3D
+### XML Encoding
 
-```xml
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
-<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+```x3d
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <head>
     <component name='Shaders' level='1'/>
   </head>
@@ -75,6 +76,66 @@ uniform sampler2D x3d_Texture2D [1]; // image from ImageTexture node
 </X3D>
 ```
 
+### Classic VRML Encoding
+
+```vrml
+#X3D V{{ site.x3d_latest_version }} utf8
+
+PROFILE Interchange
+
+COMPONENT Shaders : 1
+
+Viewpoint {
+  position 9.279771 8.706816 16.22163
+  orientation -0.83432609774564 0.526445494105168 0.163569876068002 0.712985187365762
+  centerOfRotation 4.5 0 4.5
+}
+
+DEF Timer TimeSensor {
+  loop TRUE
+}
+
+Transform {
+  children Shape {
+    appearance Appearance {
+      texture ImageTexture {
+        url "image.png"
+      }
+      shaders DEF Shader ComposedShader {
+        inputOnly SFTime set_time
+
+        language "GLSL"
+        parts [
+          ShaderPart {
+            url "data:x-shader/x-vertex,#version 300 es
+// Vertex Shader
+...
+uniform float set_time; // value from set_time field
+...
+"
+          }
+          ShaderPart {
+            type "FRAGMENT"
+            url "data:x-shader/x-fragment,#version 300 es
+// Fragment Shader
+...
+uniform sampler2D x3d_Texture2D [1]; // image from ImageTexture node
+...
+"
+          }
+        ]
+      }
+    }
+    geometry ElevationGrid {
+      xDimension 10
+      zDimension 10
+    }
+  }
+}
+
+ROUTE Timer.elapsedTime TO Shader.set_time
+```
+
 Once the X3D is defined we can now write the vertex and the fragment shader source. This is a simple example where a texture is applied to the geometry.
 
 ### Vertex Shader
@@ -84,6 +145,8 @@ Once the X3D is defined we can now write the vertex and the fragment shader sour
 
 precision mediump float;
 
+// Specify build-in uniforms and ins:
+
 uniform mat4 x3d_TextureMatrix [1];
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat4 x3d_ProjectionMatrix;
@@ -91,14 +154,23 @@ uniform mat4 x3d_ProjectionMatrix;
 in vec4 x3d_TexCoord0;
 in vec4 x3d_Vertex;
 
+// Out for fragment shader:
+
 out vec4 texCoord;
+
+// Uniforms from user-defined fields:
+
+uniform float set_time; // value from set_time field
+
+// main:
 
 void
 main ()
 {
-  texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
+   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
 
-  gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
+   // Animate vertex along x-axis.
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * (x3d_Vertex + vec4 (set_time % 1.0, 0.0, 0.0, 0.0));
 }
 ```
 
@@ -109,16 +181,23 @@ main ()
 
 precision mediump float;
 
+// Specify build-in uniforms and ins:
+
 uniform sampler2D x3d_Texture2D [1];
 
 in vec4 texCoord;
 
+// Specify build-in out:
+
 out vec4 x3d_FragColor;
+
+// main:
 
 void
 main ()
 {
-  x3d_FragColor = texture (x3d_Texture2D [0], vec2 (texCoord .s, 1.0 - texCoord .t));
+   // Use color from texture.
+   x3d_FragColor = texture (x3d_Texture2D [0], vec2 (texCoord .s, 1.0 - texCoord .t));
 }
 ```
 
@@ -475,6 +554,11 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
          <td>this is the product of object's transformation matrix and the inverse x3d_CameraSpaceMatrix</td>
       </tr>
       <tr>
+         <td>uniform mat4</td>
+         <td>x3d_EyeMatrix</td>
+         <td>if a WebXR session is active it contains the position of the current eye. Do <code class="language-plaintext highlighter-rouge">x3d_EyeMatrix * x3d_ModelViewMatrix * x3d_Vertex</code></td>
+      </tr>
+      <tr>
          <td>uniform mat3</td>
          <td>x3d_NormalMatrix</td>
          <td>object's normal matrix; this is the inverse transpose of the 3×3 submatrix of x3d_ModelViewMatrix</td>
@@ -540,6 +624,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
 | Type  | Name            | Comment                                                 |
 |-------|-----------------|---------------------------------------------------------|
 | vec3  | color           |                                                         |
+| float | visibilityStart |                                                         |
 | float | visibilityRange |                                                         |
 | mat3  | matrix          | inverse fog space matrix, rotation and scale components |
 
@@ -627,6 +712,14 @@ If the shader node is part of a [InstancedShape](/x_ite/components/x-ite/instanc
 | build-in  | gl_InstanceId            | available                                                    |
 | in mat4   | x3d_InstanceMatrix       | instance matrix, should be multiplied with x3d_Vertex        |
 | in mat3   | x3d_InstanceNormalMatrix | instance normal matrix, should be multiplied with x3d_Normal |
+
+### WebXR
+
+If a WebXR session is active `x3d_EyeMatrix` contains the position of the current eye (left or right). Do `gl_Position = x3d_ProjectionMatrix * x3d_EyeMatrix * x3d_ModelViewMatrix * x3d_Vertex` to get the right `gl_Position` for each eye.
+
+| Type    | Name          | Comment                                          |
+|---------|---------------|--------------------------------------------------|
+| in mat4 | x3d_EyeMatrix | eye matrix, should be multiplied with x3d_Vertex |
 
 ## Built-in Constants
 

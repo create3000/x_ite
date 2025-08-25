@@ -16,7 +16,7 @@ There are compressed (x_ite.min.js) and uncompressed (x_ite.js) versions availab
 ### jsDelivr CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
@@ -24,7 +24,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 ```
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/create3000/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/gh/create3000/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
@@ -34,7 +34,7 @@ import X3D from "https://cdn.jsdelivr.net/gh/create3000/x_ite@{{ site.x_ite_late
 ### UNPKG CDN
 
 ```html
-<script src="https://www.unpkg.com/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
+<script defer src="https://www.unpkg.com/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://www.unpkg.com/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
@@ -50,7 +50,7 @@ You should **NOT** use this in a production environment, as there may be breakin
 ### jsDelivr CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
@@ -58,7 +58,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
 ```
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.mjs";
@@ -68,7 +68,7 @@ import X3D from "https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.
 ### UNPKG CDN
 
 ```html
-<script src="https://www.unpkg.com/x_ite@latest/dist/x_ite.min.js"></script>
+<script defer src="https://www.unpkg.com/x_ite@latest/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://www.unpkg.com/x_ite@latest/dist/x_ite.min.mjs";
@@ -78,7 +78,7 @@ import X3D from "https://www.unpkg.com/x_ite@latest/dist/x_ite.min.mjs";
 ### GitHub CDN
 
 ```html
-<script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+<script defer src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";

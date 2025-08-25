@@ -1,4 +1,4 @@
-export default /* glsl */ `
+export default () => /* glsl */ `
 #if defined (X3D_CLIP_PLANES)
 
 uniform vec4 x3d_ClipPlane [X3D_NUM_CLIP_PLANES];

@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DAppearanceNode    from "./X3DAppearanceNode.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
@@ -120,18 +74,6 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       return this .stylePropertiesNode [geometryType];
    },
-   getPointProperties ()
-   {
-      return this .stylePropertiesNode [0];
-   },
-   getLineProperties ()
-   {
-      return this .stylePropertiesNode [1];
-   },
-   getFillProperties ()
-   {
-      return this .stylePropertiesNode [2];
-   },
    getMaterial ()
    {
       return this .materialNode;
@@ -184,7 +126,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_alphaMode__ ()
    {
-      this .alphaMode = $.enum (AlphaMode, this ._alphaMode .getValue (), AlphaMode .AUTO);
+      this .alphaMode = AlphaMode .get (this ._alphaMode .getValue ()) ?? AlphaMode .AUTO;
 
       this .set_alphaCutoff__ ();
    },
@@ -196,29 +138,27 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
 
-      if (!this .stylePropertiesNode [0])
-      {
-         const browser = this .getBrowser ();
+      if (this .stylePropertiesNode [0])
+         return;
 
-         if (browser .getRenderingProperty ("ContentScale") !== 1)
-            this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
-      }
+      const browser = this .getBrowser ();
+
+      if (browser .getRenderingProperty ("ContentScale") !== 1)
+         this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
    },
    set_lineProperties__ ()
    {
-      if (this .linePropertiesNode)
-         this .linePropertiesNode ._applied .removeInterest ("set_applied__", this);
+      this .linePropertiesNode ?._applied .removeInterest ("set_applied__", this);
 
       this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this ._lineProperties);
 
-      if (this .linePropertiesNode)
-         this .linePropertiesNode ._applied .addInterest ("set_applied__", this);
+      this .linePropertiesNode ?._applied .addInterest ("set_applied__", this);
 
       this .set_applied__ ();
    },
    set_applied__ ()
    {
-      if (this .linePropertiesNode && this .linePropertiesNode ._applied .getValue ())
+      if (this .linePropertiesNode ?._applied .getValue ())
       {
          this .stylePropertiesNode [1] = this .linePropertiesNode;
       }
@@ -234,13 +174,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_fillProperties__ ()
    {
-      if (this .stylePropertiesNode [2])
-         this .stylePropertiesNode [2] ._transparent .removeInterest ("set_transparent__", this);
+      this .stylePropertiesNode [2] ?._transparent .removeInterest ("set_transparent__", this);
 
       this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this ._fillProperties);
 
-      if (this .stylePropertiesNode [2])
-         this .stylePropertiesNode [2] ._transparent .addInterest ("set_transparent__", this);
+      this .stylePropertiesNode [2] ?._transparent .addInterest ("set_transparent__", this);
 
       this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
    },
@@ -252,16 +190,13 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
          this .materialNode ._transmission .removeInterest ("set_transmission__", this);
       }
 
-      this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material);
+      this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material)
+         ?? this .getBrowser () .getDefaultMaterial ();
 
-      if (!this .materialNode)
-         this .materialNode = this .getBrowser () .getDefaultMaterial ();
+      this .materialNode ._transparent  .addInterest ("set_transparent__",  this);
+      this .materialNode ._transmission .addInterest ("set_transmission__", this);
 
-      if (this .materialNode)
-      {
-         this .materialNode ._transparent  .addInterest ("set_transparent__",  this);
-         this .materialNode ._transmission .addInterest ("set_transmission__", this);
-      }
+      this .set_transmission__ ();
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -270,13 +205,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_backMaterial__ ()
    {
-      if (this .backMaterialNode)
-         this .backMaterialNode ._transparent .removeInterest ("set_transparent__", this);
+      this .backMaterialNode ?._transparent .removeInterest ("set_transparent__", this);
 
       this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this ._backMaterial);
 
-      if (this .backMaterialNode)
-         this .backMaterialNode ._transparent .addInterest ("set_transparent__", this);
+      this .backMaterialNode ?._transparent .addInterest ("set_transparent__", this);
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -307,13 +240,10 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_textureTransform__ ()
    {
-      if (this .textureTransformNode)
-         this .textureTransformNode .removeInterest ("updateTextureTransformMapping", this);
+      this .textureTransformNode ?.removeInterest ("updateTextureTransformMapping", this);
 
-      this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
-
-      if (!this .textureTransformNode)
-         this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
+      this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform)
+         ?? this .getBrowser () .getDefaultTextureTransform ();
 
       this .textureTransformNode .addInterest ("updateTextureTransformMapping", this);
 
@@ -418,26 +348,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
 
 Object .defineProperties (Appearance,
 {
-   typeName:
-   {
-      value: "Appearance",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "appearance",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("Appearance", "Shape", 1, "appearance", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

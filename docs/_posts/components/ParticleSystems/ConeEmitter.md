@@ -15,7 +15,7 @@ tags: [ConeEmitter, ParticleSystems]
 
 ConeEmitter generates all available particles from a specific point in space. Particles are emitted from the single point specified by the position field emanating in a direction randomly distributed within the cone specified by the angle and direction fields.
 
-The ConeEmitter node belongs to the **ParticleSystems** component and requires at least level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
+The ConeEmitter node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -27,27 +27,45 @@ The ConeEmitter node belongs to the **ParticleSystems** component and requires a
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [on](#fields-on) | TRUE |
+| SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 1 0  |
+| SFFloat | [in, out] | [angle](#fields-angle) | π/4  |
+| SFFloat | [in, out] | [speed](#fields-speed) | 0  |
+| SFFloat | [in, out] | [variation](#fields-variation) | 0.25  |
+| SFFloat | [in, out] | [mass](#fields-mass) | 0  |
+| SFFloat | [in, out] | [surfaceArea](#fields-surfaceArea) | 0  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **on** TRUE
+{: #fields-on }
 
 Enables/disables production of particles from this emitter node. If operating when turned off, existing particles complete their rendering process.
 
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-position }
 
 Point from which particles emanate.
 
 ### SFVec3f [in, out] **direction** 0 1 0 <small>(-∞,∞)</small>
+{: #fields-direction }
 
 Initial *direction* from which particles emanate.
 
 ### SFFloat [in, out] **angle** π/4 <small>[0,π]</small>
+{: #fields-angle }
 
 [Cone](/x_ite/components/geometry3d/cone/) boundary for random distribution of particles about initial direction.
 
@@ -56,10 +74,12 @@ Initial *direction* from which particles emanate.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **speed** 0 <small>[0,∞)</small>
+{: #fields-speed }
 
 Initial linear *speed* (default is m/s) imparted to all particles along their direction of movement.
 
 ### SFFloat [in, out] **variation** 0.25 <small>[0,∞)</small>
+{: #fields-variation }
 
 Multiplier for the randomness used to control the range of possible output values. The bigger the value, the more random the output and the bigger the range of possible initial values possible.
 
@@ -68,6 +88,7 @@ Multiplier for the randomness used to control the range of possible output value
 - *variation* of zero does not allow any randomness.
 
 ### SFFloat [in, out] **mass** 0 <small>[0,∞)</small>
+{: #fields-mass }
 
 Basic *mass* of each particle, defined in *mass* base units (default is kilograms).
 
@@ -75,9 +96,10 @@ Basic *mass* of each particle, defined in *mass* base units (default is kilogram
 
 - *mass* is needed if gravity or other force-related calculations are performed on a per-particle basis.
 - [Kilogram](https://en.wikipedia.org/wiki/Kilogram)
-- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/concepts.html#Standardunitscoordinates
+- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#Standardunitscoordinates)
 
 ### SFFloat [in, out] **surfaceArea** 0 <small>[0,∞)</small>
+{: #fields-surfaceArea }
 
 Particle surface area in area base units (default is meters squared). Surface area is used for calculations such as wind effects per particle.
 
@@ -88,7 +110,9 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/ConeEmitter/ConeEmitter.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/ConeEmitter/ConeEmitter.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/ParticleSystems/ConeEmitter/screenshot.avif" alt="ConeEmitter"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/ConeEmitter/ConeEmitter.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/ConeEmitter/ConeEmitter.x3d)

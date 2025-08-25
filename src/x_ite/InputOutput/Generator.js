@@ -1,55 +1,8 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
+function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, html = false, closingTags = false, names = true })
 {
    this .string          = "";
    this .indent          = indent;
@@ -58,40 +11,14 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .doublePrecision = Algorithm .clamp (doublePrecision, 1, 21);
    this .html            = html;
    this .closingTags     = html || closingTags;
+   this .outputNames     = names; // private option: used in StaticGroup for toVRMLString.
 
-   this .floatFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "standard",
-      maximumSignificantDigits: this .precision,
-      useGrouping: false,
-   })
-   .format;
+   this .floatFormat             = this .createFloatFormat (this .precision);
+   this .floatExponentialFormat  = this .createFloatExponentialFormat (this .precision);
+   this .doubleFormat            = this .createFloatFormat (this .doublePrecision);
+   this .doubleExponentialFormat = this .createFloatExponentialFormat (this .doublePrecision);
 
-   this .floatExponentialFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "scientific",
-      maximumSignificantDigits: this .precision,
-      useGrouping: false,
-   })
-   .format;
-
-   this .doubleFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "standard",
-      maximumSignificantDigits: this .doublePrecision,
-      useGrouping: false,
-   })
-   .format;
-
-   this .doubleExponentialFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "scientific",
-      maximumSignificantDigits: this .doublePrecision,
-      useGrouping: false,
-   })
-   .format;
-
-   this .Style (style);
+   this .Style (style, indentChar);
 
    this .executionContextStack = [ ];
    this .executionContextIndex = new Set ();
@@ -103,13 +30,11 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .namesByNode           = new Map ();
    this .routeNodes            = new Map ();
    this .containerFields       = [ ];
-
-   this .PushExecutionContext (null);
 }
 
 Object .assign (Generator .prototype,
 {
-   Style (style)
+   Style (style, indentChar = "  ")
    {
       switch (style)
       {
@@ -151,7 +76,7 @@ Object .assign (Generator .prototype,
             this .break          = "\n";
             this .tidyBreak      = "\n";
             this .tidySpace      = " ";
-            this .indentChar     = "  ";
+            this .indentChar     = indentChar;
             this .listEnclosure  = " ";
             this .listBreak      = " ";
             this .listIndentChar = "";
@@ -165,10 +90,10 @@ Object .assign (Generator .prototype,
             this .break          = "\n";
             this .tidyBreak      = "\n";
             this .tidySpace      = " ";
-            this .indentChar     = "  ";
+            this .indentChar     = indentChar;
             this .listEnclosure  = "\n";
             this .listBreak      = "\n";
-            this .listIndentChar = "  ";
+            this .listIndentChar = this .indentChar;
             this .attribBreak    = "\n";
             break;
          }
@@ -236,6 +161,26 @@ Object .assign (Generator .prototype,
 
       return "";
    },
+   createFloatFormat (precision)
+   {
+      return new Intl .NumberFormat ("en",
+      {
+         notation: "standard",
+         maximumSignificantDigits: precision,
+         useGrouping: false,
+      })
+      .format;
+   },
+   createFloatExponentialFormat (precision)
+   {
+      return new Intl .NumberFormat ("en",
+      {
+         notation: "scientific",
+         maximumSignificantDigits: precision,
+         useGrouping: false,
+      })
+      .format;
+   },
    FloatFormat  (value)
    {
       if (Number .isFinite (value))
@@ -276,18 +221,29 @@ Object .assign (Generator .prototype,
          return;
 
       this .executionContextIndex .add (executionContext);
-
-      this .importedNodesIndex .set (executionContext, new Set ());
-      this .importedNames      .set (executionContext, new Map ());
-      this .exportedNodesIndex .set (executionContext, new Set ());
-      this .nodes              .set (executionContext, new Set ());
-      this .names              .set (executionContext, new Set ());
-      this .namesByNode        .set (executionContext, new Map ());
-      this .routeNodes         .set (executionContext, new Set ());
+      this .importedNodesIndex    .set (executionContext, new Set ());
+      this .importedNames         .set (executionContext, new Map ());
+      this .exportedNodesIndex    .set (executionContext, new Set ());
+      this .nodes                 .set (executionContext, new Set ());
+      this .names                 .set (executionContext, new Set ());
+      this .namesByNode           .set (executionContext, new Map ());
+      this .routeNodes            .set (executionContext, new Set ());
    },
    PopExecutionContext ()
    {
-      this .executionContextStack .pop ();
+      const executionContext = this .executionContextStack .pop ();
+
+      if (this .executionContextStack .at (-1) === executionContext)
+         return;
+
+      this .executionContextIndex .delete (executionContext);
+      this .importedNodesIndex    .delete (executionContext);
+      this .importedNames         .delete (executionContext);
+      this .exportedNodesIndex    .delete (executionContext);
+      this .nodes                 .delete (executionContext);
+      this .names                 .delete (executionContext);
+      this .namesByNode           .delete (executionContext);
+      this .routeNodes            .delete (executionContext);
    },
    ExecutionContext ()
    {
@@ -345,11 +301,9 @@ Object .assign (Generator .prototype,
    },
    ExistsRouteNode (routeNode)
    {
-      const
-         namesByNode = this .namesByNode .get (this .ExecutionContext ()),
-         routeNodes  = this .routeNodes .get (this .ExecutionContext ());
+      const routeNodes = this .routeNodes .get (this .ExecutionContext ());
 
-      return namesByNode .has (routeNode) || routeNodes .has (routeNode);
+      return routeNodes .has (routeNode);
    },
    IsSharedNode (baseNode)
    {
@@ -507,6 +461,30 @@ Object .assign (Generator .prototype,
          return string .replace (regex, char => map [char]);
       };
    })(),
+   XMLAppInfo (object)
+   {
+      const appInfo = object .getAppInfo ();
+
+      if (!appInfo)
+         return;
+
+      this .string += this .Space ();
+      this .string += "appinfo='";
+      this .string += this .XMLEncode (appInfo);
+      this .string += "'";
+   },
+   XMLDocumentation (object)
+   {
+      const documentation = object .getDocumentation ();
+
+      if (!documentation)
+         return;
+
+      this .string += this .Space ();
+      this .string += "documentation='";
+      this .string += this .XMLEncode (documentation);
+      this .string += "'";
+   },
    JSONEncode: (() =>
    {
       const map = {
@@ -546,6 +524,40 @@ Object .assign (Generator .prototype,
          this .string = this .string .slice (0, -1);
 
       this .string += this .TidyBreak ();
+   },
+   JSONAppInfo (object)
+   {
+      const appInfo = object .getAppInfo ();
+
+      if (!appInfo)
+         return;
+
+      this .string += ',';
+      this .string += this .Indent ();
+      this .string += '"';
+      this .string += "@appinfo";
+      this .string += '"';
+      this .string += ':';
+      this .string += '"';
+      this .string += this .JSONEncode (appInfo);
+      this .string += '"';
+   },
+   JSONDocumentation (object)
+   {
+      const documentation = object .getDocumentation ();
+
+      if (!documentation)
+         return;
+
+      this .string += ',';
+      this .string += this .Indent ();
+      this .string += '"';
+      this .string += "@documentation";
+      this .string += '"';
+      this .string += ':';
+      this .string += '"';
+      this .string += this .JSONEncode (documentation);
+      this .string += '"';
    },
 });
 

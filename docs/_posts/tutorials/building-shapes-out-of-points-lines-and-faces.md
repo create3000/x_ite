@@ -32,13 +32,13 @@ A [Coordinate](/x_ite/components/rendering/coordinate/) node contains a list of 
 
 ### XML Encoding
 
-```xml
+```x3d
 <!-- X Y Z -->
 <Coordinate
     point='2.0 1.0 3.0, 4.0 2.5 5.3, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Coordinate {
@@ -69,7 +69,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <PointSet>
@@ -79,7 +79,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -92,6 +92,16 @@ Shape {
 }
 ```
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/points1/points1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/points1/screenshot.avif" alt="PointSet"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/points1/points1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/points1/points1.x3dv)
+{: .example-links }
+
 ## Syntax: IndexedLineSet
 
 An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node creates geometry out of lines:
@@ -100,7 +110,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedLineSet
@@ -111,7 +121,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -124,6 +134,16 @@ Shape {
   }
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/lines1/lines1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/lines1/screenshot.avif" alt="IndexedLineSet"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/lines1/lines1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/lines1/lines1.x3dv)
+{: .example-links }
 
 ## Using line set coordinate indexes
 
@@ -157,7 +177,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedFaceSet
@@ -168,7 +188,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -181,6 +201,16 @@ Shape {
   }
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/faces1/faces1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/faces1/screenshot.avif" alt="IndexedFaceSet"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/faces1/faces1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/faces1/faces1.x3dv)
+{: .example-links }
 
 ## Using face set coordinate index lists
 
@@ -212,7 +242,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance><!-- ... --></Appearance>
   <IndexedFaceSet
@@ -225,7 +255,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -264,13 +294,13 @@ A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolato
 
 ### XML Encoding
 
-```xml
+```x3d
 <CoordinateInterpolator
     key='0.0, ...'
     keyValue='0.0 1.0 0.0, ...'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 CoordinateInterpolator {

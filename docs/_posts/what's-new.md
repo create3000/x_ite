@@ -7,7 +7,147 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
-## X_ITE v10.2.0 Released
+## X_ITE v12.0 Series
+
+*Leipzig, 9th August 2025:* This new series 12.0 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped for the back face.
+
+There is now a test file that should show both the same image on the front and back face: [texture mapping on a Rectangle2D with TextureTransform](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Geometry2D/FlipTexture.x3d).
+
+### Breaking Change
+
+* Fixes texture flipping about x-Axis for Geometry2D for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/).
+
+### Notable Changes
+
+* Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
+* Collision detection is now entirely done by GPU.
+* XML and JSON attributes *appinfo* and *documentation* for `ProtoDeclare`, `ExternProtoDeclare` and `field` are no longer ignored.
+* Bug fixes in several nodes with bounding box calculations.
+* Fixes bug with light *attenuation* handling in PBR shader.
+* Fixes a bug with some smart-phones that HAnim and ParticleSystem nodes are not working.
+
+## X_ITE v11.6 Series
+
+*Leipzig, 12th July 2025:* This new series 11.6 comes with Animated PNG support for MovieTexture node. The MoveTexture node has been able to handle Animated GIFs for quite a while, and can now also handle Animated PNGs.
+
+For a first impression of how the whole thing looks now, here are two example files to test:
+
+1. [Animated PNG as MovieTexture](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedPNG.x3d)
+2. [Animated GIF as MovieTexture](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedGIF.x3d)
+
+See also: [MovieTexture supported file formats](/x_ite/components/texturing/movietexture/#supported-file-formats).
+
+### Notable Changes
+
+* This series drops support for WebGL 1, because all known browsers support WebGL 2 now for quite a while.
+* [EnvironmentLight](/x_ite/components/lighting/environmentlight/) can now generate a diffuse texture from specular if *diffuseTexture* field is empty.
+* Fixes a bug with Mali GPU when some objects are rendered completely black.
+* Fixes light calculations for [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/).
+* Speed of glTF image loading is now better in some cases.
+* Fixes a bug with [Extrusion](/x_ite/components/geometry3d/extrusion/) and closed *spine* when *orientations* are used.
+
+## X_ITE v11.5 Series
+
+*Leipzig, 6th April 2025:* This series comes improvements in [Sunrize](/sunrize/).
+
+### Sunrize
+
+* Objects can now directly be selected in the browser window.
+* New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
+* New »View all objects in active layer.« button in the Dashboard.
+* Other bug fixes.
+
+### X_ITE
+
+* New `theme` [attribute](/x_ite/#attributes-of-the-x3d-canvas-element) for the \<x3d-canvas\> element.
+* New icon concept for context menu, timings and notifications.
+* X3DVolumeDataNode now supports [browser option](/x_ite/reference/browser-services/#browser-options) `QualityWhenMoving`.
+* Improved [LineProperties](/x_ite/components/shape/lineproperties/) `linewidthScaleFactor` handling to support a greater range of values.
+* Fixed various minor bugs in [MovieTexture](/x_ite/components/texturing/movietexture/).
+* Fixed issue with animation getting stuck when in transition, viewAll or lookAt animation.
+* Fixed issue with [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) sending »old« *touchTime* values.
+* Fixed issue in normal calculations in rare cases.
+* Fixed [Switch](/x_ite/components/grouping/switch/) and [LOD](/x_ite/components/navigation/lod/) `addChildren` and `removeChildren` events handling.
+* If the *min* package is selected, the correct files are now loaded from the assets folder.
+* Fixed fatal bug in PBR shader when [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) and [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) are present at the same time.
+* Fixed bug when Order Independent Transparency (OIT) and [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) are used together.
+* Fixed a bug in PBR shader when points and lines are rendered without normals.
+* Other bug fixes.
+
+## X_ITE v11.4 Series
+
+*Leipzig, 23rd March 2025:* This series comes with a lot of small but important changes and features.
+
+* Improved WOFF2 font files handling.
+* New dragging cursor when an X3DDragSensorNode is dragged.
+* New [Mute](/x_ite/reference/browser-services/#getbrowseroption-name-string-any) browser option.
+* Fixed a issue when an X3DBindableNode receives a *set_bind* `FALSE` event.
+* Fixed an issue with viewpoint binding at initialization of world and when the viewpoint has received an additional *set_bind* `TRUE` event.
+* The pixel data of a [PixelTexture](/x_ite/components/texturing/pixeltexture/) node are now checked for transparent pixels if necessary, to automatically determine alpha mode of [Appearance](/x_ite/components/shape/appearance/) node.
+
+## X_ITE v11.3 Series
+
+*Leipzig, 9th March 2025:* The scene-graph now optimizes itself automatically depending on what nodes are present. If, for example, a Group node contains only invisible nodes such as TimeSensor or ScalarInterpolator, this group is completely optimized away, of course this has no influence on the animation. Not only nodes that are invisible, but also nodes that do not participate in collision or shadow calculation can now be sorted out. This optimization is dynamic and thorough, everything that does not need to be traversed is removed.
+
+* Scene-graph traversal optimizations for improved performance and efficiency in processing scene graphs, resulting in faster rendering and reduced computation overhead.
+
+## X_ITE v11.2 Series
+
+*Leipzig, 16th February 2025:* With this series there is now extended WebXR support. Use your VR glasses with X_ITE and get immersive.
+
+* Basic visualization of the controller (input ray and tracking point)
+* X3DPointingDeviceSensorNode support
+* Support for WALK, FLY and EXAMINE viewer via controllers and buttons
+
+You can now click and drag [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) and [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) etc. and also get feedback on your controller.
+
+The WALK, FLY and EXAMINE viewer can now be controlled via the buttons and the thumbstick of the controller(s), conveniently when sitting on the couch. Use a [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node to choose a viewer.
+
+## X_ITE v11.0 Series
+
+*Leipzig, 12th December 2024:* Again, these series fixes some long standing issues. There are also some breaking changes.
+
+* `X3DBrowser.createScene` now returns a Promise.
+* `X3DBaseNode.setExecutionContext(null)` always connects to browser.
+* Default value of `X3DTextureProjectorNode.upVector` is now `0 1 0`.
+* Fixed a bug when parsing strings.
+
+## X_ITE v10.5 Series
+
+*Leipzig, 8th September 2024:* These series fixes some long standing issues.
+
+* Improved rendering of opaque points, especially with [PointSet](/x_ite/components/rendering/pointset/).
+* Implemented [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/).
+* Increased speed when parsing X3D files.
+* Improved rendering of thick lines.
+* [StaticGroup](/x_ite/components/grouping/staticgroup/) is now doing extensive optimizations.
+* [HAnimSegment](/x_ite/components/hanim/hanimsegment/) now handles displacers.
+* glTF Parser: Implemented glTF extension [KHR_animation_pointer](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_animation_pointer/README.md).
+
+## X_ITE v10.4 Series
+
+*Leipzig, 27th August 2024:* With this version of X_ITE we have now implemented render optimizations for StaticGroup nodes. A StaticGroup node will now completely remove all transformations and bake them into the geometry. Furthermore, assuming the Appearance node is exactly the same (cloned) and the geometry nodes are compatible, the geometry nodes will be merged into a single one.
+
+This works very well with all geometry types (point, line, 2D, 3D).
+
+A basic test file is also available. This test file will create 10 static nodes from the previous 22 nodes:
+
+* [StaticGroup](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroup.x3d)
+
+Another test file using an Inline node with a glTF sample (1.5 million triangles). This test file will create 15 static nodes from the previous 49 nodes:
+
+* [StaticGroup with Inline](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroupWithInline.x3d)
+
+## X_ITE v10.3 Series
+
+*Leipzig, 18th August 2024:* With this release there is now basic WebXR support built directly into X_ITE. If WebXR is possible then a new button (Cardboard Glasses) appears in the lower right corner of the \<x3d-canvas\>. In addition, there are now three new [attributes](/x_ite/#attributes-of-the-x3d-canvas-element) (*xrButton, xrMovementControl, xrSessionMode*) and the corresponding [browser options](/x_ite/reference/browser-services/#browser-options) (*XRButton, XRMovementControl, XRSessionMode*).
+
+If you don't have a VR headset, there is a browser extension for Chrome and Firefox that emulates a WebXR device:
+
+* [WebXR Emulator for Chrome](https://chromewebstore.google.com/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje)
+* [WebXR Emulator for Firefox](https://addons.mozilla.org/de/firefox/addon/webxr-api-emulator/)
+
+## X_ITE v10.2 Series
 
 *Leipzig, 4th August 2024:* This release comes with the following improvements:
 
@@ -15,13 +155,13 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 - Implemented KHR_mesh_quantization in glTF parser.
 - Tangents are now automatically generated using MikkTSpace algorithm, if not present.
 
-## X_ITE v10.1.0 Released
+## X_ITE v10.1 Series
 
 *Leipzig, 28th July 2024:* This release comes with a new [browser option](/x_ite/reference/browser-services/#browser-options) `TextCompression` which determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, i.e. either by adjusting char spacing or by scaling. These are the two options suggested by the X3D specification, and we can now offer both to let the user choose which one they want. The option can be changed programmatically via `setBrowserOption` or via a new attribute of the \<x3d-canvas\> element.
 
 We also noticed two problems with text rendering, particularly with vertical text, where the text did not start or end at the origin. Also *maxExtent* is now implemented as specified by X3D.
 
-## X_ITE v10.0.0 Released
+## X_ITE v10.0 Series
 
 *Leipzig, 23rd June 2024:* With this release, all glTF material extensions are now available, i.e. when a glTF file is parsed, these extensions are automatically converted to X3D. There is now an X3D node for each glTF extension. These nodes can also be referenced directly in X3D files. Extensions for glTF materials are converted to the new X3DMaterialExtensionNode nodes, which can be used as a child of [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) node and the new [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) node. These material nodes now have a new field »extensions« for this purpose. The introduction of the »extensions« field has only a minimal impact and leads to the greatest possible compatibility.
 
@@ -100,7 +240,7 @@ In the meantime, further improvements have of course been made, but these are no
 * ES module version of X_ITE named »x_ite.mjs«.
 * Typescript types for IntelliSense.
 * PLY 3d format parser.
-* [TextureProjection component](/x_ite/components/#textureprojection) is now working.
+* [TextureProjection component](/x_ite/components/overview/#textureprojection) is now working.
 
 ## X_ITE v8.10.0 Released
 
@@ -490,7 +630,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Better control of navigation with mouse and trackpad on macOS and tablet devices.
 - Fixed examine viewer rotation when multiple layer with viewport are present.
-- Emulate middle mouse button when pressing Alt/Option key.
+- Emulate middle mouse button when pressing *Alt-or-Option*-key.
 - Fixed bug in IndexedTriangleFanSet.
 - Updated Shape component to level 5.
 - Fix bug in rotation axis/angle calculation.

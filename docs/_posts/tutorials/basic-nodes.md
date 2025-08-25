@@ -7,11 +7,11 @@ tags: [Basic, Nodes]
 ---
 ## Overview
 
-X3D is capable of representing static and animated objects and it can have hyperlinks to other media such as sound, movies, and image. X\_ITE is a browsers for X3D and available for many different platforms as well as [Sunrize](/sunrize/) is an authoring tools for the creation X3D files. For programmers there is an JavaScript API interface to access X3D nodes and commonly used 3D application programmer interface features.
+X3D is capable of representing static and animated objects and it can have hyperlinks to other media such as sound, movies, and image. X\_ITE is a browsers for X3D and available for many different platforms as well as [Sunrize](/sunrize/) is an authoring tools for the creation X3D files. For programmers there is a JavaScript API interface to access X3D nodes and commonly used 3D application programmer interface features.
 
 ## Let The Games Begin…
 
-A X3D file has four basic elements:
+An X3D file has four basic elements:
 
 1. A header which tells the browser that the file is X3D and which version also. A header line is mandatory.
 2. Comments are preceded by a #.
@@ -26,9 +26,13 @@ Here is a typical X3D Classic Encoded file with a single node:
 
 ### XML Encoding
 
-```xml
+```x3d
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+  <head>
+    <component name='PointingDeviceSensor' level='1'/>
+  </head>
   <Scene>
     <PlaneSensor DEF='Sensor'
         offset='0 2 0'/>
@@ -43,10 +47,14 @@ Here is a typical X3D Classic Encoded file with a single node:
 </X3D>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
+
+PROFILE Interchange
+
+COMPONENT PointingDeviceSensor : 1
 
 # A sample file with a simple scene
 
@@ -70,19 +78,29 @@ ROUTE Sensor.translation_changed TO XForm.set_translation
 
 Be careful! X3D is a case sensitive language.
 
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/simple/simple.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/simple/screenshot.avif" alt="Simple Example"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/simple/simple.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/simple/simple.x3dv)
+{: .example-links }
+
 ## Key Concept
 
 Now we can start to add information to the file. The first node to deal with is the [WorldInfo](/x_ite/components/core/worldinfo/) node. This node contains general information about the world, such as a *title* for the world. [WorldInfo](/x_ite/components/core/worldinfo/) can also contain an *info* field, which contain other information about the file such as copyright information. You can put what you like in it. A sample [WorldInfo](/x_ite/components/core/worldinfo/) node is shown below:
 
 ### XML Encoding
 
-```xml
+```x3d
 <WorldInfo
     title='Tutorial'
     info='"Basic Nodes", "https://create3000.github.io/x_ite/"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 WorldInfo {
@@ -102,7 +120,7 @@ A [Shape](/x_ite/components/shape/shape/) node is the node to specify material a
 
 ### XML Encoding
 
-```xml
+```x3d
 <Shape>
   <Appearance>
     <Material/>
@@ -111,7 +129,7 @@ A [Shape](/x_ite/components/shape/shape/) node is the node to specify material a
 </Shape>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Shape {
@@ -143,7 +161,7 @@ In order to make our world any use at all, we need to be able to transform objec
 
 ### XML Encoding
 
-```xml
+```x3d
 <Transform
     translation='1 1 1'
     rotation='0 1 0 0.78'
@@ -152,7 +170,7 @@ In order to make our world any use at all, we need to be able to transform objec
 </Transform>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Transform {
@@ -173,7 +191,7 @@ In X3D, you navigate between pages the same way as in HTML. You have an object t
 
 ### XML Encoding
 
-```xml
+```x3d
 <Anchor
     url='"next-page.html"'
     description='Look forward'>
@@ -181,7 +199,7 @@ In X3D, you navigate between pages the same way as in HTML. You have an object t
 </Anchor>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Anchor {
@@ -199,11 +217,11 @@ There are a couple of extra fields not shown above. One of these is *parameter* 
 
 ### XML Encoding
 
-```xml
+```x3d
 parameter='"target=_blank"'
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 parameter [ "target=_blank" ]
@@ -215,12 +233,12 @@ There are two ways we can change the background of our scene. One is to specify 
 
 ### XML Encoding
 
-```xml
+```x3d
 <Background
     skyColor='0.5 0.5 0.5'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Background {
@@ -236,13 +254,13 @@ To give the world camera another position or orientation there is a [Viewpoint](
 
 ### XML Encoding
 
-```xml
+```x3d
 <Viewpoint DEF='LookAtHouse'
     position='0 2 10'
     orientation='0 1 0 3.14'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 DEF LookAtHouse Viewpoint {
@@ -257,12 +275,12 @@ If you define more than once viewpoint in an X3D file, the first viewpoint defin
 
 ### XML Encoding
 
-```xml
+```x3d
 <Anchor
     url='"#LookAtHouse"'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 Anchor {
@@ -278,12 +296,12 @@ When using Gouraud shading browsers calculate lighting by working it out for eac
 
 ### XML Encoding
 
-```xml
+```x3d
 <NavigationInfo
     headlight='false'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 NavigationInfo {

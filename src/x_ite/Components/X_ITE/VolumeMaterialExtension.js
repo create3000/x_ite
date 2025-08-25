@@ -1,57 +1,21 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                   from "../../Fields.js";
 import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
+import X3DNode                  from "../Core/X3DNode.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+
+// Register key.
+
+ExtensionKeys .add ("VOLUME_MATERIAL_EXTENSION");
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_ThicknessTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -63,6 +27,13 @@ function VolumeMaterialExtension (executionContext)
 
    this .addType (X3DConstants .VolumeMaterialExtension);
 
+   // Units
+
+   this ._thickness           .setUnit ("length");
+   this ._attenuationDistance .setUnit ("length");
+
+   // Private properties
+
    this .attenuationColorArray = new Float32Array (3);
 }
 
@@ -72,7 +43,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      this ._thickness            .addInterest ("set_thickness__",          this);
+      this ._thickness           .addInterest ("set_thickness__",           this);
       this ._thicknessTexture    .addInterest ("set_thicknessTexture__",    this);
       this ._attenuationDistance .addInterest ("set_attenuationDistance__", this);
       this ._attenuationColor    .addInterest ("set_attenuationColor__",    this);
@@ -98,16 +69,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    },
    set_attenuationColor__ ()
    {
-      //We cannot use this in Windows Edge:
-      //this .attenuationColorArray .set (this ._attenuationColor .getValue ());
-
-      const
-         attenuationColorArray = this .attenuationColorArray,
-         attenuationColor      = this ._attenuationColor .getValue ();
-
-      attenuationColorArray [0] = attenuationColor .r;
-      attenuationColorArray [1] = attenuationColor .g;
-      attenuationColorArray [2] = attenuationColor .b;
+      this .attenuationColorArray .set (this ._attenuationColor .getValue ());
    },
    getExtensionKey ()
    {
@@ -123,6 +85,12 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
       options .push ("X3D_MATERIAL_TEXTURES");
 
       this .thicknessTextureNode ?.getShaderOptions (options, "THICKNESS", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_ThicknessEXT");
+      uniforms .push ("x3d_AttenuationDistanceEXT");
+      uniforms .push ("x3d_AttenuationColorEXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -145,26 +113,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
 
 Object .defineProperties (VolumeMaterialExtension,
 {
-   typeName:
-   {
-      value: "VolumeMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("VolumeMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

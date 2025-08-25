@@ -1,53 +1,7 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
 
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
-
-typeof jquery_mousewheel; // import plugin
+void (typeof jquery_mousewheel); // import plugin
 
 const CONTEXT_MENU_TIME = 1200;
 
@@ -55,8 +9,8 @@ function PointingDevice (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .cursor = "DEFAULT";
-   this .isOver = false;
+   this .over     = false;
+   this .grabbing = false;
 }
 
 Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .prototype),
@@ -76,9 +30,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
    },
    mousewheel (event)
-   {
-      // event .preventDefault () must be done in the all viewers.
-   },
+   { },
    mousedown (event)
    {
       const
@@ -87,7 +39,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       browser .getElement () .focus ();
 
-      if (browser .getShiftKey () && browser .getControlKey ())
+      if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
 
       if (event .button === 0)
@@ -104,50 +56,74 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
          if (browser .buttonPressEvent (x, y))
          {
+            // Stop event propagation.
+
             event .preventDefault ();
             event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
 
-            browser .setCursor ("HAND");
+            this .grabbing = Array .from (browser .getHit () .sensors .keys ())
+               .some (node => node .getType () .includes (X3DConstants .X3DDragSensorNode));
+
+            browser .setCursor ("POINTER");
+
             this .onverifymotion (x, y);
          }
       }
    },
    mouseup (event)
    {
+      if (event .button !== 0)
+         return;
+
+      // Stop event propagation.
+
       event .preventDefault ();
 
-      if (event .button === 0)
-      {
-         const
-            browser = this .getBrowser (),
-            element = browser .getSurface ();
+      // Handle button release.
 
-         const { x, y } = browser .getPointerFromEvent (event);
+      const
+         browser = this .getBrowser (),
+         element = browser .getSurface ();
 
-         $(document) .off (".PointingDevice" + this .getId ());
-         element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+      const { x, y } = browser .getPointerFromEvent (event);
 
-         browser .buttonReleaseEvent ();
-         browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
-         this .onverifymotion (x, y);
+      $(document) .off (".PointingDevice" + this .getId ());
+      element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
-         this .cursor = "DEFAULT";
-      }
+      this .grabbing = false;
+
+      browser .buttonReleaseEvent ();
+      browser .setCursor (this .over ? "POINTER" : "DEFAULT");
+      this .onverifymotion (x, y);
    },
    dblclick (event)
    {
-      if (this .isOver)
-         event .stopImmediatePropagation ();
+      const browser = this .getBrowser ();
+
+      if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
+         return;
+
+      if (!this .over)
+         return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
    },
    mousemove (event)
    {
+      // Stop event propagation.
+
       event .preventDefault ();
+
+      // Motion.
 
       const browser = this .getBrowser ();
 
       const { x, y } = browser .getPointerFromEvent (event);
 
-      this .onmotion (x, y);
+      this .onmotion (x, y, true);
    },
    touchstart (event)
    {
@@ -169,11 +145,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
             const hit = this .getBrowser () .getHit ();
 
-            if (hit .id === 0 || hit .sensors .length === 0)
+            if (hit .id === 0 || hit .sensors .size === 0)
             {
                this .touchX       = event .pageX;
                this .touchY       = event .pageY;
-               this .touchTimeout = setTimeout (this .showContextMenu .bind (this, event), CONTEXT_MENU_TIME);
+               this .touchTimeout = setTimeout (() => this .showContextMenu (event), CONTEXT_MENU_TIME);
             }
 
             break;
@@ -216,41 +192,33 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          }
       }
    },
-   onmotion (x, y)
+   onmotion (x, y, move = false)
    {
       const browser = this .getBrowser ();
 
-      if (browser .motionNotifyEvent (x, y))
-      {
-         if (!this .isOver)
-         {
-            this .isOver = true;
-            this .cursor = browser .getCursor ();
+      this .over = browser .motionNotifyEvent (x, y);
 
-            browser .setCursor ("HAND");
-         }
-      }
+      if (browser .getViewer () .isActive ())
+         return;
+
+      if (this .over)
+         browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
       else
-      {
-         if (this .isOver)
-         {
-            this .isOver = false;
-
-            browser .setCursor (this .cursor);
-         }
-      }
+         browser .setCursor (this .grabbing && move ? "GRABBING" : "DEFAULT");
    },
    onmouseout (event)
    {
       this .getBrowser () .leaveNotifyEvent ();
    },
-   onverifymotion (x, y)
+   async onverifymotion (x, y)
    {
       // Verify isOver state. This is necessary if an Switch changes on buttonReleaseEvent
       // and the new child has a sensor node inside. This sensor node must be updated to
       // reflect the correct isOver state.
 
-      requestAnimationFrame (() => this .onmotion (x, y));
+      await this .getBrowser () .nextFrame ();
+
+      this .onmotion (x, y);
    },
    showContextMenu (event)
    {

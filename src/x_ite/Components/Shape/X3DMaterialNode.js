@@ -1,51 +1,5 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields                 from "../../Fields.js";
+import X3DNode                from "../Core/X3DNode.js";
 import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
 import AlphaMode              from "../../Browser/Shape/AlphaMode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
@@ -106,7 +60,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, localObjectsKeys } = renderContext;
+         const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, hAnimNode, localObjectsKeys } = renderContext;
 
          key += shapeNode .getAlphaMode ();
          key += renderObject .getRenderAndGlobalLightsKey ();
@@ -116,7 +70,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ?.getStyleKey () ?? 0;
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
-         key += humanoidNode ?.getHumanoidKey () ?? "[]";
+         key += hAnimNode ?.getHAnimKey () ?? "[]";
          key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? 2 : appearanceNode .getTextureBits () .toString (16);
@@ -145,21 +99,10 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          browser = this .getBrowser (),
          options = [ ];
 
-      options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
+      if (browser .getRenderingProperty ("XRSession"))
+         options .push ("X3D_XR_SESSION");
 
-      if (geometryContext .hasFogCoords)
-         options .push ("X3D_FOG_COORDS");
-
-      if (geometryContext .colorMaterial)
-         options .push ("X3D_COLOR_MATERIAL");
-
-      if (geometryContext .hasNormals)
-         options .push ("X3D_NORMALS");
-
-      if (geometryContext .hasTangents)
-         options .push ("X3D_TANGENTS");
-
-      switch (browser .getBrowserOption ("ColorSpace"))
+      switch (browser .getBrowserOption ("ColorSpace") .toUpperCase ())
       {
          case "SRGB":
             options .push ("X3D_COLORSPACE_SRGB");
@@ -172,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             break;
       }
 
-      switch (browser .getBrowserOption ("ToneMapping"))
+      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
       {
          default: // NONE
             break;
@@ -180,13 +123,29 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          case "ACES_HILL":
          case "ACES_HILL_EXPOSURE_BOOST":
          case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
+            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
             break;
       }
 
+      options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
+
+      if (geometryContext .hasFogCoords)
+         options .push ("X3D_FOG_COORDS");
+
+      if (geometryContext .colorMaterial)
+         options .push ("X3D_COLOR_MATERIAL");
+
+      const flat = browser .getRenderingProperty ("Shading") === "FLAT";
+
+      if (geometryContext .hasNormals && !flat)
+         options .push ("X3D_NORMALS");
+
+      if (geometryContext .hasTangents)
+         options .push ("X3D_TANGENTS");
+
       if (renderContext)
       {
-         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, localObjectsKeys, textureNode } = renderContext;
+         const { renderObject, fogNode, shapeNode, appearanceNode, hAnimNode, localObjectsKeys, textureNode } = renderContext;
 
          const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
 
@@ -229,12 +188,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
                break;
          }
 
-         if (humanoidNode)
-         {
-            options .push ("X3D_SKINNING");
-            options .push (`X3D_NUM_JOINT_SETS ${humanoidNode .getNumJoints () / 4}`);
-            options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
-         }
+         hAnimNode ?.getShaderOptions (options);
 
          const
             numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
@@ -254,7 +208,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
          }
 
-         if (numEnvironmentLights)
+         if (numEnvironmentLights && geometryContext .hasNormals)
          {
             // Although we count this kind of light here, only one is supported.
             options .push ("X3D_USE_IBL")
@@ -376,18 +330,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    },
 });
 
-Object .defineProperties (X3DMaterialNode,
-{
-   typeName:
-   {
-      value: "X3DMaterialNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DMaterialNode, X3DNode .getStaticProperties ("X3DMaterialNode", "Shape", 1));
 
 export default X3DMaterialNode;

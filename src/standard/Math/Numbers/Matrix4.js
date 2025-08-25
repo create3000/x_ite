@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Vector3             from "./Vector3.js";
 import Vector4             from "./Vector4.js";
 import Quaternion          from "./Quaternion.js";
@@ -52,12 +5,12 @@ import Rotation4           from "./Rotation4.js";
 import Matrix3             from "./Matrix3.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
-function Matrix4 ()
+function Matrix4 (... args)
 {
-   if (arguments .length)
+   if (args .length)
    {
       for (let i = 0; i < 16; ++ i)
-         this [i] = arguments [i];
+         this [i] = args [i];
    }
    else
    {
@@ -131,45 +84,45 @@ Object .assign (Matrix4 .prototype,
          {
             case 1:
             {
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
                break;
             }
             case 2:
             {
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
-               if (rotation && !rotation .equals (Rotation4 .Identity))
+               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
                   this .rotate (rotation);
 
                break;
             }
             case 3:
             {
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
-               if (rotation && !rotation .equals (Rotation4 .Identity))
+               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector3 .One))
+               if (scale && !scale .equals (Vector3 .ONE))
                   this .scale (scale);
 
                break;
             }
             case 4:
             {
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
-               if (rotation && !rotation .equals (Rotation4 .Identity))
+               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector3 .One))
+               if (scale && !scale .equals (Vector3 .ONE))
                {
-                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .Identity))
+                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .IDENTITY))
                   {
                      this .rotate (scaleOrientation);
                      this .scale (scale);
@@ -186,20 +139,20 @@ Object .assign (Matrix4 .prototype,
             case 5:
             {
                // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation && !translation .equals (Vector3 .Zero))
+               if (translation && !translation .equals (Vector3 .ZERO))
                   this .translate (translation);
 
-               const hasCenter = center && !center .equals (Vector3 .Zero);
+               const hasCenter = center && !center .equals (Vector3 .ZERO);
 
                if (hasCenter)
                   this .translate (center);
 
-               if (rotation && !rotation .equals (Rotation4 .Identity))
+               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector3 .One))
+               if (scale && !scale .equals (Vector3 .ONE))
                {
-                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .Identity))
+                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .IDENTITY))
                   {
                      this .rotate (scaleOrientation);
                      this .scale (scale);
@@ -406,6 +359,8 @@ Object .assign (Matrix4 .prototype,
    },
    inverse ()
    {
+      // Complexity 43 +, 40 -, 140 *. 1 /
+
       const
          { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
            8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this,
@@ -465,6 +420,8 @@ Object .assign (Matrix4 .prototype,
    },
    multLeft (matrix)
    {
+      // Complexity 48 +, 64 *.
+
       const
          { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
            8: a08, 9: a09, 10: a10, 11: a11, 12: a12, 13: a13, 14: a14, 15: a15 } = this,
@@ -492,6 +449,8 @@ Object .assign (Matrix4 .prototype,
    },
    multRight (matrix)
    {
+      // Complexity 48 +, 64 *.
+
       const
          { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
            8: a08, 9: a09, 10: a10, 11: a11, 12: a12, 13: a13, 14: a14, 15: a15 } = this,
@@ -679,7 +638,7 @@ Object .defineProperties (Matrix4 .prototype,
          return function () { return vector .set (this [12], this [13], this [14], this [15]); };
       })(),
    },
-   xAxis:
+   X_AXIS:
    {
       get: (() =>
       {
@@ -688,7 +647,7 @@ Object .defineProperties (Matrix4 .prototype,
          return function () { return vector .set (this [0], this [1], this [2]); };
       })(),
    },
-   yAxis:
+   Y_AXIS:
    {
       get: (() =>
       {
@@ -697,7 +656,7 @@ Object .defineProperties (Matrix4 .prototype,
          return function () { return vector .set (this [4], this [5], this [6]); };
       })(),
    },
-   zAxis:
+   Z_AXIS:
    {
       get: (() =>
       {
@@ -734,7 +693,7 @@ Object .defineProperties (Matrix4 .prototype,
 
 Object .assign (Matrix4,
 {
-   Identity: Object .freeze (new Matrix4 ()),
+   IDENTITY: Object .freeze (new Matrix4 ()),
    Rotation (rotation)
    {
       return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));

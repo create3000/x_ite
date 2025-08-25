@@ -47,7 +47,7 @@ A [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node selects th
 
 ### XML Encoding
 
-```xml
+```x3d
 <NavigationInfo
   type='"WALK", "ANY"'
   avatarSize='0.25, 1.6, 0.75'
@@ -55,7 +55,7 @@ A [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node selects th
   headlight='true'/>
 ```
 
-### Classic Encoding
+### Classic VRML Encoding
 
 ```vrml
 NavigationInfo {
@@ -65,6 +65,16 @@ NavigationInfo {
   headlight  TRUE
 }
 ```
+
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/navigation1/navigation1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/navigation1/screenshot.avif" alt="NavigationInfo"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/navigation1/navigation1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/navigation1/navigation1.x3dv)
+{: .example-links }
 
 ## Summary
 

@@ -15,7 +15,7 @@ tags: [ForcePhysicsModel, ParticleSystems]
 
 ForcePhysicsModel applies a constant force value to the particles.
 
-The ForcePhysicsModel node belongs to the **ParticleSystems** component and requires at least level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
+The ForcePhysicsModel node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -27,19 +27,29 @@ The ForcePhysicsModel node belongs to the **ParticleSystems** component and requ
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFVec3f | [in, out] | [force](#fields-force) | 0 -9.8 0  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFVec3f [in, out] **force** 0 -9.8 0 <small>(∞,∞)</small>
+{: #fields-force }
 
 *force* field indicates strength and direction of the propelling *force* on the particles (for example, default is Earth's gravity).
 
@@ -48,7 +58,7 @@ Enables/disables node operation.
 - If particles have zero mass, ForcePhysicsModel node has no effect.
 - *force* is specified in *force* base units (usually newtons, acceleration of one kilogram at rate of one meter per second squared).
 - [Https://en.wikipedia.org/wiki/Newton_(unit) and Kilogram](https://en.wikipedia.org/wiki/Kilogram)
-- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/concepts.html#Standardunitscoordinates
+- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#Standardunitscoordinates)
 
 ## Advice
 
@@ -58,7 +68,9 @@ Enables/disables node operation.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/screenshot.avif" alt="ForcePhysicsModel"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.x3d)

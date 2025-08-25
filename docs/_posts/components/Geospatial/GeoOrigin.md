@@ -15,7 +15,7 @@ tags: [GeoOrigin, Geospatial]
 
 GeoOrigin specifies local geospatial coordinate system for parent node, enabling increased geographic precision during scene rendering (by mitigating potential floating-point roundoff errors). GeoOrigin can be contained by other Geospatial component nodes, typically via DEF/USE to ensure consistency.
 
-The GeoOrigin node belongs to the **Geospatial** component and requires at least level **1,** its default container field is *geoOrigin.* It is available from X3D version 3.0 or higher.
+The GeoOrigin node belongs to the [Geospatial](/x_ite/components/overview/#geospatial) component and requires at least support level **1,** its default container field is *geoOrigin.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -26,22 +26,32 @@ The GeoOrigin node belongs to the **Geospatial** component and requires at least
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
+| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0  |
+| SFBool | [ ] | [rotateYUp](#fields-rotateYUp) | FALSE |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
+{: #fields-geoSystem }
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 
 #### Hints
 
-- [X3D Architecture 25.2.2 Spatial reference frames](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/geospatial.html#Spatialreferenceframes
-- [X3D Architecture 25.2.4 Specifying geospatial coordinates](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/geospatial.html#Specifyinggeospatialcoords
+- [X3D Architecture 25.2.2 Spatial reference frames](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#Spatialreferenceframes)
+- [X3D Architecture 25.2.4 Specifying geospatial coordinates](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#Specifyinggeospatialcoords)
 - [UTM is Universal Transverse Mercator coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
 
 #### Warning
@@ -49,6 +59,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 - Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-geoCoords }
 
 Defines absolute geographic location (and implicit local coordinate frame).
 
@@ -61,6 +72,7 @@ Defines absolute geographic location (and implicit local coordinate frame).
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### SFBool [ ] **rotateYUp** FALSE
+{: #fields-rotateYUp }
 
 Whether to rotate coordinates of nodes using this GeoOrigin so that local-up direction aligns with VRML Y axis *rotateYUp* false means local up-direction is relative to planet surface *rotateYUp* true allows proper operation of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) modes FLY, WALK.
 
@@ -71,7 +83,7 @@ Whether to rotate coordinates of nodes using this GeoOrigin so that local-up dir
 - Only one geospatial coordinate system is allowed per scene, thus DEF-ing and later USE-ing only one GeoOrigin node per scene is recommended.
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf)
 - GeoOrigin is likely to be restored in X3D v4.0 for special use on devices with limited floating-point resolution.
-- [X3D Architecture 25.2.5 Dealing with high-precision coordinates](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/geospatial.html#high-precisioncoords
+- [X3D Architecture 25.2.5 Dealing with high-precision coordinates](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#high-precisioncoords)
 
 ### Warnings
 

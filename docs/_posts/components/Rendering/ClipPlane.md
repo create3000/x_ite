@@ -15,7 +15,7 @@ tags: [ClipPlane, Rendering]
 
 ClipPlane specifies a single plane equation used to clip (i.e. cull or hide) displayed geometry. The plane field specifies a four-component plane equation that describes both inside and outside half space.
 
-The ClipPlane node belongs to the **Rendering** component and requires at least level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The ClipPlane node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -27,19 +27,29 @@ The ClipPlane node belongs to the **Rendering** component and requires at least 
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFVec4f | [in, out] | [plane](#fields-plane) | 0 1 0 0  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFVec4f [in, out] **plane** 0 1 0 0 <small>[0,1] or (-∞,∞)</small>
+{: #fields-plane }
 
 If (a,b,c,d) is the *plane*, with the first three components being a normalized vector describing the *plane*'s normal direction (and thus the fourth component d being distance from the origin), a point (x,y,z) is visible to the user, with regards to the clipping *plane*, if a*x+b*y+c*z+d is greater than 0.
 
@@ -51,7 +61,7 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 #### Warning
 
-- (a, b, c) value of (0, 0, 0) is forbidden since the zero vector has ambiguous direction and is thus degenerate, not defining a *plane*.
+- (a, b, c, d) value of (0, 0, 0, d) is forbidden since the zero vector has ambiguous direction and is thus degenerate, not defining a *plane*.
 
 ## Advice
 
@@ -65,7 +75,9 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Rendering/ClipPlane/screenshot.avif" alt="ClipPlane"/>
+</x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d)

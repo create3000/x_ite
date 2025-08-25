@@ -1,55 +1,8 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
-import X3DCast              from "../../Base/X3DCast.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Triangle3            from "../../../standard/Math/Geometry/Triangle3.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
@@ -61,17 +14,13 @@ function ElevationGrid (executionContext)
 
    this .addType (X3DConstants .ElevationGrid);
 
+   // Units
+
    this ._set_height  .setUnit ("length");
    this ._xSpacing    .setUnit ("length");
    this ._zSpacing    .setUnit ("length");
    this ._creaseAngle .setUnit ("angle");
    this ._height      .setUnit ("length");
-
-   this .fogCoordNode = null;
-   this .colorNode    = null;
-   this .texCoordNode = null;
-   this .normalNode   = null;
-   this .coordNode    = null;
 }
 
 Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNode .prototype),
@@ -85,93 +34,15 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
       this ._fogCoord   .addInterest ("set_fogCoord__", this);
       this ._color      .addInterest ("set_color__",    this);
       this ._texCoord   .addInterest ("set_texCoord__", this);
+      this ._tangent    .addInterest ("set_tangent__",  this);
       this ._normal     .addInterest ("set_normal__",   this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_texCoord__ ();
+      this .set_tangent__ ();
       this .set_normal__ ();
-   },
-   set_attrib__ ()
-   {
-      const attribNodes = this .getAttrib ();
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .removeInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
-      }
-
-      attribNodes .length = 0;
-
-      for (const node of this ._attrib)
-      {
-         const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
-
-         if (attribNode)
-            attribNodes .push (attribNode);
-      }
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .addInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
-      }
-
-      this .updateVertexArrays ();
-   },
-   set_fogCoord__ ()
-   {
-      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
-
-      this .fogCoordNode ?.addInterest ("requestRebuild", this);
-   },
-   set_color__ ()
-   {
-      this .colorNode ?.removeInterest ("requestRebuild", this);
-
-      this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
-
-      this .colorNode ?.addInterest ("requestRebuild", this);
-
-      this .setTransparent (this .colorNode ?.isTransparent ());
-   },
-   set_texCoord__ ()
-   {
-      this .texCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
-
-      this .texCoordNode ?.addInterest ("requestRebuild", this);
-
-      this .setTextureCoordinate (this .texCoordNode);
-   },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
-   getColor ()
-   {
-      return this .colorNode;
-   },
-   getTexCoord ()
-   {
-      return this .texCoordNode;
-   },
-   getNormal ()
-   {
-      return this .normalNode;
-   },
-   getTangent ()
-   {
-      return this .tangentNode;
    },
    getHeight (index)
    {
@@ -302,20 +173,21 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          attribNodes        = this .getAttrib (),
          numAttribNodes     = attribNodes .length,
          attribArrays       = this .getAttribs (),
-         fogCoordNode       = this .fogCoordNode,
+         fogCoordNode       = this .getFogCoord (),
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
-         normalNode         = this .getNormal (),
          tangentNode        = this .getTangent (),
+         normalNode         = this .getNormal (),
          points             = this .createPoints (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
+         tangentArray       = this .getTangents (),
          normalArray        = this .getNormals (),
-         tangentArray       = this .getTangent (),
-         vertexArray        = this .getVertices ();
+         vertexArray        = this .getVertices (),
+         numCoordIndices    = coordIndex .length;
 
-      let face = 0;
+      let texCoords, texCoordArray;
 
       if (texCoordNode)
       {
@@ -323,16 +195,17 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
       }
       else
       {
-         var
-            texCoords     = this .createTexCoords (),
-            texCoordArray = this .getTexCoords ();
+         texCoords     = this .createTexCoords (),
+         texCoordArray = this .getTexCoords ();
 
          multiTexCoordArray .push (texCoordArray);
       }
 
       // Build geometry
 
-      for (let c = 0, numCoordIndices = coordIndex .length; c < numCoordIndices; ++ face)
+      let face = 0;
+
+      for (let c = 0; c < numCoordIndices; ++ face)
       {
          for (let p = 0; p < 6; ++ p, ++ c)
          {
@@ -360,8 +233,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
                texCoordArray .push (x, y, 0, 1);
             }
 
-            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
             tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
+            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
 
             vertexArray .push (x, y, z, 1);
          }
@@ -384,26 +257,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
 
 Object .defineProperties (ElevationGrid,
 {
-   typeName:
-   {
-      value: "ElevationGrid",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... X3DNode .getStaticProperties ("ElevationGrid", "Geometry3D", 3, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -1,73 +1,20 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
+import X3DViewer         from "./X3DViewer.js";
+import PositionChaser    from "../../Components/Followers/PositionChaser.js";
+import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
+import TimeSensor        from "../../Components/Time/TimeSensor.js";
+import Algorithm         from "../../../standard/Math/Algorithm.js";
+import Vector2           from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import X3DViewer            from "./X3DViewer.js";
-import PositionChaser       from "../../Components/Followers/PositionChaser.js";
-import OrientationChaser    from "../../Components/Followers/OrientationChaser.js";
-import TimeSensor           from "../../Components/Time/TimeSensor.js";
-import Algorithm            from "../../../standard/Math/Algorithm.js";
-import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
+void (typeof jquery_mousewheel); // import plugin
 
-typeof jquery_mousewheel; // import plugin
+const macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
-   macOS  = /Mac OS X/i .test (navigator .userAgent),
-   mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
-
-const
-   SPIN_RELEASE_TIME = mobile ? 20 : 25,
-   SPIN_ANGLE        = Algorithm .radians (mobile ? 3 : 2),
-   SPIN_FACTOR       = mobile ? 0.2 : 0.3,
+   SPIN_RELEASE_TIME = 20,
+   SPIN_ANGLE        = Algorithm .radians (2),
+   SPIN_FACTOR       = 0.3,
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.2,
@@ -145,7 +92,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       this .rotationChaser .setup ();
 
       this .timeSensor ._loop     = true;
-      this .timeSensor ._stopTime = browser .getCurrentTime ();
+      this .timeSensor ._stopTime = Date .now () / 1000;
       this .timeSensor .setup ();
 
       this .timeSensor ._fraction_changed  .addInterest ("spin", this);
@@ -162,7 +109,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             this .startOrientation .assign (viewpoint .getUserOrientation ());
 
-            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, Rotation4 .Identity, viewpoint ._orientationOffset .getValue ());
+            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .IDENTITY, Rotation4 .IDENTITY, viewpoint ._orientationOffset .getValue ());
          }
       }
 
@@ -182,11 +129,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          case 0:
          {
-            // Start rotate.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Start rotate.
 
             this .button = event .button;
 
@@ -198,23 +145,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-
-            if (this .getStraightenHorizon ())
-            {
-               const viewpoint = this .getActiveViewpoint ();
-
-               this .fromPointer .set (x, y);
-               this .startOrientation .assign (viewpoint .getUserOrientation ());
-               this .lastRoll = 0;
-               this .negate   = 0;
-            }
-            else
-            {
-               this .trackballProjectToSphere (x, y, this .fromVector);
-            }
-
-            this .rotation .assign (Rotation4 .Identity);
-            this .deltaRotation .assign (Rotation4 .Identity);
+            this .startRotate (x, y, 0);
 
             this .motionTime = Date .now ();
 
@@ -223,11 +154,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
-            // Start pan.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // Start pan.
 
             this .button = event .button;
 
@@ -239,8 +170,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-
-            this .getPointOnCenterPlane (x, y, this .fromPoint);
+            this .startPan (x, y);
 
             this ._isActive = true;
             break;
@@ -260,11 +190,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          case 0:
          {
-            // End rotate.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // End rotate.
 
             this .getBrowser () .setCursor ("DEFAULT");
 
@@ -276,11 +206,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
-            // End pan.
-
             // Stop event propagation.
+
             event .preventDefault ();
-            event .stopImmediatePropagation ();
+
+            // End pan.
 
             this .getBrowser () .setCursor ("DEFAULT");
 
@@ -292,156 +222,68 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    dblclick (event)
    {
       // Stop event propagation.
+
       event .preventDefault ();
-      event .stopImmediatePropagation ();
+
+      // Look at.
 
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();
       this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
-   mousemove: (() =>
+   mousemove (event)
    {
-      const
-         translation = new Vector2 (),
-         axis        = new Vector3 (),
-         fromPoint   = new Vector3 ();
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      return function (event)
+      switch (this .getButton (this .button))
       {
-         const { x, y } = this .getBrowser () .getPointerFromEvent (event);
-
-         switch (this .getButton (this .button))
+         case 0:
          {
-            case 0:
-            {
-               // Rotate view around Viewpoint.centerOfRotation.
+            // Stop event propagation.
 
-               // Stop event propagation.
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
+            event .preventDefault ();
 
-               if (this .getStraightenHorizon ())
-               {
-                  const
-                     viewpoint = this .getActiveViewpoint (),
-                     upVector  = viewpoint .getUpVector (true);
+            // Rotate view around Viewpoint.centerOfRotation.
 
-                  translation .set (x, y) .subtract (this .fromPointer);
+            this .rotate (x, y);
 
-                  const
-                     pixelPerRevolutionX = this .getViewport () [2] * 2,
-                     pixelPerRevolutionY = this .getViewport () [3] * 2,
-                     startRoll           = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .zAxis)) .dot (upVector), -1, 1)),
-                     roll                = Math .PI * 2 * +translation .y / pixelPerRevolutionY,
-                     clampedRoll         = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
-
-                  // Adjust fromPointer y.
-
-                  if (this .lastRoll - Math .abs (roll) > 0)
-                     this .fromPointer .y += (roll - clampedRoll) / (Math .PI * 2) * pixelPerRevolutionY;
-
-                  this .lastRoll = Math .abs (roll);
-
-                  // Check disk angle.
-
-                  if (!this .negate)
-                  {
-                     if (Math .PI / 2 - Math .abs (startRoll - Math .PI / 2) < DISK_ANGLE)
-                     {
-                        if (y - this .getViewport () [1] > this .getViewport () [3] / 2)
-                           this .negate = startRoll < Math .PI / 4 ? -1 : 1;
-                        else
-                           this .negate = startRoll > Math .PI / 4 ? -1 : 1;
-                     }
-                     else
-                     {
-                        this .negate = 1;
-                     }
-                  }
-
-                  // Determine roll and rotation.
-
-                  this .deltaRotation .assign (this .rotation);
-                  this .roll .set (1, 0, 0, clampedRoll);
-                  this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolutionX * this .negate);
-                  this .deltaRotation .inverse () .multRight (this .rotation);
-               }
-               else
-               {
-                  const toVector = this .trackballProjectToSphere (x, y, this .toVector);
-
-                  // Determine roll and rotation.
-
-                  this .deltaRotation .assign (this .rotation);
-                  this .roll .assign (Rotation4 .Identity);
-                  this .rotation .setFromToVec (toVector, this .fromVector);
-                  this .deltaRotation .inverse () .multRight (this .rotation);
-               }
-
-               this .addRotate (this .roll, this .rotation, this .deltaRotation);
-
-               this .motionTime = Date .now ();
-               break;
-            }
-            case 1:
-            {
-               // Move view along center plane.
-
-               // Stop event propagation.
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
-
-               const
-                  viewpoint   = this .getActiveViewpoint (),
-                  toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
-                  translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
-
-               this .addMove (translation, translation);
-
-               this .fromPoint .assign (toPoint);
-               break;
-            }
+            this .motionTime = Date .now ();
+            break;
          }
-      };
-   })(),
-   mousewheel: (() =>
+         case 1:
+         {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
+            // Move view along center plane.
+
+            this .pan (x, y);
+            break;
+         }
+      }
+   },
+   mousewheel (event)
    {
-      const
-         step        = new Vector3 (),
-         translation = new Vector3 ();
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      return function (event)
-      {
-         const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      if (!this .isPointerInRectangle (x, y))
+         return;
 
-         if (!this .isPointerInRectangle (x, y))
-            return;
+      // Stop event propagation.
 
-         // Stop event propagation.
+      event .preventDefault ();
 
-         event .preventDefault ();
-         event .stopImmediatePropagation ();
+      // Change viewpoint position.
 
-         // Change viewpoint position.
+      const viewpoint = this .getActiveViewpoint ();
 
-         const
-            browser   = this .getBrowser (),
-            viewpoint = this .getActiveViewpoint ();
+      this .removeSpinning ();
+      viewpoint .transitionStop ();
 
-         browser .prepareEvents () .removeInterest ("spin", this);
-         viewpoint .transitionStop ();
-
-         this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR);
-         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
-
-         if (event .deltaY > 0)
-            this .addMove (translation .negate (), Vector3 .Zero);
-
-         else if (event .deltaY < 0)
-            this .addMove (translation, Vector3 .Zero);
-      };
-   })(),
+      this .zoom (event .zoomFactor || SCROLL_FACTOR, event .deltaY);
+   },
    touchstart (event)
    {
       const touches = event .originalEvent .touches;
@@ -615,25 +457,91 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
-   set_positionOffset__ (value)
+   startRotate (x, y, negate)
    {
-      const viewpoint = this .getActiveViewpoint ();
+      if (this .getStraightenHorizon ())
+      {
+         const viewpoint = this .getActiveViewpoint ();
 
-      viewpoint ._positionOffset = value;
+         this .fromPointer .set (x, y);
+         this .startOrientation .assign (viewpoint .getUserOrientation ());
+         this .lastRoll = 0;
+         this .negate   = negate;
+      }
+      else
+      {
+         this .trackballProjectToSphere (x, y, this .fromVector);
+      }
    },
-   set_centerOfRotationOffset__ (value)
+   rotate: (() =>
    {
-      const viewpoint = this .getActiveViewpoint ();
+      const
+         translation = new Vector2 (),
+         axis        = new Vector3 ();
 
-      viewpoint ._centerOfRotationOffset = value;
-   },
-   set_rotation__ (value)
-   {
-      const viewpoint = this .getActiveViewpoint ();
+      return function (x, y)
+      {
+         if (this .getStraightenHorizon ())
+         {
+            const
+               viewpoint = this .getActiveViewpoint (),
+               upVector  = viewpoint .getUpVector (true);
 
-      viewpoint ._orientationOffset = this .getOrientationOffset (this .roll, value .getValue (), this .initialOrientationOffset);
-      viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
-   },
+            translation .set (x, y) .subtract (this .fromPointer);
+
+            const
+               pixelPerRevolutionX = this .getViewport () [2] * 2,
+               pixelPerRevolutionY = this .getViewport () [3] * 2,
+               startRoll           = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .Z_AXIS)) .dot (upVector), -1, 1)),
+               roll                = Math .PI * 2 * +translation .y / pixelPerRevolutionY,
+               clampedRoll         = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
+
+            // Adjust fromPointer y.
+
+            if (this .lastRoll - Math .abs (roll) > 0)
+               this .fromPointer .y += (roll - clampedRoll) / (Math .PI * 2) * pixelPerRevolutionY;
+
+            this .lastRoll = Math .abs (roll);
+
+            // Check disk angle.
+
+            if (!this .negate)
+            {
+               if (Math .PI / 2 - Math .abs (startRoll - Math .PI / 2) < DISK_ANGLE)
+               {
+                  if (y - this .getViewport () [1] > this .getViewport () [3] / 2)
+                     this .negate = startRoll < Math .PI / 4 ? -1 : 1;
+                  else
+                     this .negate = startRoll > Math .PI / 4 ? -1 : 1;
+               }
+               else
+               {
+                  this .negate = 1;
+               }
+            }
+
+            // Determine roll and rotation.
+
+            this .deltaRotation .assign (this .rotation);
+            this .roll .set (1, 0, 0, clampedRoll);
+            this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolutionX * this .negate);
+            this .deltaRotation .inverse () .multRight (this .rotation);
+         }
+         else
+         {
+            const toVector = this .trackballProjectToSphere (x, y, this .toVector);
+
+            // Determine roll and rotation.
+
+            this .deltaRotation .assign (this .rotation);
+            this .roll .assign (Rotation4 .IDENTITY);
+            this .rotation .setFromToVec (toVector, this .fromVector);
+            this .deltaRotation .inverse () .multRight (this .rotation);
+         }
+
+         this .addRotate (this .roll, this .rotation, this .deltaRotation);
+      };
+   })(),
    addRotate (roll, rotation, deltaRotation)
    {
       const viewpoint = this .getActiveViewpoint ();
@@ -650,17 +558,16 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          // console .warn ("start")
 
+         this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
+
          this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
          this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
          this .getOrientationOffset (roll, rotation, this .initialOrientationOffset);
 
-         this .rotationChaser ._set_value       = Rotation4 .Identity;
+         this .rotationChaser ._set_value       = Rotation4 .IDENTITY;
          this .rotationChaser ._set_destination = rotation;
       }
-
-      this .disconnect ();
-      this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
    },
    addSpinning (deltaRotation)
    {
@@ -682,7 +589,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .axis .negate ();
 
          this .timeSensor ._cycleInterval = Math .PI / (angle * SPIN_FACTOR * 25);
-         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = Date .now () / 1000;
 
          const lookAtRotation = viewpoint .getLookAtRotation (userPosition, userCenterOfRotation);
 
@@ -694,6 +601,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .getBrowser () .prepareEvents () .addInterest ("spin", this);
          this .rotation .assign (deltaRotation);
       }
+   },
+   removeSpinning ()
+   {
+      const browser = this .getBrowser ();
+
+      this .timeSensor ._stopTime = Date .now () / 1000;
+      browser .prepareEvents () .removeInterest ("spin", this);
    },
    spin: (() =>
    {
@@ -726,13 +640,55 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          else
          {
-            rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR * 60 / this .getBrowser () .getCurrentFrameRate ());
+            rotation .assign (Rotation4 .IDENTITY) .slerp (this .rotation, SPIN_FACTOR * 60 / this .getBrowser () .getCurrentFrameRate ());
 
             this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
 
-            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, rotation, this .orientationOffset);
+            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .IDENTITY, rotation, this .orientationOffset);
             viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
          }
+      };
+   })(),
+   startPan (x, y)
+   {
+      this .getPointOnCenterPlane (x, y, this .fromPoint);
+   },
+   pan: (() =>
+   {
+      const fromPoint = new Vector3 ();
+
+      return function  (x, y)
+      {
+         const
+            viewpoint   = this .getActiveViewpoint (),
+            toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
+            translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
+
+         this .addMove (translation, translation);
+
+         this .fromPoint .assign (toPoint);
+      };
+   })(),
+   zoom: (() =>
+   {
+      const
+         step        = new Vector3 (),
+         translation = new Vector3 ();
+
+      return function (zoomFactor, deltaY)
+      {
+         // Change viewpoint position.
+
+         const viewpoint = this .getActiveViewpoint ();
+
+         this .getDistanceToCenter (step) .multiply (zoomFactor);
+         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .norm ()));
+
+         if (deltaY > 0)
+            this .addMove (translation .negate (), Vector3 .ZERO);
+
+         else if (deltaY < 0)
+            this .addMove (translation, Vector3 .ZERO);
       };
    })(),
    addMove: (() =>
@@ -745,7 +701,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          const viewpoint = this .getActiveViewpoint ();
 
-         if (this .positionChaser ._isActive .getValue () && this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
+         if (this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
          {
             positionOffset
                .assign (this .positionChaser ._set_destination .getValue ())
@@ -755,6 +711,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          else
          {
+            this .positionChaser ._value_changed .addInterest ("set_positionOffset__", this);
+
             positionOffset
                .assign (viewpoint ._positionOffset .getValue ())
                .add (positionOffsetChange);
@@ -763,7 +721,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .positionChaser ._set_destination = positionOffset;
          }
 
-         if (this .centerOfRotationChaser ._isActive .getValue () && this .centerOfRotationChaser ._value_changed .hasInterest ("set_centerOfRotationOffset__", this))
+         if (this .centerOfRotationChaser ._value_changed .hasInterest ("set_centerOfRotationOffset__", this))
          {
             centerOfRotationOffset
                .assign (this .centerOfRotationChaser ._set_destination .getValue ())
@@ -773,6 +731,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          else
          {
+            this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
+
             centerOfRotationOffset
                .assign (viewpoint ._centerOfRotationOffset .getValue ())
                .add (centerOfRotationOffsetChange);
@@ -780,10 +740,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .centerOfRotationChaser ._set_value       = viewpoint ._centerOfRotationOffset;
             this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
          }
-
-         this .disconnect ();
-         this .positionChaser         ._value_changed .addInterest ("set_positionOffset__",         this);
-         this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
       };
    })(),
    getPositionOffset: (() =>
@@ -857,31 +813,47 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       return function (rotation)
       {
-         rotation .multVecRot (V .assign (Vector3 .zAxis));
-         N .assign (Vector3 .yAxis) .cross (V);
-         H .assign (N) .cross (Vector3 .yAxis);
-         r .setFromToVec (Vector3 .zAxis, H);
+         rotation .multVecRot (V .assign (Vector3 .Z_AXIS));
+         N .assign (Vector3 .Y_AXIS) .cross (V);
+         H .assign (N) .cross (Vector3 .Y_AXIS);
+         r .setFromToVec (Vector3 .Z_AXIS, H);
 
          return r;
       };
    })(),
+   set_positionOffset__ (value)
+   {
+      const viewpoint = this .getActiveViewpoint ();
+
+      viewpoint ._positionOffset = value;
+   },
+   set_centerOfRotationOffset__ (value)
+   {
+      const viewpoint = this .getActiveViewpoint ();
+
+      viewpoint ._centerOfRotationOffset = value;
+   },
+   set_rotation__ (value)
+   {
+      const viewpoint = this .getActiveViewpoint ();
+
+      viewpoint ._orientationOffset = this .getOrientationOffset (this .roll, value .getValue (), this .initialOrientationOffset);
+      viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
+   },
    disconnect ()
    {
-      const browser = this .getBrowser ();
-
       this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this);
       this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
       this .rotationChaser         ._value_changed .removeInterest ("set_rotation__",               this);
 
-      this .timeSensor ._stopTime = browser .getCurrentTime ();
-      browser .prepareEvents () .removeInterest ("spin", this);
+      this .removeSpinning ();
    },
    dispose ()
    {
       const browser = this .getBrowser ();
 
       this .disconnect ();
-      this .getNavigationInfo () ._transitionStart .removeInterest ("disconnect", this);
+      this    .getNavigationInfo () ._transitionStart   .removeInterest ("disconnect", this);
       browser .getBrowserOptions () ._StraightenHorizon .removeInterest ("disconnect", this);
 
       browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);
@@ -896,13 +868,6 @@ Object .defineProperties (ExamineViewer,
    typeName:
    {
       value: "ExamineViewer",
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
       enumerable: true,
    },
 });

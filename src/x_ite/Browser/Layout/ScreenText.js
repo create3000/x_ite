@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DTextGeometry from "../Text/X3DTextGeometry.js";
 import TextAlignment   from "../Text/TextAlignment.js";
 import PixelTexture    from "../../Components/Texturing/PixelTexture.js";
@@ -59,10 +12,10 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .textureNode   = new PixelTexture (text .getExecutionContext ());
-   this .canvas        = $("<canvas></canvas>");
-   this .context       = this .canvas [0] .getContext ("2d", { willReadFrequently: true });
-   this .matrix        = new Matrix4 ();
+   this .textureNode     = new PixelTexture (text .getExecutionContext ());
+   this .context         = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
+   this .modelViewMatrix = new Matrix4 ();
+   this .matrix          = new Matrix4 ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
@@ -71,10 +24,6 @@ function ScreenText (text, fontStyle)
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
 {
    modelViewMatrix: new Matrix4 (),
-   isTransparent ()
-   {
-      return true;
-   },
    getMatrix ()
    {
       return this .matrix;
@@ -169,7 +118,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
-            canvas         = this .canvas [0],
+            canvas         = this .context .canvas,
             cx             = this .context;
 
          // Set texCoord.
@@ -390,6 +339,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
       {
          this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
+         this .modelViewMatrix
+            .assign (renderObject .getModelViewMatrix () .get ())
+            .multLeft (this .matrix);
+
          // Update Text bbox.
 
          bbox .assign (this .getBBox ()) .multRight (this .matrix);
@@ -397,9 +350,15 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          this .getText () .setBBox (bbox);
       };
    })(),
+   displaySimple (gl, renderContext, shaderNode)
+   {
+      renderContext .modelViewMatrix .set (this .modelViewMatrix);
+
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, renderContext .modelViewMatrix);
+   },
    display (gl, renderContext)
    {
-      Matrix4 .prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
+      renderContext .modelViewMatrix .set (this .modelViewMatrix);
 
       renderContext .textureNode = this .textureNode;
    },

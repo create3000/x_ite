@@ -1,51 +1,6 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
+import Algorithm from "../Algorithm.js";
 
-function Vector2 (x = 0, y = 0)
+function Vector2 (x = 0, y = x)
 {
    this .x = x;
    this .y = y;
@@ -65,22 +20,22 @@ Object .assign (Vector2 .prototype,
       copy .y = this .y;
       return copy;
    },
-   assign (vector)
-   {
-      this .x = vector .x;
-      this .y = vector .y;
-      return this;
-   },
-   set (x, y)
+   assign ({ x, y })
    {
       this .x = x;
       this .y = y;
       return this;
    },
-   equals (vector)
+   set (x = 0, y = x)
    {
-      return this .x === vector .x &&
-             this .y === vector .y;
+      this .x = x;
+      this .y = y;
+      return this;
+   },
+   equals ({ x, y })
+   {
+      return this .x === x &&
+             this .y === y;
    },
    negate ()
    {
@@ -94,16 +49,16 @@ Object .assign (Vector2 .prototype,
       this .y = 1 / this .y;
       return this;
    },
-   add (vector)
+   add ({ x, y })
    {
-      this .x += vector .x;
-      this .y += vector .y;
+      this .x += x;
+      this .y += y;
       return this;
    },
-   subtract (vector)
+   subtract ({ x, y })
    {
-      this .x -= vector .x;
-      this .y -= vector .y;
+      this .x -= x;
+      this .y -= y;
       return this;
    },
    multiply (value)
@@ -112,10 +67,10 @@ Object .assign (Vector2 .prototype,
       this .y *= value;
       return this;
    },
-   multVec (vector)
+   multVec ({ x, y })
    {
-      this .x *= vector .x;
-      this .y *= vector .y;
+      this .x *= x;
+      this .y *= y;
       return this;
    },
    divide (value)
@@ -124,10 +79,10 @@ Object .assign (Vector2 .prototype,
       this .y /= value;
       return this;
    },
-   divVec (vector)
+   divVec ({ x, y })
    {
-      this .x /= vector .x;
-      this .y /= vector .y;
+      this .x /= x;
+      this .y /= y;
       return this;
    },
    normalize ()
@@ -142,49 +97,51 @@ Object .assign (Vector2 .prototype,
 
       return this;
    },
-   dot (vector)
+   dot ({ x, y })
    {
-      return this .x * vector .x +
-             this .y * vector .y;
+      return this .x * x +
+             this .y * y;
    },
-   norm ()
+   squaredNorm ()
    {
       const { x, y } = this;
 
       return x * x +
              y * y;
    },
-   magnitude ()
+   norm ()
    {
       return Math .hypot (this .x, this .y);
    },
-   distance (vector)
+   distance ({ x, y })
    {
-      return Math .hypot (this .x - vector .x,
-                          this .y - vector .y);
+      return Math .hypot (this .x - x,
+                          this .y - y);
    },
-   lerp (destination, t)
+   lerp ({ x: dX, y: dY }, t)
    {
       const { x, y } = this;
 
-      this .x = x + t * (destination .x - x);
-      this .y = y + t * (destination .y - y);
+      this .x = x + t * (dX - x);
+      this .y = y + t * (dY - y);
       return this;
    },
    abs ()
    {
-      this .x = Math .abs (this .x);
-      this .y = Math .abs (this .y);
+      const { x, y } = this;
+
+      this .x = Math .abs (x);
+      this .y = Math .abs (y);
       return this;
    },
    min (vector)
    {
       let { x, y } = this;
 
-      for (const vector of arguments)
+      for (const { x: minX, y: minY } of arguments)
       {
-         x = Math .min (x, vector .x);
-         y = Math .min (y, vector .y);
+         x = Math .min (x, minX);
+         y = Math .min (y, minY);
       }
 
       this .x = x;
@@ -195,14 +152,20 @@ Object .assign (Vector2 .prototype,
    {
       let { x, y } = this;
 
-      for (const vector of arguments)
+      for (const { x: maxX, y: maxY } of arguments)
       {
-         x = Math .max (x, vector .x);
-         y = Math .max (y, vector .y);
+         x = Math .max (x, maxX);
+         y = Math .max (y, maxY);
       }
 
       this .x = x;
       this .y = y;
+      return this;
+   },
+   clamp ({ x: minX, y: minY }, { x: maxX, y: maxY })
+   {
+      this .x = Algorithm .clamp (this .x, minX, maxX);
+      this .y = Algorithm .clamp (this .y, minY, maxY);
       return this;
    },
    toString ()
@@ -232,10 +195,15 @@ Object .defineProperties (Vector2 .prototype,
 
 Object .assign (Vector2,
 {
-   Zero: Object .freeze (new Vector2 ()),
-   One: Object .freeze (new Vector2 (1, 1)),
-   xAxis: Object .freeze (new Vector2 (1, 0)),
-   yAxis: Object .freeze (new Vector2 (0, 1)),
+   ZERO: Object .freeze (new Vector2 ()),
+   // Positive values
+   ONE: Object .freeze (new Vector2 (1)),
+   X_AXIS: Object .freeze (new Vector2 (1, 0)),
+   Y_AXIS: Object .freeze (new Vector2 (0, 1)),
+   // Negative values
+   NEGATIVE_ONE: Object .freeze (new Vector2 (-1)),
+   NEGATIVE_X_AXIS: Object .freeze (new Vector2 (-1, 0)),
+   NEGATIVE_Y_AXIS: Object .freeze (new Vector2 (0, -1)),
 });
 
 export default Vector2;
