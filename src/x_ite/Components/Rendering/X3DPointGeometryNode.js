@@ -18,10 +18,6 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    {
       return false;
    },
-   intersectsBox ()
-   {
-      return false;
-   },
    generateTexCoords ()
    { },
    display (gl, renderContext)

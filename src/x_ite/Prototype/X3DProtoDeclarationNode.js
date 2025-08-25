@@ -4,6 +4,10 @@ import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
 import SFNodeCache          from "../Fields/SFNodeCache.js";
 import X3DConstants         from "../Base/X3DConstants.js";
 
+const
+   _appInfo       = Symbol (),
+   _documentation = Symbol ();
+
 function X3DProtoDeclarationNode (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
@@ -11,6 +15,11 @@ function X3DProtoDeclarationNode (executionContext)
    this .addType (X3DConstants .X3DProtoDeclarationNode);
 
    this .addChildObjects (X3DConstants .outputOnly, "updateInstances", new Fields .SFTime ());
+
+   // Private properties
+
+   this [_appInfo]       = "";
+   this [_documentation] = "";
 }
 
 Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DBaseNode .prototype),
@@ -18,6 +27,22 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DB
    canUserDefinedFields ()
    {
       return true;
+   },
+   getAppInfo ()
+   {
+      return this [_appInfo];
+   },
+   setAppInfo (value)
+   {
+      this [_appInfo] = String (value);
+   },
+   setDocumentation (value)
+   {
+      this [_documentation] = String (value);
+   },
+   getDocumentation ()
+   {
+      return this [_documentation];
    },
    createInstance (executionContext, setup = true /* non-public argument */)
    {
@@ -50,6 +75,30 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DB
 
 for (const key of Object .keys (X3DProtoDeclarationNode .prototype))
    Object .defineProperty (X3DProtoDeclarationNode .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DProtoDeclarationNode .prototype,
+{
+   name:
+   {
+      get: X3DProtoDeclarationNode .prototype .getName,
+      enumerable: true,
+   },
+   fields:
+   {
+      get: X3DProtoDeclarationNode .prototype .getFieldDefinitions,
+      enumerable: true,
+   },
+   appInfo:
+   {
+      get: X3DProtoDeclarationNode .prototype .getAppInfo,
+      enumerable: true,
+   },
+   documentation:
+   {
+      get: X3DProtoDeclarationNode .prototype .getDocumentation,
+      enumerable: true,
+   },
+});
 
 Object .defineProperties (X3DProtoDeclarationNode,
 {

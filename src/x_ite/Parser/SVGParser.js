@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       const navigationInfo = scene .createNode ("NavigationInfo");
 
-      navigationInfo .type = ["PLANE_create3000.github.io", "PLANE", "EXAMINE", "ANY"];
+      navigationInfo .type = ["PLANE", "PLANE_create3000.github.io", "EXAMINE", "ANY"];
 
       // Get attributes of svg element.
 

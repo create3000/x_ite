@@ -1,5 +1,5 @@
-/* X_ITE v12.0.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.3")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -679,12 +679,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       // Rotations to negated normals of the texture cube.
 
       const rotations = [
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, new (external_X_ITE_X3D_Vector3_default()) ( 0,  0, -1)), // front
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, new (external_X_ITE_X3D_Vector3_default()) ( 0,  0,  1)), // back
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, new (external_X_ITE_X3D_Vector3_default()) ( 1,  0,  0)), // left
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, new (external_X_ITE_X3D_Vector3_default()) (-1,  0,  0)), // right
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, new (external_X_ITE_X3D_Vector3_default()) ( 0, -1,  0)), // top
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, new (external_X_ITE_X3D_Vector3_default()) ( 0,  1,  0)), // bottom
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Z_AXIS), // front
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Z_AXIS),          // back
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).X_AXIS),          // left
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_X_AXIS), // right
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Y_AXIS), // top
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Y_AXIS),          // bottom
       ];
 
       // Negated scales of the texture cube.

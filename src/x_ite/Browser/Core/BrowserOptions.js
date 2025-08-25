@@ -108,8 +108,12 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
             browser      = this .getBrowser (),
             localStorage = this .localStorage;
 
-         for (const { name, value } of this .getFieldDefinitions ())
+         for (const fieldDefinition of this .getFieldDefinitions ())
          {
+            const
+               name  = fieldDefinition .getName (),
+               value = fieldDefinition .getValue ();
+
             if (attributes .has (name))
             {
                const

@@ -1071,6 +1071,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                   if (!field .isInitializable () || field .isDefaultValue ())
                   {
+                     generator .XMLAppInfo (field);
+                     generator .XMLDocumentation (field);
+
                      generator .string += generator .closingTags ? "></field>" : "/>";
                      generator .string += generator .TidyBreak ();
                   }
@@ -1083,6 +1086,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                         case X3DConstants .SFNode:
                         case X3DConstants .MFNode:
                         {
+                           generator .XMLAppInfo (field);
+                           generator .XMLDocumentation (field);
                            generator .PushContainerField (null);
 
                            generator .string += ">";
@@ -1111,6 +1116,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                            field .toXMLStream (generator);
 
                            generator .string += "'";
+
+                           generator .XMLAppInfo (field);
+                           generator .XMLDocumentation (field);
+
                            generator .string += generator .closingTags ? "></field>" : "/>";
                            generator .string += generator .TidyBreak ();
                            break;
@@ -1122,6 +1131,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                {
                   if (generator .ExecutionContext ())
                      references .push (field);
+
+                  generator .XMLAppInfo (field);
+                  generator .XMLDocumentation (field);
 
                   generator .string += generator .closingTags ? "></field>" : "/>";
                   generator .string += generator .TidyBreak ();
@@ -1522,6 +1534,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                if (generator .ExecutionContext ())
                   references .push (field);
             }
+
+            generator .JSONAppInfo (field);
+            generator .JSONDocumentation (field);
 
             generator .string += generator .TidyBreak ();
             generator .string += generator .DecIndent ();

@@ -62,7 +62,7 @@ Object .assign (Cylinder3 .prototype,
          scaleFactor    = 1 / this .radius,
          toUnitCylSpace = new Matrix4 ();
 
-      toUnitCylSpace .scale (new Vector3 (scaleFactor, scaleFactor, scaleFactor));
+      toUnitCylSpace .scale (new Vector3 (scaleFactor));
       toUnitCylSpace .multLeft (mtxToYAxis);
 
       // find the given line un-translated

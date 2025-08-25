@@ -4,8 +4,8 @@ import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import X3DCast      from "../../Base/X3DCast.js";
 import MikkTSpace   from "../../Browser/Rendering/MikkTSpace.js";
-import Vector2      from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4      from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../../standard/Math/Geometry/Box3.js";
 import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
@@ -14,11 +14,11 @@ import DEVELOPMENT  from "../../DEVELOPMENT.js";
 
 // Box normals for bbox / line intersection.
 const boxNormals = [
-   new Vector3 (0,  0,  1), // front
-   new Vector3 (0,  0, -1), // back
-   new Vector3 (0,  1,  0), // top
-   new Vector3 (0, -1,  0), // bottom
-   new Vector3 (1,  0,  0)  // right
+   Vector3 .Z_AXIS,          // front
+   Vector3 .NEGATIVE_Z_AXIS, // back
+   Vector3 .Y_AXIS,          // top
+   Vector3 .NEGATIVE_Y_AXIS, // bottom
+   Vector3 .X_AXIS,          // right
    // left: We do not need to test for left.
 ];
 
@@ -440,10 +440,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       // Apply screen nodes transformation in place here.
    },
-   isClipped (point, clipPlanes)
-   {
-      return clipPlanes .some (clipPlane => clipPlane .isClipped (point));
-   },
    intersectsLine: (() =>
    {
       const
@@ -451,10 +447,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          uvt             = { u: 0, v: 0, t: 0 },
          v0              = new Vector3 (),
          v1              = new Vector3 (),
-         v2              = new Vector3 (),
-         clipPoint       = new Vector3 ();
+         v2              = new Vector3 ();
 
-      return function (hitRay, matrix, clipPlanes, intersections)
+      return function (hitRay, matrix, intersections)
       {
          if (this .intersectsBBox (hitRay))
          {
@@ -475,96 +470,52 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
                v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
                v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
-               if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
-               {
-                  // Get barycentric coordinates.
+               if (!hitRay .intersectsTriangle (v0, v1, v2, uvt))
+                  continue;
 
-                  const { u, v, t } = uvt;
+               // Get barycentric coordinates.
 
-                  // Determine vectors for X3DPointingDeviceSensors.
+               const { u, v, t } = uvt;
 
-                  const point = new Vector3 (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
-                                             u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
-                                             u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
+               // Determine vectors for LinePickSensor.
 
-                  if (clipPlanes .length)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
-                  }
+               const point = new Vector3 (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
+                                          u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
+                                          u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
 
-                  const texCoord = new Vector2 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
-                                                u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9]);
+               const texCoord = new Vector4 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
+                                             u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9],
+                                             u * texCoords [i4 + 2] + v * texCoords [i4 + 6] + t * texCoords [i4 + 10],
+                                             u * texCoords [i4 + 3] + v * texCoords [i4 + 7] + t * texCoords [i4 + 11]);
 
-                  const i3 = i * 3;
+               const i3 = i * 3;
 
-                  const normal = new Vector3 (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
-                                              u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
-                                              u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
+               const normal = new Vector3 (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
+                                           u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                           u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
 
-                  intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
-               }
+               intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
             }
          }
 
          return intersections .length;
       };
    })(),
-   getPlanesWithOffset: (() =>
-   {
-      const
-         min    = new Vector3 (),
-         max    = new Vector3 (),
-         planes = Array .from ({ length: 5 }, () => new Plane3 ());
-
-      return function (minX, minY, minZ, maxX, maxY, maxZ)
-      {
-         min .set (minX, minY, minZ);
-         max .set (maxX, maxY, maxZ);
-
-         for (let i = 0; i < 5; ++ i)
-            planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
-         return planes;
-      };
-   })(),
    intersectsBBox: (() =>
    {
       const intersection = new Vector3 ();
 
-      return function (hitRay, offsets)
+      return function (hitRay)
       {
-         const { min, max } = this;
+         const { min, max, planes } = this;
 
-         let
-            minX,
-            maxX,
-            minY,
-            maxY,
-            minZ,
-            maxZ,
-            planes;
-
-         if (offsets)
-         {
-            minX   = min .x - offsets .x;
-            maxX   = max .x + offsets .x;
-            minY   = min .y - offsets .y;
-            maxY   = max .y + offsets .y;
-            minZ   = min .z - offsets .z;
-            maxZ   = max .z + offsets .z;
-            planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
-         }
-         else
-         {
-            minX   = min .x;
-            maxX   = max .x;
-            minY   = min .y;
-            maxY   = max .y;
-            minZ   = min .z;
-            maxZ   = max .z;
-            planes = this .planes;
-         }
+         const
+            minX = min .x,
+            maxX = max .x,
+            minY = min .y,
+            maxY = max .y,
+            minZ = min .z,
+            maxZ = max .z;
 
          // front
          if (planes [0] .intersectsLine (hitRay, intersection))
@@ -604,55 +555,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
             if (intersection .y >= minY && intersection .y <= maxY &&
                 intersection .z >= minZ && intersection .z <= maxZ)
                return true;
-         }
-
-         return false;
-      };
-   })(),
-   intersectsBox: (() =>
-   {
-      const
-         v0        = new Vector3 (),
-         v1        = new Vector3 (),
-         v2        = new Vector3 (),
-         invMatrix = new Matrix4 (),
-         clipPoint = new Vector3 ();
-
-      return function (box, clipPlanes, modelViewMatrix)
-      {
-         if (box .intersectsBox (this .bbox))
-         {
-            box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
-
-            this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
-
-            const vertices = this .vertices .getValue ();
-
-            for (let i = 0, length = this .vertexCount; i < length; i += 3)
-            {
-               const i4 = i * 4;
-
-               v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-               v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-               v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-               if (box .intersectsTriangle (v0, v1, v2))
-               {
-                  if (clipPlanes .length)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
-                        continue;
-
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
-                        continue;
-
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
-                        continue;
-                  }
-
-                  return true;
-               }
-            }
          }
 
          return false;

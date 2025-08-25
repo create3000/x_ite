@@ -31,7 +31,12 @@ const SFNodeCache =
    },
    set (baseNode, node)
    {
-      node .dispose = dispose;
+      Object .defineProperty (node, "dispose",
+      {
+         value: dispose,
+         writable: true,
+         configurable: true,
+      });
 
       // WeakMap allows associating data to objects in a way that doesn't prevent
       // the key objects from being collected, even if the values reference the keys.

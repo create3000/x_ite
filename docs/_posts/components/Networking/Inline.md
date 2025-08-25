@@ -75,7 +75,7 @@ The *global* field controls potential external scoping effects of lights found w
 ### SFBool [in, out] **load** TRUE
 {: #fields-load }
 
-*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded asset.
 
 #### Hints
 

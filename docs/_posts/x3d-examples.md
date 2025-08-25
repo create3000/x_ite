@@ -18,7 +18,7 @@ In X3D, a virtual keyboard can be dynamically created by defining reusable key s
 
 [![Connectors](https://create3000.github.io/media/x_ite/examples/connectors/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/connectors/connectors.x3d){: .left .w-25 }
 
-**Connecting Draggable Nodes with Routes**
+**Connect Draggable Nodes with Visual Routes**
 
 In X3D, draggable nodes can be made interactive by using [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) to capture user movements. By connecting these sensors to other nodes with `ROUTE` statements, you can dynamically update positions, orientations, or other properties in real time.
 

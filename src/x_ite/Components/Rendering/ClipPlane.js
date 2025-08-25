@@ -18,10 +18,7 @@ function ClipPlaneContainer ()
 
 Object .assign (ClipPlaneContainer .prototype,
 {
-   isClipped (point)
-   {
-      return this .plane .getDistanceToPoint (point) < 0;
-   },
+   isClipPlane: true,
    set (clipPlane, modelViewMatrix)
    {
       const
